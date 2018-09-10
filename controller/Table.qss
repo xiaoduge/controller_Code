@@ -1,0 +1,30 @@
+/**********表格**********/
+QTableView {
+        border: 1px solid rgb(45, 45, 45);
+        background: rgb(200, 200, 200);
+        gridline-color: rgb(60, 60, 60);
+}
+QTableView::item {
+        padding-left: 5px;
+        padding-right: 5px;
+        border: none;
+        background: rgb(72, 72, 74);
+        border-right: 1px solid rgb(45, 45, 45);
+        border-bottom: 1px solid rgb(45, 45, 45);
+}
+QTableView::item:selected {
+        background: rgba(255, 255, 255, 40);
+}
+QTableView::item:selected:!active {
+        color: white;
+}
+QTableView::indicator {
+        width: 20px;
+        height: 20px;
+}
+QTableView::indicator:enabled:unchecked {
+        image: url(:/Black/checkBox);
+}
+QTableView::indicator:enabled:unchecked:hover {
+        image: url(:/Black/checkBoxHover);
+}

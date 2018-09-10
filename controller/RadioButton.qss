@@ -1,0 +1,10 @@
+
+
+
+QRadioButton::indicator::unchecked {
+    image: url(:/pic/Radio_noselect.png);
+}
+
+QRadioButton::indicator::checked { 
+    image: url(:/pic/Radio_select .png);
+}

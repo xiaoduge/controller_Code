@@ -1,0 +1,59 @@
+#ifndef EX_RFIDCFGPAGE_H
+#define EX_RFIDCFGPAGE_H
+
+
+#include <QObject>
+#include <QPixmap>
+#include <QPalette>
+
+#include "basewidget.h"
+#include "subpage.h"
+
+#include "Display.h"
+#include "ctrlapplication.h"
+
+
+class MainWindow;
+class QPushButton;
+class QLabel;
+class QCheckBox;
+
+class Ex_RFIDCfgPage : public CSubPage
+{
+    Q_OBJECT
+
+public:
+    Ex_RFIDCfgPage(QObject *parent = 0,CBaseWidget *widget = 0 , MainWindow *wndMain = 0);
+
+    virtual void creatTitle();
+
+    virtual void switchLanguage();
+
+    virtual void buildTranslation();
+
+    virtual void initUi();
+
+    virtual void update();
+    void createHeader();
+
+private:
+    void buildTitles();
+    void save();
+    void setBackColor();
+    void createControl();
+    void connectData();
+
+    QLabel* m_pExLbTitle;
+
+    QCheckBox *m_chRfid;
+    QPushButton* m_saveBtn;
+
+private slots:
+    void on_saveBtn_clicked();
+
+};
+
+extern CtrlApplication *gApp;
+
+
+#endif // EX_RFIDCFGPAGE_H

@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/ime">
+        <file>icon4ime/bs_l.png</file>
+        <file>icon4ime/bs_s.png</file>
+        <file>icon4ime/cr_l.png</file>
+        <file>icon4ime/cr_s.png</file>
+        <file>icon4ime/imesel.png</file>
+        <file>icon4ime/shift.png</file>
+        <file>icon4ime/symbol.png</file>
+    </qresource>
+</RCC>

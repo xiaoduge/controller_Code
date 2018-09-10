@@ -1,0 +1,20 @@
+QCheckBox
+{
+    font-family:Consolas;
+    height:24px;
+    font-size:14px;
+    border-radius:2px;
+}
+QCheckBox::indicator
+{
+    width:20px;
+    height:20px;
+}
+QCheckBox::indicator:unchecked
+{
+    image:url(:/pic/unselected.png);
+}
+QCheckBox::indicator:checked
+{
+    image:url(:/pic/selected.png);
+}
