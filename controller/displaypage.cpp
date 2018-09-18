@@ -1,9 +1,6 @@
 #include "displaypage.h"
-
 #include "titlebar.h"
-
 #include "mainwindow.h"
-
 #include <QPainter>
 #include <QLabel>
 #include <QSlider>
@@ -105,11 +102,8 @@ void DisplayPage::initUi()
     for( iLoop = 0 ; iLoop < 3 ; iLoop++)
     {
         m_pBackWidget[iLoop] = new QWidget(m_widget);
-
         QPalette pal(m_pBackWidget[iLoop]->palette());
-
         pal.setColor(QPalette::Background, Qt::white);
-
         m_pBackWidget[iLoop]->setAutoFillBackground(true);
         m_pBackWidget[iLoop]->setPalette(pal);
 
@@ -121,7 +115,6 @@ void DisplayPage::initUi()
         laName[iLoop]->setAlignment(Qt::AlignLeft);
         laName[iLoop]->show();
     }
-
 
     pSlider[0] = new QSlider(m_pBackWidget[0]);
     pSlider[0]->setOrientation(Qt::Horizontal);
@@ -186,6 +179,17 @@ void DisplayPage::initUi()
 
 void DisplayPage::update()
 {
+    m_iEnergySave = gGlobalParam.MiscParam.iEnerySave;
+    m_pBtnEnergySave->setState(m_iEnergySave);
+    if(m_iEnergySave)
+    {
+        m_pBackWidget[2]->show();
+    }
+    else
+    {
+        m_pBackWidget[2]->hide();
+    }
+
     m_iSleepTime = ex_gGlobalParam.Ex_Config_Param.iScreenSleepTime;
     m_comboBox->setCurrentIndex(m_iSleepTime - 1);
 }

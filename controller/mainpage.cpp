@@ -166,7 +166,7 @@ MainPage::MainPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CP
     updEcoInfo(APP_EXE_I4_NO,m_wndMain->getEco(APP_EXE_I4_NO),true);
     updEcoInfo(APP_EXE_I5_NO,m_wndMain->getEco(APP_EXE_I5_NO),true);
     //ex
-    updEcoInfo(APP_EXE_I3_NO,m_wndMain->getEco(APP_EXE_I3_NO),true);
+   // updEcoInfo(APP_EXE_I3_NO,m_wndMain->getEco(APP_EXE_I3_NO),true);
     //end
 
     for (iLoop = 0; iLoop < APP_DEV_HS_SUB_NUM; iLoop++)
@@ -618,7 +618,7 @@ void MainPage::update()
    updIsInfo(APP_EXE_I5_NO,&m_aHistoryEco[APP_EXE_I5_NO]);
 
    //ex 0904
-   updIsInfo(APP_EXE_I3_NO,&m_aHistoryEco[APP_EXE_I3_NO]);
+   //updIsInfo(APP_EXE_I3_NO,&m_aHistoryEco[APP_EXE_I3_NO]);
    //end
 }
 
@@ -1359,7 +1359,7 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
                 {
                     fQ = toConductivity(info->fQuality);
                 }
-#if 0
+
                 //if (DispGetEdiQtwFlag())
                 {
                     if( 1 > fQ)
@@ -1372,20 +1372,8 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
                     }
                     m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
                 }
-#endif
+
                 //else if (DispGetTankCirFlag())
-                if(DispGetTankCirFlag())
-                {
-                    if( 1 > fQ)
-                    {
-                        m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_WQ_VALUE]]->setText(QString::number(fQ,'f',3));
-                    }
-                    else
-                    {
-                        m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_WQ_VALUE]]->setText(QString::number(fQ,'f',1));
-                    }
-                    m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
-                }
                 
                 if(MACHINE_PURIST != gGlobalParam.iMachineType)
                 {
@@ -1424,6 +1412,7 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
         }
         break;
         //ex
+#if 0
     case APP_EXE_I3_NO:
     {
         if (MACHINE_Genie == gGlobalParam.iMachineType)
@@ -1465,10 +1454,11 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
         break;
     }
         //end
+#endif
     }
 }
 
-#define I3TEST  //ex
+//#define I3TEST  //ex
 void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
 {
     float fQ ;

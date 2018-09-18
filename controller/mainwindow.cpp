@@ -5230,7 +5230,7 @@ void MainWindow::on_ScreenSleep(bool sleep)
 {
     if(sleep && (g_screenSleep != 0) && (!g_isScreenSleep) && gGlobalParam.MiscParam.iEnerySave)
     {
-        int value = 1;
+        int value = 50;
         g_isScreenSleep = true;
         Write_sys_int(PWMLCD_FILE, value);
     }

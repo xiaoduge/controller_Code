@@ -98,11 +98,8 @@ void SoundPage::initUi()
     m_strQss4Chk = m_wndMain->getQss4Chk();
 
     QPixmap back(":/pic/SubPageBack.png");
-
     QSize size(back.width(), back.height());
-
     QImage image_bg = QImage(size, QImage::Format_ARGB32);
-
     QPainter p(&image_bg);
 
     p.fillRect(image_bg.rect(), QColor(255, 255, 255));
