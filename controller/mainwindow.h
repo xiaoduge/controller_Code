@@ -319,6 +319,8 @@ public:
 
     void ClearToc();
 
+    void updateRectState();
+
     /* for all kinds of state related measurements */
     float        m_fSourceWaterPressure;
     float        m_fSourceWaterConductivity;

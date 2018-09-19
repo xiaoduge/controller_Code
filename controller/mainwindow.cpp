@@ -224,8 +224,10 @@ Ex_DISP_PARAM_CALI_STRU ex_global_Cali; //dcj_ex;
 Ex_LoginState global_LoginState; //dcj_ex;
 Ex_LoginState user_LoginState; //ex
 Ex_DISP_GLOBAL_PARAM_STRU ex_gGlobalParam; //dcj_ex;
+EX_CCB  ex_gCcb; //dcj_ex
 unsigned int g_screenSleep;
 bool g_isScreenSleep;
+unsigned int ex_gulSecond = 0;
 
 DISP_CM_USAGE_STRU     gCMUsage ;
 
@@ -3282,7 +3284,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
             /*alarm masks */
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
-            m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= ~(1 << DISP_ALARM_PART0_HPACK_OOP);
+            m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_HPACK_OOP)
+                                                          |(1 << DISP_ALARM_PART0_TUBEUV_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1 ;
 #ifdef PCBTEST
@@ -3293,7 +3296,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
             
             /*alarm masks */
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
-            m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= ~(1 << DISP_ALARM_PART0_ATPACK_OOP);
+            m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_ATPACK_OOP)
+                                                          |(1 << DISP_ALARM_PART0_TUBEUV_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;            
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1] &= (~((1 << DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE)
@@ -3306,7 +3310,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
             /*alarm masks */
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_UPACK_OOP)
-                                                        |(1 << DISP_ALARM_PART0_185UV_OOP)));
+                                                          |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
+                                                          |(1 << DISP_ALARM_PART0_185UV_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1] &= ( ~((1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE)
@@ -3319,6 +3324,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= ( ~((1 << DISP_ALARM_PART0_ATPACK_OOP)
                                                            |(1 << DISP_ALARM_PART0_UPACK_OOP)
+                                                           |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
                                                            |(1 << DISP_ALARM_PART0_185UV_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
@@ -3332,7 +3338,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
             /*alarm masks */
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0;
-            m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= ~(1 << DISP_ALARM_PART0_ATPACK_OOP);
+            m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_ATPACK_OOP)
+                                                         |(1 << DISP_ALARM_PART0_TUBEUV_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1] &= (~((1 << DISP_ALARM_PART1_LOWER_TUBE_RESISTENCE)
@@ -3348,7 +3355,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
             /*alarm masks */
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
-            m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= ~(1 << DISP_ALARM_PART0_ATPACK_OOP);
+            m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_ATPACK_OOP)
+                                                         |(1 << DISP_ALARM_PART0_TUBEUV_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1] &= (~((1 << DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE)
@@ -3369,6 +3377,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_185UV_OOP)
                                                          |(1 << DISP_ALARM_PART0_ATPACK_OOP)
+                                                         |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
                                                          |(1 << DISP_ALARM_PART0_UPACK_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
@@ -3390,6 +3399,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_185UV_OOP)
                                                          |(1 << DISP_ALARM_PART0_ATPACK_OOP)
+                                                         |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
                                                          |(1 << DISP_ALARM_PART0_UPACK_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
@@ -3902,7 +3912,12 @@ MainWindow::MainWindow(QMainWindow *parent) :
            addRfid2DelayList(iLoop);
        }
     }
-    
+    //ex
+    for(iLoop = 0; iLoop < EX_RECT_NUM; iLoop++)
+    {
+        ex_gCcb.Ex_Rect_State.EX_N_NO[iLoop] = 0;
+    }
+    //end
     CcbInit();
 
     if(ex_gGlobalParam.Ex_Default == 0)
@@ -6353,13 +6368,13 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
     case DISP_NOT_SWITCH_STATE:
         {
             qDebug("on_dispIndication:DISP_NOT_SWITCH_STATE \r\n");
+            updateRectState(); //ex
             
             if (!m_bSplash && (typeid(*m_pCurPage) == typeid(SystemMonitorPage)))
             {
                 SystemMonitorPage *page = (SystemMonitorPage *)m_pCurPage;
                 page->updateSwitchInfo();
-            }
-            
+            }     
         }
         break;
     case DISP_NOT_RPUMP_STATE:
@@ -7415,5 +7430,43 @@ void MainWindow::ClearToc()
         alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE);
         alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE);
     }
+}
+
+void MainWindow::updateRectState()
+{
+    bool temp;
+    unsigned int nRectSwitchMask;
+    nRectSwitchMask = DispGetSwitchState(APP_EXE_SWITCHS_MASK);
+    //N1
+    temp = nRectSwitchMask & (1 << APP_EXE_N1_NO) ? true : false;
+    if(temp && (ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N1] == 0))
+    {
+        ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N1] = 1;
+    }
+    if(!temp)
+    {
+        ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N1] = 0;
+    }
+    //N2
+    temp = nRectSwitchMask & (1 << APP_EXE_N2_NO) ? true : false;
+    if(temp && (ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N2] == 0))
+    {
+        ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N2] = 1;
+    }
+    if(!temp)
+    {
+        ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N2] = 0;
+    }
+    //N3
+    temp = nRectSwitchMask & (1 << APP_EXE_N3_NO) ? true : false;
+    if(temp && (ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N3] == 0))
+    {
+        ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N3] = 1;
+    }
+    if(!temp)
+    {
+        ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N3] = 0;
+    }
+
 }
 
