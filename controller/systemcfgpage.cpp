@@ -916,23 +916,23 @@ void SystemCfgPage::save()
        {
        case DISP_WATER_BARREL_TYPE_030L:
            pmParam.afCap[DISP_PM_PM2] = 30;
-           pmParam.afDepth[DISP_PM_PM2] = 0.30;
+           pmParam.afDepth[DISP_PM_PM2] = 0.25;
            break;
        case DISP_WATER_BARREL_TYPE_060L:
            pmParam.afCap[DISP_PM_PM2] = 60;
-           pmParam.afDepth[DISP_PM_PM2] = 0.60;
+           pmParam.afDepth[DISP_PM_PM2] = 0.55;
            break;
        case DISP_WATER_BARREL_TYPE_100L:
            pmParam.afCap[DISP_PM_PM2] = 100;
-           pmParam.afDepth[DISP_PM_PM2] = 1.00;
+           pmParam.afDepth[DISP_PM_PM2] = 0.95;
            break;
        case DISP_WATER_BARREL_TYPE_200L:
            pmParam.afCap[DISP_PM_PM2] = 200;
-           pmParam.afDepth[DISP_PM_PM2] = 1.00;
+           pmParam.afDepth[DISP_PM_PM2] = 0.95;
            break;
        case DISP_WATER_BARREL_TYPE_350L:
            pmParam.afCap[DISP_PM_PM2] = 350;
-           pmParam.afDepth[DISP_PM_PM2] = 1.00;
+           pmParam.afDepth[DISP_PM_PM2] = 0.95;
            break;
        case DISP_WATER_BARREL_TYPE_UDF:
            pmParam.afCap[DISP_PM_PM2] = m_lePWTankCap->text().toInt();
@@ -958,23 +958,23 @@ void SystemCfgPage::save()
        {
        case DISP_WATER_BARREL_TYPE_030L:
            pmParam.afCap[DISP_PM_PM3] = 30;
-           pmParam.afDepth[DISP_PM_PM3] = 0.30;
+           pmParam.afDepth[DISP_PM_PM3] = 0.25;
            break;
        case DISP_WATER_BARREL_TYPE_060L:
            pmParam.afCap[DISP_PM_PM3] = 60;
-           pmParam.afDepth[DISP_PM_PM3] = 0.60;
+           pmParam.afDepth[DISP_PM_PM3] = 0.55;
            break;
        case DISP_WATER_BARREL_TYPE_100L:
            pmParam.afCap[DISP_PM_PM3] = 100;
-           pmParam.afDepth[DISP_PM_PM3] = 1.00;
+           pmParam.afDepth[DISP_PM_PM3] = 0.95;
            break;
        case DISP_WATER_BARREL_TYPE_200L:
            pmParam.afCap[DISP_PM_PM3] = 200;
-           pmParam.afDepth[DISP_PM_PM3] = 1.00;
+           pmParam.afDepth[DISP_PM_PM3] = 0.95;
            break;
        case DISP_WATER_BARREL_TYPE_350L:
            pmParam.afCap[DISP_PM_PM3] = 350;
-           pmParam.afDepth[DISP_PM_PM3] = 1.00;
+           pmParam.afDepth[DISP_PM_PM3] = 0.95;
            break;
        case DISP_WATER_BARREL_TYPE_UDF:
            pmParam.afCap[DISP_PM_PM3] = m_leSWTankCap->text().toInt();

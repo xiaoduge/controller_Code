@@ -2643,12 +2643,6 @@ void work_start_N3(void *para)
         work_N3_fail(pWorkItem->id);
         return ;
     }
-    //ex
-    else
-    {
-        ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N3] = gulSecond;
-    }
-    //end
     work_N3_succ();
 }
 
@@ -3026,7 +3020,6 @@ void work_start_qtw(void *para)
                 iTmp  = (1 << APP_EXE_E1_NO);
                 iTmp |= (1<<APP_EXE_C1_NO);
                 iTmp |= (1 << APP_EXE_N2_NO); 
-                ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N2] = gulSecond; //
             }
             else
             {
@@ -3087,7 +3080,6 @@ void work_start_qtw(void *para)
         {
             iTmp = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO);
             ulQtwSwMask = pCcb->ulHyperTwMask;
-            ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N2] = gulSecond; //ex
         }
         else
         {
@@ -3325,12 +3317,6 @@ void work_start_toc_cir(void *para)
             work_cir_fail(pWorkItem->id);
             return ;
         }
-        //ex
-        else
-        {
-            ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N2] = gulSecond;
-        }
-        //end
 
         /* tell exe to calc toc */
                 
@@ -3345,12 +3331,6 @@ void work_start_toc_cir(void *para)
              work_cir_fail(pWorkItem->id);
              return ;
          }
-         //ex
-         else
-         {
-             ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N2] = gulSecond;
-         }
-         //end
          
         break;
     }
@@ -3422,6 +3402,18 @@ void work_start_cir(void *para)
                  work_cir_fail(pWorkItem->id);        
                  return ;
              }
+             //Ex FM1 report
+             iTmp = (1 << APP_FM_FM1_NO); /* start flow report */
+
+             iRet = CcbUpdateFms(pWorkItem->id,0,iTmp,iTmp);
+             if (iRet )
+             {
+                 VOS_LOG(VOS_LOG_WARNING,"CcbUpdateFms Fail %d",iRet);
+                 /* notify ui (late implemnt) */
+                 work_cir_fail(pWorkItem->id);
+                 return ;
+             }
+             //end
 
              pCcb->iTocStage      = APP_PACKET_EXE_TOC_STAGE_FLUSH1;
              pCcb->iTocStageTimer = 0;
@@ -3456,6 +3448,19 @@ void work_start_cir(void *para)
                  work_cir_fail(pWorkItem->id);        
                  return ;
              }
+
+             //Ex FM1 report
+             iTmp = (1 << APP_FM_FM1_NO); /* start flow report */
+
+             iRet = CcbUpdateFms(pWorkItem->id,0,iTmp,iTmp);
+             if (iRet )
+             {
+                 VOS_LOG(VOS_LOG_WARNING,"CcbUpdateFms Fail %d",iRet);
+                 /* notify ui (late implemnt) */
+                 work_cir_fail(pWorkItem->id);
+                 return ;
+             }
+             //end
              //EX
              for (iLoop = 0; iLoop < 3; iLoop++) //延时启动N2
              {
@@ -3469,10 +3474,6 @@ void work_start_cir(void *para)
              }
              iTmp = (1 << APP_EXE_E5_NO) | (1 << APP_EXE_E9_NO) | (1 << APP_EXE_C2_NO)| (1 << APP_EXE_N2_NO);
              iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulCirMask,iTmp);
-
-             ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N2] = gulSecond;
-
-             //END
              
              pCcb->iTocStage      = APP_PACKET_EXE_TOC_STAGE_NUM;
          }
@@ -3521,6 +3522,14 @@ void work_start_cir(void *para)
              }
              
              iTmp = (1 << APP_EXE_I4_NO);
+
+             //ex UP Tank I3 Report
+             if(MACHINE_UP == pCcb->ulMachineType)
+             {
+                 iTmp = (1 << APP_EXE_I3_NO);
+             }
+             //endl
+
              iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
              if (iRet )
              {
@@ -4724,7 +4733,7 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                             {
                                 if (!gCcb.bit1AlarmTOC)
                                 {
-                                    if (gCcb.ExeBrd.aEcoObjs[APP_EXE_I3_NO].Value.eV.fWaterQ > CcbGetSp30())
+                                    if (gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV.fWaterQ < CcbGetSp30())
                                     {
                                         gCcb.bit1AlarmTOC   = TRUE;
 
@@ -4736,7 +4745,7 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                                 }
                                 else
                                 {
-                                    if (gCcb.ExeBrd.aEcoObjs[APP_EXE_I3_NO].Value.eV.fWaterQ <= CcbGetSp30())
+                                    if (gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV.fWaterQ >= CcbGetSp30())
                                     {
                                         gCcb.bit1AlarmTOC   = FALSE;
                                         
@@ -4843,18 +4852,26 @@ void CanCcbRectNMeasurePostProcess(int rectID)
     if(ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N1] == 1)
     {
         DispGetOtherCurrent(APP_EXE_N1_NO, &iTmpData);
-        if((gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N1]) > 5)
+        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N1]) > 3)
         {
             if(iTmpData < 100)
             {
                 //Alaram
-                gCcb.ulFiredAlarmFlags |= ALARM_N1;
-                CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP,TRUE);
+                if(!ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1)
+                {
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1 = 1;
+                    gCcb.ulFiredAlarmFlags |= ALARM_N1;
+                    CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP,TRUE);
+                }
             }
             else
             {
-                gCcb.ulFiredAlarmFlags &= ~ALARM_N1;
-                CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP, FALSE);
+                if(!!ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1)
+                {
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1 = 0;
+                    gCcb.ulFiredAlarmFlags &= ~ALARM_N1;
+                    CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP, FALSE);
+                }
             }
         }
     }
@@ -4862,19 +4879,26 @@ void CanCcbRectNMeasurePostProcess(int rectID)
     if(ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N2] == 1)
     {
         DispGetOtherCurrent(APP_EXE_N2_NO, &iTmpData);
-        if((gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N2]) > 5)
+        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N2]) > 3)
         {
             if(iTmpData < 100)
             {
                 //Alaram
-                gCcb.ulFiredAlarmFlags |= ALARM_N2;
-                CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP,TRUE);
-
+                if(!ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2)
+                {
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2 = 1;
+                    gCcb.ulFiredAlarmFlags |= ALARM_N2;
+                    CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP,TRUE);
+                }
             }
             else
             {
-                gCcb.ulFiredAlarmFlags &= ~ALARM_N2;
-                CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP, FALSE);
+                if(!!ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2)
+                {
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2 = 0;
+                    gCcb.ulFiredAlarmFlags &= ~ALARM_N2;
+                    CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP, FALSE);
+                }
             }
         }
     }
@@ -4883,18 +4907,27 @@ void CanCcbRectNMeasurePostProcess(int rectID)
     if(ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N3] == 1)
     {
         DispGetOtherCurrent(APP_EXE_N3_NO, &iTmpData);
-        if((gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N3]) < 5)
+        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N3]) > 3)
         {
             if(iTmpData < 100)
             {
                 //Alaram
-                gCcb.ulFiredAlarmFlags |= ALARM_N3;
-                CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP,TRUE);
+                if(!ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3)
+                {
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 = 1;
+                    gCcb.ulFiredAlarmFlags |= ALARM_N3;
+                    CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP,TRUE);
+                }
+
             }
             else
             {
-                gCcb.ulFiredAlarmFlags &= ~ALARM_N3;
-                CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP, FALSE);
+                if(!!ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3)
+                {
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 = 0;
+                    gCcb.ulFiredAlarmFlags &= ~ALARM_N3;
+                    CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP, FALSE);
+                }
             }
         }
     }
@@ -9852,12 +9885,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                     cbf(pWorkItem->id);        
                     return ;
                 }
-                //ex
-                else
-                {
-                    ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N1] = gulSecond;
-                }
-                //end
+
                 iTmp  = (1 << APP_EXE_I1_NO)|(1<<APP_EXE_I2_NO)|(1<<APP_EXE_I3_NO);
                 iTmp |= (GET_B_MASK(APP_EXE_PM1_NO))|(GET_B_MASK(APP_EXE_PM2_NO));
                 iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
@@ -10430,11 +10458,6 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                     cbf(pWorkItem->id);        
                     return ;
                 }
-                else
-                {
-                    ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N1] = gulSecond;
-                }
-                //end
          
                 iTmp  = (1 << APP_EXE_I1_NO)|(1<<APP_EXE_I2_NO)|(1<<APP_EXE_I3_NO);
                 iTmp |= (GET_B_MASK(APP_EXE_PM1_NO))|(GET_B_MASK(APP_EXE_PM2_NO));
@@ -12094,12 +12117,6 @@ void work_start_tube_cir(void *para)
     {
         VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);    
     }
-    //ex
-    else
-    {
-        ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N2] = gulSecond;
-    }
-    //end
 
     /* set  valves   */
     iTmp = 1 << APP_EXE_I4_NO;
@@ -12166,12 +12183,6 @@ void work_stop_tube_cir(void *para)
     {
         VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
     }
-    //ex
-    else
-    {
-        ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N2] = gulSecond;
-    }
-    //end
     
     pCcb->bit1TubeCirOngoing = FALSE;
     pCcb->bit1NeedTubeCir    = FALSE;

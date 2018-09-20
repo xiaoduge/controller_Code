@@ -26,8 +26,8 @@
 #define PAGEID_MARGIN (4)
 
 #define PAGE_X_DIMENSION (40)
-#define PAGE_Y_DIMENSION (20)
-
+//#define PAGE_Y_DIMENSION (20)
+#define PAGE_Y_DIMENSION (40)
 enum GLOBAL_BMP_ENUM
 {
     GLOBAL_BMP_HOME = 0,

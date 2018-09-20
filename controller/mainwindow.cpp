@@ -858,7 +858,7 @@ void MainRetrivePmParam(int iMachineType,DISP_PM_SETTING_STRU  &Param)
             
             Param.afCap[iLoop] = fValue;
     
-            fValue = config->value(strV + "/RANGE",0.3).toFloat(); // max 100mm
+            fValue = config->value(strV + "/RANGE",0.25).toFloat(); // max 100mm  default:0.3
             
             Param.afDepth[iLoop] = fValue;            
             break;
@@ -3912,12 +3912,17 @@ MainWindow::MainWindow(QMainWindow *parent) :
            addRfid2DelayList(iLoop);
        }
     }
+
     //ex
     for(iLoop = 0; iLoop < EX_RECT_NUM; iLoop++)
     {
         ex_gCcb.Ex_Rect_State.EX_N_NO[iLoop] = 0;
     }
+    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1 = 0;
+    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2 = 0;
+    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 = 0;
     //end
+
     CcbInit();
 
     if(ex_gGlobalParam.Ex_Default == 0)
@@ -5245,7 +5250,7 @@ void MainWindow::on_ScreenSleep(bool sleep)
 {
     if(sleep && (g_screenSleep != 0) && (!g_isScreenSleep) && gGlobalParam.MiscParam.iEnerySave)
     {
-        int value = 50;
+        int value = 10;
         g_isScreenSleep = true;
         Write_sys_int(PWMLCD_FILE, value);
     }
@@ -7442,6 +7447,7 @@ void MainWindow::updateRectState()
     if(temp && (ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N1] == 0))
     {
         ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N1] = 1;
+        ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N1] = ex_gulSecond;
     }
     if(!temp)
     {
@@ -7452,6 +7458,7 @@ void MainWindow::updateRectState()
     if(temp && (ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N2] == 0))
     {
         ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N2] = 1;
+        ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N2] = ex_gulSecond;
     }
     if(!temp)
     {
@@ -7462,6 +7469,7 @@ void MainWindow::updateRectState()
     if(temp && (ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N3] == 0))
     {
         ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N3] = 1;
+        ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N3] = ex_gulSecond;
     }
     if(!temp)
     {
