@@ -108,7 +108,8 @@ SOURCES += main.cpp\
     ex_historypage.cpp \
     ex_rfidcfgpage.cpp \
     ex_screensleepthread.cpp \
-    ex_eventfilter.cpp
+    ex_eventfilter.cpp \
+    ex_screensleeppage.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -195,7 +196,8 @@ HEADERS  += mainwindow.h \
     ex_historypage.h \
     ex_rfidcfgpage.h \
     ex_screensleepthread.h \
-    ex_eventfilter.h
+    ex_eventfilter.h \
+    ex_screensleeppage.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

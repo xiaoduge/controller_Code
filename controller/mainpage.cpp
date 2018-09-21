@@ -1289,32 +1289,37 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
     case APP_EXE_I2_NO:
         {
             fQ = info->fQuality;
-
-            if((MACHINE_PURIST == gGlobalParam.iMachineType))
-            {   
-               
+            switch(gGlobalParam.iMachineType)
+            {
+            case MACHINE_PURIST:
+            {
                 if (DispGetUpQtwFlag())
                 {
                     m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ).sprintf("%3d",(int)fQ > 200 ?200:(int)fQ));
-                    
+
                     m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->setText(tr("us"));
                 }
+                break;
             }
-            else if (MACHINE_ADAPT == gGlobalParam.iMachineType)
+            case MACHINE_ADAPT:
             {
                 m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
-            
+
                 m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ).sprintf("%3d",(int)fQ > 200 ?200:(int)fQ));
-                
+
                 m_pLabels[LABEL_NAVI_EDI_WQ_UNIT]->setText(tr("us"));
-            
+                break;
             }
-            else if ((MACHINE_UP == gGlobalParam.iMachineType)
-                     && (!DispGetTankCirFlag()))
+            case MACHINE_UP:
             {
-                m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
-                m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ).sprintf("%3d",(int)fQ > 200 ?200:(int)fQ));
-                m_pLabels[LABEL_NAVI_EDI_WQ_UNIT]->setText(tr("us"));
+                if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
+                {
+                    m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+                    m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ).sprintf("%3d",(int)fQ > 200 ?200:(int)fQ));
+                    m_pLabels[LABEL_NAVI_EDI_WQ_UNIT]->setText(tr("us"));
+                }
+                break;
+            }
             }
         }
         break;
@@ -1348,75 +1353,6 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
         break;
     case APP_EXE_I4_NO:
         {
-            if (MACHINE_ADAPT != gGlobalParam.iMachineType
-                && MACHINE_UP != gGlobalParam.iMachineType)
-            {
-                if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
-                {
-                    fQ = info->fQuality;
-                }
-                else
-                {
-                    fQ = toConductivity(info->fQuality);
-                }
-
-                //if (DispGetEdiQtwFlag())
-                {
-                    if( 1 > fQ)
-                    {
-                        m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_WQ_VALUE]]->setText(QString::number(fQ,'f',3));
-                    }
-                    else
-                    {
-                        m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_WQ_VALUE]]->setText(QString::number(fQ,'f',1));
-                    }
-                    m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
-                }
-
-                //else if (DispGetTankCirFlag())
-                
-                if(MACHINE_PURIST != gGlobalParam.iMachineType)
-                {
-                    if( 1 > fQ)
-                    {
-                        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',2));
-                    }
-                    else
-                    {
-                        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',1));
-                    }
-                }
-            }
-            /*
-            if((MACHINE_UP == gGlobalParam.iMachineType)
-                && DispGetTankCirFlag())
-            {
-                if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
-                {
-                    fQ = info->fQuality;
-                }
-                else
-                {
-                    fQ = toConductivity(info->fQuality);
-                }
-
-                if( 1 > fQ)
-                {
-                    m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',2));
-                }
-                else
-                {
-                    m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',1));
-                }
-            }*/
-        }
-        break;
-        //ex
-#if 0
-    case APP_EXE_I3_NO:
-    {
-        if (MACHINE_Genie == gGlobalParam.iMachineType)
-        {
             if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
             {
                 fQ = info->fQuality;
@@ -1426,7 +1362,63 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
                 fQ = toConductivity(info->fQuality);
             }
 
-            if (!DispGetTankCirFlag())
+            switch(gGlobalParam.iMachineType)
+            {
+            case MACHINE_PURIST:
+            case MACHINE_UP:
+            case MACHINE_ADAPT:
+                break;
+            case MACHINE_Genie:
+            {
+                if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+                {
+                    //if (DispGetEdiQtwFlag())
+                    {
+                        if( 1 > fQ)
+                        {
+                            m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_WQ_VALUE]]->setText(QString::number(fQ,'f',3));
+                        }
+                        else
+                        {
+                            m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_WQ_VALUE]]->setText(QString::number(fQ,'f',1));
+                        }
+                        m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+                    }
+
+                    if( 1 > fQ)
+                    {
+                        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',2));
+                    }
+                    else
+                    {
+                        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                    }
+                }
+                break;
+            }
+            default:
+                break;
+            }
+
+        }
+        break;
+
+    case APP_EXE_I3_NO:
+    {
+        if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
+        {
+            fQ = info->fQuality;
+        }
+        else
+        {
+            fQ = toConductivity(info->fQuality);
+        }
+
+        switch(gGlobalParam.iMachineType)
+        {
+        case MACHINE_Genie:
+        {
+            if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
             {
                 if( 1 > fQ)
                 {
@@ -1438,8 +1430,11 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
                 }
                 m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
             }
-
-            if(MACHINE_Genie == gGlobalParam.iMachineType)
+            break;
+        }
+        case MACHINE_UP:
+        {
+            if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
             {
                 if( 1 > fQ)
                 {
@@ -1450,15 +1445,17 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
                     m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',1));
                 }
             }
+            break;
+        }
+        default:
+            break;
+            //
         }
         break;
     }
-        //end
-#endif
     }
 }
 
-//#define I3TEST  //ex
 void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
 {
     float fQ ;
@@ -1480,12 +1477,13 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
     case APP_EXE_I2_NO:
         {
             fQ = info->fQuality;
-
-            if((MACHINE_PURIST == gGlobalParam.iMachineType))
-            {   
+            switch(gGlobalParam.iMachineType)
+            {
+            case MACHINE_PURIST:
+            {
                 if (DispGetUpQtwFlag())
                 {
-                     if (bVisible) 
+                     if (bVisible)
                      {
                          if(fQ > 200)
                          {
@@ -1494,32 +1492,43 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                          m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',1));
                          m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->setText(tr("us"));
                      }
-         
+
                      m_aHistoryEco[iIndex] = *info;
                 }
+                break;
             }
 
-            else if ((MACHINE_ADAPT == gGlobalParam.iMachineType))
+            case MACHINE_ADAPT:
             {
                 if (bVisible)
                 {
                     m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
 
                     m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ).sprintf("%3d",(int)fQ > 200 ? 200 : (int)fQ));
-                    
+
                     m_pLabels[LABEL_NAVI_EDI_WQ_UNIT]->setText(tr("us"));
                 }
+                break;
             }
-            else if ((MACHINE_UP == gGlobalParam.iMachineType)
-                     && (!DispGetTankCirFlag()))
+            case MACHINE_UP:
             {
-                if (bVisible)
+                if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
                 {
-                    m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
-                    m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ).sprintf("%3d",(int)fQ > 200 ?200:(int)fQ));
-                    m_pLabels[LABEL_NAVI_EDI_WQ_UNIT]->setText(tr("us"));
+                    if(DispGetEdiQtwFlag() && bVisible)
+                    {
+                        m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+                        m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ).sprintf("%3d",(int)fQ > 200 ?200:(int)fQ));
+                        m_pLabels[LABEL_NAVI_EDI_WQ_UNIT]->setText(tr("us"));
+                    }
+                    m_aHistoryEco[iIndex] = *info; //ex
                 }
-                m_aHistoryEco[iIndex] = *info; //ex
+                break;
+            }
+            //RO unfinished
+            case MACHINE_RO:
+                break;
+            default:
+                break;
             }
          }
         break;
@@ -1558,9 +1567,6 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
         break;
     case APP_EXE_I4_NO:
         {
-#ifdef I3TEST
-        if(MACHINE_Genie == gGlobalParam.iMachineType)
-        {
             if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
             {
                 fQ = info->fQuality;
@@ -1569,39 +1575,100 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
             {
                 fQ = toConductivity(info->fQuality);
             }
-            if (DispGetTankCirFlag())
-            {
 
-                if (bVisible && (MACHINE_Genie == gGlobalParam.iMachineType))
+            switch(gGlobalParam.iMachineType)
+            {
+            case MACHINE_Genie:
+            {
+                if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
                 {
-                    if( 1 > fQ)
+                    if(DispGetEdiQtwFlag())
                     {
-                        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',2));
+                        if (bVisible)
+                        {
+                            if( 1 > fQ)
+                            {
+                                m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',3));
+                            }
+                            else
+                            {
+                                m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                            }
+                            m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+                        }
+                        m_aHistoryEco[iIndex] = *info;
                     }
-                    else
+                    else if(DispGetTankCirFlag())
                     {
-                        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                        if (bVisible)
+                        {
+                            if( 1 > fQ)
+                            {
+                                m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',2));
+                            }
+                            else
+                            {
+                                m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                            }
+                        }
+                        m_aHistoryEco[iIndex] = *info;
+                    }
+                    else if(bForceUpd)
+                    {
+                        if (bVisible)
+                        {
+                            if( 1 > fQ)
+                            {
+                                m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',3));
+                            }
+                            else
+                            {
+                                m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                            }
+                            m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+
+                            if( 1 > fQ)
+                            {
+                                m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',2));
+                            }
+                            else
+                            {
+                                m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                            }
+                        }
+                        m_aHistoryEco[iIndex] = *info;
                     }
                 }
-                m_aHistoryEco[iIndex] = *info;
+                break;
+            }
+            case MACHINE_PURIST:
+            case MACHINE_UP:
+                break;
+            default:
+                break;
             }
         }
-#else
-            if(MACHINE_PURIST != gGlobalParam.iMachineType
-                    && MACHINE_UP != gGlobalParam.iMachineType)
+        break;
+
+    case APP_EXE_I3_NO:
+    {
+        if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
+        {
+            fQ = info->fQuality;
+        }
+        else
+        {
+            fQ = toConductivity(info->fQuality);
+        }
+        switch(gGlobalParam.iMachineType)
+        {
+        case MACHINE_Genie:
+        {
+            if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
             {
-                if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
+                if(DispGetEdiQtwFlag())
                 {
-                    fQ = info->fQuality;
-                }
-                else
-                {
-                    fQ = toConductivity(info->fQuality);
-                }
-                
-                if (DispGetEdiQtwFlag())
-                {
-                    if (bVisible) 
+                    if (bVisible)
                     {
                         if( 1 > fQ)
                         {
@@ -1611,15 +1678,52 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                         {
                             m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',1));
                         }
+                        m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
                     }
-                    if (bVisible) m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
                     m_aHistoryEco[iIndex] = *info;
                 }
-                else if (DispGetTankCirFlag())
+                else if (bForceUpd)
                 {
-                
-                    if (bVisible
-                        && (MACHINE_PURIST != gGlobalParam.iMachineType)) 
+                    if (bVisible)
+                    {
+                        if( 1 > fQ)
+                        {
+                            m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',3));
+                        }
+                        else
+                        {
+                            m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                        }
+                        m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+                    }
+                    m_aHistoryEco[iIndex] = *info;
+                }
+            }
+            break;
+        }
+        case MACHINE_UP:
+        {
+            if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+            {
+                if(DispGetEdiQtwFlag())
+                {
+                    if (bVisible)
+                    {
+                        if( 1 > fQ)
+                        {
+                            m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',3));
+                        }
+                        else
+                        {
+                            m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                        }
+                        m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+                    }
+                    m_aHistoryEco[iIndex] = *info;
+                }
+                else if(DispGetTankCirFlag())
+                {
+                    if (bVisible)
                     {
                         if( 1 > fQ)
                         {
@@ -1634,7 +1738,7 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                 }
                 else if (bForceUpd)
                 {
-                    if (bVisible) 
+                    if (bVisible)
                     {
                         if( 1 > fQ)
                         {
@@ -1644,13 +1748,8 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                         {
                             m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',1));
                         }
-                    }
-    
-                    if (bVisible) m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
-    
-                    if (bVisible
-                        && (MACHINE_PURIST != gGlobalParam.iMachineType)) 
-                    {
+                        m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+
                         if( 1 > fQ)
                         {
                             m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',2));
@@ -1663,102 +1762,13 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                     m_aHistoryEco[iIndex] = *info;
                 }
             }
-            /*
-            if((MACHINE_UP == gGlobalParam.iMachineType)
-                && DispGetTankCirFlag())
-            {
-                if(bVisible)
-                {
-                    if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
-                    {
-                        fQ = info->fQuality;
-                    }
-                    else
-                    {
-                        fQ = toConductivity(info->fQuality);
-                    }
-
-                    if( 1 > fQ)
-                    {
-                        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',2));
-                    }
-                    else
-                    {
-                        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',1));
-                    }
-                }
-            }
-            */
-#endif
+            break;
         }
-        break;
-        //ex 0904
-#ifdef I3TEST
-    case APP_EXE_I3_NO:
-    {
-        if(MACHINE_Genie == gGlobalParam.iMachineType)
-        {
-            if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
-            {
-                fQ = info->fQuality;
-            }
-            else
-            {
-                fQ = toConductivity(info->fQuality);
-            }
-
-            if (!DispGetTankCirFlag())
-            {
-                if (bVisible)
-                {
-                    if( 1 > fQ)
-                    {
-                        m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',3));
-                    }
-                    else
-                    {
-                        m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',1));
-                    }
-                }
-                if (bVisible) m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
-                m_aHistoryEco[iIndex] = *info;
-            }
-
-            else if (bForceUpd)
-            {
-                if (bVisible)
-                {
-                    if( 1 > fQ)
-                    {
-                        m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',3));
-                    }
-                    else
-                    {
-                        m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',1));
-                    }
-                }
-
-                if (bVisible) m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
-
-                if (bVisible
-                    && (MACHINE_Genie == gGlobalParam.iMachineType))
-                {
-                    if( 1 > fQ)
-                    {
-                        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',2));
-                    }
-                    else
-                    {
-                        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',1));
-                    }
-                }
-                m_aHistoryEco[iIndex] = *info;
-            }
+        default:
+            break;
         }
-
         break;
     }
-#endif //end
     }
 }
 

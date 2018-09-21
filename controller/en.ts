@@ -2784,7 +2784,7 @@
         <location filename="mainpage.cpp" line="754"/>
         <location filename="mainpage.cpp" line="755"/>
         <source>Fahrenheit</source>
-        <translation>℉</translation>
+        <translation>F</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="760"/>
@@ -5051,7 +5051,7 @@
         <location filename="waterqualitypage.cpp" line="369"/>
         <location filename="waterqualitypage.cpp" line="388"/>
         <source>Fahrenheit</source>
-        <translation>℉</translation>
+        <translation>F</translation>
     </message>
     <message>
         <location filename="waterqualitypage.cpp" line="271"/>

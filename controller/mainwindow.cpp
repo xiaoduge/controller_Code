@@ -81,6 +81,7 @@
 #include "ex_init_timepage.h"
 #include "ex_init_tankcfgpage.h"
 #include "ex_init_syscfgpage.h"
+#include "ex_screensleeppage.h"
 
 #include "ex_screensleepthread.h"
 /***********************************************
@@ -484,7 +485,6 @@ void MainRetriveMachineType(int &iMachineType)
     if (cfgGlobal)
     {
         iMachineType = cfgGlobal->value("/global/machtype",MACHINE_L_Genie).toInt();
-
         /* More come here late implement*/
         delete cfgGlobal;
     }
@@ -3133,7 +3133,17 @@ void MainWindow::initUI()
         connect(m_pExInitPages[Ex_Init_Network], SIGNAL(networkSwitchBtnClicked(int)), this, SLOT(on_Ex_Init_Network(int))); //on_Ex_Init_Networ
         connect(m_pExInitPages[Ex_Init_Handlercfg], SIGNAL(exInitFinished()), this, SLOT(on_Ex_Init_Finished()));
         connect(m_pExInitPages[Ex_Init_Handlercfg], SIGNAL(handlercfgSwitchBtnClicked(int)), this, SLOT(on_Ex_Init_Handler(int)));
-    } //
+    }
+    //ScreenPage
+    m_pScreenSleepWidget = new CBaseWidget(mainWidget);
+    m_pScreenSleepWidget->setObjectName("ScreenSleepPage");
+    m_pScreenSleepWidget->hide();
+    m_pScreenSleepWidget->setGeometry(0, 0, 800, 600);
+
+    m_pScreenSleepPage = new Ex_ScreenSleepPage(0, m_pScreenSleepWidget, this);
+    connect(m_pScreenSleepPage, SIGNAL(pageHide()), this, SLOT(on_Ex_ScreenPageHide()));
+    m_pPreviousPage = NULL;
+    //end
 
     for (index = 0; index < PAGE_NUM; index++)
     {
@@ -3522,6 +3532,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_cMas[iLoop].aulMask[0]  = DISP_NOTIFY_DEFAULT;
 
             m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACK)
+                                         |(1 << DISP_H_PACK)
                                          |(1 << DISP_N5_UV)
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
@@ -5253,6 +5264,10 @@ void MainWindow::on_ScreenSleep(bool sleep)
         int value = 10;
         g_isScreenSleep = true;
         Write_sys_int(PWMLCD_FILE, value);
+
+        m_pPreviousPage = m_pCurPage;
+        m_pCurPage->show(false);
+        m_pScreenSleepPage->show(true);
     }
 
 }
@@ -7346,6 +7361,16 @@ void MainWindow::on_Ex_Init_Handler(int index)
     default:
         break;
     }
+}
+
+void MainWindow::on_Ex_ScreenPageHide()
+{
+    if(typeid(*m_pCurPage) == typeid(Ex_ScreenSleepPage))
+    {
+        m_pCurPage->show(false);
+        m_pPreviousPage->show(true);
+    }
+
 }
 
 int MainWindow::getActiveHandlerBrds() 

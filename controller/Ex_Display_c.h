@@ -57,6 +57,7 @@ extern EX_CCB  ex_gCcb;
 
 extern unsigned int ex_gulSecond;
 
+
 #ifdef __cplusplus
 }
 #endif

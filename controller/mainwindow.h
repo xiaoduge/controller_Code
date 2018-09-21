@@ -356,6 +356,8 @@ private slots:
     void on_Ex_Init_Finished();
     void on_Ex_Init_Handler(int);
 
+    void on_Ex_ScreenPageHide();
+
     //void Test();
 
 signals:
@@ -431,6 +433,10 @@ private:
     CBaseWidget* m_pExInitWidgets[Ex_Init_Num];
     CPage* m_pExInitPages[Ex_Init_Num];
     CPage* m_curExInitPage;
+
+    CBaseWidget* m_pScreenSleepWidget;
+    CPage* m_pScreenSleepPage;
+    CPage* m_pPreviousPage;
     //
 
     bool m_bSplash;

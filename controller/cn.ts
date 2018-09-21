@@ -354,7 +354,7 @@
     <message>
         <location filename="alarmdisplaypage.cpp" line="518"/>
         <source>Prefilter</source>
-        <translation>预处理柱</translation>
+        <translation>AC PACK</translation>
     </message>
     <message>
         <location filename="alarmdisplaypage.cpp" line="566"/>
@@ -956,7 +956,7 @@
     <message>
         <location filename="ConsumableinsPage.cpp" line="409"/>
         <source>Prefilter</source>
-        <translation>预处理柱</translation>
+        <translation>AC PACK</translation>
     </message>
     <message>
         <location filename="ConsumableinsPage.cpp" line="416"/>
@@ -1184,7 +1184,7 @@
     <message>
         <location filename="consumablestatepage.cpp" line="386"/>
         <source>Prefilter</source>
-        <translation>预处理柱</translation>
+        <translation>AC PACK</translation>
     </message>
     <message>
         <location filename="consumablestatepage.cpp" line="482"/>
@@ -2950,7 +2950,7 @@
         <location filename="mainpage.cpp" line="754"/>
         <location filename="mainpage.cpp" line="755"/>
         <source>Fahrenheit</source>
-        <translation>℉</translation>
+        <translation>F</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="760"/>
@@ -3185,7 +3185,7 @@
     <message>
         <location filename="maintenancecycle.cpp" line="447"/>
         <source>Prefilter</source>
-        <translation>预处理柱</translation>
+        <translation>AC PACK</translation>
     </message>
     <message>
         <location filename="maintenancecycle.cpp" line="449"/>
@@ -3266,7 +3266,7 @@
         <location filename="maintenancecycle.cpp" line="562"/>
         <source>RO Chlorine Cleaning</source>
         <oldsource>RO Chlorine Clean</oldsource>
-        <translation>RO氯清洗柱</translation>
+        <translation>RO氯清洗</translation>
     </message>
     <message>
         <location filename="maintenancecycle.cpp" line="661"/>
@@ -4329,7 +4329,7 @@
     <message>
         <location filename="SterilizePage.cpp" line="110"/>
         <source>Install Case First</source>
-        <translation>请先安装清洗盒</translation>
+        <translation>请安装Cleaning Pack</translation>
     </message>
     <message>
         <location filename="SterilizePage.cpp" line="112"/>
@@ -4355,7 +4355,7 @@
     <message>
         <location filename="SterilizePage.cpp" line="287"/>
         <source>Please Insert Detergent Casette!</source>
-        <translation>请先安装清洗盒!</translation>
+        <translation>请安装Cleaning Pack</translation>
     </message>
     <message>
         <location filename="SterilizePage.cpp" line="306"/>
@@ -5306,7 +5306,7 @@
         <location filename="waterqualitypage.cpp" line="369"/>
         <location filename="waterqualitypage.cpp" line="388"/>
         <source>Fahrenheit</source>
-        <translation>℉</translation>
+        <translation>F</translation>
     </message>
     <message>
         <source>Velocity</source>

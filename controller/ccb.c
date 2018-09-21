@@ -3107,6 +3107,12 @@ void work_start_qtw(void *para)
         {
             iTmp |= (1 << APP_EXE_I2_NO);
         }
+        //UP HP循环开启时Ro采样I3
+        if(MACHINE_UP == pCcb->ulMachineType)
+        {
+            iTmp |= (1 << APP_EXE_I3_NO);
+        }
+
         iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
         if (iRet )
         {
@@ -3194,6 +3200,12 @@ void work_stop_qtw(void *para)
     {
         iTmp |= (1 << APP_EXE_I2_NO);
     }
+    //UP HP循环开启时Ro采样I3
+    if(MACHINE_UP == pCcb->ulMachineType)
+    {
+        iTmp |= (1 << APP_EXE_I3_NO);
+    }
+
     iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,0);
     if (iRet )
     {
@@ -3526,7 +3538,7 @@ void work_start_cir(void *para)
              //ex UP Tank I3 Report
              if(MACHINE_UP == pCcb->ulMachineType)
              {
-                 iTmp = (1 << APP_EXE_I3_NO);
+                 iTmp |= (1 << APP_EXE_I3_NO);
              }
              //endl
 
@@ -3636,6 +3648,14 @@ void work_stop_cir(void *para)
     }
 
     iTmp = (1 << APP_EXE_I4_NO)|(1 << APP_EXE_I5_NO);
+
+    //ex UP Tank I3 Report
+    if(MACHINE_UP == pCcb->ulMachineType)
+    {
+        iTmp |= (1 << APP_EXE_I3_NO);
+    }
+    //endl
+
     iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,0);
     if (iRet )
     {
@@ -7439,7 +7459,47 @@ void DispSndHoEco(int iMask)
     if (iMask & (1 << APP_EXE_I4_NO))
     {
         pEco->ucId         = APP_EXE_I4_NO;
-        pEco->ev           = gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV;
+        //ex
+        switch(gCcb.ulMachineType)
+        {
+        case MACHINE_L_Genie:
+        case MACHINE_L_EDI_LOOP:
+        case MACHINE_Genie:
+        case MACHINE_EDI:
+        {
+            if(haveHPCir(&gCcb))
+            {
+                pEco->ev = gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV;
+            }
+            else
+            {
+                pEco->ev = gCcb.ExeBrd.aEcoObjs[APP_EXE_I3_NO].Value.eV;
+            }
+            break;
+        }
+        case MACHINE_L_UP:
+        case MACHINE_L_RO_LOOP:
+        case MACHINE_UP:
+        case MACHINE_RO:
+        case MACHINE_ADAPT:
+        {
+            if(haveHPCir(&gCcb))
+            {
+                pEco->ev = gCcb.ExeBrd.aEcoObjs[APP_EXE_I3_NO].Value.eV;
+            }
+            else
+            {
+                pEco->ev = gCcb.ExeBrd.aEcoObjs[APP_EXE_I2_NO].Value.eV;
+            }
+            break;
+        }
+        default:
+            pEco->ev = gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV;
+            break;
+        }
+        //end
+
+        //pEco->ev           = gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV;
         pHoMsg->hdr.ucLen += sizeof(APP_PACKET_RPT_ECO_STRU);
         pEco++;
     }
