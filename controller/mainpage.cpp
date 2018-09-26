@@ -97,6 +97,8 @@ MainPage::MainPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CP
 {
     int iLoop;
 
+    m_fToc = 3;
+
     m_bSingleMachine = false;
 
 
@@ -619,6 +621,8 @@ void MainPage::update()
 
    //ex
    updIsInfo(APP_EXE_I3_NO,&m_aHistoryEco[APP_EXE_I3_NO]);
+
+   updToc(m_fToc);
    //end
 }
 

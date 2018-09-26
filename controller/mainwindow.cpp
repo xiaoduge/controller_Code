@@ -3142,6 +3142,7 @@ void MainWindow::initUI()
 
     m_pScreenSleepPage = new Ex_ScreenSleepPage(0, m_pScreenSleepWidget, this);
     connect(m_pScreenSleepPage, SIGNAL(pageHide()), this, SLOT(on_Ex_ScreenPageHide()));
+    connect(this, SIGNAL(SleepPageShow(bool)), m_pScreenSleepPage, SLOT(on_SleepPageShow(bool)));
     m_pPreviousPage = NULL;
     //end
 
@@ -5261,13 +5262,17 @@ void MainWindow::on_ScreenSleep(bool sleep)
 {
     if(sleep && (g_screenSleep != 0) && (!g_isScreenSleep) && gGlobalParam.MiscParam.iEnerySave)
     {
-        int value = 10;
+
         g_isScreenSleep = true;
-        Write_sys_int(PWMLCD_FILE, value);
+//        int value = 10;
+//        Write_sys_int(PWMLCD_FILE, value);
 
         m_pPreviousPage = m_pCurPage;
         m_pCurPage->show(false);
+        m_pCurPage->setWidgetVisible(true);
+
         m_pScreenSleepPage->show(true);
+        emit SleepPageShow(true);
     }
 
 }
@@ -7368,6 +7373,7 @@ void MainWindow::on_Ex_ScreenPageHide()
     if(typeid(*m_pCurPage) == typeid(Ex_ScreenSleepPage))
     {
         m_pCurPage->show(false);
+        emit SleepPageShow(false);
         m_pPreviousPage->show(true);
     }
 

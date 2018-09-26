@@ -5,6 +5,8 @@
 
 class QPushButton;
 class QLabel;
+class Ex_DSleepWidget;
+
 
 class Ex_ScreenSleepPage : public CPage
 {
@@ -19,15 +21,21 @@ signals:
 
 protected:
     void mouseReleaseEvent(QMouseEvent *event);
+    void timerEvent(QTimerEvent *event);
 
 protected slots:
 //    void on_screenBtn_clicked();
+    void on_SleepPageShow(bool);
 
 private:
     void initUi();
+    int randomPos(int max);
 
 private:
+    Ex_DSleepWidget* m_pdwidget;
     QLabel* m_msgLabel;
+    int m_timeID;
+    QString m_titleMsg;
 
 };
 

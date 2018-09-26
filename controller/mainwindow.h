@@ -365,6 +365,8 @@ signals:
     void autoLogin(void);
     void iapIndication(IAP_NOTIFY_STRU *pIapNotify);
 
+    void SleepPageShow(bool); //ex
+
 protected:
     void mousePressEvent(QMouseEvent *e);
 

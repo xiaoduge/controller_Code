@@ -20,8 +20,8 @@ bool Ex_EventFilter::eventFilter(QObject *watched, QEvent *event)
 
         if(g_isScreenSleep)
         {
-            int value = gGlobalParam.MiscParam.iBrightness;
-            Write_sys_int(PWMLCD_FILE, value);
+//            int value = gGlobalParam.MiscParam.iBrightness;
+//            Write_sys_int(PWMLCD_FILE, value);
             g_isScreenSleep = false;
             return true;
         }

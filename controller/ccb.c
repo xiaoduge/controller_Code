@@ -4872,7 +4872,7 @@ void CanCcbRectNMeasurePostProcess(int rectID)
     if(ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N1] == 1)
     {
         DispGetOtherCurrent(APP_EXE_N1_NO, &iTmpData);
-        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N1]) > 3)
+        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N1]) > 15)
         {
             if(iTmpData < 100)
             {
@@ -4899,7 +4899,7 @@ void CanCcbRectNMeasurePostProcess(int rectID)
     if(ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N2] == 1)
     {
         DispGetOtherCurrent(APP_EXE_N2_NO, &iTmpData);
-        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N2]) > 3)
+        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N2]) > 15)
         {
             if(iTmpData < 100)
             {
@@ -4927,7 +4927,7 @@ void CanCcbRectNMeasurePostProcess(int rectID)
     if(ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N3] == 1)
     {
         DispGetOtherCurrent(APP_EXE_N3_NO, &iTmpData);
-        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N3]) > 3)
+        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N3]) > 15)
         {
             if(iTmpData < 100)
             {
@@ -7489,6 +7489,7 @@ void DispSndHoEco(int iMask)
             }
             else
             {
+                pEco->ucId         = APP_EXE_I2_NO;
                 pEco->ev = gCcb.ExeBrd.aEcoObjs[APP_EXE_I2_NO].Value.eV;
             }
             break;

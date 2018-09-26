@@ -1,73 +1,101 @@
 #include "ex_screensleeppage.h"
 #include "mainwindow.h"
 #include <QLabel>
+#include <QPalette>
+#include <QTimer>
+
+#include "ex_dsleepwidget.h"
 
 
 Ex_ScreenSleepPage::Ex_ScreenSleepPage(QObject *parent, CBaseWidget *widget, MainWindow  *wndMain)
     :CPage(parent, widget, wndMain)
 {
-    initUi();
     buildTranslation();
+    initUi();    
 }
 
 void Ex_ScreenSleepPage::buildTranslation()
 {
-    QString titleMsg;
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
-        titleMsg = tr("SuperGenie G");
+        m_titleMsg = tr("SuperGenie G");
         break;
     case MACHINE_L_UP:
-        titleMsg = tr("SuperGenie U");
+        m_titleMsg = tr("SuperGenie U");
         break;
     case MACHINE_L_EDI_LOOP:
-        titleMsg = tr("SuperGenie E");
+        m_titleMsg = tr("SuperGenie E");
         break;
     case MACHINE_L_RO_LOOP:
-        titleMsg = tr("SuperGenie R");
+        m_titleMsg = tr("SuperGenie R");
         break;
     case MACHINE_Genie:
-        titleMsg = tr("Genie G");
+        m_titleMsg = tr("Genie G");
         break;
     case MACHINE_UP:
-        titleMsg = tr("Genie U");
+        m_titleMsg = tr("Genie U");
         break;
     case MACHINE_EDI:
-        titleMsg = tr("Genie E");
+        m_titleMsg = tr("Genie E");
         break;
     case MACHINE_RO:
-        titleMsg = tr("Genie R");
+        m_titleMsg = tr("Genie R");
         break;
     case MACHINE_PURIST:
-        titleMsg = tr("PURIST U");
+        m_titleMsg = tr("PURIST U");
         break;
      case MACHINE_ADAPT:
-        titleMsg = tr("Genie A");
+        m_titleMsg = tr("Genie A");
         break;
     }
-    m_msgLabel->setText(titleMsg);
 }
 
 void Ex_ScreenSleepPage::initUi()
 {
-    QWidget* tempWidget = new QWidget(m_widget);
-//    QPalette palette = tempWidget->palette();
-//    palette.setBrush(QColor());
-
-    m_msgLabel = new QLabel(tempWidget);
-    m_msgLabel->setGeometry(0, 0, 800, 600);
-    m_msgLabel->setAlignment(Qt::AlignHCenter);
-    QString qss = "QLabel{font-family: Arial; \
-                          font-size: 72px;\
-                          font-weight: bold;\
-                          font-style:italic;\
-                          color: blue;}";
-    m_msgLabel->setStyleSheet(qss);
+    m_pdwidget = new Ex_DSleepWidget(m_titleMsg, 800, 600, m_widget);
+    m_pdwidget->setGeometry(0, 0, 800, 600);
 }
+
 
 void Ex_ScreenSleepPage::mouseReleaseEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
     emit pageHide();
 }
+
+void Ex_ScreenSleepPage::timerEvent(QTimerEvent *event)
+{
+    if(event->timerId() == m_timeID)
+    {
+        int x = randomPos(800);
+        int y = randomPos(600) + 30;
+        m_pdwidget->setPos(x, y);
+        m_pdwidget->update();
+    }
+}
+
+void Ex_ScreenSleepPage::on_SleepPageShow(bool isShow)
+{
+    if(isShow)
+    {
+        m_timeID = startTimer(3000);
+    }
+    else
+    {
+        killTimer(m_timeID);
+    }
+}
+
+int Ex_ScreenSleepPage::randomPos(int max)
+{
+    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
+    int temp = qrand()%max;
+    if(temp < 5)
+    {
+        temp += 5;
+    }
+    return temp;
+}
+
+

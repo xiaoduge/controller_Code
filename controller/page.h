@@ -47,6 +47,7 @@ public:
 
     
     bool isVisible() { return m_widget->isVisible();}
+    void setWidgetVisible(bool isVisible);
 
     int width() {return m_widget->geometry().width();}
     int height() {return m_widget->geometry().height();}

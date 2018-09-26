@@ -45,3 +45,8 @@ void CPage::show(bool bShow)
     }
 }
 
+void CPage::setWidgetVisible(bool isVisible)
+{
+    m_widget->setVisible(isVisible);
+}
+

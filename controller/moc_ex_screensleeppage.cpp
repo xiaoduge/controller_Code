@@ -22,7 +22,7 @@ static const uint qt_meta_data_Ex_ScreenSleepPage[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,11 +32,15 @@ static const uint qt_meta_data_Ex_ScreenSleepPage[] = {
  // signals: signature, parameters, type, tag, flags
       20,   19,   19,   19, 0x05,
 
+ // slots: signature, parameters, type, tag, flags
+      31,   19,   19,   19, 0x09,
+
        0        // eod
 };
 
 static const char qt_meta_stringdata_Ex_ScreenSleepPage[] = {
     "Ex_ScreenSleepPage\0\0pageHide()\0"
+    "on_SleepPageShow(bool)\0"
 };
 
 void Ex_ScreenSleepPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -46,10 +50,10 @@ void Ex_ScreenSleepPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         Ex_ScreenSleepPage *_t = static_cast<Ex_ScreenSleepPage *>(_o);
         switch (_id) {
         case 0: _t->pageHide(); break;
+        case 1: _t->on_SleepPageShow((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObjectExtraData Ex_ScreenSleepPage::staticMetaObjectExtraData = {
@@ -84,9 +88,9 @@ int Ex_ScreenSleepPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 2;
     }
     return _id;
 }
