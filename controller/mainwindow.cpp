@@ -3089,7 +3089,7 @@ void MainWindow::initUI()
 
     this->resize(800, 600);
 
-    this->setWindowFlags(Qt::FramelessWindowHint);
+    this->setWindowFlags(Qt::FramelessWindowHint|Qt::Widget);
     this->setMouseTracking(true);
 
     mainWidget = new QWidget(this);
@@ -3099,7 +3099,8 @@ void MainWindow::initUI()
 
     for (index = 0; index < GLOBAL_BMP_NUM; index++)
     {
-        gpGlobalPixmaps[index] = new QPixmap(gGlobalPixelmapName[index]);
+//        gpGlobalPixmaps[index] = new QPixmap(gGlobalPixelmapName[index]);
+        gpGlobalPixmaps[index] = new QPixmap(gGlobalPixelmapName[index], 0, Qt::ColorOnly);
     }
 
     m_pFonts[GLOBAL_FONT_12] = new QFont("" , 12 ,  QFont::Bold);
@@ -5269,7 +5270,6 @@ void MainWindow::on_ScreenSleep(bool sleep)
 
         m_pPreviousPage = m_pCurPage;
         m_pCurPage->show(false);
-        m_pCurPage->setWidgetVisible(true);
 
         m_pScreenSleepPage->show(true);
         emit SleepPageShow(true);

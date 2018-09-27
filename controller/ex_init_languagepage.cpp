@@ -89,7 +89,6 @@ void Ex_Init_Languagepage::setBackColor()
     QPalette pal(m_widget->palette());
 
     pal.setBrush(m_widget->backgroundRole(),QBrush(image_bg));
-
     m_widget->setAutoFillBackground(true);
     m_widget->setPalette(pal);
 }

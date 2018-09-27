@@ -16,8 +16,6 @@
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QMainWindow>
-#include <QtGui/QMenuBar>
-#include <QtGui/QStatusBar>
 #include <QtGui/QToolBar>
 #include <QtGui/QWidget>
 
@@ -28,9 +26,7 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QLabel *tvState;
-    QMenuBar *menuBar;
     QToolBar *mainToolBar;
-    QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -44,16 +40,9 @@ public:
         tvState->setGeometry(QRect(90, 10, 81, 41));
         tvState->setStyleSheet(QString::fromUtf8("font: 18pt \"WenQuanYi Micro Hei Mono\";"));
         MainWindow->setCentralWidget(centralWidget);
-        menuBar = new QMenuBar(MainWindow);
-        menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 800, 25));
-        MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QString::fromUtf8("statusBar"));
-        MainWindow->setStatusBar(statusBar);
 
         retranslateUi(MainWindow);
 

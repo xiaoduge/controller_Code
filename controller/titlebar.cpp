@@ -85,7 +85,10 @@ void titleBar::paintEvent(QPaintEvent *e)
 
     if (m_pNaviBar)
     {
-        painter.drawPixmap(rect().x(),rect().y(),m_pNaviBar->width(),m_pNaviBar->height(),*m_pNaviBar);
+//        painter.drawPixmap(rect().x(),rect().y(),m_pNaviBar->width(),m_pNaviBar->height(),*m_pNaviBar);
+        painter.setBrush(QColor(240, 240, 240));
+        painter.setPen(Qt::transparent);
+        painter.drawRect(0, 0, 800, 55);
     }
 
     if (m_pBarSeperator)

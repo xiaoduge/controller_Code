@@ -116,6 +116,8 @@ void CBitmapButton::paintEvent(QPaintEvent *e)
 
     QPainter painter(this);
 
+    painter.setBrush(Qt::transparent); //ex
+
     if (curPicture)
     {
         painter.drawPixmap(rect().x(),rect().y(),curPicture->width(),curPicture->height(),*curPicture);
