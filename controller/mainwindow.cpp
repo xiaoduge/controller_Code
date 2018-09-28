@@ -82,6 +82,7 @@
 #include "ex_init_tankcfgpage.h"
 #include "ex_init_syscfgpage.h"
 #include "ex_screensleeppage.h"
+#include "ex_factorytestpage.h"
 
 #include "ex_screensleepthread.h"
 /***********************************************
@@ -3351,7 +3352,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
             /*alarm masks */
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_ATPACK_OOP)
-                                                         |(1 << DISP_ALARM_PART0_TUBEUV_OOP)));
+                                                          |(1 << DISP_ALARM_PART0_HPACK_OOP)
+                                                          |(1 << DISP_ALARM_PART0_TUBEUV_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1] &= (~((1 << DISP_ALARM_PART1_LOWER_TUBE_RESISTENCE)
@@ -4166,12 +4168,37 @@ void MainWindow::updTank()
 
         subpage->updateTankLevel(level);
     }
+
+    if (NULL != m_pSubPages[PAGE_SET])
+    {
+        SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
+
+        Ex_FactoryTestPage *subpage =(Ex_FactoryTestPage *)page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+
+        subpage->updTank(level,liter);
+    }
     //end
     if (abs(m_iLevel - level) >= 1)
     {
         m_iLevel = level;
 
         DispSndHoPpbAndTankLevel(APP_PROTOL_CANID_BROADCAST,APP_PACKET_HO_QL_TYPE_LEVEL,m_iLevel,0);
+    }
+}
+
+void MainWindow::updSoureTank()
+{
+    /* calc */
+    float liter = (m_fPressure[APP_EXE_PM3_NO]/100)*gGlobalParam.PmParam.afCap[APP_EXE_PM3_NO];
+    int   level = (int)((liter*100) / gGlobalParam.PmParam.afCap[APP_EXE_PM3_NO]);
+
+    if (NULL != m_pSubPages[PAGE_SET])
+    {
+        SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
+
+        Ex_FactoryTestPage *subpage =(Ex_FactoryTestPage *)page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+
+        subpage->updSoureTank(level,liter);
     }
 }
 
@@ -4192,19 +4219,33 @@ void MainWindow::updPressure(int iIdx)
     switch(iIdx)
     {
     case APP_EXE_PM1_NO:
+    {
         if (NULL != m_pSubPages[PAGE_MENU])
         {
             MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
         
             WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
 
-            subpage->updPressure(iIdx,m_fPressure[iIdx]);
-            
+            subpage->updPressure(iIdx, m_fPressure[iIdx]);
+
+        }
+        if (NULL != m_pSubPages[PAGE_SET])
+        {
+            SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
+
+            Ex_FactoryTestPage *subpage =(Ex_FactoryTestPage *)page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+
+            subpage->updatePressure(iIdx, m_fPressure[iIdx]);
         }
 
         break;
+     }
     case APP_EXE_PM2_NO:
         updTank();
+        break;
+
+    case APP_EXE_PM3_NO:
+        updSoureTank();
         break;
     }
 
@@ -4231,6 +4272,26 @@ void MainWindow::updFlowInfo(int iIdx)
             }
         }       
         
+    }
+    if (NULL != m_pSubPages[PAGE_SET])
+    {
+        SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
+
+        Ex_FactoryTestPage *subpage =(Ex_FactoryTestPage *) page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+
+        {
+            int iTmDelta = m_periodEvents - m_iLstFlowMeterTick[iIdx];
+            int iFmDelta;
+
+            if ((iTmDelta >= (FM_CALC_PERIOD/PERIOD_EVENT_LENGTH))
+                && (m_ulLstFlowMeter[iIdx] != 0))
+            {
+                iFmDelta = m_ulFlowMeter[iIdx] - m_ulLstFlowMeter[iIdx];
+
+                subpage->updateFlow(iIdx,(iFmDelta * TOMLPERMIN / iTmDelta));
+            }
+        }
+
     }
 
     if ( (0 == m_ulLstFlowMeter[iIdx]) 

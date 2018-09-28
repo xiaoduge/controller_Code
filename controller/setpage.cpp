@@ -31,6 +31,7 @@
 #include "ex_superpowerpage.h"
 #include "ex_usercfgpage.h"
 #include "ex_userinfo.h"
+#include "ex_factorytestpage.h"
 
 
 #define BTNS_PER_ROW (4)
@@ -57,6 +58,7 @@ static QString SubPageName[SET_BTN_NUMBER] =
     "device set",
 //    "User Config",
     "Super Power",
+    "Factory"
 };
 
 
@@ -77,6 +79,7 @@ static CONFIG_BTN1 sBtns[SET_BTN_NUMBER] =
 //    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
 //    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
 //    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
+    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
 };
@@ -213,10 +216,15 @@ void SetPage::createSubPage()
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new Ex_SuperPowerPage(this , tmpWidget , m_wndMain);
+            m_pSubPages[index] = new Ex_SuperPowerPage(this, tmpWidget, m_wndMain);
+            break;
+        case SET_BTN_SYSTEM_FACTORYTEST:
+            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
+            tmpWidget->setObjectName(SubPageName[index]);
+            tmpWidget->setGeometry(0,0,800,600);
+            m_pSubPages[index] = new Ex_FactoryTestPage(this, tmpWidget, m_wndMain);
             break;
         }
-
     }
 
 }
@@ -258,6 +266,7 @@ void SetPage::buildTranslation()
     m_pBtns[SET_BTN_PERIPHERAL_DEVICE_MANAGER]->setTip(tr("Connecting Device"));
 
     m_pBtns[SET_BTN_SYSTEM_SUPER]->setTip(tr("Super Power"));
+    m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->setTip(tr("Factory"));
 
     for (index = 0; index < SET_BTN_NUMBER; index++)
     {
@@ -369,6 +378,7 @@ void SetPage::initUi()
     
     connect(m_pTitleBar, SIGNAL(clicked(int)), this, SLOT(on_navi_clicked(int)));
     m_pBtns[SET_BTN_SYSTEM_SUPER]->hide();
+    m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
 
 }
 
@@ -390,12 +400,14 @@ void SetPage::on_btn_clicked(int index)
         case SET_BTN_SYSTEM_NETWORK:
         case SET_BTN_PERIPHERAL_DEVICE_MANAGER:
         case SET_BTN_SYSTEM_SUPER: //
+        case SET_BTN_SYSTEM_FACTORYTEST:
         {
             QDateTime endTime = QDateTime::currentDateTime();
             global_LoginState.setEndTime(endTime);
             if(!global_LoginState.getLoginState(gGlobalParam.MiscParam.iAutoLogoutTime))
             {
                 m_pBtns[SET_BTN_SYSTEM_SUPER]->hide(); //
+                m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
                 LoginDlg dlg;
                 dlg.exec() ;
                 if(0 == dlg.m_iLogInResult)
@@ -412,6 +424,7 @@ void SetPage::on_btn_clicked(int index)
                         QDateTime startTime = QDateTime::currentDateTime();
                         global_LoginState.setStartTime(startTime);
                         m_pBtns[SET_BTN_SYSTEM_SUPER]->show(); //
+                        m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->show();
                         break;
                     }
                     case 3:
@@ -449,6 +462,7 @@ void SetPage::on_btn_clicked(int index)
         case SET_BTN_USER_CFG: //
         {
             m_pBtns[SET_BTN_SYSTEM_SUPER]->hide(); //
+            m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
             LoginDlg dlg;
             dlg.exec() ;
             if(0 == dlg.m_iLogInResult)

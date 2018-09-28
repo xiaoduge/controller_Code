@@ -34,6 +34,7 @@ enum SET_BTN_NAME
     SET_BTN_PERIPHERAL_DEVICE_MANAGER,
 //    SET_BTN_USER_CFG,
     SET_BTN_SYSTEM_SUPER, //super power- ex_dcj
+    SET_BTN_SYSTEM_FACTORYTEST, //ex
     SET_BTN_NUMBER,
 };
 
@@ -59,6 +60,8 @@ public:
     virtual void mousePressEvent(QMouseEvent *);
     virtual void mouseReleaseEvent(QMouseEvent *);
     virtual void mouseMoveEvent(QMouseEvent *);
+
+    CPage *getSubPage(int iIdx) { return m_pSubPages[iIdx];}
 
 private:
     void buildTitles();

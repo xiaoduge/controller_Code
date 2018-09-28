@@ -110,7 +110,8 @@ SOURCES += main.cpp\
     ex_screensleepthread.cpp \
     ex_eventfilter.cpp \
     ex_screensleeppage.cpp \
-    ex_dsleepwidget.cpp
+    ex_dsleepwidget.cpp \
+    ex_factorytestpage.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -199,7 +200,8 @@ HEADERS  += mainwindow.h \
     ex_screensleepthread.h \
     ex_eventfilter.h \
     ex_screensleeppage.h \
-    ex_dsleepwidget.h
+    ex_dsleepwidget.h \
+    ex_factorytestpage.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

@@ -57,6 +57,8 @@ extern EX_CCB  ex_gCcb;
 
 extern unsigned int ex_gulSecond;
 
+int Ex_FactoryTest(int select);
+
 
 #ifdef __cplusplus
 }

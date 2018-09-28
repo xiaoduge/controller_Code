@@ -4747,7 +4747,7 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                                 }
                             }
                         }  
-                        else if (iEcoId == APP_EXE_I3_NO)
+                        else if (iEcoId == APP_EXE_I4_NO)
                         {
                             if (gCcb.bit1TocOngoing)
                             {
@@ -14213,6 +14213,39 @@ void CcbInit(void)
     VOS_SndMsg2(TASK_HANDLE_MOCAN   ,INIT_ALL_THREAD_EVENT,0,NULL);
     VOS_SndMsg2(TASK_HANDLE_ZB      ,INIT_ALL_THREAD_EVENT,0,NULL);
 
+}
+
+//质量检验主板用
+int Ex_FactoryTest(int select)
+{
+    int iTmp, iRet;
+    switch(select)
+    {
+    case 0:
+    {
+        iTmp  = (1 << APP_FM_FM1_NO)|(1 << APP_FM_FM2_NO)|(1<<APP_FM_FM3_NO)|(1<<APP_FM_FM4_NO);
+        iRet = CcbUpdateFms(WORK_LIST_HP, 0, iTmp, iTmp);
+        if (iRet )
+        {
+            return 1;
+        }
+        break;
+    }
+    case 1:
+    {
+        iTmp  = (GET_B_MASK(APP_EXE_PM1_NO))|(GET_B_MASK(APP_EXE_PM2_NO))|(GET_B_MASK(APP_EXE_PM3_NO));
+        iRet = CcbUpdateIAndBs(WORK_LIST_HP, 0, iTmp, iTmp);
+        if (iRet )
+        {
+            return 2;
+        }
+        break;
+    }
+    default:
+        break;
+    }
+
+    return 0;
 }
 
 #ifdef __cplusplus

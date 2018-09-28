@@ -27,12 +27,12 @@ void Ex_DSleepWidget::paintEvent(QPaintEvent *event)
     QPainter painter(this);
 
     painter.setPen(Qt::NoPen);
-    QLinearGradient lineG(QPointF(400, 0), QPointF(400, 600));
-    lineG.setColorAt(0, Qt::black);
-    lineG.setColorAt(0.5, Qt::gray);
-    lineG.setColorAt(1, Qt::black);
-    painter.setBrush(lineG);
-//    painter.setBrush(Qt::black);
+//    QLinearGradient lineG(QPointF(400, 0), QPointF(400, 600));
+//    lineG.setColorAt(0, Qt::black);
+//    lineG.setColorAt(0.5, Qt::gray);
+//    lineG.setColorAt(1, Qt::black);
+//    painter.setBrush(lineG);
+    painter.setBrush(Qt::black);
     painter.drawRect(this->rect());
 
     QFont font("Arial", 36, QFont::Bold);
