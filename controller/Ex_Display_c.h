@@ -47,9 +47,23 @@ typedef struct
 
 typedef struct
 {
+    unsigned int     bit1CheckDecPressure       : 1;
+
+}EX_CHECK_STATE;
+
+typedef struct
+{
+    unsigned int ulDecPressure; //DecPressure;
+}EX_DELAY_TICK;
+
+typedef struct
+{
     EX_RECT_STATE Ex_Rect_State;
     EX_ALARM_TICK Ex_Alarm_Tick;
     EX_ALARM_RECT Ex_Alarm_Bit;
+
+    EX_DELAY_TICK Ex_Delay_Tick;
+    EX_CHECK_STATE EX_Check_State;
 }EX_CCB;
 
 extern Ex_DISP_PARAM_CALI_STRU ex_global_Cali;

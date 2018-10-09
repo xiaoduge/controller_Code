@@ -65,7 +65,7 @@ void Ex_SysMsgPage::buildTranslation()
         m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Genie R");
         break;
     case MACHINE_PURIST:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("PURIST U");
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Genie PURIST");
         break;
     case MACHINE_ADAPT:
         m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Genie A");

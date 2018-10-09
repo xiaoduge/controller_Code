@@ -3936,6 +3936,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
     ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1 = 0;
     ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2 = 0;
     ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 = 0;
+
+    ex_gCcb.EX_Check_State.bit1CheckDecPressure = 0;
     //end
 
     CcbInit();
@@ -5490,7 +5492,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                             alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE);
                             alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_TEMPERATURE);
                         }
-                        if ( m_bC1Regulator )DispC1Regulator();
+                       if ( m_bC1Regulator )DispC1Regulator();
                         break;
                     case APP_EXE_I2_NO:
                         if (DispGetPwFlag())
@@ -6392,14 +6394,22 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             NOT_DECPRE_ITEM_STRU *pItem = (NOT_DECPRE_ITEM_STRU *)pNotify->aucData;
             if (typeid(*m_pCurPage) == typeid(MainPage))
             {
-                pMainPage->updDecPressureState(pItem->iType,pItem->iAction);
-                
+                pMainPage->updDecPressureState(pItem->iType,pItem->iAction);          
                 if(pItem->iAction)
                 {
+                    //ex
+                    ex_gCcb.Ex_Delay_Tick.ulDecPressure = ex_gulSecond;
+                    ex_gCcb.EX_Check_State.bit1CheckDecPressure = 1;
+                    //end
+
                     DispSetSubWorkState4Pw(DISP_WORK_SUB_IDLE_DEPRESSURE);
                 }
                 else
                 {
+                    //ex
+                    ex_gCcb.EX_Check_State.bit1CheckDecPressure = 0;
+                    //end
+
                     DispSetSubWorkState4Pw(DISP_WORK_SUB_IDLE);
                 }
                 

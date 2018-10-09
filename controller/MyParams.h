@@ -18,7 +18,7 @@
 #define MACH_NAME_UP             "Genie U"
 #define MACH_NAME_EDI            "Genie E"
 #define MACH_NAME_RO             "Genie R"
-#define MACH_NAME_PURIST         "PURIST U"
+#define MACH_NAME_PURIST         "Genie PURIST"
 #define MACH_NAME_Adapt          "Genie A"
 
 typedef enum

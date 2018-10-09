@@ -249,13 +249,13 @@ void AlarmDisplayPage::buildTranslation()
              m_astrPartAlarm[iIdx] = tr("Tank Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP11]) + tr("omg");
              aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
              break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE):
              /*
-             纯水取水<设定值
-             */
+         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE):
+             //纯水取水<设定值
              m_astrPartAlarm[iIdx] = tr("Feed Product Resis.") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP12]) + tr("omg");
              aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
              break;
+             */
          case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY):
              /*
              循环水质<设定值 

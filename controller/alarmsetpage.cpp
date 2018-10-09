@@ -227,12 +227,12 @@ void AlarmSetPage::buildTranslation()
             */
             m_plistItem[iIdx]->setName(tr("Low Pure Tank Water Resis."));
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE):
             /*
-            纯水取水<设定值
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE):
+            //纯水取水<设定值
             m_plistItem[iIdx]->setName(tr("Low Feed Product Resis."));
             break;
+            */
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE):
             /*
             进水温度>45℃
@@ -725,6 +725,7 @@ void AlarmSetPage::save()
                 Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_LOWER_PWTANK_RESISTENCE);
             }
             break;
+            /*
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE):
             if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
             {
@@ -735,6 +736,7 @@ void AlarmSetPage::save()
                 Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE);
             }
             break;
+            */
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE):
             if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
             {
@@ -1120,6 +1122,7 @@ void AlarmSetPage::update()
                 m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
             }
             break;
+            /*
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE):
             if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE))
             {
@@ -1130,6 +1133,7 @@ void AlarmSetPage::update()
                 m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
             }
             break;
+            */
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE):
             if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE))
             {

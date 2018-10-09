@@ -422,7 +422,7 @@ typedef enum
     DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY,
     DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY,
     DISP_ALARM_PART1_LOWER_PWTANK_RESISTENCE,
-    DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE,
+    //DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE,
     DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE,
     DISP_ALARM_PART1_LOWER_SOURCE_WATER_TEMPERATURE,
     DISP_ALARM_PART1_HIGHER_RO_PRODUCT_TEMPERATURE,
@@ -850,7 +850,6 @@ typedef struct
     int           iLan;                 /* Language */
     int           iBrightness;          /* 0~255 */
     int           iEnerySave;           /* 0: Dont save ,other : save */
-    int           iScreenSleepTime;     /*1-60*/
     int           iUint4Conductivity;
     int           iUint4Temperature;
     int           iUint4Pressure;

@@ -43,7 +43,7 @@ void Ex_ScreenSleepPage::buildTranslation()
         m_titleMsg = tr("Genie R");
         break;
     case MACHINE_PURIST:
-        m_titleMsg = tr("PURIST U");
+        m_titleMsg = tr("Genie PURIST");
         break;
      case MACHINE_ADAPT:
         m_titleMsg = tr("Genie A");

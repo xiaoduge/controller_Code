@@ -77,6 +77,10 @@ unsigned char gaucIapBuffer[1024];
 #define haveHPCir(pCcb)((pCcb)->MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
 #define haveZigbee(pCcb)((pCcb)->MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_ZIGBEE))
 
+//ex
+int Check_TOC_Alarm = 0;
+//end
+
 typedef enum
 {
     WORK_MSG_TYPE_START_QTW = 0,
@@ -2823,7 +2827,7 @@ void work_start_qtw(void *para)
                     return ;
                 }
                 
-                for (iLoop = 0; iLoop < 10; iLoop++)
+                for (iLoop = 0; iLoop < 10; iLoop++) //10
                 {
                     /* get B1 reports from exe */
                     iRet = CcbGetPmValue(pWorkItem->id,APP_EXE_PM1_NO,1);
@@ -4749,7 +4753,7 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                         }  
                         else if (iEcoId == APP_EXE_I4_NO)
                         {
-                            if (gCcb.bit1TocOngoing)
+                            if (gCcb.bit1TocOngoing  && Check_TOC_Alarm)
                             {
                                 if (!gCcb.bit1AlarmTOC)
                                 {
@@ -6148,11 +6152,14 @@ void CanCcbDinProcess(void)
 
 void DispC1Regulator(void)
 {
+    if(!gCcb.bit1B1Check4RuningState) //No speed control when not running
+    {
+        return;
+    }
+
     if (DISP_ACT_TYPE_SWITCH & gCcb.ExeBrd.aRPumpObjs[0].iActive)
     {
         float ft = (0.1 * gCcb.ExeBrd.aEcoObjs[APP_EXE_I1_NO].Value.eV.usTemp);
-        //float fv = 0.0147*ft*ft - 1.05*ft + 31.6;
-        //float fv = 0.0164*ft*ft - 1.12*ft + 33.4;
         float fv = 0.012*ft*ft - 0.8738*ft + 33;  //0.012*水温2 - 0.8738*水温 + 33
 
         int speed = DispConvertVoltage2RPumpSpeed(fv);
@@ -6226,8 +6233,8 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
                     {
                         gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk;
                         gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk;
-                        if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ > 18.2)
-                            gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = 18.2;
+                        if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ > 16)
+                            gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = 16;
                         break;
                     }
                     case 3:
@@ -6797,7 +6804,7 @@ int CanCcbAfDataClientRpt4FlowMeter(MAIN_CANITF_MSG_STRU *pCanItfMsg)
                     }
 
 
-                    if (CcbConvert2Fm1Data(gCcb.QtwMeas.ulCurFm - gCcb.QtwMeas.ulBgnFm ) >= gCcb.QtwMeas.ulTotalFm
+                    if (CcbConvert2Fm1Data(gCcb.QtwMeas.ulCurFm - gCcb.QtwMeas.ulBgnFm) >= gCcb.QtwMeas.ulTotalFm
                         && gCcb.QtwMeas.ulTotalFm != INVALID_FM_VALUE)
                     {
                         /* enough water has been taken */
@@ -13762,6 +13769,11 @@ void MainSecondTask4Pw()
                         switch(gCcb.iTocStage)
                         {
                         case APP_PACKET_EXE_TOC_STAGE_FLUSH1:
+                        {
+                            if(gCcb.iTocStageTimer == 159)
+                            {
+                                Check_TOC_Alarm = 1;
+                            }
                             if (gCcb.iTocStageTimer >= 160)
                             {
                                 if (!SearchWork(work_start_toc_cir))
@@ -13770,6 +13782,7 @@ void MainSecondTask4Pw()
                                 }   
                             }
                             break;
+                        }
                         case APP_PACKET_EXE_TOC_STAGE_OXDIZATION:
                             if (gCcb.iTocStageTimer >= 180)
                             {
@@ -13782,6 +13795,7 @@ void MainSecondTask4Pw()
                         case APP_PACKET_EXE_TOC_STAGE_FLUSH2:
                             if (gCcb.iTocStageTimer >= 20)
                             {
+                                Check_TOC_Alarm = 0;
                                 if (!SearchWork(work_stop_cir))
                                 {
                                     CcbInnerWorkStopCir();
@@ -13887,6 +13901,22 @@ void MainSecondTask4Pw()
 
 }
 
+//ex
+void Ex_DispDecPressure()
+{
+    if((gCcb.curWorkState.iMainWorkState4Pw == DISP_WORK_STATE_IDLE)
+        &&(gCcb.curWorkState.iSubWorkState4Pw ==DISP_WORK_SUB_IDLE_DEPRESSURE)
+        &&(ex_gCcb.EX_Check_State.bit1CheckDecPressure == 1))
+    {
+        if((ex_gulSecond - ex_gCcb.Ex_Delay_Tick.ulDecPressure) > 30)
+        {
+            int     iType = APP_DEV_HS_SUB_NUM;
+            CcbNotDecPressure(iType, 0);
+        }
+    }
+}
+//end
+
 
 void MainSecondTask()
 {
@@ -13901,6 +13931,8 @@ void MainSecondTask()
     MainSecondTask4MainState();
 
     MainSecondTask4Pw();
+
+    Ex_DispDecPressure(); //ex
 
 }
 
