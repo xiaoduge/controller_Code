@@ -42,13 +42,16 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     
     m_iRealNum = 0;
 
-    aIds[iIdx].iDspType = 2;
-    aIds[iIdx].iId      = DISP_PRE_PACK;
-    aIds[iIdx].vi.v1Min = 0;
-    aIds[iIdx].vi.v1Max = 99999;
-    aIds[iIdx].vi.v2Min = 0;
-    aIds[iIdx].vi.v2Max = 99999;
-    iIdx++;
+    if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+    {
+        aIds[iIdx].iDspType = 2;
+        aIds[iIdx].iId      = DISP_PRE_PACK;
+        aIds[iIdx].vi.v1Min = 0;
+        aIds[iIdx].vi.v1Max = 99999;
+        aIds[iIdx].vi.v2Min = 0;
+        aIds[iIdx].vi.v2Max = 99999;
+        iIdx++;
+    }
     
     switch(gGlobalParam.iMachineType)
     {

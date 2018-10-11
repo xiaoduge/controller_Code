@@ -304,6 +304,26 @@ void Ex_HistoryPage::dbQueryProduceWater()
     }
     m_pTableView->setColumnWidth(count - 1, 180);
 
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+        break;
+    case MACHINE_L_UP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_UP:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        m_pTableView->hideColumn(7);
+        m_pTableView->hideColumn(8);
+        break;
+    case MACHINE_PURIST:
+        break;
+    }
+
+
 }
 
 void Ex_HistoryPage::dbQueryLog()

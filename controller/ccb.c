@@ -4729,6 +4729,7 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                     switch(gCcb.iCirType)
                     {
                     case CIR_TYPE_UP:
+                    {
                         if (iEcoId == APP_EXE_I5_NO)
                         {
                             float fValue = gCcb.ExeBrd.aEcoObjs[APP_EXE_I5_NO].Value.eV.fWaterQ;
@@ -4755,9 +4756,10 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                         {
                             if (gCcb.bit1TocOngoing  && Check_TOC_Alarm)
                             {
+                                float fValue = gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV.fWaterQ;
                                 if (!gCcb.bit1AlarmTOC)
-                                {
-                                    if (gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV.fWaterQ < CcbGetSp30())
+                                { 
+                                    if (fValue < CcbGetSp30())
                                     {
                                         gCcb.bit1AlarmTOC   = TRUE;
 
@@ -4769,7 +4771,7 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                                 }
                                 else
                                 {
-                                    if (gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV.fWaterQ >= CcbGetSp30())
+                                    if (fValue >= CcbGetSp30())
                                     {
                                         gCcb.bit1AlarmTOC   = FALSE;
                                         
@@ -4784,6 +4786,7 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                             
                         }
                         break;
+                    }
                     case CIR_TYPE_HP:
                         {
                             if (iEcoId == APP_EXE_I4_NO)
@@ -6152,8 +6155,10 @@ void CanCcbDinProcess(void)
 
 void DispC1Regulator(void)
 {
-    if(!gCcb.bit1B1Check4RuningState) //No speed control when not running
+//    if((!gCcb.bit1B1Check4RuningState) && (DISP_ACT_TYPE_SWITCH & gCcb.ExeBrd.aRPumpObjs[0].iActive))
+    if(!gCcb.bit1B1Check4RuningState)
     {
+        CcbUpdateRPumpObjState(0, 0X0000);
         return;
     }
 
@@ -13770,12 +13775,13 @@ void MainSecondTask4Pw()
                         {
                         case APP_PACKET_EXE_TOC_STAGE_FLUSH1:
                         {
-                            if(gCcb.iTocStageTimer == 159)
+                            if(gCcb.iTocStageTimer == 150)
                             {
                                 Check_TOC_Alarm = 1;
                             }
                             if (gCcb.iTocStageTimer >= 160)
                             {
+                                Check_TOC_Alarm = 0;
                                 if (!SearchWork(work_start_toc_cir))
                                 {
                                     CcbInnerWorkStartCirToc(APP_PACKET_EXE_TOC_STAGE_OXDIZATION);
@@ -13795,7 +13801,6 @@ void MainSecondTask4Pw()
                         case APP_PACKET_EXE_TOC_STAGE_FLUSH2:
                             if (gCcb.iTocStageTimer >= 20)
                             {
-                                Check_TOC_Alarm = 0;
                                 if (!SearchWork(work_stop_cir))
                                 {
                                     CcbInnerWorkStopCir();
@@ -14256,7 +14261,7 @@ int Ex_FactoryTest(int select)
     case 0:
     {
         iTmp  = (1 << APP_FM_FM1_NO)|(1 << APP_FM_FM2_NO)|(1<<APP_FM_FM3_NO)|(1<<APP_FM_FM4_NO);
-        iRet = CcbUpdateFms(WORK_LIST_HP, 0, iTmp, iTmp);
+        iRet = CcbUpdateFms(WORK_LIST_LP, 0, iTmp, iTmp);
         if (iRet )
         {
             return 1;
@@ -14266,7 +14271,7 @@ int Ex_FactoryTest(int select)
     case 1:
     {
         iTmp  = (GET_B_MASK(APP_EXE_PM1_NO))|(GET_B_MASK(APP_EXE_PM2_NO))|(GET_B_MASK(APP_EXE_PM3_NO));
-        iRet = CcbUpdateIAndBs(WORK_LIST_HP, 0, iTmp, iTmp);
+        iRet = CcbUpdateIAndBs(WORK_LIST_LP, 0, iTmp, iTmp);
         if (iRet )
         {
             return 2;

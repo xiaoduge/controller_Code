@@ -82,12 +82,17 @@ WaterQualityPage::WaterQualityPage(QObject *parent,CBaseWidget *widget ,MainWind
      case MACHINE_RO:
         break;
      case MACHINE_PURIST:
+     {
         aUsIds[iUsIdx].iId   = UP_WATER;
         aUsIndex[UP_WATER]   = iUsIdx;
         iUsIdx++;
-        aUsIds[iUsIdx].iId   = UP_TOC;
-        aUsIndex[UP_TOC]     = iUsIdx;
-        iUsIdx++;
+        if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
+        {
+            aUsIds[iUsIdx].iId   = UP_TOC;
+            aUsIndex[UP_TOC]     = iUsIdx;
+            iUsIdx++;
+        }
+
         aUsIds[iUsIdx].iId          = UP_PRODUCT_TEMT;
         aUsIndex[UP_PRODUCT_TEMT]   = iUsIdx;
         iUsIdx++;
@@ -98,13 +103,19 @@ WaterQualityPage::WaterQualityPage(QObject *parent,CBaseWidget *widget ,MainWind
         aUsIndex[UP_SPEED]   = iUsIdx;
         iUsIdx++;
         break;
+     }
      default:
+     {
         aUsIds[iUsIdx].iId   = UP_WATER;
         aUsIndex[UP_WATER]   = iUsIdx;
         iUsIdx++;
-        aUsIds[iUsIdx].iId   = UP_TOC;
-        aUsIndex[UP_TOC]     = iUsIdx;
-        iUsIdx++;
+        if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
+        {
+            aUsIds[iUsIdx].iId   = UP_TOC;
+            aUsIndex[UP_TOC]     = iUsIdx;
+            iUsIdx++;
+        }
+
         aUsIds[iUsIdx].iId   = UP_PRODUCT_TEMT;
         aUsIndex[UP_PRODUCT_TEMT]       = iUsIdx;
         iUsIdx++;
@@ -112,6 +123,7 @@ WaterQualityPage::WaterQualityPage(QObject *parent,CBaseWidget *widget ,MainWind
         aUsIndex[UP_SPEED]   = iUsIdx;
         iUsIdx++;
         break;
+     }
      }
 
       m_aiRealNum[WQ_TYPE_UP] = iUsIdx;
@@ -706,6 +718,8 @@ void WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
             }
             else if (DispGetTocCirFlag())
             {
+                update_tank_msg(CIR_WATER_QUA,toOneDecimal(fQ));
+                m_aTankHistoryEco[CIR_WATER_QUA].fShowInfo = info->fQuality;
             } 
             else if (DispGetEdiQtwFlag() //0629
                      &&(MACHINE_PURIST != gGlobalParam.iMachineType))

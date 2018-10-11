@@ -243,7 +243,7 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-    case MACHINE_ADAPT:
+
     {
         if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_HaveTubeFilter)
         {
@@ -263,6 +263,7 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
     }
     case MACHINE_Genie:
     case MACHINE_PURIST:
+    case MACHINE_ADAPT:
         break;
     }
 

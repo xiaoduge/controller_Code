@@ -485,7 +485,7 @@ void MainRetriveMachineType(int &iMachineType)
 
     if (cfgGlobal)
     {
-        iMachineType = cfgGlobal->value("/global/machtype",MACHINE_L_Genie).toInt();
+        iMachineType = cfgGlobal->value("/global/machtype", MACHINE_Genie).toInt(); //MACHINE_L_Genie
         /* More come here late implement*/
         delete cfgGlobal;
     }
@@ -508,7 +508,7 @@ void MainRetriveMachineParam(int iMachineType,DISP_MACHINE_PARAM_STRU  &Param)
                                 MM_DEFALUT_SP11,MM_DEFALUT_SP12,MM_DEFALUT_SP13,MM_DEFALUT_SP14,MM_DEFALUT_SP15,
                                 MM_DEFALUT_SP16,MM_DEFALUT_SP17,MM_DEFALUT_SP18,MM_DEFALUT_SP19,MM_DEFALUT_SP20,
                                 MM_DEFALUT_SP21,MM_DEFALUT_SP22,MM_DEFALUT_SP23,MM_DEFALUT_SP24,MM_DEFALUT_SP25,
-                                MM_DEFALUT_SP26,MM_DEFALUT_SP27,MM_DEFALUT_SP28,MM_DEFALUT_SP29,MM_DEFALUT_SP30,
+                                MM_DEFALUT_SP26,MM_DEFALUT_SP27,MM_DEFALUT_SP28,MM_DEFALUT_SP29,15.0,
                                 MM_DEFALUT_SP31,1.0};
 
     QString strCfgName = gaMachineType[iMachineType].strName;
@@ -3329,6 +3329,9 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1] &= ( ~((1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE)
                                                            |(1 << DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE)
+                                                           |(1 << DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE)
+                                                           |(1 << DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE)
+                                                           |(1 << DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE)
                                                            |(1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE)));
             break;
         case MACHINE_L_RO_LOOP:
@@ -3344,6 +3347,9 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1] &= (~((1 << DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE)
                                                          |(1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE)
                                                          |(1 << DISP_ALARM_PART1_HIGHER_EDI_PRODUCT_TEMPERATURE)
+                                                         |(1 << DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE)
+                                                         |(1 << DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE)
+                                                         |(1 << DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE)
                                                          |(1 << DISP_ALARM_PART1_LOWER_EDI_PRODUCT_TEMPERATURE)));
             
             break;
@@ -3403,6 +3409,9 @@ MainWindow::MainWindow(QMainWindow *parent) :
                                                           |(1 << DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE)
                                                           |(1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE)
                                                           |(1 << DISP_ALARM_PART1_HIGHER_TUBE_TEMPERATURE)
+                                                          |(1 << DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE)
+                                                          |(1 << DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE)
+                                                          |(1 << DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE)
                                                           |(1 << DISP_ALARM_PART1_LOWER_TUBE_TEMPERATURE)));
             
             m_bC1Regulator = true;
@@ -3428,6 +3437,9 @@ MainWindow::MainWindow(QMainWindow *parent) :
                                                          |(1 << DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_HIGHER_TUBE_TEMPERATURE)
+                                                         |(1 << DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE)
+                                                         |(1 << DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE)
+                                                         |(1 << DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE)
                                                          |(1 << DISP_ALARM_PART1_LOWER_TUBE_TEMPERATURE)));
             m_bC1Regulator = true;
             break;

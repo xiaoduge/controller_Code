@@ -162,7 +162,6 @@
         <location filename="alarmdisplaypage.cpp" line="207"/>
         <location filename="alarmdisplaypage.cpp" line="214"/>
         <location filename="alarmdisplaypage.cpp" line="249"/>
-        <location filename="alarmdisplaypage.cpp" line="256"/>
         <location filename="alarmdisplaypage.cpp" line="263"/>
         <location filename="alarmdisplaypage.cpp" line="270"/>
         <location filename="alarmdisplaypage.cpp" line="376"/>
@@ -245,9 +244,8 @@
         <translation>水箱水质 &lt;</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="256"/>
         <source>Feed Product Resis.</source>
-        <translation>RO产水</translation>
+        <translation type="obsolete">RO产水</translation>
     </message>
     <message>
         <location filename="alarmdisplaypage.cpp" line="263"/>
@@ -784,10 +782,9 @@
         <translation>纯水箱水质低</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="234"/>
         <source>Low Feed Product Resis.</source>
         <oldsource>Low Pure Water Product Resistence</oldsource>
-        <translation>源水箱水质低</translation>
+        <translation type="obsolete">源水箱水质低</translation>
     </message>
 </context>
 <context>
@@ -907,7 +904,7 @@
 <context>
     <name>ConsumableInsPage</name>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="386"/>
+        <location filename="ConsumableinsPage.cpp" line="387"/>
         <source>Components Installation</source>
         <oldsource>Consumable Install</oldsource>
         <translation>耗材安装</translation>
@@ -917,27 +914,27 @@
         <translation type="obsolete">预处理柱</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="410"/>
-        <location filename="ConsumableinsPage.cpp" line="417"/>
-        <location filename="ConsumableinsPage.cpp" line="424"/>
-        <location filename="ConsumableinsPage.cpp" line="431"/>
-        <location filename="ConsumableinsPage.cpp" line="438"/>
-        <location filename="ConsumableinsPage.cpp" line="445"/>
-        <location filename="ConsumableinsPage.cpp" line="452"/>
-        <location filename="ConsumableinsPage.cpp" line="459"/>
-        <location filename="ConsumableinsPage.cpp" line="466"/>
-        <location filename="ConsumableinsPage.cpp" line="473"/>
-        <location filename="ConsumableinsPage.cpp" line="482"/>
-        <location filename="ConsumableinsPage.cpp" line="494"/>
-        <location filename="ConsumableinsPage.cpp" line="501"/>
-        <location filename="ConsumableinsPage.cpp" line="508"/>
-        <location filename="ConsumableinsPage.cpp" line="515"/>
-        <location filename="ConsumableinsPage.cpp" line="523"/>
-        <location filename="ConsumableinsPage.cpp" line="531"/>
-        <location filename="ConsumableinsPage.cpp" line="540"/>
-        <location filename="ConsumableinsPage.cpp" line="548"/>
-        <location filename="ConsumableinsPage.cpp" line="557"/>
-        <location filename="ConsumableinsPage.cpp" line="565"/>
+        <location filename="ConsumableinsPage.cpp" line="411"/>
+        <location filename="ConsumableinsPage.cpp" line="418"/>
+        <location filename="ConsumableinsPage.cpp" line="425"/>
+        <location filename="ConsumableinsPage.cpp" line="432"/>
+        <location filename="ConsumableinsPage.cpp" line="439"/>
+        <location filename="ConsumableinsPage.cpp" line="446"/>
+        <location filename="ConsumableinsPage.cpp" line="453"/>
+        <location filename="ConsumableinsPage.cpp" line="460"/>
+        <location filename="ConsumableinsPage.cpp" line="467"/>
+        <location filename="ConsumableinsPage.cpp" line="474"/>
+        <location filename="ConsumableinsPage.cpp" line="483"/>
+        <location filename="ConsumableinsPage.cpp" line="495"/>
+        <location filename="ConsumableinsPage.cpp" line="502"/>
+        <location filename="ConsumableinsPage.cpp" line="509"/>
+        <location filename="ConsumableinsPage.cpp" line="516"/>
+        <location filename="ConsumableinsPage.cpp" line="524"/>
+        <location filename="ConsumableinsPage.cpp" line="532"/>
+        <location filename="ConsumableinsPage.cpp" line="541"/>
+        <location filename="ConsumableinsPage.cpp" line="549"/>
+        <location filename="ConsumableinsPage.cpp" line="558"/>
+        <location filename="ConsumableinsPage.cpp" line="566"/>
         <source>Install</source>
         <translation>安装</translation>
     </message>
@@ -954,148 +951,148 @@
         <translation type="obsolete">AT-PACK柱</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="409"/>
+        <location filename="ConsumableinsPage.cpp" line="410"/>
         <source>Prefilter</source>
         <translation>AC PACK</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="416"/>
+        <location filename="ConsumableinsPage.cpp" line="417"/>
         <source>P Pack</source>
         <translation>P Pack</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="423"/>
+        <location filename="ConsumableinsPage.cpp" line="424"/>
         <source>U Pack</source>
         <translation>U Pack</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="430"/>
+        <location filename="ConsumableinsPage.cpp" line="431"/>
         <source>AT Pack</source>
         <translation>AT Pack</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="437"/>
+        <location filename="ConsumableinsPage.cpp" line="438"/>
         <source>H Pack</source>
         <translation>H Pack</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="444"/>
+        <location filename="ConsumableinsPage.cpp" line="445"/>
         <source>254 UV Lamp</source>
         <oldsource>254 UV</oldsource>
         <translation>254 UV</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="451"/>
+        <location filename="ConsumableinsPage.cpp" line="452"/>
         <source>185 UV Lamp</source>
         <oldsource>185 UV</oldsource>
         <translation>185 UV</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="458"/>
+        <location filename="ConsumableinsPage.cpp" line="459"/>
         <source>Tank UV Lamp</source>
         <oldsource>Tank UV</oldsource>
         <translation>水箱UV</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="465"/>
+        <location filename="ConsumableinsPage.cpp" line="466"/>
         <source>TUBE UV</source>
         <translation>管路UV</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="472"/>
+        <location filename="ConsumableinsPage.cpp" line="473"/>
         <source>TOC UV</source>
         <translation>TOC UV</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="481"/>
+        <location filename="ConsumableinsPage.cpp" line="482"/>
         <source>Tank Vent Filter</source>
         <oldsource>Air Filter</oldsource>
         <translation>空气过滤器</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="493"/>
+        <location filename="ConsumableinsPage.cpp" line="494"/>
         <source>Final Fliter B</source>
         <oldsource>Terminal B Filter</oldsource>
         <translation>终端B过滤器</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="500"/>
+        <location filename="ConsumableinsPage.cpp" line="501"/>
         <source>Final Fliter A</source>
         <oldsource>Terminal A Filter</oldsource>
         <translation>终端A过滤器</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="507"/>
+        <location filename="ConsumableinsPage.cpp" line="508"/>
         <source>Loop Filter</source>
         <oldsource>Tube Filter</oldsource>
         <translation>管路过滤器</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="514"/>
+        <location filename="ConsumableinsPage.cpp" line="515"/>
         <source>Loop DI</source>
         <oldsource>Tube DI</oldsource>
         <translation>管路DI</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="522"/>
+        <location filename="ConsumableinsPage.cpp" line="523"/>
         <source>Feed Pump</source>
         <translation>原水增压泵</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="530"/>
+        <location filename="ConsumableinsPage.cpp" line="531"/>
         <source>Dist. Pump</source>
         <translation>管路循环泵</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="564"/>
+        <location filename="ConsumableinsPage.cpp" line="565"/>
         <source>EDI Module</source>
         <translation>EDI</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="574"/>
+        <location filename="ConsumableinsPage.cpp" line="575"/>
         <source>CAT</source>
         <translation>CAT</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="575"/>
+        <location filename="ConsumableinsPage.cpp" line="576"/>
         <source>LOT</source>
         <translation>LOT</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="779"/>
+        <location filename="ConsumableinsPage.cpp" line="780"/>
         <source>Failed to read RFID,please make sure the part is installed correctly.</source>
         <translation>读取RFID失败,请确认该部件是否安装.</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="779"/>
+        <location filename="ConsumableinsPage.cpp" line="780"/>
         <source>Alarm</source>
         <translation>警报</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="793"/>
-        <location filename="ConsumableinsPage.cpp" line="804"/>
+        <location filename="ConsumableinsPage.cpp" line="794"/>
+        <location filename="ConsumableinsPage.cpp" line="805"/>
         <source>About</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="793"/>
-        <location filename="ConsumableinsPage.cpp" line="804"/>
+        <location filename="ConsumableinsPage.cpp" line="794"/>
+        <location filename="ConsumableinsPage.cpp" line="805"/>
         <source>Please Input Serial Number !</source>
         <translation>请输入序列号!</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="539"/>
+        <location filename="ConsumableinsPage.cpp" line="540"/>
         <source>Recir. Pump</source>
         <oldsource>Circulation Pump</oldsource>
         <translation>循环泵</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="547"/>
+        <location filename="ConsumableinsPage.cpp" line="548"/>
         <source>RO Membrane</source>
         <translation>RO膜</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="556"/>
+        <location filename="ConsumableinsPage.cpp" line="557"/>
         <source>RO Pump</source>
         <oldsource>RO Booster Pump</oldsource>
         <translation>RO泵</translation>
@@ -1685,111 +1682,111 @@
         <translation>结束日期</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="335"/>
-        <location filename="ex_historypage.cpp" line="341"/>
-        <location filename="ex_historypage.cpp" line="347"/>
         <location filename="ex_historypage.cpp" line="355"/>
+        <location filename="ex_historypage.cpp" line="361"/>
         <location filename="ex_historypage.cpp" line="367"/>
+        <location filename="ex_historypage.cpp" line="375"/>
+        <location filename="ex_historypage.cpp" line="387"/>
         <source>ID</source>
         <translation>编号</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="336"/>
+        <location filename="ex_historypage.cpp" line="356"/>
         <source>Ecoid</source>
         <translation>电极编号</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="337"/>
-        <location filename="ex_historypage.cpp" line="350"/>
+        <location filename="ex_historypage.cpp" line="357"/>
+        <location filename="ex_historypage.cpp" line="370"/>
         <source>Quality</source>
         <translation>水质</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="338"/>
-        <location filename="ex_historypage.cpp" line="344"/>
-        <location filename="ex_historypage.cpp" line="352"/>
+        <location filename="ex_historypage.cpp" line="358"/>
         <location filename="ex_historypage.cpp" line="364"/>
-        <location filename="ex_historypage.cpp" line="371"/>
+        <location filename="ex_historypage.cpp" line="372"/>
+        <location filename="ex_historypage.cpp" line="384"/>
+        <location filename="ex_historypage.cpp" line="391"/>
         <source>Time</source>
         <translation>时间</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="342"/>
+        <location filename="ex_historypage.cpp" line="362"/>
         <source>type</source>
         <translation>类型</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="343"/>
+        <location filename="ex_historypage.cpp" line="363"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="348"/>
+        <location filename="ex_historypage.cpp" line="368"/>
         <source>WName</source>
         <translation>类型</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="368"/>
+        <location filename="ex_historypage.cpp" line="388"/>
         <source>Name</source>
         <translation>用户名</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="349"/>
+        <location filename="ex_historypage.cpp" line="369"/>
         <source>Quantity</source>
         <translation>取水量</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="351"/>
+        <location filename="ex_historypage.cpp" line="371"/>
         <source>Tmp</source>
         <translation>温度</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="356"/>
+        <location filename="ex_historypage.cpp" line="376"/>
         <source>Duration</source>
         <translation>持续时间</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="357"/>
+        <location filename="ex_historypage.cpp" line="377"/>
         <source>Ecoroin</source>
         <translation>进水水质</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="358"/>
+        <location filename="ex_historypage.cpp" line="378"/>
         <source>Tmproin</source>
         <translation>进水温度</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="359"/>
+        <location filename="ex_historypage.cpp" line="379"/>
         <source>Ecorores</source>
         <translation>截留率</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="360"/>
+        <location filename="ex_historypage.cpp" line="380"/>
         <source>eEcoropw</source>
         <translation>RO水质</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="361"/>
+        <location filename="ex_historypage.cpp" line="381"/>
         <source>Tmpropw</source>
         <translation>RO温度</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="362"/>
+        <location filename="ex_historypage.cpp" line="382"/>
         <source>Ecoedi</source>
-        <translation>EDI水质</translation>
+        <translation type="unfinished">EDI水质</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="363"/>
+        <location filename="ex_historypage.cpp" line="383"/>
         <source>Tmpedi</source>
-        <translation>EDI温度</translation>
+        <translation type="unfinished">EDI温度</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="369"/>
+        <location filename="ex_historypage.cpp" line="389"/>
         <source>Action</source>
         <translation>操作</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="370"/>
+        <location filename="ex_historypage.cpp" line="390"/>
         <source>Info</source>
         <translation>信息</translation>
     </message>
@@ -2258,7 +2255,8 @@
     </message>
     <message>
         <location filename="ex_screensleeppage.cpp" line="46"/>
-        <source>PURIST U</source>
+        <source>Genie PURIST</source>
+        <oldsource>PURIST U</oldsource>
         <translation type="unfinished">PURIST</translation>
     </message>
     <message>
@@ -2393,8 +2391,8 @@
     </message>
     <message>
         <location filename="ex_sysmsgpage.cpp" line="68"/>
-        <source>PURIST U</source>
-        <oldsource>PURIST</oldsource>
+        <source>Genie PURIST</source>
+        <oldsource>PURIST U</oldsource>
         <translation type="unfinished">PURIST</translation>
     </message>
     <message>
@@ -3063,12 +3061,12 @@
     </message>
     <message>
         <location filename="mainpage.cpp" line="735"/>
-        <location filename="mainpage.cpp" line="1305"/>
-        <location filename="mainpage.cpp" line="1315"/>
-        <location filename="mainpage.cpp" line="1324"/>
-        <location filename="mainpage.cpp" line="1498"/>
-        <location filename="mainpage.cpp" line="1514"/>
-        <location filename="mainpage.cpp" line="1526"/>
+        <location filename="mainpage.cpp" line="1299"/>
+        <location filename="mainpage.cpp" line="1309"/>
+        <location filename="mainpage.cpp" line="1318"/>
+        <location filename="mainpage.cpp" line="1492"/>
+        <location filename="mainpage.cpp" line="1508"/>
+        <location filename="mainpage.cpp" line="1520"/>
         <source>us</source>
         <translation>μS/cm</translation>
     </message>
@@ -3101,53 +3099,63 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1896"/>
-        <location filename="mainpage.cpp" line="1948"/>
+        <location filename="mainpage.cpp" line="1256"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainpage.cpp" line="1257"/>
+        <source>Please stop dispensing water before switching system into Standby mode</source>
+        <translation type="unfinished">请先停止取水后再切换至待机状态</translation>
+    </message>
+    <message>
+        <location filename="mainpage.cpp" line="1890"/>
+        <location filename="mainpage.cpp" line="1942"/>
         <source>Tank Full</source>
         <translation>水箱满</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1908"/>
+        <location filename="mainpage.cpp" line="1902"/>
         <source>Flush</source>
         <translation>冲洗</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1917"/>
+        <location filename="mainpage.cpp" line="1911"/>
         <source>Rinsing</source>
         <translation>清洗</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1924"/>
+        <location filename="mainpage.cpp" line="1918"/>
         <source>Filling</source>
         <translation>注水</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1958"/>
-        <location filename="mainpage.cpp" line="1961"/>
+        <location filename="mainpage.cpp" line="1952"/>
+        <location filename="mainpage.cpp" line="1955"/>
         <source>Pressure Relief</source>
         <translation>泄压</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1965"/>
-        <location filename="mainpage.cpp" line="1968"/>
+        <location filename="mainpage.cpp" line="1959"/>
+        <location filename="mainpage.cpp" line="1962"/>
         <source>Standby</source>
         <translation type="unfinished">待机</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1982"/>
-        <location filename="mainpage.cpp" line="1998"/>
+        <location filename="mainpage.cpp" line="1976"/>
+        <location filename="mainpage.cpp" line="1992"/>
         <source>Dispense</source>
         <translation type="unfinished">产水</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1986"/>
-        <location filename="mainpage.cpp" line="2011"/>
+        <location filename="mainpage.cpp" line="1980"/>
+        <location filename="mainpage.cpp" line="2005"/>
         <source>Recirculation</source>
         <translation>循环</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1990"/>
-        <location filename="mainpage.cpp" line="2004"/>
+        <location filename="mainpage.cpp" line="1984"/>
+        <location filename="mainpage.cpp" line="1998"/>
         <source>Ready</source>
         <translation>就绪</translation>
     </message>
@@ -3170,82 +3178,82 @@
         <translation type="obsolete">℃</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6858"/>
+        <location filename="mainwindow.cpp" line="6870"/>
         <source>No Pre-PACK detected!</source>
         <translation>预处理柱脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6861"/>
+        <location filename="mainwindow.cpp" line="6873"/>
         <source>No P-PACK detected!</source>
         <translation>P Pack脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6864"/>
+        <location filename="mainwindow.cpp" line="6876"/>
         <source>No U-PACK detected!</source>
         <translation>U Pack脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6867"/>
+        <location filename="mainwindow.cpp" line="6879"/>
         <source>No AT-PACK detected!</source>
         <translation>AT Pack脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6870"/>
+        <location filename="mainwindow.cpp" line="6882"/>
         <source>No H-PACK detected!</source>
         <translation>H Pack脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6873"/>
+        <location filename="mainwindow.cpp" line="6885"/>
         <source>False Pre-PACK detected!</source>
         <translation type="unfinished">预处理柱脱落错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6876"/>
+        <location filename="mainwindow.cpp" line="6888"/>
         <source>False P-PACK detected!</source>
         <translation type="unfinished">P-Pack错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6879"/>
+        <location filename="mainwindow.cpp" line="6891"/>
         <source>False U-PACK detected!</source>
         <translation type="unfinished">U-Pack错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6882"/>
+        <location filename="mainwindow.cpp" line="6894"/>
         <source>False AT-PACK detected!</source>
         <translation type="unfinished">AT-Pack错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6885"/>
+        <location filename="mainwindow.cpp" line="6897"/>
         <source>False H-PACK detected!</source>
         <translation type="unfinished">H-Pack错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7262"/>
+        <location filename="mainwindow.cpp" line="7274"/>
         <source>Water</source>
         <translation type="unfinished">水质信息</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7263"/>
+        <location filename="mainwindow.cpp" line="7275"/>
         <source>Alarm</source>
         <translation>警报</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7264"/>
+        <location filename="mainwindow.cpp" line="7276"/>
         <source>User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7265"/>
+        <location filename="mainwindow.cpp" line="7277"/>
         <source>GetW</source>
         <translation type="unfinished">取水信息</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7266"/>
+        <location filename="mainwindow.cpp" line="7278"/>
         <source>PWater</source>
         <translation type="unfinished">产水信息</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7267"/>
+        <location filename="mainwindow.cpp" line="7279"/>
         <source>Log</source>
         <translation type="unfinished">日志</translation>
     </message>
@@ -3257,151 +3265,151 @@
         <translation type="obsolete">预处理柱</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="448"/>
-        <location filename="maintenancecycle.cpp" line="456"/>
-        <location filename="maintenancecycle.cpp" line="464"/>
-        <location filename="maintenancecycle.cpp" line="472"/>
-        <location filename="maintenancecycle.cpp" line="480"/>
-        <location filename="maintenancecycle.cpp" line="488"/>
-        <location filename="maintenancecycle.cpp" line="496"/>
-        <location filename="maintenancecycle.cpp" line="504"/>
-        <location filename="maintenancecycle.cpp" line="512"/>
-        <location filename="maintenancecycle.cpp" line="520"/>
+        <location filename="maintenancecycle.cpp" line="451"/>
+        <location filename="maintenancecycle.cpp" line="459"/>
+        <location filename="maintenancecycle.cpp" line="467"/>
+        <location filename="maintenancecycle.cpp" line="475"/>
+        <location filename="maintenancecycle.cpp" line="483"/>
+        <location filename="maintenancecycle.cpp" line="491"/>
+        <location filename="maintenancecycle.cpp" line="499"/>
+        <location filename="maintenancecycle.cpp" line="507"/>
+        <location filename="maintenancecycle.cpp" line="515"/>
+        <location filename="maintenancecycle.cpp" line="523"/>
         <source>Day</source>
         <translation>天</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="481"/>
+        <location filename="maintenancecycle.cpp" line="484"/>
         <source>Litre</source>
         <translation>升</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="455"/>
+        <location filename="maintenancecycle.cpp" line="458"/>
         <source>P PACK</source>
         <oldsource>P-PACK</oldsource>
         <translation>P PACK</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="463"/>
+        <location filename="maintenancecycle.cpp" line="466"/>
         <source>U PACK</source>
         <oldsource>U-PACK</oldsource>
         <translation>U PACK</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="471"/>
+        <location filename="maintenancecycle.cpp" line="474"/>
         <source>AT PACK</source>
         <oldsource>AT-PACK</oldsource>
         <translation>AT PACK</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="495"/>
+        <location filename="maintenancecycle.cpp" line="498"/>
         <source>185 UV</source>
         <oldsource>185UV</oldsource>
         <translation>185 UV</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="489"/>
-        <location filename="maintenancecycle.cpp" line="497"/>
-        <location filename="maintenancecycle.cpp" line="505"/>
-        <location filename="maintenancecycle.cpp" line="513"/>
-        <location filename="maintenancecycle.cpp" line="521"/>
+        <location filename="maintenancecycle.cpp" line="492"/>
+        <location filename="maintenancecycle.cpp" line="500"/>
+        <location filename="maintenancecycle.cpp" line="508"/>
+        <location filename="maintenancecycle.cpp" line="516"/>
+        <location filename="maintenancecycle.cpp" line="524"/>
         <source>hr</source>
         <oldsource>Hour</oldsource>
         <translation>小时</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="429"/>
+        <location filename="maintenancecycle.cpp" line="432"/>
         <source>Consumables Life</source>
         <translation>耗材生命周期</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="447"/>
+        <location filename="maintenancecycle.cpp" line="450"/>
         <source>Prefilter</source>
         <translation>AC PACK</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="449"/>
-        <location filename="maintenancecycle.cpp" line="457"/>
-        <location filename="maintenancecycle.cpp" line="465"/>
-        <location filename="maintenancecycle.cpp" line="473"/>
+        <location filename="maintenancecycle.cpp" line="452"/>
+        <location filename="maintenancecycle.cpp" line="460"/>
+        <location filename="maintenancecycle.cpp" line="468"/>
+        <location filename="maintenancecycle.cpp" line="476"/>
         <source>L</source>
         <translation>升</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="479"/>
+        <location filename="maintenancecycle.cpp" line="482"/>
         <source>H PACK</source>
         <oldsource>H-PACK</oldsource>
         <translation>H PACK</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="487"/>
+        <location filename="maintenancecycle.cpp" line="490"/>
         <source>254 UV</source>
         <oldsource>254UV</oldsource>
         <translation>254 UV</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="503"/>
+        <location filename="maintenancecycle.cpp" line="506"/>
         <source>Tank UV</source>
         <translation>水箱 UV</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="511"/>
+        <location filename="maintenancecycle.cpp" line="514"/>
         <source>Tube UV</source>
         <translation>管路UV</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="519"/>
+        <location filename="maintenancecycle.cpp" line="522"/>
         <source>TOC UV</source>
         <translation>TOC UV</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="527"/>
+        <location filename="maintenancecycle.cpp" line="530"/>
         <source>Tank Vent Filter</source>
         <oldsource>Tank Air Filter</oldsource>
         <translation>空气过滤器</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="528"/>
-        <location filename="maintenancecycle.cpp" line="535"/>
-        <location filename="maintenancecycle.cpp" line="542"/>
-        <location filename="maintenancecycle.cpp" line="549"/>
-        <location filename="maintenancecycle.cpp" line="556"/>
-        <location filename="maintenancecycle.cpp" line="563"/>
+        <location filename="maintenancecycle.cpp" line="531"/>
+        <location filename="maintenancecycle.cpp" line="538"/>
+        <location filename="maintenancecycle.cpp" line="545"/>
+        <location filename="maintenancecycle.cpp" line="552"/>
+        <location filename="maintenancecycle.cpp" line="559"/>
+        <location filename="maintenancecycle.cpp" line="566"/>
         <source>days</source>
         <translation>天</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="534"/>
+        <location filename="maintenancecycle.cpp" line="537"/>
         <source>Final Fliter B</source>
         <oldsource>Terminal Filter B</oldsource>
         <translation>终端B过滤器</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="541"/>
+        <location filename="maintenancecycle.cpp" line="544"/>
         <source>Final Fliter A</source>
         <oldsource>Terminal Filter A</oldsource>
         <translation>终端A过滤器</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="548"/>
+        <location filename="maintenancecycle.cpp" line="551"/>
         <source>Loop Filter</source>
         <oldsource>Tube Filter</oldsource>
         <translation>管路过滤器</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="555"/>
+        <location filename="maintenancecycle.cpp" line="558"/>
         <source>Loop DI</source>
         <oldsource>Tube DI</oldsource>
         <translation>管路DI</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="562"/>
+        <location filename="maintenancecycle.cpp" line="565"/>
         <source>RO Chlorine Cleaning</source>
         <oldsource>RO Chlorine Clean</oldsource>
         <translation>RO氯清洗</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="661"/>
+        <location filename="maintenancecycle.cpp" line="664"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
@@ -4797,7 +4805,7 @@
     <message>
         <location filename="systestpage.cpp" line="505"/>
         <source>HP Pump</source>
-        <translation>HP泵</translation>
+        <translation type="unfinished">循环泵</translation>
     </message>
     <message>
         <location filename="systestpage.cpp" line="513"/>
@@ -5405,13 +5413,13 @@
 <context>
     <name>WaterQualityPage</name>
     <message>
-        <location filename="waterqualitypage.cpp" line="234"/>
+        <location filename="waterqualitypage.cpp" line="246"/>
         <source>Water Quality</source>
         <translation>水质信息</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="323"/>
-        <location filename="waterqualitypage.cpp" line="342"/>
+        <location filename="waterqualitypage.cpp" line="335"/>
+        <location filename="waterqualitypage.cpp" line="354"/>
         <source>Omg</source>
         <translation>MΩ.cm</translation>
     </message>
@@ -5421,27 +5429,27 @@
         <translation type="obsolete">μS/cm</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="292"/>
+        <location filename="waterqualitypage.cpp" line="304"/>
         <source>TOC</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="292"/>
+        <location filename="waterqualitypage.cpp" line="304"/>
         <source>ppb</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="297"/>
-        <location filename="waterqualitypage.cpp" line="301"/>
+        <location filename="waterqualitypage.cpp" line="309"/>
+        <location filename="waterqualitypage.cpp" line="313"/>
         <source>Temp.</source>
         <oldsource>Temp</oldsource>
         <translation>温度</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="301"/>
-        <location filename="waterqualitypage.cpp" line="356"/>
-        <location filename="waterqualitypage.cpp" line="369"/>
-        <location filename="waterqualitypage.cpp" line="388"/>
+        <location filename="waterqualitypage.cpp" line="313"/>
+        <location filename="waterqualitypage.cpp" line="368"/>
+        <location filename="waterqualitypage.cpp" line="381"/>
+        <location filename="waterqualitypage.cpp" line="400"/>
         <source>Fahrenheit</source>
         <translation>F</translation>
     </message>
@@ -5450,169 +5458,169 @@
         <translation type="obsolete">流速</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="271"/>
-        <location filename="waterqualitypage.cpp" line="311"/>
+        <location filename="waterqualitypage.cpp" line="283"/>
+        <location filename="waterqualitypage.cpp" line="323"/>
         <source>G/min</source>
         <translation>G/min</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="249"/>
+        <location filename="waterqualitypage.cpp" line="261"/>
         <source>Tank Level</source>
         <translation>水箱液位</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="317"/>
-        <location filename="waterqualitypage.cpp" line="323"/>
-        <location filename="waterqualitypage.cpp" line="327"/>
+        <location filename="waterqualitypage.cpp" line="329"/>
+        <location filename="waterqualitypage.cpp" line="335"/>
+        <location filename="waterqualitypage.cpp" line="339"/>
         <source>UP IN</source>
         <translation>UP进水</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="342"/>
-        <location filename="waterqualitypage.cpp" line="346"/>
+        <location filename="waterqualitypage.cpp" line="354"/>
+        <location filename="waterqualitypage.cpp" line="358"/>
         <source>EDI Product</source>
         <translation>EDI产水</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="360"/>
+        <location filename="waterqualitypage.cpp" line="372"/>
         <source>RO Product</source>
         <translation>RO产水</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="373"/>
+        <location filename="waterqualitypage.cpp" line="385"/>
         <source>RO Rejection</source>
         <oldsource>RO Reject Rate</oldsource>
         <translation>RO截留率</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="261"/>
-        <location filename="waterqualitypage.cpp" line="288"/>
-        <location filename="waterqualitypage.cpp" line="317"/>
-        <location filename="waterqualitypage.cpp" line="327"/>
-        <location filename="waterqualitypage.cpp" line="346"/>
-        <location filename="waterqualitypage.cpp" line="360"/>
-        <location filename="waterqualitypage.cpp" line="376"/>
-        <location filename="waterqualitypage.cpp" line="379"/>
+        <location filename="waterqualitypage.cpp" line="273"/>
+        <location filename="waterqualitypage.cpp" line="300"/>
+        <location filename="waterqualitypage.cpp" line="329"/>
+        <location filename="waterqualitypage.cpp" line="339"/>
+        <location filename="waterqualitypage.cpp" line="358"/>
+        <location filename="waterqualitypage.cpp" line="372"/>
+        <location filename="waterqualitypage.cpp" line="388"/>
+        <location filename="waterqualitypage.cpp" line="391"/>
         <source>us/cm</source>
         <translation>μS/cm</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="257"/>
-        <location filename="waterqualitypage.cpp" line="261"/>
+        <location filename="waterqualitypage.cpp" line="269"/>
+        <location filename="waterqualitypage.cpp" line="273"/>
         <source>HP Resis.</source>
         <translation type="unfinished">HP</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="267"/>
-        <location filename="waterqualitypage.cpp" line="271"/>
+        <location filename="waterqualitypage.cpp" line="279"/>
+        <location filename="waterqualitypage.cpp" line="283"/>
         <source>HP Disp. rate</source>
         <translation type="unfinished">HP流速</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="307"/>
-        <location filename="waterqualitypage.cpp" line="311"/>
+        <location filename="waterqualitypage.cpp" line="319"/>
+        <location filename="waterqualitypage.cpp" line="323"/>
         <source>UP Disp. rate</source>
         <translation type="unfinished">UP流速</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="376"/>
+        <location filename="waterqualitypage.cpp" line="388"/>
         <source>Tap Cond.</source>
         <translation>自来水电导率</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="394"/>
-        <location filename="waterqualitypage.cpp" line="398"/>
-        <location filename="waterqualitypage.cpp" line="402"/>
+        <location filename="waterqualitypage.cpp" line="406"/>
+        <location filename="waterqualitypage.cpp" line="410"/>
+        <location filename="waterqualitypage.cpp" line="414"/>
         <source>RO Feed Pressure</source>
         <translation type="unfinished">RO进水压力</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="398"/>
-        <location filename="waterqualitypage.cpp" line="412"/>
+        <location filename="waterqualitypage.cpp" line="410"/>
+        <location filename="waterqualitypage.cpp" line="424"/>
         <source>mpa</source>
         <translation type="unfinished">MPa</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="402"/>
-        <location filename="waterqualitypage.cpp" line="416"/>
+        <location filename="waterqualitypage.cpp" line="414"/>
+        <location filename="waterqualitypage.cpp" line="428"/>
         <source>psi</source>
         <translation type="unfinished">psi</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="408"/>
-        <location filename="waterqualitypage.cpp" line="412"/>
-        <location filename="waterqualitypage.cpp" line="416"/>
+        <location filename="waterqualitypage.cpp" line="420"/>
+        <location filename="waterqualitypage.cpp" line="424"/>
+        <location filename="waterqualitypage.cpp" line="428"/>
         <source>RO Pressure</source>
         <translation type="unfinished">RO压力</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="422"/>
-        <location filename="waterqualitypage.cpp" line="426"/>
+        <location filename="waterqualitypage.cpp" line="434"/>
+        <location filename="waterqualitypage.cpp" line="438"/>
         <source>RO Product Rate</source>
         <oldsource>RO Prod. Rate</oldsource>
         <translation type="unfinished">RO产水流速</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="426"/>
-        <location filename="waterqualitypage.cpp" line="436"/>
-        <location filename="waterqualitypage.cpp" line="446"/>
-        <location filename="waterqualitypage.cpp" line="456"/>
-        <location filename="waterqualitypage.cpp" line="466"/>
-        <location filename="waterqualitypage.cpp" line="476"/>
+        <location filename="waterqualitypage.cpp" line="438"/>
+        <location filename="waterqualitypage.cpp" line="448"/>
+        <location filename="waterqualitypage.cpp" line="458"/>
+        <location filename="waterqualitypage.cpp" line="468"/>
+        <location filename="waterqualitypage.cpp" line="478"/>
+        <location filename="waterqualitypage.cpp" line="488"/>
         <source>G/h</source>
         <translation>G/h</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="432"/>
-        <location filename="waterqualitypage.cpp" line="436"/>
+        <location filename="waterqualitypage.cpp" line="444"/>
+        <location filename="waterqualitypage.cpp" line="448"/>
         <source>RO Reject Rate</source>
         <translation type="unfinished">RO弃水流速</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="462"/>
-        <location filename="waterqualitypage.cpp" line="466"/>
+        <location filename="waterqualitypage.cpp" line="474"/>
+        <location filename="waterqualitypage.cpp" line="478"/>
         <source>EDI Product Rate</source>
         <translation type="unfinished">EDI产水流速</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="472"/>
-        <location filename="waterqualitypage.cpp" line="476"/>
+        <location filename="waterqualitypage.cpp" line="484"/>
+        <location filename="waterqualitypage.cpp" line="488"/>
         <source>EDI Reject Rate</source>
         <translation type="unfinished">EDI弃水流速</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="297"/>
-        <location filename="waterqualitypage.cpp" line="352"/>
-        <location filename="waterqualitypage.cpp" line="365"/>
-        <location filename="waterqualitypage.cpp" line="384"/>
+        <location filename="waterqualitypage.cpp" line="309"/>
+        <location filename="waterqualitypage.cpp" line="364"/>
+        <location filename="waterqualitypage.cpp" line="377"/>
+        <location filename="waterqualitypage.cpp" line="396"/>
         <source>Celsius</source>
         <translation>℃</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="267"/>
-        <location filename="waterqualitypage.cpp" line="307"/>
+        <location filename="waterqualitypage.cpp" line="279"/>
+        <location filename="waterqualitypage.cpp" line="319"/>
         <source>L/min</source>
         <translation type="unfinished">L/min</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="252"/>
+        <location filename="waterqualitypage.cpp" line="264"/>
         <source>L</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="252"/>
+        <location filename="waterqualitypage.cpp" line="264"/>
         <source>Volume</source>
         <translation type="unfinished">储水体积</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="257"/>
-        <location filename="waterqualitypage.cpp" line="284"/>
+        <location filename="waterqualitypage.cpp" line="269"/>
+        <location filename="waterqualitypage.cpp" line="296"/>
         <source>omg</source>
         <translation>MΩ.cm</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="284"/>
-        <location filename="waterqualitypage.cpp" line="288"/>
+        <location filename="waterqualitypage.cpp" line="296"/>
+        <location filename="waterqualitypage.cpp" line="300"/>
         <source>UP</source>
         <translation>UP</translation>
     </message>
@@ -5621,31 +5629,31 @@
         <translation type="obsolete">UP流速</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="352"/>
-        <location filename="waterqualitypage.cpp" line="356"/>
+        <location filename="waterqualitypage.cpp" line="364"/>
+        <location filename="waterqualitypage.cpp" line="368"/>
         <source>EDI Temp.</source>
         <translation>EDI产水温度</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="365"/>
-        <location filename="waterqualitypage.cpp" line="369"/>
+        <location filename="waterqualitypage.cpp" line="377"/>
+        <location filename="waterqualitypage.cpp" line="381"/>
         <source>RO Temp.</source>
         <translation>RO产水温度</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="379"/>
+        <location filename="waterqualitypage.cpp" line="391"/>
         <source>RO Feed Cond.</source>
         <translation>RO进水电导率</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="384"/>
-        <location filename="waterqualitypage.cpp" line="388"/>
+        <location filename="waterqualitypage.cpp" line="396"/>
+        <location filename="waterqualitypage.cpp" line="400"/>
         <source>RO Feed Temp.</source>
         <translation>RO进水温度</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="394"/>
-        <location filename="waterqualitypage.cpp" line="408"/>
+        <location filename="waterqualitypage.cpp" line="406"/>
+        <location filename="waterqualitypage.cpp" line="420"/>
         <source>bar</source>
         <translation type="unfinished">bar</translation>
     </message>
@@ -5654,12 +5662,12 @@
         <translation type="obsolete">RO工作压力</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="422"/>
-        <location filename="waterqualitypage.cpp" line="432"/>
-        <location filename="waterqualitypage.cpp" line="442"/>
-        <location filename="waterqualitypage.cpp" line="452"/>
-        <location filename="waterqualitypage.cpp" line="462"/>
-        <location filename="waterqualitypage.cpp" line="472"/>
+        <location filename="waterqualitypage.cpp" line="434"/>
+        <location filename="waterqualitypage.cpp" line="444"/>
+        <location filename="waterqualitypage.cpp" line="454"/>
+        <location filename="waterqualitypage.cpp" line="464"/>
+        <location filename="waterqualitypage.cpp" line="474"/>
+        <location filename="waterqualitypage.cpp" line="484"/>
         <source>L/h</source>
         <translation>L/h</translation>
     </message>
@@ -5668,14 +5676,14 @@
         <translation type="obsolete">RO弃水流速</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="442"/>
-        <location filename="waterqualitypage.cpp" line="446"/>
+        <location filename="waterqualitypage.cpp" line="454"/>
+        <location filename="waterqualitypage.cpp" line="458"/>
         <source>RO Feed rate</source>
         <translation>RO进水流速</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="452"/>
-        <location filename="waterqualitypage.cpp" line="456"/>
+        <location filename="waterqualitypage.cpp" line="464"/>
+        <location filename="waterqualitypage.cpp" line="468"/>
         <source>Tap Rate</source>
         <translation>自来水流速</translation>
     </message>

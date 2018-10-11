@@ -1246,27 +1246,23 @@ void MainPage::on_navi_clicked(int index)
     case NBAR_ID_POWER_OFF:
         {
             bool stateRun = m_pNaviBar->getState();
-#if 0
+
             //ex_dcj
             if(!stateRun)
             {
-                if(DISP_WORK_STATE_IDLE != DispGetWorkState4Pw())
+                if(DispGetEdiQtwFlag() || DispGetUpQtwFlag())
                 {
-                    if(0 == m_wndMain->getWaterQuantity(APP_DEV_HS_SUB_HYPER))
-                    {
-                        m_abQtwFlag[APP_DEV_HS_SUB_HYPER] = false;
-                    }
-                    m_wndMain->startQtw(APP_DEV_HS_SUB_HYPER,m_abQtwFlag[APP_DEV_HS_SUB_HYPER]);
+                    this->updateRunInfo(true);
+                    QMessageBox::warning(m_widget,
+                                         tr("Warning"),
+                                         tr("Please stop dispensing water before switching system into Standby mode"),
+                                         QMessageBox::Close);
 
-                    if(0 == m_wndMain->getWaterQuantity(APP_DEV_HS_SUB_REGULAR))
-                    {
-                        m_abQtwFlag[APP_DEV_HS_SUB_REGULAR] = false;
-                    }
-                    m_wndMain->startQtw(APP_DEV_HS_SUB_REGULAR,m_abQtwFlag[APP_DEV_HS_SUB_REGULAR]);
+                    return;
                 }
             }
             //end
-#endif
+
             m_wndMain->run(stateRun);
             
         }
