@@ -7776,6 +7776,8 @@ void CanCcbSndHOState(int iIndex , int iState)
 
     pLoad->ucState           = iState;
     pLoad->ucResult          = APP_PACKET_HO_ERROR_CODE_SUCC;
+
+    pLoad->ucAlarmState      = getAlarmState();  //ex
     
     switch(iState)
     {
@@ -12905,6 +12907,7 @@ void MainSndHeartBeat(void)
 
      pLoad->ucState      = CanCcbGetHoState();
      pLoad->ucResult     = 0;
+     pLoad->ucAlarmState = getAlarmState();
      
      switch(pLoad->ucState)
      {
