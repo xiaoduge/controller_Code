@@ -641,6 +641,8 @@ typedef enum
 {
     DISP_PRE_PACKLIFEDAY = 0,   //曾趙翐:  0~999 DAYS    0~9999L 
     DISP_PRE_PACKLIFEL,     //曾趙翐:   0~9999L
+    DISP_T_PACKLIFEDAY,     //T PACK: 2018.10.12 ADD
+    DISP_T_PACKLIFEL,       //T PACK: 2018.10.12 ADD
     DISP_P_PACKLIFEDAY ,    //曾趙翐:  0~999 DAYS    0~9999L 
     DISP_P_PACKLIFEL ,      //曾趙翐:   0~9999L 
     DISP_U_PACKLIFEDAY ,    //曾趙翐:  0~999 DAYS    0~9999L 
@@ -671,6 +673,7 @@ typedef enum
 typedef enum
 {
     DISP_PRE_PACK = 0,  
+    DISP_T_PACK,  //2018.10.12 ADD
     DISP_P_PACK ,    
     DISP_U_PACK,
     DISP_AT_PACK,

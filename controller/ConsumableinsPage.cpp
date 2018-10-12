@@ -19,6 +19,15 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_PREPACK;
         iIdx++;
     }
+
+    //2018.10.12 add T PACK
+    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+    {
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_T_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+    }
     
     switch(gGlobalParam.iMachineType)
     {
@@ -408,6 +417,13 @@ void ConsumableInsPage::buildTranslation()
             Ô¤´¦ÀíÖù     
             */
             m_aInsListItem[iMapIdx]->setName(tr("Prefilter"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+       case DISP_T_PACK:
+            /*
+            T Pack
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("T Pack"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
        case DISP_P_PACK:

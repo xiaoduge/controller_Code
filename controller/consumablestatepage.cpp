@@ -18,7 +18,14 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         aIds[iIdx].iId   = DISP_PRE_PACK;
         iIdx++;
     }
-    
+    //2018 add T-Pack
+    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+    {
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_T_PACK;
+        iIdx++;
+    }
+
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
@@ -371,6 +378,13 @@ void ConsumableStatePage:: update()
                 (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY])/ DISP_DAYININSECOND;
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ")+ tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
+
+            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_PRE_PACK];
+            m_pCslistItem[iIdx]->setCatNo(strTmp);
+
+            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_PRE_PACK];
+            m_pCslistItem[iIdx]->setLotNo(strTmp);
+
             
             if (gCMUsage.ulUsageState & (1 << DISP_PRE_PACKLIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_PRE_PACKLIFEL))
@@ -384,6 +398,38 @@ void ConsumableStatePage:: update()
             
             /*Preporcess column */
             m_pCslistItem[iIdx]->setName(tr("Prefilter"));
+            break;
+        case DISP_T_PACK:
+            /* T-Pack */
+            tmp = gCMUsage.info.aulCms[DISP_T_PACKLIFEL] ;
+            strTmp = astrNames[0] + "  " + QString::number(tmp) + "L";
+            m_pCslistItem[iIdx]->setValue(strTmp);
+
+            strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY]);
+            m_pCslistItem[iIdx]->setInstDate(strTmp);
+
+            tmp = gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEDAY] -
+                (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY])/ DISP_DAYININSECOND;
+            strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ")+ tr("days");
+            m_pCslistItem[iIdx]->setChangeDate(strTmp);
+
+            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_T_PACK];
+            m_pCslistItem[iIdx]->setCatNo(strTmp);
+
+            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_T_PACK];
+            m_pCslistItem[iIdx]->setLotNo(strTmp);
+
+
+            if (gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEDAY)
+                || gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEL))
+            {
+                m_pCslistItem[iIdx]->updateState(1);
+            }
+            else
+            {
+                m_pCslistItem[iIdx]->updateState(0);
+            }
+            m_pCslistItem[iIdx]->setName(tr("T Pack"));
             break;
         case DISP_P_PACK:
         

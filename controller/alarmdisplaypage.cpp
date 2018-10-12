@@ -529,6 +529,43 @@ void AlarmDisplayPage::csUpdate()
                 iIdx++;
             }
             break;
+        case DISP_T_PACK:
+            if (gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEDAY)
+                || gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEL))
+            {
+                /* for preprocess column */
+                tmp = gCMUsage.info.aulCms[DISP_T_PACKLIFEL] ;
+                if(tmp < 0)
+                {
+                    tmp = 0;
+                }
+                strTmp = astrNames[0] + "  " + QString::number(tmp) + "L";
+                m_pCslistItem[iIdx]->setValue(strTmp);
+
+                strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY]);
+                m_pCslistItem[iIdx]->setInstDate(strTmp);
+
+                tmp = gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEDAY] -
+                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY])/ DISP_DAYININSECOND;
+                if(tmp < 0)
+                {
+                    tmp = 0;
+                }
+                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                m_pCslistItem[iIdx]->setName(tr("T Pack"));
+                m_pCslistItem[iIdx]->setChangeDate(strTmp);
+
+                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_T_PACK];
+                m_pCslistItem[iIdx]->setCatNo(strTmp);
+
+                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_T_PACK];
+                m_pCslistItem[iIdx]->setLotNo(strTmp);
+
+                m_pCslistItem[iIdx]->updateState(1);
+                m_pCslistItem[iIdx]->setId(iIdx);
+                iIdx++;
+            }
+            break;
 
         case DISP_P_PACK:
             if (gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEDAY) 

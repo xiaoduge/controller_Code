@@ -665,6 +665,15 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     {
         Param.aulCms[DISP_PRE_PACKLIFEL] = 10000; // 
     }
+    //2018.10.12 add T-Pack
+    if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_T_PACKLIFEDAY])
+    {
+        Param.aulCms[DISP_T_PACKLIFEDAY] = 360;
+    }
+    if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_T_PACKLIFEL])
+    {
+        Param.aulCms[DISP_T_PACKLIFEL] = 10000; //
+    }
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_P_PACKLIFEDAY])
     {
@@ -1239,6 +1248,17 @@ void MainRetriveCMInfo(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_PRE_PACKLIFEL])
     {
         Param.aulCms[DISP_PRE_PACKLIFEL] = 0; // NEW pack
+    }
+
+    //2018.10.12 T-Pack
+    if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_T_PACKLIFEDAY])
+    {
+        Param.aulCms[DISP_T_PACKLIFEDAY] = DispGetCurSecond(); // NEW pack
+    }
+
+    if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_T_PACKLIFEL])
+    {
+        Param.aulCms[DISP_T_PACKLIFEL] = 0; // NEW pack
     }
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_P_PACKLIFEDAY])
@@ -2586,6 +2606,25 @@ void CheckConsumptiveMaterialState(void)
 
     }    
 
+    //2018.10.12 T_Pack
+    if (ulCurTime > gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY])
+    {
+        ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY])/DISP_DAYININSECOND;
+
+
+        if (ulTemp >= gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEDAY])
+        {
+            gCMUsage.ulUsageState |= (1 << DISP_T_PACKLIFEDAY);
+        }
+
+        if (gCMUsage.info.aulCms[DISP_T_PACKLIFEL] >= gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEL])
+        {
+            gCMUsage.ulUsageState |= (1 << DISP_T_PACKLIFEL);
+        }
+
+    }
+    //
+
     // check pack
     if (ulCurTime > gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY])
     {
@@ -2795,6 +2834,14 @@ void MainResetCmInfo(int iSel)
         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEDAY] = 0;
         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] = 0;
         break;
+    case DISP_T_PACK:
+        gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY] = DispGetCurSecond();
+        gCMUsage.info.aulCms[DISP_T_PACKLIFEL]   = 0;
+        gCMUsage.ulUsageState &= ~(1 << DISP_T_PACKLIFEDAY);
+        gCMUsage.ulUsageState &= ~(1 << DISP_T_PACKLIFEL);
+        gCMUsage.cmInfo.aulCumulatedData[DISP_T_PACKLIFEDAY] = 0;
+        gCMUsage.cmInfo.aulCumulatedData[DISP_T_PACKLIFEL] = 0;
+        break;
     case DISP_P_PACK:
         gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY] = DispGetCurSecond();
         gCMUsage.info.aulCms[DISP_P_PACKLIFEL]   = 0;
@@ -2946,7 +2993,7 @@ void SaveConsumptiveMaterialInfo(void)
 
    int iLoop;
 
-   int aPackArray[] = {DISP_PRE_PACKLIFEL,DISP_P_PACKLIFEL,DISP_H_PACKLIFEL,DISP_U_PACKLIFEL,DISP_AT_PACKLIFEL};
+   int aPackArray[] = {DISP_PRE_PACKLIFEL,DISP_T_PACKLIFEL,DISP_P_PACKLIFEL,DISP_H_PACKLIFEL,DISP_U_PACKLIFEL,DISP_AT_PACKLIFEL};
    int aNArray[]    = {DISP_N1_UVLIFEHOUR,DISP_N2_UVLIFEHOUR,DISP_N3_UVLIFEHOUR,DISP_N4_UVLIFEHOUR,DISP_N5_UVLIFEHOUR};
 
    for (iLoop = 0; iLoop < DISP_CM_NUM; iLoop++)
@@ -6027,7 +6074,8 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                  {
                  case APP_FM_FM1_NO:
                      ulQuantity = CcbConvert2Fm1Data(pItem->ulValue);  
-                     gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += ulQuantity;   
+                     gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += ulQuantity;
+                     gCMUsage.cmInfo.aulCumulatedData[DISP_T_PACKLIFEL] += ulQuantity;
                      break;
                  case APP_FM_FM2_NO:
                      break;
