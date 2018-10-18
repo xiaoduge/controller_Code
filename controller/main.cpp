@@ -79,18 +79,18 @@ QString CREATE_TABLE_GetW = "CREATE TABLE IF NOT EXISTS  GetW (id INTEGER PRIMAR
                                                                   "name VARCHAR(20) NOT NULL,"
                                                                   "quantity double NULL,"
                                                                   "quality double NULL,"
-                                                                  "tmp INTEGER NULL,"
+                                                                  "tmp double NULL,"
                                                                   "time VARCHAR(20) NOT NULL)";
 
 QString CREATE_TABLE_Produce_Water = "CREATE TABLE IF NOT EXISTS  PWater (id INTEGER PRIMARY KEY AUTOINCREMENT,"
                                                                   "duration INTEGER NULL,"
                                                                   "ecoroin double NULL,"
-                                                                  "tmproin INTEGER NULL,"
+                                                                  "tmproin double NULL,"
                                                                   "ecorores double NULL,"
                                                                   "ecoropw double NULL,"
-                                                                  "tmpropw INTEGER NULL,"
+                                                                  "tmpropw double NULL,"
                                                                   "ecoedi double NULL,"
-                                                                  "tmpedi INTEGER NULL,"
+                                                                  "tmpedi double NULL,"
                                                                   "time VARCHAR(20) NOT NULL)";
 
 QString CREATE_TABLE_Log = "CREATE TABLE IF NOT EXISTS  Log (id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -146,7 +146,7 @@ QString INSERT_sql_Rfid    = "INSERT INTO Rfid (id, name, address, type) VALUES 
 QString select_sql_User    = "SELECT id , Name , PassWord , Permission FROM User";
 
 //ex
-QString update_sql_Water = "update Water SET quality = ?, time = ? where time > ? and time < ?";
+QString update_sql_Water = "update Water SET quality = ?, time = ? where ecoid = ? and time > ? and time < ?";
 //end
 
 User *gpActiveU;

@@ -28,18 +28,22 @@ AdcsListItem::AdcsListItem(QWidget *parent ,AlarmDisplayPage *owner) :
     this->lbInstDate = new QLabel(this);
     this->lbInstDate->setGeometry(QRect(160 , 15 , 200 , 20));
     //this->lbInstDate->setText("InstDate:2017.10.10");
-
+#if 0
     this->lbChangeDate = new QLabel(this);
     this->lbChangeDate->setGeometry(QRect(160 , 45 , 200 , 20));
     //this->lbChangeDate->setText("ChangeDate:2018.10.10");
+#endif
+    this->lbChangeDate = new QLabel(this);
+    this->lbChangeDate->setGeometry(QRect(ADCS_LEFT_MARGIN, 75, 350, 20*2));
+    this->lbChangeDate->setWordWrap(true);
 
     this->lbCatNo = new QLabel(this);
-    this->lbCatNo->setGeometry(QRect(ADCS_LEFT_MARGIN , 75 , 160 , 20));
-    //this->lbCatNo->setText("CAT NO:123456");
+    this->lbCatNo->setGeometry(QRect(ADCS_LEFT_MARGIN, 125, 160, 20));
+    //this->lbCatNo->setText("Cat No.:123456");
 
     this->lbLotNo = new QLabel(this);
-    this->lbLotNo->setGeometry(QRect(160 , 75 , 160 , 20));
-    //this->lbLotNo->setText("LOT NO: 789456");
+    this->lbLotNo->setGeometry(QRect(160, 125, 160, 20));
+    //this->lbLotNo->setText("Lot No.: 789456");
     m_id = 0XFF;
 
 }

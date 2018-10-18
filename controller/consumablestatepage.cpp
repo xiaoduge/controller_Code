@@ -379,10 +379,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ")+ tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_PRE_PACK];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_PRE_PACK];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
 
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_PRE_PACK];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_PRE_PACK];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
 
             
@@ -413,10 +413,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ")+ tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_T_PACK];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_T_PACK];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
 
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_T_PACK];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_T_PACK];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
 
 
@@ -446,10 +446,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ") + tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
             
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_P_PACK];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_P_PACK];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
             
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_P_PACK];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_P_PACK];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
             if (gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEDAY) 
@@ -478,10 +478,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ") + tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
             
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_U_PACK];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_U_PACK];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
             
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_U_PACK];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_U_PACK];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
             if (gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEDAY) 
@@ -510,10 +510,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ") + tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
             
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_AT_PACK];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_AT_PACK];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
             
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_AT_PACK];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_AT_PACK];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
             if (gCMUsage.ulUsageState & (1 << DISP_AT_PACKLIFEDAY) 
@@ -542,10 +542,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ") + tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
             
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_H_PACK];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_H_PACK];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
             
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_H_PACK];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_H_PACK];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
             if (gCMUsage.ulUsageState & (1 << DISP_H_PACKLIFEDAY) 
@@ -574,10 +574,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ") + tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_N1_UV];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_N1_UV];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
             
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_N1_UV];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_N1_UV];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
             
             if (gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEDAY) 
@@ -606,10 +606,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ") + tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_N2_UV];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_N2_UV];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
             
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_N2_UV];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_N2_UV];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
             
             if (gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEDAY) 
@@ -638,10 +638,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ") + tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_N3_UV];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_N3_UV];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
             
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_N3_UV];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_N3_UV];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
             
             if (gCMUsage.ulUsageState & (1 << DISP_N3_UVLIFEDAY) 
@@ -670,10 +670,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ") + tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_N4_UV];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_N4_UV];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
             
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_N4_UV];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_N4_UV];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
             
             if (gCMUsage.ulUsageState & (1 << DISP_N4_UVLIFEDAY) 
@@ -702,10 +702,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ") + tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_N5_UV];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_N5_UV];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
             
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_N5_UV];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_N5_UV];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
             
             if (gCMUsage.ulUsageState & (1 << DISP_N5_UVLIFEDAY) 
@@ -730,10 +730,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ") + tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_W_FILTER];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_W_FILTER];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
             
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_W_FILTER];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_W_FILTER];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
             
             if (gCMUsage.ulUsageState & (1 << DISP_W_FILTERLIFE) 
@@ -758,10 +758,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ") + tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_T_B_FILTER];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_T_B_FILTER];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
             
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_T_B_FILTER];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_T_B_FILTER];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
             
             if (gCMUsage.ulUsageState & (1 << DISP_T_B_FILTERLIFE) 
@@ -785,10 +785,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ") + tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_T_A_FILTER];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_T_A_FILTER];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
             
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_T_A_FILTER];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_T_A_FILTER];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
             
             if (gCMUsage.ulUsageState & (1 << DISP_T_A_FILTERLIFE) 
@@ -813,10 +813,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ") + tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_TUBE_FILTER];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_TUBE_FILTER];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
             
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_TUBE_FILTER];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_TUBE_FILTER];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
             
             if (gCMUsage.ulUsageState & (1 << DISP_TUBE_FILTERLIFE) 
@@ -841,10 +841,10 @@ void ConsumableStatePage:: update()
             strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ") + tr("days");
             m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-            strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_TUBE_DI];
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_TUBE_DI];
             m_pCslistItem[iIdx]->setCatNo(strTmp);
             
-            strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_TUBE_DI];
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_TUBE_DI];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
             
             if (gCMUsage.ulUsageState & (1 << DISP_TUBE_DI_LIFE) 

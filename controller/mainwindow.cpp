@@ -469,7 +469,7 @@ void MainRetriveExConfigParam(int iMachineType)
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
 
     QString strV = "/ExConfigParam/ScreenSleepTime";
-    ex_gGlobalParam.Ex_Config_Param.iScreenSleepTime = config->value(strV, 3).toInt();
+    ex_gGlobalParam.Ex_Config_Param.iScreenSleepTime = config->value(strV, 10).toInt();
 
     if (config)
     {
@@ -3284,6 +3284,25 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_iFmActiveMask  = 0;
     m_eWorkMode      = APP_WORK_MODE_NORMAL; /* refer APP_WORK_MODE_NUM */
 
+    for(iLoop = 0; iLoop < APP_EXE_ECO_NUM; iLoop++)
+    {
+        switch(iLoop)
+        {
+        case 0:
+        case 1:
+            m_EcowOfDay[iLoop].iQuality = 2000;
+            break;
+        case 2:
+        case 3:
+        case 4:
+            m_EcowOfDay[iLoop].iQuality = 0;
+            break;
+        default:
+            break;
+        }
+
+    }
+
     for (iLoop = 0; iLoop < APP_EXE_INPUT_REG_PUMP_NUM; iLoop++)
     {
 //        m_aiRPumpVoltageLevel[iLoop] = 0; //ex_dcj
@@ -5514,15 +5533,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                         break;
                     }
                     //end
-# if 0
-                    if(m_EcowOfDay[pItem->ucId].iQuality > pItem->fValue)
-                    {
-                        m_EcowOfDay[pItem->ucId].iECOid    = pItem->ucId;
-                        m_EcowOfDay[pItem->ucId].iQuality  = pItem->fValue;
-                        m_EcowOfDay[pItem->ucId].iTemp     = pItem->usValue;
-                        m_EcowOfDay[pItem->ucId].time      = strdataTime;
-                    }
-#endif
+
                     m_EcowCurr[pItem->ucId].iECOid    = pItem->ucId;
                     m_EcowCurr[pItem->ucId].iQuality  = pItem->fValue;
                     m_EcowCurr[pItem->ucId].iTemp     = pItem->usValue;
@@ -5551,7 +5562,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                             alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE);
                             alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_TEMPERATURE);
                         }
-                       if ( m_bC1Regulator )DispC1Regulator();
+                       if ( m_bC1Regulator ) //DispC1Regulator();  //test c1
                         break;
                     case APP_EXE_I2_NO:
                         if (DispGetPwFlag())
@@ -5683,55 +5694,51 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             }
 
             //ex
-            QString strCurDate = QDate::currentDate().toString("yyyy-MM-dd"); //"yyyy-MM-dd hh:mm:ss"
-            QString strStartTime = strCurDate + " 00:00:00";
-            QString strEndTime =  strCurDate + " 23:59:59";
-            query.prepare(select_sql_Water);
-            query.addBindValue(strStartTime);
-            query.addBindValue(strEndTime);
-            query.exec();
-            if(query.next())
+            QString strCurDate = QDate::currentDate().toString("yyyy-MM-dd") + QString("%"); //"yyyy-MM-dd hh:mm:ss"
+            for(WLoop = 0; WLoop < APP_EXE_ECO_NUM; WLoop++)
             {
-                //update
-                query.previous();
-                while(query.next())
+                QString selectCurMsg = QString("SELECT id, ecoid, quality, time FROM Water where ecoid = %1 and time like '%2'")
+                                                  .arg(WLoop).arg(strCurDate);
+                query.exec(selectCurMsg);
+                if(query.next())
                 {
+                    //update
                     int hEcoid = query.value(1).toInt();
                     double hQuality = query.value(2).toDouble();
-                    ex_query.prepare(update_sql_Water);
+                    QString updateCm = QString("update Water SET quality = ?, time = ? where ecoid = ? and time like '%1'").arg(strCurDate);
+                    ex_query.prepare(updateCm);
                     switch(hEcoid)
                     {
                     case 0:
                     case 1:
+                    {
                         if(hQuality > m_EcowOfDay[hEcoid].iQuality)
                         {
                             ex_query.addBindValue(m_EcowOfDay[hEcoid].iQuality);
                             ex_query.addBindValue(m_EcowOfDay[hEcoid].time);
-                            ex_query.addBindValue(strStartTime);
-                            ex_query.addBindValue(strEndTime);
-                            ex_query.exec();
-                        }
-                        break;
-                    case 2:
-                    case 3:
-                    case 4:
-                        if(hQuality < m_EcowOfDay[hEcoid].iQuality)
-                        {
-                            ex_query.addBindValue(m_EcowOfDay[hEcoid].iQuality);
-                            ex_query.addBindValue(m_EcowOfDay[hEcoid].time);
-                            ex_query.addBindValue(strStartTime);
-                            ex_query.addBindValue(strEndTime);
+                            ex_query.addBindValue(hEcoid);
                             ex_query.exec();
                         }
                         break;
                     }
+                    case 2:
+                    case 3:
+                    case 4:
+                    {
+                        if(hQuality < m_EcowOfDay[hEcoid].iQuality)
+                        {
+                            ex_query.addBindValue(m_EcowOfDay[hEcoid].iQuality);
+                            ex_query.addBindValue(m_EcowOfDay[hEcoid].time);
+                            ex_query.addBindValue(hEcoid);
+                            ex_query.exec();
+                        }
+                        break;
+                    }
+                    }
                 }
-            }
-            else
-            {
-                //insert new
-                for(WLoop = 0 ; WLoop < APP_EXE_ECO_NUM ; WLoop++)
+                else
                 {
+                    //insert new
                     query.prepare(INSERT_sql_Water);
                     query.bindValue(":ecoid", m_EcowOfDay[WLoop].iECOid);
                     query.bindValue(":quality",m_EcowOfDay[WLoop].iQuality);
@@ -5741,22 +5748,6 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 }
             }
             //end
-#if 0
-            if(QString::compare(strdataTime.mid(0,10),m_strLstTime) != 0)
-            {
-                for(WLoop = 0 ; WLoop < APP_EXE_ECO_NUM ; WLoop++)
-                {
-                    query.prepare(INSERT_sql_Water);
-                    query.bindValue(":ecoid", m_EcowOfDay[WLoop].iECOid);
-                    query.bindValue(":quality",m_EcowOfDay[WLoop].iQuality);
-                    query.bindValue(":time", m_EcowOfDay[WLoop].time);
-                    query.exec();
-            
-                }
-                m_strLstTime = strdataTime.mid(0,10);
-            }
-#endif
-            
         }
         break;
     case DISP_NOT_PM:
@@ -6116,11 +6107,12 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                  {
                  case APP_DEV_HS_SUB_REGULAR:
                     {
+                         float tmpI4 = (m_EcowCurr[APP_EXE_I4_NO].iTemp*1.0)/10;
                          query.prepare(INSERT_sql_GetW);
                          query.bindValue(":name", "HP");
                          query.bindValue(":quantity",fQuantity);
                          query.bindValue(":quality",m_EcowCurr[APP_EXE_I4_NO].iQuality);
-                         query.bindValue(":tmp",m_EcowCurr[APP_EXE_I4_NO].iTemp);
+                         query.bindValue(":tmp",tmpI4);
                          query.bindValue(":time", strTime);
                          bDbResult = query.exec();
 
@@ -6129,12 +6121,13 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     break;
                  case APP_DEV_HS_SUB_HYPER:
                     {
+                         float tmpI5 = (m_EcowCurr[APP_EXE_I5_NO].iTemp*1.0)/10;
                          gCMUsage.cmInfo.aulCumulatedData[DISP_U_PACKLIFEL] += ulQuantity;
                          query.prepare(INSERT_sql_GetW);
                          query.bindValue(":name", "UP");
                          query.bindValue(":quantity",fQuantity);
                          query.bindValue(":quality" ,m_EcowCurr[APP_EXE_I5_NO].iQuality);
-                         query.bindValue(":tmp"     ,m_EcowCurr[APP_EXE_I5_NO].iTemp);
+                         query.bindValue(":tmp"     ,tmpI5);
                          query.bindValue(":time"    ,strTime);
                          bDbResult = query.exec();
 
@@ -6165,7 +6158,6 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 {
                     double res = 0;
 
-
                     if (m_EcowCurr[APP_EXE_I1_NO].iQuality != 0)
                     {
                         res = (m_EcowCurr[APP_EXE_I1_NO].iQuality - m_EcowCurr[APP_EXE_I2_NO].iQuality)/m_EcowCurr[APP_EXE_I1_NO].iQuality ;
@@ -6173,12 +6165,15 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     query.prepare(INSERT_sql_PW);
                     query.bindValue(":duration", ulDelSec/60); // to minute
                     query.bindValue(":ecoroin",m_EcowCurr[APP_EXE_I1_NO].iQuality);
-                    query.bindValue(":tmproin",m_EcowCurr[APP_EXE_I1_NO].iTemp);
+                    query.bindValue(":tmproin", (m_EcowCurr[APP_EXE_I1_NO].iTemp*1.0)/10);
+
                     query.bindValue(":ecorores",res);
+
                     query.bindValue(":ecoropw",m_EcowCurr[APP_EXE_I2_NO].iQuality);
-                    query.bindValue(":tmpropw",m_EcowCurr[APP_EXE_I2_NO].iTemp);
+                    query.bindValue(":tmpropw", (m_EcowCurr[APP_EXE_I2_NO].iTemp*1.0)/10);
+
                     query.bindValue(":ecoedi", m_EcowCurr[APP_EXE_I3_NO].iQuality);
-                    query.bindValue(":tmpedi", m_EcowCurr[APP_EXE_I3_NO].iTemp);
+                    query.bindValue(":tmpedi", (m_EcowCurr[APP_EXE_I3_NO].iTemp*1.0)/10);
                     query.bindValue(":time", strTime);
                     bDbResult = query.exec();
 

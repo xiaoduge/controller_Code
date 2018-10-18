@@ -43,11 +43,11 @@ CsListItem::CsListItem(QWidget *parent ,ConsumableStatePage *owner,int iId) :
 
     this->lbCatNo = new QLabel(this);
     this->lbCatNo->setGeometry(QRect(460 , 15 , 180 , 20));
-    //this->lbCatNo->setText("CAT NO:123456");
+    //this->lbCatNo->setText("Cat No.:123456");
 
     this->lbLotNo = new QLabel(this);
     this->lbLotNo->setGeometry(QRect(460 , 45 , 180 , 20));
-    //this->lbLotNo->setText("LOT NO: 789456");
+    //this->lbLotNo->setText("Lot No.: 789456");
 
     btnShopCar =  new CBitmapButton(this,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_SINGLE,0);
 

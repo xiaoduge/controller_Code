@@ -487,6 +487,8 @@ void AlarmDisplayPage::csUpdate()
     };
 
     /*Preporcess column */
+    QString strWarnMsg = tr("Please replace it in time so as not to affect the performance of the system.");
+    QString strROMsg = tr("Perform RO Membrane Cl2 Cleaning, Install a cleaning pack and press Clean.");
    
     for (iLoop = 0; iLoop < m_aiRealNum[ALARM_TYPE_CS]; iLoop++)
     {
@@ -507,21 +509,28 @@ void AlarmDisplayPage::csUpdate()
             
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
-            
+
+                /*
                 tmp = gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEDAY] - 
                     (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY])/ DISP_DAYININSECOND;
+                   */
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY])/DISP_DAYININSECOND) -
+                      gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEDAY];
+
+
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setName(tr("Prefilter"));
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_PRE_PACK];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_PRE_PACK];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_PRE_PACK];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_PRE_PACK];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
                 m_pCslistItem[iIdx]->updateState(1);
@@ -545,20 +554,27 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
 
+                /*
                 tmp = gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEDAY] -
                     (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY])/ DISP_DAYININSECOND;
+                    */
+
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEDAY];
+
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setName(tr("T Pack"));
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_T_PACK];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_T_PACK];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_T_PACK];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_T_PACK];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
 
                 m_pCslistItem[iIdx]->updateState(1);
@@ -582,20 +598,25 @@ void AlarmDisplayPage::csUpdate()
                 
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
-                
+                /*
                 tmp = gGlobalParam.CMParam.aulCms[DISP_P_PACKLIFEDAY] - 
                     (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY])/ DISP_DAYININSECOND;
+                    */
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_P_PACKLIFEDAY];
+
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
                 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_P_PACK];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_P_PACK];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_P_PACK];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_P_PACK];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
                 m_pCslistItem[iIdx]->updateState(1);
@@ -620,19 +641,23 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-                tmp = gGlobalParam.CMParam.aulCms[DISP_U_PACKLIFEDAY] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY])/ DISP_DAYININSECOND;
+//                tmp = gGlobalParam.CMParam.aulCms[DISP_U_PACKLIFEDAY] -
+//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY])/ DISP_DAYININSECOND;
+
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_U_PACKLIFEDAY];
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
                 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_U_PACK];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_U_PACK];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_U_PACK];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_U_PACK];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 m_pCslistItem[iIdx]->updateState(1);
                 m_pCslistItem[iIdx]->setId(iIdx);
@@ -657,19 +682,23 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_AT_PACKLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-                tmp = gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEDAY] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_AT_PACKLIFEDAY])/ DISP_DAYININSECOND;
+//                tmp = gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEDAY] -
+//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_AT_PACKLIFEDAY])/ DISP_DAYININSECOND;
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_AT_PACKLIFEDAY])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEDAY];
+
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
                 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_AT_PACK];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_AT_PACK];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_AT_PACK];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_AT_PACK];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 m_pCslistItem[iIdx]->updateState(1);
                 m_pCslistItem[iIdx]->setId(iIdx);
@@ -694,19 +723,24 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-                tmp = gGlobalParam.CMParam.aulCms[DISP_H_PACKLIFEDAY] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY])/ DISP_DAYININSECOND;
+//                tmp = gGlobalParam.CMParam.aulCms[DISP_H_PACKLIFEDAY] -
+//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY])/ DISP_DAYININSECOND;
+
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_H_PACKLIFEDAY];
+
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
                 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_H_PACK];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_H_PACK];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_H_PACK];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_H_PACK];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
                 m_pCslistItem[iIdx]->updateState(1);
@@ -732,19 +766,23 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_N1_UVLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-                tmp = gGlobalParam.CMParam.aulCms[DISP_N1_UVLIFEDAY] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N1_UVLIFEDAY])/ DISP_DAYININSECOND;
+//                tmp = gGlobalParam.CMParam.aulCms[DISP_N1_UVLIFEDAY] -
+//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N1_UVLIFEDAY])/ DISP_DAYININSECOND;
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N1_UVLIFEDAY])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_N1_UVLIFEDAY];
+
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_N1_UV];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_N1_UV];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_N1_UV];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_N1_UV];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
                 m_pCslistItem[iIdx]->updateState(1);
@@ -770,19 +808,23 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_N2_UVLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-                tmp = gGlobalParam.CMParam.aulCms[DISP_N2_UVLIFEDAY] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N2_UVLIFEDAY])/ DISP_DAYININSECOND;
+//                tmp = gGlobalParam.CMParam.aulCms[DISP_N2_UVLIFEDAY] -
+//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N2_UVLIFEDAY])/ DISP_DAYININSECOND;
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N2_UVLIFEDAY])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_N2_UVLIFEDAY];
+
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
                 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_N2_UV];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_N2_UV];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_N2_UV];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_N2_UV];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
 
                 m_pCslistItem[iIdx]->updateState(1);
@@ -808,19 +850,22 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_N3_UVLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-                tmp = gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEDAY] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N3_UVLIFEDAY])/ DISP_DAYININSECOND;
+//                tmp = gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEDAY] -
+//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N3_UVLIFEDAY])/ DISP_DAYININSECOND;
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N3_UVLIFEDAY])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEDAY];
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_N3_UV];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_N3_UV];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_N3_UV];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_N3_UV];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
                 m_pCslistItem[iIdx]->updateState(1);
@@ -845,19 +890,22 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_N4_UVLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-                tmp = gGlobalParam.CMParam.aulCms[DISP_N4_UVLIFEDAY] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N4_UVLIFEDAY])/ DISP_DAYININSECOND;
+//                tmp = gGlobalParam.CMParam.aulCms[DISP_N4_UVLIFEDAY] -
+//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N4_UVLIFEDAY])/ DISP_DAYININSECOND;
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N4_UVLIFEDAY])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_N4_UVLIFEDAY];
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_N4_UV];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_N4_UV];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_N4_UV];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_N4_UV];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
                 m_pCslistItem[iIdx]->updateState(1);
@@ -881,15 +929,18 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_N5_UVLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-                tmp = gGlobalParam.CMParam.aulCms[DISP_N5_UVLIFEDAY] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N5_UVLIFEDAY])/ DISP_DAYININSECOND;
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                tmp = gGlobalParam.CMParam.aulCms[DISP_N5_UVLIFEDAY] -
+//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N5_UVLIFEDAY])/ DISP_DAYININSECOND;
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N5_UVLIFEDAY])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_N5_UVLIFEDAY];
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_N5_UV];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_N5_UV];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_N5_UV];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_N5_UV];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
                 m_pCslistItem[iIdx]->updateState(1);
@@ -909,20 +960,24 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_W_FILTERLIFE]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-                tmp = gGlobalParam.CMParam.aulCms[DISP_W_FILTERLIFE] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_W_FILTERLIFE])/ DISP_DAYININSECOND;
+//                tmp = gGlobalParam.CMParam.aulCms[DISP_W_FILTERLIFE] -
+//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_W_FILTERLIFE])/ DISP_DAYININSECOND;
+
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_W_FILTERLIFE])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_W_FILTERLIFE];
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_W_FILTER];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_W_FILTER];
                 
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_W_FILTER];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_W_FILTER];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
                 m_pCslistItem[iIdx]->updateState(1);
@@ -939,19 +994,23 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_T_B_FILTERLIFE]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-                tmp = gGlobalParam.CMParam.aulCms[DISP_T_B_FILTERLIFE] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_B_FILTERLIFE])/ DISP_DAYININSECOND;
+//                tmp = gGlobalParam.CMParam.aulCms[DISP_T_B_FILTERLIFE] -
+//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_B_FILTERLIFE])/ DISP_DAYININSECOND;
+
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_B_FILTERLIFE])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_T_B_FILTERLIFE];
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_T_B_FILTER];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_T_B_FILTER];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_T_B_FILTER];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_T_B_FILTER];
                 
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 m_pCslistItem[iIdx]->updateState(1);
@@ -968,19 +1027,22 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_T_A_FILTER]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-                tmp = gGlobalParam.CMParam.aulCms[DISP_T_A_FILTERLIFE] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_A_FILTER])/ DISP_DAYININSECOND;
+//                tmp = gGlobalParam.CMParam.aulCms[DISP_T_A_FILTERLIFE] -
+//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_A_FILTER])/ DISP_DAYININSECOND;
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_A_FILTERLIFE])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_T_A_FILTERLIFE];
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_T_A_FILTER];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_T_A_FILTER];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_T_A_FILTER];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_T_A_FILTER];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
                 m_pCslistItem[iIdx]->updateState(1);
@@ -1000,19 +1062,24 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_TUBE_FILTERLIFE]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-                tmp = gGlobalParam.CMParam.aulCms[DISP_TUBE_FILTERLIFE] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_TUBE_FILTERLIFE])/ DISP_DAYININSECOND;
+//                tmp = gGlobalParam.CMParam.aulCms[DISP_TUBE_FILTERLIFE] -
+//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_TUBE_FILTERLIFE])/ DISP_DAYININSECOND;
+
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_TUBE_FILTERLIFE])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_TUBE_FILTERLIFE];
+
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_TUBE_FILTERLIFE];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_TUBE_FILTERLIFE];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_TUBE_FILTERLIFE];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_TUBE_FILTERLIFE];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
                 m_pCslistItem[iIdx]->updateState(1);
@@ -1032,19 +1099,24 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_TUBE_DI_LIFE]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-                tmp = gGlobalParam.CMParam.aulCms[DISP_TUBE_DI_LIFE] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_TUBE_DI_LIFE])/ DISP_DAYININSECOND;
+//                tmp = gGlobalParam.CMParam.aulCms[DISP_TUBE_DI_LIFE] -
+//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_TUBE_DI_LIFE])/ DISP_DAYININSECOND;
+
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_TUBE_DI_LIFE])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_TUBE_DI_LIFE];
+
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_TUBE_DI_LIFE];
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_TUBE_DI_LIFE];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_TUBE_DI_LIFE];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_TUBE_DI_LIFE];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
                 m_pCslistItem[iIdx]->updateState(1);
@@ -1059,24 +1131,32 @@ void AlarmDisplayPage::csUpdate()
             {
             
                 /* for DISP_TUBE_DI column */
-                strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_ROC12LIFEDAY]);
+                strTmp = tr("Last Maintenance ") + decodeTime(gCMUsage.info.aulCms[DISP_ROC12LIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-                tmp = gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_ROC12LIFEDAY])/ DISP_DAYININSECOND;
+//                tmp = gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY] -
+//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_ROC12LIFEDAY])/ DISP_DAYININSECOND;
+
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_ROC12LIFEDAY])/ DISP_DAYININSECOND) -
+                        gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY];
+
+
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
+//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");\
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strROMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
-                strTmp = tr("CAT NO:") + gGlobalParam.cmSn.aCn[DISP_ROC12LIFEDAY];
+                /*
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_ROC12LIFEDAY];
                 m_pCslistItem[iIdx]->setCatNo(strTmp);
                 
-                strTmp = tr("LOT NO:") + gGlobalParam.cmSn.aLn[DISP_ROC12LIFEDAY];
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_ROC12LIFEDAY];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
-                
+                */
+
                 m_pCslistItem[iIdx]->updateState(1);
                 m_pCslistItem[iIdx]->setId(iIdx);
                 m_pCslistItem[iIdx]->setName(tr("RO Chlorine"));

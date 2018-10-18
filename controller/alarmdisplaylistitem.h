@@ -9,7 +9,7 @@
 
 class AlarmDisplayPage;
 
-#define ADCS_LIST_WIDGET_HEIGHT (100)
+#define ADCS_LIST_WIDGET_HEIGHT (170)   //100
 #define ADCS_LIST_WIDGET_WIDTH  (350)
 
 class AdcsListItem : public QWidget

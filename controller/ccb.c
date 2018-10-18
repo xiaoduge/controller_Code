@@ -3166,7 +3166,6 @@ DISPHANDLE CcbInnerWorkStartQtw(int iIndex)
     return (DISPHANDLE)pWorkItem;
 }
 
-//#define E4DELAY
 void work_stop_qtw(void *para)
 {
     WORK_ITEM_STRU *pWorkItem = (WORK_ITEM_STRU *)para;
@@ -3226,27 +3225,6 @@ void work_stop_qtw(void *para)
     }     
 
     work_stop_qtw_succ(iIndex);
-
-#ifdef E4DELAY
-    //ex
-    iRet = CcbUpdateSwitch(pWorkItem->id,0,1 << APP_EXE_E4_NO, 1 << APP_EXE_E4_NO);
-    for (iLoop = 0; iLoop < 3; iLoop++) //
-    {
-        iRet = CcbWorkDelayEntry(pWorkItem->id,1000,CcbDelayCallBack);
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);
-            return;
-        }
-
-    }
-    iRet = CcbUpdateSwitch(pWorkItem->id,0,1 << APP_EXE_E4_NO,0);
-    if (iRet )
-    {
-        VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
-    }
-    //end
-#endif
 
     pCcb->ulAdapterAgingCount = gulSecond;
 }
