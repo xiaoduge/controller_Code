@@ -18,6 +18,7 @@
 
 
 class MainWindow;
+class QPushButton;
 
 class Ex_SuperPowerPage : public CSubPage
 {
@@ -53,13 +54,21 @@ public:
     virtual void update();
 
 private:
-
     void buildTitles();
     void save();
     void setBackColor();
     void createControl();
     void connectData();
 
+    //delete db table data;
+    bool deleteDbAll();
+    bool deleteDbWater();
+    bool deleteDbAlarm();
+    bool deleteDbGetWater();
+    bool deleteDbPWater();
+    bool deleteDbLog();
+
+private:
     QLabel    *m_lbDefaultState;
     QComboBox *m_cmbDefaultState;
 
@@ -71,6 +80,11 @@ private:
     QLabel* m_pExLabel[SYSCFGPAGE_LB_NUM];
     QLineEdit* m_ExLineEdit[SYSCFGPAGE_LB_NUM];
 
+
+    QLabel* m_pLbDbDel;
+    QComboBox* m_pCmDbDel;
+    QPushButton* m_pBtnDbDel;
+
 public slots:
 
     void on_btn_clicked(int);
@@ -78,6 +92,8 @@ public slots:
     void Restart(void);
 
     void on_CmbIndexChange_deviceType(int index);
+
+    void on_btnDbDel_clicked();
 
 };
 

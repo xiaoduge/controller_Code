@@ -1190,7 +1190,7 @@ void MainRetriveMiscParam(int iMachineType,DISP_MISC_SETTING_STRU  &Param)
         Param.iSoundMask = iValue;  
         
         strV = "/MISC/NETWORKMASK";
-        iValue = config->value(strV,3).toInt(); //0629 1->3
+        iValue = config->value(strV,1).toInt(); //0629 1->3
         Param.iNetworkMask = iValue;        
 
         strV = "/MISC/MISCFLAG";
@@ -1207,7 +1207,7 @@ void MainRetriveMiscParam(int iMachineType,DISP_MISC_SETTING_STRU  &Param)
         Param.iAutoLogoutTime = iValue;  
         
         strV = "/MISC/POWERONFLUSHTIME";
-        iValue = config->value(strV,5).toInt();
+        iValue = config->value(strV,1).toInt(); //5
         Param.iPowerOnFlushTime = iValue;  
 
     }    
@@ -5562,7 +5562,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                             alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE);
                             alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_TEMPERATURE);
                         }
-                       if ( m_bC1Regulator ) //DispC1Regulator();  //test c1
+                       if ( m_bC1Regulator ) DispC1Regulator();  //test c1
                         break;
                     case APP_EXE_I2_NO:
                         if (DispGetPwFlag())
@@ -5692,14 +5692,18 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 
                 pItem++;
             }
-
+#if 0   //2018-10-19
             //ex
             QString strCurDate = QDate::currentDate().toString("yyyy-MM-dd") + QString("%"); //"yyyy-MM-dd hh:mm:ss"
             for(WLoop = 0; WLoop < APP_EXE_ECO_NUM; WLoop++)
             {
                 QString selectCurMsg = QString("SELECT id, ecoid, quality, time FROM Water where ecoid = %1 and time like '%2'")
                                                   .arg(WLoop).arg(strCurDate);
-                query.exec(selectCurMsg);
+                bool ret = query.exec(selectCurMsg);
+                if(!ret)
+                {
+                    break;
+                }
                 if(query.next())
                 {
                     //update
@@ -5747,6 +5751,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
 
                 }
             }
+#endif
             //end
         }
         break;

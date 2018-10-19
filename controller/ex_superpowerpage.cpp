@@ -1,16 +1,13 @@
 #include "ex_superpowerpage.h"
-
 #include "titlebar.h"
-
 #include "mainwindow.h"
-
 #include "ExtraDisplay.h"
-
 #include <QPainter>
-
 #include <QMessageBox>
-
 #include <QProcess>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QMessageBox>
 
 #define ControlNum 6
 
@@ -62,6 +59,9 @@ void Ex_SuperPowerPage::buildTranslation()
     m_pExLabel[SYSCFGPAGE_LB_PRODATE]->setText(tr("Production Date"));
     m_pExLabel[SYSCFGPAGE_LB_INSTALLDATE]->setText(tr("Installation Date"));
     m_pExLabel[SYSCFGPAGE_LB_SOFTVER]->setText(tr("Software Version"));
+
+    m_pBtnDbDel->setText(tr("Delete"));
+    m_pLbDbDel->setText(tr("Delete Data"));
 
     m_pBtnSave->setTip(tr("Save"),QColor(228, 231, 240),BITMAPBUTTON_TIP_CENTER);
 }
@@ -145,6 +145,7 @@ void Ex_SuperPowerPage::createControl()
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
     tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT*4));
+    yOffset += (BACKWIDGET_HEIGHT*4 + 20);
 
     QVBoxLayout* v1Layout = new QVBoxLayout;
     QVBoxLayout* v2Layout = new QVBoxLayout;
@@ -188,7 +189,32 @@ void Ex_SuperPowerPage::createControl()
     hLayout->addLayout(v2Layout);
 
     tmpWidget->setLayout(hLayout);
-    //
+
+    //Database Delete
+    tmpWidget = new QWidget(m_widget);
+    tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
+    tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
+
+    rectTmp = QRect(5,  15, 120, 30);;
+    m_pLbDbDel = new QLabel(tmpWidget);
+    m_pLbDbDel->setGeometry(rectTmp);
+    m_pLbDbDel->show();
+
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setWidth(X_VALUE_WIDTH*2 + 5);
+    m_pCmDbDel = new QComboBox(tmpWidget);
+    QStringList cbList;
+    cbList << tr("All") << tr("Alarm") << tr("GetW") << tr("PWater") << tr("Log");//  << tr("Water");
+    m_pCmDbDel->addItems(cbList);
+    m_pCmDbDel->setCurrentIndex(0);
+    m_pCmDbDel->setGeometry(rectTmp);
+
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN*2);
+    rectTmp.setWidth(X_VALUE_WIDTH*2 + 5);
+    m_pBtnDbDel = new QPushButton(tmpWidget);
+    m_pBtnDbDel->setGeometry(rectTmp);
+    connect(m_pBtnDbDel, SIGNAL(clicked()), this, SLOT(on_btnDbDel_clicked()));
 
     //Save Btn
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,SYSCFGPAGE_BTN_SAVE);
@@ -233,6 +259,107 @@ void Ex_SuperPowerPage::connectData()
     default:
         break;
     }
+}
+
+bool Ex_SuperPowerPage::deleteDbAll()
+{
+    //water
+    bool ret;
+#if 0
+    ret = deleteDbWater();
+    if(!ret)
+    {
+        return false;
+    }
+#endif
+    //alarm
+    ret = deleteDbAlarm();
+    if(!ret)
+    {
+        return false;
+    }
+    //getWater
+    ret = deleteDbGetWater();
+    if(!ret)
+    {
+        return false;
+    }
+    //product water
+    ret = deleteDbPWater();
+    if(!ret)
+    {
+        return false;
+    }
+    //log
+    ret = deleteDbLog();
+    if(!ret)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool Ex_SuperPowerPage::deleteDbWater()
+{
+    QString strSql = "Delete from Water";
+    QSqlQuery query;
+    bool ret = query.exec(strSql);
+    if(!ret)
+    {
+        QMessageBox::warning(m_widget, tr("Water"), tr("Deleting table failed: Water"), QMessageBox::Ok);
+        return false;
+    }
+
+    return true;
+}
+bool Ex_SuperPowerPage::deleteDbAlarm()
+{
+    QString strSql = "Delete from Alarm";
+    QSqlQuery query;
+    bool ret = query.exec(strSql);
+    if(!ret)
+    {
+        QMessageBox::warning(m_widget, tr("Alarm"), tr("Deleting table failed: Alarm"), QMessageBox::Ok);
+        return false;
+    }
+    return true;
+}
+bool Ex_SuperPowerPage::deleteDbGetWater()
+{
+    QString strSql = "Delete from GetW";
+    QSqlQuery query;
+    bool ret = query.exec(strSql);
+    if(!ret)
+    {
+        QMessageBox::warning(m_widget, tr("GetWater"), tr("Deleting table failed: GetW"), QMessageBox::Ok);
+        return false;
+    }
+    return true;
+}
+bool Ex_SuperPowerPage::deleteDbPWater()
+{
+    QString strSql = "Delete from PWater";
+    QSqlQuery query;
+    bool ret = query.exec(strSql);
+    if(!ret)
+    {
+        QMessageBox::warning(m_widget, tr("Product Water"), tr("Deleting table failed: pWater"), QMessageBox::Ok);
+        return false;
+    }
+    return true;
+}
+bool Ex_SuperPowerPage::deleteDbLog()
+{
+    QString strSql = "Delete from Log";
+    QSqlQuery query;
+    bool ret = query.exec(strSql);
+    if(!ret)
+    {
+        QMessageBox::warning(m_widget, tr("Log"), tr("Deleting table failed: Log"), QMessageBox::Ok);
+        return false;
+    }
+    return true;
 }
 
 void Ex_SuperPowerPage::save()
@@ -304,7 +431,35 @@ void Ex_SuperPowerPage::on_CmbIndexChange_deviceType(int index)
         update();
          /**/
         Restart();
-     }
+    }
+}
+
+void Ex_SuperPowerPage::on_btnDbDel_clicked()
+{
+    int index = m_pCmDbDel->currentIndex();
+    switch(index)
+    {
+    case 0:
+        deleteDbAll();
+        break;
+    case 1:
+        deleteDbAlarm();
+        break;
+    case 2:
+        deleteDbGetWater();
+        break;
+    case 3:
+        deleteDbPWater();
+        break;
+    case 4:
+        deleteDbLog();
+        break;
+/*  case 5:
+        deleteDbWater();
+        break;*/
+    default:
+        break;
+    }
 }
 
 void Ex_SuperPowerPage::on_btn_clicked(int index)

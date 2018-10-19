@@ -152,7 +152,7 @@ private:
          m_pcombType[0]  = new QComboBox;
 
          m_pcombType[0]->addItem(tr("UP"));
-         m_pcombType[0]->addItem(tr("EDI"));
+         m_pcombType[0]->addItem(tr("HP"));
          m_pcombType[0]->setCurrentIndex(0);
 
          /* checkbox */

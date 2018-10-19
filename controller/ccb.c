@@ -1668,7 +1668,8 @@ int CcbSwitchSetModbusWrapper(int id,unsigned int ulAddress, unsigned int ulNums
 }
 
 
-int CcbSetSwitch(int id,unsigned int ulAddress, unsigned int ulSwitchs)
+
+int CcbInnerSetSwitch(int id,unsigned int ulAddress, unsigned int ulSwitchs)
 {
 
     int iTmp;
@@ -1690,7 +1691,22 @@ int CcbSetSwitch(int id,unsigned int ulAddress, unsigned int ulSwitchs)
     return iRet;
 }
 
-int CcbUpdateSwitch(int id,unsigned int ulAddress, unsigned int ulMask,unsigned int ulSwitchs)
+
+int CcbSetSwitch(int id,unsigned int ulAddress, unsigned int ulSwitchs)
+{
+    int iRet = -1;
+
+    sp_thread_mutex_lock( &gCcb.C12Mutex );
+    
+    iRet = CcbInnerSetSwitch(id,ulAddress,ulSwitchs);
+
+    sp_thread_mutex_unlock( &gCcb.C12Mutex );
+
+    return iRet;
+}
+
+
+int CcbInnerUpdateSwitch(int id,unsigned int ulAddress, unsigned int ulMask,unsigned int ulSwitchs)
 {
     int iRet = -1;
 
@@ -1706,6 +1722,20 @@ int CcbUpdateSwitch(int id,unsigned int ulAddress, unsigned int ulMask,unsigned 
     }
 
     CcbUpdateSwitchObjState(ulMask,ulSwitchs);
+
+    return iRet;
+}
+
+
+int CcbUpdateSwitch(int id,unsigned int ulAddress, unsigned int ulMask,unsigned int ulSwitchs)
+{
+    int iRet = -1;
+
+    sp_thread_mutex_lock( &gCcb.C12Mutex );
+    
+    iRet = CcbInnerUpdateSwitch(id,ulAddress,ulMask,ulSwitchs);
+
+    sp_thread_mutex_unlock( &gCcb.C12Mutex );
 
     return iRet;
 }
@@ -6139,7 +6169,8 @@ void DispC1Regulator(void)
         CcbUpdateRPumpObjState(0, 0X0000);
         return;
     }
-
+    sp_thread_mutex_lock( &gCcb.C12Mutex );
+    
     if (DISP_ACT_TYPE_SWITCH & gCcb.ExeBrd.aRPumpObjs[0].iActive)
     {
         float ft = (0.1 * gCcb.ExeBrd.aEcoObjs[APP_EXE_I1_NO].Value.eV.usTemp);
@@ -6152,6 +6183,8 @@ void DispC1Regulator(void)
             DispSetRPump(0,(0XFF00|speed));
         }
     }
+    
+    sp_thread_mutex_unlock( &gCcb.C12Mutex );
 }
 
 int CcbC2Regulator(int id,float fv,int on)
@@ -9742,7 +9775,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 return ;
             }
             
-            for (iLoop = 0; iLoop < 10; iLoop++) //延时测进水压力
+            for (iLoop = 0; iLoop < 10; iLoop++) //延时测进水压�?
             {
                 /* get B1 reports from exe */
                 iRet = CcbGetPmValue(pWorkItem->id,APP_EXE_PM1_NO,1);

@@ -291,6 +291,8 @@ typedef struct
    sp_thread_mutex_t WorkMutex;
 
    sp_thread_mutex_t ModbusMutex;
+   
+   sp_thread_mutex_t C12Mutex;
 
    sp_sem_t         Sem4Delay[WORK_LIST_NUM + 1];    /* Used in work Delay */
    SYS_TIMEO        to4Delay[WORK_LIST_NUM +1];

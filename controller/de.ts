@@ -2146,55 +2146,65 @@
 <context>
     <name>Ex_SuperPowerPage</name>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="48"/>
+        <location filename="ex_superpowerpage.cpp" line="45"/>
         <source>Super Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="54"/>
+        <location filename="ex_superpowerpage.cpp" line="51"/>
         <source>Default State</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="55"/>
+        <location filename="ex_superpowerpage.cpp" line="52"/>
         <location filename="ex_superpowerpage.cpp" line="120"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="56"/>
+        <location filename="ex_superpowerpage.cpp" line="53"/>
         <location filename="ex_superpowerpage.cpp" line="121"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="58"/>
+        <location filename="ex_superpowerpage.cpp" line="55"/>
         <source>System Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="60"/>
+        <location filename="ex_superpowerpage.cpp" line="57"/>
         <source>Catalog No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="61"/>
+        <location filename="ex_superpowerpage.cpp" line="58"/>
         <source>Serial No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="62"/>
+        <location filename="ex_superpowerpage.cpp" line="59"/>
         <source>Production Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="63"/>
+        <location filename="ex_superpowerpage.cpp" line="60"/>
         <source>Installation Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="64"/>
+        <location filename="ex_superpowerpage.cpp" line="61"/>
         <source>Software Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="63"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="64"/>
+        <source>Delete Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2203,18 +2213,86 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="264"/>
-        <location filename="ex_superpowerpage.cpp" line="297"/>
+        <location filename="ex_superpowerpage.cpp" line="208"/>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="208"/>
+        <location filename="ex_superpowerpage.cpp" line="307"/>
+        <source>Water</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="208"/>
+        <location filename="ex_superpowerpage.cpp" line="320"/>
+        <source>Alarm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="208"/>
+        <source>GetW</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="208"/>
+        <source>PWater</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="208"/>
+        <location filename="ex_superpowerpage.cpp" line="356"/>
+        <source>Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="307"/>
+        <source>Deleting table failed: Water</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="320"/>
+        <source>Deleting table failed: Alarm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="332"/>
+        <source>GetWater</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="332"/>
+        <source>Deleting table failed: GetW</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="344"/>
+        <source>Product Water</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="344"/>
+        <source>Deleting table failed: pWater</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="356"/>
+        <source>Deleting table failed: Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="388"/>
+        <location filename="ex_superpowerpage.cpp" line="421"/>
         <source>NOTIFY</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="264"/>
+        <location filename="ex_superpowerpage.cpp" line="388"/>
         <source>Whether to restart the device immediately?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="297"/>
+        <location filename="ex_superpowerpage.cpp" line="421"/>
         <source>Change Device Type?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2390,7 +2468,7 @@
     </message>
     <message>
         <location filename="setdevicepage.h" line="155"/>
-        <source>EDI</source>
+        <source>HP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3031,82 +3109,82 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6922"/>
+        <location filename="mainwindow.cpp" line="6917"/>
         <source>No Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6925"/>
+        <location filename="mainwindow.cpp" line="6920"/>
         <source>No P-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6928"/>
+        <location filename="mainwindow.cpp" line="6923"/>
         <source>No U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6931"/>
+        <location filename="mainwindow.cpp" line="6926"/>
         <source>No AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6934"/>
+        <location filename="mainwindow.cpp" line="6929"/>
         <source>No H-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6937"/>
+        <location filename="mainwindow.cpp" line="6932"/>
         <source>False Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6940"/>
+        <location filename="mainwindow.cpp" line="6935"/>
         <source>False P-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6943"/>
+        <location filename="mainwindow.cpp" line="6938"/>
         <source>False U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6946"/>
+        <location filename="mainwindow.cpp" line="6941"/>
         <source>False AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="6949"/>
+        <location filename="mainwindow.cpp" line="6944"/>
         <source>False H-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7326"/>
+        <location filename="mainwindow.cpp" line="7321"/>
         <source>Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7327"/>
+        <location filename="mainwindow.cpp" line="7322"/>
         <source>Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7328"/>
+        <location filename="mainwindow.cpp" line="7323"/>
         <source>User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7329"/>
+        <location filename="mainwindow.cpp" line="7324"/>
         <source>GetW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7330"/>
+        <location filename="mainwindow.cpp" line="7325"/>
         <source>PWater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7331"/>
+        <location filename="mainwindow.cpp" line="7326"/>
         <source>Log</source>
         <translation type="unfinished"></translation>
     </message>

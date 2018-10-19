@@ -74,11 +74,11 @@ void Ex_HistoryPage::buildTranslation()
     m_plbStartTime->setText(tr("Start Date"));
     m_plbStopTime->setText(tr("End Date"));
 
-    m_QryObjNameCbox->setItemText(0, tr("Water"));
-    m_QryObjNameCbox->setItemText(1, tr("Alarm"));
-    m_QryObjNameCbox->setItemText(2, tr("GetW"));
-    m_QryObjNameCbox->setItemText(3, tr("PWater"));
-    m_QryObjNameCbox->setItemText(4, tr("Log"));
+    m_QryObjNameCbox->setItemText(0, tr("Alarm"));
+    m_QryObjNameCbox->setItemText(1, tr("GetW"));
+    m_QryObjNameCbox->setItemText(2, tr("PWater"));
+    m_QryObjNameCbox->setItemText(3, tr("Log"));
+//    m_QryObjNameCbox->setItemText(4, tr("Water"));
 }
 
 void Ex_HistoryPage::switchLanguage()
@@ -126,7 +126,7 @@ void Ex_HistoryPage::initUi()
 
     m_QryObjNameCbox = new QComboBox(m_pOperatingWidget);
     QStringList cbList;
-    cbList << tr("Water") << tr("Alarm") << tr("GetW") << tr("PWater") << tr("Log");  //<< tr("All")
+    cbList << tr("Alarm") << tr("GetW") << tr("PWater") << tr("Log");  // << tr("Water")
     m_QryObjNameCbox->addItems(cbList);
 
     m_pTableView = new QTableView(m_pOperatingWidget);
@@ -191,20 +191,20 @@ void Ex_HistoryPage::dbQuery()
     switch(index)
     {
     case 0:
-        dbQueryWater();
-        break;
-    case 1:
         dbQueryAlarm();
         break;
-    case 2:
+    case 1:
         dbQueryGetWater();
         break;
-    case 3:
+    case 2:
         dbQueryProduceWater();
         break;
-    case 4:
+    case 3:
         dbQueryLog();
         break;
+/*  case 4:
+        dbQueryWater();
+        break;   */
     default:
         break;
     }

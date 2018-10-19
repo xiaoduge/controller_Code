@@ -360,12 +360,14 @@ int main(int argc, char *argv[])
     db.open();
 
     QSqlQuery query;
-
-    bool success = query.exec(CREATE_TABLE_Water);
+    bool success;
+#if 0
+    success = query.exec(CREATE_TABLE_Water);
     if(success)
         qDebug()<<"create Water table successed\r\n";
     else
         qDebug()<<"create Water table failed\r\n";
+#endif
 
     success = query.exec(CREATE_TABLE_Handler);
     if(success)
