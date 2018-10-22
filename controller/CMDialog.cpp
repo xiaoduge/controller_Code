@@ -235,6 +235,42 @@ void CMDlg::showCmInfo()
             }
             
             break;
+        case DISP_AC_PACKLIFEDAY:
+            {
+                int tmp = gGlobalParam.CMParam.aulCms[iId] - ((DispGetCurSecond() - gCMUsage.info.aulCms[iId])/DISP_DAYININSECOND);
+
+                m_pEditCMCur[iId]->setText(QString::number(tmp));
+                if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_H_PACK))
+                {
+                    m_pEditCMCfg[iId]->setEnabled(true);
+                    m_pEditCMCur[iId]->setEnabled(true);
+                    m_pBtnCM[iId]->setEnabled(true);
+                }
+                else
+                {
+                    m_pEditCMCfg[iId]->setEnabled(false);
+                    m_pEditCMCur[iId]->setEnabled(false);
+                    m_pBtnCM[iId]->setEnabled(false);
+                }
+
+            }
+            break;
+        case DISP_AC_PACKLIFEL:
+            m_pEditCMCur[iId]->setText(QString::number(gCMUsage.info.aulCms[iId]));
+            if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_H_PACK))
+            {
+                m_pEditCMCfg[iId]->setEnabled(true);
+                m_pEditCMCur[iId]->setEnabled(true);
+                m_pBtnCM[iId]->setEnabled(true);
+            }
+            else
+            {
+                m_pEditCMCfg[iId]->setEnabled(false);
+                m_pEditCMCur[iId]->setEnabled(false);
+                m_pBtnCM[iId]->setEnabled(false);
+            }
+
+            break;
         case DISP_T_PACKLIFEDAY:
             {
                 int tmp = gGlobalParam.CMParam.aulCms[iId] - ((DispGetCurSecond() - gCMUsage.info.aulCms[iId])/DISP_DAYININSECOND);
@@ -467,6 +503,7 @@ void CMDlg::resetItem(int iId,QString &strName)
     case DISP_P_PACKLIFEDAY:
     case DISP_U_PACKLIFEDAY:
     case DISP_PRE_PACKLIFEDAY:
+    case DISP_AC_PACKLIFEDAY:
     case DISP_T_PACKLIFEDAY:
     case DISP_N1_UVLIFEDAY:
     case DISP_N2_UVLIFEDAY:

@@ -52,6 +52,30 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         aIds[iIdx].vi.v2Max = 99999;
         iIdx++;
     }
+    //2018.10.22 ADD AC PACK
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iDspType = 2;
+        aIds[iIdx].iId      = DISP_AC_PACK;
+        aIds[iIdx].vi.v1Min = 0;
+        aIds[iIdx].vi.v1Max = 99999;
+        aIds[iIdx].vi.v2Min = 0;
+        aIds[iIdx].vi.v2Max = 99999;
+        iIdx++;
+        break;
+    case MACHINE_PURIST:
+        break;
+    }
+
     //2018.10.12 add T-Pack
     if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
     {
@@ -462,6 +486,14 @@ void MaintenanceCyclePage::buildTranslation()
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
             pMaintenancelistItem[iIndex]->setP2Name(tr("L"));
             break;
+        case DISP_AC_PACK:
+            /*
+            AC PACK  90Day   10000L
+            */
+            pMaintenancelistItem[iIndex]->setName(tr("AC Pack"));
+            pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
+            pMaintenancelistItem[iIndex]->setP2Name(tr("L"));
+            break;
         case DISP_T_PACK:
             /*
             T-Pack unknow Day; unknow L
@@ -703,6 +735,13 @@ void MaintenanceCyclePage:: update()
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEDAY]));
             pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEL]));
             break;
+        case DISP_AC_PACK:
+            /*
+            AC PACK 90DAY  10000L
+            */
+            pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_AC_PACKLIFEDAY]));
+            pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_AC_PACKLIFEL]));
+            break;
         case DISP_T_PACK:
             /*
             T-Pack
@@ -855,6 +894,15 @@ void MaintenanceCyclePage::save()
             CMParam.aulCms[DISP_PRE_PACKLIFEDAY] = iTemp;
             iTemp = pMaintenancelistItem[iIndex]->getP2().toInt();
             CMParam.aulCms[DISP_PRE_PACKLIFEL] = iTemp;
+            break;
+        case DISP_AC_PACK:
+            /*
+            AC PACK 90DAY 10000L
+            */
+            iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
+            CMParam.aulCms[DISP_AC_PACKLIFEDAY] = iTemp;
+            iTemp = pMaintenancelistItem[iIndex]->getP2().toInt();
+            CMParam.aulCms[DISP_AC_PACKLIFEL] = iTemp;
             break;
         case DISP_T_PACK:
             /*

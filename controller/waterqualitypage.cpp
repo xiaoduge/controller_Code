@@ -228,6 +228,16 @@ WaterQualityPage::WaterQualityPage(QObject *parent,CBaseWidget *widget ,MainWind
       updEcoInfo(APP_EXE_I3_NO,m_wndMain->getEco(APP_EXE_I3_NO),true);
       updEcoInfo(APP_EXE_I4_NO,m_wndMain->getEco(APP_EXE_I4_NO),true);
       updEcoInfo(APP_EXE_I5_NO,m_wndMain->getEco(APP_EXE_I5_NO),true);
+
+      //2018.10.22 add
+      update_edi_msg(RO_RESIDUE_RATIO, 0);
+      updSwPressure(0);
+      updPressure(APP_EXE_PM1_NO, 0);
+      for(iLoop = 0; iLoop < APP_FM_FLOW_METER_NUM; iLoop++)
+      {
+          updFlowInfo(iLoop, 0);
+      }
+      //
 }
 
 void WaterQualityPage::creatTitle()

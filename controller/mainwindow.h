@@ -553,13 +553,14 @@ private:
     QString      m_strUserName;
     QString      m_strPassword;
 
-    
+
     static QStringList m_astrPrePack;
-     static QStringList m_astrPPack;
-     static QStringList m_astrUPack;
-     static QStringList m_astrHPack;
-     static QStringList m_astrATPack;
-     static QStringList m_astrCleanPack;
+    static QStringList m_astrACPack;
+    static QStringList m_astrPPack;
+    static QStringList m_astrUPack;
+    static QStringList m_astrHPack;
+    static QStringList m_astrATPack;
+    static QStringList m_astrCleanPack;
 
     class RFIDPackInfo
     {
@@ -628,6 +629,10 @@ private:
             if (m_astrPPack.contains(strSn))
             {
                iPackType = DISP_P_PACK;
+            }
+            else if(m_astrACPack.contains(strSn))
+            {
+                iPackType = DISP_AC_PACK;
             }
             else if (m_astrUPack.contains(strSn))
             {

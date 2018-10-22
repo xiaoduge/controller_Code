@@ -397,6 +397,8 @@ typedef enum
     DISP_ALARM_PART0_185UV_OOP ,
     DISP_ALARM_PART0_TANKUV_OOP ,
     DISP_ALARM_PART0_TUBEUV_OOP ,
+    DISP_ALARM_PART0_PREPACK_OOP ,  //2018.10.22 add
+    DISP_ALARM_PART0_ACPACK_OOP ,   //2018.10.22 add
     DISP_ALARM_PART0_PPACK_OOP ,
     DISP_ALARM_PART0_ATPACK_OOP ,
     DISP_ALARM_PART0_HPACK_OOP ,
@@ -503,6 +505,7 @@ typedef enum
 
 #define MODULES_ALL ((1 << DISP_SM_NUM) - 1)
 
+#if 0
 #define DEFAULT_MODULES_L_Genie      (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
 #define DEFAULT_MODULES_L_UP         (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
 #define DEFAULT_MODULES_EDI_LOOP     (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
@@ -513,6 +516,18 @@ typedef enum
 #define DEFAULT_MODULES_RO           (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
 #define DEFAULT_MODULES_PURIST       (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
 #define DEFAULT_MODULES_ADAPT        (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
+#endif
+
+#define DEFAULT_MODULES_L_Genie      (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
+#define DEFAULT_MODULES_L_UP         (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
+#define DEFAULT_MODULES_EDI_LOOP     (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
+#define DEFAULT_MODULES_RO_LOOP      (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
+#define DEFAULT_MODULES_Genie        (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
+#define DEFAULT_MODULES_UP           (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
+#define DEFAULT_MODULES_EDI          (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
+#define DEFAULT_MODULES_RO           (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
+#define DEFAULT_MODULES_PURIST       (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
+#define DEFAULT_MODULES_ADAPT        (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
 
 typedef struct
 {
@@ -641,6 +656,8 @@ typedef enum
 {
     DISP_PRE_PACKLIFEDAY = 0,   //´¿»¯Öù:  0~999 DAYS    0~9999L 
     DISP_PRE_PACKLIFEL,     //´¿»¯Öù:   0~9999L
+    DISP_AC_PACKLIFEDAY,   //AC PACK:  0~999 DAYS    0~9999L 
+    DISP_AC_PACKLIFEL,     //AC PACK:   0~9999L
     DISP_T_PACKLIFEDAY,     //T PACK: 2018.10.12 ADD
     DISP_T_PACKLIFEL,       //T PACK: 2018.10.12 ADD
     DISP_P_PACKLIFEDAY ,    //´¿»¯Öù:  0~999 DAYS    0~9999L 
@@ -673,6 +690,7 @@ typedef enum
 typedef enum
 {
     DISP_PRE_PACK = 0,  
+    DISP_AC_PACK,  //2018.10.22 ADD
     DISP_T_PACK,  //2018.10.12 ADD
     DISP_P_PACK ,    
     DISP_U_PACK,

@@ -305,6 +305,9 @@ void SterilizePage::on_btn_clicked(int index)
                         case DISP_PRE_PACK:
                              QMessageBox::about(NULL, tr("About"), tr("No Pre-PACK detected!"));
                              break;
+                        case DISP_AC_PACK:
+                             QMessageBox::about(NULL, tr("About"), tr("No AC-PACK detected!"));
+                             break;
                         case (DISP_P_PACK | (1 << 16)):
                              QMessageBox::about(NULL, tr("About"), tr("No Clean-PACK detected!"));
                              break;

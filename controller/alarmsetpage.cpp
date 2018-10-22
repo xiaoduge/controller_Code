@@ -107,6 +107,18 @@ void AlarmSetPage::buildTranslation()
             */
             m_plistItem[iIdx]->setName(tr("Check Loop UV"));
             break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP):
+            /*
+            PRE-PackÍÑÂä
+            */
+            m_plistItem[iIdx]->setName(tr("PRE Pack Not Detected"));
+            break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP):
+            /*
+            AC-PackÍÑÂä
+            */
+            m_plistItem[iIdx]->setName(tr("AC Pack Not Detected"));
+            break;
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP):
             /*
             P-PackÍÑÂä
@@ -537,6 +549,26 @@ void AlarmSetPage::save()
                 Param.aulFlag[DISP_ALARM_PART0] &= ~(1<<DISP_ALARM_PART0_TUBEUV_OOP);
             }
             break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP):
+            if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
+            {
+                Param.aulFlag[DISP_ALARM_PART0] |= (1<<DISP_ALARM_PART0_PREPACK_OOP);
+            }
+            else
+            {
+                Param.aulFlag[DISP_ALARM_PART0] &= ~(1<<DISP_ALARM_PART0_PREPACK_OOP);
+            }
+            break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP):
+            if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
+            {
+                Param.aulFlag[DISP_ALARM_PART0] |= (1<<DISP_ALARM_PART0_ACPACK_OOP);
+            }
+            else
+            {
+                Param.aulFlag[DISP_ALARM_PART0] &= ~(1<<DISP_ALARM_PART0_ACPACK_OOP);
+            }
+            break;
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP):
             if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
             {
@@ -934,6 +966,26 @@ void AlarmSetPage::update()
                 m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
             }
             break;
+       case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP):
+           if (pParam->aulFlag[DISP_ALARM_PART0] & (1<<DISP_ALARM_PART0_PREPACK_OOP))
+           {
+               m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
+           }
+           else
+           {
+               m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
+           }
+           break;
+       case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP):
+           if (pParam->aulFlag[DISP_ALARM_PART0] & (1<<DISP_ALARM_PART0_ACPACK_OOP))
+           {
+               m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
+           }
+           else
+           {
+               m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
+           }
+           break;
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP):
             if (pParam->aulFlag[DISP_ALARM_PART0] & (1<<DISP_ALARM_PART0_PPACK_OOP))
             {

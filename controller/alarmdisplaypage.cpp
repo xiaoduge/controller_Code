@@ -125,6 +125,20 @@ void AlarmDisplayPage::buildTranslation()
              m_astrPartAlarm[iIdx] = tr("Check TUBE UV");
              aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
              break;
+         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP):
+             /*
+             PRE-PackÍÑÂä
+             */
+             m_astrPartAlarm[iIdx] = tr("PRE Pack Not Detected");
+             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx;
+             break;
+         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP):
+             /*
+             AC-PackÍÑÂä
+             */
+             m_astrPartAlarm[iIdx] = tr("AC Pack Not Detected");
+             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx;
+             break;
          case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP):
              /*
              P-PackÍÑÂä
@@ -533,6 +547,44 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_PRE_PACK];
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 
+                m_pCslistItem[iIdx]->updateState(1);
+                m_pCslistItem[iIdx]->setId(iIdx);
+                iIdx++;
+            }
+            break;
+        case DISP_AC_PACK:
+            if (gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEDAY)
+                || gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEL))
+            {
+                /* for preprocess column */
+                tmp = gCMUsage.info.aulCms[DISP_AC_PACKLIFEL] ;
+                if(tmp < 0)
+                {
+                    tmp = 0;
+                }
+                strTmp = astrNames[0] + "  " + QString::number(tmp) + "L";
+                m_pCslistItem[iIdx]->setValue(strTmp);
+
+                strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY]);
+                m_pCslistItem[iIdx]->setInstDate(strTmp);
+
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY])/DISP_DAYININSECOND) -
+                      gGlobalParam.CMParam.aulCms[DISP_AC_PACKLIFEDAY];
+
+                if(tmp < 0)
+                {
+                    tmp = 0;
+                }
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
+                m_pCslistItem[iIdx]->setName(tr("AC Pack"));
+                m_pCslistItem[iIdx]->setChangeDate(strTmp);
+
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_AC_PACK];
+                m_pCslistItem[iIdx]->setCatNo(strTmp);
+
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_AC_PACK];
+                m_pCslistItem[iIdx]->setLotNo(strTmp);
+
                 m_pCslistItem[iIdx]->updateState(1);
                 m_pCslistItem[iIdx]->setId(iIdx);
                 iIdx++;
@@ -1192,6 +1244,8 @@ void AlarmDisplayPage::asUpdate()
          case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP):
          case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP):
          case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TUBEUV_OOP):
+         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP):
+         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP):
          case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP):
          case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ATPACK_OOP):
          case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_HPACK_OOP):

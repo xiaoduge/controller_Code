@@ -372,6 +372,8 @@ QString gastrAlarmName[] =
     "185UV Out of Position Alarm",
     "Tank UV Out of Position Alarm",
     "TUBE UV Out of Position Alarm",
+    "Pre-PACK Out of Position Alarm",
+    "AC-PACK Out of Position Alarm",
     "P-PACK Out of Position Alarm",
     "AT-PACK Out of Position Alarm",
     "H-PACK Out of Position Alarm",  //ex
@@ -664,6 +666,15 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_PRE_PACKLIFEL])
     {
         Param.aulCms[DISP_PRE_PACKLIFEL] = 10000; // 
+    }
+    //2018.10.22 ADD AC PACK
+    if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_AC_PACKLIFEDAY])
+    {
+        Param.aulCms[DISP_AC_PACKLIFEDAY] = 90;
+    }
+    if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_AC_PACKLIFEL])
+    {
+        Param.aulCms[DISP_AC_PACKLIFEL] = 10000; //
     }
     //2018.10.12 add T-Pack
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_T_PACKLIFEDAY])
@@ -1248,6 +1259,16 @@ void MainRetriveCMInfo(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_PRE_PACKLIFEL])
     {
         Param.aulCms[DISP_PRE_PACKLIFEL] = 0; // NEW pack
+    }
+    //2018.10.22 AC PACK
+    if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_AC_PACKLIFEDAY])
+    {
+        Param.aulCms[DISP_AC_PACKLIFEDAY] = DispGetCurSecond(); // NEW pack
+    }
+
+    if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_AC_PACKLIFEL])
+    {
+        Param.aulCms[DISP_AC_PACKLIFEL] = 0; // NEW pack
     }
 
     //2018.10.12 T-Pack
@@ -2605,6 +2626,23 @@ void CheckConsumptiveMaterialState(void)
         }
 
     }    
+    //2018.10.22 AC PACK
+    if (ulCurTime > gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY])
+    {
+        ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY])/DISP_DAYININSECOND;
+
+
+        if (ulTemp >= gGlobalParam.CMParam.aulCms[DISP_AC_PACKLIFEDAY])
+        {
+            gCMUsage.ulUsageState |= (1 << DISP_AC_PACKLIFEDAY);
+        }
+
+        if (gCMUsage.info.aulCms[DISP_AC_PACKLIFEL] >= gGlobalParam.CMParam.aulCms[DISP_AC_PACKLIFEL])
+        {
+            gCMUsage.ulUsageState |= (1 << DISP_AC_PACKLIFEL);
+        }
+
+    }
 
     //2018.10.12 T_Pack
     if (ulCurTime > gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY])
@@ -2834,6 +2872,14 @@ void MainResetCmInfo(int iSel)
         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEDAY] = 0;
         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] = 0;
         break;
+    case DISP_AC_PACK:
+        gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY] = DispGetCurSecond();
+        gCMUsage.info.aulCms[DISP_AC_PACKLIFEL]   = 0;
+        gCMUsage.ulUsageState &= ~(1 << DISP_AC_PACKLIFEDAY);
+        gCMUsage.ulUsageState &= ~(1 << DISP_AC_PACKLIFEL);
+        gCMUsage.cmInfo.aulCumulatedData[DISP_AC_PACKLIFEDAY] = 0;
+        gCMUsage.cmInfo.aulCumulatedData[DISP_AC_PACKLIFEL] = 0;
+        break;
     case DISP_T_PACK:
         gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY] = DispGetCurSecond();
         gCMUsage.info.aulCms[DISP_T_PACKLIFEL]   = 0;
@@ -2993,7 +3039,7 @@ void SaveConsumptiveMaterialInfo(void)
 
    int iLoop;
 
-   int aPackArray[] = {DISP_PRE_PACKLIFEL,DISP_T_PACKLIFEL,DISP_P_PACKLIFEL,DISP_H_PACKLIFEL,DISP_U_PACKLIFEL,DISP_AT_PACKLIFEL};
+   int aPackArray[] = {DISP_PRE_PACKLIFEL,DISP_AC_PACKLIFEL,DISP_T_PACKLIFEL,DISP_P_PACKLIFEL,DISP_H_PACKLIFEL,DISP_U_PACKLIFEL,DISP_AT_PACKLIFEL};
    int aNArray[]    = {DISP_N1_UVLIFEHOUR,DISP_N2_UVLIFEHOUR,DISP_N3_UVLIFEHOUR,DISP_N4_UVLIFEHOUR,DISP_N5_UVLIFEHOUR};
 
    for (iLoop = 0; iLoop < DISP_CM_NUM; iLoop++)
@@ -3065,6 +3111,7 @@ void SaveConsumptiveMaterialInfo(void)
 }
 
 QStringList MainWindow::m_astrPrePack;
+QStringList MainWindow::m_astrACPack;
 QStringList MainWindow::m_astrPPack;
 QStringList MainWindow::m_astrUPack;
 QStringList MainWindow::m_astrHPack;
@@ -3265,6 +3312,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_astrUPack     << "RR700Q501";
 
     m_astrHPack     << "RR700H101";
+
+    m_astrACPack    << "RR700AC01"; //2018.10.22 add
 
     gCMUsage.ulUsageState = 0;
 
@@ -3517,6 +3566,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
                                                           |(1 << DISP_ALARM_PART0_TANKUV_OOP)
                                                           |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
                                                           |(1 << DISP_ALARM_PART0_PPACK_OOP)
+                                                          |(1 << DISP_ALARM_PART0_ACPACK_OOP)
                                                           |(1 << DISP_ALARM_PART0_ATPACK_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
@@ -3657,6 +3707,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_cMas[iLoop].aulMask[0]  = DISP_NOTIFY_DEFAULT;
 
             m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_PRE_PACK)
+                                         |(1 << DISP_AC_PACK)
+                                         |(1 << DISP_T_PACK)
                                          |(1 << DISP_P_PACK)
                                          |(1 << DISP_AT_PACK)
                                          |(1 << DISP_N1_UV)
@@ -3672,6 +3724,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_cMas[iLoop].aulMask[0]  = DISP_NOTIFY_DEFAULT;
 
             m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACK)
+                                           |(1 << DISP_T_PACK)
                                            |(1 << DISP_N1_UV)
                                            |(1 << DISP_N3_UV)
                                            |(1 << DISP_N5_UV)
@@ -3765,8 +3818,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
 
         /*rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
@@ -3778,8 +3837,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
         break;
     case MACHINE_L_UP:
         
@@ -3792,8 +3857,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
 
         /*rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
@@ -3805,8 +3876,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
         break;
     case MACHINE_L_EDI_LOOP:
         
@@ -3819,8 +3896,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_H_PACK;
         
-        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
 
         /*rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
@@ -3832,8 +3915,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_H_PACK;
         
-        MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
         break;
     case MACHINE_L_RO_LOOP:
         
@@ -3846,8 +3935,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
 
         /*rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
@@ -3859,8 +3954,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
         break;
     case MACHINE_Genie:
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
@@ -3872,9 +3973,15 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
-        
-        //MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        //MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
+
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
 
         /*rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
@@ -3886,8 +3993,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-       // MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-      //  MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
         break;
     case MACHINE_UP:
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
@@ -3899,8 +4012,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-       // MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-     //   MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
 
         /*rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
@@ -3912,8 +4031,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        //MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-       // MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
         break;
     case MACHINE_EDI:
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
@@ -3922,8 +4047,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
         
-        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
 
         /*rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
@@ -3932,8 +4063,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
         
-        MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
         break;
     case MACHINE_RO:
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
@@ -3942,8 +4079,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
         
-        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
 
         /*rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
@@ -3952,8 +4095,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
         
-        MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
         break;
     case MACHINE_PURIST:
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
@@ -3976,8 +4125,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
+
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
 
         /* rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
@@ -3989,9 +4144,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-        MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+        }
 
+        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
+        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
         
         break;
     } 
@@ -4809,6 +4969,12 @@ void MainWindow::on_timerSecondEvent()
                         case DISP_P_PACK:
                             alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP);
                             break;
+                        case DISP_PRE_PACK:
+                            alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP);
+                            break;
+                        case DISP_AC_PACK:
+                            alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP);
+                            break;
                         case DISP_U_PACK:
                             alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP);
                             break;
@@ -5212,7 +5378,7 @@ bool alarmHaveAssociatedModule(int iAlarmPart,int iAlarmId)
                 bDevice = false ;
             }
             break;
-        case DISP_ALARM_PART0_PPACK_OOP:
+        case DISP_ALARM_PART0_PREPACK_OOP:
             if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))) //DISP_SM_PreFilterColumn
             {
                 bDevice = false ;
@@ -5222,6 +5388,8 @@ bool alarmHaveAssociatedModule(int iAlarmPart,int iAlarmId)
                 bDevice = false ;
             }
             break;
+        case DISP_ALARM_PART0_ACPACK_OOP:
+        case DISP_ALARM_PART0_PPACK_OOP:
         case DISP_ALARM_PART0_ATPACK_OOP:
         case DISP_ALARM_PART0_HPACK_OOP:
         case DISP_ALARM_PART0_UPACK_OOP:  
@@ -6647,6 +6815,18 @@ void MainWindow :: rmvRfidFromDelayList(int iRfId)
                 alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP);
             }
             break;
+        case DISP_PRE_PACK:
+            if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_PREPACK_OOP))
+            {
+                alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP);
+            }
+            break;
+        case DISP_AC_PACK:
+            if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_ACPACK_OOP))
+            {
+                alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP);
+            }
+            break;
         case DISP_U_PACK:
             if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_UPACK_OOP))
             {
@@ -6917,6 +7097,9 @@ void MainWindow::run(bool bRun)
                case DISP_PRE_PACK:
                     ToastDlg::makeToast(tr("No Pre-PACK detected!"));
                     break;
+               case DISP_AC_PACK:
+                    ToastDlg::makeToast(tr("No AC-PACK detected!"));
+                    break;
                case DISP_P_PACK:
                     ToastDlg::makeToast(tr("No P-PACK detected!"));
                     break;
@@ -6931,6 +7114,9 @@ void MainWindow::run(bool bRun)
                     break;
                case (DISP_PRE_PACK | 0xFF00):
                     ToastDlg::makeToast(tr("False Pre-PACK detected!"));
+                    break;
+               case (DISP_AC_PACK | 0xFF00):
+                    ToastDlg::makeToast(tr("False AC-PACK detected!"));
                     break;
                case (DISP_P_PACK | 0xFF00):
                     ToastDlg::makeToast(tr("False P-PACK detected!"));
