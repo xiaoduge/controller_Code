@@ -13072,7 +13072,8 @@ void CcbInitMachineType(void)
         gCcb.ulNormalTwMask = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_C2_NO);
         gCcb.ulCirMask      = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO);
 
-        gCcb.ulRunMask      = APP_EXE_INNER_SWITCHS & (~((1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO)));
+//        gCcb.ulRunMask      = APP_EXE_INNER_SWITCHS & (~((1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO)));
+        gCcb.ulRunMask      = APP_EXE_INNER_SWITCHS & (~((1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO)));
 
         gCcb.ulPMMask       = (((1 << APP_EXE_PM1_NO)|(1 << APP_EXE_PM2_NO)) << APP_EXE_MAX_ECO_NUMBER);
         gCcb.bit1CirSpeedAdjust = TRUE;
@@ -13419,6 +13420,7 @@ void MainSecondTask4MainState()
         {
         case MACHINE_L_Genie:
         case MACHINE_Genie:
+        case MACHINE_UP: //2018.10.24 add
             if (gCcb.bit1B2Full)
             {
                 // check report flag

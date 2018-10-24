@@ -1515,7 +1515,7 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
             {
                 if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
                 {
-                    if(DispGetEdiQtwFlag() && bVisible)
+                    if((DispGetPwFlag() || DispGetEdiQtwFlag()) && bVisible)
                     {
                         m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
                         m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ).sprintf("%3d",(int)fQ > 200 ?200:(int)fQ));
@@ -1667,7 +1667,7 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
         {
             if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
             {
-                if(DispGetEdiQtwFlag())
+                if(DispGetPwFlag() || DispGetEdiQtwFlag())
                 {
                     if (bVisible)
                     {
