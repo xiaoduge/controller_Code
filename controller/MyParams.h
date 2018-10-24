@@ -63,10 +63,13 @@ typedef struct
 
 extern MACHINE_TYPE_STRU gaMachineType[MACHINE_NUM];
 
-void MainRetriveDefaultState(int iMachineType);//ex_dcj
-void MainRetriveProductMsg(int iMachineType);//ex_dcj
-void MainRetriveInstallMsg(int iMachineType);//ex_dcj
-void MainRetriveExConfigParam(int iMachineType); //ex_dcj
+//ex_dcj
+void MainRetriveDefaultState(int iMachineType);
+void MainRetriveExMachineMsg(int iMachineType);
+void MainRetriveProductMsg(int iMachineType);
+void MainRetriveInstallMsg(int iMachineType);
+void MainRetriveExConfigParam(int iMachineType);
+//end
 
 void MainRetriveMachineParam(int iMachineType,DISP_MACHINE_PARAM_STRU  &Param);
 void MainRetriveTMParam(int iMachineType,DISP_TIME_PARAM_STRU  &Param);
@@ -85,11 +88,13 @@ void MainSaveCMInfo(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param);
 void MainSaveFMParam(int iMachineType,DISP_FM_SETTING_STRU  &Param);
 void MainRetriveFmParam(int iMachineType,DISP_FM_SETTING_STRU  &Param);
 
-
-void MainSaveDefaultState(int iMachineType); //ex_dcj
-void MainSaveProductMsg(int iMachineType);//ex_dcj
-void MainSaveInstallMsg(int iMachineType);//ex_dcj
-void MainSaveExConfigParam(int iMachineType); //ex_dcj
+//ex_dcj
+void MainSaveDefaultState(int iMachineType);
+void MainSaveExMachineMsg(int iMachineType);
+void MainSaveProductMsg(int iMachineType);
+void MainSaveInstallMsg(int iMachineType);
+void MainSaveExConfigParam(int iMachineType);
+//end
 
 void MainSavePMParam(int iMachineType,DISP_PM_SETTING_STRU  &Param);
 void MainRetrivePmParam(int iMachineType,DISP_PM_SETTING_STRU  &Param);

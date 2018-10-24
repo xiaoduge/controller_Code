@@ -320,6 +320,7 @@ public:
     void ClearToc();
 
     void updateRectState();
+    void updateRectAlarmState();
 
     /* for all kinds of state related measurements */
     float        m_fSourceWaterPressure;

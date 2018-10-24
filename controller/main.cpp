@@ -320,6 +320,31 @@ void preMainCalbrate(void)
 
 }
 
+//2018.10.23 add, delete data two years ago
+void DeleteExpiredData()
+{
+    int iLoop;
+    QStringList tableName;
+    QSqlQuery query;
+    tableName << "Alarm" << "GetW" << "PWater" << "Log"; //Water;
+
+    QDateTime nowDate = QDateTime::currentDateTime();
+    QDateTime deadLine = nowDate.addYears(-2);
+    QString   strLine = deadLine.toString("yyyy-MM-dd hh:mm:ss");
+
+    for(iLoop = 0; iLoop < 4; iLoop++)
+    {
+        QString strQuery = QString("Delete from %1 where time < '%2'")
+                .arg(tableName.at(iLoop)).arg(strLine);
+        bool ret = query.exec(strQuery);
+        if(ret)
+            qDebug() << QString("Delete from %1 where time < '%2' : success").arg(tableName.at(iLoop)).arg(strLine);
+        else
+            qDebug() << QString("Delete from %1 where time < '%2' : fail").arg(tableName.at(iLoop)).arg(strLine);
+    }
+
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -412,14 +437,8 @@ int main(int argc, char *argv[])
     else
         qDebug()<<"create log table failed\r\n";
 
-#if 0
-    {
-        LoginDlg Login(NULL,false);
-        Login.setGeometry(200,100,300,200);
-        Login.show();
-        while(Login.exec() != QDialog::Accepted);
-    }
-#endif
+    DeleteExpiredData(); //删除两年前的数据
+
     MainWindow w;
 
     w.show();

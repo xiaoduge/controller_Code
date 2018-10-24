@@ -423,6 +423,24 @@ void MainRetriveDefaultState(int iMachineType)//
         config = NULL;
     }
 }
+
+void MainRetriveExMachineMsg(int iMachineType) //ex_dcj
+{
+    QString strCfgName = gaMachineType[iMachineType].strName;
+    strCfgName += ".ini";
+    QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
+    QString strV;
+
+    strV = "/ExMachineMsg/MachineFlow/";
+    ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow = config->value(strV, 10).toInt();
+
+    if (config)
+    {
+        delete config;
+        config = NULL;
+    }
+}
+
 void MainRetriveProductMsg(int iMachineType) //ex_dcj
 {
     QString strCfgName = gaMachineType[iMachineType].strName;
@@ -1534,6 +1552,26 @@ void MainSaveDefaultState(int iMachineType) //ex_dcj
     sync();
 }
 
+//
+void MainSaveExMachineMsg(int iMachineType)
+{
+    QString strCfgName = gaMachineType[iMachineType].strName;
+    strCfgName += ".ini";
+
+    QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
+    QString strV;
+
+    strV = "/ExMachineMsg/MachineFlow/";
+    config->setValue(strV, ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
+
+    if (config)
+    {
+        delete config;
+        config = NULL;
+    }
+    sync();
+}
+
 void MainSaveProductMsg(int iMachineType) //ex_dcj
 {
     QString strCfgName = gaMachineType[iMachineType].strName;
@@ -1561,6 +1599,7 @@ void MainSaveProductMsg(int iMachineType) //ex_dcj
     }
     sync();
 }
+
 void MainSaveInstallMsg(int iMachineType) //ex_dcj
 {
     QString strCfgName = gaMachineType[iMachineType].strName;
@@ -2499,6 +2538,7 @@ void MainRetriveGlobalParam(void)
     MainRetriveMachineType(gGlobalParam.iMachineType);
 
     MainRetriveDefaultState(gGlobalParam.iMachineType); //ex_dcj
+    MainRetriveExMachineMsg(gGlobalParam.iMachineType);
     MainRetriveProductMsg(gGlobalParam.iMachineType); //ex_dcj
     MainRetriveInstallMsg(gGlobalParam.iMachineType); //ex_dcj
     MainRetriveExConfigParam(gGlobalParam.iMachineType);//ex_dcj
@@ -2913,12 +2953,12 @@ void MainResetCmInfo(int iSel)
         gCMUsage.cmInfo.aulCumulatedData[DISP_AT_PACKLIFEL] = 0;
         break;
     case DISP_H_PACK:
-        gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY] = DispGetCurSecond();
-        gCMUsage.info.aulCms[DISP_U_PACKLIFEL]   = 0;
-        gCMUsage.ulUsageState &= ~(1 << DISP_U_PACKLIFEDAY);
-        gCMUsage.ulUsageState &= ~(1 << DISP_U_PACKLIFEL);
-        gCMUsage.cmInfo.aulCumulatedData[DISP_U_PACKLIFEDAY] = 0;
-        gCMUsage.cmInfo.aulCumulatedData[DISP_U_PACKLIFEL] = 0;
+        gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY] = DispGetCurSecond();
+        gCMUsage.info.aulCms[DISP_H_PACKLIFEL]   = 0;
+        gCMUsage.ulUsageState &= ~(1 << DISP_H_PACKLIFEDAY);
+        gCMUsage.ulUsageState &= ~(1 << DISP_H_PACKLIFEL);
+        gCMUsage.cmInfo.aulCumulatedData[DISP_H_PACKLIFEDAY] = 0;
+        gCMUsage.cmInfo.aulCumulatedData[DISP_H_PACKLIFEL] = 0;
         break;
    case DISP_N1_UV:
         gCMUsage.info.aulCms[DISP_N1_UVLIFEDAY] = DispGetCurSecond();
@@ -4175,6 +4215,10 @@ MainWindow::MainWindow(QMainWindow *parent) :
     ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2 = 0;
     ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 = 0;
 
+    ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN1 = 0;
+    ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN2 = 0;
+    ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN3 = 0;
+
     ex_gCcb.EX_Check_State.bit1CheckDecPressure = 0;
     //end
 
@@ -4947,6 +4991,9 @@ void MainWindow::on_timerPeriodEvent()
 
 void MainWindow::on_timerSecondEvent()
 {
+    updateRectState(); //ex
+    updateRectAlarmState();//
+
     if (m_iRfidDelayedMask)
     {
         int iLoop;
@@ -5370,6 +5417,7 @@ bool alarmHaveAssociatedModule(int iAlarmPart,int iAlarmId)
    switch(iAlarmPart)
    {
    case DISP_ALARM_PART0:
+   {
         switch(iAlarmId)
         {
         case DISP_ALARM_PART0_TUBEUV_OOP:
@@ -5400,13 +5448,13 @@ bool alarmHaveAssociatedModule(int iAlarmPart,int iAlarmId)
             break;
         default:
              break;
-        }
-        
-        if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)) 
-        {
-            bDevice = false ;
-        }
+        }  
+//        if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
+//        {
+//            bDevice = false ;
+//        }
        break;
+   }
    case DISP_ALARM_PART1:
        switch(iAlarmId)
        {
@@ -6234,25 +6282,56 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             unsigned int ulQuantity;
             while(pItem->ucId != 0XFF)
             {
+
                  switch(pItem->ucId)
                  {
                  case APP_FM_FM1_NO:
-                     ulQuantity = CcbConvert2Fm1Data(pItem->ulValue);  
-                     gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += ulQuantity;
-                     gCMUsage.cmInfo.aulCumulatedData[DISP_T_PACKLIFEL] += ulQuantity;
+                     ulQuantity = CcbConvert2Fm1Data(pItem->ulValue);
                      break;
                  case APP_FM_FM2_NO:
                      break;
                  case APP_FM_FM3_NO:
-                     ulQuantity = CcbConvert2Fm3Data(pItem->ulValue);  
-                     gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += ulQuantity;   
-                     gCMUsage.cmInfo.aulCumulatedData[DISP_AT_PACKLIFEL] += ulQuantity;   
-                     gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] += ulQuantity;   
+                 {
+                     ulQuantity = CcbConvert2Fm3Data(pItem->ulValue);
+
+                     switch(gGlobalParam.iMachineType)
+                     {
+                     case MACHINE_L_Genie:
+                     case MACHINE_L_UP:
+                     case MACHINE_L_EDI_LOOP:
+                     case MACHINE_L_RO_LOOP:
+                     {
+                         gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += ulQuantity;
+                         gCMUsage.cmInfo.aulCumulatedData[DISP_AC_PACKLIFEL] += ulQuantity;
+                         gCMUsage.cmInfo.aulCumulatedData[DISP_AT_PACKLIFEL] += ulQuantity;
+                         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] += ulQuantity;
+                     }
+                         break;
+                     default:
+                         break;
+                     }
+                 }
                      break;
                  case APP_FM_FM4_NO:
-                     ulQuantity = CcbConvert2Fm4Data(pItem->ulValue);  
-                     gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += ulQuantity;   
-                     gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] += ulQuantity;   
+                 {
+                     ulQuantity = CcbConvert2Fm4Data(pItem->ulValue);
+
+                     switch(gGlobalParam.iMachineType)
+                     {
+                     case MACHINE_L_Genie:
+                     case MACHINE_L_UP:
+                     case MACHINE_L_EDI_LOOP:
+                     case MACHINE_L_RO_LOOP:
+                     {
+                         gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += ulQuantity;
+                         gCMUsage.cmInfo.aulCumulatedData[DISP_AC_PACKLIFEL] += ulQuantity;
+                         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] += ulQuantity;
+                     }
+                         break;
+                     default:
+                         break;
+                     }
+                 }
                      break;
                  default:
                      break;
@@ -6296,6 +6375,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     {
                          float tmpI5 = (m_EcowCurr[APP_EXE_I5_NO].iTemp*1.0)/10;
                          gCMUsage.cmInfo.aulCumulatedData[DISP_U_PACKLIFEL] += ulQuantity;
+                         gCMUsage.cmInfo.aulCumulatedData[DISP_H_PACKLIFEL] += ulQuantity;
                          query.prepare(INSERT_sql_GetW);
                          query.bindValue(":name", "UP");
                          query.bindValue(":quantity",fQuantity);
@@ -6473,7 +6553,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             case DISP_ALARM_PART0:
                 if (pInfo->ucId < DISP_ALARM_PART0_NUM)
                 {
-                    alarmCommProc(!!pInfo->ucFlag,pInfo->ucPart,pInfo->ucId);
+//                    alarmCommProc(!!pInfo->ucFlag,pInfo->ucPart,pInfo->ucId);
                 }
                 break;
             case DISP_ALARM_PART1:
@@ -6692,7 +6772,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
     case DISP_NOT_SWITCH_STATE:
         {
             qDebug("on_dispIndication:DISP_NOT_SWITCH_STATE \r\n");
-            updateRectState(); //ex
+            //updateRectState(); //ex
             
             if (!m_bSplash && (typeid(*m_pCurPage) == typeid(SystemMonitorPage)))
             {
@@ -7824,5 +7904,129 @@ void MainWindow::updateRectState()
         ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N3] = 0;
     }
 
+}
+
+void MainWindow::updateRectAlarmState()
+{
+    int iTmpData;
+    //N1
+    if(ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N1] == 1)
+    {
+        DispGetOtherCurrent(APP_EXE_N1_NO, &iTmpData);
+        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N1]) > 15)
+        {
+            if(iTmpData < 100)
+            {
+                //Alaram
+                if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1 == 0)
+                {
+                    //2018.10.23
+                    if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN1 == 0)
+                    {
+                        ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectDelay[EX_RECT_N1] = ex_gulSecond;
+                        ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN1 = 1;
+                    }
+                    else
+                    {
+                        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectDelay[EX_RECT_N1]) > 5)
+                        {
+                            ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1 = 1;
+                            alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP);
+                        }
+                    }
+                    //
+                }
+            }
+            else
+            {
+                if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1 == 1)
+                {
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN1 = 0;
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1 = 0;
+                    alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP);
+                }
+            }
+        }
+    }
+    //N2
+    if(ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N2] == 1)
+    {
+        DispGetOtherCurrent(APP_EXE_N2_NO, &iTmpData);
+        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N2]) > 15)
+        {
+            if(iTmpData < 100)
+            {
+                //Alaram
+                if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2 == 0)
+                {
+                    //2018.10.23
+                    if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN2 == 0)
+                    {
+                        ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectDelay[EX_RECT_N2] = ex_gulSecond;
+                        ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN2 = 1;
+                    }
+                    else
+                    {
+                        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectDelay[EX_RECT_N2]) > 5)
+                        {
+                            ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2 = 1;
+                            alarmCommProc(true, DISP_ALARM_PART0, DISP_ALARM_PART0_185UV_OOP);
+                        }
+                    }
+                    //
+                }
+            }
+            else
+            {
+                if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2 == 1)
+                {
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN2 = 0;
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2 = 0;
+                    alarmCommProc(false, DISP_ALARM_PART0, DISP_ALARM_PART0_185UV_OOP);
+                }
+            }
+        }
+    }
+
+    //N3
+    if(ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N3] == 1)
+    {
+        DispGetOtherCurrent(APP_EXE_N3_NO, &iTmpData);
+        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N3]) > 15)
+        {
+            if(iTmpData < 100)
+            {
+                //Alaram
+                if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 == 0)
+                {
+                    //2018.10.23
+                    if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN3 == 0)
+                    {
+                        ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectDelay[EX_RECT_N3] = ex_gulSecond;
+                        ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN3 = 1;
+                    }
+                    else
+                    {
+                        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectDelay[EX_RECT_N3]) > 5)
+                        {
+                            ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 = 1;
+                            alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP);
+                        }
+                    }
+                    //
+                }
+
+            }
+            else
+            {
+                if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 == 1)
+                {
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN3 = 0;
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 = 0;
+                    alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP);
+                }
+            }
+        }
+    }
 }
 

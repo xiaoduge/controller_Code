@@ -3141,7 +3141,7 @@ void work_start_qtw(void *para)
         {
             iTmp |= (1 << APP_EXE_I2_NO);
         }
-        //UP HP循环开启时Ro采样I3
+        //UP HP循环开启时Ro采� �I3
         if(MACHINE_UP == pCcb->ulMachineType)
         {
             iTmp |= (1 << APP_EXE_I3_NO);
@@ -3233,7 +3233,7 @@ void work_stop_qtw(void *para)
     {
         iTmp |= (1 << APP_EXE_I2_NO);
     }
-    //UP HP循环开启时Ro采样I3
+    //UP HP循环开启时Ro采� �I3
     if(MACHINE_UP == pCcb->ulMachineType)
     {
         iTmp |= (1 << APP_EXE_I3_NO);
@@ -4894,15 +4894,29 @@ void CanCcbRectNMeasurePostProcess(int rectID)
                 //Alaram
                 if(!ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1)
                 {
-                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1 = 1;
-                    gCcb.ulFiredAlarmFlags |= ALARM_N1;
-                    CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP,TRUE);
+                    //2018.10.23
+                    if(!ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN1)
+                    {
+                        ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectDelay[EX_RECT_N1] = ex_gulSecond;
+                        ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN1 = 1;
+                    }
+                    else
+                    {
+                        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectDelay[EX_RECT_N1]) > 5)
+                        {
+                            ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1 = 1;
+                            gCcb.ulFiredAlarmFlags |= ALARM_N1;
+                            CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP,TRUE);
+                        }
+                    }
+                    //
                 }
             }
             else
             {
                 if(!!ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1)
                 {
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN1 = 0;
                     ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1 = 0;
                     gCcb.ulFiredAlarmFlags &= ~ALARM_N1;
                     CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP, FALSE);
@@ -4921,15 +4935,29 @@ void CanCcbRectNMeasurePostProcess(int rectID)
                 //Alaram
                 if(!ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2)
                 {
-                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2 = 1;
-                    gCcb.ulFiredAlarmFlags |= ALARM_N2;
-                    CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP,TRUE);
+                    //2018.10.23
+                    if(!ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN2)
+                    {
+                        ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectDelay[EX_RECT_N2] = ex_gulSecond;
+                        ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN2 = 1;
+                    }
+                    else
+                    {
+                        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectDelay[EX_RECT_N2]) > 5)
+                        {
+                            ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2 = 1;
+                            gCcb.ulFiredAlarmFlags |= ALARM_N2;
+                            CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP,TRUE);
+                        }
+                    }
+                    //
                 }
             }
             else
             {
                 if(!!ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2)
                 {
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN2 = 0;
                     ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2 = 0;
                     gCcb.ulFiredAlarmFlags &= ~ALARM_N2;
                     CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP, FALSE);
@@ -4949,9 +4977,22 @@ void CanCcbRectNMeasurePostProcess(int rectID)
                 //Alaram
                 if(!ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3)
                 {
-                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 = 1;
-                    gCcb.ulFiredAlarmFlags |= ALARM_N3;
-                    CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP,TRUE);
+                    //2018.10.23
+                    if(!ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN3)
+                    {
+                        ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectDelay[EX_RECT_N3] = ex_gulSecond;
+                        ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN3 = 1;
+                    }
+                    else
+                    {
+                        if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectDelay[EX_RECT_N3]) > 5)
+                        {
+                            ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 = 1;
+                            gCcb.ulFiredAlarmFlags |= ALARM_N3;
+                            CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP,TRUE);
+                        }
+                    }
+                    //
                 }
 
             }
@@ -4959,6 +5000,7 @@ void CanCcbRectNMeasurePostProcess(int rectID)
             {
                 if(!!ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3)
                 {
+                    ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN3 = 0;
                     ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 = 0;
                     gCcb.ulFiredAlarmFlags &= ~ALARM_N3;
                     CcbNotAlarmFire(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP, FALSE);
@@ -6336,7 +6378,7 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
             }
 
             CcbRectNotify();
-            CanCcbRectNMeasurePostProcess(pPm->ucId); //ex
+            //CanCcbRectNMeasurePostProcess(pPm->ucId); //ex
         }
         break;    
     case APP_PACKET_RPT_GPUMP:

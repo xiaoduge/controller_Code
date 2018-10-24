@@ -18,12 +18,18 @@ typedef struct
     int iScreenSleepTime;
 }Ex_COFIG_PARAM;
 
+typedef struct
+{
+    unsigned int iMachineFlow; //机型流量
+}Ex_MACHINE_MSG; //Machine
+
 
 typedef struct
 {
     int Ex_Default;
     Ex_SYSTEM_MSG Ex_System_Msg;
     Ex_COFIG_PARAM Ex_Config_Param;
+    Ex_MACHINE_MSG Ex_Machine_Msg;
 }Ex_DISP_GLOBAL_PARAM_STRU;
 
 extern Ex_LoginState global_LoginState; //dcj_ex;

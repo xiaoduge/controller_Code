@@ -124,13 +124,24 @@ void Ex_SuperPowerPage::createControl()
     connect(m_cmbDefaultState, SIGNAL(currentIndexChanged(int)),
      this, SLOT(on_CmbIndexChange_DefaultState(int)));
 
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + 120);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + 80); //120
     rectTmp.setWidth(120);
     m_lbDeviceTypeName = new QLabel(tmpWidget);
     m_lbDeviceTypeName->setGeometry(rectTmp);
     m_lbDeviceTypeName->show();
 
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    //系统流速
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN - 10);
+    rectTmp.setWidth(X_VALUE_WIDTH + 30);
+    m_cmbDeviceFlow = new QComboBox(tmpWidget);
+    m_cmbDeviceFlow->setGeometry(rectTmp);
+    QStringList flowList;
+    flowList << "5" << "10" << "12" << "15"<< "24" << "32"
+             << "30" << "50" << "60" << "125" << "150" << "250" << "300" << "500" << "600";
+    m_cmbDeviceFlow->addItems(flowList);
+
+    //系统机型
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 10);
     rectTmp.setWidth(X_VALUE_WIDTH*2 + 30);
     m_cmbDeviceType = new QComboBox(tmpWidget);
     m_cmbDeviceType->setGeometry(rectTmp);
@@ -140,7 +151,8 @@ void Ex_SuperPowerPage::createControl()
     }
     m_cmbDeviceType->setCurrentIndex(gGlobalParam.iMachineType);
     connect(m_cmbDeviceType, SIGNAL(currentIndexChanged(int)), this, SLOT(on_CmbIndexChange_deviceType(int)));
-    //
+
+    //line2
     tmpWidget = new QWidget(m_widget);
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
@@ -370,6 +382,9 @@ void Ex_SuperPowerPage::save()
     ex_gGlobalParam.Ex_System_Msg.Ex_InsDate = m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE]->text();
     ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer = m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]->text();
 
+    ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow = m_cmbDeviceFlow->currentText().toInt();
+
+    MainSaveExMachineMsg(gGlobalParam.iMachineType);
     MainSaveProductMsg(gGlobalParam.iMachineType);
     MainSaveInstallMsg(gGlobalParam.iMachineType);
 
@@ -394,8 +409,12 @@ void Ex_SuperPowerPage :: on_CmbIndexChange_DefaultState(int index)
          {
              return;
          }
+         ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow = m_cmbDeviceFlow->currentText().toInt();
+         MainSaveExMachineMsg(gGlobalParam.iMachineType);
+
          ex_gGlobalParam.Ex_Default = m_cmbDefaultState->currentIndex();
          MainSaveDefaultState(gGlobalParam.iMachineType);
+
          MainUpdateGlobalParam();
          update();
          /**/

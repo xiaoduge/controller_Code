@@ -73,6 +73,7 @@ private:
     QComboBox *m_cmbDefaultState;
 
     QLabel    *m_lbDeviceTypeName;
+    QComboBox *m_cmbDeviceFlow;
     QComboBox *m_cmbDeviceType;
 
     CBitmapButton* m_pBtnSave;

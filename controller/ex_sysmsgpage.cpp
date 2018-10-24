@@ -41,34 +41,34 @@ void Ex_SysMsgPage::buildTranslation()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Super-Genie G");
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Super-Genie G %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_L_UP:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Super-Genie U");
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Super-Genie U %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_L_EDI_LOOP:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = ("Super-Genie E");
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Super-Genie E %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_L_RO_LOOP:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Super-Genie R");
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Super-Genie R %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_Genie:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Genie G");
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Genie G %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_UP:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Genie U");
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Genie U %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_EDI:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Genie E");
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Genie E %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_RO:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Genie R");
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Genie R %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_PURIST:
         m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Genie PURIST");
         break;
     case MACHINE_ADAPT:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Genie A");
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = tr("Genie A %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     }
 
@@ -200,5 +200,6 @@ void Ex_SysMsgPage::initUi()
 
 void Ex_SysMsgPage::update()
 {
-    updateNameMsg();
+//    updateNameMsg();
+    buildTranslation();
 }

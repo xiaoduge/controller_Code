@@ -35,6 +35,7 @@ typedef struct
 typedef struct
 {
     unsigned int ulAlarmNRectTick[EX_RECT_NUM];
+    unsigned int ulAlarmNRectDelay[EX_RECT_NUM];
 }EX_ALARM_TICK;
 
 typedef struct
@@ -43,6 +44,9 @@ typedef struct
     unsigned int     bit1AlarmN2       : 1;
     unsigned int     bit1AlarmN3       : 1;
 
+    unsigned int     bit1AlarmDelayN1  : 1;
+    unsigned int     bit1AlarmDelayN2  : 1;
+    unsigned int     bit1AlarmDelayN3  : 1;
 }EX_ALARM_RECT;
 
 typedef struct

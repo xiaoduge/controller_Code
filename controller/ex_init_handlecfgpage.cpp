@@ -735,7 +735,7 @@ void Ex_Init_HandleCfgpage::update()
         {
             if (imask & (1 << iLoop))
             {
-                QString strSn = QString::fromAscii((char *)dbH[iLoop].name,9);
+                QString strSn = QString::fromAscii((char *)dbH[iLoop].name, APP_SN_LENGTH);
                 QString strAddress = QString::number(dbH[iLoop].address);
                 addHandler(0,strSn,strAddress);
 
