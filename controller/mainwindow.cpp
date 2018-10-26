@@ -392,7 +392,7 @@ QString gastrAlarmName[] =
     "Low Recir. Resis.",   //ex
     "Low HP Prouduce Cond.",   //ex
     "Lower Pure Water Tank Resistence Alarm",
-    "Low Pure Water Product Resistence",
+//    "Low Pure Water Product Resistence",
     "Higher Source Water Temperature Alarm",
     "Lower Source Water Temperature Alarm",
     "Higher RO Product Temperature Alarm",
@@ -406,6 +406,7 @@ QString gastrAlarmName[] =
     "Higher TOC Sensor Temperature Alarm",
     "Lower TOC Sensor Temperature Alarm",
     "Lower TOC Source Water Resistence Alarm",
+    "Leak or Tank Overflow",
 };
 
 void MainRetriveDefaultState(int iMachineType)//
@@ -3145,7 +3146,7 @@ void SaveConsumptiveMaterialInfo(void)
    if (chflag)
    {
       gCMUsage.bit1PendingInfoSave = TRUE;
-      //  MainSaveCMInfo(gGlobalParam.iMachineType,gCMUsage.info);
+      MainSaveCMInfo(gGlobalParam.iMachineType,gCMUsage.info); //
    }
    
 }
@@ -3705,6 +3706,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
             m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACK)
                                          |(1 << DISP_H_PACK)
+                                         |(1 << DISP_N4_UV)
                                          |(1 << DISP_N5_UV)
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
@@ -4909,6 +4911,8 @@ void MainWindow::on_timerEvent()
 
     CheckConsumptiveMaterialState();
 
+    autoCirPreHour(); //More than 1 hour, start cir;
+
     if (m_iLstDay != DispGetDay())
     {
         m_iLstDay = DispGetDay();
@@ -5614,6 +5618,19 @@ void MainWindow::initScreenSleep()
     m_screenSleepThread = new Ex_ScreenSleepThread(this);
     m_screenSleepThread->start();
     connect(m_screenSleepThread, SIGNAL(screenSleep(bool)), this, SLOT(on_ScreenSleep(bool)));
+}
+
+void MainWindow::autoCirPreHour()
+{
+    if(ex_gulSecond - ex_gCcb.Ex_Auto_Cir_Tick.ulUPAutoCirTick > 60*60) //More than 1 hour, start cir;
+    {
+        if(!(DispGetUpQtwFlag() || DispGetUpCirFlag() || DispGetEdiQtwFlag()
+             || DispGetTankCirFlag() || DispGetTocCirFlag()))
+        {
+            this->startCir(CIR_TYPE_UP);
+        }
+    }
+
 }
 
 void MainWindow::on_ScreenSleep(bool sleep)
@@ -6467,6 +6484,8 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             }
             
             qDebug() <<"DISP_NOT_PWVOLUME_STAT : " << endl;
+
+            updatePackFlow(); //ex 2018.10.26
             
             if (typeid(*m_pCurPage) == typeid(SystemMonitorPage))
             {
@@ -6528,6 +6547,8 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_DEC \r\n");
                 break;
             }
+
+            updatePackFlow(); //ex 2018.10.26
             
             if (typeid(*m_pCurPage) == typeid(SystemMonitorPage))
             {
@@ -6567,7 +6588,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     switch(pInfo->ucId)
                     {
                     case DISP_ALARM_B_LEAK:
-        
+                        alarmCommProc(!!pInfo->ucFlag, DISP_ALARM_PART1, DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW);
                         /* show lockup dialog */
                         if (!m_bLockupDlg && pInfo->ucFlag)
                         {
@@ -8027,6 +8048,94 @@ void MainWindow::updateRectAlarmState()
                 }
             }
         }
+    }
+}
+
+void MainWindow::updatePackFlow()
+{
+    unsigned int ulQuantity;
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+    {
+        switch(DispGetWorkState())
+        {
+        case DISP_WORK_STATE_PREPARE:
+        {
+            if(NOT_RUNING_STATE_FLUSH == DispGetRunningStateFlag())
+            {
+                if(!m_calcPFlow.isFlushing())
+                {
+                    m_calcPFlow.setFlushState(true);
+                    m_calcPFlow.setStartTime(QDateTime::currentDateTime());
+                }
+            }
+            break;
+        }
+        case DISP_WORK_STATE_RUN:
+        {
+            if(m_calcPFlow.isFlushing())
+            {
+                m_calcPFlow.setFlushState(false);
+                m_calcPFlow.setStopTime(QDateTime::currentDateTime());
+                ulQuantity = m_calcPFlow.calcFlow(0);
+
+                gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += ulQuantity;
+                gCMUsage.cmInfo.aulCumulatedData[DISP_AC_PACKLIFEL] += ulQuantity;
+                gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] += ulQuantity;
+            }
+            //
+            if (DispGetPwFlag() || (NOT_RUNING_STATE_CLEAN == DispGetRunningStateFlag()))
+            {
+                if(!m_calcPFlow.isProducing())
+                {
+                    m_calcPFlow.setProductState(true);
+                    m_calcPFlow.setStartTime(QDateTime::currentDateTime());
+                }
+            }
+            else
+            {
+                if(m_calcPFlow.isProducing())
+                {
+                    m_calcPFlow.setProductState(false);
+                    m_calcPFlow.setStopTime(QDateTime::currentDateTime());
+                    ulQuantity = m_calcPFlow.calcFlow(1);
+
+                    gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += ulQuantity;
+                    gCMUsage.cmInfo.aulCumulatedData[DISP_AC_PACKLIFEL] += ulQuantity;
+                    gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] += ulQuantity;
+                }
+            }
+            break;
+        }
+        default:
+        {
+            if(m_calcPFlow.isFlushing())
+            {
+                m_calcPFlow.setFlushState(false);
+                m_calcPFlow.setStopTime(QDateTime::currentDateTime());
+                ulQuantity = m_calcPFlow.calcFlow(0);
+            }
+            if(m_calcPFlow.isProducing())
+            {
+                m_calcPFlow.setProductState(false);
+                m_calcPFlow.setStopTime(QDateTime::currentDateTime());
+                ulQuantity = m_calcPFlow.calcFlow(1);
+            }
+            gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += ulQuantity;
+            gCMUsage.cmInfo.aulCumulatedData[DISP_AC_PACKLIFEL] += ulQuantity;
+            gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] += ulQuantity;
+            break;
+        }
+        }
+        break;
+    }
+    default:
+        break;
     }
 }
 

@@ -40,6 +40,12 @@ typedef struct
 
 typedef struct
 {
+    unsigned int ulUPAutoCirTick;
+}EX_AUTO_CIR_TICK;
+
+
+typedef struct
+{
     unsigned int     bit1AlarmN1       : 1;
     unsigned int     bit1AlarmN2       : 1;
     unsigned int     bit1AlarmN3       : 1;
@@ -68,6 +74,8 @@ typedef struct
 
     EX_DELAY_TICK Ex_Delay_Tick;
     EX_CHECK_STATE EX_Check_State;
+
+    EX_AUTO_CIR_TICK Ex_Auto_Cir_Tick;
 }EX_CCB;
 
 extern Ex_DISP_PARAM_CALI_STRU ex_global_Cali;

@@ -342,6 +342,12 @@ void AlarmSetPage::buildTranslation()
             */
             m_plistItem[iIdx]->setName(tr("High TOC Feed Conductivity"));
             break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW):
+            /*
+            Leak or Tank Overflow
+            */
+            m_plistItem[iIdx]->setName(tr("Leak or Tank Overflow"));
+            break;
         }
     }
 
@@ -898,8 +904,20 @@ void AlarmSetPage::save()
             {
                 Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE);
             }
-            iIdx++; 
+           // iIdx++;
             break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW):
+            if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
+            {
+                Param.aulFlag[DISP_ALARM_PART1] |= (1<<DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW);
+            }
+            else
+            {
+                Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW);
+            }
+            iIdx++;
+            break;
+
         }
     }    
 
@@ -1316,6 +1334,17 @@ void AlarmSetPage::update()
                 m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
             }
             break;
+
+       case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW):
+           if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW))
+           {
+               m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
+           }
+           else
+           {
+               m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
+           }
+           break;
         }
    }      
 }

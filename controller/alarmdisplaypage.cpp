@@ -390,6 +390,13 @@ void AlarmDisplayPage::buildTranslation()
              m_astrPartAlarm[iIdx] = tr("TOC Feed Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP30]) + tr("omg");
              aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
              break;
+         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW): //LEAK
+             /*
+             Leak or Tank Overflow
+             */
+             m_astrPartAlarm[iIdx] = tr("Leak or Tank Overflow");
+             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx;
+             break;
          }
       }
 }

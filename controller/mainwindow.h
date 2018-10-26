@@ -22,6 +22,7 @@
 #include "cbitmapbutton.h"
 #include "basewidget.h"
 #include "ex_init_handlecfgpage.h"
+#include "ex_calcpackflow.h"
 
 #define PAGEID_MARGIN (4)
 
@@ -321,6 +322,7 @@ public:
 
     void updateRectState();
     void updateRectAlarmState();
+    void updatePackFlow();
 
     /* for all kinds of state related measurements */
     float        m_fSourceWaterPressure;
@@ -671,7 +673,12 @@ private:
     //ex  screenSleep
     Ex_ScreenSleepThread* m_screenSleepThread;
     //end
+
+    Ex_CalcPackFlow m_calcPFlow;
+
+private:
     void initScreenSleep();
+    void autoCirPreHour();
 
 private slots:
     void on_ScreenSleep(bool sleep);

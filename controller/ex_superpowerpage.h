@@ -86,6 +86,8 @@ private:
     QComboBox* m_pCmDbDel;
     QPushButton* m_pBtnDbDel;
 
+    QPushButton* m_pBtnDelCfg;
+
 public slots:
 
     void on_btn_clicked(int);
@@ -95,7 +97,7 @@ public slots:
     void on_CmbIndexChange_deviceType(int index);
 
     void on_btnDbDel_clicked();
-
+    void on_btnDelCfg_clicked();
 };
 
 extern CtrlApplication *gApp;

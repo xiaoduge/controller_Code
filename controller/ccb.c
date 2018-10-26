@@ -2815,6 +2815,12 @@ void work_start_qtw(void *para)
     /* Processing */
     CanCcbTransState4Pw(DISP_WORK_STATE_RUN,DISP_WORK_SUB_RUN_QTWING);
 
+    //2018.10.26 add
+    if(pCcb->aHandler[iIndex].iDevType == APP_DEV_HS_SUB_HYPER)
+    {
+        ex_gCcb.Ex_Auto_Cir_Tick.ulUPAutoCirTick = ex_gulSecond; //UP Auto cir 60min
+    }
+
     switch(pCcb->ulMachineType)
     {
     case MACHINE_ADAPT:
@@ -3394,6 +3400,12 @@ void work_start_cir(void *para)
             
             return;
         }  
+    }
+
+    //2018.10.26 add
+    if(iCirType == CIR_TYPE_UP)
+    {
+        ex_gCcb.Ex_Auto_Cir_Tick.ulUPAutoCirTick = ex_gulSecond; //UP Auto cir 60min
     }
 
     switch(iCirType)

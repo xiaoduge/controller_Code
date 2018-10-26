@@ -63,6 +63,8 @@ void Ex_SuperPowerPage::buildTranslation()
     m_pBtnDbDel->setText(tr("Delete"));
     m_pLbDbDel->setText(tr("Delete Data"));
 
+    m_pBtnDelCfg->setText(tr("Delete Cfg"));
+
     m_pBtnSave->setTip(tr("Save"),QColor(228, 231, 240),BITMAPBUTTON_TIP_CENTER);
 }
 
@@ -227,6 +229,12 @@ void Ex_SuperPowerPage::createControl()
     m_pBtnDbDel = new QPushButton(tmpWidget);
     m_pBtnDbDel->setGeometry(rectTmp);
     connect(m_pBtnDbDel, SIGNAL(clicked()), this, SLOT(on_btnDbDel_clicked()));
+
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN*2);
+    rectTmp.setWidth(X_VALUE_WIDTH*2 + 5);
+    m_pBtnDelCfg = new QPushButton(tmpWidget);
+    m_pBtnDelCfg->setGeometry(rectTmp);
+    connect(m_pBtnDelCfg, SIGNAL(clicked()), this, SLOT(on_btnDelCfg_clicked()));
 
     //Save Btn
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,SYSCFGPAGE_BTN_SAVE);
@@ -478,6 +486,54 @@ void Ex_SuperPowerPage::on_btnDbDel_clicked()
         break;*/
     default:
         break;
+    }
+}
+
+void Ex_SuperPowerPage::on_btnDelCfg_clicked()
+{
+    QString strCfgName = gaMachineType[gGlobalParam.iMachineType].strName;
+    strCfgName += "_info.ini";
+
+    QFile infoFile(strCfgName);
+    if(!infoFile.exists())
+    {
+        qDebug() <<" not existe";
+        QMessageBox::warning(m_widget, tr("DeleteInfoCfg"), tr("info File not existe"), QMessageBox::Ok);
+    }
+    else
+    {
+        if(infoFile.remove())
+        {
+            qDebug() << "Delete success";
+        }
+        else
+        {
+            qDebug() << "Delete failed";
+            QMessageBox::warning(m_widget, tr("DeleteInfoCfg"), tr("info File delete failed"), QMessageBox::Ok);
+        }
+    }
+
+    strCfgName = gaMachineType[gGlobalParam.iMachineType].strName;
+    strCfgName += ".ini";
+
+    QFile cfgFile(strCfgName);
+    if(!cfgFile.exists())
+    {
+        qDebug() <<" not existe";
+        QMessageBox::warning(m_widget, tr("DeleteCfg"), tr("Cfg File not existe"), QMessageBox::Ok);
+        return;
+    }
+    else
+    {
+        if(cfgFile.remove())
+        {
+            qDebug() << "Delete success";
+        }
+        else
+        {
+            qDebug() << "Delete failed";
+            QMessageBox::warning(m_widget, tr("DeleteCfg"), tr("Cfg File delete failed"), QMessageBox::Ok);
+        }
     }
 }
 
