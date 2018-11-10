@@ -17,7 +17,7 @@
 #define BACKWIDGET_ITEM_HEIGHT  30
 
 static  QRect   sQrectAry[2] = {
-        QRect(5,  BACKWIDGET_HEIGHT/2 - BACKWIDGET_ITEM_HEIGHT/2, BACKWIDGET_ITEM_LENGTH + 20, BACKWIDGET_ITEM_HEIGHT) ,
+        QRect(5,  BACKWIDGET_HEIGHT/2 - BACKWIDGET_ITEM_HEIGHT/2, BACKWIDGET_ITEM_LENGTH + 50, BACKWIDGET_ITEM_HEIGHT) ,
         QRect(60, 2, 110 , 18) ,
     };
 
@@ -112,7 +112,7 @@ void Ex_Init_Tankcfgpage::createControl()
     m_lbPWTankName->setGeometry(rectTmp);
     m_lbPWTankName->hide();
 
-    rectTmp.setX(160);
+    rectTmp.setX(180);
     rectTmp.setWidth(60+20);
     m_cmbPWTankVolume = new QComboBox(tmpWidget);
     m_cmbPWTankVolume->setGeometry(rectTmp);

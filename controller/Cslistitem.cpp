@@ -13,7 +13,7 @@ CsListItem::CsListItem(QWidget *parent ,ConsumableStatePage *owner,int iId) :
     //PixShopCar.load("Channel_Press.png");
     
     this->lbName = new QLabel(this);
-    this->lbName->setGeometry(QRect(15 , 15 , 120 , 20));
+    this->lbName->setGeometry(QRect(15 , 15 , 150 , 20)); //120
     //this->lbName->setText("ConsumableStatePage");
 
     this->lbPic = new QLabel(this);
@@ -28,17 +28,17 @@ CsListItem::CsListItem(QWidget *parent ,ConsumableStatePage *owner,int iId) :
     this->setPalette(pal);
 
     this->lbWaterValue = new QLabel(this);
-    this->lbWaterValue->setGeometry(QRect(85 , 15 , 60 , 20));
+    this->lbWaterValue->setGeometry(QRect(115 , 15 , 60 , 20)); //85
     //this->lbWaterValue->setText("3000L");
 
     this->lbInstDate = new QLabel(this);
-//    this->lbInstDate->setGeometry(QRect(190 , 15 , 200 , 20));
-    this->lbInstDate->setGeometry(QRect(170 , 15 , 220 , 20));
+    this->lbInstDate->setGeometry(QRect(200 , 15 , 200 , 20));
+//    this->lbInstDate->setGeometry(QRect(170 , 15 , 220 , 20));
     //this->lbInstDate->setText("InstDate:2017.10.10");
 
     this->lbChangeDate = new QLabel(this);
-//    this->lbChangeDate->setGeometry(QRect(190 , 45 , 200 , 20));
-    this->lbChangeDate->setGeometry(QRect(170 , 45 , 220 , 20));
+    this->lbChangeDate->setGeometry(QRect(200 , 45 , 200 , 20));
+//    this->lbChangeDate->setGeometry(QRect(170 , 45 , 220 , 20));
     //this->lbChangeDate->setText("ChangeDate:2018.10.10");
 
     this->lbCatNo = new QLabel(this);

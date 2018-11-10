@@ -10,6 +10,7 @@ QT       += sql
 TRANSLATIONS = cn.ts
 TRANSLATIONS += de.ts
 TRANSLATIONS += en.ts
+TRANSLATIONS += sp.ts
 
 TARGET = controller
 TEMPLATE = app

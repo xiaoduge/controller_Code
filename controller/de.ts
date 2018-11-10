@@ -3143,92 +3143,92 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7199"/>
+        <location filename="mainwindow.cpp" line="7221"/>
         <source>No Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7202"/>
+        <location filename="mainwindow.cpp" line="7224"/>
         <source>No AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7205"/>
+        <location filename="mainwindow.cpp" line="7227"/>
         <source>No P-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7208"/>
+        <location filename="mainwindow.cpp" line="7230"/>
         <source>No U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7211"/>
+        <location filename="mainwindow.cpp" line="7233"/>
         <source>No AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7214"/>
+        <location filename="mainwindow.cpp" line="7236"/>
         <source>No H-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7217"/>
+        <location filename="mainwindow.cpp" line="7239"/>
         <source>False Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7220"/>
+        <location filename="mainwindow.cpp" line="7242"/>
         <source>False AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7223"/>
+        <location filename="mainwindow.cpp" line="7245"/>
         <source>False P-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7226"/>
+        <location filename="mainwindow.cpp" line="7248"/>
         <source>False U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7229"/>
+        <location filename="mainwindow.cpp" line="7251"/>
         <source>False AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7232"/>
+        <location filename="mainwindow.cpp" line="7254"/>
         <source>False H-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7609"/>
+        <location filename="mainwindow.cpp" line="7631"/>
         <source>Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7610"/>
+        <location filename="mainwindow.cpp" line="7632"/>
         <source>Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7611"/>
+        <location filename="mainwindow.cpp" line="7633"/>
         <source>User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7612"/>
+        <location filename="mainwindow.cpp" line="7634"/>
         <source>GetW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7613"/>
+        <location filename="mainwindow.cpp" line="7635"/>
         <source>PWater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7614"/>
+        <location filename="mainwindow.cpp" line="7636"/>
         <source>Log</source>
         <translation type="unfinished"></translation>
     </message>

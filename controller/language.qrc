@@ -3,5 +3,6 @@
         <file>en.qm</file>
         <file>cn.qm</file>
         <file>de.qm</file>
+        <file>sp.qm</file>
     </qresource>
 </RCC>

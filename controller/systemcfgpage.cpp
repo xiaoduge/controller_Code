@@ -373,7 +373,7 @@ void SystemCfgPage::createControl()
     m_chkPWTankUV->hide();
 
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
-    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH);
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 20);
     m_lbPWTankUVName = new QLabel(tmpWidget);
     m_lbPWTankUVName->setGeometry(rectTmp);
     m_lbPWTankUVName->hide();
@@ -482,6 +482,7 @@ void SystemCfgPage::createControl()
     yOffset += BACKWIDGET_START_HIATUS;
 
     rectTmp = sQrectAry[0];
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 20);
     m_lbPWTankName = new QLabel(tmpWidget);
     m_lbPWTankName->setGeometry(rectTmp);
     m_lbPWTankName->hide();

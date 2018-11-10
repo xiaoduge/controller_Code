@@ -150,7 +150,7 @@ void Ex_Init_TimePage::Create_Date_Time()
         ShowWidget[iLoop]->setGeometry(QRect(134 , 190 + 90 * iLoop , 530 ,60));
 
         lbName[iLoop] = new QLabel(ShowWidget[iLoop]);
-        lbName[iLoop]->setGeometry(QRect(25, 20 , 100 , 20));
+        lbName[iLoop]->setGeometry(QRect(25, 20 , 120 , 20));
         lbName[iLoop]->setAlignment(Qt::AlignLeft);
 
         m_pBtns[iLoop] = new CBitmapButton(ShowWidget[iLoop],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,iLoop);

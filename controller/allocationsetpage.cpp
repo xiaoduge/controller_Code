@@ -115,7 +115,7 @@ void AllocationSetPage::initUi()
     m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
     
     m_lbNameTitle = new QLabel(m_pBackWidget[iIdx]);
-    m_lbNameTitle->setGeometry(QRect(25, ITEM_HEIGHT/2 - 10 , 100 , 20));
+    m_lbNameTitle->setGeometry(QRect(25, ITEM_HEIGHT/2 - 10 , 140 , 20));
     m_lbNameTitle->setAlignment(Qt::AlignLeft);
 
     m_pBtnEnable = new CBitmapButton(m_pBackWidget[iIdx],BITMAPBUTTON_STYLE_SWITCH,BITMAPBUTTON_PIC_STYLE_NORMAL,0);

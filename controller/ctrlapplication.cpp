@@ -116,6 +116,10 @@ void CtrlApplication::installTranslators(int iLanguage,bool bSwitchFont)
             m_pTranslator->load(":/language/cn.qm");
             installTranslator(m_pTranslator);
             break;
+        case APP_LAN_SPA:
+            m_pTranslator->load(":/language/sp.qm");
+            installTranslator(m_pTranslator);
+            break;
         default:
             m_pTranslator->load(":/language/en.qm");
             installTranslator(m_pTranslator);

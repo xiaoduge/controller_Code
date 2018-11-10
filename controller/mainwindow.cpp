@@ -3699,6 +3699,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
             m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_H_PACK);
             break;
+#if 0   //2018.11.07
         case MACHINE_Genie:
 
             /*notify masks */
@@ -3710,6 +3711,23 @@ MainWindow::MainWindow(QMainWindow *parent) :
                                          |(1 << DISP_N5_UV)
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
+            break:
+#endif
+        case MACHINE_Genie:
+
+            /*notify masks */
+            m_cMas[iLoop].aulMask[0]  = DISP_NOTIFY_DEFAULT;
+
+            m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACKLIFEDAY)
+                                         |(1 << DISP_AT_PACKLIFEL)
+                                         |(1 << DISP_H_PACKLIFEDAY)
+                                         |(1 << DISP_H_PACKLIFEL)
+                                         |(1 << DISP_N4_UVLIFEDAY)
+                                         |(1 << DISP_N4_UVLIFEHOUR)
+                                         |(1 << DISP_N5_UVLIFEDAY)
+                                         |(1 << DISP_N5_UVLIFEHOUR)
+                                         |(1 << DISP_TUBE_FILTERLIFE)
+                                         |(1 << DISP_TUBE_DI_LIFE)));
             break;
         case MACHINE_UP:
             /*notify masks */
@@ -3775,22 +3793,26 @@ MainWindow::MainWindow(QMainWindow *parent) :
             break;
         } 
 
-       if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_Pre_Filter) //DISP_SM_PreFilterColumn
+      // if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_Pre_Filter) //DISP_SM_PreFilterColumn
+       if(!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter)))
        {
            m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_PRE_PACK);
        }
 
-       if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_TubeUV)
+      // if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_TubeUV)
+       if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeUV)))
        {
            m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_N4_UV);        
        }
 
-       if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_HaveTubeFilter)
+       //if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_HaveTubeFilter)
+       if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTubeFilter)))
        {
            m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_TUBE_FILTER);                 
        }
     
-       if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_TubeDI)
+       //if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_TubeDI)
+       if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeDI)))
        {
            m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_TUBE_DI);
        }
