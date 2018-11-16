@@ -4,7 +4,7 @@
 #define LEFT_MARGIN       10
 #define TOP_MARGIN        5
 #define BOTTOM_MARGIN     5
-#define NAME_ITEM_WIDTH   200   //160
+#define NAME_ITEM_WIDTH   220   //160
 #define VALUE_ITEM_WIDTH  120
 #define ITEM_SPACE       (20)
 #define ITEM_UINT_SPACE  (5)

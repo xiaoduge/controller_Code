@@ -166,7 +166,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     //case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
-    case MACHINE_RO:
+    //case MACHINE_RO:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
         aIds[iIdx].iDspType = 2;
@@ -190,7 +190,6 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
-    case MACHINE_RO:
         aIds[iIdx].iDspType = 2;
         aIds[iIdx].iId      = DISP_N1_UV;
         aIds[iIdx].vi.v1Min = 0;
@@ -201,6 +200,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         break;
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
+    case MACHINE_RO:
         break;
     }
 

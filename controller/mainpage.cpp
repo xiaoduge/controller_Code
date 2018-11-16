@@ -54,7 +54,7 @@ static CONFIG_LABEL sLabels[LABEL_NUMBER] = {
     {77,106,146,50,GLOBAL_FONT_60,QColor(255,255,255),NULL,"18.2",0,0},
     {233,140,50,20,GLOBAL_FONT_14,QColor(255,255,255),NULL,"O",0,0},//M¦¸.cm
     {100,190,40,15,GLOBAL_FONT_14,QColor(255,255,255),NULL,"TOC",0,0},
-    {145,177,90,30,GLOBAL_FONT_30,QColor(255,255,255),NULL,"3",0,0},
+    {145,177,90,30,GLOBAL_FONT_30,QColor(255,255,255),NULL," ",0,0}, //3, 2018.11.23
     {240,190,30,15,GLOBAL_FONT_14,QColor(255,255,255),NULL,"ppb",0,0},
     {130,230,70,30,GLOBAL_FONT_30,QColor(255,255,255),NULL,"25.0",0,0},
     {205,240,15,20,GLOBAL_FONT_14,QColor(255,255,255),NULL,"C",0,0}, // ¡æ
@@ -436,7 +436,10 @@ void MainPage::initUi()
 
         m_pLabels[index]->setFont(*m_wndMain->getFont(sLabels[index].enFont));
 
-        if (sLabels[index].str) m_pLabels[index]->setText(sLabels[index].str);
+        if (sLabels[index].str)
+        {
+            m_pLabels[index]->setText(sLabels[index].str);
+        }
         
         if(m_bSingleMachine)
         {
@@ -555,8 +558,8 @@ void MainPage::initUi()
     {
     case MACHINE_EDI:
     case MACHINE_RO:
-        m_pLabels[LABEL_NAVI_UP_TOC_VALUE]->hide();         
-        m_pLabels[LABEL_NAVI_UP_TOC_UNIT]->hide(); 
+        m_pLabels[LABEL_NAVI_UP_TOC_VALUE]->hide();
+        m_pLabels[LABEL_NAVI_UP_TOC_UNIT]->hide();
         break;
     case MACHINE_PURIST: 
         {
@@ -623,7 +626,7 @@ void MainPage::update()
    //ex
    updIsInfo(APP_EXE_I3_NO,&m_aHistoryEco[APP_EXE_I3_NO]);
 
-   updToc(m_fToc);
+   updToc(m_fToc); //2018.11.12
    //end
 }
 
@@ -1321,6 +1324,13 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
                 }
                 break;
             }
+            case MACHINE_RO:
+            {
+                m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+                m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ).sprintf("%3d",(int)fQ > 200 ?200:(int)fQ));
+                m_pLabels[LABEL_NAVI_UP_WQ_UNIT]->setText(tr("us"));
+                break;
+            }
             }
         }
         break;
@@ -1527,6 +1537,16 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
             }
             //RO unfinished
             case MACHINE_RO:
+                //2018.11.12
+                m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+               // m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ).sprintf("%3d",(int)fQ > 200 ?200:(int)fQ));
+                if(fQ > 200)
+                {
+                    fQ = 200;
+                }
+                m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                 m_pLabels[LABEL_NAVI_UP_WQ_UNIT]->setText(tr("us"));
+                m_aHistoryEco[iIndex] = *info; //end
                 break;
             default:
                 break;

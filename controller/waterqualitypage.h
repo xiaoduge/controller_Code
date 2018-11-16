@@ -95,6 +95,7 @@ public:
     
     void updSwPressure(float fvalue);
 
+    void updTOC(float fToc); //2018.11.13
 private:
 
     void update_edi_msg(int iIdx,float value);

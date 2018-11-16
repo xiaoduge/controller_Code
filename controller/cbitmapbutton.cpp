@@ -197,14 +197,21 @@ void CBitmapButton::paintEvent(QPaintEvent *e)
                 {
                     rectText.setY(rectText.bottom()-52);
                     rectText.setX(rectText.x()-10);
-                    painter.drawText(rectText,Qt::AlignCenter,strDst);
+//                    painter.drawText(rectText,Qt::AlignCenter,strDst);
+
+                    QTextOption option(Qt::AlignHCenter | Qt::AlignVCenter);
+                    option.setWrapMode(QTextOption::WordWrap);
+                    painter.drawText(rect(), strDst, option);
                 }
                 break;
             case BITMAPBUTTON_ICON_COCENTER:
                 {
                     rectText.setY(rectText.y()+12);
                     rectText.setX(rectText.x());
-                    painter.drawText(rectText,Qt::AlignCenter,strDst);
+//                    painter.drawText(rectText,Qt::AlignCenter,strDst);
+                    QTextOption option(Qt::AlignHCenter | Qt::AlignVCenter);
+                    option.setWrapMode(QTextOption::WordWrap);
+                    painter.drawText(rect(), strDst, option);
                 }
                 break;
             case BITMAPBUTTON_TIP_BOTTOMCENTER:
@@ -212,10 +219,16 @@ void CBitmapButton::paintEvent(QPaintEvent *e)
                     QFontMetrics fm = painter.fontMetrics();
                     rectText.setY(rectText.bottom() - (fm.ascent()+fm.descent()) - rect().height() / 5);
                     painter.drawText(rectText,Qt::AlignCenter,strDst);
+//                    QTextOption option(Qt::AlignHCenter | Qt::AlignVCenter);
+//                    option.setWrapMode(QTextOption::WordWrap);
+//                    painter.drawText(rect(), strDst, option);
                 }
                 break;
            default:
-                painter.drawText(rectText,Qt::AlignCenter,strDst);
+//                painter.drawText(rectText,Qt::AlignCenter,strDst);
+                QTextOption option(Qt::AlignHCenter | Qt::AlignVCenter);
+                option.setWrapMode(QTextOption::WordWrap);
+                painter.drawText(rect(), strDst, option);
                 break;
             }
         }

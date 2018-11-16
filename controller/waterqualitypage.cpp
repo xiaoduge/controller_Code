@@ -537,9 +537,19 @@ void WaterQualityPage::update_up_msg(int isIdx,float fValue)
 
     switch(isIdx)
     {
-    case UP_TOC:            
-        tmpMsg = upmsg[iIdx].arg((int)fValue);
+    case UP_TOC:
+    {
+        if(fValue > 200)
+        {
+            tmpMsg = QString(" > 200");
+        }
+        else
+        {
+            tmpMsg = upmsg[iIdx].arg((int)fValue);
+        }
+//        tmpMsg = upmsg[iIdx].arg((int)fValue);
         break;
+    }
     case UP_WATER:
         if(1 > fValue)
         {
@@ -659,6 +669,8 @@ void WaterQualityPage::updAllInfo(void)
     update_edi_msg(RO_RESIDUE_RATIO, m_aEDIHistoryEco[RO_RESIDUE_RATIO].fShowInfo);
     update_edi_msg(TAP_WATER_QUALITY,m_aEDIHistoryEco[TAP_WATER_QUALITY].fShowInfo);
     update_edi_msg(RO_WATER_IN_QUALITY,m_aEDIHistoryEco[RO_WATER_IN_QUALITY].fShowInfo);
+
+    update_up_msg(UP_TOC, m_aUpHistoryEco[UP_TOC].fShowInfo);
     
 }
 
@@ -904,6 +916,14 @@ void WaterQualityPage::updSwPressure(float fvalue)
     }
 
     m_aEDIHistoryEco[TAP_WATER_PRESSURE].fShowInfo = fvalue;
+}
+
+void WaterQualityPage::updTOC(float fToc)
+{
+//    UP_TOC
+    update_up_msg(UP_TOC, fToc);
+    m_aUpHistoryEco[UP_TOC].fShowInfo = fToc;
+
 }
 
 void WaterQualityPage::updFlowInfo(int iIndex,int iValue)

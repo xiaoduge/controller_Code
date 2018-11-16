@@ -88,7 +88,7 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
      //case MACHINE_Genie:
      case MACHINE_UP:
      case MACHINE_EDI:
-     case MACHINE_RO:
+     //case MACHINE_RO:
      case MACHINE_PURIST:
      case MACHINE_ADAPT:
          aIds[iIdx].iType = 0;
@@ -128,11 +128,14 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
      case MACHINE_Genie:
      case MACHINE_UP:
      case MACHINE_EDI:
-     case MACHINE_RO:
          aIds[iIdx].iType = 0;
          aIds[iIdx].iId   = DISP_N1_UV;
          aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
          iIdx++;
+         break;
+     case MACHINE_RO:
+         break;
+     default:
          break;
      }
     
@@ -178,7 +181,6 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
      case MACHINE_L_RO_LOOP:
      case MACHINE_UP:
      case MACHINE_EDI:
-     case MACHINE_RO:
      {
          if (gGlobalParam.SubModSetting.ulFlags & (1 <<DISP_SM_TubeUV))
          {
@@ -190,6 +192,7 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
          break;
      }
      case MACHINE_Genie:
+     case MACHINE_RO:
      case MACHINE_PURIST:
          break;
      }
@@ -272,8 +275,6 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
     case MACHINE_L_RO_LOOP:
     case MACHINE_UP:
     case MACHINE_EDI:
-    case MACHINE_RO:
-
     {
         if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_HaveTubeFilter)
         {
@@ -294,6 +295,7 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
     case MACHINE_Genie:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
+    case MACHINE_RO:
         break;
     }
 

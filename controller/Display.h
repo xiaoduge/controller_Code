@@ -196,7 +196,7 @@ typedef struct
 }DISP_OBJ_STRU;
 
 /* default setting for MM parameters */
-#define MM_DEFALUT_SP1 1.0//          0~1.6Mpa    B1进水压力下限
+#define MM_DEFALUT_SP1 0.5//          0~1.6Mpa    B1进水压力下限
 #define MM_DEFALUT_SP2 92//          RO截留率下限,通过计算公式rejection=(I1b-I2)/I1b*100%
 #define MM_DEFALUT_SP3 50//          0~100?s/cm  RO产水电导率下限（I2测得）
 #define MM_DEFALUT_SP4 1.0//          0~18.2M .cm EDI产水电阻率下限（I3测得）
@@ -227,7 +227,7 @@ typedef struct
 #define MM_DEFALUT_SP29 5//           
 #define MM_DEFALUT_SP30 15//        TOC进水水质下限15.0MΩ.cm   
 #define MM_DEFALUT_SP31 16//        HP循环(水箱循环)水质下限15.0MΩ.cm   
-#define MM_DEFALUT_SP32 16//        HP产水水质下限15.0MΩ.cm   
+#define MM_DEFALUT_SP32 0//        HP产水水质下限15.0MΩ.cm   
 
 typedef enum
 {

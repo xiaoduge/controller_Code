@@ -2,7 +2,7 @@
 #include "ExtraDisplay.h"
 #include <QMutexLocker>
 #include <QTimerEvent>
-#include <QDebug>
+//#include <QDebug>
 #include "ExtraDisplay.h"
 
 const int iTimeF = 1000* 10; //10s
@@ -20,7 +20,6 @@ Ex_ScreenSleepThread::~Ex_ScreenSleepThread()
 
 void Ex_ScreenSleepThread::run()
 {
-    qDebug() << "ScreenSleep thread run()";
     m_timerID = startTimer(iTimeF);
 
     exec();
@@ -43,7 +42,7 @@ void Ex_ScreenSleepThread::timerEvent(QTimerEvent *event)
         {
             emit screenSleep(true);
         }
-        qDebug() << "g_screenSleep: " << g_screenSleep;
+//        qDebug() << "g_screenSleep: " << g_screenSleep;
     }
 }
 

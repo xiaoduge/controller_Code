@@ -328,7 +328,7 @@ void SystemCfgPage::createControl()
         yOffset += BACKWIDGET_START_HIATUS;
 
         rectTmp = sQrectAry[0];
-        rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH);
+        rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 10);
 
         for (iCol = 0; iCol < iCols; iCol++)
         {
@@ -338,8 +338,8 @@ void SystemCfgPage::createControl()
                 m_aChks[iRow * iCols + iCol]->setGeometry(rectTmp);
                 m_aChks[iRow * iCols + iCol]->setStyleSheet(strQss4Chk);
             
-                rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
-                rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH);
+                rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 20);
+                rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 10);
             }
         }
         
@@ -372,20 +372,20 @@ void SystemCfgPage::createControl()
     m_chkPWTankUV->setStyleSheet(strQss4Chk);
     m_chkPWTankUV->hide();
 
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 10);
     rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 20);
     m_lbPWTankUVName = new QLabel(tmpWidget);
     m_lbPWTankUVName->setGeometry(rectTmp);
     m_lbPWTankUVName->hide();
 
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 10);
     rectTmp.setWidth(X_ITEM_WIDTH);
     m_lePWTankUVValue = new QLineEdit(tmpWidget);
     m_lePWTankUVValue->setGeometry(rectTmp);
     m_lePWTankUVValue->setValidator(new QIntValidator(0, 100, this));
     m_lePWTankUVValue->hide();
 
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 10);
     rectTmp.setWidth(X_ITEM_WIDTH+30);
     m_lbPWTankUVUnit = new QLabel(tmpWidget);
     m_lbPWTankUVUnit->setGeometry(rectTmp);
@@ -418,38 +418,38 @@ void SystemCfgPage::createControl()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_PURIST:
-        rectTmp.setX(BACKWIDGET_WIDTH/2);
-        rectTmp.setWidth(sQrectAry[0].width());
+        rectTmp.setX(BACKWIDGET_WIDTH/2 - 20);
+        rectTmp.setWidth(sQrectAry[0].width() + 40);
         m_lbPOweronFlushName = new QLabel(tmpWidget);
         m_lbPOweronFlushName->setGeometry(rectTmp);
         m_lbPOweronFlushName->hide();
     
-        rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+        rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 25);
         rectTmp.setWidth(X_ITEM_WIDTH);
         m_lePOweronFlushValue = new QLineEdit(tmpWidget);
         m_lePOweronFlushValue->setGeometry(rectTmp);
         m_lePOweronFlushValue->setValidator(new QIntValidator(0, 100, this));
         m_lePOweronFlushValue->hide();
             
-        rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+        rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 25);
         rectTmp.setWidth(X_ITEM_WIDTH);
         m_lbPOweronFlushUnit = new QLabel(tmpWidget);
         m_lbPOweronFlushUnit->setGeometry(rectTmp);
         m_lbPOweronFlushUnit->hide();
         break;
     default:
-        rectTmp.setX(BACKWIDGET_WIDTH/2);
-        rectTmp.setWidth(sQrectAry[0].width());
+        rectTmp.setX(BACKWIDGET_WIDTH/2 -20);
+        rectTmp.setWidth(sQrectAry[0].width() + 40);
         m_lbPOweronFlushName = new QLabel(tmpWidget);
         m_lbPOweronFlushName->setGeometry(rectTmp);
     
-        rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+        rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 25);
         rectTmp.setWidth(X_ITEM_WIDTH);
         m_lePOweronFlushValue = new QLineEdit(tmpWidget);
         m_lePOweronFlushValue->setGeometry(rectTmp);
         m_lePOweronFlushValue->setValidator(new QIntValidator(0, 100, this));
             
-        rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+        rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 25);
         rectTmp.setWidth(X_ITEM_WIDTH);
         m_lbPOweronFlushUnit = new QLabel(tmpWidget);
         m_lbPOweronFlushUnit->setGeometry(rectTmp);
@@ -457,11 +457,12 @@ void SystemCfgPage::createControl()
     }
     
     rectTmp = sQrectAry[0];
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 30);
     m_lbLoginLingerName = new QLabel(tmpWidget);
     m_lbLoginLingerName->setGeometry(rectTmp);
 
         
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 20);
     rectTmp.setWidth(X_ITEM_WIDTH);
     m_leLoginLingerValue = new QLineEdit(tmpWidget);
     m_leLoginLingerValue->setGeometry(rectTmp);

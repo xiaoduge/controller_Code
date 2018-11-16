@@ -1083,7 +1083,7 @@ void AlarmDisplayPage::csUpdate()
             if (gCMUsage.ulUsageState & (1 << DISP_T_A_FILTERLIFE) 
                 || gCMUsage.ulUsageState & (1 << DISP_T_A_FILTERLIFE))
             {
-                strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_T_A_FILTER]);
+                strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_T_A_FILTERLIFE]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
 //                tmp = gGlobalParam.CMParam.aulCms[DISP_T_A_FILTERLIFE] -

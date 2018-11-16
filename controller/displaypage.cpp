@@ -111,7 +111,7 @@ void DisplayPage::initUi()
 
         laName[iLoop]      = new QLabel(m_pBackWidget[iLoop]);
         laName[iLoop]->setPixmap(NULL);
-        laName[iLoop]->setGeometry(QRect(25, 15 , 100 , 20));
+        laName[iLoop]->setGeometry(QRect(25, 15 , 140 , 20));
         laName[iLoop]->setAlignment(Qt::AlignLeft);
         laName[iLoop]->show();
     }
@@ -119,7 +119,7 @@ void DisplayPage::initUi()
     pSlider[0] = new QSlider(m_pBackWidget[0]);
     pSlider[0]->setOrientation(Qt::Horizontal);
     pSlider[0]->setStyleSheet(qsss);
-    pSlider[0]->setGeometry(QRect(130 , 10 ,400,40));
+    pSlider[0]->setGeometry(QRect(140 , 10 ,370,40));
     pSlider[0]->setMinimum(0);
     pSlider[0]->setMaximum(255);
     pSlider[0]->setValue(m_iBrightness);
@@ -148,8 +148,8 @@ void DisplayPage::initUi()
     m_comboBox->setCurrentIndex(m_iSleepTime - 1);
     connect(m_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(on_comboBox_currentIndexChanged(int)));
 
-    m_sleepLabel->setGeometry(QRect(25, 15, 100 , 20));
-    m_comboBox->setGeometry(QRect(150 , 10, 80, 30));
+    m_sleepLabel->setGeometry(QRect(25, 15, 140 , 20));
+    m_comboBox->setGeometry(QRect(200 , 10, 80, 30));
     if(m_iEnergySave)
     {
         m_pBackWidget[2]->show();

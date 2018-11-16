@@ -119,7 +119,7 @@ void SoundPage::initUi()
 
         m_lblNames[iLoop] = new QLabel(m_pBackWidget[iLoop]);
         m_lblNames[iLoop]->setPixmap(NULL);
-        m_lblNames[iLoop]->setGeometry(QRect(25, 30 , 100 , 20));
+        m_lblNames[iLoop]->setGeometry(QRect(25, 30 , 140 , 20));
         m_lblNames[iLoop]->setText("Sound");
         m_lblNames[iLoop]->setStyleSheet(" font-size:18px;color:#16181e;font-family:Arial;QFont::Bold");
         m_lblNames[iLoop]->show();
