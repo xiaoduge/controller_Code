@@ -626,7 +626,17 @@ void MainPage::update()
    //ex
    updIsInfo(APP_EXE_I3_NO,&m_aHistoryEco[APP_EXE_I3_NO]);
 
-   updToc(m_fToc); //2018.11.12
+   switch(gGlobalParam.iMachineType)
+   {
+   case MACHINE_Genie:
+   case MACHINE_UP:
+   case MACHINE_PURIST:
+       updToc(m_fToc); //2018.11.12
+       break;
+   default:
+       break;
+   }
+//   updToc(m_fToc); //2018.11.12
    //end
 }
 
@@ -1458,6 +1468,19 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
             }
             break;
         }
+        case MACHINE_EDI:
+        {
+            if( 1 > fQ)
+            {
+                m_pLabels[m_aiLblMap[LABEL_NAVI_UP_WQ_VALUE]]->setText(QString::number(fQ,'f',3));
+            }
+            else
+            {
+                m_pLabels[m_aiLblMap[LABEL_NAVI_UP_WQ_VALUE]]->setText(QString::number(fQ,'f',1));
+            }
+            m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+            break;
+        }
         default:
             break;
             //
@@ -1783,6 +1806,40 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                     m_aHistoryEco[iIndex] = *info;
                 }
             }
+            break;
+        }
+
+        case MACHINE_EDI:
+        {
+            if (bVisible)
+            {
+                if( 1 > fQ)
+                {
+                    m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ,'f',3));
+                }
+                else
+                {
+                    m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                }
+                m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+            }
+
+            else if (bForceUpd)
+            {
+                if (bVisible)
+                {
+                    if( 1 > fQ)
+                    {
+                        m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ,'f',3));
+                    }
+                    else
+                    {
+                        m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                    }
+                    m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+                }
+            }
+            m_aHistoryEco[iIndex] = *info;
             break;
         }
         default:

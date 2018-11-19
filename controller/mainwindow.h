@@ -322,6 +322,9 @@ public:
 
     void updateRectState();
     void updateRectAlarmState();
+
+    void initMachineFlow();
+    void calcFlow(int state);
     void updatePackFlow();
 
     /* for all kinds of state related measurements */
@@ -674,7 +677,10 @@ private:
     Ex_ScreenSleepThread* m_screenSleepThread;
     //end
 
-    Ex_CalcPackFlow m_calcPFlow;
+    int m_flushMachineFlow;
+    int m_productMachineFlow;
+
+//    Ex_CalcPackFlow m_calcPFlow;
 
 private:
     void initScreenSleep();

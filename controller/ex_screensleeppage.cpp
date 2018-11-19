@@ -1,4 +1,5 @@
 #include "ex_screensleeppage.h"
+#include "ExtraDisplay.h"
 #include "mainwindow.h"
 #include <QLabel>
 #include <QPalette>
@@ -19,35 +20,45 @@ void Ex_ScreenSleepPage::buildTranslation()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
-        m_titleMsg = tr("SuperGenie G");
+        m_titleMsg = tr("SuperGenie G %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_L_UP:
-        m_titleMsg = tr("SuperGenie U");
+        m_titleMsg = tr("SuperGenie U %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_L_EDI_LOOP:
-        m_titleMsg = tr("SuperGenie E");
+        m_titleMsg = tr("SuperGenie E %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_L_RO_LOOP:
-        m_titleMsg = tr("SuperGenie R");
+        m_titleMsg = tr("SuperGenie R %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_Genie:
-        m_titleMsg = tr("Genie G");
+        m_titleMsg = tr("Genie G %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_UP:
-        m_titleMsg = tr("Genie U");
+        m_titleMsg = tr("Genie U %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_EDI:
-        m_titleMsg = tr("Genie E");
+        m_titleMsg = tr("Genie E %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_RO:
-        m_titleMsg = tr("Genie R");
+        m_titleMsg = tr("Genie R %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_PURIST:
         m_titleMsg = tr("Genie PURIST");
         break;
      case MACHINE_ADAPT:
-        m_titleMsg = tr("Genie A");
+        m_titleMsg = tr("Genie A %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
+    }
+}
+
+void Ex_ScreenSleepPage::update()
+{
+    buildTranslation();
+
+    if(m_pdwidget)
+    {
+        m_pdwidget->setMsg(m_titleMsg);
     }
 }
 

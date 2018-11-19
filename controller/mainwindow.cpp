@@ -181,6 +181,16 @@ I5  UP产水电阻率
 
 #define BUZZER_FILE       "/dev/buzzer_ctl"
 
+/*
+Version: 0.1.2.181119.release
+0       :  Major version number
+1       :  Minor version number
+2       :  Revision number
+181119  :  Date version number
+release :  version phase
+*/
+QString strSoftwareVersion = QString("0.1.1.181119_release");
+
 MainWindow *gpMainWnd;
 
 QPixmap    *gpGlobalPixmaps[GLOBAL_BMP_NUM];
@@ -461,7 +471,7 @@ void MainRetriveProductMsg(int iMachineType) //ex_dcj
     ex_gGlobalParam.Ex_System_Msg.Ex_ProDate = config->value(strV, "unknow").toString();
 
     strV = "/ProductMsg/SoftwareVersion/";
-    ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer = config->value(strV, "1.0").toString();
+    ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer = config->value(strV, strSoftwareVersion).toString();
 
     if (config)
     {
@@ -2654,10 +2664,14 @@ void CheckConsumptiveMaterialState(void)
 {
     uint32_t ulCurTime = DispGetCurSecond();
     uint32_t ulTemp;
+    int iMask;
 
     gCMUsage.ulUsageState = 0; 
 
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY])
+    iMask = gpMainWnd->getMachineNotifyMask(gGlobalParam.iMachineType,0);
+
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY])
+            && (iMask & (1 << DISP_PRE_PACK)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY])/DISP_DAYININSECOND;
 
@@ -2674,7 +2688,8 @@ void CheckConsumptiveMaterialState(void)
 
     }    
     //2018.10.22 AC PACK
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY])
+            && (iMask & (1 << DISP_AC_PACK)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY])/DISP_DAYININSECOND;
 
@@ -2692,7 +2707,8 @@ void CheckConsumptiveMaterialState(void)
     }
 
     //2018.10.12 T_Pack
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY])
+            && (iMask & (1 << DISP_T_PACK)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY])/DISP_DAYININSECOND;
 
@@ -2711,7 +2727,8 @@ void CheckConsumptiveMaterialState(void)
     //
 
     // check pack
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY])
+            && (iMask & (1 << DISP_P_PACK)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY])/DISP_DAYININSECOND;
 
@@ -2728,7 +2745,8 @@ void CheckConsumptiveMaterialState(void)
 
     }
 
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY])
+            && (iMask & (1 << DISP_U_PACK)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY])/DISP_DAYININSECOND;
 
@@ -2746,7 +2764,8 @@ void CheckConsumptiveMaterialState(void)
     }    
 
     // check pack
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY])
+            && (iMask & (1 << DISP_H_PACK)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY])/DISP_DAYININSECOND;
 
@@ -2764,7 +2783,8 @@ void CheckConsumptiveMaterialState(void)
     }
 
     // check uv
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_N1_UVLIFEDAY])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_N1_UVLIFEDAY])
+            && (iMask & (1 << DISP_N1_UV)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_N1_UVLIFEDAY])/DISP_DAYININSECOND;
 
@@ -2779,7 +2799,8 @@ void CheckConsumptiveMaterialState(void)
         }
 
     }        
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_N2_UVLIFEDAY])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_N2_UVLIFEDAY])
+            && (iMask & (1 << DISP_N2_UV)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_N2_UVLIFEDAY])/DISP_DAYININSECOND;
 
@@ -2795,7 +2816,8 @@ void CheckConsumptiveMaterialState(void)
 
     }        
 
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_N3_UVLIFEDAY])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_N3_UVLIFEDAY])
+            && (iMask & (1 << DISP_N3_UV)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_N3_UVLIFEDAY])/DISP_DAYININSECOND;
 
@@ -2811,7 +2833,8 @@ void CheckConsumptiveMaterialState(void)
 
     }        
 
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_N4_UVLIFEDAY])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_N4_UVLIFEDAY])
+            && (iMask & (1 << DISP_N4_UV)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_N4_UVLIFEDAY])/DISP_DAYININSECOND;
 
@@ -2827,7 +2850,8 @@ void CheckConsumptiveMaterialState(void)
 
     }        
     
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_N5_UVLIFEDAY])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_N5_UVLIFEDAY])
+            && (iMask & (1 << DISP_N5_UV)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_N5_UVLIFEDAY])/DISP_DAYININSECOND;
 
@@ -2843,7 +2867,8 @@ void CheckConsumptiveMaterialState(void)
 
     }        
 
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_W_FILTERLIFE])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_W_FILTERLIFE])
+            && (iMask & (1 << DISP_W_FILTER)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_W_FILTERLIFE])/DISP_DAYININSECOND;
     
@@ -2853,7 +2878,8 @@ void CheckConsumptiveMaterialState(void)
         }
     }
 
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_T_B_FILTERLIFE])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_T_B_FILTERLIFE])
+            && (iMask & (1 << DISP_T_B_FILTER)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_T_B_FILTERLIFE])/DISP_DAYININSECOND;
     
@@ -2863,7 +2889,8 @@ void CheckConsumptiveMaterialState(void)
         }
     }
 
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_T_A_FILTERLIFE])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_T_A_FILTERLIFE])
+            && (iMask & (1 << DISP_T_A_FILTER)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_T_A_FILTERLIFE])/DISP_DAYININSECOND;
     
@@ -2873,7 +2900,8 @@ void CheckConsumptiveMaterialState(void)
         }
     }    
 
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_TUBE_FILTERLIFE])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_TUBE_FILTERLIFE])
+            && (iMask & (1 << DISP_TUBE_FILTER)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_TUBE_FILTERLIFE])/DISP_DAYININSECOND;
     
@@ -2883,7 +2911,8 @@ void CheckConsumptiveMaterialState(void)
         }
     }  
 
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_TUBE_DI_LIFE])
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_TUBE_DI_LIFE])
+            && (iMask & (1 << DISP_TUBE_DI)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_TUBE_DI_LIFE])/DISP_DAYININSECOND;
     
@@ -3559,6 +3588,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_185UV_OOP)
                                                          |(1 << DISP_ALARM_PART0_ATPACK_OOP)
+                                                         |(1 << DISP_ALARM_PART0_HPACK_OOP) //2018.11.19
                                                          |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
                                                          |(1 << DISP_ALARM_PART0_UPACK_OOP)));
 
@@ -3754,8 +3784,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
             m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACK)
                                          |(1 << DISP_U_PACK)
+                                         |(1 << DISP_H_PACK)
                                          |(1 << DISP_N2_UV)
+                                         |(1 << DISP_N4_UV)
                                          |(1 << DISP_N5_UV)
+                                         |(1 << DISP_T_B_FILTER) //2018.11.19
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
             break;
@@ -4147,10 +4180,10 @@ MainWindow::MainWindow(QMainWindow *parent) :
     case MACHINE_EDI:
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PPACK_CLEANPACK] = DISP_P_PACK;
-        
+        /*
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
-        
+        */
         if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
         {
             MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
@@ -4163,10 +4196,10 @@ MainWindow::MainWindow(QMainWindow *parent) :
         /*rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_PPACK_CLEANPACK] = DISP_P_PACK | (1 << 16);
-        
+        /*
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
-        
+        */
         if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
         {
             MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
@@ -4298,6 +4331,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
     }
 //    Splash();
     initScreenSleep(); //ex
+    initMachineFlow(); //ex 2018.11.19
 
 }
 
@@ -5081,6 +5115,7 @@ void MainWindow::on_timerSecondEvent()
 {
     updateRectState(); //ex
     updateRectAlarmState();//
+    updatePackFlow(); //
 
     if (m_iRfidDelayedMask)
     {
@@ -8146,8 +8181,95 @@ void MainWindow::updateRectAlarmState()
     }
 }
 
+void MainWindow::initMachineFlow()
+{
+    int rate = 0;
+    unsigned int machineFlow = ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow;
+
+    rate = 120;
+    m_flushMachineFlow = ((rate * 1000.0)/3600.0) + 0.5;
+
+    rate = 39;
+    switch(machineFlow)
+    {
+    case 5:
+        rate += 8;
+        break;
+    case 10:
+        rate += 16;
+        break;
+    case 12:
+        rate += 12;
+        break;
+    case 15:
+        rate += 24;
+        break;
+    case 24:
+        rate += 24;
+        break;
+    case 32:
+        rate += 32;
+        break;
+    default:
+        break;
+
+    }
+    m_productMachineFlow = ((rate * 1000.0)/3600.0) + 0.5;
+
+}
+
+void MainWindow::calcFlow(int state)
+{
+    switch(state)
+    {
+    case 0:
+        gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += m_flushMachineFlow;
+        gCMUsage.cmInfo.aulCumulatedData[DISP_AC_PACKLIFEL] += m_flushMachineFlow;
+        gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] += m_flushMachineFlow;
+        break;
+    case 1:
+        gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += m_productMachineFlow;
+        gCMUsage.cmInfo.aulCumulatedData[DISP_AC_PACKLIFEL] += m_productMachineFlow;
+        gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] += m_productMachineFlow;
+        break;
+    default:
+        break;
+    }
+
+}
+
+
 void MainWindow::updatePackFlow()
 {
+    unsigned int nSwitchMask = DispGetSwitchState(APP_EXE_SWITCHS_MASK);
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+    {
+        if((nSwitchMask & ( 1 << APP_EXE_E1_NO))
+            && (nSwitchMask & ( 1 << APP_EXE_E2_NO)))
+        {
+            calcFlow(0);
+        }
+        else if((nSwitchMask & ( 1 << APP_EXE_E1_NO))
+                && (nSwitchMask & ( 1 << APP_EXE_C1_NO)))
+        {
+            calcFlow(1);
+        }
+
+        break;
+    }
+    default:
+        break;
+    }
+
+
+#if 0
     unsigned int ulQuantity;
     switch(gGlobalParam.iMachineType)
     {
@@ -8232,5 +8354,7 @@ void MainWindow::updatePackFlow()
     default:
         break;
     }
+#endif
 }
+
 

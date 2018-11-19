@@ -455,7 +455,7 @@
     <message>
         <location filename="alarmdisplaypage.cpp" line="1193"/>
         <source>Last Maintenance </source>
-        <translation type="unfinished"></translation>
+        <translation>维护时间</translation>
     </message>
     <message>
         <location filename="alarmdisplaypage.cpp" line="1221"/>
@@ -2342,7 +2342,7 @@
     <message>
         <location filename="ex_screensleeppage.cpp" line="37"/>
         <source>Genie U</source>
-        <translation type="unfinished">Genie U 20</translation>
+        <translation type="unfinished">Genie U</translation>
     </message>
     <message>
         <location filename="ex_screensleeppage.cpp" line="40"/>

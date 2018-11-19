@@ -495,12 +495,12 @@
     <message>
         <location filename="alarmdisplaypage.cpp" line="1193"/>
         <source>Last Maintenance </source>
-        <translation type="unfinished"></translation>
+        <translation>Dernier entretien</translation>
     </message>
     <message>
         <location filename="alarmdisplaypage.cpp" line="1221"/>
         <source>RO Chlorine</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">RO Cl</translation>
     </message>
 </context>
 <context>
@@ -3018,39 +3018,39 @@
     <message>
         <location filename="mainpage.cpp" line="1260"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Attention</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="1261"/>
         <source>Please stop dispensing water before switching system into Standby mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez arrêter de distribuer de l&apos;eau avant de mettre le système en mode veille</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="1912"/>
         <location filename="mainpage.cpp" line="1964"/>
         <source>Tank Full</source>
-        <translation type="unfinished"></translation>
+        <translation>Réservoir plein</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="1924"/>
         <source>Flush</source>
-        <translation type="unfinished"></translation>
+        <translation>Flush</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="1933"/>
         <source>Rinsing</source>
-        <translation type="unfinished"></translation>
+        <translation>Rinçage</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="1940"/>
         <source>Filling</source>
-        <translation type="unfinished"></translation>
+        <translation>Remplissage</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="1974"/>
         <location filename="mainpage.cpp" line="1977"/>
         <source>Pressure Relief</source>
-        <translation type="unfinished"></translation>
+        <translation>Soulagement de la pression</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="1981"/>
@@ -3062,13 +3062,13 @@
         <location filename="mainpage.cpp" line="1998"/>
         <location filename="mainpage.cpp" line="2014"/>
         <source>Dispense</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispenser</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="2002"/>
         <location filename="mainpage.cpp" line="2027"/>
         <source>Recirculation</source>
-        <translation type="unfinished"></translation>
+        <translation>Recirculation</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="2006"/>
@@ -4875,7 +4875,7 @@
     <message>
         <location filename="systemmonitorpage.cpp" line="826"/>
         <source>Tank Full</source>
-        <translation type="unfinished"></translation>
+        <translation>Réservoir plein</translation>
     </message>
     <message>
         <location filename="systemmonitorpage.cpp" line="836"/>
@@ -4885,17 +4885,17 @@
     <message>
         <location filename="systemmonitorpage.cpp" line="842"/>
         <source>Flush</source>
-        <translation type="unfinished"></translation>
+        <translation>Flush</translation>
     </message>
     <message>
         <location filename="systemmonitorpage.cpp" line="848"/>
         <source>Rinsing</source>
-        <translation type="unfinished"></translation>
+        <translation>Rinçage</translation>
     </message>
     <message>
         <location filename="systemmonitorpage.cpp" line="853"/>
         <source>Filling</source>
-        <translation type="unfinished"></translation>
+        <translation>Remplissage</translation>
     </message>
     <message>
         <location filename="systemmonitorpage.cpp" line="858"/>
@@ -4911,25 +4911,25 @@
         <location filename="systemmonitorpage.cpp" line="868"/>
         <location filename="systemmonitorpage.cpp" line="869"/>
         <source>Standby</source>
-        <translation type="unfinished"></translation>
+        <translation>Veille</translation>
     </message>
     <message>
         <location filename="systemmonitorpage.cpp" line="874"/>
         <location filename="systemmonitorpage.cpp" line="891"/>
         <source>Dispense</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispenser</translation>
     </message>
     <message>
         <location filename="systemmonitorpage.cpp" line="878"/>
         <location filename="systemmonitorpage.cpp" line="902"/>
         <source>Recirculation</source>
-        <translation type="unfinished"></translation>
+        <translation>Recirculation</translation>
     </message>
     <message>
         <location filename="systemmonitorpage.cpp" line="882"/>
         <location filename="systemmonitorpage.cpp" line="895"/>
         <source>Ready</source>
-        <translation type="unfinished"></translation>
+        <translation>Prêt</translation>
     </message>
     <message>
         <location filename="systemmonitorpage.cpp" line="927"/>

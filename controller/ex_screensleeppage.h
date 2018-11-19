@@ -15,6 +15,7 @@ public:
     Ex_ScreenSleepPage(QObject *parent = 0,CBaseWidget *widget = 0,MainWindow  *wndMain = 0);
 
     void buildTranslation();
+    void update();
 
 signals:
     void pageHide();

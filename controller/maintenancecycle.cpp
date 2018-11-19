@@ -165,7 +165,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     case MACHINE_L_RO_LOOP:
     //case MACHINE_Genie:
     case MACHINE_UP:
-    case MACHINE_EDI:
+    //case MACHINE_EDI:
     //case MACHINE_RO:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:

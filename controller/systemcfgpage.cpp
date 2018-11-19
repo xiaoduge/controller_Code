@@ -922,7 +922,7 @@ void SystemCfgPage::save()
            break;
        case DISP_WATER_BARREL_TYPE_060L:
            pmParam.afCap[DISP_PM_PM2] = 60;
-           pmParam.afDepth[DISP_PM_PM2] = 0.55;
+           pmParam.afDepth[DISP_PM_PM2] = 0.52;
            break;
        case DISP_WATER_BARREL_TYPE_100L:
            pmParam.afCap[DISP_PM_PM2] = 100;

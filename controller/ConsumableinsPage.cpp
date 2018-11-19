@@ -87,7 +87,7 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
      case MACHINE_L_RO_LOOP:
      //case MACHINE_Genie:
      case MACHINE_UP:
-     case MACHINE_EDI:
+     //case MACHINE_EDI:
      //case MACHINE_RO:
      case MACHINE_PURIST:
      case MACHINE_ADAPT:
@@ -180,7 +180,6 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
      case MACHINE_L_EDI_LOOP:
      case MACHINE_L_RO_LOOP:
      case MACHINE_UP:
-     case MACHINE_EDI:
      {
          if (gGlobalParam.SubModSetting.ulFlags & (1 <<DISP_SM_TubeUV))
          {
@@ -193,6 +192,7 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
      }
      case MACHINE_Genie:
      case MACHINE_RO:
+     case MACHINE_EDI:
      case MACHINE_PURIST:
          break;
      }
@@ -274,7 +274,6 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_UP:
-    case MACHINE_EDI:
     {
         if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_HaveTubeFilter)
         {
@@ -296,6 +295,7 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
     case MACHINE_RO:
+    case MACHINE_EDI:
         break;
     }
 

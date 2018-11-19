@@ -13431,9 +13431,12 @@ void MainSecondTask4MainState()
         switch(gCcb.ulMachineType)
         {
         case MACHINE_L_Genie:
+        case MACHINE_L_EDI_LOOP:
+        case MACHINE_L_RO_LOOP:
         case MACHINE_Genie:
         case MACHINE_UP: //2018.10.24 add
         case MACHINE_RO: //2018.11.12 add , Automatic recovery of water production
+        case MACHINE_EDI:
             if (gCcb.bit1B2Full)
             {
                 // check report flag
