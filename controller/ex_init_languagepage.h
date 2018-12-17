@@ -22,44 +22,11 @@
 
 class MainWindow;
 class QPushButton;
+class QComboBox;
 
 class Ex_Init_Languagepage : public CSubPage
 {
     Q_OBJECT
-
-public:
-    QString Country[Ex_LanguageNum] =
-    {
-        QString(":/pic/English.png"),
-        QString(":/pic/China.png"),
-        QString(":/pic/Spanish.png"),
-        QString(":/pic/France.png"),
-        QString(":/pic/Germany.png"),
-        QString(":/pic/Italian.png"),
-
-    };
-
-    QString CountryName[Ex_LanguageNum] =
-    {
-        QString("English"),
-        QString("Chinese"),
-        QString("Spanish"),
-        QString("French"),
-        QString("German"),
-        QString("Italian"),
-
-    };
-
-    QRect backrect[Ex_LanguageNum] =
-    {
-        QRect(72 , 163 , 202 , 125),
-        QRect(299 , 163 , 202 , 125),
-        QRect(526 , 163 , 202 , 125),
-        QRect(72 , 320 , 202 , 125),
-        QRect(299 , 320 , 202 , 125),
-        QRect(526 , 320 , 202 , 125),
-    };
-
 public:
     Ex_Init_Languagepage(QObject *parent = 0,CBaseWidget *widget = 0 , MainWindow *wndMain = 0);
 
@@ -78,24 +45,21 @@ private:
     void buildTitles();
     void setBackColor();
 
-    CBitmapButton *btnLanguage[Ex_LanguageNum];
-    QLabel *lbLanguage[Ex_LanguageNum];
-    QLabel *lbStr[Ex_LanguageNum];
-
+    QComboBox* m_pCbLan;
+//    QPushButton* m_pBtnSave;
+    QLabel* m_pLbWorld;
     int    m_iLanguage;
 
     QPushButton* m_nextBtn;
-    QPushButton* m_saveBtn;
 
 signals:
     void languageSwitchBtnClicked(int);
 
 public slots:
-    void on_btn_clicked(int index);
+    void on_saveBtn_clicked();
+    void on_cbLan_currentIndexChanged(int index);
 
     void on_nextBtn_clicked();
-    void on_saveBtn_clicked();
-
 };
 
 

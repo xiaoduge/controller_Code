@@ -17,6 +17,7 @@
 #include "alarmdisplaypage.h"
 #include "sysmsgpage.h"
 #include "ex_sysmsgpage.h"
+#include "ex_usermanualpage.h"
 
 #include <QPainter>
 
@@ -243,6 +244,14 @@ void MenuPage::Create_subPage()
 //            m_pSubPages[index] = new SysMsgPage(this , tmpWidget , m_wndMain);
             m_pSubPages[index] = new Ex_SysMsgPage(this , tmpWidget , m_wndMain);
             break;
+            /*
+        case MENU_BTN_USER_MANU:
+            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
+            tmpWidget->setObjectName(SubPageName[index]);
+            tmpWidget->setGeometry(0,0,800,600);
+            m_pSubPages[index] = new Ex_UserManualPage(this , tmpWidget , m_wndMain);
+            break;
+            */
         }
     }
 

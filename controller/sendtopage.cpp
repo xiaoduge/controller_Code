@@ -9,6 +9,9 @@
 #include <QScrollBar>
 
 #include <QListWidgetItem>
+#include <QDir>
+#include <QSqlQuery>
+#include <QPrinter>
 
 SendToPage::SendToPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
@@ -164,15 +167,286 @@ void SendToPage::initUi()
 
     connect(SaveBtn, SIGNAL(clicked(int)), this, SLOT(on_btn_clicked(int)));
 }
-
-void SendToPage::on_btn_clicked(int)
+//#define OUTPDF
+void SendToPage::copyAlarmFile()
 {
+#ifdef OUTPDF
+    int i = 1;
+    QPrinter text_printer; //文本生成不要设置resolution，否则输出会乱掉
+    QPainter text_painter;
+    text_printer.setOutputFormat(QPrinter::PdfFormat);
+    text_printer.setPageSize(QPrinter::A4);
+    text_printer.setOutputFileName("/media/sda1/GenieData/Alarm.pdf"); //直接设置输出文件路径，相对或者绝对路径
+    text_painter.begin(&text_printer);
+    text_painter.setFont(*m_wndMain->getFont(GLOBAL_FONT_12));
+    QString strTmp = QString("ID  Type  Status  Time");
+    text_painter.drawText(10, 30, strTmp);
+    i++;
+    QSqlQuery query;
+    query.exec("select * from Alarm");
+    while(query.next())
+    {
+        strTmp = QString("%1,  %2,  %3,  %4").arg(query.value(0).toInt())
+                                             .arg(query.value(1).toString())
+                                             .arg(query.value(2).toInt())
+                                             .arg(query.value(3).toString());
+        text_painter.drawText(10, i*30, strTmp);
+        i++;
+    }
+    text_painter.end();
+
+#else
+
+    QFile file("/media/sda1/GenieData/Alarm.csv");
+    if(!file.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:Alarm"), QMessageBox::Ok);
+        return;
+    }
+
+    QTextStream out(&file);
+    out << QString("ID") << ","
+        << QString("Type") << ","
+        << QString("Status") << ","
+        << QString("Time") << "\n";
+
+    QSqlQuery query;
+    query.exec("select * from Alarm");
+    while(query.next())
+    {
+        out << query.value(0).toInt() << ","
+            << query.value(1).toString() << ","
+            << query.value(2).toInt() << ","
+            << query.value(3).toString() << "\n";
+    }
+    file.close();
+
+   //tobase64
+    if(!file.open(QFile::ReadOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:Alarm.dcj"), QMessageBox::Ok);
+        return;
+    }
+    QByteArray content = file.readAll().toBase64();
+    QFile fileBase64("/media/sda1/GenieData/Alarm.dcj");
+    if(!fileBase64.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:Alarm.dcj"), QMessageBox::Ok);
+        return;
+    }
+    fileBase64.write(content);
+
+    file.close();
+    fileBase64.close();
+
+    QFile::remove("/media/sda1/GenieData/Alarm.csv");
+#endif
+}
+
+void SendToPage::copyGetWater()
+{
+    QFile file("/media/sda1/GenieData/GetWater.csv");
+    if(!file.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:GetWater"), QMessageBox::Ok);
+        return;
+    }
+
+    QTextStream out(&file);
+    out << QString("ID") << ","
+        << QString("WName") << ","
+        << QString("Quantity") << ","
+        << QString("Quantity") << ","
+        << QString("Tmp") << ","
+        << QString("Time") << "\n";
+
+    QSqlQuery query;
+    query.exec("select * from GetW");
+    while(query.next())
+    {
+        out << query.value(0).toInt() << ","
+            << query.value(1).toString() << ","
+            << query.value(2).toDouble() << ","
+            << query.value(3).toDouble() << ","
+            << query.value(4).toDouble() << ","
+            << query.value(5).toString() << "\n";
+    }
+    file.close();
+
+    //tobase64
+    if(!file.open(QFile::ReadOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:GetWater.dcj"), QMessageBox::Ok);
+        return;
+    }
+    QByteArray content = file.readAll().toBase64();
+    QFile fileBase64("/media/sda1/GenieData/GetWater.dcj");
+    if(!fileBase64.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:GetWater.dcj"), QMessageBox::Ok);
+        return;
+    }
+    fileBase64.write(content);
+
+    file.close();
+    fileBase64.close();
+
+    QFile::remove("/media/sda1/GenieData/GetWater.csv");
+}
+
+void SendToPage::copyProduceWater()
+{
+    QFile file("/media/sda1/GenieData/ProductWater.csv");
+    if(!file.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:ProduceWater"), QMessageBox::Ok);
+        return;
+    }
+
+    QTextStream out(&file);
+    out << QString("ID") << ","
+        << QString("Duration") << ","
+        << QString("Ecoroin") << ","
+        << QString("Tmproin") << ","
+        << QString("Ecorores") << ","
+        << QString("eEcoropw") << ","
+        << QString("Tmpropw") << ","
+        << QString("Ecoedi") << ","
+        << QString("Tmpedi") << ","
+        << QString("Time") << "\n";
+
+    QSqlQuery query;
+    query.exec("select * from PWater");
+    while(query.next())
+    {
+        out << query.value(0).toInt() << ","
+            << query.value(1).toInt() << ","
+            << query.value(2).toDouble() << ","
+            << query.value(3).toDouble() << ","
+            << query.value(4).toDouble() << ","
+            << query.value(5).toDouble() << ","
+            << query.value(6).toDouble() << ","
+            << query.value(7).toDouble() << ","
+            << query.value(8).toDouble() << ","
+            << query.value(9).toString() << "\n";
+    }
+    file.close();
+
+    //tobase64
+    if(!file.open(QFile::ReadOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:ProduceWater.dcj"), QMessageBox::Ok);
+        return;
+    }
+    QByteArray content = file.readAll().toBase64();
+    QFile fileBase64("/media/sda1/GenieData/ProduceWater.dcj");
+    if(!fileBase64.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:ProduceWater.dcj"), QMessageBox::Ok);
+        return;
+    }
+    fileBase64.write(content);
+
+    file.close();
+    fileBase64.close();
+
+    QFile::remove("/media/sda1/GenieData/ProductWater.csv");
+}
+
+void SendToPage::copyLog()
+{
+    QFile file("/media/sda1/GenieData/log.csv");
+    if(!file.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:Log"), QMessageBox::Ok);
+        return;
+    }
+
+    QTextStream out(&file);
+    out << QString("ID") << ","
+        << QString("Name") << ","
+        << QString("Action") << ","
+        << QString("Info") << ","
+        << QString("Time") << "\n";
+
+    QSqlQuery query;
+    query.exec("select * from Log");
+    while(query.next())
+    {
+        out << query.value(0).toInt() << ","
+            << query.value(1).toString() << ","
+            << query.value(2).toString() << ","
+            << query.value(3).toString() << ","
+            << query.value(4).toString() << "\n";
+    }
+    file.close();
+
+    //tobase64
+    if(!file.open(QFile::ReadOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:Log.dcj"), QMessageBox::Ok);
+        return;
+    }
+    QByteArray content = file.readAll().toBase64();
+    QFile fileBase64("/media/sda1/GenieData/Log.dcj");
+    if(!fileBase64.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:Log.dcj"), QMessageBox::Ok);
+        return;
+    }
+    fileBase64.write(content);
+
+    file.close();
+    fileBase64.close();
+
+    QFile::remove("/media/sda1/GenieData/log.csv");
+}
+
+void SendToPage::copyHistoryToUsb()
+{
+    QString pathName = QString("/media/sda1");
+    QDir dir(pathName);
+    if(!dir.exists())
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("U disk does not exist"), QMessageBox::Ok);
+        return;
+    }
+
+    pathName = QString("/media/sda1/GenieData");
+    dir.setPath(pathName);
+    if(!dir.exists())
+    {
+        bool ok = dir.mkdir(pathName);
+        if(!ok)
+        {
+            QMessageBox::warning(NULL, tr("Warning"), tr("Directory does not exist"), QMessageBox::Ok);
+            return;
+        }
+    }
+
+    if(m_chkSwitchs[2]->checkState() == Qt::Checked)
+    {
+        copyAlarmFile();
+        copyGetWater();
+        copyProduceWater();
+        copyLog();
+
+    }
+}
+
+void SendToPage::on_btn_clicked(int btnID)
+{
+    switch(btnID)
+    {
+    case SNEDPAGE_BTN_OK:
+        copyHistoryToUsb();
+        break;
+    default:
+        break;
+    }
     show(false);
 
 }
-
-
-
 
 void SendToPage::on_checkBox_changeState(int state)
 {

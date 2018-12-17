@@ -445,7 +445,7 @@ void MainRetriveExMachineMsg(int iMachineType) //ex_dcj
     QString strV;
 
     strV = "/ExMachineMsg/MachineFlow/";
-    ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow = config->value(strV, 10).toInt();
+    ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow = config->value(strV, 5).toInt();
 
     if (config)
     {
@@ -529,20 +529,14 @@ void MainRetriveMachineParam(int iMachineType,DISP_MACHINE_PARAM_STRU  &Param)
     /* retrive parameter from configuration */
     int iLoop;
 
-//    float defautlValue[] = {MM_DEFALUT_SP1,MM_DEFALUT_SP2,MM_DEFALUT_SP3,MM_DEFALUT_SP4,MM_DEFALUT_SP5,
-//                            MM_DEFALUT_SP6,MM_DEFALUT_SP7,MM_DEFALUT_SP8,MM_DEFALUT_SP9,MM_DEFALUT_SP10,
-//                            MM_DEFALUT_SP11,MM_DEFALUT_SP12,MM_DEFALUT_SP13,MM_DEFALUT_SP14,MM_DEFALUT_SP15,
-//                            MM_DEFALUT_SP16,MM_DEFALUT_SP17,MM_DEFALUT_SP18,MM_DEFALUT_SP19,MM_DEFALUT_SP20,
-//                            MM_DEFALUT_SP21,MM_DEFALUT_SP22,MM_DEFALUT_SP23,MM_DEFALUT_SP24,MM_DEFALUT_SP25,
-//                            MM_DEFALUT_SP26,MM_DEFALUT_SP27,MM_DEFALUT_SP28,MM_DEFALUT_SP29,MM_DEFALUT_SP30,
-//                            MM_DEFALUT_SP31,MM_DEFALUT_SP32};
-        float defautlValue[] = {MM_DEFALUT_SP1,MM_DEFALUT_SP2,MM_DEFALUT_SP3,MM_DEFALUT_SP4,MM_DEFALUT_SP5,
-                                MM_DEFALUT_SP6,MM_DEFALUT_SP7,MM_DEFALUT_SP8,MM_DEFALUT_SP9,MM_DEFALUT_SP10,
-                                MM_DEFALUT_SP11,MM_DEFALUT_SP12,MM_DEFALUT_SP13,MM_DEFALUT_SP14,MM_DEFALUT_SP15,
-                                MM_DEFALUT_SP16,MM_DEFALUT_SP17,MM_DEFALUT_SP18,MM_DEFALUT_SP19,MM_DEFALUT_SP20,
-                                MM_DEFALUT_SP21,MM_DEFALUT_SP22,MM_DEFALUT_SP23,MM_DEFALUT_SP24,MM_DEFALUT_SP25,
-                                MM_DEFALUT_SP26,MM_DEFALUT_SP27,MM_DEFALUT_SP28,MM_DEFALUT_SP29,15.0,
-                                MM_DEFALUT_SP31,0.0};
+    float defautlValue[] = {MM_DEFALUT_SP1,MM_DEFALUT_SP2,MM_DEFALUT_SP3,MM_DEFALUT_SP4,MM_DEFALUT_SP5,
+                            MM_DEFALUT_SP6,MM_DEFALUT_SP7,MM_DEFALUT_SP8,MM_DEFALUT_SP9,MM_DEFALUT_SP10,
+                            MM_DEFALUT_SP11,MM_DEFALUT_SP12,MM_DEFALUT_SP13,MM_DEFALUT_SP14,MM_DEFALUT_SP15,
+                            MM_DEFALUT_SP16,MM_DEFALUT_SP17,MM_DEFALUT_SP18,MM_DEFALUT_SP19,MM_DEFALUT_SP20,
+                            MM_DEFALUT_SP21,MM_DEFALUT_SP22,MM_DEFALUT_SP23,MM_DEFALUT_SP24,MM_DEFALUT_SP25,
+                            MM_DEFALUT_SP26,MM_DEFALUT_SP27,MM_DEFALUT_SP28,MM_DEFALUT_SP29,MM_DEFALUT_SP30,
+                            MM_DEFALUT_SP31,MM_DEFALUT_SP32};
+
 
     QString strCfgName = gaMachineType[iMachineType].strName;
 
@@ -1073,6 +1067,20 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[3].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk = Param.pc[4].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk = Param.pc[5].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk = Param.pc[6].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_TEMP].fk = Param.pc[7].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[8].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[9].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[10].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[11].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[12].fk;
+        /*
+        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[3].fk;
         ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk = Param.pc[4].fk;
         ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_TEMP].fk = Param.pc[5].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[6].fk;
@@ -1080,6 +1088,7 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[8].fk;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[9].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[10].fk;
+        */
         break;
     }
     case MACHINE_EDI:
@@ -1103,9 +1112,20 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[3].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk = Param.pc[4].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk = Param.pc[5].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[6].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[7].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[8].fk;
+        /*
+        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[3].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[4].fk;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[5].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[6].fk;
+        */
         break;
     }
     case MACHINE_PURIST:
@@ -2586,6 +2606,11 @@ void MainRetriveGlobalParam(void)
     case MACHINE_L_Genie:
         break;
     case MACHINE_Genie:
+    case MACHINE_EDI:
+    case MACHINE_UP:
+    case MACHINE_RO:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
         gGlobalParam.SubModSetting.ulFlags &= ~(1 << DISP_SM_HaveB3);
         break;
     }
@@ -5955,6 +5980,20 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                                 alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_TEMPERATURE);
                             }
                         }
+                        if((gGlobalParam.iMachineType == MACHINE_UP) || (gGlobalParam.iMachineType == MACHINE_RO))
+                        {
+                            if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+                            {
+                                if (m_EcoInfo[pItem->ucId].fQuality < gGlobalParam.MMParam.SP[MACHINE_PARAM_SP32])
+                                {
+                                   alarmCommProc(true,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY);
+                                }
+                                else if (m_iAlarmRcdMask[0][DISP_ALARM_PART1] & DISP_MAKE_ALARM(DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY))
+                                {
+                                    alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY);
+                                }
+                            }
+                        }
                         break;    
                     case APP_EXE_I4_NO:
                         if (DispGetTubeCirFlag())
@@ -5993,7 +6032,8 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                                 alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE);
                             }
                         } 
-                        else if (DispGetEdiQtwFlag())
+                        else if (DispGetEdiQtwFlag()
+                                 && ((gGlobalParam.iMachineType != MACHINE_UP) &&(gGlobalParam.iMachineType != MACHINE_RO)))
                         {
                             if (m_EcoInfo[pItem->ucId].fQuality < gGlobalParam.MMParam.SP[MACHINE_PARAM_SP32])
                             {

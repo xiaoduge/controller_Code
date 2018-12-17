@@ -24,6 +24,8 @@
 #include "displaypage.h"
 #include "ex_rfidcfgpage.h"
 
+#include "ex_languagepage.h"
+
 #define BTNS_PER_ROW (4)
 
 #define BTNS_H_MARGE (10)
@@ -123,7 +125,8 @@ void ServicePage::Create_subPage()
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new LanguagePage(this , tmpWidget , m_wndMain);
+//            m_pSubPages[index] = new LanguagePage(this , tmpWidget , m_wndMain);
+            m_pSubPages[index] = new Ex_Languagepage(this , tmpWidget , m_wndMain);//Ex_Languagepage
             break;
 
         case SET_BTN_SYSTEM_TIME:

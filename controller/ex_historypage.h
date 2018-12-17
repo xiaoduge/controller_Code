@@ -56,6 +56,7 @@ public:
     virtual void buildTranslation();
     virtual void initUi();
     virtual void update();
+    virtual void leaveSubPage();
 
 private slots:
     void on_HISTORYPAGE_BTN_QRY_STIME_clicked();

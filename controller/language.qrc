@@ -6,5 +6,6 @@
         <file>sp.qm</file>
         <file>fr.qm</file>
         <file>it.qm</file>
+        <file>kr.qm</file>
     </qresource>
 </RCC>

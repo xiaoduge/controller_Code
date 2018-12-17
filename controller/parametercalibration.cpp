@@ -96,6 +96,15 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
         aParameters[iIdx].id    = DISP_PC_COFF_EDI_WATER_CONDUCT;           
         iIdx++;
         break;
+    case MACHINE_RO:
+    case MACHINE_UP:
+        //if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+        {
+            aParameters[iIdx].type  = PARAMETER_CALIBRATION_FORMAT0;
+            aParameters[iIdx].id    = DISP_PC_COFF_EDI_WATER_CONDUCT;
+            iIdx++;
+        }
+        break;
     default:
         break;
     }    
@@ -109,6 +118,15 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
         aParameters[iIdx].type  = PARAMETER_CALIBRATION_FORMAT1;
         aParameters[iIdx].id    = DISP_PC_COFF_EDI_WATER_TEMP;          
         iIdx++;
+        break;
+    case MACHINE_RO:
+    case MACHINE_UP:
+       // if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+        {
+            aParameters[iIdx].type  = PARAMETER_CALIBRATION_FORMAT1;
+            aParameters[iIdx].id    = DISP_PC_COFF_EDI_WATER_TEMP;
+            iIdx++;
+        }
         break;
     default:
         break;
@@ -353,16 +371,38 @@ void ParameterCalibrationPage::buildTranslation()
             /*
             EDI电阻率    K:1.000 C:0.01   15.0MΩ.cm
             */
-            m_aParameterlistItem[iLoop]->setName(tr("EDI Conduct"));
+            switch(gGlobalParam.iMachineType)/*EDI电阻率*/
+            {
+            case MACHINE_RO:
+            case MACHINE_UP:
+                m_aParameterlistItem[iLoop]->setName(tr("HP Conduct"));
+                break;
+            default:
+                m_aParameterlistItem[iLoop]->setName(tr("EDI Conduct"));
+                break;
+            }
+
+         //   m_aParameterlistItem[iLoop]->setName(tr("EDI Conduct"));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
             m_aParameterlistItem[iLoop]->setP2Name(tr("C:"));
             m_aParameterlistItem[iLoop]->setP3Name(tr("omg"));
+
             break;
         case DISP_PC_COFF_EDI_WATER_TEMP:
             /*
             EDI温度     K:1.000     25.0℃
             */
-            m_aParameterlistItem[iLoop]->setName(tr("EDI Temp"));
+            switch(gGlobalParam.iMachineType)/*EDI电阻率*/
+            {
+            case MACHINE_RO:
+            case MACHINE_UP:
+                m_aParameterlistItem[iLoop]->setName(tr("HP Temp"));
+                break;
+            default:
+                m_aParameterlistItem[iLoop]->setName(tr("EDI Temp"));
+                break;
+            }
+           // m_aParameterlistItem[iLoop]->setName(tr("EDI Temp"));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
             m_aParameterlistItem[iLoop]->setP3Name(tr("celsius"));
             break;
@@ -387,7 +427,16 @@ void ParameterCalibrationPage::buildTranslation()
             /*
             TOC电极    K:1.000 C:0.01   5ppb
             */
-            m_aParameterlistItem[iLoop]->setName(tr("TOC Conduct"));
+            switch(gGlobalParam.iMachineType)/*EDI电阻率*/
+            {
+            case MACHINE_UP:
+                m_aParameterlistItem[iLoop]->setName(tr("UP TOC Conduct"));
+                break;
+            default:
+                m_aParameterlistItem[iLoop]->setName(tr("TOC Conduct"));
+                break;
+            }
+            //m_aParameterlistItem[iLoop]->setName(tr("TOC Conduct"));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
             m_aParameterlistItem[iLoop]->setP2Name(tr("C:"));
             m_aParameterlistItem[iLoop]->setP3Name(tr("ppb"));
@@ -396,7 +445,16 @@ void ParameterCalibrationPage::buildTranslation()
             /*
             TOC温度    K: 1.000    25.0℃
             */
-            m_aParameterlistItem[iLoop]->setName(tr("TOC Temp"));
+            switch(gGlobalParam.iMachineType)/*EDI电阻率*/
+            {
+            case MACHINE_UP:
+                m_aParameterlistItem[iLoop]->setName(tr("UP TOC Temp"));
+                break;
+            default:
+                m_aParameterlistItem[iLoop]->setName(tr("TOC Temp"));
+                break;
+            }
+           // m_aParameterlistItem[iLoop]->setName(tr("TOC Temp"));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
             m_aParameterlistItem[iLoop]->setP3Name(tr("celsius"));
             break;

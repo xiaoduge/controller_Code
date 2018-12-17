@@ -2469,6 +2469,40 @@ void work_stop_pw(void *para)
         /* notify ui (late implemnt) */
     }
 
+    //2018.11.22
+    switch(pCcb->ulMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+        iTmp  = (1 << APP_EXE_I1_NO)|(1<<APP_EXE_I2_NO)|(1<<APP_EXE_I3_NO);
+        iRet = CcbUpdateIAndBs(pWorkItem->id, 0, iTmp, 0);
+        if (iRet )
+        {
+            VOS_LOG(VOS_LOG_WARNING,"CcbUpdateIAndBs Fail %d",iRet);
+            /* notify ui (late implemnt) */
+        }
+        break;
+    case MACHINE_L_UP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_UP:
+    case MACHINE_RO:
+        iTmp  = (1 << APP_EXE_I1_NO)|(1<<APP_EXE_I2_NO);
+        iRet = CcbUpdateIAndBs(pWorkItem->id, 0, iTmp, 0);
+        if (iRet )
+        {
+            VOS_LOG(VOS_LOG_WARNING,"CcbUpdateIAndBs Fail %d",iRet);
+            /* notify ui (late implemnt) */
+        }
+        break;
+    case MACHINE_PURIST:
+        break;
+    case MACHINE_ADAPT:
+        break;
+    }
+    //end
+
     MainSndWorkMsg(WORK_MSG_TYPE_EPW,(unsigned char *)aiCont,sizeof(aiCont));
 
     pCcb->bit1ProduceWater        = FALSE; 
@@ -3143,14 +3177,18 @@ void work_start_qtw(void *para)
 
         iTmp = (1 << APP_EXE_I4_NO)|(1 << APP_EXE_I5_NO);
 
-        if (MACHINE_PURIST == pCcb->ulMachineType)
+        switch(pCcb->ulMachineType)
         {
+        case MACHINE_PURIST:
             iTmp |= (1 << APP_EXE_I2_NO);
-        }
-        //UP HP循环开启时Ro采� �I3
-        if(MACHINE_UP == pCcb->ulMachineType)
-        {
+            break;
+        case MACHINE_UP:
+        case MACHINE_RO:
             iTmp |= (1 << APP_EXE_I3_NO);
+            break;
+        default:
+
+            break;
         }
 
         iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
@@ -3235,6 +3273,7 @@ void work_stop_qtw(void *para)
     }
 
     iTmp  = (1 << APP_EXE_I4_NO) | (1 << APP_EXE_I5_NO);
+    /*
     if (MACHINE_PURIST == pCcb->ulMachineType)
     {
         iTmp |= (1 << APP_EXE_I2_NO);
@@ -3243,6 +3282,24 @@ void work_stop_qtw(void *para)
     if(MACHINE_UP == pCcb->ulMachineType)
     {
         iTmp |= (1 << APP_EXE_I3_NO);
+    }
+
+    if(MACHINE_RO == pCcb->ulMachineType) //&& haveHPCir(&gCcb))
+    {
+        iTmp |= (1 << APP_EXE_I3_NO);
+    }
+    */
+    switch(pCcb->ulMachineType)
+    {
+    case MACHINE_PURIST:
+        iTmp |= (1 << APP_EXE_I2_NO);
+        break;
+    case MACHINE_UP:
+    case MACHINE_RO:
+        iTmp |= (1 << APP_EXE_I3_NO);
+        break;
+    default:
+        break;
     }
 
     iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,0);
@@ -3564,6 +3621,11 @@ void work_start_cir(void *para)
              {
                  iTmp |= (1 << APP_EXE_I3_NO);
              }
+
+             if(MACHINE_RO == pCcb->ulMachineType) // && haveHPCir(&gCcb))
+             {
+                 iTmp |= (1 << APP_EXE_I3_NO);
+             }
              //endl
 
              iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
@@ -3675,6 +3737,10 @@ void work_stop_cir(void *para)
 
     //ex UP Tank I3 Report
     if(MACHINE_UP == pCcb->ulMachineType)
+    {
+        iTmp |= (1 << APP_EXE_I3_NO);
+    }
+    if(MACHINE_RO == pCcb->ulMachineType)// && haveHPCir(&gCcb))
     {
         iTmp |= (1 << APP_EXE_I3_NO);
     }
@@ -4771,36 +4837,71 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                                     /* Notify Handler , late implement */
                                 }
                             }
+
+                            //2018.12.7 add
+                            if (fValue < CcbGetSp7())
+                            {
+                                if (!gCcb.bit1AlarmUP)
+                                {
+                                    gCcb.bit1AlarmUP = TRUE;
+                                    gCcb.ulAlarmUPTick = gulSecond;
+                                }
+                                else
+                                {
+                                    /* fire alarm */
+
+                                    if (!(gCcb.ulFiredAlarmFlags  & ALARM_UP))
+                                    {
+                                        if (gulSecond - gCcb.ulAlarmUPTick >= 30)
+                                        {
+                                            gCcb.ulFiredAlarmFlags |= ALARM_UP;
+
+                                            CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE,TRUE);
+                                        }
+                                    }
+                                }
+
+                            }
+                            else
+                            {
+                                if (gCcb.ulFiredAlarmFlags & ALARM_UP)
+                                {
+                                    gCcb.ulFiredAlarmFlags &=  ~ALARM_UP;
+
+                                    CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE,FALSE);
+                                }
+
+                                if (gCcb.bit1AlarmUP) gCcb.bit1AlarmUP = FALSE;
+                            }
+                            //
                         }  
                         else if (iEcoId == APP_EXE_I4_NO)
                         {
                             if (gCcb.bit1TocOngoing  && Check_TOC_Alarm)
                             {
                                 float fValue = gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV.fWaterQ;
-                                if (!gCcb.bit1AlarmTOC)
-                                { 
-                                    if (fValue < CcbGetSp30())
+                                if(fValue < CcbGetSp30())
+                                {
+                                    if(!(gCcb.ulFiredAlarmFlags & ALARM_TOC))
                                     {
                                         gCcb.bit1AlarmTOC   = TRUE;
 
                                         gCcb.ulFiredAlarmFlags |= ALARM_TOC;
 
                                         CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE,TRUE);
-                                        
                                     }
                                 }
+
                                 else
                                 {
-                                    if (fValue >= CcbGetSp30())
+                                    if ( gCcb.ulFiredAlarmFlags & ALARM_TOC)
                                     {
-                                        gCcb.bit1AlarmTOC   = FALSE;
-                                        
                                         gCcb.ulFiredAlarmFlags &= ~ALARM_TOC;
-                                        
+
                                         CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE,FALSE);
-                                        
                                     }
-                                
+                                    if(gCcb.bit1AlarmTOC) gCcb.bit1AlarmTOC = FALSE;
+
                                 }
                             }
                             
@@ -4817,7 +4918,22 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                                     /* Stop Circulation */
                                     CcbInnerWorkStopCir();
                                 }
-                            }                            
+                            }
+
+                            if((gCcb.ulMachineType == MACHINE_UP)
+                               || (gCcb.ulMachineType == MACHINE_RO))
+                            {
+                                if(iEcoId == APP_EXE_I3_NO)
+                                {
+                                    float fValue = gCcb.ExeBrd.aEcoObjs[APP_EXE_I3_NO].Value.eV.fWaterQ;
+                                    if (fValue >= CcbGetSp11())
+                                    {
+                                        /* Stop Circulation */
+                                        CcbInnerWorkStopCir();
+                                    }
+                                }
+                            }
+
                         }
                         break;
                     }
@@ -4826,6 +4942,13 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
             case DISP_WORK_SUB_RUN_QTW:
                 switch(iEcoId)
                 {
+                case APP_EXE_I3_NO:
+                    if((gCcb.ulMachineType == MACHINE_UP) || (gCcb.ulMachineType == MACHINE_RO))
+                    {
+                        float fValue = gCcb.ExeBrd.aEcoObjs[APP_EXE_I3_NO].Value.eV.fWaterQ;
+                        gCcb.bit1I44Nw = fValue >= CcbGetSp10() ? TRUE : FALSE ;
+                    }
+                    break;
                 case APP_EXE_I4_NO:
                     {
                         float fValue = gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV.fWaterQ;

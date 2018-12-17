@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <QWSEvent>
 #include <QTranslator>
+#include <QStringList>
 
 class MainWindow;
 
@@ -17,9 +18,7 @@ public:
     void installTranslators(int iLanguage = 0,bool bSwitchFont = false);
     QTranslator *m_pTranslator;
     MainWindow  *m_pMainWnd;
-	QString m_strFontChinese;
-	QString m_strFontEngNorm;
-	QString m_strFontEngBold;
+    QStringList m_strLstFont;
 
 	bool    m_bFontLoaded;
 	int     m_iFontNum;

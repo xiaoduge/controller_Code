@@ -161,10 +161,36 @@ void Ex_Init_TimePage::Create_Date_Time()
         if(DATE_SET == iLoop)
         {
             CalS = new QCalendarWidget(m_widget);
+            //gGlobalParam.MiscParam.iLan
+            switch(gGlobalParam.MiscParam.iLan)
+            {
+            case APP_LAN_CHN:
+                CalS->setLocale(QLocale::Chinese);
+                break;
+            case APP_LAN_SPA:
+                CalS->setLocale(QLocale::Spanish);
+                break;
+            case APP_LAN_FRE:
+                CalS->setLocale(QLocale::French);
+                break;
+            case APP_LAN_ITA:
+                CalS->setLocale(QLocale::Italian);
+                break;
+            case APP_LAN_SKR:
+                CalS->setLocale(QLocale::Korean);
+                break;
+            case APP_LAN_GER:
+                CalS->setLocale(QLocale::German);
+                break;
+            default:
+                CalS->setLocale(QLocale::English);
+                break;
+            }
             CalS->setGeometry(QRect(130,100,500,300));
             CalS->hide();
 
         }
+
         else if(TIME_SET == iLoop)
         {
             TimeHCbox = new QComboBox(m_widget);

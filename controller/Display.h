@@ -206,7 +206,7 @@ typedef struct
 #define MM_DEFALUT_SP8 80//          0~2.0m  源水箱补水液位（B3）
 #define MM_DEFALUT_SP9 10//          0~2.0m  原水箱低位系统保护设定点（B3）
 #define MM_DEFALUT_SP10 1.0//        0~18.2M .cm 水箱水水质下限（I4）
-#define MM_DEFALUT_SP11 15//        0~18.2M .cm 水箱水水质上限（I4）
+#define MM_DEFALUT_SP11 2.0//        0~18.2M .cm 水箱水水质上限（I4）
 #define MM_DEFALUT_SP12 1.0//        0~18.2M .cm 纯水取水水质下限（I4）
 #define MM_DEFALUT_SP13 2000//        0~2000?s/cm 自来水电导率上限（I1a）
 #define MM_DEFALUT_SP14 100//        RO产水流速 上限100.0L/min     
@@ -225,9 +225,9 @@ typedef struct
 #define MM_DEFALUT_SP27 5//           
 #define MM_DEFALUT_SP28 45//        TOC传感器温度 上限45℃ 下限5℃  
 #define MM_DEFALUT_SP29 5//           
-#define MM_DEFALUT_SP30 15//        TOC进水水质下限15.0MΩ.cm   
+#define MM_DEFALUT_SP30 15.0//        TOC进水水质下限15.0MΩ.cm   
 #define MM_DEFALUT_SP31 16//        HP循环(水箱循环)水质下限15.0MΩ.cm   
-#define MM_DEFALUT_SP32 0//        HP产水水质下限15.0MΩ.cm   
+#define MM_DEFALUT_SP32 0.0//        HP产水水质下限15.0MΩ.cm   
 
 typedef enum
 {

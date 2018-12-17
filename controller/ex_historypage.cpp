@@ -22,6 +22,8 @@
 
 #include "ToastDlg.h"
 
+#include <QDebug>
+
 
 Ex_HistoryPage::Ex_HistoryPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
@@ -156,7 +158,33 @@ void Ex_HistoryPage::initUi()
     }
     m_ptBtns[HISTORYPAGE_TIME_BTN_CANCEL]->setGeometry(QRect(230 , 350, 100, 20));
     m_ptBtns[HISTORYPAGE_TIME_BTN_OK]->setGeometry(QRect(430 , 350, 100, 20));
+
     m_pCalendar = new QCalendarWidget(m_dockWidget);
+    switch(gGlobalParam.MiscParam.iLan)
+    {
+    case APP_LAN_CHN:
+        m_pCalendar->setLocale(QLocale::Chinese);
+        break;
+    case APP_LAN_SPA:
+        m_pCalendar->setLocale(QLocale::Spanish);
+        break;
+    case APP_LAN_FRE:
+        m_pCalendar->setLocale(QLocale::French);
+        break;
+    case APP_LAN_ITA:
+        m_pCalendar->setLocale(QLocale::Italian);
+        break;
+    case APP_LAN_SKR:
+        m_pCalendar->setLocale(QLocale::Korean);
+        break;
+    case APP_LAN_GER:
+        m_pCalendar->setLocale(QLocale::German);
+        break;
+    default:
+        m_pCalendar->setLocale(QLocale::English);
+        break;
+    }
+
     m_pCalendar->setGeometry(QRect(100,10,600,300));
     m_dockWidget->hide();
     m_btnID = 0;
@@ -405,7 +433,14 @@ void Ex_HistoryPage::update()
 //    QString tmp = date.toString("yyyy-MM-dd");
 
 //    m_phBtns[HISTORYPAGE_BTN_QRY_ETIME]->setText(tmp);
-//    m_phBtns[HISTORYPAGE_BTN_QRY_STIME]->setText(tmp);
+    //    m_phBtns[HISTORYPAGE_BTN_QRY_STIME]->setText(tmp);
+}
+
+void Ex_HistoryPage::leaveSubPage()
+{
+    m_pTableModel->clear();
+    qDebug() << "QSqlTableModel clear()";
+    CSubPage::leaveSubPage();
 }
 
 void Ex_HistoryPage::on_HISTORYPAGE_BTN_QRY_STIME_clicked()

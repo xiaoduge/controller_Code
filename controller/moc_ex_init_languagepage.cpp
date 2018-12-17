@@ -33,18 +33,19 @@ static const uint qt_meta_data_Ex_Init_Languagepage[] = {
       22,   21,   21,   21, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      58,   52,   21,   21, 0x0a,
-      78,   21,   21,   21, 0x0a,
-      99,   21,   21,   21, 0x0a,
+      52,   21,   21,   21, 0x0a,
+      79,   73,   21,   21, 0x0a,
+     113,   21,   21,   21, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_Ex_Init_Languagepage[] = {
     "Ex_Init_Languagepage\0\0"
-    "languageSwitchBtnClicked(int)\0index\0"
-    "on_btn_clicked(int)\0on_nextBtn_clicked()\0"
-    "on_saveBtn_clicked()\0"
+    "languageSwitchBtnClicked(int)\0"
+    "on_saveBtn_clicked()\0index\0"
+    "on_cbLan_currentIndexChanged(int)\0"
+    "on_nextBtn_clicked()\0"
 };
 
 void Ex_Init_Languagepage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -54,9 +55,9 @@ void Ex_Init_Languagepage::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
         Ex_Init_Languagepage *_t = static_cast<Ex_Init_Languagepage *>(_o);
         switch (_id) {
         case 0: _t->languageSwitchBtnClicked((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 2: _t->on_nextBtn_clicked(); break;
-        case 3: _t->on_saveBtn_clicked(); break;
+        case 1: _t->on_saveBtn_clicked(); break;
+        case 2: _t->on_cbLan_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->on_nextBtn_clicked(); break;
         default: ;
         }
     }

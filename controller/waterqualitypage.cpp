@@ -703,7 +703,7 @@ void WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                 fT = toFahrenheit(info->fTemperature);
             }  
             
-            if (DispGetUpQtwFlag())
+            if (DispGetUpQtwFlag() || DispGetUpCirFlag())
             { 
                 update_up_msg(UP_WATER,toOneDecimal(fQ));
                 m_aUpHistoryEco[UP_WATER].fShowInfo = info->fQuality;
@@ -744,7 +744,8 @@ void WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                 m_aTankHistoryEco[CIR_WATER_QUA].fShowInfo = info->fQuality;
             } 
             else if (DispGetEdiQtwFlag() //0629
-                     &&(MACHINE_PURIST != gGlobalParam.iMachineType))
+                     &&(MACHINE_PURIST != gGlobalParam.iMachineType)
+                     &&(MACHINE_RO != gGlobalParam.iMachineType))
             {
                 update_tank_msg(CIR_WATER_QUA,toOneDecimal(fQ));
                 m_aTankHistoryEco[CIR_WATER_QUA].fShowInfo = info->fQuality;
@@ -756,7 +757,8 @@ void WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
 //                m_aTankHistoryEco[CIR_WATER_QUA].fShowInfo = info->fQuality;
             }
             else if (bForceUpd
-                && (MACHINE_PURIST != gGlobalParam.iMachineType))
+                     && (MACHINE_PURIST != gGlobalParam.iMachineType)
+                     && (MACHINE_RO != gGlobalParam.iMachineType))
             {
                 update_tank_msg(CIR_WATER_QUA,toOneDecimal(fQ));
                 m_aTankHistoryEco[CIR_WATER_QUA].fShowInfo = info->fQuality;
@@ -789,6 +791,15 @@ void WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
             
             update_edi_msg(EDI_PRODUCT_T,toOneDecimal(fT));
             m_aEDIHistoryEco[EDI_PRODUCT_T].fShowInfo = info->fTemperature;
+
+            if(gGlobalParam.iMachineType == MACHINE_RO)
+            {
+                if (DispGetEdiQtwFlag() || DispGetTankCirFlag())
+                {
+                    update_tank_msg(CIR_WATER_QUA,toOneDecimal(fQ));
+                    m_aTankHistoryEco[CIR_WATER_QUA].fShowInfo = info->fQuality;
+                }
+            }
         }
         break;
     case APP_EXE_I2_NO: // RO Out

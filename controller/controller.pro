@@ -13,6 +13,7 @@ TRANSLATIONS += en.ts
 TRANSLATIONS += sp.ts
 TRANSLATIONS += fr.ts
 TRANSLATIONS += it.ts
+TRANSLATIONS += kr.ts
 
 TARGET = controller
 TEMPLATE = app
@@ -115,7 +116,9 @@ SOURCES += main.cpp\
     ex_screensleeppage.cpp \
     ex_dsleepwidget.cpp \
     ex_factorytestpage.cpp \
-    ex_calcpackflow.cpp
+    ex_calcpackflow.cpp \
+    ex_languagepage.cpp \
+    ex_usermanualpage.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -206,7 +209,9 @@ HEADERS  += mainwindow.h \
     ex_screensleeppage.h \
     ex_dsleepwidget.h \
     ex_factorytestpage.h \
-    ex_calcpackflow.h
+    ex_calcpackflow.h \
+    ex_languagepage.h \
+    ex_usermanualpage.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

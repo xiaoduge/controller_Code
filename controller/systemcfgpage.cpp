@@ -351,7 +351,7 @@ void SystemCfgPage::createControl()
 
     switch(gGlobalParam.iMachineType)
     {
-    case MACHINE_PURIST:
+   // case MACHINE_PURIST:
     case MACHINE_ADAPT:
         tmpWidget->setAutoFillBackground(false);
         tmpWidget->setPalette(pal);
@@ -393,7 +393,7 @@ void SystemCfgPage::createControl()
 
     switch(gGlobalParam.iMachineType)
     {
-    case MACHINE_PURIST:
+//    case MACHINE_PURIST:
     case MACHINE_ADAPT:
         yOffset -= BACKWIDGET_START_HIATUS;
         break;

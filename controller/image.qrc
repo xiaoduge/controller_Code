@@ -113,5 +113,18 @@
         <file alias="single_bg_ncir.png">pics/image/bg_nonavi_notank_nocir.png</file>
         <file alias="Monitor_Device_OFF.png">pics/image/Monitor_Device_OFF.png</file>
         <file alias="Monitor_Device_ON.png">pics/image/Monitor_Device_ON.png</file>
+        <file alias="SouthKorea.png">pics/image/SouthKorea.png</file>
+        <file alias="world.png">pics/image/world.png</file>
+        <file alias="blueWorld.png">pics/image/blueWorld.png</file>
+    </qresource>
+    <qresource prefix="/userManual">
+        <file alias="1.jpg">pics/Manual/1.jpg</file>
+        <file alias="2.jpg">pics/Manual/2.jpg</file>
+        <file alias="3.jpg">pics/Manual/3.jpg</file>
+        <file alias="4.jpg">pics/Manual/4.jpg</file>
+        <file alias="5.jpg">pics/Manual/5.jpg</file>
+        <file alias="6.jpg">pics/Manual/6.jpg</file>
+        <file alias="7.jpg">pics/Manual/7.jpg</file>
+        <file alias="8.jpg">pics/Manual/8.jpg</file>
     </qresource>
 </RCC>

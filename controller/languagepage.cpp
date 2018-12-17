@@ -27,7 +27,7 @@ QString Country[LanguageNum] =
     QString(":/pic/France.png"),
     QString(":/pic/Germany.png"),
     QString(":/pic/Italian.png"),
-
+//    QString(":/pic/SouthKorea.png")
 };
 
 QString CountryName[LanguageNum] =
@@ -38,8 +38,9 @@ QString CountryName[LanguageNum] =
     QString("French"),
     QString("German"),
     QString("Italian"),
-
+//    QString("Korean")
 };
+
 
 QRect backrect[LanguageNum] =
 {
@@ -93,6 +94,7 @@ void LanguagePage::buildTranslation()
     CountryName[3] = tr("French");
     CountryName[4] = tr("German");
     CountryName[5] = tr("Italian");
+//    CountryName[6] = tr("Korean");
 
     for(iLoop = 0 ; iLoop < LanguageNum ; iLoop++)
     {

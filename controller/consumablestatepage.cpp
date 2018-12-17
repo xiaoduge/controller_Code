@@ -454,9 +454,12 @@ void ConsumableStatePage:: update()
             break;
         case DISP_T_PACK:
             /* T-Pack */
+
+            /*
             tmp = gCMUsage.info.aulCms[DISP_T_PACKLIFEL] ;
             strTmp = astrNames[0] + "  " + QString::number(tmp) + "L";
             m_pCslistItem[iIdx]->setValue(strTmp);
+            */
 
             strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY]);
             m_pCslistItem[iIdx]->setInstDate(strTmp);

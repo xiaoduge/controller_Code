@@ -199,11 +199,17 @@ void SterilizePage::createControl()
         m_aSterilize[iLoop].laPromptFrame->setStyleSheet("background-color:transparent");
  
         m_aSterilize[iLoop].laPrompt     = new QLabel(m_aSterilize[iLoop].BackWidget);
-        m_aSterilize[iLoop].laPrompt->setGeometry(QrectAry[2]);
+
+        m_aSterilize[iLoop].laPrompt->adjustSize();
+        m_aSterilize[iLoop].laPrompt->setGeometry(QRect(190, 15, 340, 15*2));
+        m_aSterilize[iLoop].laPrompt->setWordWrap(true); //
+        m_aSterilize[iLoop].laPrompt->setAlignment(Qt::AlignHCenter);
+
+//        m_aSterilize[iLoop].laPrompt->setGeometry(QrectAry[2]);
         m_aSterilize[iLoop].laPrompt->show();
         m_aSterilize[iLoop].laPrompt->setFont(ft12);
         m_aSterilize[iLoop].laPrompt->setPalette(paLightblue);
-        m_aSterilize[iLoop].laPrompt->setAlignment(Qt::AlignCenter);
+//        m_aSterilize[iLoop].laPrompt->setAlignment(Qt::AlignCenter);
         m_aSterilize[iLoop].laPrompt->setStyleSheet("background-color:transparent");
 
         

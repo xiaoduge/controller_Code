@@ -41,34 +41,34 @@ void Ex_SysMsgPage::buildTranslation()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Super-Genie G %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Super-Genie G ") + tr("%1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_L_UP:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Super-Genie U %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Super-Genie U ") + tr("%1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_L_EDI_LOOP:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Super-Genie E %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Super-Genie E ") + tr("%1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_L_RO_LOOP:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Super-Genie R %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Super-Genie R ") + tr("%1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_Genie:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Genie G %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Genie G ") + tr("%1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_UP:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Genie U %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Genie U ") + tr("%1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_EDI:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Genie E %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Genie E ") + tr("%1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_RO:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Genie R %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Genie R ") + tr("%1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     case MACHINE_PURIST:
         m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Genie PURIST");
         break;
     case MACHINE_ADAPT:
-        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Genie A %1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
+        m_ExMsgName[SYSMS_PAGE_LB_TITLE] = QString("Genie A ") + tr("%1").arg(ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
         break;
     }
 

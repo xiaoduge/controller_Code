@@ -50,9 +50,15 @@ public:
 
 
 private:
-
     void setBackColor();
 
+    void copyAlarmFile();
+    void copyGetWater();
+    void copyProduceWater();
+    void copyLog();
+    void copyHistoryToUsb();
+
+private:
     QLabel *lbTitle;
 
     QLabel *lbPic[RECEIVER];

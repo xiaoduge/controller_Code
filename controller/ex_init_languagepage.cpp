@@ -10,6 +10,7 @@
 #include "notify.h"
 #include <QRect>
 #include <QPushButton>
+#include <QComboBox>
 
 
 
@@ -49,21 +50,16 @@ void Ex_Init_Languagepage::buildTitles()
 
 void Ex_Init_Languagepage::buildTranslation()
 {
-    int iLoop;
+    m_pCbLan->setItemText(0, tr("English"));
+    m_pCbLan->setItemText(1, tr("Chinese"));
+    m_pCbLan->setItemText(2, tr("Spanish"));
+    m_pCbLan->setItemText(3, tr("French"));
+    m_pCbLan->setItemText(4, tr("German"));
+    m_pCbLan->setItemText(5, tr("Italian"));
+    m_pCbLan->setItemText(6, tr("Korean"));
 
-    CountryName[0] = tr("English");
-    CountryName[1] = tr("Chinese");
-    CountryName[2] = tr("Spanish");
-    CountryName[3] = tr("French");
-    CountryName[4] = tr("German");
-    CountryName[5] = tr("Italian");
-
-    for(iLoop = 0 ; iLoop < Ex_LanguageNum ; iLoop++)
-    {
-        lbStr[iLoop]->setText(CountryName[iLoop]);
-    }
+//    m_pBtnSave->setText(tr("Save"));
     m_nextBtn->setText(tr("Next"));
-    m_saveBtn->setText(tr("Save"));
 }
 
 void Ex_Init_Languagepage::switchLanguage()
@@ -97,53 +93,35 @@ void Ex_Init_Languagepage::initUi()
 {
     setBackColor();
 
-    QPixmap *LanguagePix = new QPixmap(":/pic/Language.png");
+    QPixmap worldPix = QPixmap(":/pic/blueWorld.png");
 
-    for(int iLoop = 0 ; iLoop < Ex_LanguageNum ; iLoop++)
-    {
-        QPixmap tmpPix;
-        tmpPix.load(Country[iLoop]);
+    m_pLbWorld = new QLabel(m_widget);
+    m_pLbWorld->setPixmap(worldPix);
+    m_pLbWorld->setGeometry(20, 90, worldPix.width(), worldPix.height());
 
-        btnLanguage[iLoop] = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_SINGLE,iLoop);
+    m_pCbLan = new QComboBox(m_widget);
+    QStringList strList;
+    strList << tr("English")
+            << tr("Chinese")
+            << tr("Spanish")
+            << tr("French")
+            << tr("German")
+            << tr("Italian")
+            << tr("Korean");
+    m_pCbLan->addItems(strList);
+    m_pCbLan->setCurrentIndex(m_iLanguage);
+    m_pCbLan->setGeometry(570, 105, 160, 40);
+    connect(m_pCbLan, SIGNAL(currentIndexChanged(int)), this, SLOT(on_cbLan_currentIndexChanged(int)));
 
-        btnLanguage[iLoop]->setButtonPicture(LanguagePix);
+//    m_pBtnSave = new QPushButton( m_widget);
+//    m_pBtnSave->setGeometry(560, 180, 160, 40);
+//    connect(m_pBtnSave, SIGNAL(clicked()), this, SLOT(on_saveBtn_clicked()));
+//    m_pBtnSave->hide();
 
-        btnLanguage[iLoop]->setGeometry(backrect[iLoop]);
-
-        btnLanguage[iLoop]->setStyleSheet("background-color:transparent");
-
-        connect(btnLanguage[iLoop], SIGNAL(clicked(int)), this, SLOT(on_btn_clicked(int)));
-
-        lbLanguage[iLoop] = new QLabel(btnLanguage[iLoop]);
-
-        lbLanguage[iLoop]->setPixmap(tmpPix);
-        lbLanguage[iLoop]->setGeometry(QRect(76,28,50,32));
-
-        lbStr[iLoop] = new QLabel(btnLanguage[iLoop]);
-        lbStr[iLoop]->setText(CountryName[iLoop]);
-        lbStr[iLoop]->setGeometry(QRect(50,70,100,30));
-        lbStr[iLoop]->setAlignment(Qt::AlignCenter);
-        lbStr[iLoop]->setStyleSheet(" font-size:18pt;color:#3f4a56;font-family:Arial;");
-    }
     m_nextBtn = new QPushButton(m_widget);
-    m_saveBtn = new QPushButton(m_widget);
+    m_nextBtn->setGeometry(570, 180, 160, 40);
     connect(m_nextBtn, SIGNAL(clicked()), this, SLOT(on_nextBtn_clicked()));
-    connect(m_saveBtn, SIGNAL(clicked()), this, SLOT(on_saveBtn_clicked()));
 
-    m_saveBtn->hide(); //hide
-    m_saveBtn->move(200, 477);
-    m_nextBtn->move(500, 477);
-
-}
-
-void Ex_Init_Languagepage::on_btn_clicked(int index)
-{
-   m_iLanguage = index;
-
-   //ex
-   gApp->installTranslators(m_iLanguage);
-   m_wndMain->switchLanguage();
-   //end
 }
 
 void Ex_Init_Languagepage::on_nextBtn_clicked()
@@ -151,6 +129,26 @@ void Ex_Init_Languagepage::on_nextBtn_clicked()
     on_saveBtn_clicked(); //next clicked save
     emit languageSwitchBtnClicked(1);
 
+}
+
+void Ex_Init_Languagepage::leaveSubPage()
+{
+    if (m_iLanguage != gGlobalParam.MiscParam.iLan)
+    {
+       DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;
+
+       MiscParam.iLan = m_iLanguage;
+
+       MainSaveMiscParam(gGlobalParam.iMachineType,MiscParam);
+
+       MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
+
+       gApp->installTranslators(m_iLanguage);
+
+       m_wndMain->switchLanguage();
+    }
+
+    CSubPage::leaveSubPage();
 }
 
 void Ex_Init_Languagepage::on_saveBtn_clicked()
@@ -172,24 +170,12 @@ void Ex_Init_Languagepage::on_saveBtn_clicked()
     }
 }
 
-void Ex_Init_Languagepage::leaveSubPage()
+void Ex_Init_Languagepage::on_cbLan_currentIndexChanged(int index)
 {
-    if (m_iLanguage != gGlobalParam.MiscParam.iLan)
-    {
-       DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;
+    m_iLanguage = index;
 
-       MiscParam.iLan = m_iLanguage;
-
-       MainSaveMiscParam(gGlobalParam.iMachineType,MiscParam);
-
-       MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
-
-       gApp->installTranslators(m_iLanguage);
-
-       m_wndMain->switchLanguage();
-    }
-
-    CSubPage::leaveSubPage();
+    gApp->installTranslators(m_iLanguage);
+    m_wndMain->switchLanguage();
 }
 
 

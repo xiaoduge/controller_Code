@@ -79,7 +79,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     //2018.10.12 add T-Pack
     if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
     {
-        aIds[iIdx].iDspType = 2;
+        aIds[iIdx].iDspType = 1;   //2018.12.17
         aIds[iIdx].iId      = DISP_T_PACK;
         aIds[iIdx].vi.v1Min = 0;
         aIds[iIdx].vi.v1Max = 99999;
@@ -500,7 +500,7 @@ void MaintenanceCyclePage::buildTranslation()
             */
             pMaintenancelistItem[iIndex]->setName(tr("T Pack"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
-            pMaintenancelistItem[iIndex]->setP2Name(tr("L"));
+            //pMaintenancelistItem[iIndex]->setP2Name(tr("L"));
             break;
         case DISP_P_PACK:
             /* 
@@ -747,7 +747,7 @@ void MaintenanceCyclePage:: update()
             T-Pack
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEDAY]));
-            pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEL]));
+            //pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEL]));
             break;
         case DISP_P_PACK:
             /* 
@@ -910,8 +910,8 @@ void MaintenanceCyclePage::save()
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_T_PACKLIFEDAY] = iTemp;
-            iTemp = pMaintenancelistItem[iIndex]->getP2().toInt();
-            CMParam.aulCms[DISP_T_PACKLIFEL] = iTemp;
+      //      iTemp = pMaintenancelistItem[iIndex]->getP2().toInt();
+      //      CMParam.aulCms[DISP_T_PACKLIFEL] = iTemp;
             break;
         case DISP_P_PACK:
             /* 

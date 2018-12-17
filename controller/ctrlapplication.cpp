@@ -71,37 +71,30 @@ void CtrlApplication::installTranslators(int iLanguage,bool bSwitchFont)
         char fontname[256];
         int loadedFontID;
         int fontNum = 0;
-    
-        sprintf(fontname,"%s/%s",fontdir,"FZZDXJW.TTF");
-        loadedFontID = QFontDatabase::addApplicationFont(fontname);  
-        QStringList loadedFontFamilies = QFontDatabase::applicationFontFamilies(loadedFontID);
-        if(!loadedFontFamilies.empty())
-        {
-            m_strFontChinese = loadedFontFamilies.at(0);  
-            fontNum++;
+        int iLoop;
+        QString strFontName;
+        char * astrFontFile[] = {
+            "FZZDXJW.TTF",
+            "myriadproregular.ttf",
+            "myriadprobold.ttf",
+            "myriadcjk3.ttf",
+            NULL,
+        };
 
-            qDebug() << m_strFontChinese << endl;
-        }
-        
-        sprintf(fontname,"%s/%s",fontdir,"myriadproregular.ttf");
-        loadedFontID = QFontDatabase::addApplicationFont(fontname); 
-        loadedFontFamilies = QFontDatabase::applicationFontFamilies(loadedFontID);
-        if(!loadedFontFamilies.empty())
+        for (iLoop = 0; astrFontFile[iLoop] ;iLoop++)
         {
-            m_strFontEngNorm = loadedFontFamilies.at(0);  
-            fontNum++;
-            qDebug() << m_strFontEngNorm << endl;
+            sprintf(fontname,"%s/%s",fontdir,astrFontFile[iLoop]);
+            loadedFontID = QFontDatabase::addApplicationFont(fontname);  
+            QStringList loadedFontFamilies = QFontDatabase::applicationFontFamilies(loadedFontID);
+            if(!loadedFontFamilies.empty())
+            {
+                strFontName = loadedFontFamilies.at(0);  
+                m_strLstFont << strFontName;
+                fontNum++;
+                qDebug() << astrFontFile[iLoop] << endl;
+            }
         }
-    
-        sprintf(fontname,"%s/%s",fontdir,"myriadprobold.ttf");
-        loadedFontID = QFontDatabase::addApplicationFont(fontname); 
-        loadedFontFamilies = QFontDatabase::applicationFontFamilies(loadedFontID);
-        if(!loadedFontFamilies.empty())
-        {
-            m_strFontEngBold = loadedFontFamilies.at(0);  
-            fontNum++;
-            qDebug() << m_strFontEngBold << endl;
-        }
+
         m_bFontLoaded = true;
         m_iFontNum = fontNum;
     }
@@ -112,7 +105,6 @@ void CtrlApplication::installTranslators(int iLanguage,bool bSwitchFont)
         switch(iLanguage)
         {
         case APP_LAN_CHN:
-            
             m_pTranslator->load(":/language/cn.qm");
             installTranslator(m_pTranslator);
             break;
@@ -128,7 +120,14 @@ void CtrlApplication::installTranslators(int iLanguage,bool bSwitchFont)
             m_pTranslator->load(":/language/it.qm");
             installTranslator(m_pTranslator);
             break;
-//        case APP_LAN_GER:
+        case APP_LAN_SKR:
+            m_pTranslator->load(":/language/kr.qm");
+            installTranslator(m_pTranslator);
+            break;
+        case APP_LAN_GER:
+            m_pTranslator->load(":/language/de.qm");
+            installTranslator(m_pTranslator);
+            break;
         default:
             m_pTranslator->load(":/language/en.qm");
             installTranslator(m_pTranslator);
@@ -140,15 +139,20 @@ void CtrlApplication::installTranslators(int iLanguage,bool bSwitchFont)
         {
             switch(iLanguage)
             {
+            default:
             case APP_LAN_CHN:
                 {
-                    QFont font(m_strFontChinese,16);
+                    QFont font(m_strLstFont[0],16);
                     QApplication::setFont(font);
                 }
                 break;
-            default:
+            case APP_LAN_ENG:
+            case APP_LAN_SPA:
+            case APP_LAN_FRE:
+            case APP_LAN_GER:
+            case APP_LAN_ITA:
                 {
-                    QFont font(m_strFontEngNorm,16);
+                    QFont font(m_strLstFont[1],16);
                     QApplication::setFont(font);
                 }
                 break;
