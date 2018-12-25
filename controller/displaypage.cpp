@@ -111,7 +111,7 @@ void DisplayPage::initUi()
 
         laName[iLoop]      = new QLabel(m_pBackWidget[iLoop]);
         laName[iLoop]->setPixmap(NULL);
-        laName[iLoop]->setGeometry(QRect(25, 15 , 140 , 20));
+        laName[iLoop]->setGeometry(QRect(20, 15 , 150 , 20));
         laName[iLoop]->setAlignment(Qt::AlignLeft);
         laName[iLoop]->show();
     }

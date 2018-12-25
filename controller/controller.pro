@@ -14,6 +14,7 @@ TRANSLATIONS += sp.ts
 TRANSLATIONS += fr.ts
 TRANSLATIONS += it.ts
 TRANSLATIONS += kr.ts
+TRANSLATIONS += rus.ts
 
 TARGET = controller
 TEMPLATE = app

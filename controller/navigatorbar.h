@@ -34,6 +34,7 @@ public:
     void updateRunInfo(bool bRun);
     void setShowDuration(int iDuration){m_iDuration = iDuration;}
     bool getState();
+
 signals:
     void clicked();
     void clicked(int);

@@ -180,6 +180,9 @@ void Ex_HistoryPage::initUi()
     case APP_LAN_GER:
         m_pCalendar->setLocale(QLocale::German);
         break;
+    case APP_LAN_RUS:
+        m_pCalendar->setLocale(QLocale::Russian);
+        break;
     default:
         m_pCalendar->setLocale(QLocale::English);
         break;

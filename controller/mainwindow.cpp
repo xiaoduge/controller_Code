@@ -189,7 +189,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.1.181119_release");
+QString strSoftwareVersion = QString("0.1.3.181224_debug");
 
 MainWindow *gpMainWnd;
 
@@ -378,47 +378,46 @@ char *State_info[] =
 };
 
 /* total alarm here */
-QString gastrAlarmName[] = 
+QString gastrAlarmName[] =
 {
-    "254UV Out of Position Alarm",
-    "185UV Out of Position Alarm",
-    "Tank UV Out of Position Alarm",
-    "TUBE UV Out of Position Alarm",
-    "Pre-PACK Out of Position Alarm",
-    "AC-PACK Out of Position Alarm",
-    "P-PACK Out of Position Alarm",
-    "AT-PACK Out of Position Alarm",
-    "H-PACK Out of Position Alarm",  //ex
-    "U-PACK Out of Position Alarm",
-    "Lower Source Water Pressure Alarm", /* should be after DISP_ALARM_UPProduct */
-    "Higher Source Water Conductivity Alarm",
-    "Higher RO Product Conductitvity Alarm",
-    "Lower RO Residue Alarm",
-    "Lower EDI Product Resistence Alarm",
-    "Lower UP Product Resistence Alarm",
-    "Lower Tube Water Resistence Alarm",
-    "Lower Pure Water Tank  Water Level Alarm",
-    "Lower Source Water Tank Water Level Alarm",
-    "Lower RO Product Flowing Velocity Alarm",
-    "Lower RO Discard Flowing Velocity Alarm",
-    "Low Recir. Resis.",   //ex
-    "Low HP Prouduce Cond.",   //ex
-    "Lower Pure Water Tank Resistence Alarm",
-//    "Low Pure Water Product Resistence",
-    "Higher Source Water Temperature Alarm",
-    "Lower Source Water Temperature Alarm",
-    "Higher RO Product Temperature Alarm",
-    "Lower RO Product Temperature Alarm",
-    "Higher EDI Product Temperature Alarm",
-    "Lower EDI Product Temperature Alarm",
-    "Higher UP Product Temperature Alarm",
-    "Lower UP Product Temperature Alarm",
-    "Higher Tube Water Temperature Alarm",
-    "Lower Tube Water Temperature Alarm",
-    "Higher TOC Sensor Temperature Alarm",
-    "Lower TOC Sensor Temperature Alarm",
-    "Lower TOC Source Water Resistence Alarm",
-    "Leak or Tank Overflow",
+    "Check 254 UV Lamp",
+    "Check 185 UV Lamp",
+    "Check Tank UV Lamp",
+    "Check Loop UV Lamp",
+    "Prefiltration Pack Not Detected",
+    "AC-Pack Not Detected",
+    "P-Pack Not Detected",
+    "AT-Pack Not Detected",
+    "H-Pack Not Detected",
+    "U-Pack Not Detected",
+    "Low Feed Water Pressure",
+    "Feed Water Conductivity>SP",
+    "RO Product Conductivity>SP",
+    "RO Rejection Rate<SP",
+    "EDI Product Resistivity<SP",
+    "UP Product Resistivity<SP",
+    "Loop Water Resistivity<SP",
+    "Pure Tank Level<SP",
+    "Feed Tank Level<SP",
+    "RO Product Rate<SP",
+    "RO Drain Rate<SP",
+    "Recirculating Water Resistivity<SP",
+    "HP Water Resistivity<SP",
+    "Tank Water Resistivity<SP",
+    "High Feed Water Temperature",
+    "Low Feed Water Temperature",
+    "High RO Product Temperature",
+    "Low RO Product Temperature",
+    "High EDI Product Temperature",
+    "Low EDI Product Temperature",
+    "High UP Product Temperature",
+    "Low UP Product Temperature",
+    "High Loop Water Temperature",
+    "Low Loop Water Temperature",
+    "High TOC Sensor Temperature",
+    "Low TOC Sensor Temperature",
+    "TOC Feed Water Resistivity<SP",
+    "Leakage or Tank Overflow"
 };
 
 void MainRetriveDefaultState(int iMachineType)//
@@ -5457,7 +5456,7 @@ void MainWindow::on_IapIndication(IAP_NOTIFY_STRU *pIapNotify)
                     {
                         uint8 deviceid[20];
                         uint8 deviceidLen;
-                    
+
                         deviceidLen = pIapNotify->data[1 + RPC_POS_DAT0 + 1];
                         memcpy(deviceid,&pIapNotify->data[1 + RPC_POS_DAT0 + 1 + 1],deviceidLen);
     
@@ -5475,7 +5474,6 @@ void MainWindow::on_IapIndication(IAP_NOTIFY_STRU *pIapNotify)
     
                             Hex2String(strElecId,deviceid,deviceidLen);
     
-                            //m_pDeviceDlg->addDevice(strElecId,strAddress,strDevType);
                             {
                                 SetDevicePage *page = getDeviceDlg();
                                 if (page) page->addDevice(strElecId,strAddress,strDevType);
@@ -5924,6 +5922,15 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     switch(pItem->ucId)
                     {
                     case APP_EXE_I1_NO:
+                        if (m_EcoInfo[pItem->ucId].fQuality > gGlobalParam.MMParam.SP[MACHINE_PARAM_SP13])
+                        {
+                           alarmCommProc(true,DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_SOURCE_WATER_CONDUCTIVITY);
+                        }
+                        else if (m_iAlarmRcdMask[0][DISP_ALARM_PART1] & DISP_MAKE_ALARM(DISP_ALARM_PART1_HIGER_SOURCE_WATER_CONDUCTIVITY))
+                        {
+                            alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_SOURCE_WATER_CONDUCTIVITY);
+                        }
+
                         if (m_EcoInfo[pItem->ucId].fTemperature > gGlobalParam.MMParam.SP[MACHINE_PARAM_SP18])
                         {
                            alarmCommProc(true,DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE);
@@ -5992,6 +5999,21 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                                 {
                                     alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY);
                                 }
+
+                                //??????????????T Pack
+                                if (DispGetTankCirFlag())
+                                {
+                                    if (m_EcoInfo[pItem->ucId].fQuality < gGlobalParam.MMParam.SP[MACHINE_PARAM_SP31])
+                                    {
+                                       //alarmCommProc(true,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY);
+                                        gCMUsage.ulUsageState |= (1 << DISP_T_PACKLIFEL);
+                                    }
+                                    else if (m_iAlarmRcdMask[0][DISP_ALARM_PART1] & DISP_MAKE_ALARM(DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY))
+                                    {
+                                        //alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY);
+                                        gCMUsage.ulUsageState &= ~(1 << DISP_T_PACKLIFEL);
+                                    }
+                                }
                             }
                         }
                         break;    
@@ -6044,15 +6066,19 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                                 alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY);
                             }
                         }
-                        else if (DispGetTankCirFlag())
+                        else if (DispGetTankCirFlag()
+                                 && ((gGlobalParam.iMachineType != MACHINE_UP) &&(gGlobalParam.iMachineType != MACHINE_RO)))
                         {
+                            //??????????????T Pack
                             if (m_EcoInfo[pItem->ucId].fQuality < gGlobalParam.MMParam.SP[MACHINE_PARAM_SP31])
                             {
-                               alarmCommProc(true,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY);
+                               //alarmCommProc(true,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY);
+                                gCMUsage.ulUsageState |= (1 << DISP_T_PACKLIFEL);
                             }
                             else if (m_iAlarmRcdMask[0][DISP_ALARM_PART1] & DISP_MAKE_ALARM(DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY))
                             {
-                                alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY);
+                                //alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY);
+                                gCMUsage.ulUsageState &= ~(1 << DISP_T_PACKLIFEL);
                             }
                         }
                         break;                           
@@ -6725,9 +6751,12 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
     case DISP_NOT_ALARM:
         {
             qDebug("on_dispIndication:DISP_NOT_ALARM \r\n");
-            
+
             NOT_ALARM_ITEM_STRU *pInfo = (NOT_ALARM_ITEM_STRU *)pNotify->aucData;
-    
+
+            qDebug() << QString("Targer Alarm: %1; %2; %3 ")
+                        .arg(!!pInfo->ucFlag).arg(pInfo->ucPart).arg(pInfo->ucId);
+            
             switch(pInfo->ucPart)
             {
             case DISP_ALARM_PART0:

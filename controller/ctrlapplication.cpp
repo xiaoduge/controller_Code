@@ -128,10 +128,13 @@ void CtrlApplication::installTranslators(int iLanguage,bool bSwitchFont)
             m_pTranslator->load(":/language/de.qm");
             installTranslator(m_pTranslator);
             break;
+        case APP_LAN_RUS:
+            m_pTranslator->load(":/language/rus.qm");
+            installTranslator(m_pTranslator);
+            break;
         default:
             m_pTranslator->load(":/language/en.qm");
-            installTranslator(m_pTranslator);
-            
+            installTranslator(m_pTranslator);     
             break;
         }
 

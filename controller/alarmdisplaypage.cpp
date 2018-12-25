@@ -204,7 +204,7 @@ void AlarmDisplayPage::buildTranslation()
              /*
              RO截留率<设定值
              */
-             m_astrPartAlarm[iIdx] = tr("RO Rejection < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP2]) + tr("us/cm");
+             m_astrPartAlarm[iIdx] = tr("RO Rejection < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP2]) + tr("%");
              aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
              break;
          case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE):

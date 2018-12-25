@@ -13,10 +13,11 @@
 #define ControlNum 6
 
 #define BACKWIDGET_START_Y      80
-#define BACKWIDGET_START_HIATUS 120
-#define BACKWIDGET_HEIGHT       80
+#define BACKWIDGET_START_HIATUS 160   //120
+#define BACKWIDGET_HEIGHT       120   //80
 #define BACKWIDGET_WIDTH        700
 
+/*
 QRect   QrectAry[ControlNum] = {
         QRect(0,  10,  41 , 37) ,
         QRect(50, 20, 120 , 18) ,
@@ -25,6 +26,17 @@ QRect   QrectAry[ControlNum] = {
         QRect(300, 50, 260 , 15) ,  //325->300
         QRect(600, 22, 150 , 15) ,
     };
+*/
+
+QRect   QrectAry[ControlNum] = {
+        QRect(0,  10,  41 , 37) ,
+        QRect(50, 20, 130 , 18) ,
+        QRect(190, 20, 340 , 15) ,
+        QRect(50, 60, 280 , 15) , //QRect(60, 50, 190 , 15) ,
+        QRect(50, 85, 280 , 15) ,  //325->300
+        QRect(600, 22, 150 , 15) ,
+    };
+
 
 static CONFIG_BTN cleanBtn[1] =
 {
@@ -65,25 +77,17 @@ void SterilizePage::buildTranslation()
 
     m_aSterilize[DISP_CLEAN_RO].laName->setText(tr("RO CL Cleaning"));
     m_aSterilize[DISP_CLEAN_PH].laName->setText(tr("RO pH Cleaning"));
-    //m_aSterilize[DISP_CLEAN_SYSTEM].laName->setText(tr("System Cleaning"));
 
     for (iLoop = 0; iLoop < (DISP_CLEAN_NUM - 1); iLoop++)
     {
         QString strTitle = tr("Last Maintenance:");
-//        QString strTime;
         time_t tmInfo ;
 
         QDateTime lstDateTime;
         QString strLstDateTime;
 
-//        struct tm *tblock;
 
         tmInfo = gGlobalParam.CleanParam.aCleans[iLoop].lstTime;
-/*
-        tblock = localtime(&tmInfo);      
-        strTime   = asctime(tblock);   
-        strTitle = strTitle + " " + strTime;
-*/
         lstDateTime = QDateTime::fromTime_t(tmInfo);
         strLstDateTime = lstDateTime.toString("d/M/yyyy"); //hh:mm:ss
         strTitle = strTitle + " " + strLstDateTime;
@@ -95,11 +99,7 @@ void SterilizePage::buildTranslation()
             strTitle = tr("Next Due Date:");
     
             tmInfo += gGlobalParam.CleanParam.aCleans[iLoop].period;
-      /*
-            tblock = localtime(&tmInfo);
-            strTime   = asctime(tblock);    
-            strTitle = strTitle + " " + strTime;
-      */
+
             lstDateTime = QDateTime::fromTime_t(tmInfo);
             strLstDateTime = lstDateTime.toString("d/M/yyyy"); //hh:mm:ss
             strTitle = strTitle + " " + strLstDateTime;
@@ -178,7 +178,7 @@ void SterilizePage::createControl()
         m_aSterilize[iLoop].BackWidget->setAutoFillBackground(true);
         m_aSterilize[iLoop].BackWidget->setPalette(pal);
 
-        m_aSterilize[iLoop].BackWidget->setGeometry(QRect(50 , BACKWIDGET_START_Y + BACKWIDGET_START_HIATUS * iLoop , BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
+        m_aSterilize[iLoop].BackWidget->setGeometry(QRect(50 , BACKWIDGET_START_Y + BACKWIDGET_START_HIATUS * iLoop, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
 
         m_aSterilize[iLoop].laBackNo     = new QLabel(m_aSterilize[iLoop].BackWidget);
         m_aSterilize[iLoop].laBackNo->setGeometry(QrectAry[0]);
@@ -205,11 +205,9 @@ void SterilizePage::createControl()
         m_aSterilize[iLoop].laPrompt->setWordWrap(true); //
         m_aSterilize[iLoop].laPrompt->setAlignment(Qt::AlignHCenter);
 
-//        m_aSterilize[iLoop].laPrompt->setGeometry(QrectAry[2]);
         m_aSterilize[iLoop].laPrompt->show();
         m_aSterilize[iLoop].laPrompt->setFont(ft12);
         m_aSterilize[iLoop].laPrompt->setPalette(paLightblue);
-//        m_aSterilize[iLoop].laPrompt->setAlignment(Qt::AlignCenter);
         m_aSterilize[iLoop].laPrompt->setStyleSheet("background-color:transparent");
 
         
@@ -227,8 +225,7 @@ void SterilizePage::createControl()
 
         m_aSterilize[iLoop].btnClean = new CBitmapButton(m_aSterilize[iLoop].BackWidget,BITMAPBUTTON_STYLE_SWITCH,BITMAPBUTTON_PIC_STYLE_SINGLE,iLoop);
         m_aSterilize[iLoop].btnClean->setButtonPicture(m_wndMain->getBitmap(GLOBAL_BMP_PAGE_NAVI_NORMAL));
-        //m_aSterilize[iLoop].btnClean->setPressPicture(m_wndMain->getBitmap(GLOBAL_BMP_SWITCH_ON));
-        m_aSterilize[iLoop].btnClean->setGeometry(600,22,m_aSterilize[iLoop].btnClean->getPicWidth(),m_aSterilize[iLoop].btnClean->getPicHeight());
+        m_aSterilize[iLoop].btnClean->setGeometry(600,20,m_aSterilize[iLoop].btnClean->getPicWidth(),m_aSterilize[iLoop].btnClean->getPicHeight());
         m_aSterilize[iLoop].btnClean->setStyleSheet("background-color:transparent");
         m_aSterilize[iLoop].btnClean->show();
 

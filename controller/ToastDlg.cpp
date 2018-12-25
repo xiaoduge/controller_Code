@@ -29,7 +29,7 @@ ToastDlg::ToastDlg(QWidget *parent) :
                   | Qt::WindowMinimizeButtonHint 
                   | Qt::WindowMaximizeButtonHint);
     
-    setFixedSize(200, 60);
+    setFixedSize(250, 70); //200 60
 
     m_pLbInfo    = new QLabel;
     m_pLbInfo->setAlignment(Qt::AlignCenter);

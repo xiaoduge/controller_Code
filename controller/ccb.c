@@ -4802,6 +4802,124 @@ void CcbNotAlarmFire(int iPart,int iId,int bFired)
 
 }
 
+//2018.12.21 add
+void Check_RO_EDI_Alarm(int iEcoId)
+{
+    float fRej;
+
+    if(!DispGetPwFlag())
+    {
+        return;
+    }
+
+    switch(iEcoId)
+    {
+    case 1:
+        if(gCcb.ulMachineType != MACHINE_PURIST)
+        {
+            fRej = CcbCalcREJ();
+            if (fRej < CcbGetSp2())
+            {
+                if(!gCcb.bit1AlarmRej)
+                {
+                    gCcb.bit1AlarmRej = TRUE;
+                    gCcb.ulAlarmRejTick = gulSecond;
+                }
+                else
+                {
+                    if (!(gCcb.ulFiredAlarmFlags  & ALARM_REJ))
+                    {
+                        if ((gulSecond - gCcb.ulAlarmRejTick) >= 60*5) //60*5
+                        {
+                            gCcb.ulFiredAlarmFlags |= ALARM_REJ;
+
+                            CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_RESIDUE_RATIO, TRUE);
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                if (gCcb.ulFiredAlarmFlags  & ALARM_REJ)
+                {
+                    gCcb.ulFiredAlarmFlags &=  ~ALARM_REJ;
+                    CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_RESIDUE_RATIO, FALSE);
+                }
+
+                if (gCcb.bit1AlarmRej) gCcb.bit1AlarmRej = FALSE;
+            }
+        }
+        //RO
+        if (gCcb.ExeBrd.aEcoObjs[APP_EXE_I2_NO].Value.eV.fWaterQ > CcbGetSp3())
+        {
+            if(!gCcb.bit1AlarmRoPw)
+            {
+                gCcb.bit1AlarmRoPw   = TRUE;
+                gCcb.ulAlarmRoPwTick = gulSecond;
+            }
+            else
+            {
+                if (!(gCcb.ulFiredAlarmFlags  & ALARM_ROPW))
+                {
+                    if ((gulSecond - gCcb.ulAlarmRoPwTick) >= 60*5)
+                    {
+                        gCcb.ulFiredAlarmFlags |= ALARM_ROPW;
+
+                        CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_RO_PRODUCT_CONDUCTIVITY,TRUE);
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (gCcb.ulFiredAlarmFlags  & ALARM_ROPW)
+            {
+                gCcb.ulFiredAlarmFlags &=  ~ALARM_ROPW;
+
+                CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_RO_PRODUCT_CONDUCTIVITY, FALSE);
+            }
+
+            if (gCcb.bit1AlarmRoPw) gCcb.bit1AlarmRoPw = FALSE;
+        }
+        break;
+    case 2:
+        if (gCcb.ExeBrd.aEcoObjs[APP_EXE_I3_NO].Value.eV.fWaterQ < CcbGetSp4())
+        {
+            if(!gCcb.bit1AlarmEDI)
+            {
+                gCcb.bit1AlarmEDI   = TRUE;
+                gCcb.ulAlarmEDITick = gulSecond;
+            }
+            else
+            {
+                if (!(gCcb.ulFiredAlarmFlags  & ALARM_EDI))
+                {
+                    if ((gulSecond - gCcb.ulAlarmEDITick) >= 60*5)
+                    {
+                        gCcb.ulFiredAlarmFlags |= ALARM_EDI;
+                        CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE,TRUE);
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (gCcb.ulFiredAlarmFlags  & ALARM_EDI)
+            {
+                gCcb.ulFiredAlarmFlags &=  ~ALARM_EDI;
+
+                CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE,FALSE);
+            }
+
+            if (gCcb.bit1AlarmEDI) gCcb.bit1AlarmEDI = FALSE;
+        }
+        break;
+    default:
+        break;
+    }
+}
+
 void CanCcbEcoMeasurePostProcess(int iEcoId)
 {
     switch(gCcb.curWorkState.iMainWorkState4Pw)
@@ -5013,6 +5131,7 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
     default:
         break;
     }
+    Check_RO_EDI_Alarm(iEcoId);
 }
 
 void CanCcbRectNMeasurePostProcess(int rectID)
@@ -6124,6 +6243,63 @@ void work_start_key_succ(void)
     MainSndWorkMsg(WORK_MSG_TYPE_SKH,(unsigned char *)aiCont,sizeof(aiCont));
 }
 
+//12.18
+void work_start_key(void *para)
+{
+    WORK_ITEM_STRU *pWorkItem = (WORK_ITEM_STRU *)para;
+    CCB            *pCcb      = (CCB *)pWorkItem->para;
+
+    int             iTmp,iRet;
+
+    switch((int)pWorkItem->extra)
+    {
+    case APP_EXE_DIN_RF_KEY:
+        {
+            /* E10 ON */
+            iTmp = 1 << APP_EXE_E10_NO;
+            iRet = CcbUpdateSwitch(pWorkItem->id,0,iTmp,iTmp);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);
+                work_start_key_fail((int)pWorkItem->extra);
+
+                return ;
+            }
+
+            //CanCcbTransState(DISP_WORK_STATE_KP,DISP_WORK_SUB_IDLE);
+        }
+        break;
+    case APP_EXE_DIN_LEAK_KEY:
+        {
+            /* stop all */
+            iTmp = 0;
+            iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
+
+                /* notify ui (late implemnt) */
+                work_start_key_fail((int)pWorkItem->extra);
+
+                return ;
+            }
+
+            pCcb->bit1LeakKey4Reset = TRUE;
+            CcbNotAlarmFire(0XFF,DISP_ALARM_B_LEAK,TRUE);
+
+            CanCcbTransState(DISP_WORK_STATE_KP,DISP_WORK_SUB_IDLE);
+        }
+        break;
+    }
+
+    /* push state */
+    // CcbPushState();
+
+    work_start_key_succ();
+
+}
+
+#if 0
 void work_start_key(void *para)
 {
     WORK_ITEM_STRU *pWorkItem = (WORK_ITEM_STRU *)para;
@@ -6181,6 +6357,7 @@ void work_start_key(void *para)
     work_start_key_succ();
 
 }
+#endif
 
 void work_stop_key_succ(void)
 {
@@ -6189,6 +6366,51 @@ void work_stop_key_succ(void)
     MainSndWorkMsg(WORK_MSG_TYPE_EKH,(unsigned char *)aiCont,sizeof(aiCont));
 }
 
+void work_stop_key(void *para)
+{
+    WORK_ITEM_STRU *pWorkItem = (WORK_ITEM_STRU *)para;
+    CCB            *pCcb      = (CCB *)pWorkItem->para;
+    int             iRet;
+    int             iTmp;
+
+    /* stop all */
+
+    switch((int)pWorkItem->extra)
+    {
+    case APP_EXE_DIN_RF_KEY:
+        {
+            /* E10 OFF */
+            iTmp = 1 << APP_EXE_E10_NO;
+            iRet = CcbUpdateSwitch(pWorkItem->id,0,iTmp,0);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);
+            }
+
+
+            if (DISP_WORK_STATE_IDLE == DispGetWorkState()
+                || DISP_WORK_STATE_LPP == DispGetWorkState())
+            {
+                DispCmdEntry(DISP_CMD_RUN,NULL,0);
+            }
+        }
+        break;
+    case APP_EXE_DIN_LEAK_KEY:
+        {
+            CcbNotAlarmFire(0XFF,DISP_ALARM_B_LEAK,FALSE);
+        }
+        break;
+    }
+
+    iTmp = (int)pWorkItem->extra;
+
+    pCcb->ulKeyWorkStates &= ~(1 << iTmp);
+
+    work_stop_key_succ();
+
+}
+
+#if 0
 void work_stop_key(void *para)
 {
     WORK_ITEM_STRU *pWorkItem = (WORK_ITEM_STRU *)para;
@@ -6225,10 +6447,19 @@ void work_stop_key(void *para)
     work_stop_key_succ();
 
 }
-
+#endif
 
 DISPHANDLE CcbInnerWorkStartKeyWok(int iKey)
 {
+    //2018.12.18 add
+    if(iKey == APP_EXE_DIN_RF_KEY)
+    {
+        if (DISP_WORK_STATE_IDLE != DispGetWorkState())
+        {
+            DispCmdEntry(DISP_CMD_HALT,NULL,0);
+        }
+    } //end
+
     WORK_ITEM_STRU *pWorkItem = CcbAllocWorkItem();
 
     if (!pWorkItem)
@@ -9656,6 +9887,16 @@ void CcbWorMsgProc(SAT_MSG_HEAD *pucMsg)
                     break;
                }
                break;
+               //2018.12.18
+           case DISP_WORK_STATE_PREPARE:
+               switch(gCcb.curWorkState.iSubWorkState)
+               {
+               case DISP_WORK_SUB_IDLE:
+                   CcbNotState(NOT_STATE_RUN);
+                   break;
+               }
+               break;
+               //end
            case DISP_WORK_STATE_RUN:
                 switch(gCcb.curWorkState.iSubWorkState)
                 {
@@ -11591,6 +11832,7 @@ void work_idle(void *para)
     pCcb->bit1InitRuned = FALSE;
 
     /* 1. close all valves */
+
     iTmp = 0;
     CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
     
@@ -13514,6 +13756,7 @@ void CcbAddFmReportWork(WORK_SETUP_REPORT_STRU *pRpt )
 
 void MainSecondTask4MainState()
 {
+    printf("check Ro Alarm: 00");
     switch(gCcb.curWorkState.iMainWorkState)
     {
     case DISP_WORK_STATE_PREPARE:
@@ -13640,7 +13883,7 @@ void MainSecondTask4MainState()
             break;
         }
 
-
+#if 0
         if (gCcb.bit1AlarmRej || gCcb.bit1AlarmRoPw)
         {
             unsigned int ulMask =  (1 << APP_EXE_I1_NO) | (1 << APP_EXE_I2_NO);
@@ -13714,11 +13957,11 @@ void MainSecondTask4MainState()
                 if (!(gCcb.ulFiredAlarmFlags  & ALARM_REJ))
                 {
                     /* fire alarm */
-                    if (gulSecond - gCcb.ulAlarmRejTick >= 60*5)
+                    if (gulSecond - gCcb.ulAlarmRejTick >= 5) //60*5
                     {
                         gCcb.ulFiredAlarmFlags |= ALARM_REJ;
         
-                        CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_RO_PRODUCT_CONDUCTIVITY,TRUE);
+                        CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_RESIDUE_RATIO, TRUE);
                     }
                 }
             }
@@ -13728,7 +13971,7 @@ void MainSecondTask4MainState()
                 if (!(gCcb.ulFiredAlarmFlags  & ALARM_ROPW))
                 {
                     /* fire alarm */
-                    if (gulSecond - gCcb.ulAlarmRoPwTick >= 60*5)
+                    if (gulSecond - gCcb.ulAlarmRoPwTick >= 5)
                     {
                         gCcb.ulFiredAlarmFlags |= ALARM_ROPW;
         
@@ -13788,7 +14031,8 @@ void MainSecondTask4MainState()
                 }
             }
         }  
-        
+   #endif
+
         /*Check B3 */
         if (!CcbGetPmObjState(1 << APP_EXE_PM3_NO)
             && haveB3(&gCcb))

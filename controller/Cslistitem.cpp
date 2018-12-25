@@ -32,12 +32,11 @@ CsListItem::CsListItem(QWidget *parent ,ConsumableStatePage *owner,int iId) :
     //this->lbWaterValue->setText("3000L");
 
     this->lbInstDate = new QLabel(this);
-    this->lbInstDate->setGeometry(QRect(230 , 15 , 200 , 20));
-//    this->lbInstDate->setGeometry(QRect(170 , 15 , 220 , 20));
+    this->lbInstDate->setGeometry(QRect(230 , 15 , 215 , 20));
     //this->lbInstDate->setText("InstDate:2017.10.10");
 
     this->lbChangeDate = new QLabel(this);
-    this->lbChangeDate->setGeometry(QRect(230 , 45 , 200 , 20));
+    this->lbChangeDate->setGeometry(QRect(230 , 45 , 215 , 20));
 //    this->lbChangeDate->setGeometry(QRect(170 , 45 , 220 , 20));
     //this->lbChangeDate->setText("ChangeDate:2018.10.10");
 

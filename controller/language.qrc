@@ -7,5 +7,6 @@
         <file>fr.qm</file>
         <file>it.qm</file>
         <file>kr.qm</file>
+        <file>rus.qm</file>
     </qresource>
 </RCC>

@@ -19,11 +19,9 @@
 
 SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
-    // {1,1,1,1,2,1,2,2,1,1,2,1,1,2,2,2,2,2,2,1}
-
     int iIdx = 0;
 
-    switch(gGlobalParam.iMachineType)/*自来水压力*/
+    switch(gGlobalParam.iMachineType)/*B1??????*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -40,7 +38,79 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*RO截留率*/
+    switch(gGlobalParam.iMachineType)/*?????????I1a?*/
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP13;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)/*????*/
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP18;
+        aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP19;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)/*RO???????*/
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+    case MACHINE_PURIST: /* 2018/05/22 ADD */
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP3;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)/*RO????*/
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+    case MACHINE_PURIST:
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP20;
+        aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP21;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)/*RO?????*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -57,25 +127,7 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*RO产水电导率*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_ADAPT:
-    case MACHINE_PURIST: /* 2018/05/22 ADD */
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP3;
-        iIdx++;
-        break;
-    } 
-
-    switch(gGlobalParam.iMachineType)/*EDI产水*/
+    switch(gGlobalParam.iMachineType)/*EDI???????*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_EDI_LOOP:
@@ -87,7 +139,140 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*纯水箱液位*/
+    switch(gGlobalParam.iMachineType)/*EDI????*/
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP22;
+        aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP23;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)/*UP???????*/
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP7;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)/*UP????*/
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP24;
+        aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP25;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)/*HP??????  ???????? */
+    {
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        break;
+    default:
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP32;
+        iIdx++;
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP31;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)/*??????? ??*/
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    // case MACHINE_PURIST: /* 2018/05/22 ADD */
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP10;
+        aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP11;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)/*TOC?????*/
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP28;
+        aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP29;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)/*TOC??????*/
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP30;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)/*????*/
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP17;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)/*??????*/
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP26;
+        aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP27;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)/*????????  ????????*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -105,25 +290,7 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*UP取水下线 ?HP产水?*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP7;
-        iIdx++;
-        break;
-    } 
-
-    switch(gGlobalParam.iMachineType)/*原水箱液位*/
+    switch(gGlobalParam.iMachineType)/*???????  ????????????*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -132,24 +299,6 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
         aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP8;
         aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP9;
-        iIdx++;
-        break;
-    } 
-
-    switch(gGlobalParam.iMachineType)/*水箱水质*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    // case MACHINE_PURIST: /* 2018/05/22 ADD */
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP10;
-        aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP11;
         iIdx++;
         break;
     } 
@@ -173,24 +322,7 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
     } 
 #endif
 
-    switch(gGlobalParam.iMachineType)/*自来水电导率*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_ADAPT:
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP13;
-        iIdx++;
-        break;
-    } 
-
-    switch(gGlobalParam.iMachineType)/*RO产水流速*/
+    switch(gGlobalParam.iMachineType)/*RO?????? ??*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -203,7 +335,7 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*RO弃水流速*/
+    switch(gGlobalParam.iMachineType)/*RO???? ??*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -211,149 +343,6 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
     case MACHINE_L_RO_LOOP:
         aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
         aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP16;
-        iIdx++;
-        break;
-    } 
-
-    switch(gGlobalParam.iMachineType)/*管路水质*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP17;
-        iIdx++;
-        break;
-    } 
-
-    switch(gGlobalParam.iMachineType)/*进水温度*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    //case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP18;
-        aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP19;
-        iIdx++;
-        break;
-    } 
-
-    switch(gGlobalParam.iMachineType)/*RO产水温度*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_ADAPT:
-    case MACHINE_PURIST:
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP20;
-        aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP21;
-        iIdx++;
-        break;
-    } 
-
-    switch(gGlobalParam.iMachineType)/*EDI产水温度*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_EDI:
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP22;
-        aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP23;
-        iIdx++;
-        break;
-    } 
-
-    switch(gGlobalParam.iMachineType)/*U/HP产水温度*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP24;
-        aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP25;
-        iIdx++;
-        break;
-    } 
-
-    switch(gGlobalParam.iMachineType)/*管路产水温度*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP26;
-        aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP27;
-        iIdx++;
-        break;
-    }  
-    
-    switch(gGlobalParam.iMachineType)/*TOC传感器温度*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP28;
-        aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP29;
-        iIdx++;
-        break;
-    } 
-
-    switch(gGlobalParam.iMachineType)/*TOC进水水质*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP30;
-        iIdx++;
-        break;
-    } 
-
-    switch(gGlobalParam.iMachineType)/*循环水质/HP产水*/
-    {
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        break;
-    default:
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP31;
-        iIdx++;
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP32;
         iIdx++;
         break;
     } 
@@ -448,12 +437,6 @@ void SetPoint::buildTranslation()
              case MACHINE_PURIST:
              case MACHINE_ADAPT:
                  pSetPlistItem[iLoop]->setName(tr("UP Resis."));
-                 break;
-             case MACHINE_L_EDI_LOOP: 
-             case MACHINE_L_RO_LOOP:
-             case MACHINE_EDI:
-             case MACHINE_RO:
-                 pSetPlistItem[iLoop]->setName(tr("HP Resis."));
                  break;
              }
             pSetPlistItem[iLoop]->setP1Name(tr("Lower Limit"));
