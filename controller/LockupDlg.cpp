@@ -26,7 +26,6 @@
 LockupDlg::LockupDlg(QWidget *parent) :
     QDialog(parent)
 {
-    //this->setFixedSize(300,200); //设置窗体固定大小
     setFixedSize(300, 200);
 
     m_pBtnReset  = new QPushButton;
@@ -49,10 +48,7 @@ LockupDlg::LockupDlg(QWidget *parent) :
 
     setLayout(m_pMainLayout);
 
-
     connect(m_pBtnReset,SIGNAL(clicked()),this,SLOT(on_pushButton_Reset()));
-
-
 }
 
 LockupDlg::~LockupDlg()

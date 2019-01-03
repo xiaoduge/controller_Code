@@ -541,7 +541,8 @@ void WaterQualityPage::update_up_msg(int isIdx,float fValue)
     {
         if(fValue > 200)
         {
-            tmpMsg = QString(" > 200");
+//            tmpMsg = QString(" > 200");
+            tmpMsg = upmsg[iIdx].arg(" > 200");
         }
         else
         {

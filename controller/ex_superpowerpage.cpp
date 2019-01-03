@@ -185,6 +185,7 @@ void Ex_SuperPowerPage::createControl()
 
     m_pExLabel[SYSCFGPAGE_LB_SOFTVER] = new QLabel;
     m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER] = new QLineEdit;
+    m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]->setReadOnly(true);
     m_pExLabel[SYSCFGPAGE_LB_SOFTVER]->setBuddy(m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]);
 
     v1Layout->addWidget(m_pExLabel[SYSCFGPAGE_LB_CATALOGNO]);
@@ -388,7 +389,7 @@ void Ex_SuperPowerPage::save()
     ex_gGlobalParam.Ex_System_Msg.Ex_SerialNo = m_ExLineEdit[SYSCFGPAGE_LB_SERIALNO]->text();
     ex_gGlobalParam.Ex_System_Msg.Ex_ProDate = m_ExLineEdit[SYSCFGPAGE_LB_PRODATE]->text();
     ex_gGlobalParam.Ex_System_Msg.Ex_InsDate = m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE]->text();
-    ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer = m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]->text();
+//    ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer = m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]->text();
 
     ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow = m_cmbDeviceFlow->currentText().toInt();
 

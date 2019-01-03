@@ -189,7 +189,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.3.181224_debug");
+QString strSoftwareVersion = QString("0.1.3.181225_release");
 
 MainWindow *gpMainWnd;
 
@@ -470,7 +470,8 @@ void MainRetriveProductMsg(int iMachineType) //ex_dcj
     ex_gGlobalParam.Ex_System_Msg.Ex_ProDate = config->value(strV, "unknow").toString();
 
     strV = "/ProductMsg/SoftwareVersion/";
-    ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer = config->value(strV, strSoftwareVersion).toString();
+//    ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer = config->value(strV, strSoftwareVersion).toString();
+    ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer = strSoftwareVersion;
 
     if (config)
     {
@@ -3774,24 +3775,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
                                          |(1 << DISP_TUBE_DI)));
             break;
 
-#if 0
-        case MACHINE_Genie:
-
-            /*notify masks */
-            m_cMas[iLoop].aulMask[0]  = DISP_NOTIFY_DEFAULT;
-
-            m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACKLIFEDAY)
-                                         |(1 << DISP_AT_PACKLIFEL)
-                                         |(1 << DISP_H_PACKLIFEDAY)
-                                         |(1 << DISP_H_PACKLIFEL)
-                                         |(1 << DISP_N4_UVLIFEDAY)
-                                         |(1 << DISP_N4_UVLIFEHOUR)
-                                         |(1 << DISP_N5_UVLIFEDAY)
-                                         |(1 << DISP_N5_UVLIFEHOUR)
-                                         |(1 << DISP_TUBE_FILTERLIFE)
-                                         |(1 << DISP_TUBE_DI_LIFE)));
-            break;
-#endif
         case MACHINE_UP:
             /*notify masks */
             m_cMas[iLoop].aulMask[0]  = DISP_NOTIFY_DEFAULT;
@@ -3834,29 +3817,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
                                          |(1 << DISP_TUBE_DI)));
             break;
 
-#if 0
-        case MACHINE_RO:
-
-            /*notify masks */
-            m_cMas[iLoop].aulMask[0]  = DISP_NOTIFY_DEFAULT;
-
-            m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACKLIFEDAY)
-                                         |(1 << DISP_AT_PACKLIFEL)
-                                         |(1 << DISP_U_PACKLIFEDAY)
-                                         |(1 << DISP_U_PACKLIFEL)
-                                         |(1 << DISP_H_PACKLIFEDAY)
-                                         |(1 << DISP_H_PACKLIFEL)
-                                         |(1 << DISP_N2_UVLIFEDAY)
-                                         |(1 << DISP_N2_UVLIFEHOUR)
-                                         |(1 << DISP_N4_UVLIFEDAY)
-                                         |(1 << DISP_N4_UVLIFEHOUR)
-                                         |(1 << DISP_N5_UVLIFEDAY)
-                                         |(1 << DISP_N5_UVLIFEHOUR)
-                                         |(1 << DISP_T_B_FILTERLIFE)
-                                         |(1 << DISP_TUBE_FILTERLIFE)
-                                         |(1 << DISP_TUBE_DI_LIFE)));
-            break;
-#endif
         case MACHINE_PURIST:
 
             /*notify masks */
@@ -3889,6 +3849,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
                                            |(1 << DISP_TUBE_DI)));
             break;
         } 
+
+        if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
+        {
+            m_cMas[iLoop].aulMask[0] &= ~(1 <<  DISP_T_PACK);
+        }
 
       // if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_Pre_Filter) //DISP_SM_PreFilterColumn
        if(!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter)))

@@ -69,6 +69,8 @@ unsigned char gaucIapBuffer[1024];
 
 #define is_B2_FULL(ulValue) ((ulValue / gCcb.PMParam.afDepth[DISP_PM_PM2] * 100) >= B2_FULL)
 
+#define is_SWPUMP_FRONT(pCcb) ((pCcb)->MiscParam.ulMisFlags & (1 << DISP_SM_SW_PUMP))
+
 #define haveB1(pCcb)((pCcb)->SubModSetting.ulFlags & (1 << DISP_SM_HaveB1))
 #define haveB3(pCcb)((pCcb)->SubModSetting.ulFlags & (1 << DISP_SM_HaveB3))
 #define haveTOC(pCcb)((pCcb)->SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
@@ -110,7 +112,7 @@ typedef enum
 
     WORK_MSG_TYPE_STATE = 0x80,  /* State Changed */
 
-    WORK_MSG_TYPE_STATE4PW,  
+    WORK_MSG_TYPE_STATE4PW
     
 }WORK_MSG_TYPE_ENUM;
 
@@ -2865,7 +2867,14 @@ void work_start_qtw(void *para)
             if (gulSecond - pCcb->ulAdapterAgingCount > 60)
             {
                 /* 2018/01/05 add E3 according to ZHANG */
-                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO);
+                if(haveB3(&gCcb))
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_C3_NO);
+                }
+                else
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+                }
                 
                 iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
                 if (iRet )
@@ -2887,7 +2896,15 @@ void work_start_qtw(void *para)
                 
                 /* E1,E3 ON*/
                 /* set  valves */
-                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO);
+                if(haveB3(&gCcb))
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_C3_NO);
+                }
+                else
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+                }
+
                 iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
                 if (iRet )
                 {
@@ -2971,8 +2988,18 @@ void work_start_qtw(void *para)
                 {
                     VOS_LOG(VOS_LOG_WARNING,"E1,E3,E5,C1,C2 ON; I1b,I2,I4,I5,B1;"); 
                     /*E1,E3,E5,C1,C2 ON; I1b,I2,I4,I5,B1;*/
-                    iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E3_NO)|(1 << APP_EXE_E5_NO)
-                          |(1 << APP_EXE_C1_NO)|(1 << APP_EXE_C2_NO);
+                    if(haveB3(&gCcb))
+                    {
+                        iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E3_NO)|(1 << APP_EXE_E5_NO)
+                              |(1 << APP_EXE_C1_NO)|(1 << APP_EXE_C2_NO)|(1 << APP_EXE_C3_NO);
+
+                    }
+                    else
+                    {
+                        iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E3_NO)|(1 << APP_EXE_E5_NO)
+                              |(1 << APP_EXE_C1_NO)|(1 << APP_EXE_C2_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+                    }
+
                     iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
                     if (iRet )
                     {
@@ -2987,7 +3014,7 @@ void work_start_qtw(void *para)
                     {
                         CcbC2Regulator(pWorkItem->id,8,TRUE);
                     }
-                    
+
                     iTmp = (1 << APP_EXE_I1_NO)|(1 << APP_EXE_I2_NO)|(1 << APP_EXE_I4_NO)|(1 << APP_EXE_I5_NO)|(GET_B_MASK(APP_EXE_PM1_NO));
                     iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
                     if (iRet )
@@ -3002,7 +3029,15 @@ void work_start_qtw(void *para)
                 {
                     VOS_LOG(VOS_LOG_WARNING,"E1,E3,C1 ON; I1b,I2,B1;"); 
                     /*E1,E3,C1 ON; I1b,I2,B1*/
-                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO);
+                    if(haveB3(&gCcb))
+                    {
+                        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+                    }
+                    else
+                    {
+                        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+                    }
+
                     iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
                     if (iRet )
                     {
@@ -3091,14 +3126,30 @@ void work_start_qtw(void *para)
             if (APP_DEV_HS_SUB_HYPER == pCcb->aHandler[iIndex].iDevType)
             {
                 VOS_LOG(VOS_LOG_WARNING,"E1,C1,N2 ON I1b,I2,I4,I5,B1"); 
-                iTmp  = (1 << APP_EXE_E1_NO);
+                if(haveB3(&gCcb))
+                {
+                    iTmp  = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_C3_NO);
+                }
+                else
+                {
+                    iTmp  = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+                }
+
                 iTmp |= (1<<APP_EXE_C1_NO);
                 iTmp |= (1 << APP_EXE_N2_NO); 
             }
             else
             {
                 VOS_LOG(VOS_LOG_WARNING,"E1,C1,ON I1b,I2,I4,I5,B1"); 
-                iTmp  = (1 << APP_EXE_E1_NO);
+                if(haveB3(&gCcb))
+                {
+                    iTmp  = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_C3_NO);
+                }
+                else
+                {
+                    iTmp  = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+                }
+
                 iTmp |= (1<<APP_EXE_C1_NO);
             }
             
@@ -6256,7 +6307,15 @@ void work_start_key(void *para)
     case APP_EXE_DIN_RF_KEY:
         {
             /* E10 ON */
-            iTmp = 1 << APP_EXE_E10_NO;
+            if(is_SWPUMP_FRONT(&gCcb))
+            {
+                iTmp = (1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+            }
+            else
+            {
+                iTmp = (1 << APP_EXE_E10_NO);
+            }
+
             iRet = CcbUpdateSwitch(pWorkItem->id,0,iTmp,iTmp);
             if (iRet )
             {
@@ -6380,7 +6439,14 @@ void work_stop_key(void *para)
     case APP_EXE_DIN_RF_KEY:
         {
             /* E10 OFF */
-            iTmp = 1 << APP_EXE_E10_NO;
+            if(is_SWPUMP_FRONT(&gCcb))
+            {
+                iTmp = (1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+            }
+            else
+            {
+                iTmp = 1 << APP_EXE_E10_NO;
+            }
             iRet = CcbUpdateSwitch(pWorkItem->id,0,iTmp,0);
             if (iRet )
             {
@@ -10152,7 +10218,16 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
             iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
 #else
             /* 2018/01/05 add E3 according to ZHANG */
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+            if(haveB3(&gCcb))
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+            }
+            else
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)
+                        |(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+            }
+
 #endif        
             
             iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
@@ -10183,7 +10258,15 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
             CcbNotState(NOT_STATE_OTHER);
             /* E1,C3 ON*/
             /* set  valves */
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C3_NO);
+            if(haveB3(&gCcb))
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C3_NO);
+            }
+            else
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+            }
+
             iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
             if (iRet )
             {
@@ -10282,7 +10365,15 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
         
             VOS_LOG(VOS_LOG_WARNING,"E1,E3,C1,C3 ON; I1b,I2,B1,S4"); 
             /*E1,E3,C1,C3 ON; I1b,I2,B1,S4*/
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+            if(haveB3(&gCcb))
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+            }
+            else
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)
+                        |(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+            }
             iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
             if (iRet )
             {
@@ -10379,8 +10470,17 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 VOS_LOG(VOS_LOG_WARNING,"E1,C1,C3,T,N1 ON I1b,I2,I3,B1,B2,S2,S3,S4"); 
                 /* produce water */
                 /* E1,C1,C3,T,N1 ON I1b,I2,I3,B1,B2,S2,S3,S4 */
-                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
-                iTmp |=(1 << APP_EXE_T1_NO)|(1 << APP_EXE_N1_NO); 
+                if(haveB3(&gCcb))
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+                    iTmp |=(1 << APP_EXE_T1_NO)|(1 << APP_EXE_N1_NO);
+                }
+                else
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+                    iTmp |=(1 << APP_EXE_T1_NO)|(1 << APP_EXE_N1_NO);
+                }
+
                 iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
                 if (iRet )
                 {
@@ -10471,7 +10571,15 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
             iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
 #else
             /* 2018/01/05 add E3 according to ZHANG */
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+            if(haveB3(&gCcb))
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+            }
+            else
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)
+                        |(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+            }
 #endif        
             
             iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
@@ -10502,7 +10610,15 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
         
             /* E1,C3 ON*/
             /* set  valves */
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C3_NO);
+            if(haveB3(&gCcb))
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C3_NO);
+            }
+            else
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+            }
+
             iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
             if (iRet )
             {
@@ -10585,7 +10701,15 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
             VOS_LOG(VOS_LOG_WARNING,"E1,E3,C1,C3 ON; I1b,I2,B1,S4"); 
         
             /*E1,E3,C1,C3 ON; I1b,I2,B1,S4*/
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+            if(haveB3(&gCcb))
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+            }
+            else
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)
+                        |(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+            }
             iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
             if (iRet )
             {
@@ -10681,7 +10805,15 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 VOS_LOG(VOS_LOG_WARNING,"E1,C1,C3 ON I1b,I2,B1,B2,S2,S3,S4"); 
                 /* produce water */
                 /* E1,C1,C3 ON I1b,I2,B1,B2,S2,S3,S4 */
-                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO); 
+                if(haveB3(&gCcb))
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+                }
+                else
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+                }
+
                 iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
                 if (iRet )
                 {
@@ -10753,7 +10885,16 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
             iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
 #else
             /* 2018/01/05 add E3 according to ZHANG */
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+            if(haveB3(&gCcb))
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+            }
+            else
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)
+                        |(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+            }
+
 #endif        
             
             iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
@@ -10784,7 +10925,15 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
             VOS_LOG(VOS_LOG_WARNING,"E1,E3 ON"); 
             
             /* set  valves */
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO);
+            if(haveB3(&gCcb))
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+            }
+            else
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+            }
+
             iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
             if (iRet )
             {
@@ -10867,7 +11016,14 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
             VOS_LOG(VOS_LOG_WARNING,"E1,E3,C1 ON; I1b,I2,B1"); 
         
             /*E1,E3,C1 ON; I1b,I2,B1*/
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO);
+            if(haveB3(&gCcb))
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+            }
+            else
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+            }
             iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
             if (iRet )
             {
@@ -10952,7 +11108,15 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 VOS_LOG(VOS_LOG_WARNING,"E1,C1,T,N1 ON I1b,I2,I3,B1,B2,S2"); 
                 /* produce water */
                 /* E1,C1,T,N1 ON I1b,I2,I3,B1,B2 */
-                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO);
+                if(haveB3(&gCcb))
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+                }
+                else
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+                }
+
                 iTmp |=(1 << APP_EXE_T1_NO)|(1 << APP_EXE_N1_NO); 
                 iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
                 if (iRet )
@@ -11033,7 +11197,16 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
         iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
 #else
         /* 2018/01/05 add E3 according to ZHANG */
-        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)
+                    |(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+        }
+
 #endif        
         
         iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
@@ -11064,7 +11237,14 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
         VOS_LOG(VOS_LOG_WARNING,"E1,E3 ON"); 
         
         /* set  valves */
-        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+        }
         iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
         if (iRet )
         {
@@ -11147,7 +11327,15 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
         VOS_LOG(VOS_LOG_WARNING,"E1,E3,C1 ON; I1b,I2,B1"); 
     
         /*E1,E3,C1 ON; I1b,I2,B1*/
-        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)
+                    |(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+        }
         iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
         if (iRet )
         {
@@ -11233,7 +11421,14 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
             VOS_LOG(VOS_LOG_WARNING,"E1,C1 ON I1b,I2,B1,B2"); 
             /* produce water */
             /* E1,C1 ON I1b,I2,B1,B2 */
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO);
+            if(haveB3(&gCcb))
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+            }
+            else
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+            }
             iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
             if (iRet )
             {
@@ -11365,7 +11560,15 @@ void work_init_run_wrapper(void *para)
         iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
 #else
         /* 2018/01/05 add E3 according to ZHANG */
-        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO)
+                    |(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+        }
 #endif        
         
         iRet = CcbSetSwitch(pWorkItem->id,0,iTmp);
@@ -11448,7 +11651,15 @@ void work_init_run_wrapper(void *para)
         /* wash state for init run */
         /* E1,E2,E3 ON*/
         /* set  valves */
-        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E3_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E3_NO)
+                    |(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+        }
         
         iRet = CcbSetSwitch(pWorkItem->id,0,iTmp);
         if (iRet )
@@ -11515,7 +11726,15 @@ void work_init_run_wrapper(void *para)
         /* wash state for init run */
         /* E1,E2,E3 ON*/
         /* set  valves */
-        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E3_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E3_NO)
+                    |(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+        }
         
         iRet = CcbSetSwitch(pWorkItem->id,0,iTmp);
         if (iRet )
@@ -11596,7 +11815,15 @@ void work_tank_start_full_loop(void *para)
     int iRet;
 
     /*E1,E2,C1,C3 ON*/
-    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+    if(haveB3(&gCcb))
+    {
+        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+    }
+    else
+    {
+        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+    }
+
     iRet = CcbUpdateSwitch(pWorkItem->id,0,iTmp,iTmp);
     if (iRet )
     {
@@ -11644,7 +11871,15 @@ void work_tank_stop_full_loop(void *para)
     int iRet;
 
     /*E1,E2,C1,C3 OFF */
-    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+    if(haveB3(&gCcb))
+    {
+        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+    }
+    else
+    {
+        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+    }
+
     iRet = CcbUpdateSwitch(pWorkItem->id,0,iTmp,0);
     if (iRet )
     {
@@ -11935,7 +12170,15 @@ void work_idle_rowash(void *para)
 #ifdef  SYSTEM_TEST
         iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
 #else
-        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)
+                    |(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+        }
 #endif        
         iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
         if (iRet )
@@ -11958,7 +12201,15 @@ void work_idle_rowash(void *para)
         }
         
         /* enable E1,E2,E3,C1,C3 ON */
-        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO)|(1<<APP_EXE_C1_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO)|(1<<APP_EXE_C1_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|
+                    (1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+        }
         
         iRet = CcbUpdateSwitch(pWorkItem->id,0,APP_EXE_INNER_SWITCHS,iTmp); // don care modbus exe result
         if (iRet )
@@ -11980,7 +12231,14 @@ void work_idle_rowash(void *para)
         }
         
         /* enable E1,E3,C1,C3 ON */
-        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+        }
         iRet = CcbUpdateSwitch(pWorkItem->id,0,APP_EXE_INNER_SWITCHS,iTmp); // don care modbus exe result
         if (iRet )
         {
@@ -12030,7 +12288,14 @@ void work_idle_rowash(void *para)
         
         
         /* enable E1,E2,E3 ON  */
-        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+        }
 
         iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
         if (iRet )
@@ -12053,7 +12318,14 @@ void work_idle_rowash(void *para)
         }
         
         /* enable E1,E3,C1 ON */
-        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+        }
         
         iRet = CcbUpdateSwitch(pWorkItem->id,0,APP_EXE_INNER_SWITCHS,iTmp); // don care modbus exe result
         if (iRet )
@@ -12173,7 +12445,14 @@ void work_idle_phwash(void *para)
 #ifdef  SYSTEM_TEST
         iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
 #else
-        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+        }
 #endif        
 
         iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
@@ -12218,7 +12497,14 @@ void work_idle_phwash(void *para)
 
         
         /* enable E1,E3,C1,C3 ON */
-        iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+        }
         iRet = CcbUpdateSwitch(pWorkItem->id,0,APP_EXE_INNER_SWITCHS,iTmp); // don care modbus exe result
         if (iRet )
         {
@@ -12238,7 +12524,14 @@ void work_idle_phwash(void *para)
         }
         
         /* E1,E3 */
-        iTmp = (1<<APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1<<APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1<<APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+        }
         iRet = CcbUpdateSwitch(pWorkItem->id,0,APP_EXE_INNER_SWITCHS,iTmp); // don care modbus exe result
         if (iRet )
         {
@@ -12287,7 +12580,14 @@ void work_idle_phwash(void *para)
         CanCcbTransState(DISP_WORK_STATE_IDLE,DISP_WORK_SUB_WASH);        
         
         /* enable E1,E2,E3 ON  */
-        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+        }
 
         iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
         if (iRet )
@@ -12330,7 +12630,14 @@ void work_idle_phwash(void *para)
         
 
         /* enable E1,E2,E3 ON  */
-        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+        }
         iRet = CcbUpdateSwitch(pWorkItem->id,0,APP_EXE_INNER_SWITCHS,iTmp); // don care modbus exe result
         if (iRet )
         {
@@ -12350,7 +12657,14 @@ void work_idle_phwash(void *para)
         }
         
         /* E1,E3,C1 */
-        iTmp = (1<<APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO);
+        if(haveB3(&gCcb))
+        {
+            iTmp = (1<<APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+        }
+        else
+        {
+            iTmp = (1<<APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+        }
         iRet = CcbUpdateSwitch(pWorkItem->id,0,APP_EXE_INNER_SWITCHS,iTmp); // don care modbus exe result
         if (iRet )
         {

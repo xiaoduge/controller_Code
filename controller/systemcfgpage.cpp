@@ -30,8 +30,10 @@ SystemCfgPage::SystemCfgPage(QObject *parent,CBaseWidget *widget ,MainWindow *wn
 {
     int iIdx = 0;
 
+    /*
     aCHKsIds[iIdx].iId = DISP_SM_HaveSWValve;
     iIdx++;
+    */
 
     aCHKsIds[iIdx].iId = DISP_SM_ElecLeakProtector;
     iIdx++;
@@ -91,14 +93,18 @@ SystemCfgPage::SystemCfgPage(QObject *parent,CBaseWidget *widget ,MainWindow *wn
 
     switch(gGlobalParam.iMachineType)
     {
-     case MACHINE_Genie:
-     case MACHINE_UP:
-     case MACHINE_EDI:
-     case MACHINE_RO:
-     case MACHINE_ADAPT:
-         aCHKsIds[iIdx].iId = DISP_SM_SW_PUMP;
-         iIdx++;
-         break;
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        aCHKsIds[iIdx].iId = DISP_SM_SW_PUMP;
+        iIdx++;
+        break;
     }
 
     m_iRealChkNum = iIdx;

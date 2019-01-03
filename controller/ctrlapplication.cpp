@@ -154,6 +154,8 @@ void CtrlApplication::installTranslators(int iLanguage,bool bSwitchFont)
             case APP_LAN_FRE:
             case APP_LAN_GER:
             case APP_LAN_ITA:
+            case APP_LAN_RUS:
+            case APP_LAN_SKR:
                 {
                     QFont font(m_strLstFont[1],16);
                     QApplication::setFont(font);
