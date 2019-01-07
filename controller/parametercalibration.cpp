@@ -607,7 +607,14 @@ void ParameterCalibrationPage::update()
 
     for (iIdx = 0; iIdx < m_iRealItems; iIdx++) //DISP_PC_COFF_NUM  m_iRealItems
     {
-        m_aParameterlistItem[iIdx]->setP1(QString::number(gGlobalParam.Caliparam.pc[iIdx].fk,'f',3));
+        if(gGlobalParam.Caliparam.pc[iIdx].fk > 100)
+        {
+            m_aParameterlistItem[iIdx]->setP1(QString::number(gGlobalParam.Caliparam.pc[iIdx].fk));
+        }
+        else
+        {
+            m_aParameterlistItem[iIdx]->setP1(QString::number(gGlobalParam.Caliparam.pc[iIdx].fk,'f',3));
+        }
         m_aParameterlistItem[iIdx]->setP2(QString::number(gGlobalParam.Caliparam.pc[iIdx].fc,'f',3));
         m_aParameterlistItem[iIdx]->setP3(QString::number(gGlobalParam.Caliparam.pc[iIdx].fv,'f',3));
     }

@@ -847,7 +847,7 @@ unsigned int CcbConvert2Fm1Data(unsigned int ulValue)
     }
     //ex_dcj
     unsigned int tmp = (ulValue * 1000)/ gCcb.FMParam.aulCfg[0];
-    tmp *= ex_global_Cali.pc[DISP_PC_COFF_S1].fk;
+   // tmp *= ex_global_Cali.pc[DISP_PC_COFF_S1].fk;
     return tmp;
 
     //return (ulValue * 1000)/ gCcb.FMParam.aulCfg[0]; // ->ml
@@ -865,7 +865,7 @@ unsigned int CcbConvert2Fm2Data(unsigned int ulValue)
     }
     //ex_dcj
     unsigned int tmp = (ulValue * 1000)/ gCcb.FMParam.aulCfg[1];
-    tmp *= ex_global_Cali.pc[DISP_PC_COFF_S2].fk;
+    //tmp *= ex_global_Cali.pc[DISP_PC_COFF_S2].fk;
     return tmp;
     
   //  return (ulValue * 1000)/ gCcb.FMParam.aulCfg[1] ; // ->ml
@@ -883,7 +883,7 @@ unsigned int CcbConvert2Fm3Data(unsigned int ulValue)
     }
     //ex_dcj
     unsigned int tmp = (ulValue * 1000)/ gCcb.FMParam.aulCfg[2];
-    tmp *= ex_global_Cali.pc[DISP_PC_COFF_S3].fk;
+    //tmp *= ex_global_Cali.pc[DISP_PC_COFF_S3].fk;
     return tmp;
 
     //return (ulValue * 1000)/ gCcb.FMParam.aulCfg[2] ; // ->ml
@@ -900,7 +900,7 @@ unsigned int CcbConvert2Fm4Data(unsigned int ulValue)
     }
     //ex_dcj
     unsigned int tmp = (ulValue * 1000)/ gCcb.FMParam.aulCfg[3];
-    tmp *= ex_global_Cali.pc[DISP_PC_COFF_S4].fk;
+    //tmp *= ex_global_Cali.pc[DISP_PC_COFF_S4].fk;
     return tmp;
 
   //  return (ulValue * 1000)/ gCcb.FMParam.aulCfg[3] ; // ->ml

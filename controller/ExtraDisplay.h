@@ -15,7 +15,8 @@ typedef struct
 
 typedef struct
 {
-    int iScreenSleepTime;
+    int   iScreenSleepTime;
+    float flowRate; //
 }Ex_COFIG_PARAM;
 
 typedef struct

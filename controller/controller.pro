@@ -119,7 +119,8 @@ SOURCES += main.cpp\
     ex_factorytestpage.cpp \
     ex_calcpackflow.cpp \
     ex_languagepage.cpp \
-    ex_usermanualpage.cpp
+    ex_usermanualpage.cpp \
+    ex_managersetpage.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -212,7 +213,8 @@ HEADERS  += mainwindow.h \
     ex_factorytestpage.h \
     ex_calcpackflow.h \
     ex_languagepage.h \
-    ex_usermanualpage.h
+    ex_usermanualpage.h \
+    ex_managersetpage.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

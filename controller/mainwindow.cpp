@@ -189,7 +189,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.3.181225_release");
+QString strSoftwareVersion = QString("0.1.4.190107_debug");
 
 MainWindow *gpMainWnd;
 
@@ -501,8 +501,12 @@ void MainRetriveExConfigParam(int iMachineType)
     strCfgName += ".ini";
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
 
-    QString strV = "/ExConfigParam/ScreenSleepTime";
+    QString strV;
+    strV = "/ExConfigParam/ScreenSleepTime";
     ex_gGlobalParam.Ex_Config_Param.iScreenSleepTime = config->value(strV, 10).toInt();
+
+    strV = "/ExConfigParam/DispenseFlowRate";
+    ex_gGlobalParam.Ex_Config_Param.flowRate = config->value(strV, 2.0).toFloat();
 
     if (config)
     {
@@ -962,7 +966,7 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     strCfgName += ".ini";
 
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
-
+    /*
     for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
     {
         QString strV = "/PCCOFF/";
@@ -982,17 +986,69 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         fValue = config->value(strV3,1).toFloat(); // max 200mm
         Param.pc[iLoop].fv = fValue;
     }
+    */
     //
     switch(iMachineType)
     {
     case MACHINE_L_Genie:
+    {
+        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
+        {
+            QString strV = "/PCCOFF/";
+            float fValue ;
+            float iDefault = 1;
+            if((DISP_PC_COFF_S1 <= iLoop) && (iLoop <= DISP_PC_COFF_S4) )
+            {
+                iDefault= 450;
+            }
+
+            strV += QString::number(iLoop);
+
+            QString strV1 = "/K" + strV;
+            fValue = config->value(strV1,iDefault).toFloat(); // max 200mm
+            Param.pc[iLoop].fk = fValue;
+
+            QString strV2 = "/C" + strV;
+            fValue = config->value(strV2, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fc = fValue;
+
+            QString strV3 = "/V" + strV;
+            fValue = config->value(strV3, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fv = fValue;
+        }
         for(int i = 0;i < DISP_PC_COFF_NUM ; i++)
         {
             ex_global_Cali.pc[i].fk = Param.pc[i].fk;
         }
         break;
+    }
     case MACHINE_L_UP:
     {
+        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
+        {
+            QString strV = "/PCCOFF/";
+            float fValue ;
+            float iDefault = 1;
+            if((7 < iLoop) && (iLoop < 12) )
+            {
+                iDefault= 450;
+            }
+
+            strV += QString::number(iLoop);
+
+            QString strV1 = "/K" + strV;
+            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
+            Param.pc[iLoop].fk = fValue;
+
+            QString strV2 = "/C" + strV;
+            fValue = config->value(strV2, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fc = fValue;
+
+            QString strV3 = "/V" + strV;
+            fValue = config->value(strV3, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fv = fValue;
+        }
+
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1012,6 +1068,31 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     }
     case MACHINE_L_EDI_LOOP:
     {
+        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
+        {
+            QString strV = "/PCCOFF/";
+            float fValue ;
+            float iDefault = 1;
+            if((7 < iLoop) && (iLoop < 12) )
+            {
+                iDefault= 450;
+            }
+
+            strV += QString::number(iLoop);
+
+            QString strV1 = "/K" + strV;
+            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
+            Param.pc[iLoop].fk = fValue;
+
+            QString strV2 = "/C" + strV;
+            fValue = config->value(strV2, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fc = fValue;
+
+            QString strV3 = "/V" + strV;
+            fValue = config->value(strV3, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fv = fValue;
+        }
+
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1031,6 +1112,31 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     }
     case MACHINE_L_RO_LOOP:
     {
+        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
+        {
+            QString strV = "/PCCOFF/";
+            float fValue ;
+            float iDefault = 1;
+            if((3 < iLoop) && (iLoop < 8) )
+            {
+                iDefault= 450;
+            }
+
+            strV += QString::number(iLoop);
+
+            QString strV1 = "/K" + strV;
+            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
+            Param.pc[iLoop].fk = fValue;
+
+            QString strV2 = "/C" + strV;
+            fValue = config->value(strV2, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fc = fValue;
+
+            QString strV3 = "/V" + strV;
+            fValue = config->value(strV3, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fv = fValue;
+        }
+
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1046,6 +1152,31 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     }
     case MACHINE_Genie:
     {
+        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
+        {
+            QString strV = "/PCCOFF/";
+            float fValue ;
+            float iDefault = 1;
+            if(10 == iLoop)
+            {
+                iDefault= 7055;
+            }
+
+            strV += QString::number(iLoop);
+
+            QString strV1 = "/K" + strV;
+            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
+            Param.pc[iLoop].fk = fValue;
+
+            QString strV2 = "/C" + strV;
+            fValue = config->value(strV2, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fc = fValue;
+
+            QString strV3 = "/V" + strV;
+            fValue = config->value(strV3, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fv = fValue;
+        }
+
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1063,6 +1194,31 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     }
     case MACHINE_UP:
     {
+        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
+        {
+            QString strV = "/PCCOFF/";
+            float fValue ;
+            float iDefault = 1;
+            if(10 == iLoop)
+            {
+                iDefault= 7055;
+            }
+
+            strV += QString::number(iLoop);
+
+            QString strV1 = "/K" + strV;
+            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
+            Param.pc[iLoop].fk = fValue;
+
+            QString strV2 = "/C" + strV;
+            fValue = config->value(strV2, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fc = fValue;
+
+            QString strV3 = "/V" + strV;
+            fValue = config->value(strV3, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fv = fValue;
+        }
+
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1076,23 +1232,34 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[10].fk;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[11].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[12].fk;
-        /*
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[3].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk = Param.pc[4].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_TEMP].fk = Param.pc[5].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[6].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[7].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[8].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[9].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[10].fk;
-        */
         break;
     }
     case MACHINE_EDI:
     {
+        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
+        {
+            QString strV = "/PCCOFF/";
+            float fValue ;
+            float iDefault = 1;
+            if(8 == iLoop)
+            {
+                iDefault= 7055;
+            }
+
+            strV += QString::number(iLoop);
+
+            QString strV1 = "/K" + strV;
+            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
+            Param.pc[iLoop].fk = fValue;
+
+            QString strV2 = "/C" + strV;
+            fValue = config->value(strV2, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fc = fValue;
+
+            QString strV3 = "/V" + strV;
+            fValue = config->value(strV3, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fv = fValue;
+        }
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1108,6 +1275,31 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     }
     case MACHINE_RO:
     {
+        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
+        {
+            QString strV = "/PCCOFF/";
+            float fValue ;
+            float iDefault = 1;
+            if(6 == iLoop)
+            {
+                iDefault= 7055;
+            }
+
+            strV += QString::number(iLoop);
+
+            QString strV1 = "/K" + strV;
+            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
+            Param.pc[iLoop].fk = fValue;
+
+            QString strV2 = "/C" + strV;
+            fValue = config->value(strV2, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fc = fValue;
+
+            QString strV3 = "/V" + strV;
+            fValue = config->value(strV3, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fv = fValue;
+        }
+
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1117,19 +1309,35 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[6].fk;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[7].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[8].fk;
-        /*
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[3].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[4].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[5].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[6].fk;
-        */
         break;
     }
     case MACHINE_PURIST:
     {
+        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
+        {
+            QString strV = "/PCCOFF/";
+            float fValue ;
+            float iDefault = 1;
+            if(6 == iLoop)
+            {
+                iDefault= 7055;
+            }
+
+            strV += QString::number(iLoop);
+
+            QString strV1 = "/K" + strV;
+            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
+            Param.pc[iLoop].fk = fValue;
+
+            QString strV2 = "/C" + strV;
+            fValue = config->value(strV2, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fc = fValue;
+
+            QString strV3 = "/V" + strV;
+            fValue = config->value(strV3, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fv = fValue;
+        }
+
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1143,6 +1351,31 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     }
     case MACHINE_ADAPT:
     {
+        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
+        {
+            QString strV = "/PCCOFF/";
+            float fValue ;
+            float iDefault = 1;
+            if(8 == iLoop)
+            {
+                iDefault= 7055;
+            }
+
+            strV += QString::number(iLoop);
+
+            QString strV1 = "/K" + strV;
+            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
+            Param.pc[iLoop].fk = fValue;
+
+            QString strV2 = "/C" + strV;
+            fValue = config->value(strV2, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fc = fValue;
+
+            QString strV3 = "/V" + strV;
+            fValue = config->value(strV3, 1).toFloat(); // max 200mm
+            Param.pc[iLoop].fv = fValue;
+        }
+
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1661,8 +1894,12 @@ void MainSaveExConfigParam(int iMachineType)
     strCfgName += ".ini";
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
 
-    QString strV = "/ExConfigParam/ScreenSleepTime";
+    QString strV;
+    strV = "/ExConfigParam/ScreenSleepTime";
     config->setValue(strV, ex_gGlobalParam.Ex_Config_Param.iScreenSleepTime);
+
+    strV = "/ExConfigParam/DispenseFlowRate";
+    config->setValue(strV, ex_gGlobalParam.Ex_Config_Param.flowRate);
 
     if (config)
     {
@@ -2074,81 +2311,70 @@ void MainSaveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
             QString strV3 = "/V" + strV;
             config->setValue(strV3,strTmp);
         }
-#if 0
-        //
-        QString strP;
-        QString strTmp;
-
-        strP = "/PCCOFF/SOURCE_WATER_CONDUCT";
-        strTmp = QString::number(Param.pc[0].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/SOURCE_WATER_TEMP";
-        strTmp = QString::number(Param.pc[1].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/RO_WATER_CONDUCT";
-        strTmp = QString::number(Param.pc[2].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/RO_WATER_TEMP";
-        strTmp = QString::number(Param.pc[3].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/EDI_WATER_CONDUCT";
-        strTmp = QString::number(Param.pc[4].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/EDI_WATER_TEMP";
-        strTmp = QString::number(Param.pc[5].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/UP_WATER_CONDUCT";
-        strTmp = QString::number(Param.pc[6].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/UP_WATER_TEMP";
-        strTmp = QString::number(Param.pc[7].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/TOC_WATER_CONDUCT";
-        strTmp = QString::number(Param.pc[8].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/TOC_WATER_TEMP";
-        strTmp = QString::number(Param.pc[9].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/S1";
-        strTmp = QString::number(Param.pc[10].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/S2";
-        strTmp = QString::number(Param.pc[11].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/S3";
-        strTmp = QString::number(Param.pc[12].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/S4";
-        strTmp = QString::number(Param.pc[13].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/PW_TANK_LEVEL";
-        strTmp = QString::number(Param.pc[14].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/SW_TANK_LEVEL";
-        strTmp = QString::number(Param.pc[15].fk,'f', 3);
-        config->setValue(strP,strTmp);
-
-        strP = "/PCCOFF/SYS_PRESSURE";
-        strTmp = QString::number(Param.pc[16].fk,'f', 3);
-        config->setValue(strP,strTmp);
-#endif
-
     }    
+
+    //2019.1.3
+    DISP_FM_SETTING_STRU fmParam;
+
+    switch(iMachineType)
+    {
+    case MACHINE_L_Genie:
+        for(int i = 0;i < DISP_PC_COFF_NUM ; i++)
+        {
+            fmParam.aulCfg[DISP_FM_FM1] = Param.pc[DISP_PC_COFF_S1].fk;
+            fmParam.aulCfg[DISP_FM_FM2]= Param.pc[DISP_PC_COFF_S2].fk;
+            fmParam.aulCfg[DISP_FM_FM3] = Param.pc[DISP_PC_COFF_S3].fk;
+            fmParam.aulCfg[DISP_FM_FM4] = Param.pc[DISP_PC_COFF_S4].fk;
+        }
+        break;
+    case MACHINE_L_UP:
+    {
+        fmParam.aulCfg[DISP_FM_FM1] = Param.pc[8].fk;
+        fmParam.aulCfg[DISP_FM_FM2] = Param.pc[9].fk;
+        fmParam.aulCfg[DISP_FM_FM3] = Param.pc[10].fk;
+        fmParam.aulCfg[DISP_FM_FM4] = Param.pc[11].fk;
+        break;
+    }
+    case MACHINE_L_EDI_LOOP:
+    {
+        fmParam.aulCfg[DISP_FM_FM1] = Param.pc[8].fk;
+        fmParam.aulCfg[DISP_FM_FM2] = Param.pc[9].fk;
+        fmParam.aulCfg[DISP_FM_FM3] = Param.pc[10].fk;
+        fmParam.aulCfg[DISP_FM_FM4] = Param.pc[11].fk;
+        break;
+    }
+    case MACHINE_L_RO_LOOP:
+    {
+        fmParam.aulCfg[DISP_FM_FM1] = Param.pc[4].fk;
+        fmParam.aulCfg[DISP_FM_FM2] = Param.pc[5].fk;
+        fmParam.aulCfg[DISP_FM_FM3] = Param.pc[6].fk;
+        fmParam.aulCfg[DISP_FM_FM4] = Param.pc[7].fk;
+        break;
+    }
+    case MACHINE_Genie:
+        fmParam.aulCfg[DISP_FM_FM1]  = Param.pc[10].fk;
+        break;
+    case MACHINE_UP:
+        fmParam.aulCfg[DISP_FM_FM1]  = Param.pc[10].fk;
+        break;
+    case MACHINE_EDI:
+        fmParam.aulCfg[DISP_FM_FM1]  = Param.pc[8].fk;
+        break;
+    case MACHINE_RO:
+        fmParam.aulCfg[DISP_FM_FM1]  = Param.pc[6].fk;
+        break;
+    case MACHINE_PURIST:
+        fmParam.aulCfg[DISP_FM_FM1]  = Param.pc[6].fk;
+        break;
+    case MACHINE_ADAPT:
+        fmParam.aulCfg[DISP_FM_FM1]  = Param.pc[8].fk;
+        break;
+    default:
+        break;
+    }
+    MainSaveFMParam(iMachineType, fmParam);
+
+    //end
     if (config)
     {
         delete config;

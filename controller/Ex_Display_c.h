@@ -10,6 +10,7 @@ extern "C"
 typedef struct
 {
    float fk;
+   float fc;
 }Ex_DISP_PARAM_CALI_ITEM_STRU;
 
 typedef struct

@@ -23,6 +23,7 @@
 #include "ExtraDisplay.h"
 #include "displaypage.h"
 #include "ex_rfidcfgpage.h"
+#include "ex_managersetpage.h"
 
 #include "ex_languagepage.h"
 
@@ -35,17 +36,18 @@
 static QString SubPageName[SERVICE_BTN_NUMBER] = 
 {    
     "Material Install",
-    "Time Set",
-    "Language",
-    "Sound Set",
-    "Unit Set",
-    "LCD",
+    "ManagerConfig",
+ //   "Time Set",
+//    "Language",
+//    "Sound Set",
+//    "Unit Set",
+ //   "LCD",
     "User Config",
 //    "Service Report",
     "History",
     "RFID Config",
     "Allocation Set",
-    "Sterilize",
+    "Sterilize"
 };
 
 static CONFIG_BTN1 sBtns[SERVICE_BTN_NUMBER] = 
@@ -57,10 +59,11 @@ static CONFIG_BTN1 sBtns[SERVICE_BTN_NUMBER] =
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
 //    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
+//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
+//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
+//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
+//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
+//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
 };
 
@@ -101,6 +104,12 @@ void ServicePage::Create_subPage()
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[SERVICE_BTN_STERILIZE] = new SterilizePage(this , tmpWidget , m_wndMain);
             break;
+        case SERVICE_BTN_MANAGERCONFIG:
+            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
+            tmpWidget->setObjectName(SubPageName[index]);
+            tmpWidget->setGeometry(0,0,800,600);
+            m_pSubPages[SERVICE_BTN_MANAGERCONFIG] = new Ex_ManagerSetPage(this , tmpWidget , m_wndMain);
+            break;
         case SERVICE_BTN_INSTALL:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
@@ -121,6 +130,7 @@ void ServicePage::Create_subPage()
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[index] = new AllocationSetPage(this , tmpWidget , m_wndMain);
             break;
+         /*
         case SET_BTN_SYSTEM_LANGUAGE:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
@@ -152,7 +162,7 @@ void ServicePage::Create_subPage()
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[index] = new DisplayPage(this , tmpWidget , m_wndMain);
-            break;
+            break;*/
         case SET_BTN_USER_CFG:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
@@ -200,16 +210,20 @@ void ServicePage::buildTranslation()
 {
     int index;
     m_pBtns[SERVICE_BTN_STERILIZE]->setTip(tr("Cleaning & Sanitization"));
+    m_pBtns[SERVICE_BTN_MANAGERCONFIG]->setTip(tr("Setting"));
     m_pBtns[SERVICE_BTN_INSTALL]->setTip(tr("Components Installation"));
 //    m_pBtns[SERVICE_BTN_REPORT]->setTip(tr("Service Report"));
     m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->setTip(tr("Dist. Control"));
+    /*
     m_pBtns[SET_BTN_SYSTEM_TIME]->setTip(tr("Time & Date"));
     m_pBtns[SET_BTN_SYSTEM_LANGUAGE]->setTip(tr("Language"));
     m_pBtns[SET_BTN_SYSTEM_SOUND]->setTip(tr("Audio"));
     m_pBtns[SET_BTN_SYSTEM_UNIT]->setTip(tr("Units"));
+    m_pBtns[SET_BTN_SYSTEM_LCD]->setTip(tr("LCD"));
+    */
     m_pBtns[SET_BTN_USER_CFG]->setTip(tr("User Config"));
     m_pBtns[SET_BTN_HISTORY_RECORD]->setTip(tr("History"));
-    m_pBtns[SET_BTN_SYSTEM_LCD]->setTip(tr("LCD"));
+
     m_pBtns[SET_BTN_RFID_CONFIG]->setTip(tr("RFID Config"));
 
     for (index = 0; index < SERVICE_BTN_NUMBER; index++)
@@ -359,15 +373,18 @@ void ServicePage::on_btn_clicked(int index)
         switch(index)
         {
         case SERVICE_BTN_INSTALL:
+        /*
         case SET_BTN_SYSTEM_TIME:
         case SET_BTN_SYSTEM_LANGUAGE:
         case SET_BTN_SYSTEM_SOUND:
         case SET_BTN_SYSTEM_UNIT:
         case SET_BTN_SYSTEM_LCD:
+        */
         case SET_BTN_HISTORY_RECORD:
         case SET_BTN_RFID_CONFIG:
         case SET_BTN_SYSTEM_ALLOCATION:
         case SERVICE_BTN_STERILIZE:
+        case SERVICE_BTN_MANAGERCONFIG:
         {
             QDateTime endTime = QDateTime::currentDateTime();
             user_LoginState.setEndTime(endTime);
