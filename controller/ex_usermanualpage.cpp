@@ -100,11 +100,9 @@ void Ex_UserManualPage::loadNewContent(bool next)
 
     else
     {
-        if(m_curPage < (MAXPAGE - 1))
+        if(m_curPage < (m_maxPageNum[gGlobalParam.iMachineType] - 1))
         {
             m_curPage++;
-            qDebug() << "m_curPage: " << m_curPage;
-            qDebug() << "PixmapName: " << m_strList.at(m_curPage);
             m_pixmap = QPixmap(m_strList.at(m_curPage));
             m_pContentLb->setPixmap(m_pixmap);
             m_pContentLb->setScaledContents(true);
@@ -167,15 +165,45 @@ void Ex_UserManualPage::mouseReleaseEvent(QMouseEvent *e)
 
 }
 
+void Ex_UserManualPage::initMaxPageNum()
+{
+    m_maxPageNum[MACHINE_L_Genie] = 0;
+    m_maxPageNum[MACHINE_L_UP] = 0;
+    m_maxPageNum[MACHINE_L_EDI_LOOP] = 0;
+    m_maxPageNum[MACHINE_L_RO_LOOP] = 0;
+
+    m_maxPageNum[MACHINE_Genie] = 8;
+    m_maxPageNum[MACHINE_UP] = 0;
+    m_maxPageNum[MACHINE_EDI] = 0;
+    m_maxPageNum[MACHINE_RO] = 0;
+
+    m_maxPageNum[MACHINE_PURIST] = 0;
+    m_maxPageNum[MACHINE_ADAPT] = 0;
+
+
+}
+
 void Ex_UserManualPage::initPixNameList()
 {
     int iLoop;
     QString tmp;
-    for(iLoop = 0; iLoop < MAXPAGE; iLoop++)
+
+    initMaxPageNum();
+
+    if(0 == m_maxPageNum[gGlobalParam.iMachineType])
     {
-        tmp = QString("://userManual/%1.jpg").arg(iLoop+1);
+        tmp = QString("://userManual/Genie_0.png");
         m_strList << tmp;
     }
+    else
+    {
+        for(iLoop = 0; iLoop < m_maxPageNum[gGlobalParam.iMachineType]; iLoop++)
+        {
+            tmp = QString("://userManual/G_E_%1.png").arg(iLoop+1);
+            m_strList << tmp;
+        }
+    }
+
 }
 
 

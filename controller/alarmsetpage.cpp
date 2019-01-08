@@ -348,6 +348,12 @@ void AlarmSetPage::buildTranslation()
             */
             m_plistItem[iIdx]->setName(tr("Leak or Tank Overflow"));
             break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE):
+            /*
+            Work pressure max
+            */
+            m_plistItem[iIdx]->setName(tr("High Work Pressure"));
+            break;
         }
     }
 
@@ -915,6 +921,16 @@ void AlarmSetPage::save()
             {
                 Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW);
             }
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE):
+            if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
+            {
+                Param.aulFlag[DISP_ALARM_PART1] |= (1<<DISP_ALARM_PART1_HIGH_WORK_PRESSURE);
+            }
+            else
+            {
+                Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_HIGH_WORK_PRESSURE);
+            }
+            break;
             iIdx++;
             break;
 
@@ -1337,6 +1353,16 @@ void AlarmSetPage::update()
 
        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW):
            if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW))
+           {
+               m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
+           }
+           else
+           {
+               m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
+           }
+           break;
+       case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE):
+           if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_HIGH_WORK_PRESSURE))
            {
                m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
            }

@@ -38,6 +38,23 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         break;
     } 
 
+    switch(gGlobalParam.iMachineType)/*Working pressure limit*/
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP33;
+        iIdx++;
+        break;
+    }
+
     switch(gGlobalParam.iMachineType)/*?????????I1a?*/
     {
     case MACHINE_L_Genie:
@@ -606,6 +623,12 @@ void SetPoint::buildTranslation()
             pSetPlistItem[iLoop]->setP1Name(tr("Lower threshold"));            
             pSetPlistItem[iLoop]->setP1Unit(tr("omg"));
             break;
+        case MACHINE_PARAM_SP33:
+            /* work Pressure max 12bar */
+            pSetPlistItem[iLoop]->setName(tr("Work Pressure"));
+            pSetPlistItem[iLoop]->setP1Name(tr("Max."));
+            pSetPlistItem[iLoop]->setP1Unit(tr("bar"));
+            break;
         }
     }
 
@@ -888,6 +911,11 @@ void SetPoint::save()
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP32] = fTemp;
             break;
+        case MACHINE_PARAM_SP33:
+            /* 自来水压力下限1.0bar */
+            fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
+            MMParam.SP[MACHINE_PARAM_SP33] = fTemp;
+            break;
         }
     }
 
@@ -1056,6 +1084,11 @@ void SetPoint::update()
             HP产水水质下限 ? MΩ.cm
             */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP32],'f',1));
+            break;
+        case MACHINE_PARAM_SP33:
+            /* 自来水压力下限1.0bar */
+            pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP33],'f',1));
+
             break;
         }
     }

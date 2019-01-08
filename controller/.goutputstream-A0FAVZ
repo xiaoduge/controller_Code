@@ -1,0 +1,266 @@
+#ifndef _DISPLAY_H_
+#define _DISPLAY_H_
+
+#include "datatype.h"
+#include "cminterface.h"
+#include "notify.h"
+
+#include "zbcomm.h"
+
+#ifdef __cplusplus
+ extern "C"
+ {
+#endif
+ /* special address description flags for the CAN_ID */
+#define CAN_EFF_FLAG 0x80000000U /* EFF/SFF is set in the MSB */
+#define CAN_RTR_FLAG 0x40000000U /* remote transmission request */
+#define CAN_ERR_FLAG 0x20000000U /* error frame */
+ 
+ /* valid bits in CAN ID for frame formats */
+#define CAN_SFF_MASK 0x000007FFU /* standard frame format (SFF) */
+#define CAN_EFF_MASK 0x1FFFFFFFU /* extended frame format (EFF) */
+#define CAN_ERR_MASK 0x1FFFFFFFU /* omit EFF, RTR, ERR flags */
+
+#define MAX_CAN_MESSAGE_LEN 256
+
+#define CAN_ADDRESS_MASK (0X3FF)
+
+#define CAN_SRC_ADDRESS_POS (10) // BIT0~BIT9 in indentifer
+
+#define CAN_SRC_ADDRESS(indenfier)((indenfier >> CAN_SRC_ADDRESS_POS) & CAN_ADDRESS_MASK)
+
+#define CAN_DST_ADDRESS_POS (0) // BIT0~BIT9 in indentifer
+
+#define CAN_DST_ADDRESS(indenfier)((indenfier >> CAN_DST_ADDRESS_POS) & CAN_ADDRESS_MASK)
+
+#define CAN_BROAD_CAST_ADDRESS (0X3FF)
+
+#define CAN_ADDRESS(indenfier)((indenfier) & CAN_ADDRESS_MASK)
+
+#define CAN_BUILD_ADDRESS_IDENTIFIER(ulIdentifier,usSrcCanAdr,usDstCanAdr)(ulIdentifier=(usSrcCanAdr<<CAN_SRC_ADDRESS_POS)|(usDstCanAdr << CAN_DST_ADDRESS_POS)|CAN_EFF_FLAG)
+
+#define CAN_INVALID_ADDRESS (0XFFFF)
+
+#define INVALID_CAN_ADDRESS(usAddress) ((usAddress & CAN_BROAD_CAST_ADDRESS) == CAN_BROAD_CAST_ADDRESS)
+
+
+#define B1_PRESSURE (16)   /* Unit: bar = 0.1Mpa */
+#define B2_LEVEL    (2.0)  /* Unit: Millimeter */
+#define B3_LEVEL    (2.0)  /* Unit: Millimeter */
+
+#define B2_FULL  (100)    /* Unit: Percent */
+
+#define B3_FULL  (100)    /* Unit: Percent */
+
+
+#define PERIOD_EVENT_LENGTH (100) // MS
+
+#define SECOND_EVENT_LENGTH (1000) // MS
+
+#define UV_PFM_PEROID ((60*60)) // SECOND IN HOUR
+
+#define TOMLPERMIN  (60 * (1000/PERIOD_EVENT_LENGTH))   /* convert to millilitre per Minute */
+#define TOMLPERHOUR (60 * TOMLPERMIN)                   /* convert to millilitre per Hour */
+
+#define FM_CALC_PERIOD          (3000)
+#define FM_UPDATE_PERIOD        (30000)
+#define FM_ALARM_CHECK_PERIOD   (10000)
+#define FM_SIMULATION_PERIOD    (60000)
+
+typedef enum
+{
+    DB_TBL_BEST_WATER_QUALITY = 0,
+    DB_TBL_ALARM,
+    DB_TBL_USER,
+    DB_TBL_TAKE_WATER,
+    DB_TBL_PRODUCE_WATER,
+    DB_TBL_LOG,
+    DB_TBL_NUM,
+}DB_TABLE_ENUM;
+
+typedef enum
+{
+     MACHINE_L_Genie = 0,
+     MACHINE_L_UP,
+     MACHINE_L_EDI_LOOP,
+     MACHINE_L_RO_LOOP,
+     MACHINE_Genie,
+     MACHINE_UP,
+     MACHINE_EDI,
+     MACHINE_RO,
+     MACHINE_PURIST,
+     MACHINE_ADAPT,
+     MACHINE_NUM,
+}MACHINE_TYPE_ENUM;
+
+
+typedef void * DISPHANDLE;
+
+
+#define DISP_INVALID_HANDLE (NULL)
+#define DISP_SPECIAL_HANDLE ((void *)1)
+
+typedef enum
+{
+    DISP_WORK_STATE_IDLE = 0,
+    DISP_WORK_STATE_RUN,
+    DISP_WORK_STATE_LPP,     /* Low pressure protect state */
+    DISP_WORK_STATE_KP ,     /* Key Protect State */
+
+    /* extra for prepare*/
+    DISP_WORK_STATE_PREPARE = 0X80,
+}DISP_WORK_STATE_ENUM;
+
+typedef enum
+{
+   /* works availabe under IDLE State */
+   
+   DISP_WORK_SUB_IDLE    = 0,
+   DISP_WORK_SUB_WASH, 
+   DISP_WORK_SUB_IDLE_DEPRESSURE,
+
+   /* works availabe under RUN State  */
+   DISP_WORK_SUB_RUN_INIT,
+   DISP_WORK_SUB_RUN_QTW,
+   DISP_WORK_SUB_RUN_QTWING,
+   DISP_WORK_SUB_RUN_CIR,
+   DISP_WORK_SUB_RUN_CIRING,
+   DISP_WORK_SUB_RUN_DEC,
+
+   /* works available under */
+   
+   
+}DISP_WORK_SUB_STATE_ENUM;
+
+typedef enum
+{
+   /* works availabe under IDLE State */
+
+   
+   DISP_CMD_IDLE  = 0,  /* return to idle state */
+
+   DISP_CMD_RUN      ,
+
+   DISP_CMD_WASH  ,
+
+   DISP_CMD_RESET,
+
+   DISP_CMD_ENG_MODE,   /* 4 */
+
+   DISP_CMD_EXIT_ENG_MODE,
+
+   DISP_CMD_ENG_CMD,
+
+   DISP_CMD_LEAK_RESET,
+
+   DISP_CMD_TUBE_CIR,  /* 8 */
+
+   DISP_CMD_TW,
+
+   DISP_CMD_CIR,
+
+   DISP_CMD_SWITCH_REPORT,
+
+   DISP_CMD_CANCEL_WORK = 0x80,
+
+   DISP_CMD_HALT,
+   
+}DISP_CMD_ENUM;
+
+
+typedef enum
+{
+    DISP_ACT_TYPE_SWITCH = (1 << 0),
+    DISP_ACT_TYPE_RPT = (1 << 1),
+
+}DISP_ACT_TYPE_ENUM;
+
+
+typedef union
+{
+   unsigned int       ulV;
+   float              fV;
+   APP_ECO_VALUE_STRU eV;
+}DISP_OBJ_VALUE;
+
+typedef struct
+{
+    int emDispObjType; /* refer APP_OBJ_TYPE_ENUM */
+    int iDispObjId;
+    int iState;        /* 0: normal , 1: breakdown */
+    int iActive;       /* refer DISP_ACT_TYPE_ENUM, any combination of DISP_ACT_TYPE_ENUM */
+    unsigned int ulSec;
+    unsigned int ulDurSec;
+    int iVChoice;
+    DISP_OBJ_VALUE Value;
+}DISP_OBJ_STRU;
+
+/* default setting for MM parameters */
+#define MM_DEFALUT_SP1 0.5//          0~1.6Mpa    B1进水压力下限
+#define MM_DEFALUT_SP2 92//          RO截留率下限,通过计算公式rejection=(I1b-I2)/I1b*100%
+#define MM_DEFALUT_SP3 50//          0~100?s/cm  RO产水电导率下限（I2测得）
+#define MM_DEFALUT_SP4 1.0//          0~18.2M .cm EDI产水电阻率下限（I3测得）
+#define MM_DEFALUT_SP5 80 //          0~2.0m  设备恢复产水液位（B2）
+#define MM_DEFALUT_SP6 10 //          0~2.0m  水箱低液位报警线（B2）
+#define MM_DEFALUT_SP7 16//          0~18.2M .cm UP产水电阻率下限（I5）
+#define MM_DEFALUT_SP8 80//          0~2.0m  源水箱补水液位（B3）
+#define MM_DEFALUT_SP9 10//          0~2.0m  原水箱低位系统保护设定点（B3）
+#define MM_DEFALUT_SP10 1.0//        0~18.2M .cm 水箱水水质下限（I4）
+#define MM_DEFALUT_SP11 2.0//        0~18.2M .cm 水箱水水质上限（I4）
+#define MM_DEFALUT_SP12 1.0//        0~18.2M .cm 纯水取水水质下限（I4）
+#define MM_DEFALUT_SP13 2000//        0~2000?s/cm 自来水电导率上限（I1a）
+#define MM_DEFALUT_SP14 100//        RO产水流速 上限100.0L/min     
+#define MM_DEFALUT_SP15 20//        RO产水流速 下限20.0L/min   
+#define MM_DEFALUT_SP16 20//        RO弃水流速 下限20.0L/min     
+#define MM_DEFALUT_SP17 1//        管路水质   下限 1MΩ.cm     
+#define MM_DEFALUT_SP18 45//        进水温度 上限45℃      
+#define MM_DEFALUT_SP19 5//        进水温度 下限5℃     
+#define MM_DEFALUT_SP20 45//        RO产水温度 上限45℃ 下限5℃    
+#define MM_DEFALUT_SP21 5//           
+#define MM_DEFALUT_SP22 45//        EDI产水温度 上限45℃ 下限5℃   
+#define MM_DEFALUT_SP23 5//           
+#define MM_DEFALUT_SP24 45//        UP产水温度 上限45℃ 下限5℃   
+#define MM_DEFALUT_SP25 5//           
+#define MM_DEFALUT_SP26 45//        UP产水温度 上限45℃ 下限5℃   
+#define MM_DEFALUT_SP27 5//           
+#define MM_DEFALUT_SP28 45//        TOC传感器温度 上限45℃ 下限5℃  
+#define MM_DEFALUT_SP29 5//           
+#define MM_DEFALUT_SP30 15.0//        TOC进水水质下限15.0MΩ.cm   
+#define MM_DEFALUT_SP31 1.0//        HP循环(水箱循环)水质下限15.0MΩ.cm   
+#define MM_DEFALUT_SP32 0.0//        HP产水水质下限15.0MΩ.cm   
+
+typedef enum
+{
+    MACHINE_PARAM_SP1 = 0,//    0~1.6Mpa    B1进水压力下限
+    MACHINE_PARAM_SP2,//          RO截留率下限,通过计算公式rejection=(I1b-I2)/I1b*100%
+    MACHINE_PARAM_SP3,//          0~100?s/cm  RO产水电导率上限（I2测得）
+    MACHINE_PARAM_SP4,//          0~18.2M .cm EDI产水电阻率下限（I3测得）
+    MACHINE_PARAM_SP5,//          0~2.0m  设备恢复产水液位（B2）
+    MACHINE_PARAM_SP6,//          0~2.0m  水箱低液位报警线（B2）
+    MACHINE_PARAM_SP7,//          0~18.2M .cm UP产水电阻率下限（I5）
+    MACHINE_PARAM_SP8,//          0~2.0m  源水箱补水液位（B3）
+    MACHINE_PARAM_SP9,//          0~2.0m  原水箱低位系统保护设定点（B3）
+    MACHINE_PARAM_SP10,//        0~18.2M .cm 水箱水水质下限（I4）
+    MACHINE_PARAM_SP11,//        0~18.2M .cm 水箱水水质上限（I4）
+    MACHINE_PARAM_SP12,//        0~18.2M .cm 纯水取水水质下限（I4）
+    MACHINE_PARAM_SP13,//        0~2000?s/cm 自来水电导率上限（I1a）
+    MACHINE_PARAM_SP14,//        RO产水流速 上限100.0L/min     
+    MACHINE_PARAM_SP15,//        RO产水流速 下限20.0L/min   
+    MACHINE_PARAM_SP16,//        RO弃水流速 下限20.0L/min     
+    MACHINE_PARAM_SP17,//        管路水质   下限 1MΩ.cm     
+    MACHINE_PARAM_SP18,//        进水温度 上限45℃      
+    MACHINE_PARAM_SP19,//        进水温度 下限5℃     
+    MACHINE_PARAM_SP20,//        RO产水温度 上限45℃ 下限5℃    
+    MACHINE_PARAM_SP21,//           
+    MACHINE_PARAM_SP22,//        EDI产水温度 上限45℃ 下限5℃   
+    MACHINE_PARAM_SP23,//           
+    MACHINE_PARAM_SP24,//        UP产水温度 上限45℃ 下限5℃   
+    MACHINE_PARAM_SP25,//           
+    MACHINE_PARAM_SP26,//        TUBE产水温度 上限45℃ 下限5℃   
+    MACHINE_PARAM_SP27,//           
+    MACHINE_PARAM_SP28,//        TOC传感器温度 上限45℃ 下限5℃  
+    MACHINE_PARAM_SP29,//           
+    MACHINE_PARAM_SP30,//        TOC进水水质下限15.0MΩ.cm   
+    MACHINE_PARAM_SP31,//        水箱循环水质下限   
+    MACHINE_PARAM_SP32,//        HP 产水水质下限
+    MACHINE_PARAM_SP33,//        

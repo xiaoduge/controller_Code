@@ -42,11 +42,11 @@ void Ex_ManagerSetPage::buildTranslation()
     m_tabWidget->setTabText(2, tr("Audio"));
     m_tabWidget->setTabText(3, tr("Units"));
     m_tabWidget->setTabText(4, tr("LCD"));
-    m_tabWidget->setTabText(5, tr("Flowrate"));
+//    m_tabWidget->setTabText(5, tr("Flowrate"));
 
-    m_flowLabel->setText(tr("Flowrate"));
-    m_flowUnit->setText(QString("L/min"));
-    m_flowSaveBtn->setText(tr("Save"));
+//    m_flowLabel->setText(tr("Flowrate"));
+//    m_flowUnit->setText(QString("L/min"));
+//    m_flowSaveBtn->setText(tr("Save"));
 
     //Time
     int iLoop;
@@ -591,8 +591,8 @@ void Ex_ManagerSetPage::initFlowPage()
 
     connect(m_flowSaveBtn, SIGNAL(clicked()), this, SLOT(on_flowSaveBtn_clicked()));
 
-    QIcon icon1(":/pic/unselected.png");
-    m_tabWidget->addTab(m_pageWidget[MANGER_PAGE_FLOW], icon1, tr("Flowrate"));
+//    QIcon icon1(":/pic/unselected.png");
+//    m_tabWidget->addTab(m_pageWidget[MANGER_PAGE_FLOW], icon1, tr("Flowrate"));
 }
 
 void Ex_ManagerSetPage::initTimePage()

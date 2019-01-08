@@ -81,6 +81,7 @@ unsigned char gaucIapBuffer[1024];
 
 //ex
 int Check_TOC_Alarm = 0;
+int AlarmHighWorkPress = 0;
 //end
 
 typedef enum
@@ -496,7 +497,14 @@ void CanCcbSaveQtw2(int iTrxIndex, int iDevId,int iVolume)
 
     gCcb.aHandler[iIndex].ulCanId = ulCanId;
     gCcb.aHandler[iIndex].iCanIdx = 0;
-    gCcb.QtwMeas.ulTotalFm        = iVolume;
+    if(INVALID_FM_VALUE != iVolume)
+    {
+        gCcb.QtwMeas.ulTotalFm        = iVolume - ex_global_Cali.pc[DISP_PC_COFF_S1].fc;
+    }
+    else
+    {
+        gCcb.QtwMeas.ulTotalFm        = iVolume;
+    }
 
     gCcb.aHandler[iIndex].iCurTrxIndex = iTrxIndex;
 
@@ -1031,6 +1039,10 @@ float CcbGetSp32(void)
     return gCcb.MMParam.SP[MACHINE_PARAM_SP32];
 }
 
+float CcbGetSp33(void)
+{
+    return gCcb.MMParam.SP[MACHINE_PARAM_SP33];
+}
 
 float CcbGetB2Full(void)
 {
@@ -3857,10 +3869,32 @@ void work_start_speed_regulation(void *para)
 
     int iSpeed = pCcb->aHandler[iIndex].iSpeed;
 
+    float fv; //2019.1.7
+
     
     DispGetRPumpSwitchState(APP_EXE_C2_NO - APP_EXE_C1_NO,&iActive);
-    
-    iTmp = DispConvertVoltage2RPumpSpeed(((24.0 - 5.0)*iSpeed)/PUMP_SPEED_NUM + 5);
+
+    //2019.1.7
+    if(10 <= iSpeed)
+    {
+        fv = 24.0;
+    }
+    else if(iSpeed == 9)
+    {
+        fv = 18.0;
+    }
+    else if(iSpeed == 8)
+    {
+        fv = 15.0;
+    }
+    else
+    {
+        fv = iSpeed + 6.0;
+    }
+    iTmp = DispConvertVoltage2RPumpSpeed(fv);
+    //end
+
+   // iTmp = DispConvertVoltage2RPumpSpeed(((24.0 - 5.0)*iSpeed)/PUMP_SPEED_NUM + 5);
     
     if (iActive) iTmp = 0XFF00 | iTmp;
 
@@ -4750,7 +4784,6 @@ void CanCcbPmMeasurePostProcess(int iPmId)
                     case MACHINE_L_EDI_LOOP:
                     case MACHINE_L_RO_LOOP:
                         fThd = 5.0 ; /* for Large Machine (unit Bar) */
-                        //fThd = 0 ; /* for Large Machine (unit Bar) */
                         break;
                     default:
                         break;
@@ -4768,6 +4801,25 @@ void CanCcbPmMeasurePostProcess(int iPmId)
                             gCcb.ulB1UnderPressureTick = gulSecond;
                         }
                     }
+
+                    //high work pressure
+                    if(fValue >= CcbGetSp33())
+                    {
+                        if(0 == AlarmHighWorkPress)
+                        {
+                            AlarmHighWorkPress = 1;
+                            CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE,TRUE);
+                        }
+                    }
+                    else
+                    {
+                        if(1 == AlarmHighWorkPress)
+                        {
+                            AlarmHighWorkPress = 0;
+                            CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE,FALSE);
+                        }
+                    }
+                    //end
                 }       
             }
             
@@ -8322,7 +8374,14 @@ void CanCcbSaveQtwMsg(int iTrxIndex, void *pMsg)
             gCcb.aHandler[iIndex].CommHdr = pmg->hdr;
             gCcb.aHandler[iIndex].ulCanId = pCanItfMsg->ulCanId;
             gCcb.aHandler[iIndex].iCanIdx = pCanItfMsg->iCanChl;
-            gCcb.QtwMeas.ulTotalFm        = pQtwReq->ulVolumn;   
+            if(INVALID_FM_VALUE != pQtwReq->ulVolumn)
+            {
+                gCcb.QtwMeas.ulTotalFm        = pQtwReq->ulVolumn - ex_global_Cali.pc[DISP_PC_COFF_S1].fc;
+            }
+            else
+            {
+                gCcb.QtwMeas.ulTotalFm        = pQtwReq->ulVolumn;
+            }
 
             gCcb.aHandler[iIndex].iCurTrxIndex = iTrxIndex;
         }
@@ -8343,7 +8402,15 @@ void CanCcbSaveQtwMsg(int iTrxIndex, void *pMsg)
             }
             
             gCcb.aHandler[iIndex].CommHdr = pmg->hdr;
-            gCcb.QtwMeas.ulTotalFm        = pQtwReq->ulVolumn; 
+
+            if(INVALID_FM_VALUE != pQtwReq->ulVolumn)
+            {
+                gCcb.QtwMeas.ulTotalFm        = pQtwReq->ulVolumn - ex_global_Cali.pc[DISP_PC_COFF_S1].fc;
+            }
+            else
+            {
+                gCcb.QtwMeas.ulTotalFm        = pQtwReq->ulVolumn;
+            }
 
             gCcb.aHandler[iIndex].iCurTrxIndex = iTrxIndex;
             
@@ -13821,6 +13888,7 @@ void CcbInitMachineType(void)
 void MainInitMsg(void)
 {
    int iLoop;
+   float fv; //2019.1.7
    memset(&gCcb,0,sizeof(gCcb));
 
    for (iLoop = 0; iLoop < WORK_LIST_NUM; iLoop++)
@@ -13893,7 +13961,26 @@ void MainInitMsg(void)
 
    for (iLoop = 0; iLoop < PUMP_SPEED_NUM; iLoop++)
    {
-       gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(((24.0 - 5.0)*iLoop)/PUMP_SPEED_NUM + 5);
+       //2019.1.7
+       if(10 <= iLoop)
+       {
+           fv = 24.0;
+       }
+       else if(iLoop == 9)
+       {
+           fv = 18.0;
+       }
+       else if(iLoop == 8)
+       {
+           fv = 15.0;
+       }
+       else
+       {
+           fv = iLoop + 6.0;
+       }
+       gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(fv);
+       //end
+       //gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(((24.0 - 5.0)*iLoop)/PUMP_SPEED_NUM + 5);
    }
    
    // for ccb init

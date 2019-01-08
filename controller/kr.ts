@@ -273,231 +273,236 @@
         <translation>누설 또는 탱크 오버 플로우</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="506"/>
-        <location filename="alarmdisplaypage.cpp" line="507"/>
-        <location filename="alarmdisplaypage.cpp" line="547"/>
-        <location filename="alarmdisplaypage.cpp" line="585"/>
-        <location filename="alarmdisplaypage.cpp" line="629"/>
-        <location filename="alarmdisplaypage.cpp" line="672"/>
-        <location filename="alarmdisplaypage.cpp" line="713"/>
-        <location filename="alarmdisplaypage.cpp" line="754"/>
-        <location filename="alarmdisplaypage.cpp" line="796"/>
-        <location filename="alarmdisplaypage.cpp" line="838"/>
-        <location filename="alarmdisplaypage.cpp" line="880"/>
-        <location filename="alarmdisplaypage.cpp" line="921"/>
-        <location filename="alarmdisplaypage.cpp" line="961"/>
-        <location filename="alarmdisplaypage.cpp" line="996"/>
-        <location filename="alarmdisplaypage.cpp" line="1032"/>
-        <location filename="alarmdisplaypage.cpp" line="1066"/>
-        <location filename="alarmdisplaypage.cpp" line="1098"/>
-        <location filename="alarmdisplaypage.cpp" line="1135"/>
-        <location filename="alarmdisplaypage.cpp" line="1172"/>
+        <location filename="alarmdisplaypage.cpp" line="404"/>
+        <source>High Work Pressure</source>
+        <translation type="unfinished">높은 작동 압력</translation>
+    </message>
+    <message>
+        <location filename="alarmdisplaypage.cpp" line="513"/>
+        <location filename="alarmdisplaypage.cpp" line="514"/>
+        <location filename="alarmdisplaypage.cpp" line="554"/>
+        <location filename="alarmdisplaypage.cpp" line="592"/>
+        <location filename="alarmdisplaypage.cpp" line="636"/>
+        <location filename="alarmdisplaypage.cpp" line="679"/>
+        <location filename="alarmdisplaypage.cpp" line="720"/>
+        <location filename="alarmdisplaypage.cpp" line="761"/>
+        <location filename="alarmdisplaypage.cpp" line="803"/>
+        <location filename="alarmdisplaypage.cpp" line="845"/>
+        <location filename="alarmdisplaypage.cpp" line="887"/>
+        <location filename="alarmdisplaypage.cpp" line="928"/>
+        <location filename="alarmdisplaypage.cpp" line="968"/>
+        <location filename="alarmdisplaypage.cpp" line="1003"/>
+        <location filename="alarmdisplaypage.cpp" line="1039"/>
+        <location filename="alarmdisplaypage.cpp" line="1073"/>
+        <location filename="alarmdisplaypage.cpp" line="1105"/>
+        <location filename="alarmdisplaypage.cpp" line="1142"/>
+        <location filename="alarmdisplaypage.cpp" line="1179"/>
         <source> </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="511"/>
+        <location filename="alarmdisplaypage.cpp" line="518"/>
         <source>Please replace it in time so as not to affect the performance of the system.</source>
         <translation>시스템의 성능에 영향을 주지 않도록 제 시간에 교체하십시오.</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="512"/>
+        <location filename="alarmdisplaypage.cpp" line="519"/>
         <source>Perform RO Membrane Cl2 Cleaning, Install a cleaning pack and press Clean.</source>
         <translation>RO멤브레인 염소 세척수행시, 클리닝팩 설치 후  Clean 버튼을 누르세요.</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="531"/>
-        <location filename="alarmdisplaypage.cpp" line="575"/>
-        <location filename="alarmdisplaypage.cpp" line="613"/>
-        <location filename="alarmdisplaypage.cpp" line="658"/>
-        <location filename="alarmdisplaypage.cpp" line="700"/>
-        <location filename="alarmdisplaypage.cpp" line="741"/>
-        <location filename="alarmdisplaypage.cpp" line="782"/>
-        <location filename="alarmdisplaypage.cpp" line="825"/>
-        <location filename="alarmdisplaypage.cpp" line="867"/>
-        <location filename="alarmdisplaypage.cpp" line="909"/>
-        <location filename="alarmdisplaypage.cpp" line="949"/>
-        <location filename="alarmdisplaypage.cpp" line="988"/>
-        <location filename="alarmdisplaypage.cpp" line="1019"/>
-        <location filename="alarmdisplaypage.cpp" line="1053"/>
-        <location filename="alarmdisplaypage.cpp" line="1086"/>
-        <location filename="alarmdisplaypage.cpp" line="1121"/>
-        <location filename="alarmdisplaypage.cpp" line="1158"/>
+        <location filename="alarmdisplaypage.cpp" line="538"/>
+        <location filename="alarmdisplaypage.cpp" line="582"/>
+        <location filename="alarmdisplaypage.cpp" line="620"/>
+        <location filename="alarmdisplaypage.cpp" line="665"/>
+        <location filename="alarmdisplaypage.cpp" line="707"/>
+        <location filename="alarmdisplaypage.cpp" line="748"/>
+        <location filename="alarmdisplaypage.cpp" line="789"/>
+        <location filename="alarmdisplaypage.cpp" line="832"/>
+        <location filename="alarmdisplaypage.cpp" line="874"/>
+        <location filename="alarmdisplaypage.cpp" line="916"/>
+        <location filename="alarmdisplaypage.cpp" line="956"/>
+        <location filename="alarmdisplaypage.cpp" line="995"/>
+        <location filename="alarmdisplaypage.cpp" line="1026"/>
+        <location filename="alarmdisplaypage.cpp" line="1060"/>
+        <location filename="alarmdisplaypage.cpp" line="1093"/>
+        <location filename="alarmdisplaypage.cpp" line="1128"/>
+        <location filename="alarmdisplaypage.cpp" line="1165"/>
         <source>Installation Date </source>
         <translation>설치일</translation>
-    </message>
-    <message>
-        <location filename="alarmdisplaypage.cpp" line="547"/>
-        <location filename="alarmdisplaypage.cpp" line="585"/>
-        <location filename="alarmdisplaypage.cpp" line="629"/>
-        <location filename="alarmdisplaypage.cpp" line="672"/>
-        <location filename="alarmdisplaypage.cpp" line="713"/>
-        <location filename="alarmdisplaypage.cpp" line="754"/>
-        <location filename="alarmdisplaypage.cpp" line="796"/>
-        <location filename="alarmdisplaypage.cpp" line="838"/>
-        <location filename="alarmdisplaypage.cpp" line="880"/>
-        <location filename="alarmdisplaypage.cpp" line="921"/>
-        <location filename="alarmdisplaypage.cpp" line="961"/>
-        <location filename="alarmdisplaypage.cpp" line="996"/>
-        <location filename="alarmdisplaypage.cpp" line="1032"/>
-        <location filename="alarmdisplaypage.cpp" line="1066"/>
-        <location filename="alarmdisplaypage.cpp" line="1098"/>
-        <location filename="alarmdisplaypage.cpp" line="1135"/>
-        <location filename="alarmdisplaypage.cpp" line="1172"/>
-        <source>It is </source>
-        <translation>   </translation>
-    </message>
-    <message>
-        <location filename="alarmdisplaypage.cpp" line="547"/>
-        <location filename="alarmdisplaypage.cpp" line="585"/>
-        <location filename="alarmdisplaypage.cpp" line="629"/>
-        <location filename="alarmdisplaypage.cpp" line="672"/>
-        <location filename="alarmdisplaypage.cpp" line="713"/>
-        <location filename="alarmdisplaypage.cpp" line="754"/>
-        <location filename="alarmdisplaypage.cpp" line="796"/>
-        <location filename="alarmdisplaypage.cpp" line="838"/>
-        <location filename="alarmdisplaypage.cpp" line="880"/>
-        <location filename="alarmdisplaypage.cpp" line="921"/>
-        <location filename="alarmdisplaypage.cpp" line="961"/>
-        <location filename="alarmdisplaypage.cpp" line="996"/>
-        <location filename="alarmdisplaypage.cpp" line="1032"/>
-        <location filename="alarmdisplaypage.cpp" line="1066"/>
-        <location filename="alarmdisplaypage.cpp" line="1098"/>
-        <location filename="alarmdisplaypage.cpp" line="1135"/>
-        <location filename="alarmdisplaypage.cpp" line="1172"/>
-        <source>days overdue. </source>
-        <translation>일이 경과되었습니다.  </translation>
-    </message>
-    <message>
-        <location filename="alarmdisplaypage.cpp" line="548"/>
-        <source>Prefilter</source>
-        <translation type="unfinished">전치 필터</translation>
-    </message>
-    <message>
-        <location filename="alarmdisplaypage.cpp" line="551"/>
-        <location filename="alarmdisplaypage.cpp" line="589"/>
-        <location filename="alarmdisplaypage.cpp" line="633"/>
-        <location filename="alarmdisplaypage.cpp" line="675"/>
-        <location filename="alarmdisplaypage.cpp" line="716"/>
-        <location filename="alarmdisplaypage.cpp" line="757"/>
-        <location filename="alarmdisplaypage.cpp" line="799"/>
-        <location filename="alarmdisplaypage.cpp" line="841"/>
-        <location filename="alarmdisplaypage.cpp" line="883"/>
-        <location filename="alarmdisplaypage.cpp" line="924"/>
-        <location filename="alarmdisplaypage.cpp" line="964"/>
-        <location filename="alarmdisplaypage.cpp" line="999"/>
-        <location filename="alarmdisplaypage.cpp" line="1035"/>
-        <location filename="alarmdisplaypage.cpp" line="1069"/>
-        <location filename="alarmdisplaypage.cpp" line="1101"/>
-        <location filename="alarmdisplaypage.cpp" line="1138"/>
-        <location filename="alarmdisplaypage.cpp" line="1175"/>
-        <source>Cat No.:</source>
-        <translation>카타록 번호</translation>
     </message>
     <message>
         <location filename="alarmdisplaypage.cpp" line="554"/>
         <location filename="alarmdisplaypage.cpp" line="592"/>
         <location filename="alarmdisplaypage.cpp" line="636"/>
-        <location filename="alarmdisplaypage.cpp" line="678"/>
-        <location filename="alarmdisplaypage.cpp" line="719"/>
-        <location filename="alarmdisplaypage.cpp" line="760"/>
-        <location filename="alarmdisplaypage.cpp" line="802"/>
-        <location filename="alarmdisplaypage.cpp" line="844"/>
-        <location filename="alarmdisplaypage.cpp" line="886"/>
-        <location filename="alarmdisplaypage.cpp" line="927"/>
-        <location filename="alarmdisplaypage.cpp" line="967"/>
-        <location filename="alarmdisplaypage.cpp" line="1002"/>
+        <location filename="alarmdisplaypage.cpp" line="679"/>
+        <location filename="alarmdisplaypage.cpp" line="720"/>
+        <location filename="alarmdisplaypage.cpp" line="761"/>
+        <location filename="alarmdisplaypage.cpp" line="803"/>
+        <location filename="alarmdisplaypage.cpp" line="845"/>
+        <location filename="alarmdisplaypage.cpp" line="887"/>
+        <location filename="alarmdisplaypage.cpp" line="928"/>
+        <location filename="alarmdisplaypage.cpp" line="968"/>
+        <location filename="alarmdisplaypage.cpp" line="1003"/>
         <location filename="alarmdisplaypage.cpp" line="1039"/>
-        <location filename="alarmdisplaypage.cpp" line="1072"/>
-        <location filename="alarmdisplaypage.cpp" line="1104"/>
-        <location filename="alarmdisplaypage.cpp" line="1141"/>
-        <location filename="alarmdisplaypage.cpp" line="1178"/>
+        <location filename="alarmdisplaypage.cpp" line="1073"/>
+        <location filename="alarmdisplaypage.cpp" line="1105"/>
+        <location filename="alarmdisplaypage.cpp" line="1142"/>
+        <location filename="alarmdisplaypage.cpp" line="1179"/>
+        <source>It is </source>
+        <translation>   </translation>
+    </message>
+    <message>
+        <location filename="alarmdisplaypage.cpp" line="554"/>
+        <location filename="alarmdisplaypage.cpp" line="592"/>
+        <location filename="alarmdisplaypage.cpp" line="636"/>
+        <location filename="alarmdisplaypage.cpp" line="679"/>
+        <location filename="alarmdisplaypage.cpp" line="720"/>
+        <location filename="alarmdisplaypage.cpp" line="761"/>
+        <location filename="alarmdisplaypage.cpp" line="803"/>
+        <location filename="alarmdisplaypage.cpp" line="845"/>
+        <location filename="alarmdisplaypage.cpp" line="887"/>
+        <location filename="alarmdisplaypage.cpp" line="928"/>
+        <location filename="alarmdisplaypage.cpp" line="968"/>
+        <location filename="alarmdisplaypage.cpp" line="1003"/>
+        <location filename="alarmdisplaypage.cpp" line="1039"/>
+        <location filename="alarmdisplaypage.cpp" line="1073"/>
+        <location filename="alarmdisplaypage.cpp" line="1105"/>
+        <location filename="alarmdisplaypage.cpp" line="1142"/>
+        <location filename="alarmdisplaypage.cpp" line="1179"/>
+        <source>days overdue. </source>
+        <translation>일이 경과되었습니다.  </translation>
+    </message>
+    <message>
+        <location filename="alarmdisplaypage.cpp" line="555"/>
+        <source>Prefilter</source>
+        <translation type="unfinished">전치 필터</translation>
+    </message>
+    <message>
+        <location filename="alarmdisplaypage.cpp" line="558"/>
+        <location filename="alarmdisplaypage.cpp" line="596"/>
+        <location filename="alarmdisplaypage.cpp" line="640"/>
+        <location filename="alarmdisplaypage.cpp" line="682"/>
+        <location filename="alarmdisplaypage.cpp" line="723"/>
+        <location filename="alarmdisplaypage.cpp" line="764"/>
+        <location filename="alarmdisplaypage.cpp" line="806"/>
+        <location filename="alarmdisplaypage.cpp" line="848"/>
+        <location filename="alarmdisplaypage.cpp" line="890"/>
+        <location filename="alarmdisplaypage.cpp" line="931"/>
+        <location filename="alarmdisplaypage.cpp" line="971"/>
+        <location filename="alarmdisplaypage.cpp" line="1006"/>
+        <location filename="alarmdisplaypage.cpp" line="1042"/>
+        <location filename="alarmdisplaypage.cpp" line="1076"/>
+        <location filename="alarmdisplaypage.cpp" line="1108"/>
+        <location filename="alarmdisplaypage.cpp" line="1145"/>
+        <location filename="alarmdisplaypage.cpp" line="1182"/>
+        <source>Cat No.:</source>
+        <translation>카타록 번호</translation>
+    </message>
+    <message>
+        <location filename="alarmdisplaypage.cpp" line="561"/>
+        <location filename="alarmdisplaypage.cpp" line="599"/>
+        <location filename="alarmdisplaypage.cpp" line="643"/>
+        <location filename="alarmdisplaypage.cpp" line="685"/>
+        <location filename="alarmdisplaypage.cpp" line="726"/>
+        <location filename="alarmdisplaypage.cpp" line="767"/>
+        <location filename="alarmdisplaypage.cpp" line="809"/>
+        <location filename="alarmdisplaypage.cpp" line="851"/>
+        <location filename="alarmdisplaypage.cpp" line="893"/>
+        <location filename="alarmdisplaypage.cpp" line="934"/>
+        <location filename="alarmdisplaypage.cpp" line="974"/>
+        <location filename="alarmdisplaypage.cpp" line="1009"/>
+        <location filename="alarmdisplaypage.cpp" line="1046"/>
+        <location filename="alarmdisplaypage.cpp" line="1079"/>
+        <location filename="alarmdisplaypage.cpp" line="1111"/>
+        <location filename="alarmdisplaypage.cpp" line="1148"/>
+        <location filename="alarmdisplaypage.cpp" line="1185"/>
         <source>Lot No.:</source>
         <translation>롯트 번호</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="586"/>
+        <location filename="alarmdisplaypage.cpp" line="593"/>
         <source>AC Pack</source>
         <translation>AC Pack </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="630"/>
+        <location filename="alarmdisplaypage.cpp" line="637"/>
         <source>T Pack</source>
         <translation>T Pack </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="683"/>
+        <location filename="alarmdisplaypage.cpp" line="690"/>
         <source>P PACK</source>
         <translation>P Pack </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="723"/>
-        <location filename="alarmdisplaypage.cpp" line="807"/>
+        <location filename="alarmdisplaypage.cpp" line="730"/>
+        <location filename="alarmdisplaypage.cpp" line="814"/>
         <source>U PACK</source>
         <translation>U Pack </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="764"/>
+        <location filename="alarmdisplaypage.cpp" line="771"/>
         <source>AT PACK</source>
         <translation>AT Pack </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="849"/>
+        <location filename="alarmdisplaypage.cpp" line="856"/>
         <source>254 UV</source>
         <translation>254 UV</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="891"/>
+        <location filename="alarmdisplaypage.cpp" line="898"/>
         <source>185 UV</source>
         <translation>185 UV</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="932"/>
+        <location filename="alarmdisplaypage.cpp" line="939"/>
         <source>TANK UV</source>
         <translation>탱크 UV</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="972"/>
+        <location filename="alarmdisplaypage.cpp" line="979"/>
         <source>TUBE UV</source>
         <translation>루프 UV</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1007"/>
+        <location filename="alarmdisplaypage.cpp" line="1014"/>
         <source>TOC UV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1044"/>
+        <location filename="alarmdisplaypage.cpp" line="1051"/>
         <source>Tank Vent Filter</source>
         <translation>탱크 벤트 필터</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1077"/>
+        <location filename="alarmdisplaypage.cpp" line="1084"/>
         <source>Final Fliter B</source>
         <translation>파이널 필터 B</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1109"/>
+        <location filename="alarmdisplaypage.cpp" line="1116"/>
         <source>Final Fliter A</source>
         <translation>파이널 필터 A</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1146"/>
+        <location filename="alarmdisplaypage.cpp" line="1153"/>
         <source>Loop Filter</source>
         <translation>루프 필터</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1183"/>
+        <location filename="alarmdisplaypage.cpp" line="1190"/>
         <source>Loop DI</source>
         <translation>루프 DI</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1193"/>
+        <location filename="alarmdisplaypage.cpp" line="1200"/>
         <source>Last Maintenance </source>
         <translation>마지막 작업 날짜</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1221"/>
+        <location filename="alarmdisplaypage.cpp" line="1228"/>
         <source>RO Chlorine</source>
         <translation>RO Cl 클리닝</translation>
     </message>
@@ -718,6 +723,11 @@
         <location filename="alarmsetpage.cpp" line="349"/>
         <source>Leak or Tank Overflow</source>
         <translation>누설 또는 탱크 오버 플로우</translation>
+    </message>
+    <message>
+        <location filename="alarmsetpage.cpp" line="355"/>
+        <source>High Work Pressure</source>
+        <translation type="unfinished">높은 작동 압력</translation>
     </message>
 </context>
 <context>
@@ -2145,47 +2155,43 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="40"/>
-        <location filename="ex_managersetpage.cpp" line="47"/>
         <location filename="ex_managersetpage.cpp" line="96"/>
-        <location filename="ex_managersetpage.cpp" line="589"/>
         <source>Flowrate</source>
         <oldsource>Flow Rate</oldsource>
         <translation>분주량</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="41"/>
-        <location filename="ex_managersetpage.cpp" line="718"/>
+        <location filename="ex_managersetpage.cpp" line="40"/>
+        <location filename="ex_managersetpage.cpp" line="724"/>
         <source>Time &amp; Date</source>
         <oldsource>Time</oldsource>
         <translation>날짜 &amp; 시간</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="42"/>
-        <location filename="ex_managersetpage.cpp" line="754"/>
+        <location filename="ex_managersetpage.cpp" line="41"/>
+        <location filename="ex_managersetpage.cpp" line="760"/>
         <source>Language</source>
         <translation>언어</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="43"/>
-        <location filename="ex_managersetpage.cpp" line="821"/>
+        <location filename="ex_managersetpage.cpp" line="42"/>
+        <location filename="ex_managersetpage.cpp" line="827"/>
         <source>Audio</source>
         <translation>소리</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="44"/>
-        <location filename="ex_managersetpage.cpp" line="921"/>
+        <location filename="ex_managersetpage.cpp" line="43"/>
+        <location filename="ex_managersetpage.cpp" line="927"/>
         <source>Units</source>
         <translation>단위</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="45"/>
-        <location filename="ex_managersetpage.cpp" line="1004"/>
+        <location filename="ex_managersetpage.cpp" line="44"/>
+        <location filename="ex_managersetpage.cpp" line="1010"/>
         <source>LCD</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="49"/>
         <location filename="ex_managersetpage.cpp" line="78"/>
         <location filename="ex_managersetpage.cpp" line="89"/>
         <location filename="ex_managersetpage.cpp" line="126"/>
@@ -2220,49 +2226,49 @@
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="69"/>
-        <location filename="ex_managersetpage.cpp" line="736"/>
+        <location filename="ex_managersetpage.cpp" line="742"/>
         <source>English</source>
         <translation>영어</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="70"/>
-        <location filename="ex_managersetpage.cpp" line="737"/>
+        <location filename="ex_managersetpage.cpp" line="743"/>
         <source>Chinese</source>
         <translation>중국어</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="71"/>
-        <location filename="ex_managersetpage.cpp" line="738"/>
+        <location filename="ex_managersetpage.cpp" line="744"/>
         <source>Spanish</source>
         <translation>스페인어</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="72"/>
-        <location filename="ex_managersetpage.cpp" line="739"/>
+        <location filename="ex_managersetpage.cpp" line="745"/>
         <source>French</source>
         <translation>프랑스어</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="73"/>
-        <location filename="ex_managersetpage.cpp" line="740"/>
+        <location filename="ex_managersetpage.cpp" line="746"/>
         <source>German</source>
         <translation>독일어</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="74"/>
-        <location filename="ex_managersetpage.cpp" line="741"/>
+        <location filename="ex_managersetpage.cpp" line="747"/>
         <source>Italian</source>
         <translation>이탈리아어</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="75"/>
-        <location filename="ex_managersetpage.cpp" line="742"/>
+        <location filename="ex_managersetpage.cpp" line="748"/>
         <source>Korean</source>
         <translation>한국어</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="76"/>
-        <location filename="ex_managersetpage.cpp" line="743"/>
+        <location filename="ex_managersetpage.cpp" line="749"/>
         <source>Russian</source>
         <translation>러시아어</translation>
     </message>
@@ -3315,21 +3321,21 @@
         <location filename="mainpage.cpp" line="685"/>
         <location filename="mainpage.cpp" line="693"/>
         <location filename="mainpage.cpp" line="749"/>
-        <location filename="mainpage.cpp" line="1524"/>
-        <location filename="mainpage.cpp" line="1939"/>
+        <location filename="mainpage.cpp" line="1545"/>
+        <location filename="mainpage.cpp" line="1960"/>
         <source>omg</source>
         <translation>MΩ.cm</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="750"/>
-        <location filename="mainpage.cpp" line="1319"/>
-        <location filename="mainpage.cpp" line="1328"/>
-        <location filename="mainpage.cpp" line="1341"/>
-        <location filename="mainpage.cpp" line="1355"/>
-        <location filename="mainpage.cpp" line="1571"/>
-        <location filename="mainpage.cpp" line="1587"/>
-        <location filename="mainpage.cpp" line="1604"/>
-        <location filename="mainpage.cpp" line="1620"/>
+        <location filename="mainpage.cpp" line="1340"/>
+        <location filename="mainpage.cpp" line="1349"/>
+        <location filename="mainpage.cpp" line="1362"/>
+        <location filename="mainpage.cpp" line="1376"/>
+        <location filename="mainpage.cpp" line="1592"/>
+        <location filename="mainpage.cpp" line="1608"/>
+        <location filename="mainpage.cpp" line="1625"/>
+        <location filename="mainpage.cpp" line="1641"/>
         <source>us</source>
         <translation>μS/cm</translation>
     </message>
@@ -3356,68 +3362,68 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1203"/>
+        <location filename="mainpage.cpp" line="1224"/>
         <source>&gt;200</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1272"/>
+        <location filename="mainpage.cpp" line="1293"/>
         <source>Warning</source>
         <translation>경고</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1273"/>
+        <location filename="mainpage.cpp" line="1294"/>
         <source>Please stop dispensing water before switching system into Standby mode</source>
         <translation>시스템을 대기모드로 전환하기 전에 물 분주를 멈춰주시기 바랍니다</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2068"/>
-        <location filename="mainpage.cpp" line="2120"/>
+        <location filename="mainpage.cpp" line="2089"/>
+        <location filename="mainpage.cpp" line="2141"/>
         <source>Tank Full</source>
         <translation>탱크 풀</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2080"/>
+        <location filename="mainpage.cpp" line="2101"/>
         <source>Flush</source>
         <translation>플러쉬 </translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2089"/>
+        <location filename="mainpage.cpp" line="2110"/>
         <source>Rinsing</source>
         <translation>린싱 </translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2096"/>
+        <location filename="mainpage.cpp" line="2117"/>
         <source>Filling</source>
         <translation>필링</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2130"/>
-        <location filename="mainpage.cpp" line="2133"/>
+        <location filename="mainpage.cpp" line="2151"/>
+        <location filename="mainpage.cpp" line="2154"/>
         <source>Pressure Relief</source>
         <translation>압력 감쇄 </translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2137"/>
-        <location filename="mainpage.cpp" line="2140"/>
+        <location filename="mainpage.cpp" line="2158"/>
+        <location filename="mainpage.cpp" line="2161"/>
         <source>Standby</source>
         <translation>대기중</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2154"/>
-        <location filename="mainpage.cpp" line="2170"/>
+        <location filename="mainpage.cpp" line="2175"/>
+        <location filename="mainpage.cpp" line="2191"/>
         <source>Dispense</source>
         <translation> 분주 </translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2158"/>
-        <location filename="mainpage.cpp" line="2183"/>
+        <location filename="mainpage.cpp" line="2179"/>
+        <location filename="mainpage.cpp" line="2204"/>
         <source>Recirculation</source>
         <translation>순환 </translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2162"/>
-        <location filename="mainpage.cpp" line="2176"/>
+        <location filename="mainpage.cpp" line="2183"/>
+        <location filename="mainpage.cpp" line="2197"/>
         <source>Ready</source>
         <translation>준비중</translation>
     </message>
@@ -3430,97 +3436,97 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="5208"/>
+        <location filename="mainwindow.cpp" line="5242"/>
         <source>Yellow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7589"/>
+        <location filename="mainwindow.cpp" line="7623"/>
         <source>No Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7592"/>
+        <location filename="mainwindow.cpp" line="7626"/>
         <source>No AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7595"/>
+        <location filename="mainwindow.cpp" line="7629"/>
         <source>No P-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7598"/>
+        <location filename="mainwindow.cpp" line="7632"/>
         <source>No U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7601"/>
+        <location filename="mainwindow.cpp" line="7635"/>
         <source>No AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7604"/>
+        <location filename="mainwindow.cpp" line="7638"/>
         <source>No H-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7607"/>
+        <location filename="mainwindow.cpp" line="7641"/>
         <source>False Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7610"/>
+        <location filename="mainwindow.cpp" line="7644"/>
         <source>False AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7613"/>
+        <location filename="mainwindow.cpp" line="7647"/>
         <source>False P-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7616"/>
+        <location filename="mainwindow.cpp" line="7650"/>
         <source>False U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7619"/>
+        <location filename="mainwindow.cpp" line="7653"/>
         <source>False AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7622"/>
+        <location filename="mainwindow.cpp" line="7656"/>
         <source>False H-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7999"/>
+        <location filename="mainwindow.cpp" line="8033"/>
         <source>Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8000"/>
+        <location filename="mainwindow.cpp" line="8034"/>
         <source>Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8001"/>
+        <location filename="mainwindow.cpp" line="8035"/>
         <source>User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8002"/>
+        <location filename="mainwindow.cpp" line="8036"/>
         <source>GetW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8003"/>
+        <location filename="mainwindow.cpp" line="8037"/>
         <source>PWater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8004"/>
+        <location filename="mainwindow.cpp" line="8038"/>
         <source>Log</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4398,253 +4404,260 @@
 <context>
     <name>SetPoint</name>
     <message>
-        <location filename="setpoint.cpp" line="373"/>
+        <location filename="setpoint.cpp" line="390"/>
         <source>Alarm S.P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="391"/>
+        <location filename="setpoint.cpp" line="408"/>
         <source>Tap Pressure</source>
         <translation>원수압력</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="392"/>
-        <location filename="setpoint.cpp" line="398"/>
-        <location filename="setpoint.cpp" line="417"/>
-        <location filename="setpoint.cpp" line="442"/>
-        <location filename="setpoint.cpp" line="466"/>
-        <location filename="setpoint.cpp" line="487"/>
-        <location filename="setpoint.cpp" line="493"/>
-        <location filename="setpoint.cpp" line="590"/>
+        <location filename="setpoint.cpp" line="409"/>
+        <location filename="setpoint.cpp" line="415"/>
+        <location filename="setpoint.cpp" line="434"/>
+        <location filename="setpoint.cpp" line="459"/>
+        <location filename="setpoint.cpp" line="483"/>
+        <location filename="setpoint.cpp" line="504"/>
+        <location filename="setpoint.cpp" line="510"/>
+        <location filename="setpoint.cpp" line="607"/>
         <source>Lower Limit</source>
         <translation>하한선</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="393"/>
+        <location filename="setpoint.cpp" line="410"/>
+        <location filename="setpoint.cpp" line="630"/>
         <source>bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="397"/>
+        <location filename="setpoint.cpp" line="414"/>
         <source>RO Rejection</source>
         <translation>RO 제거율</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="399"/>
-        <location filename="setpoint.cpp" line="426"/>
-        <location filename="setpoint.cpp" line="427"/>
-        <location filename="setpoint.cpp" line="451"/>
-        <location filename="setpoint.cpp" line="452"/>
+        <location filename="setpoint.cpp" line="416"/>
+        <location filename="setpoint.cpp" line="443"/>
+        <location filename="setpoint.cpp" line="444"/>
+        <location filename="setpoint.cpp" line="468"/>
+        <location filename="setpoint.cpp" line="469"/>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="405"/>
+        <location filename="setpoint.cpp" line="422"/>
         <source>UP Feed Cond.</source>
         <translation>UP 공급 전도도</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="409"/>
+        <location filename="setpoint.cpp" line="426"/>
         <source>RO Cond.</source>
         <translation>RO 전도도</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="411"/>
-        <location filename="setpoint.cpp" line="472"/>
+        <location filename="setpoint.cpp" line="428"/>
+        <location filename="setpoint.cpp" line="489"/>
         <source>Upper Limit</source>
         <translation>상한선</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="412"/>
-        <location filename="setpoint.cpp" line="473"/>
+        <location filename="setpoint.cpp" line="429"/>
+        <location filename="setpoint.cpp" line="490"/>
         <source>us/cm</source>
         <translation>μS/cm</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="416"/>
+        <location filename="setpoint.cpp" line="433"/>
         <source>EDI Resis.</source>
         <translation>EDI 저항값</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="418"/>
-        <location filename="setpoint.cpp" line="443"/>
+        <location filename="setpoint.cpp" line="435"/>
         <location filename="setpoint.cpp" line="460"/>
-        <location filename="setpoint.cpp" line="461"/>
-        <location filename="setpoint.cpp" line="467"/>
-        <location filename="setpoint.cpp" line="494"/>
-        <location filename="setpoint.cpp" line="591"/>
-        <location filename="setpoint.cpp" line="599"/>
-        <location filename="setpoint.cpp" line="607"/>
+        <location filename="setpoint.cpp" line="477"/>
+        <location filename="setpoint.cpp" line="478"/>
+        <location filename="setpoint.cpp" line="484"/>
+        <location filename="setpoint.cpp" line="511"/>
+        <location filename="setpoint.cpp" line="608"/>
+        <location filename="setpoint.cpp" line="616"/>
+        <location filename="setpoint.cpp" line="624"/>
         <source>omg</source>
         <translation>MΩ.cm</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="423"/>
+        <location filename="setpoint.cpp" line="440"/>
         <source>Pure Tank Level</source>
         <translation>순수 탱크 수위</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="424"/>
-        <location filename="setpoint.cpp" line="449"/>
+        <location filename="setpoint.cpp" line="441"/>
+        <location filename="setpoint.cpp" line="466"/>
         <source>Empty</source>
         <translation>최소량</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="425"/>
-        <location filename="setpoint.cpp" line="450"/>
+        <location filename="setpoint.cpp" line="442"/>
+        <location filename="setpoint.cpp" line="467"/>
         <source>Refill</source>
         <translation>재생산</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="439"/>
+        <location filename="setpoint.cpp" line="456"/>
         <source>UP Resis.</source>
         <translation>UP 저항값</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="465"/>
+        <location filename="setpoint.cpp" line="482"/>
         <source>HP Resis.</source>
         <translation>HP 저항값</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="448"/>
+        <location filename="setpoint.cpp" line="465"/>
         <source>Feed Tank Level</source>
         <translation>원수 탱크 수위</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="457"/>
+        <location filename="setpoint.cpp" line="474"/>
         <source>Tank Resis.</source>
         <translation>탱크내 물 저항값</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="458"/>
-        <location filename="setpoint.cpp" line="479"/>
-        <location filename="setpoint.cpp" line="502"/>
-        <location filename="setpoint.cpp" line="520"/>
-        <location filename="setpoint.cpp" line="531"/>
-        <location filename="setpoint.cpp" line="558"/>
-        <location filename="setpoint.cpp" line="569"/>
-        <location filename="setpoint.cpp" line="580"/>
+        <location filename="setpoint.cpp" line="475"/>
+        <location filename="setpoint.cpp" line="496"/>
+        <location filename="setpoint.cpp" line="519"/>
+        <location filename="setpoint.cpp" line="537"/>
+        <location filename="setpoint.cpp" line="548"/>
+        <location filename="setpoint.cpp" line="575"/>
+        <location filename="setpoint.cpp" line="586"/>
+        <location filename="setpoint.cpp" line="597"/>
+        <location filename="setpoint.cpp" line="629"/>
         <source>Max.</source>
         <translation>최대</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="459"/>
-        <location filename="setpoint.cpp" line="480"/>
-        <location filename="setpoint.cpp" line="503"/>
-        <location filename="setpoint.cpp" line="521"/>
-        <location filename="setpoint.cpp" line="532"/>
-        <location filename="setpoint.cpp" line="559"/>
-        <location filename="setpoint.cpp" line="570"/>
-        <location filename="setpoint.cpp" line="581"/>
+        <location filename="setpoint.cpp" line="476"/>
+        <location filename="setpoint.cpp" line="497"/>
+        <location filename="setpoint.cpp" line="520"/>
+        <location filename="setpoint.cpp" line="538"/>
+        <location filename="setpoint.cpp" line="549"/>
+        <location filename="setpoint.cpp" line="576"/>
+        <location filename="setpoint.cpp" line="587"/>
+        <location filename="setpoint.cpp" line="598"/>
         <source>Min.</source>
         <translation>최저</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="471"/>
+        <location filename="setpoint.cpp" line="488"/>
         <source>Tap Cond.</source>
         <translation>원수 전도도</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="478"/>
+        <location filename="setpoint.cpp" line="495"/>
         <source>RO Product Rate</source>
         <translation>RO수 전도도</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="481"/>
-        <location filename="setpoint.cpp" line="482"/>
-        <location filename="setpoint.cpp" line="488"/>
+        <location filename="setpoint.cpp" line="498"/>
+        <location filename="setpoint.cpp" line="499"/>
+        <location filename="setpoint.cpp" line="505"/>
         <source>L/h</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="486"/>
+        <location filename="setpoint.cpp" line="503"/>
         <source>RO Reject Rate</source>
         <translation>RO 배수량</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="492"/>
+        <location filename="setpoint.cpp" line="509"/>
         <source>Loop Resis.</source>
         <translation>순환 라인수 저항값</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="501"/>
+        <location filename="setpoint.cpp" line="518"/>
         <source>Tap Temp.</source>
         <translation>원수 온도</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="504"/>
-        <location filename="setpoint.cpp" line="505"/>
+        <location filename="setpoint.cpp" line="521"/>
         <location filename="setpoint.cpp" line="522"/>
-        <location filename="setpoint.cpp" line="523"/>
-        <location filename="setpoint.cpp" line="533"/>
-        <location filename="setpoint.cpp" line="534"/>
-        <location filename="setpoint.cpp" line="560"/>
-        <location filename="setpoint.cpp" line="561"/>
-        <location filename="setpoint.cpp" line="571"/>
-        <location filename="setpoint.cpp" line="572"/>
-        <location filename="setpoint.cpp" line="582"/>
-        <location filename="setpoint.cpp" line="583"/>
+        <location filename="setpoint.cpp" line="539"/>
+        <location filename="setpoint.cpp" line="540"/>
+        <location filename="setpoint.cpp" line="550"/>
+        <location filename="setpoint.cpp" line="551"/>
+        <location filename="setpoint.cpp" line="577"/>
+        <location filename="setpoint.cpp" line="578"/>
+        <location filename="setpoint.cpp" line="588"/>
+        <location filename="setpoint.cpp" line="589"/>
+        <location filename="setpoint.cpp" line="599"/>
+        <location filename="setpoint.cpp" line="600"/>
         <source>Celsius</source>
         <translation>℃</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="514"/>
+        <location filename="setpoint.cpp" line="531"/>
         <source>UP Feed Temp.</source>
         <translation>UP 공급 온도</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="518"/>
+        <location filename="setpoint.cpp" line="535"/>
         <source>RO Temp.</source>
         <translation>RO 온도</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="530"/>
+        <location filename="setpoint.cpp" line="547"/>
         <source>EDI Temp.</source>
         <translation>EDI 온도</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="549"/>
+        <location filename="setpoint.cpp" line="566"/>
         <source>UP Temp.</source>
         <translation>UP 온도</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="555"/>
+        <location filename="setpoint.cpp" line="572"/>
         <source>HP Temp.</source>
         <translation>HP 온도</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="568"/>
+        <location filename="setpoint.cpp" line="585"/>
         <source>Loop Temp.</source>
         <translation>순환라인수 온도</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="579"/>
+        <location filename="setpoint.cpp" line="596"/>
         <source>TOC Temp.</source>
         <translation>TOC 온도</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="589"/>
+        <location filename="setpoint.cpp" line="606"/>
         <source>TOC Feed Resis.</source>
         <translation>TOC 공급 저항값</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="597"/>
+        <location filename="setpoint.cpp" line="614"/>
         <source>Cir Water Quality</source>
         <translation>순환수 저항값</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="598"/>
-        <location filename="setpoint.cpp" line="606"/>
+        <location filename="setpoint.cpp" line="615"/>
+        <location filename="setpoint.cpp" line="623"/>
         <source>Lower threshold</source>
         <translation>최소 한계값</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="605"/>
+        <location filename="setpoint.cpp" line="622"/>
         <source>HP Produce Water Quality</source>
         <translation type="unfinished">HP 저항값</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="612"/>
+        <location filename="setpoint.cpp" line="628"/>
+        <source>Work Pressure</source>
+        <translation>근무 압력</translation>
+    </message>
+    <message>
+        <location filename="setpoint.cpp" line="635"/>
         <source>Save</source>
         <translation>저장</translation>
     </message>

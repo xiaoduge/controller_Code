@@ -397,6 +397,13 @@ void AlarmDisplayPage::buildTranslation()
              m_astrPartAlarm[iIdx] = tr("Leak or Tank Overflow");
              aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx;
              break;
+         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE):
+             /*
+             work pressure
+             */
+             m_astrPartAlarm[iIdx] = tr("High Work Pressure");
+             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx;
+             break;
          }
       }
 }

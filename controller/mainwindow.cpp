@@ -189,7 +189,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.4.190107_debug");
+QString strSoftwareVersion = QString("0.1.4.190108_debug");
 
 MainWindow *gpMainWnd;
 
@@ -417,7 +417,8 @@ QString gastrAlarmName[] =
     "High TOC Sensor Temperature",
     "Low TOC Sensor Temperature",
     "TOC Feed Water Resistivity<SP",
-    "Leakage or Tank Overflow"
+    "Leakage or Tank Overflow",
+    "High Work Pressure"
 };
 
 void MainRetriveDefaultState(int iMachineType)//
@@ -533,14 +534,26 @@ void MainRetriveMachineParam(int iMachineType,DISP_MACHINE_PARAM_STRU  &Param)
     /* retrive parameter from configuration */
     int iLoop;
 
+    float workPressure = 8.0;
+    switch(iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        workPressure = 12.0;
+        break;
+    default:
+        break;
+    }
+
     float defautlValue[] = {MM_DEFALUT_SP1,MM_DEFALUT_SP2,MM_DEFALUT_SP3,MM_DEFALUT_SP4,MM_DEFALUT_SP5,
                             MM_DEFALUT_SP6,MM_DEFALUT_SP7,MM_DEFALUT_SP8,MM_DEFALUT_SP9,MM_DEFALUT_SP10,
                             MM_DEFALUT_SP11,MM_DEFALUT_SP12,MM_DEFALUT_SP13,MM_DEFALUT_SP14,MM_DEFALUT_SP15,
                             MM_DEFALUT_SP16,MM_DEFALUT_SP17,MM_DEFALUT_SP18,MM_DEFALUT_SP19,MM_DEFALUT_SP20,
                             MM_DEFALUT_SP21,MM_DEFALUT_SP22,MM_DEFALUT_SP23,MM_DEFALUT_SP24,MM_DEFALUT_SP25,
                             MM_DEFALUT_SP26,MM_DEFALUT_SP27,MM_DEFALUT_SP28,MM_DEFALUT_SP29,MM_DEFALUT_SP30,
-                            MM_DEFALUT_SP31,MM_DEFALUT_SP32};
-
+                            MM_DEFALUT_SP31,MM_DEFALUT_SP32, workPressure};
 
     QString strCfgName = gaMachineType[iMachineType].strName;
 
@@ -1007,10 +1020,12 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
             QString strV1 = "/K" + strV;
             fValue = config->value(strV1,iDefault).toFloat(); // max 200mm
             Param.pc[iLoop].fk = fValue;
+            ex_global_Cali.pc[iLoop].fk  = Param.pc[iLoop].fk;
 
             QString strV2 = "/C" + strV;
             fValue = config->value(strV2, 1).toFloat(); // max 200mm
             Param.pc[iLoop].fc = fValue;
+            ex_global_Cali.pc[iLoop].fc  = Param.pc[iLoop].fc;
 
             QString strV3 = "/V" + strV;
             fValue = config->value(strV3, 1).toFloat(); // max 200mm
@@ -1058,9 +1073,13 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[6].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[7].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[8].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[8].fc;
         ex_global_Cali.pc[DISP_PC_COFF_S2 ].fk = Param.pc[9].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S2].fc = Param.pc[9].fc;
         ex_global_Cali.pc[DISP_PC_COFF_S3].fk = Param.pc[10].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S3].fc = Param.pc[10].fc;
         ex_global_Cali.pc[DISP_PC_COFF_S4].fk = Param.pc[11].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S4].fc = Param.pc[11].fc;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[12].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk = Param.pc[13].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[14].fk;
@@ -1102,9 +1121,13 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[6].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[7].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[8].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[8].fc;
         ex_global_Cali.pc[DISP_PC_COFF_S2 ].fk = Param.pc[9].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S2 ].fc = Param.pc[9].fc;
         ex_global_Cali.pc[DISP_PC_COFF_S3].fk = Param.pc[10].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S3].fc = Param.pc[10].fc;
         ex_global_Cali.pc[DISP_PC_COFF_S4].fk = Param.pc[11].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S4].fc = Param.pc[11].fc;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[12].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk = Param.pc[13].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[14].fk;
@@ -1145,6 +1168,10 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_S2 ].fk = Param.pc[5].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S3].fk = Param.pc[6].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S4].fk = Param.pc[7].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[4].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S2 ].fc = Param.pc[5].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S3].fc = Param.pc[6].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S4].fc = Param.pc[7].fc;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[8].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk = Param.pc[9].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[10].fk;
@@ -1188,6 +1215,7 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[8].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[9].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[10].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[10].fc;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[11].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[12].fk;
         break;
@@ -1230,6 +1258,7 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[8].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[9].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[10].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[10].fc;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[11].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[12].fk;
         break;
@@ -1269,6 +1298,7 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[6].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[7].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[8].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[8].fc;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[9].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[10].fk;
         break;
@@ -1307,6 +1337,7 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk = Param.pc[4].fk;
         ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk = Param.pc[5].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[6].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[6].fc;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[7].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[8].fk;
         break;
@@ -1345,6 +1376,7 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[4].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[5].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[6].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[6].fc;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[7].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[8].fk;
         break;
@@ -1368,7 +1400,7 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
             Param.pc[iLoop].fk = fValue;
 
             QString strV2 = "/C" + strV;
-            fValue = config->value(strV2, 1).toFloat(); // max 200mm
+            fValue = config->value(strV2, 0).toFloat(); // max 200mm
             Param.pc[iLoop].fc = fValue;
 
             QString strV3 = "/V" + strV;
@@ -1385,6 +1417,7 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[6].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[7].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[8].fk;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[8].fc;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[9].fk;
         break;
     }
@@ -3916,7 +3949,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
                                                          |(1 << DISP_ALARM_PART1_HIGHER_TUBE_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_LOWER_TUBE_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_LOWER_SOURCE_WATER_TEMPERATURE)));
+                                                         |(1 << DISP_ALARM_PART1_LOWER_SOURCE_WATER_TEMPERATURE)
+                                                         |(1 << DISP_ALARM_PART1_HIGH_WORK_PRESSURE)));
             
             m_bC1Regulator = true;
             break;

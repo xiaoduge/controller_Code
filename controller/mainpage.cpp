@@ -1154,11 +1154,32 @@ void  MainPage::SetSpeed(int iType,int index)
     int iActive;
     int iTmp;
     int iRet;
+    float fv; // 2019.1.7
 
     
     DispGetRPumpSwitchState(APP_EXE_C2_NO - APP_EXE_C1_NO,&iActive);
+
+    //2019.1.7
+    if(10 <= index)
+    {
+        fv = 24.0;
+    }
+    else if(index == 9)
+    {
+        fv = 18.0;
+    }
+    else if(index == 8)
+    {
+        fv = 15.0;
+    }
+    else
+    {
+        fv = index + 6.0;
+    }
+    iTmp = DispConvertVoltage2RPumpSpeed(fv);
+    //end
     
-    iTmp = DispConvertVoltage2RPumpSpeed(((24.0 - 5.0)*index)/PUMP_SPEED_NUM + 5);
+    //iTmp = DispConvertVoltage2RPumpSpeed(((24.0 - 5.0)*index)/PUMP_SPEED_NUM + 5);
     
     if (iActive) iTmp = 0XFF00 | iTmp;
     

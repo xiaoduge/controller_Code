@@ -204,7 +204,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
     case MACHINE_RO:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        aParameters[iIdx].type  = PARAMETER_CALIBRATION_FORMAT1;
+        aParameters[iIdx].type  = PARAMETER_CALIBRATION_FORMAT2;
         aParameters[iIdx].id    = DISP_PC_COFF_S1;          
         iIdx++;
         break;
@@ -216,7 +216,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        aParameters[iIdx].type  = PARAMETER_CALIBRATION_FORMAT1;
+        aParameters[iIdx].type  = PARAMETER_CALIBRATION_FORMAT2;
         aParameters[iIdx].id    = DISP_PC_COFF_S2;          
         iIdx++;
         break;
@@ -228,7 +228,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        aParameters[iIdx].type = PARAMETER_CALIBRATION_FORMAT1;
+        aParameters[iIdx].type = PARAMETER_CALIBRATION_FORMAT2;
         aParameters[iIdx].id   = DISP_PC_COFF_S3;           
         iIdx++;
         break;
@@ -240,7 +240,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        aParameters[iIdx].type  = PARAMETER_CALIBRATION_FORMAT1;
+        aParameters[iIdx].type  = PARAMETER_CALIBRATION_FORMAT2;
         aParameters[iIdx].id    = DISP_PC_COFF_S4;          
         iIdx++;
         break;
@@ -615,7 +615,8 @@ void ParameterCalibrationPage::update()
         {
             m_aParameterlistItem[iIdx]->setP1(QString::number(gGlobalParam.Caliparam.pc[iIdx].fk,'f',3));
         }
-        m_aParameterlistItem[iIdx]->setP2(QString::number(gGlobalParam.Caliparam.pc[iIdx].fc,'f',3));
+//        m_aParameterlistItem[iIdx]->setP2(QString::number(gGlobalParam.Caliparam.pc[iIdx].fc,'f',3));
+        m_aParameterlistItem[iIdx]->setP2(QString::number(gGlobalParam.Caliparam.pc[iIdx].fc));
         m_aParameterlistItem[iIdx]->setP3(QString::number(gGlobalParam.Caliparam.pc[iIdx].fv,'f',3));
     }
     

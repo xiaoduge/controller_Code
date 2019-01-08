@@ -228,6 +228,7 @@ typedef struct
 #define MM_DEFALUT_SP30 15.0//        TOC进水水质下限15.0MΩ.cm   
 #define MM_DEFALUT_SP31 1.0//        HP循环(水箱循环)水质下限15.0MΩ.cm   
 #define MM_DEFALUT_SP32 0.0//        HP产水水质下限15.0MΩ.cm   
+#define MM_DEFALUT_SP33 12.0//       bar 
 
 typedef enum
 {
@@ -263,6 +264,7 @@ typedef enum
     MACHINE_PARAM_SP30,//        TOC进水水质下限15.0MΩ.cm   
     MACHINE_PARAM_SP31,//        水箱循环水质下限   
     MACHINE_PARAM_SP32,//        HP 产水水质下限
+    MACHINE_PARAM_SP33,//        Working pressure limit
     MACHINE_PARAM_SP_NUM,
 
 }MACHINE_PARAM_ENUM;
@@ -439,6 +441,7 @@ typedef enum
     DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE,
     DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE,
     DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW, //Leak or Tank Overflow
+    DISP_ALARM_PART1_HIGH_WORK_PRESSURE,  //  max work pressure
     DISP_ALARM_PART1_NUM,
 }DISP_ALARM_PART1_ENUM;
 

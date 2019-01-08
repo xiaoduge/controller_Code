@@ -18,8 +18,6 @@ class QPushButton;
 class QLabel;
 
 
-const int MAXPAGE = 8;
-
 class Ex_UserManualPage : public CSubPage
 {
     Q_OBJECT
@@ -44,6 +42,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *e);
 
 private:
+    void initMaxPageNum();
     void initPixNameList();
 
     void buildTitles();
@@ -62,6 +61,8 @@ private:
     QPixmap m_pixmap;
 
     QStringList m_strList;
+
+    int m_maxPageNum[MACHINE_NUM];
 
 
 private slots:

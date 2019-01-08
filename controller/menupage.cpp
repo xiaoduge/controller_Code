@@ -244,14 +244,13 @@ void MenuPage::Create_subPage()
 //            m_pSubPages[index] = new SysMsgPage(this , tmpWidget , m_wndMain);
             m_pSubPages[index] = new Ex_SysMsgPage(this , tmpWidget , m_wndMain);
             break;
-            /*
+
         case MENU_BTN_USER_MANU:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[index] = new Ex_UserManualPage(this , tmpWidget , m_wndMain);
             break;
-            */
         }
     }
 
@@ -279,7 +278,6 @@ void MenuPage::buildTranslation()
     m_pBtns[MENU_BTN_CONSUMPATION_MATERAIL_SATUS]->setTip(tr("Consumables Status"),BITMAPBUTTON_TIP_BOTTOMCENTER);
     m_pBtns[MENU_BTN_SYSTEM_MONITOR]->setTip(tr("System Status"),BITMAPBUTTON_TIP_BOTTOMCENTER);
     m_pBtns[MENU_BTN_SYSTEM_NOTIFICATION_ALARM]->setTip(tr("Alarm & Alerts"),BITMAPBUTTON_TIP_BOTTOMCENTER);
-//    m_pBtns[MENU_BTN_HISTORY_RECORD]->setTip(tr("History"),BITMAPBUTTON_TIP_BOTTOMCENTER);
     m_pBtns[MENU_BTN_USER_MANU]->setTip(tr("User Manual"),BITMAPBUTTON_TIP_BOTTOMCENTER);
     m_pBtns[MENU_BTN_SYSTEM_INFORMATION]->setTip(tr("Information"),BITMAPBUTTON_TIP_BOTTOMCENTER);
 

@@ -118,13 +118,14 @@
         <file alias="blueWorld.png">pics/image/blueWorld.png</file>
     </qresource>
     <qresource prefix="/userManual">
-        <file alias="1.jpg">pics/Manual/1.jpg</file>
-        <file alias="2.jpg">pics/Manual/2.jpg</file>
-        <file alias="3.jpg">pics/Manual/3.jpg</file>
-        <file alias="4.jpg">pics/Manual/4.jpg</file>
-        <file alias="5.jpg">pics/Manual/5.jpg</file>
-        <file alias="6.jpg">pics/Manual/6.jpg</file>
-        <file alias="7.jpg">pics/Manual/7.jpg</file>
-        <file alias="8.jpg">pics/Manual/8.jpg</file>
+        <file alias="G_E_1.png">pics/Manual/Genie_G_EN/G_E_1.png</file>
+        <file alias="G_E_2.png">pics/Manual/Genie_G_EN/G_E_2.png</file>
+        <file alias="G_E_3.png">pics/Manual/Genie_G_EN/G_E_3.png</file>
+        <file alias="G_E_4.png">pics/Manual/Genie_G_EN/G_E_4.png</file>
+        <file alias="G_E_5.png">pics/Manual/Genie_G_EN/G_E_5.png</file>
+        <file alias="G_E_6.png">pics/Manual/Genie_G_EN/G_E_6.png</file>
+        <file alias="G_E_7.png">pics/Manual/Genie_G_EN/G_E_7.png</file>
+        <file alias="G_E_8.png">pics/Manual/Genie_G_EN/G_E_8.png</file>
+        <file alias="Genie_0.png">pics/Manual/Genie_0.png</file>
     </qresource>
 </RCC>
