@@ -22,7 +22,7 @@ int Ex_UserInfo::checkUserInfo(const QString &userName, const QString &passWord)
     }
 
     //用户管理权限，
-    if((userName.compare("Manager", Qt::CaseInsensitive) == 0) && (passWord.compare("860860") == 0))
+    if((userName.compare("Manager", Qt::CaseInsensitive) == 0) && (passWord.compare("111111") == 0))
     {
         return 2;
     }

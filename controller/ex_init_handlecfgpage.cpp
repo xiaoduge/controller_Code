@@ -61,7 +61,7 @@ void Ex_Init_HandleCfgpage::buildTranslation()
     m_pBtnQueryHandler->setText(tr("Query"));
     m_pBtnCfgHandler->setText(tr("Config."));
     m_pBtnResetHandler->setText(tr("Reset"));
-    m_pBtnRmvHandler->setText(tr("Clear"));
+//    m_pBtnRmvHandler->setText(tr("Clear"));
     m_pBtnSaveHandler->setText(tr("Save"));
 
     m_pTblWidget->setTabText(0,tr("Dispenser"));
@@ -96,6 +96,11 @@ void Ex_Init_HandleCfgpage::setBackColor()
     m_widget->setPalette(pal);
 }
 
+void Ex_Init_HandleCfgpage::finishSave()
+{
+    ToastDlg::makeToast(tr("Successfully saved"));
+}
+
 
 void Ex_Init_HandleCfgpage::on_CmbIndexChange_trx_type(int index)
 {
@@ -120,17 +125,7 @@ void Ex_Init_HandleCfgpage::on_pushButton_FinishBtn()
     ex_gGlobalParam.Ex_Default = 1;
     MainSaveDefaultState(gGlobalParam.iMachineType);
     MainUpdateGlobalParam();
-#if 0
-    QMessageBox::StandardButton rb = QMessageBox::question(NULL, tr("NOTIFY"), tr("Whether to restart the device immediately?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
-    if(rb != QMessageBox::Yes)
-    {
-        this->show(false);
-        emit exInitFinished();
-        return;
-    }
-#endif
-    //do
     Restart();
 }
 
@@ -193,7 +188,7 @@ void Ex_Init_HandleCfgpage::initUi()
     m_pBtnQueryHandler  = new QPushButton;
     m_pBtnCfgHandler   = new QPushButton;
     m_pBtnResetHandler   = new QPushButton;
-    m_pBtnRmvHandler   = new QPushButton;
+//    m_pBtnRmvHandler   = new QPushButton;
     m_pBtnSaveHandler   = new QPushButton;
 
     pcfg2TilHBox->addWidget(m_plbHandlerSN);
@@ -210,7 +205,7 @@ void Ex_Init_HandleCfgpage::initUi()
     pcfg2HBox->addWidget(m_pBtnQueryHandler);
     pcfg2HBox->addWidget(m_pBtnCfgHandler);
     pcfg2HBox->addWidget(m_pBtnResetHandler);
-    pcfg2HBox->addWidget(m_pBtnRmvHandler);
+//    pcfg2HBox->addWidget(m_pBtnRmvHandler);
     pcfg2HBox->addWidget(m_pBtnSaveHandler);
 
     m_pExFinishBtn = new QPushButton; //
@@ -243,7 +238,7 @@ void Ex_Init_HandleCfgpage::initUi()
     connect(m_pBtnQueryHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_QueryHandler()));
     connect(m_pBtnCfgHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_CfgHandler()));
     connect(m_pBtnResetHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_ResetHandler()));
-    connect(m_pBtnRmvHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_RmvHandler()));
+//    connect(m_pBtnRmvHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_RmvHandler()));
     connect(m_pBtnSaveHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_SaveHandler()));
     connect(m_pExFinishBtn, SIGNAL(clicked()), this, SLOT(on_pushButton_FinishBtn()));
     connect(m_pbackBtn, SIGNAL(clicked()), this, SLOT(on_pushButton_BackBtn()));
@@ -259,6 +254,7 @@ void Ex_Init_HandleCfgpage::on_pushButton_QueryHandler()
 {
     char buf[64];
 
+    on_pushButton_RmvHandler();  //20190108
 
     switch (m_pcombTrxType->currentIndex())
     {
@@ -312,7 +308,7 @@ void Ex_Init_HandleCfgpage::on_pushButton_QueryHandler()
         break;
 
     }
-
+    m_wndMain->prepareKeyStroke();
 }
 
 
@@ -460,6 +456,9 @@ void Ex_Init_HandleCfgpage::on_pushButton_CfgHandler()
             }
         }
     }
+    m_wndMain->prepareKeyStroke();
+    on_pushButton_RmvHandler();  //20190108
+    on_pushButton_QueryHandler();  //20190108
 }
 
 void Ex_Init_HandleCfgpage::on_pushButton_ResetHandler()
@@ -520,7 +519,9 @@ void Ex_Init_HandleCfgpage::on_pushButton_ResetHandler()
         break;
 
     }
-
+    m_wndMain->prepareKeyStroke();
+    on_pushButton_RmvHandler();  //20190108
+    on_pushButton_QueryHandler();  //20190108
 }
 
 
@@ -546,7 +547,7 @@ void Ex_Init_HandleCfgpage::on_pushButton_RmvHandler()
         delete pDevice;
 
     }
-
+    m_wndMain->prepareKeyStroke();
     //m_pListWgtHandler->reset();
 
 }
@@ -616,9 +617,12 @@ void Ex_Init_HandleCfgpage::on_pushButton_SaveHandler()
         }
 
         m_wndMain->updHandler(iMask,hdl);
+        m_wndMain->prepareKeyStroke();
+        finishSave();
     }
     else
     {
+        m_wndMain->prepareKeyStroke();
         //QMessageBox::StandardButton rb = QMessageBox::question(NULL, tr("Handler"), tr("One and only one default handler shoud be configured ?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
         QMessageBox::about(NULL, tr("About"), tr("One and only one default handler per category shoud be configured !"));
     }
@@ -703,47 +707,8 @@ void Ex_Init_HandleCfgpage::on_checkBox_changeState(int state)
 
 void Ex_Init_HandleCfgpage::update()
 {
-   /* clear all */
-   int iLoop;
-   QListWidgetItem *pItem;
-   HandlerItem *pDevice;
-   int iCount = m_pListWgtHandler->count();
-
-   for (iLoop = 0; iLoop < iCount; iLoop++)
-   {
-       //pItem = m_pListWgtHandler->item(iLoop);
-
-       pItem = m_pListWgtHandler->takeItem(0);
-
-       pDevice = (HandlerItem *)m_pListWgtHandler->itemWidget(pItem);
-
-       m_pListWgtHandler->removeItemWidget(pItem);
-
-       delete pItem;
-
-       delete pDevice;
-
-   }
-
-    /* show handset in db */
-    DB_HANDLER_STRU * dbH = m_wndMain->getHandler();
-    int imask = m_wndMain->getHandlerMask();
-
-    if(dbH)
-    {
-        for(iLoop = 0 ; iLoop < APP_HAND_SET_MAX_NUMBER ; iLoop++)
-        {
-            if (imask & (1 << iLoop))
-            {
-                QString strSn = QString::fromAscii((char *)dbH[iLoop].name, APP_SN_LENGTH);
-                QString strAddress = QString::number(dbH[iLoop].address);
-                addHandler(0,strSn,strAddress);
-
-                qDebug() <<"MMMMMMMMMMMMMMMMMMMMMMMM"<< iLoop << strSn << strAddress;
-            }
-        }
-    }
-
+    on_pushButton_RmvHandler();
+    on_pushButton_QueryHandler();
 }
 
 void Ex_Init_HandleCfgpage::on_pushButton_DeleteHandler()

@@ -32,9 +32,11 @@ signals:
     void exInitFinished();
     void handlercfgSwitchBtnClicked(int);
 private:
-
     void buildTitles();
     void setBackColor();
+    void finishSave();
+
+private:
 
     QListWidgetItem * searchHandler(const QString& info,int iIndex);
     QString getHandler(int iDevIdx,int iInfoIdx);
@@ -45,7 +47,7 @@ private:
     QPushButton *m_pBtnQueryHandler;
     QPushButton *m_pBtnCfgHandler;
     QPushButton *m_pBtnResetHandler;
-    QPushButton *m_pBtnRmvHandler;
+//    QPushButton *m_pBtnRmvHandler;
     QPushButton *m_pBtnSaveHandler;
     QListWidget *m_pListWgtHandler;
     QComboBox   *m_pcombTrxType;

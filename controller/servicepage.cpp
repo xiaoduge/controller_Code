@@ -373,15 +373,7 @@ void ServicePage::on_btn_clicked(int index)
         switch(index)
         {
         case SERVICE_BTN_INSTALL:
-        /*
-        case SET_BTN_SYSTEM_TIME:
-        case SET_BTN_SYSTEM_LANGUAGE:
-        case SET_BTN_SYSTEM_SOUND:
-        case SET_BTN_SYSTEM_UNIT:
-        case SET_BTN_SYSTEM_LCD:
-        */
         case SET_BTN_HISTORY_RECORD:
-        case SET_BTN_RFID_CONFIG:
         case SET_BTN_SYSTEM_ALLOCATION:
         case SERVICE_BTN_STERILIZE:
         case SERVICE_BTN_MANAGERCONFIG:
@@ -431,6 +423,7 @@ void ServicePage::on_btn_clicked(int index)
             break;
         }
 
+        case SET_BTN_RFID_CONFIG:
         case SET_BTN_USER_CFG:
         {
             QDateTime endTime = QDateTime::currentDateTime();

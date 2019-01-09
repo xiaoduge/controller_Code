@@ -1781,9 +1781,13 @@
         <translation>Resetear</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="64"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="101"/>
+        <source>Successfully saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Clear</source>
-        <translation>Limpiar</translation>
+        <translation type="obsolete">Limpiar</translation>
     </message>
     <message>
         <location filename="ex_init_handlecfgpage.cpp" line="65"/>
@@ -1796,42 +1800,32 @@
         <translation>Dispositivo</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="124"/>
-        <source>NOTIFY</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="124"/>
-        <source>Whether to restart the device immediately?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="186"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="181"/>
         <source>CAN</source>
         <translation>CAN</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="187"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="182"/>
         <source>Zigbee</source>
         <translation>Inhalámbrico</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="236"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="231"/>
         <source>HANDLER</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="321"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="317"/>
         <source>Be sure to save the handsets&apos; configuration when collected all responses!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="623"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="627"/>
         <source>About</source>
         <translation type="unfinished">Sobre</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="623"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="627"/>
         <source>One and only one default handler per category shoud be configured !</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2739,43 +2733,43 @@
     </message>
     <message>
         <location filename="ex_usercfgpage.cpp" line="54"/>
-        <location filename="ex_usercfgpage.cpp" line="244"/>
+        <location filename="ex_usercfgpage.cpp" line="245"/>
         <source>Delete</source>
         <translation>Eliminar</translation>
     </message>
     <message>
         <location filename="ex_usercfgpage.cpp" line="57"/>
-        <location filename="ex_usercfgpage.cpp" line="173"/>
+        <location filename="ex_usercfgpage.cpp" line="174"/>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="172"/>
+        <location filename="ex_usercfgpage.cpp" line="173"/>
         <source>ID</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="174"/>
+        <location filename="ex_usercfgpage.cpp" line="175"/>
         <source>Password</source>
         <translation>Contraseña</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="175"/>
+        <location filename="ex_usercfgpage.cpp" line="176"/>
         <source>Permission</source>
         <translation>Permiso</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="218"/>
+        <location filename="ex_usercfgpage.cpp" line="219"/>
         <source>tableModel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="219"/>
+        <location filename="ex_usercfgpage.cpp" line="220"/>
         <source>Database Error:%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="244"/>
+        <location filename="ex_usercfgpage.cpp" line="245"/>
         <source>Are you sure delete current row?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3445,92 +3439,92 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7623"/>
+        <location filename="mainwindow.cpp" line="7618"/>
         <source>No Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7626"/>
+        <location filename="mainwindow.cpp" line="7621"/>
         <source>No AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7629"/>
+        <location filename="mainwindow.cpp" line="7624"/>
         <source>No P-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7632"/>
+        <location filename="mainwindow.cpp" line="7627"/>
         <source>No U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7635"/>
+        <location filename="mainwindow.cpp" line="7630"/>
         <source>No AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7638"/>
+        <location filename="mainwindow.cpp" line="7633"/>
         <source>No H-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7641"/>
+        <location filename="mainwindow.cpp" line="7636"/>
         <source>False Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7644"/>
+        <location filename="mainwindow.cpp" line="7639"/>
         <source>False AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7647"/>
+        <location filename="mainwindow.cpp" line="7642"/>
         <source>False P-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7650"/>
+        <location filename="mainwindow.cpp" line="7645"/>
         <source>False U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7653"/>
+        <location filename="mainwindow.cpp" line="7648"/>
         <source>False AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7656"/>
+        <location filename="mainwindow.cpp" line="7651"/>
         <source>False H-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8033"/>
+        <location filename="mainwindow.cpp" line="8028"/>
         <source>Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8034"/>
+        <location filename="mainwindow.cpp" line="8029"/>
         <source>Alarm</source>
         <translation type="unfinished">Alarmas</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8035"/>
+        <location filename="mainwindow.cpp" line="8030"/>
         <source>User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8036"/>
+        <location filename="mainwindow.cpp" line="8031"/>
         <source>GetW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8037"/>
+        <location filename="mainwindow.cpp" line="8032"/>
         <source>PWater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8038"/>
+        <location filename="mainwindow.cpp" line="8033"/>
         <source>Log</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3690,37 +3684,37 @@
 <context>
     <name>MenuPage</name>
     <message>
-        <location filename="menupage.cpp" line="269"/>
+        <location filename="menupage.cpp" line="268"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="menupage.cpp" line="278"/>
+        <location filename="menupage.cpp" line="277"/>
         <source>Water Quality</source>
         <translation>Calidad de Agua</translation>
     </message>
     <message>
-        <location filename="menupage.cpp" line="279"/>
+        <location filename="menupage.cpp" line="278"/>
         <source>Consumables Status</source>
         <translation>Estado Consumibles</translation>
     </message>
     <message>
-        <location filename="menupage.cpp" line="280"/>
+        <location filename="menupage.cpp" line="279"/>
         <source>System Status</source>
         <translation>Estado del Sistema</translation>
     </message>
     <message>
-        <location filename="menupage.cpp" line="281"/>
+        <location filename="menupage.cpp" line="280"/>
         <source>Alarm &amp; Alerts</source>
         <translation>Alarmas &amp; Alertas</translation>
     </message>
     <message>
-        <location filename="menupage.cpp" line="283"/>
+        <location filename="menupage.cpp" line="281"/>
         <source>User Manual</source>
         <translation>Manual de Usuario</translation>
     </message>
     <message>
-        <location filename="menupage.cpp" line="284"/>
+        <location filename="menupage.cpp" line="282"/>
         <source>Information</source>
         <translation>Información</translation>
     </message>
@@ -4256,7 +4250,6 @@
         <translation>Resetear</translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="73"/>
         <location filename="setdevicepage.cpp" line="87"/>
         <source>Clear</source>
         <translation>Borrar</translation>
@@ -4284,13 +4277,13 @@
     </message>
     <message>
         <location filename="setdevicepage.cpp" line="93"/>
-        <location filename="setdevicepage.cpp" line="323"/>
+        <location filename="setdevicepage.cpp" line="327"/>
         <source>Zigbee Upd</source>
         <translation>Actualización Zigbee</translation>
     </message>
     <message>
         <location filename="setdevicepage.cpp" line="95"/>
-        <location filename="setdevicepage.cpp" line="206"/>
+        <location filename="setdevicepage.cpp" line="210"/>
         <source>Device</source>
         <translation>Dispositivo</translation>
     </message>
@@ -4306,47 +4299,52 @@
     </message>
     <message>
         <location filename="setdevicepage.cpp" line="98"/>
-        <location filename="setdevicepage.cpp" line="329"/>
+        <location filename="setdevicepage.cpp" line="333"/>
         <source>Maintenance</source>
         <translation>Mantenimiento</translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="229"/>
+        <location filename="setdevicepage.cpp" line="131"/>
+        <source>Successfully saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setdevicepage.cpp" line="233"/>
         <source>CAN</source>
         <translation type="unfinished">CAN</translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="230"/>
+        <location filename="setdevicepage.cpp" line="234"/>
         <source>Zigbee</source>
         <translation>Inalámbrico</translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="265"/>
+        <location filename="setdevicepage.cpp" line="269"/>
         <source>HANDLER</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="310"/>
+        <location filename="setdevicepage.cpp" line="314"/>
         <source>RFReader</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="493"/>
+        <location filename="setdevicepage.cpp" line="501"/>
         <source>Be sure to save the handsets&apos; configuration when collected all responses!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="787"/>
+        <location filename="setdevicepage.cpp" line="803"/>
         <source>About</source>
         <translation type="unfinished">Sobre</translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="787"/>
+        <location filename="setdevicepage.cpp" line="803"/>
         <source>One and only one default handler per category shoud be configured !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="1046"/>
+        <location filename="setdevicepage.cpp" line="1064"/>
         <source>FAIL</source>
         <translation type="unfinished"></translation>
     </message>

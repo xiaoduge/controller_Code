@@ -94,6 +94,7 @@ void Ex_UserCfgPage::createControl()
     m_pPageHeaderLB->setStyleSheet(qssHeaderLB);
 
     m_pTableView = new QTableView;
+    m_pTableView->setEditTriggers(QAbstractItemView::SelectedClicked);
 
     m_pNameLB = new QLabel;
     m_pNameLineEdit = new QLineEdit;

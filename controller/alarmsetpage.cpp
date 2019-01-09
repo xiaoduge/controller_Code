@@ -910,7 +910,6 @@ void AlarmSetPage::save()
             {
                 Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE);
             }
-           // iIdx++;
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW):
             if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
@@ -921,6 +920,7 @@ void AlarmSetPage::save()
             {
                 Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW);
             }
+            break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE):
             if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
             {
@@ -930,7 +930,6 @@ void AlarmSetPage::save()
             {
                 Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_HIGH_WORK_PRESSURE);
             }
-            break;
             iIdx++;
             break;
 

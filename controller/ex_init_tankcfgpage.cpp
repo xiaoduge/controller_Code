@@ -131,28 +131,28 @@ void Ex_Init_Tankcfgpage::createControl()
 
     m_cmbPWTankVolume->hide();
 
-    rectTmp.setX(230+20);
+    rectTmp.setX(250+20);
     rectTmp.setWidth(60);
     m_lePWTankHeight = new QLineEdit(tmpWidget);
     m_lePWTankHeight->setGeometry(rectTmp);
     m_lePWTankHeight->setValidator(new QRegExpValidator(double_rx,this));
     m_lePWTankHeight->hide();
 
-    rectTmp.setX(295+20);
+    rectTmp.setX(315+20);
     rectTmp.setWidth(20);
     m_lbPWHUnit = new QLabel(tmpWidget);
     m_lbPWHUnit->setGeometry(rectTmp);
     m_lbPWHUnit->setText("M");
     m_lbPWHUnit->hide();
 
-    rectTmp.setX(325+20);
+    rectTmp.setX(345+20);
     rectTmp.setWidth(60);
     m_lePWTankCap = new QLineEdit(tmpWidget);
     m_lePWTankCap->setGeometry(rectTmp);
     m_lePWTankCap->setValidator(new QIntValidator(0, 9999, this));
     m_lePWTankCap->hide();
 
-    rectTmp.setX(390+20);
+    rectTmp.setX(410+20);
     rectTmp.setWidth(20);
     m_lbPWCUnit = new QLabel(tmpWidget);
     m_lbPWCUnit->setGeometry(rectTmp);
@@ -204,28 +204,28 @@ void Ex_Init_Tankcfgpage::createControl()
 
     m_cmbSWTankVolume->hide();
 
-    rectTmp.setX(230+20);
+    rectTmp.setX(250+20);
     rectTmp.setWidth(60);
     m_leSWTankHeight = new QLineEdit(tmpWidget);
     m_leSWTankHeight->setGeometry(rectTmp);
     m_leSWTankHeight->setValidator(new QRegExpValidator(double_rx,this));
     m_leSWTankHeight->hide();
 
-    rectTmp.setX(295+20);
+    rectTmp.setX(315+20);
     rectTmp.setWidth(20);
     m_lbSWHUnit = new QLabel(tmpWidget);
     m_lbSWHUnit->setGeometry(rectTmp);
     m_lbSWHUnit->setText("M");
     m_lbSWHUnit->hide();
 
-    rectTmp.setX(325+20);
+    rectTmp.setX(345+20);
     rectTmp.setWidth(60);
     m_leSWTankCap = new QLineEdit(tmpWidget);
     m_leSWTankCap->setGeometry(rectTmp);
     m_leSWTankCap->setValidator(new QIntValidator(0, 9999, this));
     m_leSWTankCap->hide();
 
-    rectTmp.setX(390+20);
+    rectTmp.setX(410+20);
     rectTmp.setWidth(20);
     m_lbSWCUnit = new QLabel(tmpWidget);
     m_lbSWCUnit->setGeometry(rectTmp);

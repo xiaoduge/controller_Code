@@ -349,10 +349,10 @@ public:
     void cfgHandlerRsp();
 
 private:
-
     void buildTitles();
     void setBackColor();
-
+    void finishSave();
+private:
     QListWidgetItem * searchDeviceByAddress(const QString& info);
     QListWidgetItem * searchDeviceByElecId(const QString& info);
     QListWidgetItem * searchDevice(const QString& info,int iIndex);
@@ -382,7 +382,7 @@ private:
     QPushButton *m_pBtnQueryHandler;
     QPushButton *m_pBtnCfgHandler;
     QPushButton *m_pBtnResetHandler;
-    QPushButton *m_pBtnRmvHandler;
+//    QPushButton *m_pBtnRmvHandler;
     QPushButton *m_pBtnSaveHandler;
     QListWidget *m_pListWgtHandler;
     QComboBox   *m_pcombTrxType;

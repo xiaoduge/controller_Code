@@ -1991,10 +1991,9 @@
         <translation>重置手柄</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="64"/>
         <source>Clear</source>
         <oldsource>Clear Screen</oldsource>
-        <translation>清屏</translation>
+        <translation type="obsolete">清屏</translation>
     </message>
     <message>
         <location filename="ex_init_handlecfgpage.cpp" line="65"/>
@@ -2003,14 +2002,18 @@
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="236"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="101"/>
+        <source>Successfully saved</source>
+        <translation type="unfinished">保存成功</translation>
+    </message>
+    <message>
+        <location filename="ex_init_handlecfgpage.cpp" line="231"/>
         <source>HANDLER</source>
         <translation>手柄</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="124"/>
         <source>NOTIFY</source>
-        <translation>提示</translation>
+        <translation type="obsolete">提示</translation>
     </message>
     <message>
         <location filename="ex_init_handlecfgpage.cpp" line="62"/>
@@ -2023,32 +2026,31 @@
         <translation>手柄</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="124"/>
         <source>Whether to restart the device immediately?</source>
-        <translation>是否立刻重启设备?</translation>
+        <translation type="obsolete">是否立刻重启设备?</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="186"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="181"/>
         <source>CAN</source>
         <translation>CAN</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="187"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="182"/>
         <source>Zigbee</source>
         <translation>Zigbee</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="321"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="317"/>
         <source>Be sure to save the handsets&apos; configuration when collected all responses!</source>
         <translation>请保存手柄信息!</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="623"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="627"/>
         <source>About</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="623"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="627"/>
         <source>One and only one default handler per category shoud be configured !</source>
         <translation>每种类型只能配置一个默认手柄!</translation>
     </message>
@@ -3046,43 +3048,43 @@
     </message>
     <message>
         <location filename="ex_usercfgpage.cpp" line="54"/>
-        <location filename="ex_usercfgpage.cpp" line="244"/>
+        <location filename="ex_usercfgpage.cpp" line="245"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
         <location filename="ex_usercfgpage.cpp" line="57"/>
-        <location filename="ex_usercfgpage.cpp" line="173"/>
+        <location filename="ex_usercfgpage.cpp" line="174"/>
         <source>Name</source>
         <translation>用户名</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="172"/>
+        <location filename="ex_usercfgpage.cpp" line="173"/>
         <source>ID</source>
         <translation>编号</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="174"/>
+        <location filename="ex_usercfgpage.cpp" line="175"/>
         <source>Password</source>
         <translation>密码</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="175"/>
+        <location filename="ex_usercfgpage.cpp" line="176"/>
         <source>Permission</source>
         <translation>权限</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="218"/>
+        <location filename="ex_usercfgpage.cpp" line="219"/>
         <source>tableModel</source>
         <translation>表</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="219"/>
+        <location filename="ex_usercfgpage.cpp" line="220"/>
         <source>Database Error:%1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="244"/>
+        <location filename="ex_usercfgpage.cpp" line="245"/>
         <source>Are you sure delete current row?</source>
         <translation>确定删除当前行吗？</translation>
     </message>
@@ -3776,92 +3778,92 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7623"/>
+        <location filename="mainwindow.cpp" line="7618"/>
         <source>No Pre-PACK detected!</source>
         <translation>预处理柱脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7626"/>
+        <location filename="mainwindow.cpp" line="7621"/>
         <source>No AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7629"/>
+        <location filename="mainwindow.cpp" line="7624"/>
         <source>No P-PACK detected!</source>
         <translation>P Pack脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7632"/>
+        <location filename="mainwindow.cpp" line="7627"/>
         <source>No U-PACK detected!</source>
         <translation>U Pack脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7635"/>
+        <location filename="mainwindow.cpp" line="7630"/>
         <source>No AT-PACK detected!</source>
         <translation>AT Pack脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7638"/>
+        <location filename="mainwindow.cpp" line="7633"/>
         <source>No H-PACK detected!</source>
         <translation>H Pack脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7641"/>
+        <location filename="mainwindow.cpp" line="7636"/>
         <source>False Pre-PACK detected!</source>
         <translation type="unfinished">预处理柱脱落错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7644"/>
+        <location filename="mainwindow.cpp" line="7639"/>
         <source>False AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7647"/>
+        <location filename="mainwindow.cpp" line="7642"/>
         <source>False P-PACK detected!</source>
         <translation type="unfinished">P-Pack错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7650"/>
+        <location filename="mainwindow.cpp" line="7645"/>
         <source>False U-PACK detected!</source>
         <translation type="unfinished">U-Pack错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7653"/>
+        <location filename="mainwindow.cpp" line="7648"/>
         <source>False AT-PACK detected!</source>
         <translation type="unfinished">AT-Pack错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7656"/>
+        <location filename="mainwindow.cpp" line="7651"/>
         <source>False H-PACK detected!</source>
         <translation type="unfinished">H-Pack错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8033"/>
+        <location filename="mainwindow.cpp" line="8028"/>
         <source>Water</source>
         <translation type="unfinished">水质信息</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8034"/>
+        <location filename="mainwindow.cpp" line="8029"/>
         <source>Alarm</source>
         <translation>警报</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8035"/>
+        <location filename="mainwindow.cpp" line="8030"/>
         <source>User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8036"/>
+        <location filename="mainwindow.cpp" line="8031"/>
         <source>GetW</source>
         <translation type="unfinished">取水信息</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8037"/>
+        <location filename="mainwindow.cpp" line="8032"/>
         <source>PWater</source>
         <translation type="unfinished">产水信息</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8038"/>
+        <location filename="mainwindow.cpp" line="8033"/>
         <source>Log</source>
         <translation type="unfinished">日志</translation>
     </message>
@@ -4038,17 +4040,17 @@
 <context>
     <name>MenuPage</name>
     <message>
-        <location filename="menupage.cpp" line="269"/>
+        <location filename="menupage.cpp" line="268"/>
         <source>Menu</source>
         <translation>菜单</translation>
     </message>
     <message>
-        <location filename="menupage.cpp" line="278"/>
+        <location filename="menupage.cpp" line="277"/>
         <source>Water Quality</source>
         <translation>水质信息</translation>
     </message>
     <message>
-        <location filename="menupage.cpp" line="279"/>
+        <location filename="menupage.cpp" line="278"/>
         <source>Consumables Status</source>
         <oldsource>Material Status</oldsource>
         <translation>耗材状态</translation>
@@ -4058,13 +4060,13 @@
         <translation type="obsolete">耗材状态</translation>
     </message>
     <message>
-        <location filename="menupage.cpp" line="281"/>
+        <location filename="menupage.cpp" line="280"/>
         <source>Alarm &amp; Alerts</source>
         <oldsource>Alarms &amp; Alerts</oldsource>
         <translation type="unfinished">提醒和警报</translation>
     </message>
     <message>
-        <location filename="menupage.cpp" line="280"/>
+        <location filename="menupage.cpp" line="279"/>
         <source>System Status</source>
         <oldsource>System Monitor</oldsource>
         <translation type="unfinished">系统监控</translation>
@@ -4078,13 +4080,13 @@
         <translation type="obsolete">历史信息</translation>
     </message>
     <message>
-        <location filename="menupage.cpp" line="283"/>
+        <location filename="menupage.cpp" line="281"/>
         <source>User Manual</source>
         <oldsource>User Manu</oldsource>
         <translation>用户手册</translation>
     </message>
     <message>
-        <location filename="menupage.cpp" line="284"/>
+        <location filename="menupage.cpp" line="282"/>
         <source>Information</source>
         <oldsource>System Info</oldsource>
         <translation>系统信息</translation>
@@ -4649,14 +4651,13 @@
         <translation>配置手柄</translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="73"/>
         <location filename="setdevicepage.cpp" line="87"/>
         <source>Clear</source>
         <translation>清屏</translation>
     </message>
     <message>
         <location filename="setdevicepage.cpp" line="95"/>
-        <location filename="setdevicepage.cpp" line="206"/>
+        <location filename="setdevicepage.cpp" line="210"/>
         <source>Device</source>
         <translation>设备</translation>
     </message>
@@ -4671,12 +4672,12 @@
         <translation>操作</translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="229"/>
+        <location filename="setdevicepage.cpp" line="233"/>
         <source>CAN</source>
         <translation>CAN</translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="230"/>
+        <location filename="setdevicepage.cpp" line="234"/>
         <source>Zigbee</source>
         <translation>Zigbee</translation>
     </message>
@@ -4698,7 +4699,7 @@
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="265"/>
+        <location filename="setdevicepage.cpp" line="269"/>
         <source>HANDLER</source>
         <translation>手柄</translation>
     </message>
@@ -4722,13 +4723,13 @@
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="310"/>
+        <location filename="setdevicepage.cpp" line="314"/>
         <source>RFReader</source>
         <translation>读卡器</translation>
     </message>
     <message>
         <location filename="setdevicepage.cpp" line="93"/>
-        <location filename="setdevicepage.cpp" line="323"/>
+        <location filename="setdevicepage.cpp" line="327"/>
         <source>Zigbee Upd</source>
         <translation>Zigbee升级</translation>
     </message>
@@ -4744,27 +4745,32 @@
     </message>
     <message>
         <location filename="setdevicepage.cpp" line="98"/>
-        <location filename="setdevicepage.cpp" line="329"/>
+        <location filename="setdevicepage.cpp" line="333"/>
         <source>Maintenance</source>
         <translation>维护</translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="493"/>
+        <location filename="setdevicepage.cpp" line="131"/>
+        <source>Successfully saved</source>
+        <translation type="unfinished">保存成功</translation>
+    </message>
+    <message>
+        <location filename="setdevicepage.cpp" line="501"/>
         <source>Be sure to save the handsets&apos; configuration when collected all responses!</source>
         <translation>请保存手柄信息!</translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="787"/>
+        <location filename="setdevicepage.cpp" line="803"/>
         <source>About</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="787"/>
+        <location filename="setdevicepage.cpp" line="803"/>
         <source>One and only one default handler per category shoud be configured !</source>
         <translation>每种类型只能配置一个默认手柄!</translation>
     </message>
     <message>
-        <location filename="setdevicepage.cpp" line="1046"/>
+        <location filename="setdevicepage.cpp" line="1064"/>
         <source>FAIL</source>
         <translation>失败</translation>
     </message>

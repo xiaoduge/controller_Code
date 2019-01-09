@@ -189,7 +189,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.4.190108_debug");
+QString strSoftwareVersion = QString("0.1.4.190108_release");
 
 MainWindow *gpMainWnd;
 
@@ -5480,20 +5480,17 @@ void MainWindow::AfDataMsg(IAP_NOTIFY_STRU *pIapNotify)
             {
             case APP_PACKET_HO_ADR_SET:
                 {
-//                    SetDevicePage *page = getDeviceDlg();
-//                    if (page) page->cfgHandlerRsp();
-
+                    /*
                     if (ex_gGlobalParam.Ex_Default == 0)
                     {
                         Ex_Init_HandleCfgpage* ex_Page = getExInitPage();
-                        if(ex_Page)
-                            ex_Page->cfgHandlerRsp();
+                        if(ex_Page) ex_Page->cfgHandlerRsp();
                     }
                     else
                     {
                         SetDevicePage *page = getDeviceDlg();
                         if (page) page->cfgHandlerRsp();
-                    }
+                    }*/
                 }                
                 break;
             case APP_PACKET_HO_ADR_QRY:
@@ -5598,20 +5595,18 @@ void MainWindow::zigbeeDataMsg(IAP_NOTIFY_STRU *pIapNotify)
             {
             case APP_PACKET_HO_ADR_SET:
                 {
-//                    SetDevicePage *page = getDeviceDlg();
-//                    if (page) page->cfgHandlerRsp();
-
+                    /*
                     if (ex_gGlobalParam.Ex_Default == 0)
                     {
                         Ex_Init_HandleCfgpage* ex_Page = getExInitPage();
-                        if(ex_Page)
-                            ex_Page->cfgHandlerRsp();
+                        if(ex_Page) ex_Page->cfgHandlerRsp();
                     }
                     else
                     {
                         SetDevicePage *page = getDeviceDlg();
                         if (page) page->cfgHandlerRsp();
                     }
+                    */
                 }                
                 break;
             case APP_PACKET_HO_ADR_QRY:

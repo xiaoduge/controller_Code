@@ -70,7 +70,7 @@ void SetDevicePage::buildTranslation()
     m_pBtnQueryHandler->setText(tr("Query"));
     m_pBtnCfgHandler->setText(tr("Config."));
     m_pBtnResetHandler->setText(tr("Reset"));
-    m_pBtnRmvHandler->setText(tr("Clear"));
+//    m_pBtnRmvHandler->setText(tr("Clear"));
     m_pBtnSaveHandler->setText(tr("Save"));
 
 #ifdef AUTO_CFG_RF_READER    
@@ -126,6 +126,10 @@ void SetDevicePage::setBackColor()
     m_widget->setPalette(pal);
 }
 
+void SetDevicePage::finishSave()
+{
+    ToastDlg::makeToast(tr("Successfully saved"));
+}
 
 void SetDevicePage::on_CmbIndexChange_trx_type(int index)
 {
@@ -236,7 +240,7 @@ void SetDevicePage::initUi()
     m_pBtnQueryHandler  = new QPushButton;
     m_pBtnCfgHandler   = new QPushButton;
     m_pBtnResetHandler   = new QPushButton;
-    m_pBtnRmvHandler   = new QPushButton;
+//    m_pBtnRmvHandler   = new QPushButton;
     m_pBtnSaveHandler   = new QPushButton;
 
     pcfg2TilHBox->addWidget(m_plbHandlerSN);
@@ -253,7 +257,7 @@ void SetDevicePage::initUi()
     pcfg2HBox->addWidget(m_pBtnQueryHandler);
     pcfg2HBox->addWidget(m_pBtnCfgHandler);
     pcfg2HBox->addWidget(m_pBtnResetHandler);
-    pcfg2HBox->addWidget(m_pBtnRmvHandler);
+//    pcfg2HBox->addWidget(m_pBtnRmvHandler);
     pcfg2HBox->addWidget(m_pBtnSaveHandler);
 
     pcfg2Grid->addLayout(pcfg2Top,0,0);
@@ -340,7 +344,7 @@ void SetDevicePage::initUi()
     connect(m_pBtnQueryHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_QueryHandler()));
     connect(m_pBtnCfgHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_CfgHandler()));
     connect(m_pBtnResetHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_ResetHandler()));
-    connect(m_pBtnRmvHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_RmvHandler()));
+//    connect(m_pBtnRmvHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_RmvHandler()));
     connect(m_pBtnSaveHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_SaveHandler()));
 
     connect(m_pBtnQueryRfReader,SIGNAL(clicked()),this,SLOT(on_pushButton_QueryRfReader()));
@@ -370,6 +374,8 @@ void SetDevicePage::on_pushButton_QueryId()
     Cmd.ulCanId     = 0x3ff;
     
     DispIapEntry(&Cmd);
+
+    m_wndMain->prepareKeyStroke();
 }
 
 void SetDevicePage::on_pushButton_QueryVersion()
@@ -394,6 +400,7 @@ void SetDevicePage::on_pushButton_QueryVersion()
             DispIapEntry(&Cmd);
         }
     }
+    m_wndMain->prepareKeyStroke();
 }
 
 
@@ -423,7 +430,7 @@ void SetDevicePage::on_pushButton_RmvDevice()
     }
 
    // m_pListWgtDevice->reset();
-
+    m_wndMain->prepareKeyStroke();
 }
 
 
@@ -431,6 +438,7 @@ void SetDevicePage::on_pushButton_QueryHandler()
 {
     char buf[64];
 
+    on_pushButton_RmvHandler();  //20190108 test
 
     switch (m_pcombTrxType->currentIndex())
     {
@@ -484,7 +492,7 @@ void SetDevicePage::on_pushButton_QueryHandler()
         break;
     
     }    
-
+    m_wndMain->prepareKeyStroke();
 }
 
 
@@ -623,7 +631,10 @@ void SetDevicePage::on_pushButton_CfgHandler()
                 }                
             }
         }
-    }    
+    }
+    m_wndMain->prepareKeyStroke();
+    on_pushButton_RmvHandler();  //20190108
+    on_pushButton_QueryHandler();  //20190108
 }
 
 void SetDevicePage::on_pushButton_ResetHandler()
@@ -684,6 +695,9 @@ void SetDevicePage::on_pushButton_ResetHandler()
         break;
     
     }
+    m_wndMain->prepareKeyStroke();
+    on_pushButton_RmvHandler();  //20190108
+    on_pushButton_QueryHandler();  //20190108
 
 }
 
@@ -712,7 +726,7 @@ void SetDevicePage::on_pushButton_RmvHandler()
     }
 
     //m_pListWgtHandler->reset();
-
+    m_wndMain->prepareKeyStroke();
 }
 
 void SetDevicePage::on_pushButton_SaveHandler()
@@ -780,10 +794,12 @@ void SetDevicePage::on_pushButton_SaveHandler()
         }
 
         m_wndMain->updHandler(iMask,hdl);
+        m_wndMain->prepareKeyStroke();
+        finishSave();
     }
     else
     {
-        //QMessageBox::StandardButton rb = QMessageBox::question(NULL, tr("Handler"), tr("One and only one default handler shoud be configured ?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No); 
+        m_wndMain->prepareKeyStroke();
         QMessageBox::about(NULL, tr("About"), tr("One and only one default handler per category shoud be configured !"));
     }
     
@@ -812,6 +828,7 @@ void SetDevicePage::on_pushButton_QueryRfReader()
 
     DispAfEntry(pCmd);
 
+    m_wndMain->prepareKeyStroke();
 }
 
 #ifdef AUTO_CFG_RF_READER    
@@ -956,7 +973,7 @@ void SetDevicePage::on_pushButton_RmvRfReader()
     }
 
     //m_pListWgtHandler->reset();
-
+    m_wndMain->prepareKeyStroke();
 }
 
 void SetDevicePage::on_pushButton_SaveRfReader()
@@ -1011,6 +1028,7 @@ void SetDevicePage::on_pushButton_SaveRfReader()
     }
     
     m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_PERIPHERAL_DEVICE_MANAGER);
+    m_wndMain->prepareKeyStroke();
 }
 
 
@@ -1036,7 +1054,7 @@ void SetDevicePage::on_pushButton_ZigbeeUpd()
         
         DispStartZigbeeUpd(iLength,NULL);
     }
-
+    m_wndMain->prepareKeyStroke();
 }
 
 void SetDevicePage::zigbeeUpdResult(int iResult,int iPercent)
@@ -1209,47 +1227,8 @@ void SetDevicePage::on_checkBox_changeState(int state)
 
 void SetDevicePage::update()
 {
-   /* clear all */
-   int iLoop;
-   QListWidgetItem *pItem;    
-   HandlerItem *pDevice;
-   int iCount = m_pListWgtHandler->count();
-
-   for (iLoop = 0; iLoop < iCount; iLoop++)
-   {
-       //pItem = m_pListWgtHandler->item(iLoop);
-
-       pItem = m_pListWgtHandler->takeItem(0);
-
-       pDevice = (HandlerItem *)m_pListWgtHandler->itemWidget(pItem);
-       
-       m_pListWgtHandler->removeItemWidget(pItem);
-
-       delete pItem;       
-
-       delete pDevice;
-
-   }
-
-    /* show handset in db */
-    DB_HANDLER_STRU * dbH = m_wndMain->getHandler();
-    int imask = m_wndMain->getHandlerMask();
-
-    if(dbH)
-    {
-        for(iLoop = 0 ; iLoop < APP_HAND_SET_MAX_NUMBER ; iLoop++)
-        {
-            if (imask & (1 << iLoop))
-            {
-                QString strSn = QString::fromAscii((char *)dbH[iLoop].name, APP_SN_LENGTH);
-                QString strAddress = QString::number(dbH[iLoop].address);
-                addHandler(0,strSn,strAddress);     
-        
-                qDebug() <<"MMMMMMMMMMMMMMMMMMMMMMMM"<< iLoop << strSn << strAddress;
-            }
-        } 
-    }
-
+    on_pushButton_RmvHandler();
+    on_pushButton_QueryHandler();
 }
 
 void SetDevicePage::on_pushButton_DeleteHandler()

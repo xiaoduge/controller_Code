@@ -921,7 +921,7 @@ void Ex_ManagerSetPage::initUnitsPage()
 
     m_pUnitsBtnSave = new QPushButton(m_pageWidget[MANGER_PAGE_UNITS]);
     m_pUnitsBtnSave->move(580,450);
-    connect(m_pUnitsBtnSave, SIGNAL(clicked(int)), this, SLOT(on_unitsSaveBtn_clicked()));
+    connect(m_pUnitsBtnSave, SIGNAL(clicked()), this, SLOT(on_unitsSaveBtn_clicked()));
 
     QIcon icon1(":/pic/unselected.png");
     m_tabWidget->addTab(m_pageWidget[MANGER_PAGE_UNITS], icon1, tr("Units"));
