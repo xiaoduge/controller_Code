@@ -69,6 +69,7 @@ void MainRetriveExMachineMsg(int iMachineType);
 void MainRetriveProductMsg(int iMachineType);
 void MainRetriveInstallMsg(int iMachineType);
 void MainRetriveExConfigParam(int iMachineType);
+void MainRetriveExConsumableMsg(int iMachineType, DISP_CONSUME_MATERIAL_SN_STRU &cParam, DISP_MACHINERY_SN_STRU  &mParam);
 //end
 
 void MainRetriveMachineParam(int iMachineType,DISP_MACHINE_PARAM_STRU  &Param);
@@ -94,6 +95,7 @@ void MainSaveExMachineMsg(int iMachineType);
 void MainSaveProductMsg(int iMachineType);
 void MainSaveInstallMsg(int iMachineType);
 void MainSaveExConfigParam(int iMachineType);
+void MainSaveExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int category);
 //end
 
 void MainSavePMParam(int iMachineType,DISP_PM_SETTING_STRU  &Param);

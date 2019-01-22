@@ -250,6 +250,36 @@ void Ex_ManagerSetPage::update()
     m_comboBox->setCurrentIndex(m_iSleepTime - 1);
 }
 
+void Ex_ManagerSetPage::show(bool bShow)
+{
+    if (bShow)
+    {
+        m_widget->show() ;
+
+        if (m_wndMain ) m_wndMain->setCurrentPage(this);
+
+        m_secondTimer = startTimer(1000);
+    }
+    else
+    {
+        m_widget->hide();
+        if(0 != m_secondTimer) killTimer(m_secondTimer);
+    }
+}
+
+void Ex_ManagerSetPage::timerEvent(QTimerEvent *event)
+{
+    if(m_secondTimer == event->timerId())
+    {
+        if(0 == m_tabWidget->currentIndex())
+        {
+            QTime curTime;
+            curTime = QTime::currentTime();
+            m_pBtns[TIMEPAGE_BTN_TIME_SET]->setText(curTime.toString("hh:mm:ss"));
+        }
+    }
+}
+
 void Ex_ManagerSetPage::on_flowSaveBtn_clicked()
 {
     float flowRate = m_flowLineEdit->text().toFloat();

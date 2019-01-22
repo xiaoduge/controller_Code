@@ -85,6 +85,8 @@
 #include "ex_init_syscfgpage.h"
 #include "ex_screensleeppage.h"
 #include "ex_factorytestpage.h"
+#include "ex_checkconsumaleinstall.h"
+#include "ex_consumableinstalldialog.h"
 
 #include "ex_screensleepthread.h"
 /***********************************************
@@ -189,7 +191,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.4.190108_release");
+QString strSoftwareVersion = QString("0.1.5.190121_debug");
 
 MainWindow *gpMainWnd;
 
@@ -242,6 +244,7 @@ EX_CCB  ex_gCcb; //dcj_ex
 unsigned int g_screenSleep;
 bool g_isScreenSleep;
 unsigned int ex_gulSecond = 0;
+QMutex ex_gMutex;
 
 DISP_CM_USAGE_STRU     gCMUsage ;
 
@@ -302,6 +305,8 @@ QString gastrCMCfgName[] =
 QString gastrCMActionName[] = 
 {
     "Install Prefilter",
+    "Install AC Pack",
+    "Install T Pack",
     "Install P Pack",
     "Install U Pack",
     "Install AT Pack",
@@ -368,6 +373,10 @@ extern QString INSERT_sql_Handler ;
 extern QString select_sql_Rfid ;
 extern QString delete_sql_Rfid ;
 extern QString INSERT_sql_Rfid ;
+
+extern QString select_sql_Consumable;
+extern QString insert_sql_Consumable;
+extern QString update_sql_Consumable;
 
 char *State_info[] =
 {
@@ -513,6 +522,52 @@ void MainRetriveExConfigParam(int iMachineType)
     {
         delete config;
         config = NULL;
+    }
+}
+
+//2019.1.21 add
+void MainRetriveExConsumableMsg(int iMachineType, DISP_CONSUME_MATERIAL_SN_STRU &cParam, DISP_MACHINERY_SN_STRU  &mParam)
+{
+    Q_UNUSED(iMachineType);
+    QString strUnknow = QString("unknow");
+    int iLoop;
+    for (iLoop = 0; iLoop < DISP_CM_NAME_NUM; iLoop++)
+    {
+        memset(cParam.aCn[iLoop],0,sizeof(CATNO));
+        strncpy(cParam.aCn[iLoop],strUnknow.toAscii(),APP_CAT_LENGTH);
+        memset(cParam.aLn[iLoop],0,sizeof(LOTNO));
+        strncpy(cParam.aLn[iLoop],strUnknow.toAscii(),APP_LOT_LENGTH);
+    }
+    for (iLoop = 0; iLoop < DISP_MACHINERY_NAME_NUM; iLoop++)
+    {
+        memset(mParam.aCn[iLoop],0,sizeof(CATNO));
+        strncpy(mParam.aCn[iLoop],strUnknow.toAscii(),APP_CAT_LENGTH);
+        memset(mParam.aLn[iLoop],0,sizeof(LOTNO));
+        strncpy(mParam.aLn[iLoop],strUnknow.toAscii(),APP_LOT_LENGTH);
+    }
+    qDebug() << "MainRetriveExConsumableMsg() running";
+
+    QSqlQuery query;
+    query.exec("select * from Consumable");
+    while(query.next())
+    {
+        qDebug() << QString("MainRetriveExConsumableMsg: %1").arg(query.value(4).toInt());
+        if(query.value(4).toInt() == 0)
+        {
+            qDebug() << QString("0 RetriveConsumable: %1").arg(query.value(1).toInt());
+            memset(cParam.aCn[query.value(1).toInt()], 0, sizeof(CATNO));
+            strncpy(cParam.aCn[query.value(1).toInt()], query.value(2).toString().toAscii(), APP_CAT_LENGTH);
+            memset(cParam.aLn[query.value(1).toInt()], 0, sizeof(LOTNO));
+            strncpy(cParam.aLn[query.value(1).toInt()], query.value(3).toString().toAscii(), APP_LOT_LENGTH);
+        }
+        else
+        {
+            qDebug() << QString("1 RetriveConsumable: %1").arg(query.value(1).toInt());
+            memset(mParam.aCn[query.value(1).toInt()], 0, sizeof(CATNO));
+            strncpy(mParam.aCn[query.value(1).toInt()], query.value(2).toString().toAscii(), APP_CAT_LENGTH);
+            memset(mParam.aLn[query.value(1).toInt()], 0, sizeof(LOTNO));
+            strncpy(mParam.aLn[query.value(1).toInt()], query.value(3).toString().toAscii(), APP_LOT_LENGTH);
+        }
     }
 }
 
@@ -921,7 +976,7 @@ void MainRetrivePmParam(int iMachineType,DISP_PM_SETTING_STRU  &Param)
             
             Param.afCap[iLoop] = fValue;
     
-            fValue = config->value(strV + "/RANGE",0.25).toFloat(); // max 100mm  default:0.3
+            fValue = config->value(strV + "/RANGE",0.3).toFloat(); // max 100mm  default:0.3
             
             Param.afDepth[iLoop] = fValue;            
             break;
@@ -979,7 +1034,7 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     strCfgName += ".ini";
 
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
-    /*
+
     for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
     {
         QString strV = "/PCCOFF/";
@@ -999,7 +1054,7 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         fValue = config->value(strV3,1).toFloat(); // max 200mm
         Param.pc[iLoop].fv = fValue;
     }
-    */
+
     //
     switch(iMachineType)
     {
@@ -1007,63 +1062,12 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     {
         for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
         {
-            QString strV = "/PCCOFF/";
-            float fValue ;
-            float iDefault = 1;
-            if((DISP_PC_COFF_S1 <= iLoop) && (iLoop <= DISP_PC_COFF_S4) )
-            {
-                iDefault= 450;
-            }
-
-            strV += QString::number(iLoop);
-
-            QString strV1 = "/K" + strV;
-            fValue = config->value(strV1,iDefault).toFloat(); // max 200mm
-            Param.pc[iLoop].fk = fValue;
-            ex_global_Cali.pc[iLoop].fk  = Param.pc[iLoop].fk;
-
-            QString strV2 = "/C" + strV;
-            fValue = config->value(strV2, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fc = fValue;
-            ex_global_Cali.pc[iLoop].fc  = Param.pc[iLoop].fc;
-
-            QString strV3 = "/V" + strV;
-            fValue = config->value(strV3, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fv = fValue;
-        }
-        for(int i = 0;i < DISP_PC_COFF_NUM ; i++)
-        {
-            ex_global_Cali.pc[i].fk = Param.pc[i].fk;
+            ex_global_Cali.pc[iLoop].fk = Param.pc[iLoop].fk;
         }
         break;
     }
     case MACHINE_L_UP:
     {
-        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
-        {
-            QString strV = "/PCCOFF/";
-            float fValue ;
-            float iDefault = 1;
-            if((7 < iLoop) && (iLoop < 12) )
-            {
-                iDefault= 450;
-            }
-
-            strV += QString::number(iLoop);
-
-            QString strV1 = "/K" + strV;
-            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
-            Param.pc[iLoop].fk = fValue;
-
-            QString strV2 = "/C" + strV;
-            fValue = config->value(strV2, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fc = fValue;
-
-            QString strV3 = "/V" + strV;
-            fValue = config->value(strV3, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fv = fValue;
-        }
-
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1073,13 +1077,13 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[6].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[7].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[8].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[8].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_S2 ].fk = Param.pc[9].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S2].fc = Param.pc[9].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S2].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_S3].fk = Param.pc[10].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S3].fc = Param.pc[10].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S3].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_S4].fk = Param.pc[11].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S4].fc = Param.pc[11].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S4].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[12].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk = Param.pc[13].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[14].fk;
@@ -1087,31 +1091,6 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     }
     case MACHINE_L_EDI_LOOP:
     {
-        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
-        {
-            QString strV = "/PCCOFF/";
-            float fValue ;
-            float iDefault = 1;
-            if((7 < iLoop) && (iLoop < 12) )
-            {
-                iDefault= 450;
-            }
-
-            strV += QString::number(iLoop);
-
-            QString strV1 = "/K" + strV;
-            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
-            Param.pc[iLoop].fk = fValue;
-
-            QString strV2 = "/C" + strV;
-            fValue = config->value(strV2, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fc = fValue;
-
-            QString strV3 = "/V" + strV;
-            fValue = config->value(strV3, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fv = fValue;
-        }
-
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1121,13 +1100,13 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[6].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[7].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[8].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[8].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_S2 ].fk = Param.pc[9].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S2 ].fc = Param.pc[9].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S2 ].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_S3].fk = Param.pc[10].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S3].fc = Param.pc[10].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S3].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_S4].fk = Param.pc[11].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S4].fc = Param.pc[11].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S4].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[12].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk = Param.pc[13].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[14].fk;
@@ -1135,31 +1114,6 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     }
     case MACHINE_L_RO_LOOP:
     {
-        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
-        {
-            QString strV = "/PCCOFF/";
-            float fValue ;
-            float iDefault = 1;
-            if((3 < iLoop) && (iLoop < 8) )
-            {
-                iDefault= 450;
-            }
-
-            strV += QString::number(iLoop);
-
-            QString strV1 = "/K" + strV;
-            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
-            Param.pc[iLoop].fk = fValue;
-
-            QString strV2 = "/C" + strV;
-            fValue = config->value(strV2, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fc = fValue;
-
-            QString strV3 = "/V" + strV;
-            fValue = config->value(strV3, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fv = fValue;
-        }
-
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1168,10 +1122,10 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_S2 ].fk = Param.pc[5].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S3].fk = Param.pc[6].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S4].fk = Param.pc[7].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[4].fc;
-        ex_global_Cali.pc[DISP_PC_COFF_S2 ].fc = Param.pc[5].fc;
-        ex_global_Cali.pc[DISP_PC_COFF_S3].fc = Param.pc[6].fc;
-        ex_global_Cali.pc[DISP_PC_COFF_S4].fc = Param.pc[7].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
+        ex_global_Cali.pc[DISP_PC_COFF_S2 ].fc = 0;
+        ex_global_Cali.pc[DISP_PC_COFF_S3].fc = 0;
+        ex_global_Cali.pc[DISP_PC_COFF_S4].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[8].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk = Param.pc[9].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[10].fk;
@@ -1179,31 +1133,6 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     }
     case MACHINE_Genie:
     {
-        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
-        {
-            QString strV = "/PCCOFF/";
-            float fValue ;
-            float iDefault = 1;
-            if(10 == iLoop)
-            {
-                iDefault= 7055;
-            }
-
-            strV += QString::number(iLoop);
-
-            QString strV1 = "/K" + strV;
-            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
-            Param.pc[iLoop].fk = fValue;
-
-            QString strV2 = "/C" + strV;
-            fValue = config->value(strV2, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fc = fValue;
-
-            QString strV3 = "/V" + strV;
-            fValue = config->value(strV3, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fv = fValue;
-        }
-
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1215,38 +1144,13 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[8].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[9].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[10].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[10].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[11].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[12].fk;
         break;
     }
     case MACHINE_UP:
     {
-        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
-        {
-            QString strV = "/PCCOFF/";
-            float fValue ;
-            float iDefault = 1;
-            if(10 == iLoop)
-            {
-                iDefault= 7055;
-            }
-
-            strV += QString::number(iLoop);
-
-            QString strV1 = "/K" + strV;
-            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
-            Param.pc[iLoop].fk = fValue;
-
-            QString strV2 = "/C" + strV;
-            fValue = config->value(strV2, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fc = fValue;
-
-            QString strV3 = "/V" + strV;
-            fValue = config->value(strV3, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fv = fValue;
-        }
-
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1258,37 +1162,13 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[8].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[9].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[10].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[10].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[11].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[12].fk;
         break;
     }
     case MACHINE_EDI:
     {
-        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
-        {
-            QString strV = "/PCCOFF/";
-            float fValue ;
-            float iDefault = 1;
-            if(8 == iLoop)
-            {
-                iDefault= 7055;
-            }
-
-            strV += QString::number(iLoop);
-
-            QString strV1 = "/K" + strV;
-            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
-            Param.pc[iLoop].fk = fValue;
-
-            QString strV2 = "/C" + strV;
-            fValue = config->value(strV2, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fc = fValue;
-
-            QString strV3 = "/V" + strV;
-            fValue = config->value(strV3, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fv = fValue;
-        }
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1298,38 +1178,13 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[6].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[7].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[8].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[8].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[9].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[10].fk;
         break;
     }
     case MACHINE_RO:
     {
-        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
-        {
-            QString strV = "/PCCOFF/";
-            float fValue ;
-            float iDefault = 1;
-            if(6 == iLoop)
-            {
-                iDefault= 7055;
-            }
-
-            strV += QString::number(iLoop);
-
-            QString strV1 = "/K" + strV;
-            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
-            Param.pc[iLoop].fk = fValue;
-
-            QString strV2 = "/C" + strV;
-            fValue = config->value(strV2, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fc = fValue;
-
-            QString strV3 = "/V" + strV;
-            fValue = config->value(strV3, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fv = fValue;
-        }
-
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1337,38 +1192,13 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk = Param.pc[4].fk;
         ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk = Param.pc[5].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[6].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[6].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[7].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[8].fk;
         break;
     }
     case MACHINE_PURIST:
     {
-        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
-        {
-            QString strV = "/PCCOFF/";
-            float fValue ;
-            float iDefault = 1;
-            if(6 == iLoop)
-            {
-                iDefault= 7055;
-            }
-
-            strV += QString::number(iLoop);
-
-            QString strV1 = "/K" + strV;
-            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
-            Param.pc[iLoop].fk = fValue;
-
-            QString strV2 = "/C" + strV;
-            fValue = config->value(strV2, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fc = fValue;
-
-            QString strV3 = "/V" + strV;
-            fValue = config->value(strV3, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fv = fValue;
-        }
-
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1376,38 +1206,13 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[4].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[5].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[6].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[6].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[7].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[8].fk;
         break;
     }
     case MACHINE_ADAPT:
     {
-        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
-        {
-            QString strV = "/PCCOFF/";
-            float fValue ;
-            float iDefault = 1;
-            if(8 == iLoop)
-            {
-                iDefault= 7055;
-            }
-
-            strV += QString::number(iLoop);
-
-            QString strV1 = "/K" + strV;
-            fValue = config->value(strV1, iDefault).toFloat(); // max 200mm
-            Param.pc[iLoop].fk = fValue;
-
-            QString strV2 = "/C" + strV;
-            fValue = config->value(strV2, 0).toFloat(); // max 200mm
-            Param.pc[iLoop].fc = fValue;
-
-            QString strV3 = "/V" + strV;
-            fValue = config->value(strV3, 1).toFloat(); // max 200mm
-            Param.pc[iLoop].fv = fValue;
-        }
-
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
         ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
         ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
@@ -1417,7 +1222,7 @@ void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[6].fk;
         ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[7].fk;
         ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[8].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = Param.pc[8].fc;
+        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
         ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[9].fk;
         break;
     }
@@ -1941,6 +1746,51 @@ void MainSaveExConfigParam(int iMachineType)
     }
 }
 
+void MainSaveExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int category)
+{
+    Q_UNUSED(iMachineType);
+    QSqlQuery query;
+    bool ret;
+
+    query.prepare(select_sql_Consumable);
+    query.addBindValue(iIndex);
+    ret = query.exec();
+    qDebug() << QString("MainSaveExConsumableMsg consumable compared with Sql: %1").arg(ret);
+    if(query.next())
+    {
+            QString lotno = query.value(0).toString();
+            if(ln == lotno)
+            {
+                return; // do nothing
+            }
+            else
+            {
+                QString strCurDate = QDate::currentDate().toString("yyyy-MM-dd");
+                QSqlQuery queryUpdate;
+                queryUpdate.prepare(update_sql_Consumable);
+                queryUpdate.addBindValue(cn);
+                queryUpdate.addBindValue(ln);
+                queryUpdate.addBindValue(strCurDate);
+                queryUpdate.addBindValue(iIndex);
+                bool ret = queryUpdate.exec();
+                qDebug() << QString("consumable update Sql: %1").arg(ret);
+            }
+    }
+    else
+    {
+        QString strCurDate = QDate::currentDate().toString("yyyy-MM-dd");
+        QSqlQuery queryInsert;
+        queryInsert.prepare(insert_sql_Consumable);
+        queryInsert.bindValue(":iPackType", iIndex);
+        queryInsert.bindValue(":CatNo", cn);
+        queryInsert.bindValue(":LotNo", ln);
+        queryInsert.bindValue(":category", category);
+        queryInsert.bindValue(":time", strCurDate);
+        bool ret = queryInsert.exec();
+        qDebug() << QString("consumable insert Sql: %1").arg(ret);
+    }
+}
+
 
 void MainSaveMachineType(int &iMachineType)
 {
@@ -2195,6 +2045,8 @@ void MainSaveFMParam(int iMachineType,DISP_FM_SETTING_STRU  &Param)
             strTmp = QString::number(Param.aulCfg[iLoop]);
             
             config->setValue(strV,strTmp);
+
+            qDebug() << "Save FM: " << strTmp;
         }
 
     }    
@@ -2349,58 +2201,61 @@ void MainSaveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     //2019.1.3
     DISP_FM_SETTING_STRU fmParam;
 
+    float default_L_Machine = 450.0;
+    float default_Machine = 7055.0;
+
     switch(iMachineType)
     {
     case MACHINE_L_Genie:
         for(int i = 0;i < DISP_PC_COFF_NUM ; i++)
         {
-            fmParam.aulCfg[DISP_FM_FM1] = Param.pc[DISP_PC_COFF_S1].fk;
-            fmParam.aulCfg[DISP_FM_FM2]= Param.pc[DISP_PC_COFF_S2].fk;
-            fmParam.aulCfg[DISP_FM_FM3] = Param.pc[DISP_PC_COFF_S3].fk;
-            fmParam.aulCfg[DISP_FM_FM4] = Param.pc[DISP_PC_COFF_S4].fk;
+            fmParam.aulCfg[DISP_FM_FM1] = default_L_Machine / Param.pc[DISP_PC_COFF_S1].fk;
+            fmParam.aulCfg[DISP_FM_FM2]= default_L_Machine / Param.pc[DISP_PC_COFF_S2].fk;
+            fmParam.aulCfg[DISP_FM_FM3] = default_L_Machine / Param.pc[DISP_PC_COFF_S3].fk;
+            fmParam.aulCfg[DISP_FM_FM4] = default_L_Machine / Param.pc[DISP_PC_COFF_S4].fk;
         }
         break;
     case MACHINE_L_UP:
     {
-        fmParam.aulCfg[DISP_FM_FM1] = Param.pc[8].fk;
-        fmParam.aulCfg[DISP_FM_FM2] = Param.pc[9].fk;
-        fmParam.aulCfg[DISP_FM_FM3] = Param.pc[10].fk;
-        fmParam.aulCfg[DISP_FM_FM4] = Param.pc[11].fk;
+        fmParam.aulCfg[DISP_FM_FM1] = default_L_Machine / Param.pc[8].fk;
+        fmParam.aulCfg[DISP_FM_FM2] = default_L_Machine / Param.pc[9].fk;
+        fmParam.aulCfg[DISP_FM_FM3] = default_L_Machine / Param.pc[10].fk;
+        fmParam.aulCfg[DISP_FM_FM4] = default_L_Machine / Param.pc[11].fk;
         break;
     }
     case MACHINE_L_EDI_LOOP:
     {
-        fmParam.aulCfg[DISP_FM_FM1] = Param.pc[8].fk;
-        fmParam.aulCfg[DISP_FM_FM2] = Param.pc[9].fk;
-        fmParam.aulCfg[DISP_FM_FM3] = Param.pc[10].fk;
-        fmParam.aulCfg[DISP_FM_FM4] = Param.pc[11].fk;
+        fmParam.aulCfg[DISP_FM_FM1] = default_L_Machine / Param.pc[8].fk;
+        fmParam.aulCfg[DISP_FM_FM2] = default_L_Machine / Param.pc[9].fk;
+        fmParam.aulCfg[DISP_FM_FM3] = default_L_Machine / Param.pc[10].fk;
+        fmParam.aulCfg[DISP_FM_FM4] = default_L_Machine / Param.pc[11].fk;
         break;
     }
     case MACHINE_L_RO_LOOP:
     {
-        fmParam.aulCfg[DISP_FM_FM1] = Param.pc[4].fk;
-        fmParam.aulCfg[DISP_FM_FM2] = Param.pc[5].fk;
-        fmParam.aulCfg[DISP_FM_FM3] = Param.pc[6].fk;
-        fmParam.aulCfg[DISP_FM_FM4] = Param.pc[7].fk;
+        fmParam.aulCfg[DISP_FM_FM1] = default_L_Machine / Param.pc[4].fk;
+        fmParam.aulCfg[DISP_FM_FM2] = default_L_Machine / Param.pc[5].fk;
+        fmParam.aulCfg[DISP_FM_FM3] = default_L_Machine / Param.pc[6].fk;
+        fmParam.aulCfg[DISP_FM_FM4] = default_L_Machine / Param.pc[7].fk;
         break;
     }
     case MACHINE_Genie:
-        fmParam.aulCfg[DISP_FM_FM1]  = Param.pc[10].fk;
+        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / Param.pc[10].fk;
         break;
     case MACHINE_UP:
-        fmParam.aulCfg[DISP_FM_FM1]  = Param.pc[10].fk;
+        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / Param.pc[10].fk;
         break;
     case MACHINE_EDI:
-        fmParam.aulCfg[DISP_FM_FM1]  = Param.pc[8].fk;
+        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / Param.pc[8].fk;
         break;
     case MACHINE_RO:
-        fmParam.aulCfg[DISP_FM_FM1]  = Param.pc[6].fk;
+        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / Param.pc[6].fk;
         break;
     case MACHINE_PURIST:
-        fmParam.aulCfg[DISP_FM_FM1]  = Param.pc[6].fk;
+        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / Param.pc[6].fk;
         break;
     case MACHINE_ADAPT:
-        fmParam.aulCfg[DISP_FM_FM1]  = Param.pc[8].fk;
+        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / Param.pc[8].fk;
         break;
     default:
         break;
@@ -2416,9 +2271,6 @@ void MainSaveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     
     sync();
 }
-
-
-
 
 void MainSaveMiscParam(int iMachineType,DISP_MISC_SETTING_STRU  &Param)
 {
@@ -2850,8 +2702,8 @@ void MainRetriveGlobalParam(void)
     MainRetrivePmParam(gGlobalParam.iMachineType,gGlobalParam.PmParam);
     MainRetriveMiscParam(gGlobalParam.iMachineType,gGlobalParam.MiscParam);
     MainRetriveCleanParam(gGlobalParam.iMachineType,gGlobalParam.CleanParam);
-    MainRetriveCMSn(gGlobalParam.iMachineType,gGlobalParam.cmSn);
-    MainRetriveMacSn(gGlobalParam.iMachineType,gGlobalParam.macSn);
+//    MainRetriveCMSn(gGlobalParam.iMachineType,gGlobalParam.cmSn);
+//    MainRetriveMacSn(gGlobalParam.iMachineType,gGlobalParam.macSn);
     MainRetriveCalibrateParam(gGlobalParam.iMachineType,gGlobalParam.Caliparam);
 
 #ifdef SYSTEM_TEST
@@ -3470,13 +3322,7 @@ void SaveConsumptiveMaterialInfo(void)
    
 }
 
-QStringList MainWindow::m_astrPrePack;
-QStringList MainWindow::m_astrACPack;
-QStringList MainWindow::m_astrPPack;
-QStringList MainWindow::m_astrUPack;
-QStringList MainWindow::m_astrHPack;
-QStringList MainWindow::m_astrATPack;
-QStringList MainWindow::m_astrCleanPack;
+QStringList MainWindow::m_strConsuamble[CAT_NUM];
 
 QPixmap * MainWindow::getBitmap(int id)
 {
@@ -3628,7 +3474,9 @@ MainWindow::MainWindow(QMainWindow *parent) :
     int iLoop;
 
     m_bC1Regulator = false;  
-    
+
+    MainRetriveExConsumableMsg(gGlobalParam.iMachineType,gGlobalParam.cmSn,gGlobalParam.macSn);
+
     //ui->setupUi(this);
     gpMainWnd = this;
 
@@ -3663,17 +3511,27 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_pCurPage              = NULL;
     m_curExInitPage         = NULL;
 
-    m_astrPPack     << "RR700CP01";
-    m_astrCleanPack << "RR700CL01";
+    m_strConsuamble[ACPACK_CATNO] << "RR700AC01";
+    m_strConsuamble[TPACK_CATNO] << "RR700T101";
+    m_strConsuamble[PPACK_CATNO] << "RR700CP01" << "RR700CP02";
+    m_strConsuamble[UPACK_CATNO] << "RR700Q101" << "RR700Q201" << "RR700Q301"
+                 << "RR700Q501" << "RR700Q601" << "RR700Q701";
 
-    m_astrUPack     << "RR700Q101";
-    m_astrUPack     << "RR700Q201";
-    m_astrUPack     << "RR700Q301";
-    m_astrUPack     << "RR700Q501";
+    m_strConsuamble[HPACK_CATNO] << "RR700H101";
+    m_strConsuamble[CLEANPACK_CATNO] << "RR700CL01";
 
-    m_astrHPack     << "RR700H101";
+    m_strConsuamble[UV254_CATNO] << "RAUV135A7";
+    m_strConsuamble[UV185_CATNO] << "RAUV357B7";
+    m_strConsuamble[UVTANK_CATNO] << "RAUV357A7";
 
-    m_astrACPack    << "RR700AC01"; //2018.10.22 add
+    m_strConsuamble[TANKVENTFILTER_CATNO] << "RATANKVN7";
+    m_strConsuamble[FINALFILTER_CATNO] << "RAFFC7250" << "RAFFB7201";
+
+    m_strConsuamble[UPPUMP_CATNO] << "RASP743";
+    m_strConsuamble[ROPACK_CATNO] << "RR70R0501" << "RR70R1001" << "RR70R1501";
+    m_strConsuamble[ROPUMP_CATNO] << "RASP742";
+
+    m_strConsuamble[EDI_CATNO] << "W3T101572" << "W3T101573" << "W3T262701";
 
     gCMUsage.ulUsageState = 0;
 
@@ -4553,6 +4411,25 @@ MainWindow::MainWindow(QMainWindow *parent) :
     }
 
     //ex
+    for(iLoop = 0; iLoop < APP_RFID_SUB_TYPE_NUM; iLoop++)
+    {
+        m_checkConsumaleInstall[iLoop] = new Ex_CheckConsumaleInstall(iLoop, this);
+        m_consumaleInstallDialog[iLoop] = new Ex_ConsumableInstallDialog(iLoop, this);
+
+        connect(m_checkConsumaleInstall[iLoop], SIGNAL(consumableMsg(int,QString,QString)),
+            m_consumaleInstallDialog[iLoop], SLOT(setConsumableName(int,QString,QString)));
+
+        connect(m_consumaleInstallDialog[iLoop], SIGNAL(installConusumable()),
+            m_checkConsumaleInstall[iLoop], SLOT(updateConsumaleMsg()));
+
+        connect(m_consumaleInstallDialog[iLoop], SIGNAL(setCheckStatus(bool)),
+            m_checkConsumaleInstall[iLoop], SLOT(setBusystatus(bool)));
+
+        connect(m_consumaleInstallDialog[iLoop], SIGNAL(consumableTypeChanged(int)),
+                m_checkConsumaleInstall[iLoop], SLOT(updateConsumableType(int)));
+    }
+
+
     for(iLoop = 0; iLoop < EX_RECT_NUM; iLoop++)
     {
         ex_gCcb.Ex_Rect_State.EX_N_NO[iLoop] = 0;
@@ -4573,23 +4450,21 @@ MainWindow::MainWindow(QMainWindow *parent) :
     if(ex_gGlobalParam.Ex_Default == 0)
     {
         m_pExInitPages[Ex_Init_Lan]->show(true);
+        m_startCheckConsumale = false;
     }
     else
     {
+        m_startCheckConsumale = true;
         Splash();
     }
-//    Splash();
     initScreenSleep(); //ex
-    initMachineFlow(); //ex 2018.11.19
-
+    initMachineFlow();  //ex 2018.11.19
 }
 
 void MainWindow::on_timerBuzzerEvent()
 {
     buzzerHandle();
 }
-
-
 
 void MainWindow::setRelay(int iIdx,int iEnable)
 {
@@ -7063,6 +6938,12 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             switch(m_eWorkMode)
             {
             case APP_WORK_MODE_NORMAL:
+                if(DISP_WORK_STATE_IDLE == DispGetWorkState4Pw()
+                   && m_startCheckConsumale
+                   &&(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))))
+                {
+                    checkConsumableInstall(pItem->ucId); //2019.1.21
+                }
                 break;
             case APP_WORK_MODE_CLEAN:
                 switch(pItem->ucId)
@@ -8556,94 +8437,31 @@ void MainWindow::updatePackFlow()
     default:
         break;
     }
+}
 
-
-#if 0
-    unsigned int ulQuantity;
-    switch(gGlobalParam.iMachineType)
+void MainWindow::checkConsumableInstall(int iRfId)
+{
+    if(m_checkConsumaleInstall[iRfId]->ischeckBusy())
     {
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_ADAPT:
+        return;
+    }
+
+    m_checkConsumaleInstall[iRfId]->check(iRfId);
+
+    if(!m_checkConsumaleInstall[iRfId]->isCorrectRfId())
     {
-        switch(DispGetWorkState())
-        {
-        case DISP_WORK_STATE_PREPARE:
-        {
-            if(NOT_RUNING_STATE_FLUSH == DispGetRunningStateFlag())
-            {
-                if(!m_calcPFlow.isFlushing())
-                {
-                    m_calcPFlow.setFlushState(true);
-                    m_calcPFlow.setStartTime(QDateTime::currentDateTime());
-                }
-            }
-            break;
-        }
-        case DISP_WORK_STATE_RUN:
-        {
-            if(m_calcPFlow.isFlushing())
-            {
-                m_calcPFlow.setFlushState(false);
-                m_calcPFlow.setStopTime(QDateTime::currentDateTime());
-                ulQuantity = m_calcPFlow.calcFlow(0);
-
-                gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += ulQuantity;
-                gCMUsage.cmInfo.aulCumulatedData[DISP_AC_PACKLIFEL] += ulQuantity;
-//                gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] += ulQuantity;
-            }
-            //
-            if (DispGetPwFlag() || (NOT_RUNING_STATE_CLEAN == DispGetRunningStateFlag()))
-            {
-                if(!m_calcPFlow.isProducing())
-                {
-                    m_calcPFlow.setProductState(true);
-                    m_calcPFlow.setStartTime(QDateTime::currentDateTime());
-                }
-            }
-            else
-            {
-                if(m_calcPFlow.isProducing())
-                {
-                    m_calcPFlow.setProductState(false);
-                    m_calcPFlow.setStopTime(QDateTime::currentDateTime());
-                    ulQuantity = m_calcPFlow.calcFlow(1);
-
-                    gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += ulQuantity;
-                    gCMUsage.cmInfo.aulCumulatedData[DISP_AC_PACKLIFEL] += ulQuantity;
-//                    gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] += ulQuantity;
-                }
-            }
-            break;
-        }
-        default:
-        {
-            if(m_calcPFlow.isFlushing())
-            {
-                m_calcPFlow.setFlushState(false);
-                m_calcPFlow.setStopTime(QDateTime::currentDateTime());
-                ulQuantity = m_calcPFlow.calcFlow(0);
-            }
-            if(m_calcPFlow.isProducing())
-            {
-                m_calcPFlow.setProductState(false);
-                m_calcPFlow.setStopTime(QDateTime::currentDateTime());
-                ulQuantity = m_calcPFlow.calcFlow(1);
-            }
-            gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] += ulQuantity;
-            gCMUsage.cmInfo.aulCumulatedData[DISP_AC_PACKLIFEL] += ulQuantity;
-//            gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] += ulQuantity;
-            break;
-        }
-        }
-        break;
+        return;
     }
-    default:
-        break;
+
+    if(m_checkConsumaleInstall[iRfId]->comparedWithSql())
+    {
+        m_consumaleInstallDialog[iRfId]->show();
     }
-#endif
+}
+
+QStringList MainWindow::consumableCatNo(CONSUMABLE_CATNO iType)
+{
+    return m_strConsuamble[iType];
 }
 
 

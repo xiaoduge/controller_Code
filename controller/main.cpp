@@ -110,6 +110,13 @@ QString CREATE_TABLE_Rfid     = "CREATE TABLE IF NOT EXISTS  Rfid (id INTEGER PR
                                                                   "address INTEGER NOT NULL,"
                                                                   "type INTEGER NOT NULL)";
 
+QString CREATE_TABLE_Consumable = "CREATE TABLE IF NOT EXISTS  Consumable (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                                                          "iPackType INTEGER NOT NULL,"
+                                                                          "CatNo VARCHAR(20) NOT NULL,"
+                                                                          "LotNO VARCHAR(20) NOT NULL,"
+                                                                          "category INTEGER NOT NULL,"
+                                                                          "time VARCHAR(20) NOT NULL)";
+
 QString select_sql_Water = "SELECT id, ecoid, quality, time FROM Water where time > ? and time < ?";
 QString delete_sql_Water = "delete from Water where time > ? and time < ?";
 
@@ -147,6 +154,11 @@ QString select_sql_User    = "SELECT id , Name , PassWord , Permission FROM User
 
 //ex
 QString update_sql_Water = "update Water SET quality = ?, time = ? where ecoid = ? and time > ? and time < ?";
+
+//consumable
+QString select_sql_Consumable = "select LotNo from Consumable  where iPackType = ?";
+QString insert_sql_Consumable = "insert into Consumable (id, iPackType, CatNo, LotNo, category, time) values(:id, :iPackType, :CatNo, :LotNo, :category, :time)";
+QString update_sql_Consumable = "update Consumable set CatNo = ?, LotNo = ?, time = ? where iPackType = ?";
 //end
 
 User *gpActiveU;
@@ -435,6 +447,13 @@ int main(int argc, char *argv[])
         qDebug()<<"create log table successed\r\n";
     else
         qDebug()<<"create log table failed\r\n";
+
+    //2019.1.17 add
+    success = query.exec(CREATE_TABLE_Consumable);
+    if(success)
+        qDebug()<<"create Consumable table successed\r\n";
+    else
+        qDebug()<<"create Consumable table failed\r\n";
 
     DeleteExpiredData(); //删除两年前的数据
 

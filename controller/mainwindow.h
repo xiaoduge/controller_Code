@@ -23,6 +23,7 @@
 #include "basewidget.h"
 #include "ex_init_handlecfgpage.h"
 #include "ex_calcpackflow.h"
+#include <QMutex>
 
 #define PAGEID_MARGIN (4)
 
@@ -117,6 +118,29 @@ enum SETPAGE_NAME
     SETPAGE_NUMBER
 };
 
+enum CONSUMABLE_CATNO
+{
+    PREPACK_CATNO = 0,
+    ACPACK_CATNO,
+    PPACK_CATNO,
+    UPACK_CATNO,
+    HPACK_CATNO,
+    ATPACK_CATNO,
+    CLEANPACK_CATNO,
+
+    TPACK_CATNO,
+    ROPACK_CATNO,
+    UV185_CATNO,
+    UV254_CATNO,
+    UVTANK_CATNO,
+    ROPUMP_CATNO,
+    UPPUMP_CATNO,
+    FINALFILTER_CATNO,
+    EDI_CATNO,
+    TANKVENTFILTER_CATNO,
+    CAT_NUM
+};
+
 typedef struct config_btn {
     int xPos, yPos;
     char *strBackBitmapPath;
@@ -161,6 +185,8 @@ class navigatorBar;
 class SetDevicePage;
 
 class Ex_ScreenSleepThread;
+class Ex_CheckConsumaleInstall;
+class Ex_ConsumableInstallDialog;
 
 typedef struct
 {
@@ -327,9 +353,15 @@ public:
     void calcFlow(int state);
     void updatePackFlow();
 
+    void checkConsumableInstall(int iRfId);
+
     /* for all kinds of state related measurements */
     float        m_fSourceWaterPressure;
     float        m_fSourceWaterConductivity;
+
+    //Static Public Members
+    static QStringList consumableCatNo(CONSUMABLE_CATNO iType);
+
     
 
 private slots:
@@ -431,7 +463,8 @@ private:
     void rmvRfidFromDelayList(int iRfId);
 
     void saveFmData(int id,unsigned int ulValue);
-    
+
+private:
     QTimer* m_timerBuzzer;
     
     QWidget *mainWidget;
@@ -559,14 +592,7 @@ private:
     QString      m_strUserName;
     QString      m_strPassword;
 
-
-    static QStringList m_astrPrePack;
-    static QStringList m_astrACPack;
-    static QStringList m_astrPPack;
-    static QStringList m_astrUPack;
-    static QStringList m_astrHPack;
-    static QStringList m_astrATPack;
-    static QStringList m_astrCleanPack;
+    static QStringList m_strConsuamble[CAT_NUM];
 
     class RFIDPackInfo
     {
@@ -631,35 +657,35 @@ private:
             QString strSn = sn;
 
             iPackType = DISP_CM_NAME_NUM;
-    
-            if (m_astrPPack.contains(strSn))
+
+            if (m_strConsuamble[PPACK_CATNO].contains(strSn))
             {
                iPackType = DISP_P_PACK;
             }
-            else if(m_astrACPack.contains(strSn))
+            else if(m_strConsuamble[ACPACK_CATNO].contains(strSn))
             {
                 iPackType = DISP_AC_PACK;
             }
-            else if (m_astrUPack.contains(strSn))
+            else if (m_strConsuamble[UPACK_CATNO].contains(strSn))
             {
                iPackType = DISP_U_PACK;
-            }        
-            else if (m_astrHPack.contains(strSn))
+            }
+            else if (m_strConsuamble[HPACK_CATNO].contains(strSn))
             {
                iPackType = DISP_H_PACK;
-            }        
-            else if (m_astrPrePack.contains(strSn))
+            }
+            else if (m_strConsuamble[PREPACK_CATNO].contains(strSn))
             {
                iPackType = DISP_PRE_PACK;
-            }        
-            else if (m_astrCleanPack.contains(strSn))
+            }
+            else if (m_strConsuamble[CLEANPACK_CATNO].contains(strSn))
             {
                iPackType = DISP_P_PACK | (1 <<16); /* multiplex flag */
-            }        
-            else if (m_astrATPack.contains(strSn))
+            }
+            else if (m_strConsuamble[ATPACK_CATNO].contains(strSn))
             {
                iPackType = DISP_AT_PACK ;
-            }        
+            }
         }
     
         int getPackType()
@@ -675,6 +701,10 @@ private:
 private:
     //ex  screenSleep
     Ex_ScreenSleepThread* m_screenSleepThread;
+
+    Ex_CheckConsumaleInstall* m_checkConsumaleInstall[APP_RFID_SUB_TYPE_NUM];
+    Ex_ConsumableInstallDialog* m_consumaleInstallDialog[APP_RFID_SUB_TYPE_NUM];
+    bool m_startCheckConsumale;
     //end
 
     int m_flushMachineFlow;
@@ -698,6 +728,7 @@ extern MACHINE_TYPE_STRU gaMachineType[MACHINE_NUM];
 
 extern QPixmap    *gpGlobalPixmaps[GLOBAL_BMP_NUM];
 void Write_sys_int(char *sysfilename,int value);
+extern QMutex ex_gMutex;
 
 #define PWMLCD_FILE       "/sys/class/backlight/pwm-backlight/brightness"
 

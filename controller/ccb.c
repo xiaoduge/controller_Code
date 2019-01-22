@@ -67,7 +67,7 @@ unsigned char gaucIapBuffer[1024];
 
 #define is_B3_FULL(ulValue) ((ulValue / gCcb.PMParam.afDepth[DISP_PM_PM3] * 100) >= B3_FULL)
 
-#define is_B2_FULL(ulValue) ((ulValue / gCcb.PMParam.afDepth[DISP_PM_PM2] * 100) >= B2_FULL)
+//#define is_B2_FULL(ulValue) ((ulValue / gCcb.PMParam.afDepth[DISP_PM_PM2] * 100) >= B2_FULL)
 
 #define is_SWPUMP_FRONT(pCcb) ((pCcb)->MiscParam.ulMisFlags & (1 << DISP_SM_SW_PUMP))
 
@@ -82,7 +82,30 @@ unsigned char gaucIapBuffer[1024];
 //ex
 int Check_TOC_Alarm = 0;
 int AlarmHighWorkPress = 0;
+const float cor_H_PurtTank = 0.08;
 //end
+
+int is_B2_FULL(ulValue)
+{
+    if(DISP_WATER_BARREL_TYPE_UDF == gCcb.PMParam.aiBuckType[DISP_PM_PM2])
+    {
+        return ((ulValue / gCcb.PMParam.afDepth[DISP_PM_PM2] * 100) >= B2_FULL);
+    }
+    else
+    {
+        float correction = cor_H_PurtTank;
+        if(ulValue > correction)
+        {
+            ulValue = ulValue - correction;
+        }
+        else
+        {
+            ulValue = 0;
+        }
+        return ((ulValue / (gCcb.PMParam.afDepth[DISP_PM_PM2] - correction) * 100) >= B2_FULL);
+    }
+
+}
 
 typedef enum
 {
@@ -810,17 +833,30 @@ float CcbConvert2Pm2SP(unsigned int ulValue)
 {
     float fValue = CcbConvert2Pm2Data(ulValue);
 
+    float correction_fValue = fValue;
+    float correction = 0.0;
+
     if (0 == gCcb.PMParam.afDepth[DISP_PM_PM2])
     {
         return 100.0;
     }
 
-    //ex_dcj
-    float tmp = (fValue / gCcb.PMParam.afDepth[DISP_PM_PM2]) * 100 ;
+    if(DISP_WATER_BARREL_TYPE_UDF != gCcb.PMParam.aiBuckType[DISP_PM_PM2])
+    {
+        correction = cor_H_PurtTank;
+        if(fValue > correction)
+        {
+            correction_fValue = fValue - correction;
+        }
+        else
+        {
+            correction_fValue = 0;
+        }
+    }
+
+    float tmp = (correction_fValue / (gCcb.PMParam.afDepth[DISP_PM_PM2] - correction)) * 100 ;
     tmp *= ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk;
     return tmp;
-
-    //return (fValue / gCcb.PMParam.afDepth[DISP_PM_PM2]) * 100 ;
 }
 
 //work pressure

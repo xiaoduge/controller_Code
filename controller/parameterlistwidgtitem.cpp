@@ -104,7 +104,7 @@ Parameterlistwidgtitem::Parameterlistwidgtitem(QWidget *parent,int iType,int iId
         m_lbP2Name->setGeometry(QRect(xOffset, TOP_MARGIN ,NAME_ITEM_SHORT_LENGTH , PC_LIST_WIDGET_HEIGHT - (TOP_MARGIN + BOTTOM_MARGIN)));
         m_lbP2Name->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
         xOffset += NAME_ITEM_SHORT_LENGTH;
-//        m_lbP2Name->hide();
+        m_lbP2Name->hide();
 
         m_editP2Value = new QLineEdit(this);
         m_editP2Value->setGeometry(QRect(xOffset, TOP_MARGIN  ,VALUE_ITEM_WIDTH , PC_LIST_WIDGET_HEIGHT - (TOP_MARGIN + BOTTOM_MARGIN)));
@@ -112,7 +112,7 @@ Parameterlistwidgtitem::Parameterlistwidgtitem(QWidget *parent,int iType,int iId
         m_editP2Value->setStyleSheet("QLineEdit{border-width:2;border-style:outset;}");
         m_editP2Value->setMaxLength (ITEM_MAX_CHARS);
         xOffset += VALUE_ITEM_WIDTH;
-//        m_editP2Value->hide();
+        m_editP2Value->hide();
         break;
     }
 

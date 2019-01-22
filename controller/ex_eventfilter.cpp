@@ -15,7 +15,7 @@ bool Ex_EventFilter::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type() == QEvent::MouseButtonPress)
     {
-        QMutexLocker locker(&m_mutex);
+        QMutexLocker locker(&ex_gMutex);
         g_screenSleep = 0;
 
         if(g_isScreenSleep)

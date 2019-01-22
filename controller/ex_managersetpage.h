@@ -55,6 +55,10 @@ public:
     virtual void buildTranslation();
     virtual void initUi();
     virtual void update();
+    void show(bool bShow);
+
+protected:
+    void timerEvent(QTimerEvent *event);
 
 protected slots:
     //Flow Rate
@@ -111,6 +115,7 @@ private:
     QPushButton *m_flowSaveBtn;
 
     //Time
+    int m_secondTimer;
     QLabel *lbTitPic;
     QLabel *lbTitName;
     QCalendarWidget *CalS;

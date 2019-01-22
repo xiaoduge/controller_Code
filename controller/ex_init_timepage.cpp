@@ -24,7 +24,6 @@ Ex_Init_TimePage::Ex_Init_TimePage(QObject *parent,CBaseWidget *widget ,MainWind
     buildTranslation();
 
     this->hideTitleBar();
-
 }
 
 void Ex_Init_TimePage::creatTitle()
@@ -258,6 +257,7 @@ void Ex_Init_TimePage::update()
     m_pBtns[TIMEPAGE_BTN_DATE_SET]->setTip(sysDateTime.toString("yyyy-MM-dd"));
     m_pBtns[TIMEPAGE_BTN_TIME_SET]->setTip(sysDateTime.toString("hh:mm:ss"));
 }
+
 
 void Ex_Init_TimePage::Date_show_hide(bool show)
 {

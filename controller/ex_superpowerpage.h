@@ -67,6 +67,7 @@ private:
     bool deleteDbGetWater();
     bool deleteDbPWater();
     bool deleteDbLog();
+    bool deleteDbConsumables();
 
 private:
     QLabel    *m_lbDefaultState;

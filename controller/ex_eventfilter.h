@@ -18,7 +18,6 @@ signals:
 public slots:
 
 private:
-    QMutex m_mutex;
     
 };
 

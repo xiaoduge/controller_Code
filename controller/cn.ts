@@ -1661,6 +1661,150 @@
     </message>
 </context>
 <context>
+    <name>Ex_ConsumableInstallDialog</name>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="20"/>
+        <location filename="ex_consumableinstalldialog.cpp" line="96"/>
+        <source>Components Installation</source>
+        <translation>耗材安装</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="47"/>
+        <location filename="ex_consumableinstalldialog.cpp" line="102"/>
+        <source>Install</source>
+        <oldsource>install</oldsource>
+        <translation>安装</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="48"/>
+        <location filename="ex_consumableinstalldialog.cpp" line="103"/>
+        <source>close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="98"/>
+        <source>CAT</source>
+        <translation>CAT</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="99"/>
+        <source>LOT</source>
+        <translation>LOT</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="100"/>
+        <source>User Name:</source>
+        <translation>用户名:</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="117"/>
+        <location filename="ex_consumableinstalldialog.cpp" line="124"/>
+        <source>Waring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="117"/>
+        <source>Please enter a valid username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="124"/>
+        <source>Invalid username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="144"/>
+        <source>P Pack</source>
+        <translation>P Pack</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="147"/>
+        <source>AC Pack</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="150"/>
+        <source>U Pack</source>
+        <translation>U Pack</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="153"/>
+        <source>H Pack</source>
+        <oldsource>H Pacl</oldsource>
+        <translation>H Pack</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="156"/>
+        <source>Prefilter</source>
+        <translation>预处理柱</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="159"/>
+        <source>Clean Pack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="162"/>
+        <source>AT Pack</source>
+        <translation>AT Pack</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="165"/>
+        <source>T Pack</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="168"/>
+        <source>RO Membrane</source>
+        <translation>RO膜</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="171"/>
+        <source>185 UV Lamp</source>
+        <translation>185 UV</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="174"/>
+        <source>254 UV Lamp</source>
+        <translation>185 UV</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="177"/>
+        <source>Tank UV Lamp</source>
+        <translation>水箱UV</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="180"/>
+        <source>RO Pump</source>
+        <translation>RO泵</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="183"/>
+        <source>Recir. Pump</source>
+        <translation>循环泵</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="186"/>
+        <source>Final Fliter A</source>
+        <translation>终端A过滤器</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="187"/>
+        <source>Final Fliter B</source>
+        <translation>终端B过滤器</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="190"/>
+        <source>EDI Module</source>
+        <translation>EDI</translation>
+    </message>
+    <message>
+        <location filename="ex_consumableinstalldialog.cpp" line="193"/>
+        <source>Tank Vent Filter</source>
+        <translation>空气过滤器</translation>
+    </message>
+</context>
+<context>
     <name>Ex_FactoryTestPage</name>
     <message>
         <location filename="ex_factorytestpage.cpp" line="30"/>
@@ -2286,38 +2430,38 @@
 <context>
     <name>Ex_Init_TimePage</name>
     <message>
-        <location filename="ex_init_timepage.cpp" line="43"/>
-        <location filename="ex_init_timepage.cpp" line="61"/>
+        <location filename="ex_init_timepage.cpp" line="42"/>
+        <location filename="ex_init_timepage.cpp" line="60"/>
         <source>Time &amp; Date</source>
         <translation>时间设置</translation>
     </message>
     <message>
-        <location filename="ex_init_timepage.cpp" line="53"/>
+        <location filename="ex_init_timepage.cpp" line="52"/>
         <source>Select Date</source>
         <translation>日期</translation>
     </message>
     <message>
-        <location filename="ex_init_timepage.cpp" line="54"/>
+        <location filename="ex_init_timepage.cpp" line="53"/>
         <source>Select Time</source>
         <translation>时间</translation>
     </message>
     <message>
-        <location filename="ex_init_timepage.cpp" line="62"/>
+        <location filename="ex_init_timepage.cpp" line="61"/>
         <source>OK</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="ex_init_timepage.cpp" line="63"/>
+        <location filename="ex_init_timepage.cpp" line="62"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="ex_init_timepage.cpp" line="65"/>
+        <location filename="ex_init_timepage.cpp" line="64"/>
         <source>Next</source>
         <translation>下一步</translation>
     </message>
     <message>
-        <location filename="ex_init_timepage.cpp" line="66"/>
+        <location filename="ex_init_timepage.cpp" line="65"/>
         <source>Back</source>
         <translation>上一步</translation>
     </message>
@@ -2398,32 +2542,32 @@
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="40"/>
-        <location filename="ex_managersetpage.cpp" line="724"/>
+        <location filename="ex_managersetpage.cpp" line="754"/>
         <source>Time &amp; Date</source>
         <oldsource>Time</oldsource>
         <translation>时间</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="41"/>
-        <location filename="ex_managersetpage.cpp" line="760"/>
+        <location filename="ex_managersetpage.cpp" line="790"/>
         <source>Language</source>
         <translation>语言</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="42"/>
-        <location filename="ex_managersetpage.cpp" line="827"/>
+        <location filename="ex_managersetpage.cpp" line="857"/>
         <source>Audio</source>
         <translation>声音</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="43"/>
-        <location filename="ex_managersetpage.cpp" line="927"/>
+        <location filename="ex_managersetpage.cpp" line="957"/>
         <source>Units</source>
         <translation>单位</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="44"/>
-        <location filename="ex_managersetpage.cpp" line="1010"/>
+        <location filename="ex_managersetpage.cpp" line="1040"/>
         <source>LCD</source>
         <translation>显示屏调节</translation>
     </message>
@@ -2462,49 +2606,49 @@
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="69"/>
-        <location filename="ex_managersetpage.cpp" line="742"/>
+        <location filename="ex_managersetpage.cpp" line="772"/>
         <source>English</source>
         <translation>英语</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="70"/>
-        <location filename="ex_managersetpage.cpp" line="743"/>
+        <location filename="ex_managersetpage.cpp" line="773"/>
         <source>Chinese</source>
         <translation>中文</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="71"/>
-        <location filename="ex_managersetpage.cpp" line="744"/>
+        <location filename="ex_managersetpage.cpp" line="774"/>
         <source>Spanish</source>
         <translation>西班牙语</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="72"/>
-        <location filename="ex_managersetpage.cpp" line="745"/>
+        <location filename="ex_managersetpage.cpp" line="775"/>
         <source>French</source>
         <translation>法语</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="73"/>
-        <location filename="ex_managersetpage.cpp" line="746"/>
+        <location filename="ex_managersetpage.cpp" line="776"/>
         <source>German</source>
         <translation>德语</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="74"/>
-        <location filename="ex_managersetpage.cpp" line="747"/>
+        <location filename="ex_managersetpage.cpp" line="777"/>
         <source>Italian</source>
         <translation>意大利语</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="75"/>
-        <location filename="ex_managersetpage.cpp" line="748"/>
+        <location filename="ex_managersetpage.cpp" line="778"/>
         <source>Korean</source>
         <translation>韩语</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="76"/>
-        <location filename="ex_managersetpage.cpp" line="749"/>
+        <location filename="ex_managersetpage.cpp" line="779"/>
         <source>Russian</source>
         <translation>俄语</translation>
     </message>
@@ -2813,45 +2957,60 @@
         <translation>全部</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="331"/>
+        <location filename="ex_superpowerpage.cpp" line="223"/>
+        <source>Consumables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="337"/>
         <source>Water</source>
         <translation>水质信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="502"/>
-        <location filename="ex_superpowerpage.cpp" line="513"/>
+        <location filename="ex_superpowerpage.cpp" line="399"/>
+        <source>Consumable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="399"/>
+        <source>Deleting table failed: Consumable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="521"/>
+        <location filename="ex_superpowerpage.cpp" line="532"/>
         <source>DeleteInfoCfg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="502"/>
+        <location filename="ex_superpowerpage.cpp" line="521"/>
         <source>info File not existe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="513"/>
+        <location filename="ex_superpowerpage.cpp" line="532"/>
         <source>info File delete failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="524"/>
-        <location filename="ex_superpowerpage.cpp" line="536"/>
+        <location filename="ex_superpowerpage.cpp" line="543"/>
+        <location filename="ex_superpowerpage.cpp" line="555"/>
         <source>DeleteCfg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="524"/>
+        <location filename="ex_superpowerpage.cpp" line="543"/>
         <source>Cfg File not existe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="536"/>
+        <location filename="ex_superpowerpage.cpp" line="555"/>
         <source>Cfg File delete failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="ex_superpowerpage.cpp" line="223"/>
-        <location filename="ex_superpowerpage.cpp" line="344"/>
+        <location filename="ex_superpowerpage.cpp" line="350"/>
         <source>Alarm</source>
         <translation>报警信息</translation>
     </message>
@@ -2867,58 +3026,58 @@
     </message>
     <message>
         <location filename="ex_superpowerpage.cpp" line="223"/>
-        <location filename="ex_superpowerpage.cpp" line="380"/>
+        <location filename="ex_superpowerpage.cpp" line="386"/>
         <source>Log</source>
         <translation>日志</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="331"/>
+        <location filename="ex_superpowerpage.cpp" line="337"/>
         <source>Deleting table failed: Water</source>
         <translation>删除数据表失败：水质信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="344"/>
+        <location filename="ex_superpowerpage.cpp" line="350"/>
         <source>Deleting table failed: Alarm</source>
         <translation>删除数据表失败：报警信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="356"/>
+        <location filename="ex_superpowerpage.cpp" line="362"/>
         <source>GetWater</source>
         <translation>取水信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="356"/>
+        <location filename="ex_superpowerpage.cpp" line="362"/>
         <source>Deleting table failed: GetW</source>
         <translation>删除数据表失败：取水信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="368"/>
+        <location filename="ex_superpowerpage.cpp" line="374"/>
         <source>Product Water</source>
         <translation>产水信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="368"/>
+        <location filename="ex_superpowerpage.cpp" line="374"/>
         <source>Deleting table failed: pWater</source>
         <translation>删除数据表失败：产水信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="380"/>
+        <location filename="ex_superpowerpage.cpp" line="386"/>
         <source>Deleting table failed: Log</source>
         <translation>删除数据表失败：日志</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="415"/>
-        <location filename="ex_superpowerpage.cpp" line="452"/>
+        <location filename="ex_superpowerpage.cpp" line="434"/>
+        <location filename="ex_superpowerpage.cpp" line="471"/>
         <source>NOTIFY</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="415"/>
+        <location filename="ex_superpowerpage.cpp" line="434"/>
         <source>Whether to restart the device immediately?</source>
         <translation>是否立刻重启设备?</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="452"/>
+        <location filename="ex_superpowerpage.cpp" line="471"/>
         <source>Change Device Type?</source>
         <translation>改变设备类型?</translation>
     </message>
@@ -3773,97 +3932,97 @@
         <translation type="obsolete">℃</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="5242"/>
+        <location filename="mainwindow.cpp" line="5113"/>
         <source>Yellow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7618"/>
+        <location filename="mainwindow.cpp" line="7495"/>
         <source>No Pre-PACK detected!</source>
         <translation>预处理柱脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7621"/>
+        <location filename="mainwindow.cpp" line="7498"/>
         <source>No AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7624"/>
+        <location filename="mainwindow.cpp" line="7501"/>
         <source>No P-PACK detected!</source>
         <translation>P Pack脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7627"/>
+        <location filename="mainwindow.cpp" line="7504"/>
         <source>No U-PACK detected!</source>
         <translation>U Pack脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7630"/>
+        <location filename="mainwindow.cpp" line="7507"/>
         <source>No AT-PACK detected!</source>
         <translation>AT Pack脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7633"/>
+        <location filename="mainwindow.cpp" line="7510"/>
         <source>No H-PACK detected!</source>
         <translation>H Pack脱落</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7636"/>
+        <location filename="mainwindow.cpp" line="7513"/>
         <source>False Pre-PACK detected!</source>
         <translation type="unfinished">预处理柱脱落错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7639"/>
+        <location filename="mainwindow.cpp" line="7516"/>
         <source>False AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7642"/>
+        <location filename="mainwindow.cpp" line="7519"/>
         <source>False P-PACK detected!</source>
         <translation type="unfinished">P-Pack错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7645"/>
+        <location filename="mainwindow.cpp" line="7522"/>
         <source>False U-PACK detected!</source>
         <translation type="unfinished">U-Pack错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7648"/>
+        <location filename="mainwindow.cpp" line="7525"/>
         <source>False AT-PACK detected!</source>
         <translation type="unfinished">AT-Pack错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7651"/>
+        <location filename="mainwindow.cpp" line="7528"/>
         <source>False H-PACK detected!</source>
         <translation type="unfinished">H-Pack错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8028"/>
+        <location filename="mainwindow.cpp" line="7905"/>
         <source>Water</source>
         <translation type="unfinished">水质信息</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8029"/>
+        <location filename="mainwindow.cpp" line="7906"/>
         <source>Alarm</source>
         <translation>警报</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8030"/>
+        <location filename="mainwindow.cpp" line="7907"/>
         <source>User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8031"/>
+        <location filename="mainwindow.cpp" line="7908"/>
         <source>GetW</source>
         <translation type="unfinished">取水信息</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8032"/>
+        <location filename="mainwindow.cpp" line="7909"/>
         <source>PWater</source>
         <translation type="unfinished">产水信息</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8033"/>
+        <location filename="mainwindow.cpp" line="7910"/>
         <source>Log</source>
         <translation type="unfinished">日志</translation>
     </message>

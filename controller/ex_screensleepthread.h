@@ -25,7 +25,6 @@ signals:
 public slots:
 
 private:
-    QMutex m_mutex;
     int m_timerID;
 
     

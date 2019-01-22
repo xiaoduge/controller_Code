@@ -924,11 +924,11 @@ void SystemCfgPage::save()
        {
        case DISP_WATER_BARREL_TYPE_030L:
            pmParam.afCap[DISP_PM_PM2] = 30;
-           pmParam.afDepth[DISP_PM_PM2] = 0.25;
+           pmParam.afDepth[DISP_PM_PM2] = 0.3;
            break;
        case DISP_WATER_BARREL_TYPE_060L:
            pmParam.afCap[DISP_PM_PM2] = 60;
-           pmParam.afDepth[DISP_PM_PM2] = 0.52;
+           pmParam.afDepth[DISP_PM_PM2] = 0.6;
            break;
        case DISP_WATER_BARREL_TYPE_100L:
            pmParam.afCap[DISP_PM_PM2] = 100;
@@ -966,11 +966,11 @@ void SystemCfgPage::save()
        {
        case DISP_WATER_BARREL_TYPE_030L:
            pmParam.afCap[DISP_PM_PM3] = 30;
-           pmParam.afDepth[DISP_PM_PM3] = 0.25;
+           pmParam.afDepth[DISP_PM_PM3] = 0.3;
            break;
        case DISP_WATER_BARREL_TYPE_060L:
            pmParam.afCap[DISP_PM_PM3] = 60;
-           pmParam.afDepth[DISP_PM_PM3] = 0.55;
+           pmParam.afDepth[DISP_PM_PM3] = 0.6;
            break;
        case DISP_WATER_BARREL_TYPE_100L:
            pmParam.afCap[DISP_PM_PM3] = 100;

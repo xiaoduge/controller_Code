@@ -867,7 +867,8 @@ void ConsumableInsPage::on_btn_clicked(int index)
               strncpy(cn,strCn.toAscii(),APP_CAT_LENGTH);
               strncpy(ln,strLn.toAscii(),APP_LOT_LENGTH);
    
-              MainSaveCMSnItem(gGlobalParam.iMachineType,cn,ln,cmIdx);
+              //MainSaveCMSnItem(gGlobalParam.iMachineType,cn,ln,cmIdx);
+              MainSaveExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0);
               
               strncpy(gGlobalParam.cmSn.aCn[cmIdx],cn,APP_CAT_LENGTH);
               strncpy(gGlobalParam.cmSn.aLn[cmIdx],ln,APP_LOT_LENGTH);
@@ -890,8 +891,9 @@ void ConsumableInsPage::on_btn_clicked(int index)
              strncpy(cn,strCn.toAscii(),APP_CAT_LENGTH);
              strncpy(ln,strLn.toAscii(),APP_LOT_LENGTH);
              
-             MainSaveMacSnItem(gGlobalParam.iMachineType,cn,ln,macIdx);
-             
+             //MainSaveMacSnItem(gGlobalParam.iMachineType,cn,ln,macIdx);
+             MainSaveExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1);
+
              strncpy(gGlobalParam.cmSn.aCn[macIdx],cn,APP_CAT_LENGTH);
              strncpy(gGlobalParam.cmSn.aLn[macIdx],ln,APP_LOT_LENGTH);
 

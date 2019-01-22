@@ -57,27 +57,18 @@ signals:
     void timecfgSwitchBtnClicked(int);
 
 private:
-
     void setBackColor();
-
     void buildTitles();
-
     void Date_show_hide(bool tmp);
-
     void Time_show_hide(bool tmp);
-
     void createHeads();
-
     void Create_Cal_Ok();
-
     void Create_Date_Time();
-
     void on_Ok_clicked();
-
     void on_Cancel_clicked();
-
     void changeTime();
 
+private:
     QLabel *lbTitPic;
     QLabel *lbTitName;
 
@@ -98,7 +89,6 @@ private:
     QPushButton* m_pExBackBtn;
 
 public slots:
-
     void on_btn_clicked(int);
 
     void on_ExNextBtn_clicked();

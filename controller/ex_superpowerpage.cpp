@@ -220,7 +220,7 @@ void Ex_SuperPowerPage::createControl()
     rectTmp.setWidth(X_VALUE_WIDTH*2 + 5);
     m_pCmDbDel = new QComboBox(tmpWidget);
     QStringList cbList;
-    cbList << tr("All") << tr("Alarm") << tr("GetW") << tr("PWater") << tr("Log");//  << tr("Water");
+    cbList << tr("All") << tr("Alarm") << tr("GetW") << tr("PWater") << tr("Log") << tr("Consumables");//  << tr("Water");
     m_pCmDbDel->addItems(cbList);
     m_pCmDbDel->setCurrentIndex(0);
     m_pCmDbDel->setGeometry(rectTmp);
@@ -317,6 +317,12 @@ bool Ex_SuperPowerPage::deleteDbAll()
     {
         return false;
     }
+    //consumables
+    ret = deleteDbConsumables();
+    if(!ret)
+    {
+        return false;
+    }
 
     return true;
 }
@@ -378,6 +384,19 @@ bool Ex_SuperPowerPage::deleteDbLog()
     if(!ret)
     {
         QMessageBox::warning(m_widget, tr("Log"), tr("Deleting table failed: Log"), QMessageBox::Ok);
+        return false;
+    }
+    return true;
+}
+
+bool Ex_SuperPowerPage::deleteDbConsumables()
+{
+    QString strSql = "Delete from Consumable";
+    QSqlQuery query;
+    bool ret = query.exec(strSql);
+    if(!ret)
+    {
+        QMessageBox::warning(m_widget, tr("Consumable"), tr("Deleting table failed: Consumable"), QMessageBox::Ok);
         return false;
     }
     return true;
@@ -482,9 +501,9 @@ void Ex_SuperPowerPage::on_btnDbDel_clicked()
     case 4:
         deleteDbLog();
         break;
-/*  case 5:
-        deleteDbWater();
-        break;*/
+    case 5:
+        deleteDbConsumables();
+        break;
     default:
         break;
     }
