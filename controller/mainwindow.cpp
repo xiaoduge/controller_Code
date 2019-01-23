@@ -350,7 +350,8 @@ QString gastrLoginOperateActionName[] =
     "Audio",
     "Units",
     "Connecting Device",
-    "RFID Config"
+    "RFID Config",
+    "Consumable intall Permission"
 };
 
 
@@ -4415,6 +4416,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
     {
         m_checkConsumaleInstall[iLoop] = new Ex_CheckConsumaleInstall(iLoop, this);
         m_consumaleInstallDialog[iLoop] = new Ex_ConsumableInstallDialog(iLoop, this);
+        m_consumaleInstallDialog[iLoop]->hide();
+        m_consumaleInstallDialog[iLoop]->setGeometry(200, 175, 350, 250);
 
         connect(m_checkConsumaleInstall[iLoop], SIGNAL(consumableMsg(int,QString,QString)),
             m_consumaleInstallDialog[iLoop], SLOT(setConsumableName(int,QString,QString)));

@@ -3,6 +3,7 @@
 #include <QPainter>
 #include "Display.h"
 #include "ExtraDisplay.h"
+#include "ex_hintdialog.h"
 #include <QRadioButton>
 
 #include <fcntl.h>
@@ -11,7 +12,6 @@
 #include <unistd.h>
 #include <time.h>
 #include <QDebug>
-
 
 Ex_ManagerSetPage::Ex_ManagerSetPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
@@ -485,6 +485,8 @@ void Ex_ManagerSetPage::on_audioBtnSavebtn_clicked()
 
     }
     m_wndMain->prepareKeyStroke();
+
+    Ex_HintDialog::getInstance(tr("Successfully saved"));
 }
 
 void Ex_ManagerSetPage::on_unitsSaveBtn_clicked()
@@ -513,6 +515,7 @@ void Ex_ManagerSetPage::on_unitsSaveBtn_clicked()
 
     }
     m_wndMain->prepareKeyStroke();
+    Ex_HintDialog::getInstance(tr("Successfully saved"));
 }
 
 void Ex_ManagerSetPage::on_btn_clicked(QAbstractButton *button)
@@ -555,6 +558,7 @@ void Ex_ManagerSetPage::on_LcdSaveBtn_clicked()
     m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_DISPLAY);
 
     m_wndMain->prepareKeyStroke();
+    Ex_HintDialog::getInstance(tr("Successfully saved"));
 }
 
 void Ex_ManagerSetPage::on_CheckEnergySave_stateChanged(int state)
@@ -591,7 +595,6 @@ void Ex_ManagerSetPage::setValue(int value)
 
 void Ex_ManagerSetPage::initFlowPage()
 {
-
     m_pageWidget[MANGER_PAGE_FLOW] = new QWidget;
 
     m_pFlowBackWidget = new QWidget(m_pageWidget[MANGER_PAGE_FLOW]);

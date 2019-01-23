@@ -2,19 +2,22 @@
 #define EX_CONSUMABLEINSTALLDIALOG_H
 
 #include <QDialog>
+#include "ex_basewindow.h"
 
 class QComboBox;
 class QLineEdit;
 class QLabel;
 
-class Ex_ConsumableInstallDialog : public QDialog
+class Ex_ConsumableInstallDialog : public Ex_BaseWindow
 {
     Q_OBJECT
 public:
-    explicit Ex_ConsumableInstallDialog(int id, QWidget * parent = 0, Qt::WindowFlags f = 0);
+    explicit Ex_ConsumableInstallDialog(int id, QWidget * parent = 0);
 
     void switchLanguage();
     void buildTranslation();
+
+    void updatePage();
     
 signals:
     void installConusumable();
@@ -50,7 +53,7 @@ private:
     QLineEdit *m_pLineEditLot;
     QLineEdit *m_pLineEditUser;
     QPushButton *m_pInstallBtn;
-    QPushButton *m_pCloseBtn;
+
 };
 
 #endif // EX_CONSUMABLEINSTALLDIALOG_H

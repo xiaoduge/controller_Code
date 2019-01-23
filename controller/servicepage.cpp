@@ -24,6 +24,7 @@
 #include "displaypage.h"
 #include "ex_rfidcfgpage.h"
 #include "ex_managersetpage.h"
+#include "ex_permissionsetpage.h"
 
 #include "ex_languagepage.h"
 
@@ -37,15 +38,9 @@ static QString SubPageName[SERVICE_BTN_NUMBER] =
 {    
     "Material Install",
     "ManagerConfig",
- //   "Time Set",
-//    "Language",
-//    "Sound Set",
-//    "Unit Set",
- //   "LCD",
     "User Config",
-//    "Service Report",
     "History",
-    "RFID Config",
+    "Permission",
     "Allocation Set",
     "Sterilize"
 };
@@ -58,12 +53,6 @@ static CONFIG_BTN1 sBtns[SERVICE_BTN_NUMBER] =
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
 };
 
@@ -84,7 +73,7 @@ void ServicePage::creatTitle()
     buildTitles();
     selectTitle(0);
 }
-#define HISTEST
+
 void ServicePage::Create_subPage()
 {
     int index;
@@ -116,53 +105,12 @@ void ServicePage::Create_subPage()
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[SERVICE_BTN_INSTALL] = new ConsumableInsPage(this , tmpWidget , m_wndMain);
             break;
-            /*
-        case SERVICE_BTN_REPORT:
-            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
-            tmpWidget->setObjectName(SubPageName[index]);
-            tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[SERVICE_BTN_REPORT] = new ReportPage(this, tmpWidget , m_wndMain);
-            break;
-            */
         case SET_BTN_SYSTEM_ALLOCATION:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[index] = new AllocationSetPage(this , tmpWidget , m_wndMain);
             break;
-         /*
-        case SET_BTN_SYSTEM_LANGUAGE:
-            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
-            tmpWidget->setObjectName(SubPageName[index]);
-            tmpWidget->setGeometry(0,0,800,600);
-//            m_pSubPages[index] = new LanguagePage(this , tmpWidget , m_wndMain);
-            m_pSubPages[index] = new Ex_Languagepage(this , tmpWidget , m_wndMain);//Ex_Languagepage
-            break;
-
-        case SET_BTN_SYSTEM_TIME:
-            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
-            tmpWidget->setObjectName(SubPageName[index]);
-            tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new TimePage(this , tmpWidget , m_wndMain);
-            break;
-        case SET_BTN_SYSTEM_SOUND:
-            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
-            tmpWidget->setObjectName(SubPageName[index]);
-            tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new SoundPage(this , tmpWidget , m_wndMain);
-            break;
-        case SET_BTN_SYSTEM_UNIT:
-            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
-            tmpWidget->setObjectName(SubPageName[index]);
-            tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new UnitPage(this , tmpWidget , m_wndMain);
-            break;
-        case SET_BTN_SYSTEM_LCD:
-            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
-            tmpWidget->setObjectName(SubPageName[index]);
-            tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new DisplayPage(this , tmpWidget , m_wndMain);
-            break;*/
         case SET_BTN_USER_CFG:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
@@ -173,19 +121,14 @@ void ServicePage::Create_subPage()
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-#ifdef HISTEST
             m_pSubPages[index] = new Ex_HistoryPage(this , tmpWidget , m_wndMain);
-#else
-            m_pSubPages[index] = new HistoryPage(this , tmpWidget , m_wndMain);
-#endif
             break;
-        case SET_BTN_RFID_CONFIG:
+        case SET_BTN_PERMISSION:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new Ex_RFIDCfgPage(this , tmpWidget , m_wndMain);
+            m_pSubPages[index] = new Ex_PermissionSetPage(this , tmpWidget , m_wndMain);
             break;
-
         }
 
     }
@@ -212,20 +155,10 @@ void ServicePage::buildTranslation()
     m_pBtns[SERVICE_BTN_STERILIZE]->setTip(tr("Cleaning & Sanitization"));
     m_pBtns[SERVICE_BTN_MANAGERCONFIG]->setTip(tr("Setting"));
     m_pBtns[SERVICE_BTN_INSTALL]->setTip(tr("Components Installation"));
-//    m_pBtns[SERVICE_BTN_REPORT]->setTip(tr("Service Report"));
     m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->setTip(tr("Dist. Control"));
-    /*
-    m_pBtns[SET_BTN_SYSTEM_TIME]->setTip(tr("Time & Date"));
-    m_pBtns[SET_BTN_SYSTEM_LANGUAGE]->setTip(tr("Language"));
-    m_pBtns[SET_BTN_SYSTEM_SOUND]->setTip(tr("Audio"));
-    m_pBtns[SET_BTN_SYSTEM_UNIT]->setTip(tr("Units"));
-    m_pBtns[SET_BTN_SYSTEM_LCD]->setTip(tr("LCD"));
-    */
     m_pBtns[SET_BTN_USER_CFG]->setTip(tr("User Config"));
     m_pBtns[SET_BTN_HISTORY_RECORD]->setTip(tr("History"));
-
-    m_pBtns[SET_BTN_RFID_CONFIG]->setTip(tr("RFID Config"));
-
+    m_pBtns[SET_BTN_PERMISSION]->setTip(tr("Permission"));
     for (index = 0; index < SERVICE_BTN_NUMBER; index++)
     {
         m_pBtns[index]->setFont(m_wndMain->getFont(GLOBAL_FONT_14));
@@ -236,9 +169,7 @@ void ServicePage::buildTranslation()
 void ServicePage::switchLanguage()
 {
     buildTranslation();
-
     buildTitles();
-
     selectTitle(titleIndex());
 }
 
@@ -422,8 +353,7 @@ void ServicePage::on_btn_clicked(int index)
             }
             break;
         }
-
-        case SET_BTN_RFID_CONFIG:
+        case SET_BTN_PERMISSION:
         case SET_BTN_USER_CFG:
         {
             QDateTime endTime = QDateTime::currentDateTime();

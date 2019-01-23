@@ -366,7 +366,6 @@ void AllocationSetPage::save()
        m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_ALLOCATION);
        
     }
-    
     show(false);
     m_parent->show(true);
 

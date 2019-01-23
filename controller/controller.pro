@@ -122,7 +122,11 @@ SOURCES += main.cpp\
     ex_usermanualpage.cpp \
     ex_managersetpage.cpp \
     ex_checkconsumaleinstall.cpp \
-    ex_consumableinstalldialog.cpp
+    ex_consumableinstalldialog.cpp \
+    ex_permissionsetpage.cpp \
+    ex_hintdialog.cpp \
+    ex_basewindow.cpp \
+    ex_dialogtitle.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -218,7 +222,11 @@ HEADERS  += mainwindow.h \
     ex_usermanualpage.h \
     ex_managersetpage.h \
     ex_checkconsumaleinstall.h \
-    ex_consumableinstalldialog.h
+    ex_consumableinstalldialog.h \
+    ex_permissionsetpage.h \
+    ex_hintdialog.h \
+    ex_basewindow.h \
+    ex_dialogtitle.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

@@ -77,7 +77,7 @@ const QMetaObjectExtraData Ex_ConsumableInstallDialog::staticMetaObjectExtraData
 };
 
 const QMetaObject Ex_ConsumableInstallDialog::staticMetaObject = {
-    { &QDialog::staticMetaObject, qt_meta_stringdata_Ex_ConsumableInstallDialog,
+    { &Ex_BaseWindow::staticMetaObject, qt_meta_stringdata_Ex_ConsumableInstallDialog,
       qt_meta_data_Ex_ConsumableInstallDialog, &staticMetaObjectExtraData }
 };
 
@@ -95,12 +95,12 @@ void *Ex_ConsumableInstallDialog::qt_metacast(const char *_clname)
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_Ex_ConsumableInstallDialog))
         return static_cast<void*>(const_cast< Ex_ConsumableInstallDialog*>(this));
-    return QDialog::qt_metacast(_clname);
+    return Ex_BaseWindow::qt_metacast(_clname);
 }
 
 int Ex_ConsumableInstallDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QDialog::qt_metacall(_c, _id, _a);
+    _id = Ex_BaseWindow::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

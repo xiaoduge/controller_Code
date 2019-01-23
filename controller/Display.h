@@ -498,6 +498,7 @@ typedef enum
     /* 2017/12/25 add */
     DISP_SM_HP_Water_Cir,
     DISP_SM_RFID_Authorization,
+    DISP_SM_ConsumableInstall_Authorization, //2019.1.22 add
     DISP_SM_TankUV,
     DISP_SM_Pre_Filter,
     DISP_SM_HP_Electrode,
