@@ -191,7 +191,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.5.190121_debug");
+QString strSoftwareVersion = QString("0.1.5.190125_release");
 
 MainWindow *gpMainWnd;
 

@@ -153,7 +153,7 @@ void Ex_ConsumableInstallDialog::updatePage()
         if(!m_pUserLabel->isVisible())
         {
             m_pUserLabel->show();
-            m_pUserLabel->show();
+            m_pLineEditUser->show();
         }
     }
 }

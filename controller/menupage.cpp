@@ -118,7 +118,7 @@ void MenuPage::initUi()
 
     QPainter p(&image_bg);
 
-    p.fillRect(image_bg.rect(), QColor(255, 255, 255));
+    p.fillRect(image_bg.rect(), QColor(255, 255, 255)); //238, 223, 204
 
     //p.drawPixmap(0,0,back);
 

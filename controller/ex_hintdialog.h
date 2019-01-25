@@ -11,6 +11,8 @@ class Ex_HintDialog : public QDialog
     Q_OBJECT
 public:
     explicit Ex_HintDialog(QWidget *parent = 0);
+    Ex_HintDialog(const Ex_HintDialog &obj) = delete;
+    Ex_HintDialog& operator =(const Ex_HintDialog &obj) = delete;
     ~Ex_HintDialog();
     
 signals:
