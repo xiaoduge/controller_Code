@@ -244,6 +244,7 @@ EX_CCB  ex_gCcb; //dcj_ex
 unsigned int g_screenSleep;
 bool g_isScreenSleep;
 unsigned int ex_gulSecond = 0;
+unsigned short ex_isPackNew;
 QMutex ex_gMutex;
 
 DISP_CM_USAGE_STRU     gCMUsage ;

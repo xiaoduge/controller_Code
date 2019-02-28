@@ -109,7 +109,8 @@ WaterQualityPage::WaterQualityPage(QObject *parent,CBaseWidget *widget ,MainWind
         aUsIds[iUsIdx].iId   = UP_WATER;
         aUsIndex[UP_WATER]   = iUsIdx;
         iUsIdx++;
-        if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
+        if((gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
+            && (MACHINE_ADAPT != gGlobalParam.iMachineType))
         {
             aUsIds[iUsIdx].iId   = UP_TOC;
             aUsIndex[UP_TOC]     = iUsIdx;

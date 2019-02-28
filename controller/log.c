@@ -18,7 +18,6 @@ int VOS_logger(int level,char *filename,int lineno,const char* fmt,...)
   
 
     if (level> VosLogLevel)
-
     {
         return 0;
     }
@@ -26,7 +25,6 @@ int VOS_logger(int level,char *filename,int lineno,const char* fmt,...)
     printf("[VOS_log FileName = %s LineNo = %d] : ",filename,lineno);
     vprintf(fmt,args);
     printf("\r\n");
-  
   
     va_end(args);
   

@@ -3414,7 +3414,13 @@ void work_stop_qtw(void *para)
     {
         VOS_LOG(VOS_LOG_WARNING,"CcbSetIAndBs Fail %d",iRet);    
         /* notify ui (late implemnt) */
-    }     
+    }
+
+    //2019.2.19 add
+    if(MACHINE_ADAPT == pCcb->ulMachineType)
+    {
+        pCcb->bit3RuningState = NOT_RUNING_STATE_NONE;
+    }
 
     work_stop_qtw_succ(iIndex);
 
@@ -11882,9 +11888,21 @@ void work_init_run_wrapper(void *para)
             /* notify ui (late implemnt) */
             return ;
         } 
-        
-        iTmp = 0; 
+
+        //2019.2.14 add
+        if(!(DispGetUpCirFlag()
+             | DispGetTankCirFlag()
+             | DispGetTocCirFlag()
+             | DispGetUpQtwFlag()
+             | DispGetEdiQtwFlag()))
+        {
+            iTmp = 0;
+            iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+        }
+        /*
+        iTmp = 0;
         iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+        */
         break;
 
     }
@@ -15127,7 +15145,6 @@ void CcbInit(void)
     VOS_SndMsg2(TASK_HANDLE_CANITF  ,INIT_ALL_THREAD_EVENT,0,NULL);
     VOS_SndMsg2(TASK_HANDLE_MOCAN   ,INIT_ALL_THREAD_EVENT,0,NULL);
     VOS_SndMsg2(TASK_HANDLE_ZB      ,INIT_ALL_THREAD_EVENT,0,NULL);
-
 }
 
 //质量检验主板用

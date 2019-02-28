@@ -83,6 +83,7 @@ extern Ex_DISP_PARAM_CALI_STRU ex_global_Cali;
 extern EX_CCB  ex_gCcb;
 
 extern unsigned int ex_gulSecond;
+extern unsigned short ex_isPackNew;
 
 int Ex_FactoryTest(int select);
 

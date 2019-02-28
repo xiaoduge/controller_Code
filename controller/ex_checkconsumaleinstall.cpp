@@ -1,5 +1,6 @@
 #include "ex_checkconsumaleinstall.h"
 #include "Display.h"
+#include "Ex_Display_c.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -377,6 +378,15 @@ void Ex_CheckConsumaleInstall::updateSql()
     query.addBindValue(m_iType);
     bool ret = query.exec();
     qDebug() << QString("%1, consumable update Sql: %1").arg(m_instanceID).arg(ret);
+
+    if(ret)
+    {
+        if((DISP_P_PACK == m_iType) && (!ex_isPackNew))
+        {
+            ex_isPackNew = 1;
+        }
+    }
+
 }
 
 void Ex_CheckConsumaleInstall::insertSql()
@@ -391,6 +401,15 @@ void Ex_CheckConsumaleInstall::insertSql()
     query.bindValue(":time", strCurDate);
     bool ret = query.exec();
     qDebug() << QString("%1, consumable insert Sql: %1").arg(m_instanceID).arg(ret);
+
+    if(ret)
+    {
+        if((DISP_P_PACK == m_iType) && (!ex_isPackNew))
+        {
+            ex_isPackNew = 1;
+        }
+    }
+
 }
 
 bool Ex_CheckConsumaleInstall::isCorrectRfId()
