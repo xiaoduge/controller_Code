@@ -25,6 +25,9 @@
 #include "ex_calcpackflow.h"
 #include <QMutex>
 
+
+#define RFIDTEST
+
 #define PAGEID_MARGIN (4)
 
 #define PAGE_X_DIMENSION (40)
@@ -64,7 +67,7 @@ enum GLOBAL_BMP_ENUM
     GLOBAL_BMP_ALARM_ICON,
     GLOBAL_BMP_DEVICE_ON,
     GLOBAL_BMP_DEVICE_OFF,
-    GLOBAL_BMP_NUM,
+    GLOBAL_BMP_NUM
 };
 
 enum
@@ -73,7 +76,7 @@ enum
     PAGE_MENU,
     PAGE_SERVICE,
     PAGE_SET,
-    PAGE_NUM,
+    PAGE_NUM
 };
 
 enum   //ex_dcj
@@ -227,7 +230,7 @@ public:
     void emitDispIndication(unsigned char *pucData,int iLength);
     void emitIapIndication(IAP_NOTIFY_STRU *pIapNotify);
 
-    void setLokupState(bool state) {m_bLockupDlg = state;};
+    void setLokupState(bool state) {m_bLockupDlg = state;}
     void AfDataMsg(IAP_NOTIFY_STRU *pIapNotify);
     void zigbeeDataMsg(IAP_NOTIFY_STRU *pIapNotify);
 
@@ -331,6 +334,16 @@ public:
 
     void getRfidLotNo(int iRfId,LOTNO sn) {m_aRfidInfo[iRfId].getLotNo(sn);}
 
+#ifdef RFIDTEST
+    void updateCMInfoWithRFID(int operate);
+    int writeRfid(int iRfId, int dataLayout, QString strData);
+    void getRfidInstallDate(int iRfId, QDate* date) {m_aRfidInfo[iRfId].getInstallDate(date);}
+    void getRfidVolofUse(int iRfId, int& vol) {m_aRfidInfo[iRfId].getVolUsed(vol);}
+
+    void readCMInfoFromRFID(int iRfId, int type);
+    void writeCMInfoToRFID(int iRfId, int type);
+#endif
+
     int getActiveExeBrds() { return m_iExeActiveMask ? 1 : 0;}
     int getActiveFmBrds() { return m_iExeActiveMask ? 1 : 0;}
 
@@ -363,7 +376,10 @@ public:
     //Static Public Members
     static QStringList consumableCatNo(CONSUMABLE_CATNO iType);
 
-    
+public slots:
+#ifdef RFIDTEST
+    void retriveCMInfoWithRFID();
+#endif
 
 private slots:
     void on_timerEvent();
@@ -484,6 +500,7 @@ private:
 
     bool m_bSplash;
     int  m_curPageIdx;
+    bool m_isInitCMInfo;
 
     CPage *m_pCurPage;
 
@@ -648,7 +665,30 @@ private:
             
             sn[APP_LOT_LENGTH] = 0;
         }
-    
+
+#ifdef RFIDTEST
+        void getInstallDate(QDate* date)
+        {
+            char *src = (char *)&aucContent[pLayout->aItem[RF_DATA_LAYOUT_INSTALL_DATE].offset];
+            int day,mon,year;
+
+            day = src[0];
+            mon = src[1];
+            year = (src[2] << 8)|src[3];
+
+            date->setDate(year, mon, day);
+        }
+
+        void getVolUsed(int& vol)
+        {
+            char *src = (char *)&aucContent[pLayout->aItem[RF_DATA_LAYOUT_UNKNOW_DATA].offset];
+            int num1, num2, num3;
+            num1 = src[0];
+            num2 = src[1];
+            num3 = src[2];
+            vol = num1 + num2*100 + num3*10000;
+        }
+#endif
         void setLayOut(RF_DATA_LAYOUT_ITEMS *pLayout) {this->pLayout = pLayout;}
     
         void parse()

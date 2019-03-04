@@ -3,8 +3,11 @@
 #include "mainwindow.h"
 #include "ExtraDisplay.h"
 #include "Ex_Display_c.h"
+#include "ex_hintdialog.h"
+#include <QPainter>
 #include <QMessageBox>
 #include <QGridLayout>
+#include <QFormLayout>
 
 
 Ex_FactoryTestPage::Ex_FactoryTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain)
@@ -31,9 +34,39 @@ void Ex_FactoryTestPage::buildTitles()
     setTitles(stringList);
 }
 
+void Ex_FactoryTestPage::setBackColor()
+{
+    QSize size(width(),height());
+
+    QImage image_bg = QImage(size, QImage::Format_ARGB32);
+
+    QPainter p(&image_bg);
+
+    p.fillRect(image_bg.rect(), QColor(228, 231, 240));
+
+    QPalette pal(m_widget->palette());
+
+    pal.setBrush(m_widget->backgroundRole(),QBrush(image_bg));
+
+    m_widget->setAutoFillBackground(true);
+    m_widget->setPalette(pal);
+}
+
 void Ex_FactoryTestPage::buildTranslation()
 {
     int i;
+    m_tabWidget->setTabText(0, "RFID");
+    m_tabWidget->setTabText(1, "Flow & Pressure");
+
+    m_pConfigLabel[CONFIG_CAT]->setText(tr("Cat No.:"));
+    m_pConfigLabel[CONFIG_LOT]->setText(tr("Lott No.:"));
+    m_pConfigLabel[CONFIG_INSTALLDATE]->setText(tr("Installation Date:"));
+    m_pConfigLabel[CONFIG_VOLUMEOFUSE]->setText(tr("Volume of Use:"));
+    m_pIndexLabel->setText(tr("Address:"));
+
+    m_pWriteBtn->setText(tr("Write"));
+    m_pReadBtn->setText(tr("Read"));
+
     m_pAreaLab[FTESTPAGE_FLOW]->setText(tr("Flow Test"));
     m_pAreaLab[FTESTPAGE_FLOW]->setAlignment(Qt::AlignCenter);
     m_pFlowDisplayLab[S1_DISPLAY]->setText(tr("S1"));
@@ -147,8 +180,147 @@ void Ex_FactoryTestPage::createControl()
 
     connect(m_pBtn[FTESTPAGE_FLOW], SIGNAL(clicked()), this, SLOT(on_flowBtn_clicked()));
     connect(m_pBtn[FTESTPAGE_ILOOP], SIGNAL(clicked()), this, SLOT(on_iLoopBtn_clicked()));
-//    connect(m_pBtn[FTESTPAGE_KEY], SIGNAL(clicked()), this, SLOT(on_keyBtn_clicked()));
+    //    connect(m_pBtn[FTESTPAGE_KEY], SIGNAL(clicked()), this, SLOT(on_keyBtn_clicked()));
 
+}
+
+void Ex_FactoryTestPage::initFlowTestPage()
+{
+    int i;
+    m_pageWidget[FACTORY_PAGE_FLOW] = new QWidget(m_widget);
+    m_pageWidget[FACTORY_PAGE_FLOW]->setGeometry(0, 55, 800, 545);
+    QString qss = ".QWidget{ background-color:rgb(250, 250, 250);}";
+    m_pageWidget[FACTORY_PAGE_FLOW]->setStyleSheet(qss);
+
+    for(i = 0; i < FTESTPAGE_NUM; i++)
+    {
+        m_pFrame[i] = new QFrame(m_pageWidget[FACTORY_PAGE_FLOW]);
+        m_pBtn[i] = new QPushButton;
+        m_pBtn[i]->setFixedWidth(80);
+        m_pAreaLab[i] = new QLabel;
+    }
+
+    for(i = 0; i < FLOW_DISPLAY_NUM; i++)
+    {
+        m_pFlowDisplayLE[i] = new QLineEdit;
+        m_pFlowDisplayLE[i]->setReadOnly(true);
+        m_pFlowDisplayLab[i] = new QLabel;
+    }
+
+    for(i = 0; i <  PRESSURE_DISPLAY_NUM; i++)
+    {
+        m_pPreDisplayLE[i] = new QLineEdit;
+        m_pPreDisplayLE[i]->setReadOnly(true);
+        m_pPreDisplayLab[i] = new QLabel;
+    }
+    m_pFrame[FTESTPAGE_FLOW]->setGeometry(10, 60, 770, 120);
+    m_pFrame[FTESTPAGE_ILOOP]->setGeometry(10, 220, 770, 120);
+   //    m_pFrame[FTESTPAGE_KEY]->setGeometry(0, 340, 800, 120);
+
+    qss = ".QFrame{ background-color: white;\
+                     border: 2px solid; \
+                     border-color: rgb(135,206,250);\
+                     border-radius: 4px; \
+                     padding: 2px;\
+                   }";
+
+    m_pFrame[FTESTPAGE_FLOW]->setStyleSheet(qss);
+    m_pFrame[FTESTPAGE_ILOOP]->setStyleSheet(qss);
+
+    QGridLayout* gLayout_Flow = new QGridLayout;
+    gLayout_Flow->addWidget(m_pAreaLab[FTESTPAGE_FLOW], 0, 0, 1, 1);
+    gLayout_Flow->addWidget(m_pFlowDisplayLab[S1_DISPLAY], 0, 1, 1, 1);
+    gLayout_Flow->addWidget(m_pFlowDisplayLab[S2_DISPLAY], 0, 2, 1, 1);
+    gLayout_Flow->addWidget(m_pFlowDisplayLab[S3_DISPLAY], 0, 3, 1, 1);
+    gLayout_Flow->addWidget(m_pFlowDisplayLab[S4_DISPLAY], 0, 4, 1, 1);
+
+    gLayout_Flow->addWidget(m_pBtn[FTESTPAGE_FLOW], 1, 0, 1, 1);
+    gLayout_Flow->addWidget(m_pFlowDisplayLE[S1_DISPLAY], 1, 1, 1, 1);
+    gLayout_Flow->addWidget(m_pFlowDisplayLE[S2_DISPLAY], 1, 2, 1, 1);
+    gLayout_Flow->addWidget(m_pFlowDisplayLE[S3_DISPLAY], 1, 3, 1, 1);
+    gLayout_Flow->addWidget(m_pFlowDisplayLE[S4_DISPLAY], 1, 4, 1, 1);
+
+    gLayout_Flow->setHorizontalSpacing(50);
+    gLayout_Flow->setVerticalSpacing(30);
+    m_pFrame[FTESTPAGE_FLOW]->setLayout(gLayout_Flow);
+
+    QGridLayout* gLayout_ILoop = new QGridLayout;
+    gLayout_ILoop->addWidget(m_pAreaLab[FTESTPAGE_ILOOP], 0, 0, 1, 1);
+    gLayout_ILoop->addWidget(m_pPreDisplayLab[P1_DISPLAY], 0, 1, 1, 1);
+    gLayout_ILoop->addWidget(m_pPreDisplayLab[P2_DISPLAY], 0, 2, 1, 1);
+    gLayout_ILoop->addWidget(m_pPreDisplayLab[P3_DISPLAY], 0, 3, 1, 1);
+
+
+    gLayout_ILoop->addWidget(m_pBtn[FTESTPAGE_ILOOP], 1, 0, 1, 1);
+    gLayout_ILoop->addWidget(m_pPreDisplayLE[P1_DISPLAY], 1, 1, 1, 1);
+    gLayout_ILoop->addWidget(m_pPreDisplayLE[P2_DISPLAY], 1, 2, 1, 1);
+    gLayout_ILoop->addWidget(m_pPreDisplayLE[P3_DISPLAY], 1, 3, 1, 1);
+
+    gLayout_ILoop->setHorizontalSpacing(60);
+    gLayout_ILoop->setVerticalSpacing(30);
+    m_pFrame[FTESTPAGE_ILOOP]->setLayout(gLayout_ILoop);
+
+    connect(m_pBtn[FTESTPAGE_FLOW], SIGNAL(clicked()), this, SLOT(on_flowBtn_clicked()));
+    connect(m_pBtn[FTESTPAGE_ILOOP], SIGNAL(clicked()), this, SLOT(on_iLoopBtn_clicked()));
+    //    connect(m_pBtn[FTESTPAGE_KEY], SIGNAL(clicked()), this, SLOT(on_keyBtn_clicked()));
+
+    QIcon icon1(":/pic/unselected.png");
+    m_tabWidget->addTab(m_pageWidget[FACTORY_PAGE_FLOW], icon1, tr("Flow & Pressure"));
+
+}
+
+void Ex_FactoryTestPage::initRFIDTestPage()
+{
+    m_pageWidget[FACTORY_PAGE_RFID] = new QWidget(m_widget);
+    m_pageWidget[FACTORY_PAGE_RFID]->setGeometry(0, 55, 800, 545);
+    QString qss = ".QWidget{ background-color:rgb(250, 250, 250);}";
+    m_pageWidget[FACTORY_PAGE_RFID]->setStyleSheet(qss);
+
+    QFormLayout* fLayout = new QFormLayout;
+    fLayout->setAlignment(Qt::AlignCenter);
+    fLayout->setVerticalSpacing(8);
+
+    m_pIndexLabel = new QLabel;
+    m_pIndexCombo = new QComboBox;
+    m_pIndexCombo->addItem(tr("20"));
+    m_pIndexCombo->addItem(tr("21"));
+    m_pIndexCombo->addItem(tr("22"));
+    m_pIndexCombo->addItem(tr("23"));
+    m_pIndexCombo->addItem(tr("24"));
+    m_pIndexCombo->setMinimumWidth(100);
+    fLayout->addRow(m_pIndexLabel, m_pIndexCombo);
+
+    for(int i = 0; i < CONFIG_NUM; i++)
+    {
+        m_pConfigLabel[i] = new QLabel;
+        m_pConfigLineEdit[i] = new QLineEdit;
+//        m_pConfigLineEdit[i]->setMaximumWidth(180);
+        fLayout->addRow(m_pConfigLabel[i], m_pConfigLineEdit[i]);
+    }
+
+    m_pConfigLineEdit[CONFIG_INSTALLDATE]->setReadOnly(true);
+
+    QHBoxLayout* hLayout = new QHBoxLayout;
+    hLayout->setAlignment(Qt::AlignCenter);
+    m_pWriteBtn = new QPushButton;
+    m_pReadBtn = new QPushButton;
+    m_pWriteBtn->setMaximumWidth(100);
+    m_pReadBtn->setMaximumWidth(100);
+    hLayout->addWidget(m_pWriteBtn);
+    hLayout->addSpacing(50);
+    hLayout->addWidget(m_pReadBtn);
+
+    QVBoxLayout* vLayout = new QVBoxLayout;
+    vLayout->addLayout(fLayout);
+    vLayout->addLayout(hLayout);
+
+    m_pageWidget[FACTORY_PAGE_RFID]->setLayout(vLayout);
+
+    QIcon icon1(":/pic/unselected.png");
+    m_tabWidget->addTab(m_pageWidget[FACTORY_PAGE_RFID], icon1, tr("RFID TEST"));
+
+    connect(m_pWriteBtn, SIGNAL(clicked()), this, SLOT(on_writeBtn_clicked()));
+    connect(m_pReadBtn, SIGNAL(clicked()), this, SLOT(on_readBtn_clicked()));
 }
 
 void Ex_FactoryTestPage::on_flowBtn_clicked()
@@ -189,16 +361,95 @@ void Ex_FactoryTestPage::on_keyBtn_clicked()
 {
 }
 
+void Ex_FactoryTestPage::on_writeBtn_clicked()
+{
+#ifdef RFIDTEST
+    m_wndMain->prepareKeyStroke();
+    int index = m_pIndexCombo->currentIndex();
+    QString catData = m_pConfigLineEdit[CONFIG_CAT]->text();
+    QString lotData = m_pConfigLineEdit[CONFIG_LOT]->text();
+    QString installDate = m_pConfigLineEdit[CONFIG_INSTALLDATE]->text();
+    QString volData = m_pConfigLineEdit[CONFIG_VOLUMEOFUSE]->text();
+    int iRet = 0;
+
+    iRet = m_wndMain->writeRfid(index, RF_DATA_LAYOUT_CATALOGUE_NUM, catData);
+    if(iRet != 0)
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("write cat error"), QMessageBox::Ok);
+    }
+    iRet = m_wndMain->writeRfid(index, RF_DATA_LAYOUT_LOT_NUMBER, lotData);
+    if(iRet != 0)
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("write lot error"), QMessageBox::Ok);
+    }
+
+    iRet = m_wndMain->writeRfid(index, RF_DATA_LAYOUT_INSTALL_DATE, installDate);
+    if(iRet != 0)
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("write install date error"), QMessageBox::Ok);
+    }
+    iRet = m_wndMain->writeRfid(index, RF_DATA_LAYOUT_UNKNOW_DATA, volData);
+    if(iRet != 0)
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("write vol data error"), QMessageBox::Ok);
+    }
+
+    Ex_HintDialog::getInstance(tr("Write finished"));
+#endif
+}
+
+void Ex_FactoryTestPage::on_readBtn_clicked()
+{
+#ifdef RFIDTEST
+    m_wndMain->prepareKeyStroke();
+    updateRFIDInfo(m_pIndexCombo->currentIndex());
+#endif
+}
+
 
 void Ex_FactoryTestPage::initUi()
 {
-    createControl();
+    setBackColor();
+
+    m_mainWidget = new QWidget(m_widget);
+    m_mainWidget->setGeometry(QRect(0, 55, 800, this->height() - 55));
+
+    QGridLayout *mainLayout = new QGridLayout;
+    m_tabWidget = new QTabWidget;
+    //add page
+    initRFIDTestPage();
+    initFlowTestPage();
+
+    mainLayout->addWidget(m_tabWidget, 0, 0);
+    m_mainWidget->setLayout(mainLayout);
+
+    QFile qss(":/app/tabWidget.qss");
+    qss.open(QFile::ReadOnly);
+    QString tabWidgetqss = QLatin1String (qss.readAll());
+    qss.close();
+
+    m_tabWidget->setStyleSheet(tabWidgetqss);
+    m_tabWidget->setFocusPolicy(Qt::NoFocus);
+
 }
 
 void Ex_FactoryTestPage::show(bool bShow)
 {
     CSubPage::show(bShow);
 }
+
+void Ex_FactoryTestPage::update()
+{
+    m_wndMain->setWorkMode(APP_WORK_MODE_INSTALL);
+    CSubPage::update();
+}
+
+void Ex_FactoryTestPage::fade()
+{
+    m_wndMain->setWorkMode(APP_WORK_MODE_NORMAL);
+    CSubPage::fade();
+}
+
 
 void Ex_FactoryTestPage::updateFlow(int iIndex, int value)
 {
@@ -238,6 +489,46 @@ void Ex_FactoryTestPage::updSoureTank(int iLevel, float fVolume)
 {
     Q_UNUSED(fVolume);
     m_pPreDisplayLE[P3_DISPLAY]->setText(QString("%1").arg(iLevel));
+}
+
+void Ex_FactoryTestPage::updateRFIDInfo(int iRfId)
+{
+    int iRet;
+
+    CATNO cn;
+    LOTNO ln;
+    QDate installDate;
+    int volUsed;
+
+    memset(cn,0,sizeof(CATNO));
+    memset(ln,0,sizeof(LOTNO));
+
+//    if (m_wndMain->getRfidState(iRfId))
+//    {
+//        m_wndMain->getRfidCatNo(iRfId,cn);
+//        m_wndMain->getRfidLotNo(iRfId,ln);
+//        m_wndMain->getRfidInstallDate(iRfId, &installDate);
+//        m_wndMain->getRfidVolofUse(iRfId, volUsed);
+//    }
+
+//    else
+    {
+        iRet = m_wndMain->readRfid(iRfId);
+        if (iRet)
+        {
+            return;
+        }
+
+        m_wndMain->getRfidCatNo(iRfId,cn);
+        m_wndMain->getRfidLotNo(iRfId,ln);
+        m_wndMain->getRfidInstallDate(iRfId, &installDate);
+        m_wndMain->getRfidVolofUse(iRfId, volUsed);
+    }
+
+    m_pConfigLineEdit[CONFIG_CAT]->setText(cn);
+    m_pConfigLineEdit[CONFIG_LOT]->setText(ln);
+    m_pConfigLineEdit[CONFIG_INSTALLDATE]->setText(installDate.toString("yyyy-MM-dd"));
+    m_pConfigLineEdit[CONFIG_VOLUMEOFUSE]->setText(QString("%1").arg(volUsed));
 }
 
 

@@ -11727,7 +11727,18 @@ void work_init_run_wrapper(void *para)
         VOS_LOG(VOS_LOG_WARNING,"iPowerOnFlushTime %d",pCcb->MiscParam.iPowerOnFlushTime);    
     
         // pCcb->TMParam.aulTime[TIME_PARAM_InitRunT1] should be replaced by (pCcb->MiscParam.iPowerOnFlushTime*60*1000)
-        iRet = CcbWorkDelayEntry(pWorkItem->id,pCcb->MiscParam.iPowerOnFlushTime*60*1000,CcbDelayCallBack);
+        if(ex_isPackNew)
+        {
+            ex_isPackNew = 0;
+            iRet = CcbWorkDelayEntry(pWorkItem->id,
+                                     20*60*1000,
+                                     CcbDelayCallBack);
+        }
+        else
+        {
+            iRet = CcbWorkDelayEntry(pWorkItem->id,pCcb->MiscParam.iPowerOnFlushTime*60*1000,CcbDelayCallBack);
+        }
+
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
@@ -11803,7 +11814,18 @@ void work_init_run_wrapper(void *para)
         CcbNotState(NOT_STATE_OTHER);
 
         // pCcb->TMParam.aulTime[TIME_PARAM_InitRunT1] should be replaced by (pCcb->MiscParam.iPowerOnFlushTime*60*1000)
-        iRet = CcbWorkDelayEntry(pWorkItem->id,pCcb->MiscParam.iPowerOnFlushTime*60*1000,CcbDelayCallBack);
+        if(ex_isPackNew)
+        {
+            ex_isPackNew = 0;
+            iRet = CcbWorkDelayEntry(pWorkItem->id,
+                                     20*60*1000,
+                                     CcbDelayCallBack);
+        }
+        else
+        {
+            iRet = CcbWorkDelayEntry(pWorkItem->id,pCcb->MiscParam.iPowerOnFlushTime*60*1000,CcbDelayCallBack);
+        }
+
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
@@ -11878,7 +11900,17 @@ void work_init_run_wrapper(void *para)
         CcbNotState(NOT_STATE_OTHER);
 
         // pCcb->TMParam.aulTime[TIME_PARAM_InitRunT1] should be replaced by (pCcb->MiscParam.iPowerOnFlushTime*60*1000)
-        iRet = CcbWorkDelayEntry(pWorkItem->id,pCcb->MiscParam.iPowerOnFlushTime*60*1000,CcbDelayCallBack);
+        if(ex_isPackNew)
+        {
+            ex_isPackNew = 0;
+            iRet = CcbWorkDelayEntry(pWorkItem->id,
+                                     20*60*1000,
+                                     CcbDelayCallBack);
+        }
+        else
+        {
+            iRet = CcbWorkDelayEntry(pWorkItem->id,pCcb->MiscParam.iPowerOnFlushTime*60*1000,CcbDelayCallBack);
+        }
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    

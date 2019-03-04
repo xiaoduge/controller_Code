@@ -902,7 +902,7 @@
     <message>
         <location filename="ConsumableinsPage.cpp" line="442"/>
         <source>Prefilter</source>
-        <translation type="unfinished">AC Pack</translation>
+        <translation>Pre Pack</translation>
     </message>
     <message>
         <location filename="ConsumableinsPage.cpp" line="449"/>
@@ -1140,7 +1140,7 @@
     <message>
         <location filename="consumablestatepage.cpp" line="420"/>
         <source>Prefilter</source>
-        <translation type="unfinished">AC Pack</translation>
+        <translation>Pre Pack</translation>
     </message>
     <message>
         <location filename="consumablestatepage.cpp" line="453"/>
@@ -1653,78 +1653,83 @@
 <context>
     <name>Ex_FactoryTestPage</name>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="30"/>
+        <location filename="ex_factorytestpage.cpp" line="31"/>
         <source>Factory Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="37"/>
+        <location filename="ex_factorytestpage.cpp" line="59"/>
         <source>Flow Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="39"/>
+        <location filename="ex_factorytestpage.cpp" line="61"/>
         <source>S1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="40"/>
+        <location filename="ex_factorytestpage.cpp" line="62"/>
         <source>S2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="41"/>
+        <location filename="ex_factorytestpage.cpp" line="63"/>
         <source>S3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="42"/>
+        <location filename="ex_factorytestpage.cpp" line="64"/>
         <source>S4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="47"/>
+        <location filename="ex_factorytestpage.cpp" line="69"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="50"/>
+        <location filename="ex_factorytestpage.cpp" line="72"/>
         <source>Pressure Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="52"/>
+        <location filename="ex_factorytestpage.cpp" line="74"/>
         <source>Work Pres.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="53"/>
+        <location filename="ex_factorytestpage.cpp" line="75"/>
         <source>Pure Tank Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="54"/>
+        <location filename="ex_factorytestpage.cpp" line="76"/>
         <source>Source Tank Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="60"/>
+        <location filename="ex_factorytestpage.cpp" line="82"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="166"/>
+        <location filename="ex_factorytestpage.cpp" line="257"/>
+        <source>Flow &amp; Pressure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="277"/>
         <source>Fail: Flow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="166"/>
-        <location filename="ex_factorytestpage.cpp" line="183"/>
+        <location filename="ex_factorytestpage.cpp" line="277"/>
+        <location filename="ex_factorytestpage.cpp" line="294"/>
         <source>Can not enter test Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="183"/>
+        <location filename="ex_factorytestpage.cpp" line="294"/>
         <source>Fail: Pressure</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2602,7 +2607,7 @@
     <message>
         <location filename="ex_permissionsetpage.cpp" line="39"/>
         <source>Disable RFID</source>
-        <translation type="unfinished"></translation>
+        <translation>Turn off RFID alarm</translation>
     </message>
     <message>
         <location filename="ex_permissionsetpage.cpp" line="40"/>
@@ -3869,7 +3874,7 @@
     <message>
         <location filename="maintenancecycle.cpp" line="485"/>
         <source>Prefilter</source>
-        <translation type="unfinished">AC Pack</translation>
+        <translation>Pre Pack</translation>
     </message>
     <message>
         <location filename="maintenancecycle.cpp" line="487"/>
@@ -5435,7 +5440,7 @@
         <location filename="systemcfgpage.cpp" line="177"/>
         <source>Prefilter</source>
         <oldsource>Pre-filter column</oldsource>
-        <translation type="unfinished">AC Pack</translation>
+        <translation>Pre Pack</translation>
     </message>
     <message>
         <location filename="systemcfgpage.cpp" line="183"/>
@@ -5979,13 +5984,13 @@
 <context>
     <name>WaterQualityPage</name>
     <message>
-        <location filename="waterqualitypage.cpp" line="256"/>
+        <location filename="waterqualitypage.cpp" line="257"/>
         <source>Water Quality</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="345"/>
-        <location filename="waterqualitypage.cpp" line="364"/>
+        <location filename="waterqualitypage.cpp" line="346"/>
+        <location filename="waterqualitypage.cpp" line="365"/>
         <source>Omg</source>
         <translation>MΩ.cm</translation>
     </message>
@@ -5995,245 +6000,245 @@
         <translation type="obsolete">μS/cm</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="314"/>
+        <location filename="waterqualitypage.cpp" line="315"/>
         <source>TOC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="314"/>
+        <location filename="waterqualitypage.cpp" line="315"/>
         <source>ppb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="319"/>
-        <location filename="waterqualitypage.cpp" line="323"/>
+        <location filename="waterqualitypage.cpp" line="320"/>
+        <location filename="waterqualitypage.cpp" line="324"/>
         <source>Temp.</source>
         <oldsource>Temp</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="323"/>
-        <location filename="waterqualitypage.cpp" line="378"/>
-        <location filename="waterqualitypage.cpp" line="391"/>
-        <location filename="waterqualitypage.cpp" line="410"/>
+        <location filename="waterqualitypage.cpp" line="324"/>
+        <location filename="waterqualitypage.cpp" line="379"/>
+        <location filename="waterqualitypage.cpp" line="392"/>
+        <location filename="waterqualitypage.cpp" line="411"/>
         <source>Fahrenheit</source>
         <translation>F</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="293"/>
-        <location filename="waterqualitypage.cpp" line="333"/>
+        <location filename="waterqualitypage.cpp" line="294"/>
+        <location filename="waterqualitypage.cpp" line="334"/>
         <source>G/min</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="271"/>
+        <location filename="waterqualitypage.cpp" line="272"/>
         <source>Tank Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="279"/>
-        <location filename="waterqualitypage.cpp" line="283"/>
+        <location filename="waterqualitypage.cpp" line="280"/>
+        <location filename="waterqualitypage.cpp" line="284"/>
         <source>HP Resis.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="289"/>
-        <location filename="waterqualitypage.cpp" line="293"/>
+        <location filename="waterqualitypage.cpp" line="290"/>
+        <location filename="waterqualitypage.cpp" line="294"/>
         <source>HP Disp. rate</source>
         <translation>HP Disp. Rate</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="329"/>
-        <location filename="waterqualitypage.cpp" line="333"/>
+        <location filename="waterqualitypage.cpp" line="330"/>
+        <location filename="waterqualitypage.cpp" line="334"/>
         <source>UP Disp. rate</source>
         <translation>UP Disp. Rate</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="339"/>
-        <location filename="waterqualitypage.cpp" line="345"/>
-        <location filename="waterqualitypage.cpp" line="349"/>
+        <location filename="waterqualitypage.cpp" line="340"/>
+        <location filename="waterqualitypage.cpp" line="346"/>
+        <location filename="waterqualitypage.cpp" line="350"/>
         <source>UP IN</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="364"/>
-        <location filename="waterqualitypage.cpp" line="368"/>
+        <location filename="waterqualitypage.cpp" line="365"/>
+        <location filename="waterqualitypage.cpp" line="369"/>
         <source>EDI Product</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="382"/>
+        <location filename="waterqualitypage.cpp" line="383"/>
         <source>RO Product</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="395"/>
+        <location filename="waterqualitypage.cpp" line="396"/>
         <source>RO Rejection</source>
         <oldsource>RO Reject Rate</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="454"/>
-        <location filename="waterqualitypage.cpp" line="458"/>
+        <location filename="waterqualitypage.cpp" line="455"/>
+        <location filename="waterqualitypage.cpp" line="459"/>
         <source>RO Reject Rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="484"/>
-        <location filename="waterqualitypage.cpp" line="488"/>
+        <location filename="waterqualitypage.cpp" line="485"/>
+        <location filename="waterqualitypage.cpp" line="489"/>
         <source>EDI Product Rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="494"/>
-        <location filename="waterqualitypage.cpp" line="498"/>
+        <location filename="waterqualitypage.cpp" line="495"/>
+        <location filename="waterqualitypage.cpp" line="499"/>
         <source>EDI Reject Rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="283"/>
-        <location filename="waterqualitypage.cpp" line="310"/>
-        <location filename="waterqualitypage.cpp" line="339"/>
-        <location filename="waterqualitypage.cpp" line="349"/>
-        <location filename="waterqualitypage.cpp" line="368"/>
-        <location filename="waterqualitypage.cpp" line="382"/>
-        <location filename="waterqualitypage.cpp" line="398"/>
-        <location filename="waterqualitypage.cpp" line="401"/>
+        <location filename="waterqualitypage.cpp" line="284"/>
+        <location filename="waterqualitypage.cpp" line="311"/>
+        <location filename="waterqualitypage.cpp" line="340"/>
+        <location filename="waterqualitypage.cpp" line="350"/>
+        <location filename="waterqualitypage.cpp" line="369"/>
+        <location filename="waterqualitypage.cpp" line="383"/>
+        <location filename="waterqualitypage.cpp" line="399"/>
+        <location filename="waterqualitypage.cpp" line="402"/>
         <source>us/cm</source>
         <translation>μS/cm</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="398"/>
+        <location filename="waterqualitypage.cpp" line="399"/>
         <source>Tap Cond.</source>
         <translation type="unfinished">Tap Conductivity</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="416"/>
-        <location filename="waterqualitypage.cpp" line="420"/>
-        <location filename="waterqualitypage.cpp" line="424"/>
+        <location filename="waterqualitypage.cpp" line="417"/>
+        <location filename="waterqualitypage.cpp" line="421"/>
+        <location filename="waterqualitypage.cpp" line="425"/>
         <source>RO Feed Pressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="420"/>
-        <location filename="waterqualitypage.cpp" line="434"/>
+        <location filename="waterqualitypage.cpp" line="421"/>
+        <location filename="waterqualitypage.cpp" line="435"/>
         <source>mpa</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="424"/>
-        <location filename="waterqualitypage.cpp" line="438"/>
+        <location filename="waterqualitypage.cpp" line="425"/>
+        <location filename="waterqualitypage.cpp" line="439"/>
         <source>psi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="430"/>
-        <location filename="waterqualitypage.cpp" line="434"/>
-        <location filename="waterqualitypage.cpp" line="438"/>
+        <location filename="waterqualitypage.cpp" line="431"/>
+        <location filename="waterqualitypage.cpp" line="435"/>
+        <location filename="waterqualitypage.cpp" line="439"/>
         <source>RO Pressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="444"/>
-        <location filename="waterqualitypage.cpp" line="448"/>
+        <location filename="waterqualitypage.cpp" line="445"/>
+        <location filename="waterqualitypage.cpp" line="449"/>
         <source>RO Product Rate</source>
         <oldsource>RO Prod. Rate</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="448"/>
-        <location filename="waterqualitypage.cpp" line="458"/>
-        <location filename="waterqualitypage.cpp" line="468"/>
-        <location filename="waterqualitypage.cpp" line="478"/>
-        <location filename="waterqualitypage.cpp" line="488"/>
-        <location filename="waterqualitypage.cpp" line="498"/>
+        <location filename="waterqualitypage.cpp" line="449"/>
+        <location filename="waterqualitypage.cpp" line="459"/>
+        <location filename="waterqualitypage.cpp" line="469"/>
+        <location filename="waterqualitypage.cpp" line="479"/>
+        <location filename="waterqualitypage.cpp" line="489"/>
+        <location filename="waterqualitypage.cpp" line="499"/>
         <source>G/h</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="319"/>
-        <location filename="waterqualitypage.cpp" line="374"/>
-        <location filename="waterqualitypage.cpp" line="387"/>
-        <location filename="waterqualitypage.cpp" line="406"/>
+        <location filename="waterqualitypage.cpp" line="320"/>
+        <location filename="waterqualitypage.cpp" line="375"/>
+        <location filename="waterqualitypage.cpp" line="388"/>
+        <location filename="waterqualitypage.cpp" line="407"/>
         <source>Celsius</source>
         <translation>℃</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="289"/>
-        <location filename="waterqualitypage.cpp" line="329"/>
+        <location filename="waterqualitypage.cpp" line="290"/>
+        <location filename="waterqualitypage.cpp" line="330"/>
         <source>L/min</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="274"/>
+        <location filename="waterqualitypage.cpp" line="275"/>
         <source>L</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="274"/>
+        <location filename="waterqualitypage.cpp" line="275"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="279"/>
-        <location filename="waterqualitypage.cpp" line="306"/>
+        <location filename="waterqualitypage.cpp" line="280"/>
+        <location filename="waterqualitypage.cpp" line="307"/>
         <source>omg</source>
         <translation>MΩ.cm</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="306"/>
-        <location filename="waterqualitypage.cpp" line="310"/>
+        <location filename="waterqualitypage.cpp" line="307"/>
+        <location filename="waterqualitypage.cpp" line="311"/>
         <source>UP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="374"/>
-        <location filename="waterqualitypage.cpp" line="378"/>
+        <location filename="waterqualitypage.cpp" line="375"/>
+        <location filename="waterqualitypage.cpp" line="379"/>
         <source>EDI Temp.</source>
         <translation type="unfinished">EDI Temperature</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="387"/>
-        <location filename="waterqualitypage.cpp" line="391"/>
+        <location filename="waterqualitypage.cpp" line="388"/>
+        <location filename="waterqualitypage.cpp" line="392"/>
         <source>RO Temp.</source>
         <translation type="unfinished">RO Temperature</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="401"/>
+        <location filename="waterqualitypage.cpp" line="402"/>
         <source>RO Feed Cond.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="406"/>
-        <location filename="waterqualitypage.cpp" line="410"/>
+        <location filename="waterqualitypage.cpp" line="407"/>
+        <location filename="waterqualitypage.cpp" line="411"/>
         <source>RO Feed Temp.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="416"/>
-        <location filename="waterqualitypage.cpp" line="430"/>
+        <location filename="waterqualitypage.cpp" line="417"/>
+        <location filename="waterqualitypage.cpp" line="431"/>
         <source>bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="444"/>
-        <location filename="waterqualitypage.cpp" line="454"/>
-        <location filename="waterqualitypage.cpp" line="464"/>
-        <location filename="waterqualitypage.cpp" line="474"/>
-        <location filename="waterqualitypage.cpp" line="484"/>
-        <location filename="waterqualitypage.cpp" line="494"/>
+        <location filename="waterqualitypage.cpp" line="445"/>
+        <location filename="waterqualitypage.cpp" line="455"/>
+        <location filename="waterqualitypage.cpp" line="465"/>
+        <location filename="waterqualitypage.cpp" line="475"/>
+        <location filename="waterqualitypage.cpp" line="485"/>
+        <location filename="waterqualitypage.cpp" line="495"/>
         <source>L/h</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="464"/>
-        <location filename="waterqualitypage.cpp" line="468"/>
+        <location filename="waterqualitypage.cpp" line="465"/>
+        <location filename="waterqualitypage.cpp" line="469"/>
         <source>RO Feed rate</source>
         <translation type="unfinished">RO Feed Rate</translation>
     </message>
     <message>
-        <location filename="waterqualitypage.cpp" line="474"/>
-        <location filename="waterqualitypage.cpp" line="478"/>
+        <location filename="waterqualitypage.cpp" line="475"/>
+        <location filename="waterqualitypage.cpp" line="479"/>
         <source>Tap Rate</source>
         <translation type="unfinished"></translation>
     </message>

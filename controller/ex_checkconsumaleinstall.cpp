@@ -1,5 +1,6 @@
 #include "ex_checkconsumaleinstall.h"
 #include "Display.h"
+#include "mainwindow.h"
 #include "Ex_Display_c.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -438,16 +439,31 @@ void Ex_CheckConsumaleInstall::updateConsumableType(int iType)
 
 void Ex_CheckConsumaleInstall::updateConsumaleMsg()
 {
+    int iRet;
     switch(m_operateID)
     {
     case 1:
+    {
         insertSql();
+        iRet = gpMainWnd->writeRfid(m_curRfId, RF_DATA_LAYOUT_INSTALL_DATE, "NULL");
+        if(iRet != 0)
+        {
+            QMessageBox::warning(NULL, tr("Warning"), tr("write install date error"), QMessageBox::Ok);
+        }
         MainResetCmInfo(m_iType);
         break;
+    }
     case 2:
+    {
         updateSql();
+        iRet = gpMainWnd->writeRfid(m_curRfId, RF_DATA_LAYOUT_INSTALL_DATE, "NULL");
+        if(iRet != 0)
+        {
+            QMessageBox::warning(NULL, tr("Warning"), tr("write install date error"), QMessageBox::Ok);
+        }
         MainResetCmInfo(m_iType);
         break;
+    }
     default:
         break;
     }

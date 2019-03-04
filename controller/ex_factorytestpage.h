@@ -11,6 +11,7 @@ class QPushButton;
 class QLabel;
 class QLineEdit;
 class QFrame;
+class QComboBox;
 
 class Ex_FactoryTestPage : public CSubPage
 {
@@ -38,6 +39,21 @@ public:
         P3_DISPLAY,
         PRESSURE_DISPLAY_NUM
     };
+    enum TABPAGE
+    {
+        FACTORY_PAGE_RFID = 0,
+        FACTORY_PAGE_FLOW,
+        FACTORY_PAGE_NUM
+    };
+
+    enum RFIDPAGECONFIG
+    {
+        CONFIG_CAT = 0,
+        CONFIG_LOT,
+        CONFIG_INSTALLDATE,
+        CONFIG_VOLUMEOFUSE,
+        CONFIG_NUM
+    };
 
 
 public:
@@ -49,23 +65,43 @@ public:
     virtual void initUi();
     void show(bool bShow);
 
+    void update();
+    void fade();
+
     void updateFlow(int iIndex, int value);
     void updatePressure(int iIndex,float fvalue);
     void updTank(int iLevel,float fVolume);
     void updSoureTank(int iLevel,float fVolume);
 
+    //RFID
+    void updateRFIDInfo(int iRfId);
+
 private:
     void buildTitles();
+    void setBackColor();
     void createControl();
+
+    void initFlowTestPage();
+    void initRFIDTestPage();
 
 private slots:
     void on_flowBtn_clicked();
     void on_iLoopBtn_clicked();
     void on_keyBtn_clicked();
 
+    void on_writeBtn_clicked();
+    void on_readBtn_clicked();
+
 private:
     bool isFlow;
     bool isPressure;
+
+    //
+    QTabWidget* m_tabWidget;
+    QWidget* m_mainWidget;
+    QWidget* m_pageWidget[FACTORY_PAGE_NUM];
+
+    //
     QFrame* m_pFrame[FTESTPAGE_NUM];
     QPushButton* m_pBtn[FTESTPAGE_NUM];
     QLabel* m_pAreaLab[FTESTPAGE_NUM];
@@ -76,6 +112,15 @@ private:
     QLineEdit* m_pPreDisplayLE[PRESSURE_DISPLAY_NUM];
     QLabel* m_pPreDisplayLab[PRESSURE_DISPLAY_NUM];
 
+    //
+    QLabel* m_pConfigLabel[CONFIG_NUM];
+    QLineEdit* m_pConfigLineEdit[CONFIG_NUM];
+
+    QLabel* m_pIndexLabel;
+    QComboBox* m_pIndexCombo;
+
+    QPushButton* m_pWriteBtn;
+    QPushButton* m_pReadBtn;
 };
 
 extern CtrlApplication *gApp;

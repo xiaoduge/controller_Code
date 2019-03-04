@@ -191,7 +191,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.5.190125_release");
+QString strSoftwareVersion = QString("0.1.5.190301_debug");
 
 MainWindow *gpMainWnd;
 
@@ -3080,7 +3080,9 @@ void MainResetCmInfo(int iSel)
     {
     case DISP_PRE_PACK:
         gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY] = DispGetCurSecond();
+#ifndef RFIDTEST
         gCMUsage.info.aulCms[DISP_PRE_PACKLIFEL]   = 0;
+#endif
         gCMUsage.ulUsageState &= ~(1 << DISP_PRE_PACKLIFEDAY);
         gCMUsage.ulUsageState &= ~(1 << DISP_PRE_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEDAY] = 0;
@@ -3088,7 +3090,9 @@ void MainResetCmInfo(int iSel)
         break;
     case DISP_AC_PACK:
         gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY] = DispGetCurSecond();
+#ifndef RFIDTEST
         gCMUsage.info.aulCms[DISP_AC_PACKLIFEL]   = 0;
+#endif
         gCMUsage.ulUsageState &= ~(1 << DISP_AC_PACKLIFEDAY);
         gCMUsage.ulUsageState &= ~(1 << DISP_AC_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_AC_PACKLIFEDAY] = 0;
@@ -3104,7 +3108,9 @@ void MainResetCmInfo(int iSel)
         break;
     case DISP_P_PACK:
         gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY] = DispGetCurSecond();
+#ifndef RFIDTEST
         gCMUsage.info.aulCms[DISP_P_PACKLIFEL]   = 0;
+#endif
         gCMUsage.ulUsageState &= ~(1 << DISP_P_PACKLIFEDAY);
         gCMUsage.ulUsageState &= ~(1 << DISP_P_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEDAY] = 0;
@@ -3112,7 +3118,9 @@ void MainResetCmInfo(int iSel)
         break;
     case DISP_U_PACK:
         gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY] = DispGetCurSecond();
+#ifndef RFIDTEST
         gCMUsage.info.aulCms[DISP_U_PACKLIFEL]   = 0;
+#endif
         gCMUsage.ulUsageState &= ~(1 << DISP_U_PACKLIFEDAY);
         gCMUsage.ulUsageState &= ~(1 << DISP_U_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_U_PACKLIFEDAY] = 0;
@@ -3120,7 +3128,9 @@ void MainResetCmInfo(int iSel)
         break;
     case DISP_AT_PACK:
         gCMUsage.info.aulCms[DISP_AT_PACKLIFEDAY] = DispGetCurSecond();
+#ifndef RFIDTEST
         gCMUsage.info.aulCms[DISP_AT_PACKLIFEL]   = 0;
+#endif
         gCMUsage.ulUsageState &= ~(1 << DISP_AT_PACKLIFEDAY);
         gCMUsage.ulUsageState &= ~(1 << DISP_AT_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_AT_PACKLIFEDAY] = 0;
@@ -3128,7 +3138,9 @@ void MainResetCmInfo(int iSel)
         break;
     case DISP_H_PACK:
         gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY] = DispGetCurSecond();
+#ifndef RFIDTEST
         gCMUsage.info.aulCms[DISP_H_PACKLIFEL]   = 0;
+#endif
         gCMUsage.ulUsageState &= ~(1 << DISP_H_PACKLIFEDAY);
         gCMUsage.ulUsageState &= ~(1 << DISP_H_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_H_PACKLIFEDAY] = 0;
@@ -3207,7 +3219,8 @@ void MainResetCmInfo(int iSel)
     }
 
     MainSaveCMInfo(gGlobalParam.iMachineType,gCMUsage.info);
-
+    gpMainWnd->updateCMInfoWithRFID(1); //write to RFID
+    gpMainWnd->updateCMInfoWithRFID(0); //read to RFID
     //gCMUsage.bit1PendingInfoSave = TRUE;
 }
 
@@ -3320,6 +3333,7 @@ void SaveConsumptiveMaterialInfo(void)
    {
       gCMUsage.bit1PendingInfoSave = TRUE;
       MainSaveCMInfo(gGlobalParam.iMachineType,gCMUsage.info); //
+      gpMainWnd->updateCMInfoWithRFID(1);
    }
    
 }
@@ -3475,7 +3489,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
 {
     int iLoop;
 
-    m_bC1Regulator = false;  
+    m_bC1Regulator = false;
+    m_isInitCMInfo = false; //2019.3.1 add
 
     MainRetriveExConsumableMsg(gGlobalParam.iMachineType,gGlobalParam.cmSn,gGlobalParam.macSn);
 
@@ -4463,6 +4478,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
     }
     initScreenSleep(); //ex
     initMachineFlow();  //ex 2018.11.19
+
+    QTimer::singleShot(3000, this, SLOT(retriveCMInfoWithRFID()));
 }
 
 void MainWindow::on_timerBuzzerEvent()
@@ -5169,6 +5186,7 @@ void MainWindow::on_timerEvent()
         {
             gCMUsage.bit1PendingInfoSave = FALSE;
             MainSaveCMInfo(gGlobalParam.iMachineType,gCMUsage.info);
+            updateCMInfoWithRFID(1);
         }
         
     }
@@ -5230,6 +5248,12 @@ void MainWindow::on_timerEvent()
             
             DispSndHoAlarm(APP_PROTOL_CANID_BROADCAST,iType);
         }
+    }
+
+    //2019.3.1
+    if(!m_isInitCMInfo)
+    {
+        updateCMInfoWithRFID(0);
     }
 }
 
@@ -5825,6 +5849,18 @@ int  MainWindow::readRfid(int iRfId)
     
         if (0 == iRet)
         {
+#ifdef RFIDTEST
+            iRet =  CcbReadRfid(iRfId,2000,m_RfDataItems.aItem[RF_DATA_LAYOUT_INSTALL_DATE].offset,m_RfDataItems.aItem[RF_DATA_LAYOUT_LOT_NUMBER].size);
+            if(0 != iRet)
+            {
+                return -1;
+            }
+            iRet =  CcbReadRfid(iRfId,2000,m_RfDataItems.aItem[RF_DATA_LAYOUT_UNKNOW_DATA].offset,m_RfDataItems.aItem[RF_DATA_LAYOUT_LOT_NUMBER].size);
+            if(0 != iRet)
+            {
+                return -1;
+            }
+#endif
             iRet = CcbGetRfidCont(iRfId,m_RfDataItems.aItem[RF_DATA_LAYOUT_CATALOGUE_NUM].offset,m_RfDataItems.aItem[RF_DATA_LAYOUT_CATALOGUE_NUM].size,m_aRfidInfo[iRfId].aucContent + m_RfDataItems.aItem[RF_DATA_LAYOUT_CATALOGUE_NUM].offset);
             if (0 == iRet)
             {
@@ -5836,6 +5872,25 @@ int  MainWindow::readRfid(int iRfId)
             {
                 return -1;
             }
+
+#ifdef RFIDTEST
+            iRet = CcbGetRfidCont(iRfId,
+                                  m_RfDataItems.aItem[RF_DATA_LAYOUT_INSTALL_DATE].offset,
+                                  m_RfDataItems.aItem[RF_DATA_LAYOUT_INSTALL_DATE].size,
+                                  m_aRfidInfo[iRfId].aucContent + m_RfDataItems.aItem[RF_DATA_LAYOUT_INSTALL_DATE].offset);
+            if (0 == iRet)
+            {
+                return -1;
+            }
+            iRet = CcbGetRfidCont(iRfId,
+                                  m_RfDataItems.aItem[RF_DATA_LAYOUT_UNKNOW_DATA].offset,
+                                  m_RfDataItems.aItem[RF_DATA_LAYOUT_UNKNOW_DATA].size,
+                                  m_aRfidInfo[iRfId].aucContent + m_RfDataItems.aItem[RF_DATA_LAYOUT_UNKNOW_DATA].offset);
+            if (0 == iRet)
+            {
+                return -1;
+            }
+#endif
             
             m_aRfidInfo[iRfId].ucValid = 1;
 
@@ -5847,6 +5902,72 @@ int  MainWindow::readRfid(int iRfId)
 
     return iRet;
 }
+
+#ifdef RFIDTEST
+int MainWindow::writeRfid(int iRfId, int dataLayout, QString strData)
+{
+    //make data
+    unsigned char pData[m_RfDataItems.aItem[dataLayout].size];
+    char tmpbuf[256];
+    memset(tmpbuf, 0, sizeof(tmpbuf));
+    strcpy(tmpbuf, strData.toAscii());
+    switch(dataLayout)
+    {
+    case RF_DATA_LAYOUT_CATALOGUE_NUM:
+        for (int iLoop = 0; iLoop < m_RfDataItems.aItem[RF_DATA_LAYOUT_CATALOGUE_NUM].size; iLoop += 4)
+        {
+            pData[iLoop]   = tmpbuf[iLoop + 3];
+            pData[iLoop+1] = tmpbuf[iLoop + 2];
+            pData[iLoop+2] = tmpbuf[iLoop + 1];
+            pData[iLoop+3] = tmpbuf[iLoop + 0];
+        }
+        break;
+    case RF_DATA_LAYOUT_LOT_NUMBER:
+        for (int iLoop = 0; iLoop < m_RfDataItems.aItem[RF_DATA_LAYOUT_LOT_NUMBER].size; iLoop += 4)
+        {
+            pData[iLoop]   = tmpbuf[iLoop + 3];
+            pData[iLoop+1] = tmpbuf[iLoop + 2];
+            pData[iLoop+2] = tmpbuf[iLoop + 1];
+            pData[iLoop+3] = tmpbuf[iLoop + 0];
+        }
+        break;
+    case RF_DATA_LAYOUT_INSTALL_DATE:
+    {
+        QDate curDate = QDate::currentDate();
+        pData[0] = curDate.day();
+        pData[1] = curDate.month();
+        pData[2] = (curDate.year() >> 8) & 0xff;
+        pData[3] = (curDate.year() >> 0) & 0xff;
+        break;
+    }
+    case RF_DATA_LAYOUT_UNKNOW_DATA:
+    {
+        int num, num1, num2, num3;
+        num = strData.toInt();
+        if(num > 999999)
+        {
+            num = 999999;
+        }
+
+        num1 = num%100;
+        num2 = num%10000/100;
+        num3 = num/10000;
+        pData[0] = num1;
+        pData[1] = num2;
+        pData[2] = num3;
+        break;
+    }
+    default:
+        return -1;
+    }
+    //end make data
+
+    int iRet = CcbWriteRfid(iRfId, 2000, m_RfDataItems.aItem[dataLayout].offset,
+                 m_RfDataItems.aItem[dataLayout].size,
+                 pData);
+    return iRet;
+}
+#endif
 
 void MainWindow::saveFmData(int id,unsigned int ulValue)
 {
@@ -8467,5 +8588,301 @@ QStringList MainWindow::consumableCatNo(CONSUMABLE_CATNO iType)
 {
     return m_strConsuamble[iType];
 }
+
+void MainWindow::retriveCMInfoWithRFID()
+{
+    updateCMInfoWithRFID(0);
+}
+
+#ifdef RFIDTEST
+void MainWindow::updateCMInfoWithRFID(int operate)
+{
+    int iRfId;
+    int packType;
+
+    if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter)) //DISP_SM_PreFilterColumn
+    {
+        packType = DISP_PRE_PACK;
+        iRfId = APP_RFID_SUB_TYPE_PREPACK;
+        if(0 == operate)
+        {
+            readCMInfoFromRFID(iRfId, packType);
+        }
+        else
+        {
+            writeCMInfoToRFID(iRfId, packType);
+        }
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+    {
+        packType   = DISP_AC_PACK;
+        iRfId = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        if(0 == operate)
+        {
+            readCMInfoFromRFID(iRfId, packType);
+        }
+        else
+        {
+            writeCMInfoToRFID(iRfId, packType);
+        }
+        break;
+    }
+    case MACHINE_PURIST:
+        break;
+     }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+    {
+        packType = DISP_P_PACK;
+        iRfId = APP_RFID_SUB_TYPE_PPACK_CLEANPACK;
+        if(0 == operate)
+        {
+            readCMInfoFromRFID(iRfId, packType);
+        }
+        else
+        {
+            writeCMInfoToRFID(iRfId, packType);
+        }
+        break;
+    }
+    case MACHINE_PURIST:
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+     case MACHINE_L_Genie:
+     case MACHINE_L_EDI_LOOP:
+     {
+         packType = DISP_AT_PACK;
+         iRfId = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+         if(0 == operate)
+         {
+             readCMInfoFromRFID(iRfId, packType);
+         }
+         else
+         {
+             writeCMInfoToRFID(iRfId, packType);
+         }
+         break;
+     }
+    }
+
+     switch(gGlobalParam.iMachineType)
+     {
+     case MACHINE_L_UP:
+     case MACHINE_L_RO_LOOP:
+     case MACHINE_UP:
+     case MACHINE_PURIST:
+     case MACHINE_ADAPT:
+     {
+         packType = DISP_H_PACK;
+         iRfId = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+         if(0 == operate)
+         {
+             readCMInfoFromRFID(iRfId, packType);
+         }
+         else
+         {
+             writeCMInfoToRFID(iRfId, packType);
+         }
+         break;
+     }
+     case MACHINE_L_EDI_LOOP:
+     {
+        packType = DISP_H_PACK;
+        iRfId = APP_RFID_SUB_TYPE_UPACK_HPACK;
+        if(0 == operate)
+        {
+            readCMInfoFromRFID(iRfId, packType);
+        }
+        else
+        {
+            writeCMInfoToRFID(iRfId, packType);
+        }
+        break;
+     }
+     }
+
+     switch(gGlobalParam.iMachineType)
+     {
+     case MACHINE_L_Genie:
+     case MACHINE_L_UP:
+     case MACHINE_Genie:
+     case MACHINE_UP:
+     case MACHINE_PURIST:
+     case MACHINE_ADAPT:
+     {
+         packType = DISP_U_PACK;
+         iRfId = APP_RFID_SUB_TYPE_UPACK_HPACK;
+         if(0 == operate)
+         {
+             readCMInfoFromRFID(iRfId, packType);
+         }
+         else
+         {
+             writeCMInfoToRFID(iRfId, packType);
+         }
+         break;
+     }
+     }
+}
+
+void MainWindow::readCMInfoFromRFID(int iRfId, int type)
+{
+
+    qDebug() << QString("*******readCMInfoFromRFID(%1, %2)*************").arg(iRfId).arg(type);
+    int iRet;
+
+    CATNO cn;
+    LOTNO ln;
+    QDate installDate;
+    int volUsed;
+
+    memset(cn, 0, sizeof(CATNO));
+    memset(ln, 0, sizeof(LOTNO));
+
+    if (this->getRfidState(iRfId))
+    {
+        if(m_aRfidInfo[iRfId].getPackType() == type)
+        {
+            this->getRfidInstallDate(iRfId, &installDate);
+            this->getRfidVolofUse(iRfId, volUsed);
+        }
+        else
+        {
+            qDebug() << QString("*******error 1*************");
+            return;
+        }
+
+    }
+
+    else
+    {
+        iRet = this->readRfid(iRfId);
+        if (iRet)
+        {
+            qDebug() << QString("*******error 2*************");
+            return;
+        }
+
+        if(m_aRfidInfo[iRfId].getPackType() == type)
+        {
+            this->getRfidInstallDate(iRfId, &installDate);
+            this->getRfidVolofUse(iRfId, volUsed);
+        }
+        else
+        {
+            qDebug() << QString("*******error 3*************");
+            return;
+        }
+    }
+
+    QDateTime installTime(installDate);
+    qDebug() << QString("*******(vol = %1), (time = %2)*********").arg(volUsed).arg(installTime.toTime_t());
+    switch(type)
+    {
+    case DISP_PRE_PACK:
+        gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_PRE_PACKLIFEL]   = volUsed;
+        qDebug() << "*******Pre*********";
+        break;
+    case DISP_AC_PACK:
+        gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_AC_PACKLIFEL]   = volUsed;
+        qDebug() << "*******AC*********";
+        break;
+    case DISP_T_PACK:
+        gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_T_PACKLIFEL]   = volUsed;
+        qDebug() << "*******T*********";
+        break;
+    case DISP_P_PACK:
+        gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_P_PACKLIFEL]   = volUsed;
+        qDebug() << "*******P Pack*********";
+        break;
+    case DISP_U_PACK:
+        gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_U_PACKLIFEL]   = volUsed;
+        qDebug() << "*******U Pack*********";
+        break;
+    case DISP_AT_PACK:
+        gCMUsage.info.aulCms[DISP_AT_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_AT_PACKLIFEL]   = volUsed;
+        qDebug() << "*******AT Pack*********";
+        break;
+    case DISP_H_PACK:
+        gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_H_PACKLIFEL]   = volUsed;
+        qDebug() << "*******H Pack*********";
+        break;
+    }
+    if(!m_isInitCMInfo)
+    {
+        m_isInitCMInfo = true;
+    }
+}
+
+void MainWindow::writeCMInfoToRFID(int iRfId, int type)
+{
+    qDebug() << QString("writeCMInfoToRFIF(%1, %2)").arg(iRfId).arg(type);
+    if(!m_isInitCMInfo)
+    {
+        return;
+    }
+
+    int iRet;
+    QString volData;
+    switch(type)
+    {
+    case DISP_PRE_PACK:
+        volData = QString("%1").arg(gCMUsage.info.aulCms[DISP_PRE_PACKLIFEL]);
+        break;
+    case DISP_AC_PACK:
+        volData = QString("%1").arg(gCMUsage.info.aulCms[DISP_AC_PACKLIFEL]);
+        break;
+    case DISP_P_PACK:
+        volData = QString("%1").arg(gCMUsage.info.aulCms[DISP_P_PACKLIFEL]);
+        break;
+    case DISP_U_PACK:
+        volData = QString("%1").arg(gCMUsage.info.aulCms[DISP_U_PACKLIFEL]);
+        break;
+    case DISP_AT_PACK:
+        volData = QString("%1").arg(gCMUsage.info.aulCms[DISP_AT_PACKLIFEL]);
+        break;
+    case DISP_H_PACK:
+        volData = QString("%1").arg(gCMUsage.info.aulCms[DISP_H_PACKLIFEL]);
+        break;
+    }
+
+    iRet = this->writeRfid(iRfId, RF_DATA_LAYOUT_UNKNOW_DATA, volData);
+    if(iRet != 0)
+    {
+        qDebug() << "************write pack info error*************";
+    }
+}
+#endif
 
 
