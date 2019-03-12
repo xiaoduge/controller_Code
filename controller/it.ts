@@ -1456,6 +1456,21 @@
     </message>
 </context>
 <context>
+    <name>Ex_CheckConsumaleInstall</name>
+    <message>
+        <location filename="ex_checkconsumaleinstall.cpp" line="451"/>
+        <location filename="ex_checkconsumaleinstall.cpp" line="462"/>
+        <source>Warning</source>
+        <translation type="unfinished">Avvertimento</translation>
+    </message>
+    <message>
+        <location filename="ex_checkconsumaleinstall.cpp" line="451"/>
+        <location filename="ex_checkconsumaleinstall.cpp" line="462"/>
+        <source>write install date error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Ex_ConsumableInstallDialog</name>
     <message>
         <location filename="ex_consumableinstalldialog.cpp" line="20"/>
@@ -1600,84 +1615,187 @@
 <context>
     <name>Ex_FactoryTestPage</name>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="31"/>
+        <location filename="ex_factorytestpage.cpp" line="33"/>
         <source>Factory Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="59"/>
-        <source>Flow Test</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="ex_factorytestpage.cpp" line="61"/>
-        <source>S1</source>
+        <source>Cat No.:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="ex_factorytestpage.cpp" line="62"/>
-        <source>S2</source>
+        <source>Lott No.:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="ex_factorytestpage.cpp" line="63"/>
-        <source>S3</source>
+        <source>Installation Date:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="ex_factorytestpage.cpp" line="64"/>
-        <source>S4</source>
+        <source>Volume of Use:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="65"/>
+        <source>Address:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="67"/>
+        <source>Write</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="68"/>
+        <source>Read</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="ex_factorytestpage.cpp" line="69"/>
-        <source>Start</source>
+        <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="72"/>
-        <source>Pressure Test</source>
+        <location filename="ex_factorytestpage.cpp" line="71"/>
+        <source>Flow Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="73"/>
+        <source>S1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="ex_factorytestpage.cpp" line="74"/>
-        <source>Work Pres.</source>
+        <source>S2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="ex_factorytestpage.cpp" line="75"/>
+        <source>S3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="76"/>
+        <source>S4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="81"/>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="84"/>
+        <source>Pressure Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="86"/>
+        <source>Work Pres.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="87"/>
         <source>Pure Tank Level</source>
         <translation type="unfinished">Livello Tank Pura</translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="76"/>
+        <location filename="ex_factorytestpage.cpp" line="88"/>
         <source>Source Tank Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="82"/>
+        <location filename="ex_factorytestpage.cpp" line="94"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="257"/>
+        <location filename="ex_factorytestpage.cpp" line="269"/>
         <source>Flow &amp; Pressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="277"/>
+        <location filename="ex_factorytestpage.cpp" line="286"/>
+        <source>20</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="287"/>
+        <source>21</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="288"/>
+        <source>22</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="289"/>
+        <source>23</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="290"/>
+        <source>24</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="325"/>
+        <source>RFID TEST</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="344"/>
         <source>Fail: Flow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="277"/>
-        <location filename="ex_factorytestpage.cpp" line="294"/>
+        <location filename="ex_factorytestpage.cpp" line="344"/>
+        <location filename="ex_factorytestpage.cpp" line="361"/>
         <source>Can not enter test Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="294"/>
+        <location filename="ex_factorytestpage.cpp" line="361"/>
         <source>Fail: Pressure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="384"/>
+        <location filename="ex_factorytestpage.cpp" line="389"/>
+        <location filename="ex_factorytestpage.cpp" line="395"/>
+        <location filename="ex_factorytestpage.cpp" line="400"/>
+        <source>Warning</source>
+        <translation type="unfinished">Avvertimento</translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="384"/>
+        <source>write cat error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="389"/>
+        <source>write lot error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="395"/>
+        <source>write install date error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="400"/>
+        <source>write vol data error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_factorytestpage.cpp" line="403"/>
+        <source>Write finished</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3656,97 +3774,97 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="5121"/>
+        <location filename="mainwindow.cpp" line="5143"/>
         <source>Yellow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7503"/>
+        <location filename="mainwindow.cpp" line="7632"/>
         <source>No Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7506"/>
+        <location filename="mainwindow.cpp" line="7635"/>
         <source>No AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7509"/>
+        <location filename="mainwindow.cpp" line="7638"/>
         <source>No P-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7512"/>
+        <location filename="mainwindow.cpp" line="7641"/>
         <source>No U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7515"/>
+        <location filename="mainwindow.cpp" line="7644"/>
         <source>No AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7518"/>
+        <location filename="mainwindow.cpp" line="7647"/>
         <source>No H-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7521"/>
+        <location filename="mainwindow.cpp" line="7650"/>
         <source>False Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7524"/>
+        <location filename="mainwindow.cpp" line="7653"/>
         <source>False AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7527"/>
+        <location filename="mainwindow.cpp" line="7656"/>
         <source>False P-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7530"/>
+        <location filename="mainwindow.cpp" line="7659"/>
         <source>False U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7533"/>
+        <location filename="mainwindow.cpp" line="7662"/>
         <source>False AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7536"/>
+        <location filename="mainwindow.cpp" line="7665"/>
         <source>False H-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7913"/>
+        <location filename="mainwindow.cpp" line="8042"/>
         <source>Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7914"/>
+        <location filename="mainwindow.cpp" line="8043"/>
         <source>Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7915"/>
+        <location filename="mainwindow.cpp" line="8044"/>
         <source>User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7916"/>
+        <location filename="mainwindow.cpp" line="8045"/>
         <source>GetW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7917"/>
+        <location filename="mainwindow.cpp" line="8046"/>
         <source>PWater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="7918"/>
+        <location filename="mainwindow.cpp" line="8047"/>
         <source>Log</source>
         <translation type="unfinished"></translation>
     </message>

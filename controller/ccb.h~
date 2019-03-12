@@ -120,7 +120,7 @@ typedef struct
 typedef struct
 {
     unsigned int  bit1Qtw        : 1;
-    unsigned int  bit1PendingQtw : 1;   /* for adapter */
+    unsigned int  bit1PendingQtw : 1;
     unsigned int  bit1Active     : 1;
     
     int                  iDevType;      /* APP_DEV_HS_SUB_TYPE_ENUM */

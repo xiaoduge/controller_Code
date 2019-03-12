@@ -1186,6 +1186,8 @@ int DispGetInitRunFlag(void);
 int DispGetREJ(float *pfValue);
 float CcbCalcREJ(void);
 int CcbGetTwFlag(void);
+int CcbGetTwPendingFlag(void);
+
 int DispGetUpQtwFlag(void);
 int DispGetTubeCirFlag(void);
 int DispGetTocCirFlag(void);

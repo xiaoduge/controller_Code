@@ -191,7 +191,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.5.190301_debug");
+QString strSoftwareVersion = QString("0.1.6.190308_RC");
 
 MainWindow *gpMainWnd;
 
@@ -3115,6 +3115,7 @@ void MainResetCmInfo(int iSel)
         gCMUsage.ulUsageState &= ~(1 << DISP_P_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEDAY] = 0;
         gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] = 0;
+        ex_isPackNew = 1; //2019.3.4 add
         break;
     case DISP_U_PACK:
         gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY] = DispGetCurSecond();
@@ -3219,7 +3220,7 @@ void MainResetCmInfo(int iSel)
     }
 
     MainSaveCMInfo(gGlobalParam.iMachineType,gCMUsage.info);
-    gpMainWnd->updateCMInfoWithRFID(1); //write to RFID
+//    gpMainWnd->updateCMInfoWithRFID(1); //write to RFID
     gpMainWnd->updateCMInfoWithRFID(0); //read to RFID
     //gCMUsage.bit1PendingInfoSave = TRUE;
 }
@@ -3333,7 +3334,10 @@ void SaveConsumptiveMaterialInfo(void)
    {
       gCMUsage.bit1PendingInfoSave = TRUE;
       MainSaveCMInfo(gGlobalParam.iMachineType,gCMUsage.info); //
-      gpMainWnd->updateCMInfoWithRFID(1);
+      if(DISP_WORK_STATE_IDLE != DispGetWorkState4Pw())
+      {
+          gpMainWnd->updateCMInfoWithRFID(1);
+      }
    }
    
 }
@@ -3491,6 +3495,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     m_bC1Regulator = false;
     m_isInitCMInfo = false; //2019.3.1 add
+    ex_isPackNew = 0;
 
     MainRetriveExConsumableMsg(gGlobalParam.iMachineType,gGlobalParam.cmSn,gGlobalParam.macSn);
 
@@ -5186,7 +5191,10 @@ void MainWindow::on_timerEvent()
         {
             gCMUsage.bit1PendingInfoSave = FALSE;
             MainSaveCMInfo(gGlobalParam.iMachineType,gCMUsage.info);
-            updateCMInfoWithRFID(1);
+            if(DISP_WORK_STATE_IDLE != DispGetWorkState4Pw())
+            {
+                updateCMInfoWithRFID(1);
+            }
         }
         
     }

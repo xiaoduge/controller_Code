@@ -66,6 +66,7 @@ void Ex_FactoryTestPage::buildTranslation()
 
     m_pWriteBtn->setText(tr("Write"));
     m_pReadBtn->setText(tr("Read"));
+    m_pClearBtn->setText(tr("Clear"));
 
     m_pAreaLab[FTESTPAGE_FLOW]->setText(tr("Flow Test"));
     m_pAreaLab[FTESTPAGE_FLOW]->setAlignment(Qt::AlignCenter);
@@ -304,11 +305,15 @@ void Ex_FactoryTestPage::initRFIDTestPage()
     hLayout->setAlignment(Qt::AlignCenter);
     m_pWriteBtn = new QPushButton;
     m_pReadBtn = new QPushButton;
+    m_pClearBtn = new QPushButton;
     m_pWriteBtn->setMaximumWidth(100);
     m_pReadBtn->setMaximumWidth(100);
+    m_pClearBtn->setMaximumWidth(100);
     hLayout->addWidget(m_pWriteBtn);
     hLayout->addSpacing(50);
     hLayout->addWidget(m_pReadBtn);
+    hLayout->addSpacing(50);
+    hLayout->addWidget(m_pClearBtn);
 
     QVBoxLayout* vLayout = new QVBoxLayout;
     vLayout->addLayout(fLayout);
@@ -321,6 +326,7 @@ void Ex_FactoryTestPage::initRFIDTestPage()
 
     connect(m_pWriteBtn, SIGNAL(clicked()), this, SLOT(on_writeBtn_clicked()));
     connect(m_pReadBtn, SIGNAL(clicked()), this, SLOT(on_readBtn_clicked()));
+    connect(m_pClearBtn, SIGNAL(clicked()), this, SLOT(on_clearBtn_clicked()));
 }
 
 void Ex_FactoryTestPage::on_flowBtn_clicked()
@@ -395,6 +401,7 @@ void Ex_FactoryTestPage::on_writeBtn_clicked()
     }
 
     Ex_HintDialog::getInstance(tr("Write finished"));
+    m_wndMain->updateCMInfoWithRFID(0);
 #endif
 }
 
@@ -404,6 +411,14 @@ void Ex_FactoryTestPage::on_readBtn_clicked()
     m_wndMain->prepareKeyStroke();
     updateRFIDInfo(m_pIndexCombo->currentIndex());
 #endif
+}
+
+void Ex_FactoryTestPage::on_clearBtn_clicked()
+{
+    m_pConfigLineEdit[CONFIG_CAT]->clear();
+    m_pConfigLineEdit[CONFIG_LOT]->clear();
+    m_pConfigLineEdit[CONFIG_INSTALLDATE]->clear();
+    m_pConfigLineEdit[CONFIG_VOLUMEOFUSE]->clear();
 }
 
 

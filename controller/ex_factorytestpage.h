@@ -91,6 +91,7 @@ private slots:
 
     void on_writeBtn_clicked();
     void on_readBtn_clicked();
+    void on_clearBtn_clicked();
 
 private:
     bool isFlow;
@@ -121,6 +122,7 @@ private:
 
     QPushButton* m_pWriteBtn;
     QPushButton* m_pReadBtn;
+    QPushButton* m_pClearBtn;
 };
 
 extern CtrlApplication *gApp;

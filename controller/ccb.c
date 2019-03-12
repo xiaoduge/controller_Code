@@ -83,6 +83,7 @@ unsigned char gaucIapBuffer[1024];
 int Check_TOC_Alarm = 0;
 int AlarmHighWorkPress = 0;
 const float cor_H_PurtTank = 0.08;
+
 //end
 
 int is_B2_FULL(ulValue)
@@ -193,6 +194,8 @@ void CcbNotSpeed(int iType,int iSpeed);
 int CcbC2Regulator(int id,float fv,int on);
 
 DISPHANDLE CcbInnerWorkInitRun(void);
+
+void CanCcbSndQtwRspMsg(int iIndex,int iCode);
 
 int MakeThdState(int id,int flag)
 {
@@ -391,8 +394,24 @@ int CcbGetTwFlag(void)
     }
 
     return iFlags;
+}
+
+
+int CcbGetTwPendingFlag(void)
+{
+    int iLoop;
+
+    int iFlags = 0;
+
+    for (iLoop = 0; iLoop < MAX_HANDLER_NUM; iLoop++)
+    {
+        if (gCcb.aHandler[iLoop].bit1PendingQtw) iFlags |= 1 << iLoop;
+    }
+
+    return iFlags;
     
 }
+
 
 
 int DispGetInitRunFlag(void)
@@ -2914,6 +2933,8 @@ void work_start_qtw(void *para)
             /* 2018/01/05 add extra 10 seconds for flush according to ZHANG Chunhe */
             if (gulSecond - pCcb->ulAdapterAgingCount > 60)
             {
+                gCcb.aHandler[iIndex].bit1PendingQtw = 1;
+                
                 /* 2018/01/05 add E3 according to ZHANG */
                 if(haveB3(&gCcb))
                 {
@@ -2927,7 +2948,7 @@ void work_start_qtw(void *para)
                 iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
                 if (iRet )
                 {
-                    VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet); 
+                    VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
             
                     work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);        
                     
@@ -2979,7 +3000,7 @@ void work_start_qtw(void *para)
                     iRet = CcbWorkDelayEntry(pWorkItem->id,1000,CcbDelayCallBack);
                     if (iRet )
                     {
-                        VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);  
+                        VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);
                         
                         work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);        
                         
@@ -3372,22 +3393,7 @@ void work_stop_qtw(void *para)
     }
 
     iTmp  = (1 << APP_EXE_I4_NO) | (1 << APP_EXE_I5_NO);
-    /*
-    if (MACHINE_PURIST == pCcb->ulMachineType)
-    {
-        iTmp |= (1 << APP_EXE_I2_NO);
-    }
-    //UP HP循环开启时Ro采� �I3
-    if(MACHINE_UP == pCcb->ulMachineType)
-    {
-        iTmp |= (1 << APP_EXE_I3_NO);
-    }
 
-    if(MACHINE_RO == pCcb->ulMachineType) //&& haveHPCir(&gCcb))
-    {
-        iTmp |= (1 << APP_EXE_I3_NO);
-    }
-    */
     switch(pCcb->ulMachineType)
     {
     case MACHINE_PURIST:
@@ -9677,6 +9683,8 @@ void CcbWorMsgProc(SAT_MSG_HEAD *pucMsg)
             memcpy(aResult,pWorkMsg->aucData,sizeof(aResult));
     
             gCcb.aHandler[aResult[1]].bit1Qtw = 0;
+
+            gCcb.aHandler[aResult[1]].bit1PendingQtw = 0;
             
             CcbNotAscInfo(pWorkMsg->iSubMsg*2 + !!aResult[0]);
 
@@ -13810,6 +13818,7 @@ void MainSndHeartBeat(void)
      {
      case APP_PACKET_HS_STATE_QTW:
          pLoad->ucAddData    = CcbGetTwFlag();
+         pLoad->ucResult     = CcbGetTwPendingFlag();
          break;
      case APP_PACKET_HS_STATE_CIR:
          pLoad->ucAddData    = gCcb.iCirType;
@@ -13818,6 +13827,7 @@ void MainSndHeartBeat(void)
          pLoad->ucAddData    = 0;
          break;
      }
+
 
      /* 2018/04/09 Add begin*/
      if ((CIR_TYPE_HP == gCcb.iCirType)
