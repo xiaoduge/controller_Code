@@ -130,6 +130,7 @@ void Ex_Init_Languagepage::on_nextBtn_clicked()
 {
     on_saveBtn_clicked(); //next clicked save
     emit languageSwitchBtnClicked(1);
+    m_wndMain->prepareKeyStroke();
 
 }
 

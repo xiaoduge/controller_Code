@@ -95,7 +95,8 @@ void Ex_Init_Networkpage::initUi()
         m_pBackWidget[iLoop]->setAutoFillBackground(true);
         m_pBackWidget[iLoop]->setPalette(pal);
 
-        m_pBackWidget[iLoop]->setGeometry(QRect(124 , 160 + 70 * iLoop , 530 ,60));
+//        m_pBackWidget[iLoop]->setGeometry(QRect(124 , 160 + 70 * iLoop , 530 ,60));
+        m_pBackWidget[iLoop]->setGeometry(QRect(124 , 160 + 80 * (iLoop - 1) , 530 ,60));
 
         m_laName[iLoop]      = new QLabel(m_pBackWidget[iLoop]);
         m_laName[iLoop]->setPixmap(NULL);
@@ -121,6 +122,11 @@ void Ex_Init_Networkpage::initUi()
 
         connect(m_chkSwitchs[iLoop], SIGNAL(stateChanged(int)), this, SLOT(on_checkBox_changeState(int)));
 
+        //2019.3.14 add
+        if(DISPLAY_NETWORK_CAN == iLoop)
+        {
+            m_pBackWidget[iLoop]->hide();
+        }
     }
 
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,NETWORKPAGE_BTN_SAVE);
@@ -220,6 +226,7 @@ void Ex_Init_Networkpage::on_m_pExNextBtn_clicked()
 void Ex_Init_Networkpage::on_m_pExBackBtn_clicked()
 {
     emit networkSwitchBtnClicked(0);
+    m_wndMain->prepareKeyStroke();
 }
 
 void Ex_Init_Networkpage::leaveSubPage()

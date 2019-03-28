@@ -328,7 +328,8 @@ int DispGetEdiQtwFlag(void)
 
 int DispGetREJ(float *pfValue)
 {
-    if (DISP_WORK_STATE_RUN == gCcb.curWorkState.iMainWorkState)
+    if ((DISP_WORK_STATE_RUN == gCcb.curWorkState.iMainWorkState)
+       ||(gCcb.ulMachineType == MACHINE_ADAPT && CcbGetTwPendingFlag()))
     {
        *pfValue = CcbCalcREJ();
        
@@ -1731,7 +1732,7 @@ int CcbSwitchSetModbusWrapper(int id,unsigned int ulAddress, unsigned int ulNums
         }
     }
 
-    CcbUpdateSwitchObjState(APP_EXE_SWITCHS_MASK,iTmp);
+    //CcbUpdateSwitchObjState(APP_EXE_SWITCHS_MASK,iTmp);
 
     return iRet;
 }
@@ -1743,6 +1744,8 @@ int CcbInnerSetSwitch(int id,unsigned int ulAddress, unsigned int ulSwitchs)
 
     int iTmp;
     int iRet = -1;
+
+    VOS_LOG(VOS_LOG_WARNING,"CcbInnerSetSwitch id=%x %x",id,ulSwitchs);    
     
     /* 2.Reg Numbers */
     iTmp = APP_EXE_VALVE_NUM + APP_EXE_G_PUMP_NUM + APP_EXE_R_PUMP_NUM + APP_EXE_EDI_NUM + APP_EXE_RECT_NUM;
@@ -1785,7 +1788,7 @@ int CcbInnerUpdateSwitch(int id,unsigned int ulAddress, unsigned int ulMask,unsi
     
     if (iRet )
     {
-        VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);    
+        VOS_LOG(VOS_LOG_WARNING,"CcbSwitchUpdateModbusWrapper Fail %d",iRet);    
         /* notify ui (late implemnt) */
         return iRet;
     }
@@ -2864,7 +2867,7 @@ void work_qtw_fail(CCB *pCcb,int code,int iIndex,int iWorkId)
         ulTmp = pCcb->ulNormalTwMask;
     }
     
-    if (CcbGetSwitchObjState(APP_EXE_SWITCHS))
+    if (CcbGetSwitchObjState(APP_EXE_SWITCHS_MASK))
     {
         CcbUpdateSwitch(iWorkId,0,ulTmp,0);
     }
@@ -2948,7 +2951,7 @@ void work_start_qtw(void *para)
                 iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
                 if (iRet )
                 {
-                    VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
+                    VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);
             
                     work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);        
                     
@@ -2977,7 +2980,7 @@ void work_start_qtw(void *para)
                 iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
                 if (iRet )
                 {
-                    VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
+                    VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);    
                     /* notify ui (late implemnt) */
                     work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);        
                     return ;
@@ -3000,7 +3003,7 @@ void work_start_qtw(void *para)
                     iRet = CcbWorkDelayEntry(pWorkItem->id,1000,CcbDelayCallBack);
                     if (iRet )
                     {
-                        VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);
+                        VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);
                         
                         work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);        
                         
@@ -3130,7 +3133,7 @@ void work_start_qtw(void *para)
                 iRet = CcbWorkDelayEntry(pWorkItem->id,3000,CcbDelayCallBack);
                 if (iRet )
                 {
-                    VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);    
+                    VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
                     /* notify ui (late implemnt) */
                     work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);        
                     return ;
@@ -3143,11 +3146,12 @@ void work_start_qtw(void *para)
                     float fRej ;
                     
                     /* check appromixly 5*60 seconds */
-                    for (iLoop = 0; iLoop < DEFAULT_REG_CHECK_DURATION / DEFAULT_REJ_CHECK_PERIOD; iLoop++)                                    {
+                    for (iLoop = 0; iLoop < (DEFAULT_REG_CHECK_DURATION/5) / DEFAULT_REJ_CHECK_PERIOD; iLoop++)
+                    {
                         iRet = CcbWorkDelayEntry(pWorkItem->id,DEFAULT_REJ_CHECK_PERIOD*1000,CcbDelayCallBack);
                         if (iRet )
                         {
-                            VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);    
+                            VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
                             /* notify ui (late implemnt) */
                             work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);                
                             return ;
@@ -3155,8 +3159,8 @@ void work_start_qtw(void *para)
                 
                         fRej = CcbCalcREJ();
                 
-                        if (fRej >= CcbGetSp2() 
-                            && gCcb.ExeBrd.aEcoObjs[APP_EXE_I2_NO].Value.eV.fWaterQ < CcbGetSp3())
+                        if ((fRej >= CcbGetSp2())
+                            || (gCcb.ExeBrd.aEcoObjs[APP_EXE_I2_NO].Value.eV.fWaterQ < CcbGetSp3()))
                         {
                             iValidCount ++;
                 
@@ -3171,18 +3175,18 @@ void work_start_qtw(void *para)
                         }
                     }
                 
-                    if (fRej < CcbGetSp2())
-                    {
-                        /*alarem */
-                        gCcb.bit1AlarmRej = TRUE;
-                        gCcb.ulAlarmRejTick = gulSecond;
-                    }
+//                    if (fRej < CcbGetSp2())
+//                    {
+//                        /*alarem */
+//                        gCcb.bit1AlarmRej = TRUE;
+//                        gCcb.ulAlarmRejTick = gulSecond;
+//                    }
                 
-                    if (gCcb.ExeBrd.aEcoObjs[APP_EXE_I2_NO].Value.eV.fWaterQ > CcbGetSp3())
-                    {
-                        gCcb.bit1AlarmRoPw   = TRUE;
-                        gCcb.ulAlarmRoPwTick = gulSecond;
-                    }
+//                    if (gCcb.ExeBrd.aEcoObjs[APP_EXE_I2_NO].Value.eV.fWaterQ > CcbGetSp3())
+//                    {
+//                        gCcb.bit1AlarmRoPw   = TRUE;
+//                        gCcb.ulAlarmRoPwTick = gulSecond;
+//                    }
                     
                 }
 
@@ -3397,6 +3401,7 @@ void work_stop_qtw(void *para)
     switch(pCcb->ulMachineType)
     {
     case MACHINE_PURIST:
+    case MACHINE_ADAPT:
         iTmp |= (1 << APP_EXE_I2_NO);
         break;
     case MACHINE_UP:
@@ -4836,17 +4841,38 @@ void CanCcbPmMeasurePostProcess(int iPmId)
                     default:
                         break;
                     }
-                    
-                    if (fValue >= fThd)
+                    //2019.3.14
+                    if(MACHINE_ADAPT == gCcb.ulMachineType)
                     {
-                        gCcb.bit1B1UnderPressureDetected = 0;
+                        if(CcbGetTwFlag() || CcbGetTwPendingFlag())
+                        {
+                            if (fValue >= fThd)
+                            {
+                                gCcb.bit1B1UnderPressureDetected = 0;
+                            }
+                            else
+                            {
+                                if (!gCcb.bit1B1UnderPressureDetected)
+                                {
+                                    gCcb.bit1B1UnderPressureDetected = TRUE;
+                                    gCcb.ulB1UnderPressureTick = gulSecond;
+                                }
+                            }
+                        }
                     }
                     else
                     {
-                        if (!gCcb.bit1B1UnderPressureDetected)
+                        if (fValue >= fThd)
                         {
-                            gCcb.bit1B1UnderPressureDetected = TRUE;
-                            gCcb.ulB1UnderPressureTick = gulSecond;
+                            gCcb.bit1B1UnderPressureDetected = 0;
+                        }
+                        else
+                        {
+                            if (!gCcb.bit1B1UnderPressureDetected)
+                            {
+                                gCcb.bit1B1UnderPressureDetected = TRUE;
+                                gCcb.ulB1UnderPressureTick = gulSecond;
+                            }
                         }
                     }
 
@@ -6618,7 +6644,7 @@ void work_stop_key(void *para)
 DISPHANDLE CcbInnerWorkStartKeyWok(int iKey)
 {
     //2018.12.18 add
-    if(iKey == APP_EXE_DIN_RF_KEY)
+    if(iKey == APP_EXE_DIN_RF_KEY || iKey == APP_EXE_DIN_LEAK_KEY)
     {
         if (DISP_WORK_STATE_IDLE != DispGetWorkState())
         {
@@ -6851,7 +6877,43 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
                     if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp < 0)
                         gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp = 0;
                     //end
-                    CanCcbEcoMeasurePostProcess(pEco->ucId);   
+                    CanCcbEcoMeasurePostProcess(pEco->ucId);
+
+                    //2019.3.26 add
+                    switch(gCcb.ulMachineType)
+                    {
+                    case MACHINE_L_Genie:
+                    case MACHINE_L_EDI_LOOP:
+                    case MACHINE_Genie:
+                    case MACHINE_EDI:
+                    {
+                        if(!haveHPCir(&gCcb) && (APP_EXE_I3_NO == pEco->ucId))
+                        {
+                            iEco4ZigbeeMask |= 0x1 << APP_EXE_I4_NO;
+                        }
+                        break;
+                    }
+                    case MACHINE_L_UP:
+                    case MACHINE_L_RO_LOOP:
+                    case MACHINE_UP:
+                    case MACHINE_RO:
+                    {
+                        if(!haveHPCir(&gCcb) && (APP_EXE_I2_NO == pEco->ucId))
+                        {
+                            iEco4ZigbeeMask |= 0x1 << APP_EXE_I4_NO;
+                        }
+                        break;
+                    }
+                    case MACHINE_ADAPT:
+                    {
+                        if(APP_EXE_I2_NO == pEco->ucId)
+                        {
+                            iEco4ZigbeeMask |= 0x1 << APP_EXE_I4_NO;
+                        }
+                        break;
+                    }
+                    }
+                    //end
 
                     if (APP_EXE_I4_NO == pEco->ucId)
                     {
@@ -8078,7 +8140,6 @@ void DispSndHoEco(int iMask)
         case MACHINE_L_RO_LOOP:
         case MACHINE_UP:
         case MACHINE_RO:
-        case MACHINE_ADAPT:
         {
             if(haveHPCir(&gCcb))
             {
@@ -8089,6 +8150,12 @@ void DispSndHoEco(int iMask)
                 pEco->ucId         = APP_EXE_I2_NO;
                 pEco->ev = gCcb.ExeBrd.aEcoObjs[APP_EXE_I2_NO].Value.eV;
             }
+            break;
+        }
+        case MACHINE_ADAPT:
+        {
+            pEco->ucId         = APP_EXE_I2_NO;
+            pEco->ev = gCcb.ExeBrd.aEcoObjs[APP_EXE_I2_NO].Value.eV;
             break;
         }
         default:
@@ -11919,6 +11986,7 @@ void work_init_run_wrapper(void *para)
         {
             iRet = CcbWorkDelayEntry(pWorkItem->id,pCcb->MiscParam.iPowerOnFlushTime*60*1000,CcbDelayCallBack);
         }
+        
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
@@ -11933,8 +12001,10 @@ void work_init_run_wrapper(void *para)
         if(!(DispGetUpCirFlag()
              | DispGetTankCirFlag()
              | DispGetTocCirFlag()
-             | DispGetUpQtwFlag()
-             | DispGetEdiQtwFlag()))
+             //| DispGetUpQtwFlag()
+             //| DispGetEdiQtwFlag()
+             | CcbGetTwFlag()
+             | CcbGetTwPendingFlag()))
         {
             iTmp = 0;
             iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
@@ -13018,18 +13088,17 @@ DISPHANDLE DispCmdResetProc(void)
 //#define LEAK_RESET_RUN
 DISPHANDLE DispCmdLeakResetProc(void)
 {
-
     if (DISP_WORK_STATE_KP != gCcb.curWorkState.iMainWorkState
         || DISP_WORK_SUB_IDLE != gCcb.curWorkState.iSubWorkState)
     {
         return DISP_INVALID_HANDLE;
     }
-    
+
     // CcbPopState();
 
     gCcb.ulKeyWorkStates   &= ~(1 << APP_EXE_DIN_LEAK_KEY) ;    
     gCcb.ExeBrd.ucDinState &= ~(1 << APP_EXE_DIN_LEAK_KEY) ;   
-    gCcb.bit1LeakKey4Reset = FALSE;    
+    gCcb.bit1LeakKey4Reset = FALSE;
     
     if (gCcb.ExeBrd.ucDinState
         & APP_EXE_DIN_FAIL_MASK)
@@ -13421,14 +13490,35 @@ DISPHANDLE DispCmdTw(unsigned char *pucData, int iLength)
         {
             return DISP_INVALID_HANDLE;
         }
+        else 
+        {
+            int iPendingTwFlag = CcbGetTwPendingFlag();
+            
+            if (iPendingTwFlag )
+            {
+               if (iPendingTwFlag & (1 << iIdx))
+               {
+                   DISPHANDLE hdl ;
+                    
+                   hdl = SearchWork(work_start_qtw);
+                    
+                   if (hdl)
+                   {
+                       CcbCancelWork(hdl);
 
-         if (!CcbGetHandlerStatus(pCmd->iDevId))
-         {
-        
-             VOS_LOG(VOS_LOG_DEBUG,"CTW: hs %d : invalid state",pCmd->iDevId);    
-        
-             return DISP_INVALID_HANDLE;
-         }
+                       return hdl;
+                   }
+               }
+               return DISP_INVALID_HANDLE;
+            }
+
+        }
+
+        if (!CcbGetHandlerStatus(pCmd->iDevId))
+        {
+            VOS_LOG(VOS_LOG_DEBUG,"CTW: hs %d : invalid state",pCmd->iDevId);    
+            return DISP_INVALID_HANDLE;
+        }
 
         /* try to take water */
         if (CcbGetHandlerType(pCmd->iDevId) == pCmd->iType)
@@ -14253,7 +14343,7 @@ void CcbAddFmReportWork(WORK_SETUP_REPORT_STRU *pRpt )
 
 void MainSecondTask4MainState()
 {
-    printf("check Ro Alarm: 00");
+    printf("check Ro Alarm: 00\r\n");
     switch(gCcb.curWorkState.iMainWorkState)
     {
     case DISP_WORK_STATE_PREPARE:

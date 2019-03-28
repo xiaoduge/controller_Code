@@ -4,6 +4,8 @@
 
 #include "mainwindow.h"
 
+#include "ExtraDisplay.h"
+
 #include <QPainter>
 
 #include <QMessageBox>
@@ -201,7 +203,13 @@ void SystemCfgPage::buildTranslation()
     m_lbLoginLingerName->setText(tr("Auto. Logout"));
     m_lbLoginLingerUnit->setText(tr("min"));
 
-    m_lbDeviceTypeName->setText(tr("System Type"));
+//    m_lbDeviceTypeName->setText(tr("System Type"));
+
+    //2019.3.14
+    m_lbDefaultState->setText(tr("Initialize"));
+    m_cmbDefaultState->setItemText(0, tr("Yes"));
+    m_cmbDefaultState->setItemText(1, tr("No"));
+    //
 
     m_chkDeviceTypeTOC->setText(tr("TOC"));
 
@@ -266,25 +274,38 @@ void SystemCfgPage::createControl()
     yOffset += BACKWIDGET_START_HIATUS;
 
     rectTmp = sQrectAry[0];
-    m_lbDeviceTypeName = new QLabel(tmpWidget);
-    m_lbDeviceTypeName->setGeometry(rectTmp);
-    m_lbDeviceTypeName->show();
+//    m_lbDeviceTypeName = new QLabel(tmpWidget);
+//    m_lbDeviceTypeName->setGeometry(rectTmp);
+//    m_lbDeviceTypeName->show();
 
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    m_lbDefaultState = new QLabel(tmpWidget);
+    m_lbDefaultState->setGeometry(rectTmp);
+    m_lbDefaultState->show();
+    m_lbDefaultState->setAlignment(Qt::AlignCenter);
+
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 10);
     rectTmp.setWidth(X_VALUE_WIDTH*2 + 30); //+5
     /*
     m_cmbDeviceType = new QComboBox(tmpWidget);
     m_cmbDeviceType->setGeometry(rectTmp);
    */
-    m_lbDeviceType = new QLabel(tmpWidget);
-    m_lbDeviceType->setGeometry(rectTmp);
-    m_lbDeviceType->setFrameShape(QFrame::Box);
-    m_lbDeviceType->setFrameShadow(QFrame::Plain);
-    QString qssDT = "QLabel{border-width:1px;\
-                            border-style:solid;\
-                            border-radius: 4px;\
-                            border-color: rgb(135,206,250);}";
-    m_lbDeviceType->setStyleSheet(qssDT);
+//    m_lbDeviceType = new QLabel(tmpWidget);
+//    m_lbDeviceType->setGeometry(rectTmp);
+//    m_lbDeviceType->setFrameShape(QFrame::Box);
+//    m_lbDeviceType->setFrameShadow(QFrame::Plain);
+//    QString qssDT = "QLabel{border-width:1px;\
+//                            border-style:solid;\
+//                            border-radius: 4px;\
+//                            border-color: rgb(135,206,250);}";
+//    m_lbDeviceType->setStyleSheet(qssDT);
+
+    m_cmbDefaultState = new QComboBox(tmpWidget);
+    m_cmbDefaultState->addItem(tr("Yes"));
+    m_cmbDefaultState->addItem(tr("No"));
+    m_cmbDefaultState->setCurrentIndex(1);
+    m_cmbDefaultState->setGeometry(rectTmp);
+    connect(m_cmbDefaultState, SIGNAL(currentIndexChanged(int)),
+     this, SLOT(on_CmbIndexChange_DefaultState(int)));
 
     rectTmp.setX(BACKWIDGET_WIDTH/2 + X_MARGIN - 5);
     rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH);
@@ -301,6 +322,7 @@ void SystemCfgPage::createControl()
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_PURIST:
+    case MACHINE_ADAPT:
         m_bHaveToc = true;
         m_chkDeviceTypeTOC->show();
         break;
@@ -316,7 +338,7 @@ void SystemCfgPage::createControl()
     connect(m_cmbDeviceType, SIGNAL(currentIndexChanged(int)),
      this, SLOT(on_CmbIndexChange_device_type(int)));
    */
-    m_lbDeviceType->setText(gaMachineType[gGlobalParam.iMachineType].strName);
+//    m_lbDeviceType->setText(gaMachineType[gGlobalParam.iMachineType].strName);
 
     int iCols = (m_iRealChkNum + 1) / 2 ;
     int iRows = (m_iRealChkNum + iCols - 1)/ iCols;
@@ -651,7 +673,29 @@ void SystemCfgPage::initUi()
 void SystemCfgPage::update()
 {
     connectData();
-    m_lbDeviceType->setText(gaMachineType[gGlobalParam.iMachineType].strName);
+//    m_lbDeviceType->setText(gaMachineType[gGlobalParam.iMachineType].strName);
+}
+
+void SystemCfgPage::on_CmbIndexChange_DefaultState(int index)
+{
+    int iIdx = m_cmbDefaultState->currentIndex();
+    if (iIdx == 0)
+    {
+         QMessageBox::StandardButton rb = QMessageBox::question(NULL, tr("NOTIFY"), tr("Whether to restart the device immediately?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+
+         if(rb != QMessageBox::Yes)
+         {
+             return;
+         }
+
+         ex_gGlobalParam.Ex_Default = m_cmbDefaultState->currentIndex();
+         MainSaveDefaultState(gGlobalParam.iMachineType);
+
+         MainUpdateGlobalParam();
+         update();
+         /**/
+         Restart();
+     }
 }
 
 
@@ -905,6 +949,18 @@ void SystemCfgPage::connectData()
     m_lePWTankUVValue->setText(QString::number(gGlobalParam.MiscParam.iTankUvOnTime));
     m_leLoginLingerValue->setText(QString::number(gGlobalParam.MiscParam.iAutoLogoutTime));
     m_lePOweronFlushValue->setText(QString::number(gGlobalParam.MiscParam.iPowerOnFlushTime));
+
+    switch(ex_gGlobalParam.Ex_Default)
+    {
+    case 0:
+        m_cmbDefaultState->setCurrentIndex(0);
+        break;
+    case 1:
+        m_cmbDefaultState->setCurrentIndex(1);
+        break;
+    default:
+        break;
+    }
 }
 
 void SystemCfgPage::save()
@@ -1189,13 +1245,15 @@ void SystemCfgPage::save()
    MainSaveMiscParam(gGlobalParam.iMachineType,miscParam);
    MainUpdateGlobalParam();
 
+   ex_gGlobalParam.Ex_Default = m_cmbDefaultState->currentIndex();
+   MainSaveDefaultState(gGlobalParam.iMachineType);
+
    m_wndMain->ClearToc();
    m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_DEVICE_CONFIG);
 
    show(false);
    m_parent->show(true);
 }
-
 
 void SystemCfgPage::on_CmbIndexChange_pw(int index)
 {

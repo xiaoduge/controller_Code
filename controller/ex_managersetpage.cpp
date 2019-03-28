@@ -821,7 +821,8 @@ void Ex_ManagerSetPage::initAudioPage()
         m_pAudioBackWidget[iLoop]->setAutoFillBackground(true);
         m_pAudioBackWidget[iLoop]->setPalette(pal);
 
-        m_pAudioBackWidget[iLoop]->setGeometry(QRect(120 , 100 + 70 * iLoop , 530 ,60));
+//        m_pAudioBackWidget[iLoop]->setGeometry(QRect(120 , 100 + 70 * iLoop , 530 ,60));
+        m_pAudioBackWidget[iLoop]->setGeometry(QRect(120 , 120 + 70 * iLoop , 530 ,60));
 
         m_lblNames[iLoop] = new QLabel(m_pAudioBackWidget[iLoop]);
         m_lblNames[iLoop]->setPixmap(NULL);
@@ -849,7 +850,11 @@ void Ex_ManagerSetPage::initAudioPage()
         }
 
         connect(m_chkSwitchs[iLoop], SIGNAL(stateChanged(int)), this, SLOT(on_checkBox_changeState(int)));
-
+        //2019.3.14 add
+        if(iLoop != 0)
+        {
+            m_pAudioBackWidget[iLoop]->hide();
+        }
     }
 
     m_pAudioBtnSave = new QPushButton(m_pageWidget[MANGER_PAGE_AUDIO]);

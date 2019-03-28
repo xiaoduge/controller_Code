@@ -31,13 +31,13 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-    case MACHINE_ADAPT:
         aIds[iIdx].iType = 0;
         aIds[iIdx].iId   = DISP_AC_PACK;
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
         break;
     case MACHINE_PURIST:
+    case MACHINE_ADAPT:
         break;
      }
 
@@ -85,12 +85,8 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
      {
      case MACHINE_L_UP:  
      case MACHINE_L_RO_LOOP:
-     //case MACHINE_Genie:
      case MACHINE_UP:
-     //case MACHINE_EDI:
-     //case MACHINE_RO:
      case MACHINE_PURIST:
-     case MACHINE_ADAPT:
          aIds[iIdx].iType = 0;
          aIds[iIdx].iId   = DISP_H_PACK;
          aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
@@ -102,6 +98,11 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_UPACK_HPACK;
         iIdx++;
         break;
+     case MACHINE_Genie:
+     case MACHINE_EDI:
+     case MACHINE_RO:
+     case MACHINE_ADAPT:
+         break;
      }
     
      switch(gGlobalParam.iMachineType)

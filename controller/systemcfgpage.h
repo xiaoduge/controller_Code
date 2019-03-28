@@ -46,6 +46,9 @@ public:
 
     virtual void update();
 
+protected slots:
+    void on_CmbIndexChange_DefaultState(int index);
+
 private:
 
     void buildTitles();
@@ -54,6 +57,7 @@ private:
     void createControl();
     void connectData();
 
+private:
     QLabel    *m_lbPWTankName;
     QComboBox *m_cmbPWTankVolume;
     QLineEdit *m_lePWTankHeight;
@@ -81,9 +85,12 @@ private:
     QLineEdit *m_leLoginLingerValue;
     QLabel    *m_lbLoginLingerUnit;
 
-    QLabel    *m_lbDeviceTypeName;
-//    QComboBox *m_cmbDeviceType;
-    QLabel *m_lbDeviceType;
+//    QLabel    *m_lbDeviceTypeName;
+//    QLabel *m_lbDeviceType;
+
+    //2019.3.14
+    QLabel    *m_lbDefaultState;
+    QComboBox *m_cmbDefaultState;
 
     QCheckBox *m_chkDeviceTypeTOC;
 

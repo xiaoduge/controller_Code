@@ -324,6 +324,7 @@ void SystemMonitorPage::update()
 
     m_ulSwitchMask = DispGetSwitchState(APP_EXE_SWITCHS_MASK);
 
+
     for(iLoop = 0 ; iLoop < m_iRealNum ; iLoop++)
     {
         switch(aIds[iLoop].iId)

@@ -201,8 +201,8 @@ typedef struct
 {
     int              iMainWorkState; // refer DISP_WORK_STATE_ENUM
     int              iSubWorkState;  // refer DISP_WORK_SUB_STATE_ENUM
-    int              iMainWorkState4Pw;
-    int              iSubWorkState4Pw;
+    int              iMainWorkState4Pw;  // DISP_WORK_STATE_ENUM 
+    int              iSubWorkState4Pw;  // DISP_WORK_SUB_STATE_ENUM
 
 }WORK_STATE_STRU;
 

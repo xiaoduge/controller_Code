@@ -836,181 +836,181 @@
 <context>
     <name>ConsumableInsPage</name>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="419"/>
+        <location filename="ConsumableinsPage.cpp" line="420"/>
         <source>Components Installation</source>
         <translation type="unfinished">Установка компонентов</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="442"/>
+        <location filename="ConsumableinsPage.cpp" line="443"/>
         <source>Prefilter</source>
         <translation>Картридж Pre Pack</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="443"/>
-        <location filename="ConsumableinsPage.cpp" line="450"/>
-        <location filename="ConsumableinsPage.cpp" line="457"/>
-        <location filename="ConsumableinsPage.cpp" line="464"/>
-        <location filename="ConsumableinsPage.cpp" line="471"/>
-        <location filename="ConsumableinsPage.cpp" line="478"/>
-        <location filename="ConsumableinsPage.cpp" line="485"/>
-        <location filename="ConsumableinsPage.cpp" line="492"/>
-        <location filename="ConsumableinsPage.cpp" line="499"/>
-        <location filename="ConsumableinsPage.cpp" line="506"/>
-        <location filename="ConsumableinsPage.cpp" line="513"/>
-        <location filename="ConsumableinsPage.cpp" line="520"/>
-        <location filename="ConsumableinsPage.cpp" line="529"/>
-        <location filename="ConsumableinsPage.cpp" line="541"/>
-        <location filename="ConsumableinsPage.cpp" line="548"/>
-        <location filename="ConsumableinsPage.cpp" line="555"/>
-        <location filename="ConsumableinsPage.cpp" line="562"/>
-        <location filename="ConsumableinsPage.cpp" line="570"/>
-        <location filename="ConsumableinsPage.cpp" line="578"/>
-        <location filename="ConsumableinsPage.cpp" line="587"/>
-        <location filename="ConsumableinsPage.cpp" line="595"/>
-        <location filename="ConsumableinsPage.cpp" line="604"/>
-        <location filename="ConsumableinsPage.cpp" line="612"/>
+        <location filename="ConsumableinsPage.cpp" line="444"/>
+        <location filename="ConsumableinsPage.cpp" line="451"/>
+        <location filename="ConsumableinsPage.cpp" line="458"/>
+        <location filename="ConsumableinsPage.cpp" line="465"/>
+        <location filename="ConsumableinsPage.cpp" line="472"/>
+        <location filename="ConsumableinsPage.cpp" line="479"/>
+        <location filename="ConsumableinsPage.cpp" line="486"/>
+        <location filename="ConsumableinsPage.cpp" line="493"/>
+        <location filename="ConsumableinsPage.cpp" line="500"/>
+        <location filename="ConsumableinsPage.cpp" line="507"/>
+        <location filename="ConsumableinsPage.cpp" line="514"/>
+        <location filename="ConsumableinsPage.cpp" line="521"/>
+        <location filename="ConsumableinsPage.cpp" line="530"/>
+        <location filename="ConsumableinsPage.cpp" line="542"/>
+        <location filename="ConsumableinsPage.cpp" line="549"/>
+        <location filename="ConsumableinsPage.cpp" line="556"/>
+        <location filename="ConsumableinsPage.cpp" line="563"/>
+        <location filename="ConsumableinsPage.cpp" line="571"/>
+        <location filename="ConsumableinsPage.cpp" line="579"/>
+        <location filename="ConsumableinsPage.cpp" line="588"/>
+        <location filename="ConsumableinsPage.cpp" line="596"/>
+        <location filename="ConsumableinsPage.cpp" line="605"/>
+        <location filename="ConsumableinsPage.cpp" line="613"/>
         <source>Install</source>
         <translation>помещать</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="449"/>
+        <location filename="ConsumableinsPage.cpp" line="450"/>
         <source>AC Pack</source>
         <translation>Картридж AC Pack </translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="456"/>
+        <location filename="ConsumableinsPage.cpp" line="457"/>
         <source>T Pack</source>
         <translation>Картридж T Pack </translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="463"/>
+        <location filename="ConsumableinsPage.cpp" line="464"/>
         <source>P Pack</source>
         <translation>Картридж P Pack</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="470"/>
+        <location filename="ConsumableinsPage.cpp" line="471"/>
         <source>U Pack</source>
         <translation>Картридж U Pack</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="477"/>
+        <location filename="ConsumableinsPage.cpp" line="478"/>
         <source>AT Pack</source>
         <translation>Картридж AT Pack</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="484"/>
+        <location filename="ConsumableinsPage.cpp" line="485"/>
         <source>H Pack</source>
         <translation>Картридж H Pack</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="491"/>
+        <location filename="ConsumableinsPage.cpp" line="492"/>
         <source>254 UV Lamp</source>
         <translation>254 УФ лампа</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="498"/>
+        <location filename="ConsumableinsPage.cpp" line="499"/>
         <source>185 UV Lamp</source>
         <translation>185 УФ лампа</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="505"/>
+        <location filename="ConsumableinsPage.cpp" line="506"/>
         <source>Tank UV Lamp</source>
         <translation>Бак УФ лампа</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="512"/>
+        <location filename="ConsumableinsPage.cpp" line="513"/>
         <source>TUBE UV</source>
         <translation>Петля УФ</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="519"/>
+        <location filename="ConsumableinsPage.cpp" line="520"/>
         <source>TOC UV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="528"/>
+        <location filename="ConsumableinsPage.cpp" line="529"/>
         <source>Tank Vent Filter</source>
         <translation>Бак вент фильтр</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="540"/>
+        <location filename="ConsumableinsPage.cpp" line="541"/>
         <source>Final Fliter B</source>
         <translation>Финишный фильтр В</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="547"/>
+        <location filename="ConsumableinsPage.cpp" line="548"/>
         <source>Final Fliter A</source>
         <translation>Финишный фильтр A</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="554"/>
+        <location filename="ConsumableinsPage.cpp" line="555"/>
         <source>Loop Filter</source>
         <translation>Петля фильтр</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="561"/>
+        <location filename="ConsumableinsPage.cpp" line="562"/>
         <source>Loop DI</source>
         <translation>Петля деиониз. фильтр</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="569"/>
+        <location filename="ConsumableinsPage.cpp" line="570"/>
         <source>Feed Pump</source>
         <translation>Пит. насос</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="577"/>
+        <location filename="ConsumableinsPage.cpp" line="578"/>
         <source>Dist. Pump</source>
         <translation>Раздаточный насос</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="586"/>
+        <location filename="ConsumableinsPage.cpp" line="587"/>
         <source>Recir. Pump</source>
         <translation>Рецирк. насос</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="594"/>
+        <location filename="ConsumableinsPage.cpp" line="595"/>
         <source>RO Membrane</source>
         <translation>RO мембрана</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="603"/>
+        <location filename="ConsumableinsPage.cpp" line="604"/>
         <source>RO Pump</source>
         <translation>RO насос</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="611"/>
+        <location filename="ConsumableinsPage.cpp" line="612"/>
         <source>EDI Module</source>
         <translation>EDI модуль</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="621"/>
+        <location filename="ConsumableinsPage.cpp" line="622"/>
         <source>CAT</source>
         <translation>Кат. №</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="622"/>
+        <location filename="ConsumableinsPage.cpp" line="623"/>
         <source>LOT</source>
         <translation>Лот №</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="826"/>
+        <location filename="ConsumableinsPage.cpp" line="827"/>
         <source>Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="826"/>
+        <location filename="ConsumableinsPage.cpp" line="827"/>
         <source>Failed to read RFID,please make sure the part is installed correctly.</source>
         <translation>RFID не идентифицирован, пожалуйста, убедитесь, что деталь правильно установлена</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="840"/>
-        <location filename="ConsumableinsPage.cpp" line="851"/>
+        <location filename="ConsumableinsPage.cpp" line="841"/>
+        <location filename="ConsumableinsPage.cpp" line="852"/>
         <source>About</source>
         <translation type="unfinished">Подробнее</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="840"/>
-        <location filename="ConsumableinsPage.cpp" line="851"/>
+        <location filename="ConsumableinsPage.cpp" line="841"/>
+        <location filename="ConsumableinsPage.cpp" line="852"/>
         <source>Please Input Serial Number !</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1018,203 +1018,203 @@
 <context>
     <name>ConsumableStatePage</name>
     <message>
-        <location filename="consumablestatepage.cpp" line="342"/>
+        <location filename="consumablestatepage.cpp" line="343"/>
         <source>Consumables Status</source>
         <translation type="unfinished">Статус расх.</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="380"/>
         <location filename="consumablestatepage.cpp" line="381"/>
+        <location filename="consumablestatepage.cpp" line="382"/>
         <source> </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="394"/>
-        <location filename="consumablestatepage.cpp" line="428"/>
-        <location filename="consumablestatepage.cpp" line="464"/>
-        <location filename="consumablestatepage.cpp" line="497"/>
-        <location filename="consumablestatepage.cpp" line="529"/>
-        <location filename="consumablestatepage.cpp" line="561"/>
-        <location filename="consumablestatepage.cpp" line="593"/>
-        <location filename="consumablestatepage.cpp" line="625"/>
-        <location filename="consumablestatepage.cpp" line="657"/>
-        <location filename="consumablestatepage.cpp" line="689"/>
-        <location filename="consumablestatepage.cpp" line="721"/>
-        <location filename="consumablestatepage.cpp" line="753"/>
-        <location filename="consumablestatepage.cpp" line="781"/>
-        <location filename="consumablestatepage.cpp" line="809"/>
-        <location filename="consumablestatepage.cpp" line="836"/>
-        <location filename="consumablestatepage.cpp" line="864"/>
-        <location filename="consumablestatepage.cpp" line="892"/>
+        <location filename="consumablestatepage.cpp" line="395"/>
+        <location filename="consumablestatepage.cpp" line="429"/>
+        <location filename="consumablestatepage.cpp" line="465"/>
+        <location filename="consumablestatepage.cpp" line="498"/>
+        <location filename="consumablestatepage.cpp" line="530"/>
+        <location filename="consumablestatepage.cpp" line="562"/>
+        <location filename="consumablestatepage.cpp" line="594"/>
+        <location filename="consumablestatepage.cpp" line="626"/>
+        <location filename="consumablestatepage.cpp" line="658"/>
+        <location filename="consumablestatepage.cpp" line="690"/>
+        <location filename="consumablestatepage.cpp" line="722"/>
+        <location filename="consumablestatepage.cpp" line="754"/>
+        <location filename="consumablestatepage.cpp" line="782"/>
+        <location filename="consumablestatepage.cpp" line="810"/>
+        <location filename="consumablestatepage.cpp" line="837"/>
+        <location filename="consumablestatepage.cpp" line="865"/>
+        <location filename="consumablestatepage.cpp" line="893"/>
         <source>Installation Date </source>
         <translation>Дата установки</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="399"/>
-        <location filename="consumablestatepage.cpp" line="433"/>
-        <location filename="consumablestatepage.cpp" line="469"/>
-        <location filename="consumablestatepage.cpp" line="502"/>
-        <location filename="consumablestatepage.cpp" line="534"/>
-        <location filename="consumablestatepage.cpp" line="566"/>
-        <location filename="consumablestatepage.cpp" line="598"/>
-        <location filename="consumablestatepage.cpp" line="630"/>
-        <location filename="consumablestatepage.cpp" line="662"/>
-        <location filename="consumablestatepage.cpp" line="694"/>
-        <location filename="consumablestatepage.cpp" line="726"/>
-        <location filename="consumablestatepage.cpp" line="758"/>
-        <location filename="consumablestatepage.cpp" line="786"/>
-        <location filename="consumablestatepage.cpp" line="814"/>
-        <location filename="consumablestatepage.cpp" line="841"/>
-        <location filename="consumablestatepage.cpp" line="869"/>
-        <location filename="consumablestatepage.cpp" line="897"/>
+        <location filename="consumablestatepage.cpp" line="400"/>
+        <location filename="consumablestatepage.cpp" line="434"/>
+        <location filename="consumablestatepage.cpp" line="470"/>
+        <location filename="consumablestatepage.cpp" line="503"/>
+        <location filename="consumablestatepage.cpp" line="535"/>
+        <location filename="consumablestatepage.cpp" line="567"/>
+        <location filename="consumablestatepage.cpp" line="599"/>
+        <location filename="consumablestatepage.cpp" line="631"/>
+        <location filename="consumablestatepage.cpp" line="663"/>
+        <location filename="consumablestatepage.cpp" line="695"/>
+        <location filename="consumablestatepage.cpp" line="727"/>
+        <location filename="consumablestatepage.cpp" line="759"/>
+        <location filename="consumablestatepage.cpp" line="787"/>
+        <location filename="consumablestatepage.cpp" line="815"/>
+        <location filename="consumablestatepage.cpp" line="842"/>
+        <location filename="consumablestatepage.cpp" line="870"/>
+        <location filename="consumablestatepage.cpp" line="898"/>
         <source>Replace in </source>
         <translation>Заменить в течении</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="399"/>
-        <location filename="consumablestatepage.cpp" line="433"/>
-        <location filename="consumablestatepage.cpp" line="469"/>
-        <location filename="consumablestatepage.cpp" line="502"/>
-        <location filename="consumablestatepage.cpp" line="534"/>
-        <location filename="consumablestatepage.cpp" line="566"/>
-        <location filename="consumablestatepage.cpp" line="598"/>
-        <location filename="consumablestatepage.cpp" line="630"/>
-        <location filename="consumablestatepage.cpp" line="662"/>
-        <location filename="consumablestatepage.cpp" line="694"/>
-        <location filename="consumablestatepage.cpp" line="726"/>
-        <location filename="consumablestatepage.cpp" line="758"/>
-        <location filename="consumablestatepage.cpp" line="786"/>
-        <location filename="consumablestatepage.cpp" line="814"/>
-        <location filename="consumablestatepage.cpp" line="841"/>
-        <location filename="consumablestatepage.cpp" line="869"/>
-        <location filename="consumablestatepage.cpp" line="897"/>
+        <location filename="consumablestatepage.cpp" line="400"/>
+        <location filename="consumablestatepage.cpp" line="434"/>
+        <location filename="consumablestatepage.cpp" line="470"/>
+        <location filename="consumablestatepage.cpp" line="503"/>
+        <location filename="consumablestatepage.cpp" line="535"/>
+        <location filename="consumablestatepage.cpp" line="567"/>
+        <location filename="consumablestatepage.cpp" line="599"/>
+        <location filename="consumablestatepage.cpp" line="631"/>
+        <location filename="consumablestatepage.cpp" line="663"/>
+        <location filename="consumablestatepage.cpp" line="695"/>
+        <location filename="consumablestatepage.cpp" line="727"/>
+        <location filename="consumablestatepage.cpp" line="759"/>
+        <location filename="consumablestatepage.cpp" line="787"/>
+        <location filename="consumablestatepage.cpp" line="815"/>
+        <location filename="consumablestatepage.cpp" line="842"/>
+        <location filename="consumablestatepage.cpp" line="870"/>
+        <location filename="consumablestatepage.cpp" line="898"/>
         <source>days</source>
         <translation>дней</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="402"/>
-        <location filename="consumablestatepage.cpp" line="436"/>
-        <location filename="consumablestatepage.cpp" line="472"/>
-        <location filename="consumablestatepage.cpp" line="505"/>
-        <location filename="consumablestatepage.cpp" line="537"/>
-        <location filename="consumablestatepage.cpp" line="569"/>
-        <location filename="consumablestatepage.cpp" line="601"/>
-        <location filename="consumablestatepage.cpp" line="633"/>
-        <location filename="consumablestatepage.cpp" line="665"/>
-        <location filename="consumablestatepage.cpp" line="697"/>
-        <location filename="consumablestatepage.cpp" line="729"/>
-        <location filename="consumablestatepage.cpp" line="761"/>
-        <location filename="consumablestatepage.cpp" line="789"/>
-        <location filename="consumablestatepage.cpp" line="817"/>
-        <location filename="consumablestatepage.cpp" line="844"/>
-        <location filename="consumablestatepage.cpp" line="872"/>
-        <location filename="consumablestatepage.cpp" line="900"/>
+        <location filename="consumablestatepage.cpp" line="403"/>
+        <location filename="consumablestatepage.cpp" line="437"/>
+        <location filename="consumablestatepage.cpp" line="473"/>
+        <location filename="consumablestatepage.cpp" line="506"/>
+        <location filename="consumablestatepage.cpp" line="538"/>
+        <location filename="consumablestatepage.cpp" line="570"/>
+        <location filename="consumablestatepage.cpp" line="602"/>
+        <location filename="consumablestatepage.cpp" line="634"/>
+        <location filename="consumablestatepage.cpp" line="666"/>
+        <location filename="consumablestatepage.cpp" line="698"/>
+        <location filename="consumablestatepage.cpp" line="730"/>
+        <location filename="consumablestatepage.cpp" line="762"/>
+        <location filename="consumablestatepage.cpp" line="790"/>
+        <location filename="consumablestatepage.cpp" line="818"/>
+        <location filename="consumablestatepage.cpp" line="845"/>
+        <location filename="consumablestatepage.cpp" line="873"/>
+        <location filename="consumablestatepage.cpp" line="901"/>
         <source>Cat No.:</source>
         <translation>Кат. №</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="405"/>
-        <location filename="consumablestatepage.cpp" line="439"/>
-        <location filename="consumablestatepage.cpp" line="475"/>
-        <location filename="consumablestatepage.cpp" line="508"/>
-        <location filename="consumablestatepage.cpp" line="540"/>
-        <location filename="consumablestatepage.cpp" line="572"/>
-        <location filename="consumablestatepage.cpp" line="604"/>
-        <location filename="consumablestatepage.cpp" line="636"/>
-        <location filename="consumablestatepage.cpp" line="668"/>
-        <location filename="consumablestatepage.cpp" line="700"/>
-        <location filename="consumablestatepage.cpp" line="732"/>
-        <location filename="consumablestatepage.cpp" line="764"/>
-        <location filename="consumablestatepage.cpp" line="792"/>
-        <location filename="consumablestatepage.cpp" line="820"/>
-        <location filename="consumablestatepage.cpp" line="847"/>
-        <location filename="consumablestatepage.cpp" line="875"/>
-        <location filename="consumablestatepage.cpp" line="903"/>
+        <location filename="consumablestatepage.cpp" line="406"/>
+        <location filename="consumablestatepage.cpp" line="440"/>
+        <location filename="consumablestatepage.cpp" line="476"/>
+        <location filename="consumablestatepage.cpp" line="509"/>
+        <location filename="consumablestatepage.cpp" line="541"/>
+        <location filename="consumablestatepage.cpp" line="573"/>
+        <location filename="consumablestatepage.cpp" line="605"/>
+        <location filename="consumablestatepage.cpp" line="637"/>
+        <location filename="consumablestatepage.cpp" line="669"/>
+        <location filename="consumablestatepage.cpp" line="701"/>
+        <location filename="consumablestatepage.cpp" line="733"/>
+        <location filename="consumablestatepage.cpp" line="765"/>
+        <location filename="consumablestatepage.cpp" line="793"/>
+        <location filename="consumablestatepage.cpp" line="821"/>
+        <location filename="consumablestatepage.cpp" line="848"/>
+        <location filename="consumablestatepage.cpp" line="876"/>
+        <location filename="consumablestatepage.cpp" line="904"/>
         <source>Lot No.:</source>
         <translation>Лот №</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="420"/>
+        <location filename="consumablestatepage.cpp" line="421"/>
         <source>Prefilter</source>
         <translation>Картридж Pre Pack</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="453"/>
+        <location filename="consumablestatepage.cpp" line="454"/>
         <source>AC Pack</source>
         <translation>Картридж AC Pack </translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="488"/>
+        <location filename="consumablestatepage.cpp" line="489"/>
         <source>T Pack</source>
         <translation>Картридж T Pack </translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="520"/>
+        <location filename="consumablestatepage.cpp" line="521"/>
         <source>P PACK </source>
         <translation>Картридж P Pack </translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="552"/>
+        <location filename="consumablestatepage.cpp" line="553"/>
         <source>U PACK </source>
         <translation>Картридж U Pack </translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="584"/>
+        <location filename="consumablestatepage.cpp" line="585"/>
         <source>AT PACK </source>
         <translation>Картридж AT Pack </translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="616"/>
+        <location filename="consumablestatepage.cpp" line="617"/>
         <source>H PACK </source>
         <translation>Картридж H Pack </translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="648"/>
+        <location filename="consumablestatepage.cpp" line="649"/>
         <source>254 UV</source>
         <translation>254 УФ</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="680"/>
+        <location filename="consumablestatepage.cpp" line="681"/>
         <source>185 UV</source>
         <translation>185 УФ</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="712"/>
+        <location filename="consumablestatepage.cpp" line="713"/>
         <source>TANK UV</source>
         <translation>Бак УФ</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="744"/>
+        <location filename="consumablestatepage.cpp" line="745"/>
         <source>TUBE UV</source>
         <translation>Петля УФ</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="776"/>
+        <location filename="consumablestatepage.cpp" line="777"/>
         <source>TOC UV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="804"/>
+        <location filename="consumablestatepage.cpp" line="805"/>
         <source>Tank Vent Filter</source>
         <translation>Бак вент фильтр</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="832"/>
+        <location filename="consumablestatepage.cpp" line="833"/>
         <source>Final Fliter B</source>
         <translation>Финишный фильтр В</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="859"/>
+        <location filename="consumablestatepage.cpp" line="860"/>
         <source>Final Fliter A</source>
         <translation>Финишный фильтр A</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="887"/>
+        <location filename="consumablestatepage.cpp" line="888"/>
         <source>Loop Filter</source>
         <translation>Петля фильтр</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="915"/>
+        <location filename="consumablestatepage.cpp" line="916"/>
         <source>Loop DI</source>
         <translation>Петля деиониз. фильтр</translation>
     </message>
@@ -1626,7 +1626,8 @@
     </message>
     <message>
         <location filename="ex_factorytestpage.cpp" line="62"/>
-        <source>Lott No.:</source>
+        <source>Lot No.:</source>
+        <oldsource>Lott No.:</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2073,32 +2074,32 @@
         <translation>Диспенсер</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="181"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="182"/>
         <source>CAN</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="182"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="183"/>
         <source>Zigbee</source>
         <translation type="unfinished">Wireless</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="231"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="232"/>
         <source>HANDLER</source>
         <translation type="unfinished">Диспенсер</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="317"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="318"/>
         <source>Be sure to save the handsets&apos; configuration when collected all responses!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="627"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="628"/>
         <source>About</source>
         <translation type="unfinished">Подробнее</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="627"/>
+        <location filename="ex_init_handlecfgpage.cpp" line="628"/>
         <source>One and only one default handler per category shoud be configured !</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2114,43 +2115,43 @@
         <location filename="ex_init_languagepage.cpp" line="53"/>
         <location filename="ex_init_languagepage.cpp" line="105"/>
         <source>English</source>
-        <translation>Английский</translation>
+        <translation>English</translation>
     </message>
     <message>
         <location filename="ex_init_languagepage.cpp" line="54"/>
         <location filename="ex_init_languagepage.cpp" line="106"/>
         <source>Chinese</source>
-        <translation>Китайский</translation>
+        <translation>中文</translation>
     </message>
     <message>
         <location filename="ex_init_languagepage.cpp" line="55"/>
         <location filename="ex_init_languagepage.cpp" line="107"/>
         <source>Spanish</source>
-        <translation>Испанский</translation>
+        <translation>Español</translation>
     </message>
     <message>
         <location filename="ex_init_languagepage.cpp" line="56"/>
         <location filename="ex_init_languagepage.cpp" line="108"/>
         <source>French</source>
-        <translation>Французский</translation>
+        <translation>Français</translation>
     </message>
     <message>
         <location filename="ex_init_languagepage.cpp" line="57"/>
         <location filename="ex_init_languagepage.cpp" line="109"/>
         <source>German</source>
-        <translation>Немецкий</translation>
+        <translation>Deutsch</translation>
     </message>
     <message>
         <location filename="ex_init_languagepage.cpp" line="58"/>
         <location filename="ex_init_languagepage.cpp" line="110"/>
         <source>Italian</source>
-        <translation>Итальянский</translation>
+        <translation>Italiano</translation>
     </message>
     <message>
         <location filename="ex_init_languagepage.cpp" line="59"/>
         <location filename="ex_init_languagepage.cpp" line="111"/>
         <source>Korean</source>
-        <translation>корейский</translation>
+        <translation>한국어</translation>
     </message>
     <message>
         <location filename="ex_init_languagepage.cpp" line="60"/>
@@ -2442,19 +2443,19 @@
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="42"/>
-        <location filename="ex_managersetpage.cpp" line="860"/>
+        <location filename="ex_managersetpage.cpp" line="865"/>
         <source>Audio</source>
         <translation>Аудио</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="43"/>
-        <location filename="ex_managersetpage.cpp" line="960"/>
+        <location filename="ex_managersetpage.cpp" line="965"/>
         <source>Units</source>
         <translation>Единицы</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="44"/>
-        <location filename="ex_managersetpage.cpp" line="1043"/>
+        <location filename="ex_managersetpage.cpp" line="1048"/>
         <source>LCD</source>
         <translation>Экран</translation>
     </message>
@@ -2495,43 +2496,43 @@
         <location filename="ex_managersetpage.cpp" line="69"/>
         <location filename="ex_managersetpage.cpp" line="775"/>
         <source>English</source>
-        <translation>Английский</translation>
+        <translation>English</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="70"/>
         <location filename="ex_managersetpage.cpp" line="776"/>
         <source>Chinese</source>
-        <translation>Китайский</translation>
+        <translation>中文</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="71"/>
         <location filename="ex_managersetpage.cpp" line="777"/>
         <source>Spanish</source>
-        <translation>Испанский</translation>
+        <translation>Español</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="72"/>
         <location filename="ex_managersetpage.cpp" line="778"/>
         <source>French</source>
-        <translation>Французский</translation>
+        <translation>Français</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="73"/>
         <location filename="ex_managersetpage.cpp" line="779"/>
         <source>German</source>
-        <translation>Немецкий</translation>
+        <translation>Deutsch</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="74"/>
         <location filename="ex_managersetpage.cpp" line="780"/>
         <source>Italian</source>
-        <translation>Итальянский</translation>
+        <translation>Italiano</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="75"/>
         <location filename="ex_managersetpage.cpp" line="781"/>
         <source>Korean</source>
-        <translation>корейский</translation>
+        <translation>한국어</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="76"/>
@@ -2656,9 +2657,6 @@
     <name>Ex_PermissionSetPage</name>
     <message>
         <location filename="ex_permissionsetpage.cpp" line="28"/>
-        <location filename="ex_permissionsetpage.cpp" line="36"/>
-        <location filename="ex_permissionsetpage.cpp" line="42"/>
-        <location filename="ex_permissionsetpage.cpp" line="225"/>
         <source>Permission</source>
         <translation type="unfinished">Разрешения</translation>
     </message>
@@ -2668,6 +2666,13 @@
         <location filename="ex_permissionsetpage.cpp" line="190"/>
         <source>RFID Config</source>
         <translation type="unfinished">RFID установки</translation>
+    </message>
+    <message>
+        <location filename="ex_permissionsetpage.cpp" line="36"/>
+        <location filename="ex_permissionsetpage.cpp" line="42"/>
+        <location filename="ex_permissionsetpage.cpp" line="225"/>
+        <source>Verification</source>
+        <translation>проверка</translation>
     </message>
     <message>
         <location filename="ex_permissionsetpage.cpp" line="39"/>
@@ -2786,9 +2791,13 @@
         <translation type="unfinished">Настройка информации</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="51"/>
         <source>Default State</source>
-        <translation>Настройки по умолчанию</translation>
+        <translation type="obsolete">Настройки по умолчанию</translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="51"/>
+        <source>Initialize</source>
+        <translation>инициализировать</translation>
     </message>
     <message>
         <location filename="ex_superpowerpage.cpp" line="52"/>
@@ -4495,14 +4504,14 @@
         <translation type="obsolete">RFID установки</translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="285"/>
-        <location filename="servicepage.cpp" line="293"/>
+        <location filename="servicepage.cpp" line="292"/>
+        <location filename="servicepage.cpp" line="300"/>
         <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="285"/>
-        <location filename="servicepage.cpp" line="293"/>
+        <location filename="servicepage.cpp" line="292"/>
+        <location filename="servicepage.cpp" line="300"/>
         <source>Please Stop System First!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5216,175 +5225,175 @@
 <context>
     <name>SysTestPage</name>
     <message>
-        <location filename="systestpage.cpp" line="348"/>
+        <location filename="systestpage.cpp" line="350"/>
         <source>Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="359"/>
+        <location filename="systestpage.cpp" line="361"/>
         <source>OFF</source>
         <translation>Выкл.</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="360"/>
+        <location filename="systestpage.cpp" line="362"/>
         <source>Low</source>
         <translation>Низкая </translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="361"/>
+        <location filename="systestpage.cpp" line="363"/>
         <source>Middle</source>
         <translation>Средняя</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="362"/>
+        <location filename="systestpage.cpp" line="364"/>
         <source>High</source>
         <translation>Высокая</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="372"/>
+        <location filename="systestpage.cpp" line="374"/>
         <source>RO Inlet Valve</source>
         <translation>RO вх. клапан</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="378"/>
+        <location filename="systestpage.cpp" line="380"/>
         <source>RO Reject Valve</source>
         <translation>RO клапан режекции</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="384"/>
+        <location filename="systestpage.cpp" line="386"/>
         <source>RO Drain Valve</source>
         <translation>RO сливной клапан</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="398"/>
+        <location filename="systestpage.cpp" line="400"/>
         <source>UP Inlet Valve</source>
         <translation>Вх. клапан UP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="404"/>
+        <location filename="systestpage.cpp" line="406"/>
         <source>HP Inlet Valve</source>
         <translation>Вх. клапан очищенной воды</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="412"/>
+        <location filename="systestpage.cpp" line="414"/>
         <source>UP Recirculation Valve</source>
         <translation>Рецирк. клапан UP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="418"/>
+        <location filename="systestpage.cpp" line="420"/>
         <source>HP Recirculation Valve</source>
         <translation>Рецирк. клапан HP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="424"/>
+        <location filename="systestpage.cpp" line="426"/>
         <source>TOC Flush Valve</source>
         <translation>TOC клапан промывки </translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="431"/>
+        <location filename="systestpage.cpp" line="433"/>
         <source>Feed Water Valve</source>
         <translation>Клапан пит. воды</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="437"/>
+        <location filename="systestpage.cpp" line="439"/>
         <source>Feed Pump</source>
         <translation>Пит. насос</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="438"/>
-        <location filename="systestpage.cpp" line="446"/>
-        <location filename="systestpage.cpp" line="453"/>
-        <location filename="systestpage.cpp" line="460"/>
-        <location filename="systestpage.cpp" line="467"/>
-        <location filename="systestpage.cpp" line="474"/>
-        <location filename="systestpage.cpp" line="482"/>
-        <location filename="systestpage.cpp" line="508"/>
+        <location filename="systestpage.cpp" line="440"/>
+        <location filename="systestpage.cpp" line="448"/>
+        <location filename="systestpage.cpp" line="455"/>
+        <location filename="systestpage.cpp" line="462"/>
+        <location filename="systestpage.cpp" line="469"/>
+        <location filename="systestpage.cpp" line="476"/>
+        <location filename="systestpage.cpp" line="484"/>
+        <location filename="systestpage.cpp" line="510"/>
         <source>Current</source>
         <translation>Текущий</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="445"/>
+        <location filename="systestpage.cpp" line="447"/>
         <source>Dist. Pump</source>
         <translation>Раздаточный насос</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="452"/>
+        <location filename="systestpage.cpp" line="454"/>
         <source>254 UV Lamp</source>
         <translation>254 УФ лампа</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="459"/>
+        <location filename="systestpage.cpp" line="461"/>
         <source>185 UV Lamp</source>
         <translation>185 УФ лампа</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="466"/>
+        <location filename="systestpage.cpp" line="468"/>
         <source>Tank UV Lamp</source>
         <translation>Бак УФ лампа</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="473"/>
+        <location filename="systestpage.cpp" line="475"/>
         <source>EDI Power</source>
         <translation>EDI модуль</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="481"/>
+        <location filename="systestpage.cpp" line="483"/>
         <source>RO Pump</source>
         <translation>RO насос</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="483"/>
-        <location filename="systestpage.cpp" line="509"/>
+        <location filename="systestpage.cpp" line="485"/>
+        <location filename="systestpage.cpp" line="511"/>
         <source>Voltage</source>
         <translation>Скорость</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="499"/>
+        <location filename="systestpage.cpp" line="501"/>
         <source>UP Pump</source>
         <translation>ультрачистой воды насос</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="505"/>
+        <location filename="systestpage.cpp" line="507"/>
         <source>HP Pump</source>
         <translation>очищенной воды насос</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="513"/>
+        <location filename="systestpage.cpp" line="515"/>
         <source>UP Product Valve</source>
         <translation>Клапан прод. UP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="516"/>
+        <location filename="systestpage.cpp" line="518"/>
         <source>HP Product Valve</source>
         <translation>Клапан прод. HP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="526"/>
+        <location filename="systestpage.cpp" line="528"/>
         <source>UP Out Valve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="531"/>
+        <location filename="systestpage.cpp" line="533"/>
         <source>Source Pump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="537"/>
+        <location filename="systestpage.cpp" line="539"/>
         <source>TOC Cir Valve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="542"/>
+        <location filename="systestpage.cpp" line="544"/>
         <source>HP Out Valve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="547"/>
+        <location filename="systestpage.cpp" line="549"/>
         <source>Allocated Pump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="552"/>
+        <location filename="systestpage.cpp" line="554"/>
         <source>Tube UV Light</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5392,179 +5401,201 @@
 <context>
     <name>SystemCfgPage</name>
     <message>
-        <location filename="systemcfgpage.cpp" line="132"/>
+        <location filename="systemcfgpage.cpp" line="134"/>
         <source>System Config</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="142"/>
+        <location filename="systemcfgpage.cpp" line="144"/>
         <source>Pure Water Tank</source>
         <translation>Бак чистой воды</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="143"/>
-        <location filename="systemcfgpage.cpp" line="147"/>
-        <location filename="systemcfgpage.cpp" line="507"/>
-        <location filename="systemcfgpage.cpp" line="575"/>
+        <location filename="systemcfgpage.cpp" line="145"/>
+        <location filename="systemcfgpage.cpp" line="149"/>
+        <location filename="systemcfgpage.cpp" line="527"/>
+        <location filename="systemcfgpage.cpp" line="595"/>
         <source>UDF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="144"/>
-        <location filename="systemcfgpage.cpp" line="148"/>
-        <location filename="systemcfgpage.cpp" line="509"/>
-        <location filename="systemcfgpage.cpp" line="576"/>
+        <location filename="systemcfgpage.cpp" line="146"/>
+        <location filename="systemcfgpage.cpp" line="150"/>
+        <location filename="systemcfgpage.cpp" line="529"/>
+        <location filename="systemcfgpage.cpp" line="596"/>
         <source>NO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="146"/>
+        <location filename="systemcfgpage.cpp" line="148"/>
         <source>Feed Tank</source>
         <translation>Бак пит. воды</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="156"/>
+        <location filename="systemcfgpage.cpp" line="158"/>
         <source>Feed Valve</source>
         <translation>Пит. клапан</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="159"/>
+        <location filename="systemcfgpage.cpp" line="161"/>
         <source>Leak Protector</source>
         <translation>Защита от утечки</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="162"/>
+        <location filename="systemcfgpage.cpp" line="164"/>
         <source>Printer</source>
         <translation>Принтер</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="165"/>
+        <location filename="systemcfgpage.cpp" line="167"/>
         <source>Loop UV</source>
         <translation>Петля УФ лампа</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="168"/>
+        <location filename="systemcfgpage.cpp" line="170"/>
         <source>Loop DI</source>
         <translation>Петля DI</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="171"/>
+        <location filename="systemcfgpage.cpp" line="173"/>
         <source>Loop Filter</source>
         <translation>Петля фильтр</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="174"/>
+        <location filename="systemcfgpage.cpp" line="176"/>
         <source>HP Recir.</source>
         <translation>Рециркуляция HP</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="177"/>
+        <location filename="systemcfgpage.cpp" line="179"/>
         <source>Prefilter</source>
         <translation>Pre Pack</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="180"/>
+        <location filename="systemcfgpage.cpp" line="182"/>
         <source>Disable RFID</source>
         <translation>Отключить RFID</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="183"/>
+        <location filename="systemcfgpage.cpp" line="185"/>
         <source>H PACK</source>
         <translation>Картридж H Pack</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="186"/>
+        <location filename="systemcfgpage.cpp" line="188"/>
         <source>HP ELECTRODE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="189"/>
+        <location filename="systemcfgpage.cpp" line="191"/>
         <source>Feed PUMP</source>
         <translation>Пит. насос</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="194"/>
+        <location filename="systemcfgpage.cpp" line="196"/>
         <source>Tank UV</source>
         <translation>Бак УФ</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="195"/>
+        <location filename="systemcfgpage.cpp" line="197"/>
         <source>Exposure Time</source>
         <translation>Время задержки</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="196"/>
+        <location filename="systemcfgpage.cpp" line="198"/>
         <source>min/H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="198"/>
+        <location filename="systemcfgpage.cpp" line="200"/>
         <source>Flush Time</source>
         <translation>Время промывки</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="199"/>
-        <location filename="systemcfgpage.cpp" line="202"/>
+        <location filename="systemcfgpage.cpp" line="201"/>
+        <location filename="systemcfgpage.cpp" line="204"/>
         <source>min</source>
         <translation>Мин.</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="201"/>
+        <location filename="systemcfgpage.cpp" line="203"/>
         <source>Auto. Logout</source>
         <translation>Авто выход</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="204"/>
-        <source>System Type</source>
-        <translation>Тип системы</translation>
+        <location filename="systemcfgpage.cpp" line="209"/>
+        <source>Initialize</source>
+        <translation type="unfinished">инициализировать</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="206"/>
+        <location filename="systemcfgpage.cpp" line="210"/>
+        <location filename="systemcfgpage.cpp" line="302"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="systemcfgpage.cpp" line="211"/>
+        <location filename="systemcfgpage.cpp" line="303"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System Type</source>
+        <translation type="obsolete">Тип системы</translation>
+    </message>
+    <message>
+        <location filename="systemcfgpage.cpp" line="214"/>
         <source>TOC</source>
         <translation>ТОС</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="208"/>
+        <location filename="systemcfgpage.cpp" line="216"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="502"/>
-        <location filename="systemcfgpage.cpp" line="570"/>
+        <location filename="systemcfgpage.cpp" line="522"/>
+        <location filename="systemcfgpage.cpp" line="590"/>
         <source>30</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="503"/>
-        <location filename="systemcfgpage.cpp" line="571"/>
+        <location filename="systemcfgpage.cpp" line="523"/>
+        <location filename="systemcfgpage.cpp" line="591"/>
         <source>60</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="504"/>
-        <location filename="systemcfgpage.cpp" line="572"/>
+        <location filename="systemcfgpage.cpp" line="524"/>
+        <location filename="systemcfgpage.cpp" line="592"/>
         <source>100</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="505"/>
-        <location filename="systemcfgpage.cpp" line="573"/>
+        <location filename="systemcfgpage.cpp" line="525"/>
+        <location filename="systemcfgpage.cpp" line="593"/>
         <source>200</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="506"/>
-        <location filename="systemcfgpage.cpp" line="574"/>
+        <location filename="systemcfgpage.cpp" line="526"/>
+        <location filename="systemcfgpage.cpp" line="594"/>
         <source>350</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="1287"/>
+        <location filename="systemcfgpage.cpp" line="682"/>
+        <location filename="systemcfgpage.cpp" line="1343"/>
         <source>NOTIFY</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="1287"/>
+        <location filename="systemcfgpage.cpp" line="682"/>
+        <source>Whether to restart the device immediately?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="systemcfgpage.cpp" line="1343"/>
         <source>Change Device Type?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5667,96 +5698,96 @@
         <translation>Рецирк. насос</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="826"/>
+        <location filename="systemmonitorpage.cpp" line="827"/>
         <source>Tank Full</source>
         <translation>Бак полный</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="836"/>
+        <location filename="systemmonitorpage.cpp" line="837"/>
         <source>Fill Feed Tank</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="842"/>
+        <location filename="systemmonitorpage.cpp" line="843"/>
         <source>Flush</source>
         <translation>очистка</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="848"/>
+        <location filename="systemmonitorpage.cpp" line="849"/>
         <source>Rinsing</source>
         <translation>промывка</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="853"/>
+        <location filename="systemmonitorpage.cpp" line="854"/>
         <source>Filling</source>
         <translation>Наполнение</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="858"/>
+        <location filename="systemmonitorpage.cpp" line="859"/>
         <source>LPP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="861"/>
+        <location filename="systemmonitorpage.cpp" line="862"/>
         <source>KP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="868"/>
         <location filename="systemmonitorpage.cpp" line="869"/>
+        <location filename="systemmonitorpage.cpp" line="870"/>
         <source>Standby</source>
         <translation>Ожидание</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="874"/>
-        <location filename="systemmonitorpage.cpp" line="891"/>
+        <location filename="systemmonitorpage.cpp" line="875"/>
+        <location filename="systemmonitorpage.cpp" line="892"/>
         <source>Dispense</source>
         <translation>Раздача</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="878"/>
-        <location filename="systemmonitorpage.cpp" line="902"/>
+        <location filename="systemmonitorpage.cpp" line="879"/>
+        <location filename="systemmonitorpage.cpp" line="903"/>
         <source>Recirculation</source>
         <translation>рециркуляция</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="882"/>
-        <location filename="systemmonitorpage.cpp" line="895"/>
+        <location filename="systemmonitorpage.cpp" line="883"/>
+        <location filename="systemmonitorpage.cpp" line="896"/>
         <source>Ready</source>
         <translation>Готов</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="927"/>
+        <location filename="systemmonitorpage.cpp" line="928"/>
         <source>Excution Board OK</source>
         <translation>Платформа ОК</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="931"/>
+        <location filename="systemmonitorpage.cpp" line="932"/>
         <source>Excution Board Fault</source>
         <translation>Платформа Ошибка</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="937"/>
+        <location filename="systemmonitorpage.cpp" line="938"/>
         <source>RFID OK</source>
         <translation>RFID ОК</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="941"/>
+        <location filename="systemmonitorpage.cpp" line="942"/>
         <source>RFID Fault</source>
         <translation>RFID Ошибка</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="948"/>
+        <location filename="systemmonitorpage.cpp" line="949"/>
         <source>Dispenser OK</source>
         <translation>Диспенсер ОК</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="953"/>
+        <location filename="systemmonitorpage.cpp" line="954"/>
         <source>Dispenser Partial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="958"/>
+        <location filename="systemmonitorpage.cpp" line="959"/>
         <source>Dispenser Fault</source>
         <translation>Диспенсер Ошибка</translation>
     </message>

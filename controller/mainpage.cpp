@@ -167,12 +167,10 @@ MainPage::MainPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CP
 
     buildTranslation();
 
-    updEcoInfo(APP_EXE_I2_NO,m_wndMain->getEco(APP_EXE_I2_NO),true);
-    updEcoInfo(APP_EXE_I4_NO,m_wndMain->getEco(APP_EXE_I4_NO),true);
-    updEcoInfo(APP_EXE_I5_NO,m_wndMain->getEco(APP_EXE_I5_NO),true);
-    //ex
-    updEcoInfo(APP_EXE_I3_NO,m_wndMain->getEco(APP_EXE_I3_NO),true);
-    //end
+    for(iLoop = APP_EXE_I2_NO; iLoop < APP_EXE_ECO_NUM; iLoop++)
+    {
+        m_aHistoryEco[iLoop] = *m_wndMain->getEco(iLoop);
+    }
 
     for (iLoop = 0; iLoop < APP_DEV_HS_SUB_NUM; iLoop++)
     {
@@ -624,8 +622,6 @@ void MainPage::update()
    updIsInfo(APP_EXE_I2_NO,&m_aHistoryEco[APP_EXE_I2_NO]);
    updIsInfo(APP_EXE_I4_NO,&m_aHistoryEco[APP_EXE_I4_NO]);
    updIsInfo(APP_EXE_I5_NO,&m_aHistoryEco[APP_EXE_I5_NO]);
-
-   //ex
    updIsInfo(APP_EXE_I3_NO,&m_aHistoryEco[APP_EXE_I3_NO]);
 
    switch(gGlobalParam.iMachineType)
@@ -633,6 +629,7 @@ void MainPage::update()
    case MACHINE_Genie:
    case MACHINE_UP:
    case MACHINE_PURIST:
+   case MACHINE_ADAPT:
        updToc(m_fToc); //2018.11.12
        break;
    default:
@@ -1332,10 +1329,7 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
             {
                 if (DispGetUpQtwFlag())
                 {
-                    if(fQ > 200)
-                    {
-                        fQ = 200;
-                    }
+                    fQ = fQ > 200 ? 200 : fQ;
                     m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',1));
                     m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->setText(tr("us"));
                 }
@@ -1344,8 +1338,15 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
             case MACHINE_ADAPT:
             {
                 m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
-                if(fQ > 200) fQ = 200;
-                m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                fQ = fQ > 200 ? 200 : fQ;
+                if(fQ > 99)
+                {
+                    m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',0));
+                }
+                else
+                {
+                    m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                }
                 m_pLabels[LABEL_NAVI_EDI_WQ_UNIT]->setText(tr("us"));
                 break;
             }
@@ -1603,9 +1604,18 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                 {
                     m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
 
-                    m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ).sprintf("%3d",(int)fQ > 200 ? 200 : (int)fQ));
-
+                    fQ = (fQ > 200 ? 200 : fQ);
+                    if(fQ > 99)
+                    {
+                        m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',0));
+                    }
+                    else
+                    {
+                        m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                    }
                     m_pLabels[LABEL_NAVI_EDI_WQ_UNIT]->setText(tr("us"));
+
+                    m_aHistoryEco[iIndex] = *info;
                 }
                 break;
             }

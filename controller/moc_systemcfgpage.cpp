@@ -22,7 +22,7 @@ static const uint qt_meta_data_SystemCfgPage[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -30,17 +30,19 @@ static const uint qt_meta_data_SystemCfgPage[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      15,   14,   14,   14, 0x0a,
-      41,   35,   14,   14, 0x0a,
-      67,   35,   14,   14, 0x0a,
-      93,   14,   14,   14, 0x0a,
+      21,   15,   14,   14, 0x09,
+      57,   14,   14,   14, 0x0a,
+      77,   15,   14,   14, 0x0a,
+     103,   15,   14,   14, 0x0a,
+     129,   14,   14,   14, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_SystemCfgPage[] = {
-    "SystemCfgPage\0\0on_btn_clicked(int)\0"
-    "index\0on_CmbIndexChange_pw(int)\0"
+    "SystemCfgPage\0\0index\0"
+    "on_CmbIndexChange_DefaultState(int)\0"
+    "on_btn_clicked(int)\0on_CmbIndexChange_pw(int)\0"
     "on_CmbIndexChange_sw(int)\0Restart()\0"
 };
 
@@ -50,10 +52,11 @@ void SystemCfgPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         Q_ASSERT(staticMetaObject.cast(_o));
         SystemCfgPage *_t = static_cast<SystemCfgPage *>(_o);
         switch (_id) {
-        case 0: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->on_CmbIndexChange_pw((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 2: _t->on_CmbIndexChange_sw((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 3: _t->Restart(); break;
+        case 0: _t->on_CmbIndexChange_DefaultState((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->on_CmbIndexChange_pw((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->on_CmbIndexChange_sw((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: _t->Restart(); break;
         default: ;
         }
     }
@@ -91,9 +94,9 @@ int SystemCfgPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }

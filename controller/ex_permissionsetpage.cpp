@@ -33,13 +33,13 @@ void Ex_PermissionSetPage::buildTitles()
 void Ex_PermissionSetPage::buildTranslation()
 {
     m_tabWidget->setTabText(0, tr("RFID Config"));
-    m_tabWidget->setTabText(1, tr("Permission"));
+    m_tabWidget->setTabText(1, tr("Verification"));
 
     m_pRfidTitle->setText(tr("RFID Config"));
     m_chRfid->setText(tr("Disable RFID"));
     m_saveRfidBtn->setText(tr("Save"));
 
-    m_pPermissionTitle->setText(tr("Permission"));
+    m_pPermissionTitle->setText(tr("Verification"));
     m_chPermission->setText(tr("Users is free of verification."));
     m_savePermissionBtn->setText(tr("Save"));
 }
@@ -222,7 +222,7 @@ void Ex_PermissionSetPage::initInstallPermissionPage()
     m_savePermissionBtn->move(550, 350);
 
     QIcon icon1(":/pic/unselected.png");
-    m_tabWidget->addTab(m_pageWidget[PAGE_PERMISSION], icon1, tr("Permission"));
+    m_tabWidget->addTab(m_pageWidget[PAGE_PERMISSION], icon1, tr("Verification"));
 }
 
 

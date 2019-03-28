@@ -8,7 +8,8 @@
 
 #include <QScrollBar>
 
-ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
+ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain)
+    : CSubPage(parent,widget,wndMain)
 {
     int iIdx = 0;
 
@@ -29,12 +30,12 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-    case MACHINE_ADAPT:
         aIds[iIdx].iType = 0;
         aIds[iIdx].iId   = DISP_AC_PACK;
         iIdx++;
         break;
     case MACHINE_PURIST:
+    case MACHINE_ADAPT:
         break;
     }
 
@@ -91,15 +92,16 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-//    case MACHINE_Genie:
     case MACHINE_UP:
-//    case MACHINE_EDI:
-  //  case MACHINE_RO:
     case MACHINE_PURIST:
-    case MACHINE_ADAPT:
         aIds[iIdx].iType = 0;
         aIds[iIdx].iId   = DISP_H_PACK;
         iIdx++;
+        break;
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
         break;
     }
 

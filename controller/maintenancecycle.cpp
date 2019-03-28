@@ -63,7 +63,6 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-    case MACHINE_ADAPT:
         aIds[iIdx].iDspType = 2;
         aIds[iIdx].iId      = DISP_AC_PACK;
         aIds[iIdx].vi.v1Min = 0;
@@ -73,6 +72,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         iIdx++;
         break;
     case MACHINE_PURIST:
+    case MACHINE_ADAPT:
         break;
     }
 
@@ -163,12 +163,8 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-    //case MACHINE_Genie:
     case MACHINE_UP:
-    //case MACHINE_EDI:
-    //case MACHINE_RO:
     case MACHINE_PURIST:
-    case MACHINE_ADAPT:
         aIds[iIdx].iDspType = 2;
         aIds[iIdx].iId      = DISP_H_PACK;
         aIds[iIdx].vi.v1Min = 0;
@@ -178,6 +174,10 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         iIdx++;
         break;
     case MACHINE_L_Genie:
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
         break;
     }
 

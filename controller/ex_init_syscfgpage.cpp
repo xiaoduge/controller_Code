@@ -194,11 +194,13 @@ void Ex_Init_Syscfgpage::on_ExNextBtn_clicked()
 {
     save();
     emit initcfgSwitchBtnClicked(1);
+    m_wndMain->prepareKeyStroke();
 }
 
 void Ex_Init_Syscfgpage::on_ExBackBtn_clicked()
 {
     emit initcfgSwitchBtnClicked(0);
+    m_wndMain->prepareKeyStroke();
 }
 
 

@@ -191,7 +191,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.6.190308_RC");
+QString strSoftwareVersion = QString("0.1.7.190328_release");
 
 MainWindow *gpMainWnd;
 
@@ -592,6 +592,8 @@ void MainRetriveMachineParam(int iMachineType,DISP_MACHINE_PARAM_STRU  &Param)
     int iLoop;
 
     float workPressure = 8.0;
+    float defaultRejLimit = 92.0;
+    float defaultROLimit = 50.0;
     switch(iMachineType)
     {
     case MACHINE_L_Genie:
@@ -600,11 +602,15 @@ void MainRetriveMachineParam(int iMachineType,DISP_MACHINE_PARAM_STRU  &Param)
     case MACHINE_L_RO_LOOP:
         workPressure = 12.0;
         break;
+    case MACHINE_ADAPT:
+        defaultRejLimit = 95.0;
+        defaultROLimit = 40.0;
+        break;
     default:
         break;
     }
 
-    float defautlValue[] = {MM_DEFALUT_SP1,MM_DEFALUT_SP2,MM_DEFALUT_SP3,MM_DEFALUT_SP4,MM_DEFALUT_SP5,
+    float defautlValue[] = {MM_DEFALUT_SP1, defaultRejLimit, defaultROLimit, MM_DEFALUT_SP4,MM_DEFALUT_SP5,
                             MM_DEFALUT_SP6,MM_DEFALUT_SP7,MM_DEFALUT_SP8,MM_DEFALUT_SP9,MM_DEFALUT_SP10,
                             MM_DEFALUT_SP11,MM_DEFALUT_SP12,MM_DEFALUT_SP13,MM_DEFALUT_SP14,MM_DEFALUT_SP15,
                             MM_DEFALUT_SP16,MM_DEFALUT_SP17,MM_DEFALUT_SP18,MM_DEFALUT_SP19,MM_DEFALUT_SP20,
@@ -729,7 +735,23 @@ void MainRetriveSubModuleSetting(int iMachineType,DISP_SUB_MODULE_SETTING_STRU  
         qDebug() << strV << ":" << iValue;
         
 
-    }    
+    }
+
+    switch(iMachineType)
+    {
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+    case MACHINE_UP:
+    case MACHINE_RO:
+    case MACHINE_PURIST:
+        Param.ulFlags &= ~(1 << DISP_SM_HaveB3); //
+        break;
+    case MACHINE_ADAPT:
+        Param.ulFlags &= ~(1 << DISP_SM_HaveB3); //
+        Param.ulFlags &= ~(1 << DISP_SM_HaveB2);
+        break;
+    }
+
     if (config)
     {
         delete config;
@@ -3220,7 +3242,6 @@ void MainResetCmInfo(int iSel)
     }
 
     MainSaveCMInfo(gGlobalParam.iMachineType,gCMUsage.info);
-//    gpMainWnd->updateCMInfoWithRFID(1); //write to RFID
     gpMainWnd->updateCMInfoWithRFID(0); //read to RFID
     //gCMUsage.bit1PendingInfoSave = TRUE;
 }
@@ -3981,6 +4002,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_cMas[iLoop].aulMask[0]  = DISP_NOTIFY_DEFAULT;
 
             m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACK)
+                                           |(1 << DISP_AC_PACK)
+                                           |(1 << DISP_H_PACK)
                                            |(1 << DISP_T_PACK)
                                            |(1 << DISP_N1_UV)
                                            |(1 << DISP_N3_UV)
@@ -4384,9 +4407,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
     case MACHINE_ADAPT:
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PPACK_CLEANPACK] = DISP_P_PACK;
-        
-        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
-        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
@@ -4397,15 +4417,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
             MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
         }
 
-        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
-        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
 
         /* rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_PPACK_CLEANPACK] = DISP_P_PACK | (1 << 16);
         
-        MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
-        MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
 
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
@@ -4415,9 +4431,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
             MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
             MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
         }
-
-        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
-        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
         
         break;
     } 
@@ -8600,6 +8613,7 @@ QStringList MainWindow::consumableCatNo(CONSUMABLE_CATNO iType)
 void MainWindow::retriveCMInfoWithRFID()
 {
     updateCMInfoWithRFID(0);
+    MainSaveCMInfo(gGlobalParam.iMachineType,gCMUsage.info);
 }
 
 #ifdef RFIDTEST
@@ -8759,8 +8773,6 @@ void MainWindow::updateCMInfoWithRFID(int operate)
 
 void MainWindow::readCMInfoFromRFID(int iRfId, int type)
 {
-
-    qDebug() << QString("*******readCMInfoFromRFID(%1, %2)*************").arg(iRfId).arg(type);
     int iRet;
 
     CATNO cn;
@@ -8770,7 +8782,7 @@ void MainWindow::readCMInfoFromRFID(int iRfId, int type)
 
     memset(cn, 0, sizeof(CATNO));
     memset(ln, 0, sizeof(LOTNO));
-
+#if 0
     if (this->getRfidState(iRfId))
     {
         if(m_aRfidInfo[iRfId].getPackType() == type)
@@ -8780,18 +8792,17 @@ void MainWindow::readCMInfoFromRFID(int iRfId, int type)
         }
         else
         {
-            qDebug() << QString("*******error 1*************");
             return;
         }
 
     }
 
     else
+#endif
     {
         iRet = this->readRfid(iRfId);
         if (iRet)
         {
-            qDebug() << QString("*******error 2*************");
             return;
         }
 
@@ -8802,13 +8813,11 @@ void MainWindow::readCMInfoFromRFID(int iRfId, int type)
         }
         else
         {
-            qDebug() << QString("*******error 3*************");
             return;
         }
     }
 
     QDateTime installTime(installDate);
-    qDebug() << QString("*******(vol = %1), (time = %2)*********").arg(volUsed).arg(installTime.toTime_t());
     switch(type)
     {
     case DISP_PRE_PACK:

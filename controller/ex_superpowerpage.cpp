@@ -20,7 +20,7 @@
 #define BACKWIDGET_ITEM_HEIGHT  30
 
 static  QRect   sQrectAry[2] = {
-        QRect(5,  BACKWIDGET_HEIGHT/2 - BACKWIDGET_ITEM_HEIGHT/2, BACKWIDGET_ITEM_LENGTH , BACKWIDGET_ITEM_HEIGHT) ,
+        QRect(5,  BACKWIDGET_HEIGHT/2 - BACKWIDGET_ITEM_HEIGHT/2, BACKWIDGET_ITEM_LENGTH + 10, BACKWIDGET_ITEM_HEIGHT) ,
         QRect(60, 2, 110 , 18) ,
     };
 
@@ -48,7 +48,7 @@ void Ex_SuperPowerPage::buildTitles()
 
 void Ex_SuperPowerPage::buildTranslation()
 {
-    m_lbDefaultState->setText(tr("Default State"));
+    m_lbDefaultState->setText(tr("Initialize"));
     m_cmbDefaultState->setItemText(0, tr("Yes"));
     m_cmbDefaultState->setItemText(1, tr("No"));
 
@@ -115,8 +115,9 @@ void Ex_SuperPowerPage::createControl()
     m_lbDefaultState = new QLabel(tmpWidget);
     m_lbDefaultState->setGeometry(rectTmp);
     m_lbDefaultState->show();
+    m_lbDefaultState->setAlignment(Qt::AlignCenter);
 
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 10);
     rectTmp.setWidth(X_VALUE_WIDTH*2 + 5);
     m_cmbDefaultState = new QComboBox(tmpWidget);
     m_cmbDefaultState->addItem(tr("Yes"));

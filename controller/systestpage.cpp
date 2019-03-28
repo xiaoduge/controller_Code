@@ -153,7 +153,8 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         iIdx++;
         break;
     } 
-    
+
+#if 0
     switch(gGlobalParam.iMachineType) /*E7 ON/OFF*/
     {
     case MACHINE_L_EDI_LOOP:
@@ -178,6 +179,7 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         iIdx++;
         break;
     }
+#endif
 
     switch(gGlobalParam.iMachineType)/*C3Ô­Ë®ÔöÑ¹±Ã*/
     {

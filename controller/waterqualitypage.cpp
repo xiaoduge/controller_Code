@@ -109,8 +109,7 @@ WaterQualityPage::WaterQualityPage(QObject *parent,CBaseWidget *widget ,MainWind
         aUsIds[iUsIdx].iId   = UP_WATER;
         aUsIndex[UP_WATER]   = iUsIdx;
         iUsIdx++;
-        if((gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
-            && (MACHINE_ADAPT != gGlobalParam.iMachineType))
+        if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
             aUsIds[iUsIdx].iId   = UP_TOC;
             aUsIndex[UP_TOC]     = iUsIdx;
@@ -223,22 +222,62 @@ WaterQualityPage::WaterQualityPage(QObject *parent,CBaseWidget *widget ,MainWind
       init_tank_msg();
   
       init_edi_msg();
-      
-      updEcoInfo(APP_EXE_I1_NO,m_wndMain->getEco(APP_EXE_I1_NO),true);
-      updEcoInfo(APP_EXE_I2_NO,m_wndMain->getEco(APP_EXE_I2_NO),true);
-      updEcoInfo(APP_EXE_I3_NO,m_wndMain->getEco(APP_EXE_I3_NO),true);
-      updEcoInfo(APP_EXE_I4_NO,m_wndMain->getEco(APP_EXE_I4_NO),true);
-      updEcoInfo(APP_EXE_I5_NO,m_wndMain->getEco(APP_EXE_I5_NO),true);
 
-      //2018.10.22 add
-      update_edi_msg(RO_RESIDUE_RATIO, 0);
-      updSwPressure(0);
-      updPressure(APP_EXE_PM1_NO, 0);
-      for(iLoop = 0; iLoop < APP_FM_FLOW_METER_NUM; iLoop++)
+      //2019.3.14
+      float initEDIHistoryEco[EDI_NUM] =
       {
-          updFlowInfo(iLoop, 0);
+          1.0,    // EDI_PRODUCT_QUALITY,
+          25.0,   // EDI_PRODUCT_T,
+          200.0,  // RO_PRODUCT_QUALITY,
+          25.0,   // RO_PRODUCT_T,
+          0.0,    // RO_RESIDUE_RATIO,
+          2000.0, // TAP_WATER_QUALITY,
+          2000.0, // RO_WATER_IN_QUALITY,
+          25.0,   // RO_WATER_IN_TEMPT,
+          0.0,    // TAP_WATER_PRESSURE,
+          0.0,    // RO_WORK_PRESSURE,
+          0.0,    // RO_PRODUCT_WATER_SPEED,
+          0.0,    // RO_DISCARD_WATER_SPEED,
+          0.0,    // RO_WATER_IN_SPEED,
+          0.0,    // TAP_WATER_SPEED,
+          0.0,    // EDI_PROC_WATER_SPEED,
+          0.0     // EDI_DISCARD_WATER_SPEED,
+      };
+
+      float initUpHistoryEco[UP_NUM] =
+      {
+          18.2, // UP_WATER,
+          3.0,  // UP_TOC,
+          25.0, // UP_PRODUCT_TEMT,
+          1.0,  // UP_IN_QUA,
+          0.0   // UP_SPEED,
+      };
+
+      float initTankHistoryEco[TANK_NUM] =
+      {
+          0.0, // TANK_LEVEL,
+          0.0, // TANK_VALUE,
+          1.0, // CIR_WATER_QUA,
+          0.0  // CIR_SPEED,
+      };
+
+
+      for(iLoop = 0; iLoop < EDI_NUM; iLoop++)
+      {
+          m_aEDIHistoryEco[iLoop].fShowInfo = initEDIHistoryEco[iLoop];
       }
-      //
+
+      for(iLoop = 0; iLoop < UP_NUM; iLoop++)
+      {
+          m_aUpHistoryEco[iLoop].fShowInfo = initUpHistoryEco[iLoop];
+      }
+
+      for(iLoop = 0; iLoop < TANK_NUM; iLoop++)
+      {
+          m_aTankHistoryEco[iLoop].fShowInfo = initTankHistoryEco[iLoop];
+      }
+
+
 }
 
 void WaterQualityPage::creatTitle()
@@ -1340,13 +1379,7 @@ void WaterQualityPage::setBackColor()
 
 void WaterQualityPage::update()
 {
-    //update_edi_msg(TAP_WATER_PRESSURE,toTwoDecimal(m_wndMain->m_fSourceWaterPressure));
-    
-    //update_edi_msg(TAP_WATER_QUALITY,m_wndMain->m_fSourceWaterConductivity);
-
-    updAllInfo();
-
-    
+    updAllInfo();  
 }
 
 void WaterQualityPage::initUi()

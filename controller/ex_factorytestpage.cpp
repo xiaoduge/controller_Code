@@ -59,7 +59,7 @@ void Ex_FactoryTestPage::buildTranslation()
     m_tabWidget->setTabText(1, "Flow & Pressure");
 
     m_pConfigLabel[CONFIG_CAT]->setText(tr("Cat No.:"));
-    m_pConfigLabel[CONFIG_LOT]->setText(tr("Lott No.:"));
+    m_pConfigLabel[CONFIG_LOT]->setText(tr("Lot No.:"));
     m_pConfigLabel[CONFIG_INSTALLDATE]->setText(tr("Installation Date:"));
     m_pConfigLabel[CONFIG_VOLUMEOFUSE]->setText(tr("Volume of Use:"));
     m_pIndexLabel->setText(tr("Address:"));
@@ -91,7 +91,7 @@ void Ex_FactoryTestPage::buildTranslation()
         m_pPreDisplayLab[i]->setAlignment(Qt::AlignCenter);
     }
 
-    m_pBtn[FTESTPAGE_ILOOP]->setText(tr("Stop"));
+    m_pBtn[FTESTPAGE_ILOOP]->setText(tr("Start"));
 
 }
 

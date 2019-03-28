@@ -399,11 +399,13 @@ void Ex_Init_TimePage::on_btn_clicked(int index)
 void Ex_Init_TimePage::on_ExNextBtn_clicked()
 {
     emit timecfgSwitchBtnClicked(1);
+    m_wndMain->prepareKeyStroke();
 }
 
 void Ex_Init_TimePage::on_ExBackBtn_Clicked()
 {
     emit timecfgSwitchBtnClicked(0);
+    m_wndMain->prepareKeyStroke();
 }
 
 void Ex_Init_TimePage::changeTime()

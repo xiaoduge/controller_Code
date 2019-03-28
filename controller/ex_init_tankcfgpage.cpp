@@ -548,11 +548,13 @@ void Ex_Init_Tankcfgpage::on_ExNextBtn_clicked()
 {
     save();
     emit tankcfgSwitchBtnClicked(1);
+    m_wndMain->prepareKeyStroke();
 }
 
 void Ex_Init_Tankcfgpage::on_ExBackBtn_clicked()
 {
     emit tankcfgSwitchBtnClicked(0);
+    m_wndMain->prepareKeyStroke();
 }
 
 

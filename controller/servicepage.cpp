@@ -246,6 +246,13 @@ void ServicePage::initUi()
         m_pBtns[SERVICE_BTN_STERILIZE]->hide();
         m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->enable(false);
         m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->hide();
+
+    }
+
+    if(MACHINE_ADAPT == gGlobalParam.iMachineType)
+    {
+        m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->enable(false);
+        m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->hide();
     }
 
     x = 400 - PAGEID_MARGIN/2 - PAGEID_MARGIN - gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->width()*2;

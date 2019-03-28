@@ -132,6 +132,7 @@ void Ex_Init_HandleCfgpage::on_pushButton_FinishBtn()
 void Ex_Init_HandleCfgpage::on_pushButton_BackBtn()
 {
     emit handlercfgSwitchBtnClicked(0);
+    m_wndMain->prepareKeyStroke();
 }
 
 void Ex_Init_HandleCfgpage::initUi()
