@@ -188,7 +188,6 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
-    case MACHINE_UP:
     case MACHINE_EDI:
         aIds[iIdx].iDspType = 2;
         aIds[iIdx].iId      = DISP_N1_UV;
@@ -198,6 +197,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         aIds[iIdx].vi.v2Max = 99999;
         iIdx++;
         break;
+    case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
     case MACHINE_RO:

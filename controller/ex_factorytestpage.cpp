@@ -299,7 +299,8 @@ void Ex_FactoryTestPage::initRFIDTestPage()
         fLayout->addRow(m_pConfigLabel[i], m_pConfigLineEdit[i]);
     }
 
-    m_pConfigLineEdit[CONFIG_INSTALLDATE]->setReadOnly(true);
+//    m_pConfigLineEdit[CONFIG_INSTALLDATE]->setReadOnly(true);
+    m_pConfigLineEdit[CONFIG_INSTALLDATE]->setInputMask("0000-00-00");
 
     QHBoxLayout* hLayout = new QHBoxLayout;
     hLayout->setAlignment(Qt::AlignCenter);

@@ -127,7 +127,6 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
      case MACHINE_L_EDI_LOOP:
      case MACHINE_L_RO_LOOP:
      case MACHINE_Genie:
-     case MACHINE_UP:
      case MACHINE_EDI:
          aIds[iIdx].iType = 0;
          aIds[iIdx].iId   = DISP_N1_UV;
@@ -135,6 +134,7 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
          iIdx++;
          break;
      case MACHINE_RO:
+     case MACHINE_UP:
          break;
      default:
          break;
@@ -274,7 +274,6 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-    case MACHINE_UP:
     {
         if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_HaveTubeFilter)
         {
@@ -293,10 +292,11 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
         break;
     }
     case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
     case MACHINE_RO:
-    case MACHINE_EDI:
         break;
     }
 
@@ -785,6 +785,8 @@ void ConsumableInsPage::on_btn_clicked(int index)
 {  
    int iOffset = 0;
    int iLen;
+
+   QDate installDate = QDate::currentDate();
    
    /* check SN number */
    if (index < m_iViewItemNum)
@@ -814,6 +816,7 @@ void ConsumableInsPage::on_btn_clicked(int index)
               {
                   m_wndMain->getRfidCatNo(aIds[iMapIdx].iRfid,cn);
                   m_wndMain->getRfidLotNo(aIds[iMapIdx].iRfid,ln);
+                  m_wndMain->getRfidInstallDate(aIds[iMapIdx].iRfid, &installDate);
               }
               else
               {
@@ -831,6 +834,7 @@ void ConsumableInsPage::on_btn_clicked(int index)
                   
                   m_wndMain->getRfidCatNo(aIds[iMapIdx].iRfid,cn);
                   m_wndMain->getRfidLotNo(aIds[iMapIdx].iRfid,ln);
+                  m_wndMain->getRfidInstallDate(aIds[iMapIdx].iRfid, &installDate);
               }
 
               m_aInsListItem[index]->setP1(cn);
@@ -869,7 +873,14 @@ void ConsumableInsPage::on_btn_clicked(int index)
               strncpy(ln,strLn.toAscii(),APP_LOT_LENGTH);
    
               //MainSaveCMSnItem(gGlobalParam.iMachineType,cn,ln,cmIdx);
-              MainSaveExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0);
+              if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
+              {
+                MainSaveExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0);
+              }
+              else
+              {
+                m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0, installDate, aIds[iMapIdx].iRfid);
+              }
               
               strncpy(gGlobalParam.cmSn.aCn[cmIdx],cn,APP_CAT_LENGTH);
               strncpy(gGlobalParam.cmSn.aLn[cmIdx],ln,APP_LOT_LENGTH);
@@ -893,7 +904,14 @@ void ConsumableInsPage::on_btn_clicked(int index)
              strncpy(ln,strLn.toAscii(),APP_LOT_LENGTH);
              
              //MainSaveMacSnItem(gGlobalParam.iMachineType,cn,ln,macIdx);
-             MainSaveExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1);
+             if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
+             {
+                MainSaveExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1);
+             }
+             else
+             {
+                m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1, installDate, aIds[iMapIdx].iRfid);
+             }
 
              strncpy(gGlobalParam.cmSn.aCn[macIdx],cn,APP_CAT_LENGTH);
              strncpy(gGlobalParam.cmSn.aLn[macIdx],ln,APP_LOT_LENGTH);

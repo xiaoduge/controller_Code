@@ -890,6 +890,14 @@ void Ex_ManagerSetPage::initUnitsPage()
 
         m_pUnitsBackWidget[iLoop]->setGeometry(QRect(120 , 50 + 80 * iLoop , 530 ,60));
 
+        if(gGlobalParam.iMachineType == MACHINE_ADAPT)
+        {
+            if(3 == iLoop)
+                m_pUnitsBackWidget[iLoop]->hide();
+            if(4 == iLoop)
+                m_pUnitsBackWidget[iLoop]->setGeometry(QRect(120 , 50 + 80 * (iLoop - 1) , 530 ,60));
+        }
+
         m_laName[iLoop] = new QLabel(m_pUnitsBackWidget[iLoop]);
         m_laName[iLoop]->setPixmap(NULL);
         m_laName[iLoop]->setGeometry(QRect(25, 30 , 250 , 20));

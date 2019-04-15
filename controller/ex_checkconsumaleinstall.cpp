@@ -75,6 +75,7 @@ void Ex_CheckConsumaleInstall::check(int iRfId)
 
     gpMainWnd->getRfidCatNo(m_curRfId, cn);
     gpMainWnd->getRfidLotNo(m_curRfId, ln);
+    gpMainWnd->getRfidInstallDate(m_curRfId, &m_installDate);
 
     m_catNo = cn;
     m_lotNo = ln;
@@ -328,10 +329,55 @@ void Ex_CheckConsumaleInstall::parseType()
 
 }
 
+bool Ex_CheckConsumaleInstall::isNewPack()
+{
+    switch(m_iType)
+    {
+    case DISP_P_PACK:
+    case DISP_U_PACK:
+    case DISP_H_PACK:
+    case DISP_AC_PACK:
+    {
+        if(m_installDate.toString("yyyy-MM-dd") == gpMainWnd->consumableInitDate())
+        {
+            return true;
+        }
+        return false;
+    }
+    default:
+        return true;
+    }
+
+}
+
+bool Ex_CheckConsumaleInstall::writeInstallDate()
+{
+    QString curDate = QDate::currentDate().toString("yyyy-MM-dd");
+    int iRet = gpMainWnd->writeRfid(m_curRfId, RF_DATA_LAYOUT_INSTALL_DATE, curDate);
+    if(iRet != 0)
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("write install date error"), QMessageBox::Ok);
+        return false;
+    }
+    return true;
+}
+
+bool Ex_CheckConsumaleInstall::clearVolofUse()
+{
+    int iRet = gpMainWnd->writeRfid(m_curRfId, RF_DATA_LAYOUT_UNKNOW_DATA, "0");
+    if(iRet != 0)
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("write vol data error"), QMessageBox::Ok);
+        return false;
+    }
+    return true;
+}
+
 /*
   return 0 : do nothing
   return 1 : insert new
   return 2 : update
+  return 3 : only write install date to RFID
 */
 bool Ex_CheckConsumaleInstall::comparedWithSql()
 {
@@ -347,9 +393,19 @@ bool Ex_CheckConsumaleInstall::comparedWithSql()
         QString lotno = query.value(0).toString();
         if(m_lotNo == lotno)
         {
-            m_isBusy = false;
-            qDebug() << QString("%1, consumable compared with Sql: existence").arg(m_instanceID);
-            return false; // do nothing
+            if(isNewPack())
+            {
+                m_operateID = 3;
+                emit consumableMsg(m_iType, m_catNo, m_lotNo);
+                qDebug() << QString("%1, consumable compared with Sql: write install date").arg(m_instanceID);
+                return true; //update
+            }
+            else
+            {
+                m_isBusy = false;
+                qDebug() << QString("%1, consumable compared with Sql: existence").arg(m_instanceID);
+                return false; // do nothing
+            }
         }
         else
         {
@@ -366,6 +422,7 @@ bool Ex_CheckConsumaleInstall::comparedWithSql()
         qDebug() << QString("%1, consumable compared with Sql: insert new").arg(m_instanceID);
         return true;   //insert new
     }
+
 }
 
 void Ex_CheckConsumaleInstall::updateSql()
@@ -439,16 +496,15 @@ void Ex_CheckConsumaleInstall::updateConsumableType(int iType)
 
 void Ex_CheckConsumaleInstall::updateConsumaleMsg()
 {
-    int iRet;
     switch(m_operateID)
     {
     case 1:
     {
         insertSql();
-        iRet = gpMainWnd->writeRfid(m_curRfId, RF_DATA_LAYOUT_INSTALL_DATE, "NULL");
-        if(iRet != 0)
+        if(isNewPack())
         {
-            QMessageBox::warning(NULL, tr("Warning"), tr("write install date error"), QMessageBox::Ok);
+            writeInstallDate();
+            clearVolofUse();
         }
         MainResetCmInfo(m_iType);
         break;
@@ -456,11 +512,19 @@ void Ex_CheckConsumaleInstall::updateConsumaleMsg()
     case 2:
     {
         updateSql();
-        iRet = gpMainWnd->writeRfid(m_curRfId, RF_DATA_LAYOUT_INSTALL_DATE, "NULL");
-        if(iRet != 0)
+        if(isNewPack())
         {
-            QMessageBox::warning(NULL, tr("Warning"), tr("write install date error"), QMessageBox::Ok);
+            writeInstallDate();
+            clearVolofUse();
         }
+        MainResetCmInfo(m_iType);
+        break;
+    }
+    case 3:
+    {
+        writeInstallDate();
+        clearVolofUse();
+
         MainResetCmInfo(m_iType);
         break;
     }

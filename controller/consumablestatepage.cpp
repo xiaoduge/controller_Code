@@ -131,12 +131,12 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
-    case MACHINE_UP:
     case MACHINE_EDI:
           aIds[iIdx].iType = 0;
           aIds[iIdx].iId   = DISP_N1_UV;
           iIdx++;
         break;
+    case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
     case MACHINE_RO:
@@ -293,8 +293,6 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-    case MACHINE_UP:
-    case MACHINE_PURIST:
     {
         if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_HaveTubeFilter)
         {
@@ -315,6 +313,8 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_ADAPT:
     case MACHINE_RO:
     case MACHINE_EDI:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
         break;
     }
 

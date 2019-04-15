@@ -540,13 +540,32 @@ void MainPage::initUi()
         m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->hide();
         break;
     }
+/*
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+    case MACHINE_UP:
+    case MACHINE_RO:
+    {
+        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+        {
+            m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->show();
+            m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->show();
+        }
+        else
+        {
+            m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->hide();
+            m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->hide();
+        }
+        break;
+    }
+*/
     case MACHINE_PURIST:
         m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->show();
         m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->show();
         break;
     default:     
     {
-        m_pLabels[LABEL_NAVI_EDI_LOOP_VALUE]->hide();            
+        m_pLabels[LABEL_NAVI_EDI_LOOP_VALUE]->hide();
         m_pLabels[LABEL_NAVI_EDI_LOOP_UNIT]->hide();
         m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->hide(); //
         m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->hide();  //
@@ -635,6 +654,7 @@ void MainPage::update()
    default:
        break;
    }
+
 
    //end
 }
@@ -1466,6 +1486,24 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
                 }
                 break;
             }
+            case MACHINE_EDI:
+            {
+                if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+                {
+                    if( 1 > fQ)
+                    {
+                        m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ,'f',3));
+                        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',2));
+                    }
+                    else
+                    {
+                        m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                    }
+                    m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+                }
+                break;
+            }
             default:
                 break;
             }
@@ -1519,6 +1557,10 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
         }
         case MACHINE_EDI:
         {
+            if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+            {
+                return;
+            }
             if( 1 > fQ)
             {
                 m_pLabels[m_aiLblMap[LABEL_NAVI_UP_WQ_VALUE]]->setText(QString::number(fQ,'f',3));
@@ -1778,6 +1820,58 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                 }
                 break;
             }
+            case MACHINE_EDI:
+            {
+                if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+                {
+                    if(DispGetEdiQtwFlag() || DispGetTankCirFlag())
+                    {
+                        if (bVisible)
+                        {
+                            if( 1 > fQ)
+                            {
+                                m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ,'f',3));
+                            }
+                            else
+                            {
+                                m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                            }
+                            m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+                        }
+                    }
+                    else if(DispGetTankCirFlag())
+                    {
+                        if (bVisible)
+                        {
+                            if( 1 > fQ)
+                            {
+                                m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',2));
+                            }
+                            else
+                            {
+                                m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                            }
+                        }
+                    }
+                    else if(bForceUpd)
+                    {
+                        if (bVisible)
+                        {
+                            if( 1 > fQ)
+                            {
+                                m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ,'f',3));
+                            }
+                            else
+                            {
+                                m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ,'f',1));
+                            }
+                            m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
+                        }
+                    }
+                    m_aHistoryEco[iIndex] = *info;
+                }
+                break;
+            }
             case MACHINE_PURIST:
             case MACHINE_UP:
                 break;
@@ -1904,6 +1998,10 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
 
         case MACHINE_EDI:
         {
+            if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+            {
+                return;
+            }
             if (bVisible)
             {
                 if( 1 > fQ)

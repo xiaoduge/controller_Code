@@ -31,6 +31,9 @@ public slots:
 private:
     void initRfid();
     void parseType();
+    bool isNewPack();
+    bool writeInstallDate();
+    bool clearVolofUse();
 
 private:
     int m_instanceID;
@@ -41,6 +44,7 @@ private:
     int m_category;
     QString m_catNo;
     QString m_lotNo;
+    QDate m_installDate;
     bool m_isRfidType;
     int m_operateID;
     bool m_isBusy;

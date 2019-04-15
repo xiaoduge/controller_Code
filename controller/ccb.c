@@ -83,6 +83,7 @@ unsigned char gaucIapBuffer[1024];
 int Check_TOC_Alarm = 0;
 int AlarmHighWorkPress = 0;
 const float cor_H_PurtTank = 0.08;
+int isAdaptPreAlarm = 0;
 
 //end
 
@@ -2932,9 +2933,11 @@ void work_start_qtw(void *para)
     case MACHINE_ADAPT:
          {   
             int iLoop;
-            
+
+            CanCcbTransState(DISP_WORK_STATE_RUN,DISP_WORK_SUB_RUN_INIT);//2019.3.29 add
+
             /* 2018/01/05 add extra 10 seconds for flush according to ZHANG Chunhe */
-            if (gulSecond - pCcb->ulAdapterAgingCount > 60)
+            if ((gulSecond - pCcb->ulAdapterAgingCount > 60) || isAdaptPreAlarm)
             {
                 gCcb.aHandler[iIndex].bit1PendingQtw = 1;
                 
@@ -3243,7 +3246,7 @@ void work_start_qtw(void *para)
                 /* notify ui (late implemnt) */
                 work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);        
                 return ;
-            }  
+            }
 
             pCcb->iCurTwIdx = iIndex;
             
@@ -4849,6 +4852,7 @@ void CanCcbPmMeasurePostProcess(int iPmId)
                             if (fValue >= fThd)
                             {
                                 gCcb.bit1B1UnderPressureDetected = 0;
+                                isAdaptPreAlarm = 0;
                             }
                             else
                             {
@@ -12964,7 +12968,12 @@ void work_start_lpp(void *para)
     }
     VOS_LOG(VOS_LOG_WARNING," DISP_WORK_STATE_LPP %d",iRet);  
     
-    CanCcbTransState(DISP_WORK_STATE_LPP,DISP_WORK_SUB_IDLE);     
+    CanCcbTransState(DISP_WORK_STATE_LPP,DISP_WORK_SUB_IDLE);
+
+    if(MACHINE_ADAPT == gCcb.ulMachineType)
+    {
+        isAdaptPreAlarm = 1;
+    }
 
 }
 

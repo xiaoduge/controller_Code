@@ -191,7 +191,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.7.190328_release");
+QString strSoftwareVersion = QString("0.1.7.190409_release");
 
 MainWindow *gpMainWnd;
 
@@ -482,8 +482,8 @@ void MainRetriveProductMsg(int iMachineType) //ex_dcj
     ex_gGlobalParam.Ex_System_Msg.Ex_ProDate = config->value(strV, "unknow").toString();
 
     strV = "/ProductMsg/SoftwareVersion/";
-//    ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer = config->value(strV, strSoftwareVersion).toString();
     ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer = strSoftwareVersion;
+
 
     if (config)
     {
@@ -823,7 +823,14 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_U_PACKLIFEL])
     {
-        Param.aulCms[DISP_U_PACKLIFEL] = 6000; // 
+        if(iMachineType == MACHINE_ADAPT)
+        {
+            Param.aulCms[DISP_U_PACKLIFEL] = 1000; //
+        }
+        else
+        {
+            Param.aulCms[DISP_U_PACKLIFEL] = 3000; //
+        }
     }
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_AT_PACKLIFEDAY])
@@ -843,7 +850,7 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_H_PACKLIFEL])
     {
-        Param.aulCms[DISP_H_PACKLIFEL] = 6000; // 
+        Param.aulCms[DISP_H_PACKLIFEL] = 3000; //
     }
 
 
@@ -853,7 +860,7 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     }
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N1_UVLIFEHOUR])
     {
-        Param.aulCms[DISP_N1_UVLIFEHOUR] = 8000; // 
+        Param.aulCms[DISP_N1_UVLIFEHOUR] = 1500; //
     }
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N2_UVLIFEDAY])
@@ -862,7 +869,7 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     }
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N2_UVLIFEHOUR])
     {
-        Param.aulCms[DISP_N2_UVLIFEHOUR] = 8000; // 
+        Param.aulCms[DISP_N2_UVLIFEHOUR] = 500; //
     }
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N3_UVLIFEDAY])
@@ -871,7 +878,7 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     }
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N3_UVLIFEHOUR])
     {
-        Param.aulCms[DISP_N3_UVLIFEHOUR] = 8000; // 
+        Param.aulCms[DISP_N3_UVLIFEHOUR] = 1500; //
     }
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N4_UVLIFEDAY])
@@ -3089,7 +3096,10 @@ void CheckConsumptiveMaterialState(void)
 
         if (ulTemp >= gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY])
         {
-            gCMUsage.ulUsageState |= (1 << DISP_ROC12LIFEDAY);
+            if(!(gGlobalParam.iMachineType == MACHINE_PURIST))
+            {
+                gCMUsage.ulUsageState |= (1 << DISP_ROC12LIFEDAY);
+            }
         }
         
    }      
@@ -3518,6 +3528,9 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_isInitCMInfo = false; //2019.3.1 add
     ex_isPackNew = 0;
 
+    //Set the factory default time for RFID tags
+    m_consuambleInitDate = QString("2014-05-22");
+
     MainRetriveExConsumableMsg(gGlobalParam.iMachineType,gGlobalParam.cmSn,gGlobalParam.macSn);
 
     //ui->setupUi(this);
@@ -3941,6 +3954,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_cMas[iLoop].aulMask[0]  = DISP_NOTIFY_DEFAULT;
 
             m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACK)
+                                         |(1 << DISP_N1_UV)
                                          |(1 << DISP_N5_UV)
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
@@ -5954,7 +5968,8 @@ int MainWindow::writeRfid(int iRfId, int dataLayout, QString strData)
         break;
     case RF_DATA_LAYOUT_INSTALL_DATE:
     {
-        QDate curDate = QDate::currentDate();
+//        QDate curDate = QDate::currentDate();
+        QDate curDate = QDate::fromString(strData, "yyyy-MM-dd");
         pData[0] = curDate.day();
         pData[1] = curDate.month();
         pData[2] = (curDate.year() >> 8) & 0xff;
@@ -8458,6 +8473,20 @@ void MainWindow::updateRectAlarmState()
     //N3
     if(ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N3] == 1)
     {
+        if(!gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TankUV))
+        {
+            if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 == 1)
+            {
+                ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN3 = 0;
+                ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 = 0;
+                alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP);
+            }
+            else
+            {
+                return;
+            }
+        }
+
         DispGetOtherCurrent(APP_EXE_N3_NO, &iTmpData);
         if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N3]) > 15)
         {
@@ -8899,6 +8928,92 @@ void MainWindow::writeCMInfoToRFID(int iRfId, int type)
     {
         qDebug() << "************write pack info error*************";
     }
+}
+
+void MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int iIndex,
+                                       int category, QDate &date, int iRfid)
+{
+    Q_UNUSED(iMachineType);
+    QSqlQuery query;
+    bool ret;
+
+    query.prepare(select_sql_Consumable);
+    query.addBindValue(iIndex);
+    ret = query.exec();
+    if(query.next())
+    {
+            QString lotno = query.value(0).toString();
+            if(ln == lotno)
+            {
+                resetExConsumableMsg(date, iRfid, iIndex);
+                return; // do nothing
+            }
+            else
+            {
+                QString installDate = resetExConsumableMsg(date, iRfid, iIndex).toString("yyyy-MM-dd");
+                QSqlQuery queryUpdate;
+                queryUpdate.prepare(update_sql_Consumable);
+                queryUpdate.addBindValue(cn);
+                queryUpdate.addBindValue(ln);
+                queryUpdate.addBindValue(installDate);
+                queryUpdate.addBindValue(iIndex);
+                bool ret = queryUpdate.exec();
+                qDebug() << QString("consumable update Sql: %1").arg(ret);
+            }
+    }
+    else
+    {
+        QString installDate = resetExConsumableMsg(date, iRfid, iIndex).toString("yyyy-MM-dd");
+        QSqlQuery queryInsert;
+        queryInsert.prepare(insert_sql_Consumable);
+        queryInsert.bindValue(":iPackType", iIndex);
+        queryInsert.bindValue(":CatNo", cn);
+        queryInsert.bindValue(":LotNo", ln);
+        queryInsert.bindValue(":category", category);
+        queryInsert.bindValue(":time", installDate);
+        bool ret = queryInsert.exec();
+        qDebug() << QString("consumable insert Sql: %1").arg(ret);
+    }
+}
+
+const QDate MainWindow::resetExConsumableMsg(QDate &date, int iRfid, int iType)
+{
+    switch(iType)
+    {
+    case DISP_AC_PACK:
+    case DISP_U_PACK:
+    case DISP_P_PACK:
+    case DISP_H_PACK:
+    {
+        if(date.toString("yyyy-MM-dd") == m_consuambleInitDate)
+        {
+            QDate curDate = QDate::currentDate();
+            QString strDate = curDate.toString("yyyy-MM-dd");
+            int iRet = gpMainWnd->writeRfid(iRfid, RF_DATA_LAYOUT_INSTALL_DATE, strDate);
+            if(iRet != 0)
+            {
+                QMessageBox::warning(NULL, tr("Warning"), tr("write install date error"), QMessageBox::Ok);
+            }
+
+            iRet = gpMainWnd->writeRfid(iRfid, RF_DATA_LAYOUT_UNKNOW_DATA, "0");
+            if(iRet != 0)
+            {
+                QMessageBox::warning(NULL, tr("Warning"), tr("write vol data error"), QMessageBox::Ok);
+            }
+            return curDate;
+        }
+        return date;
+    }
+    default:
+        return date;
+
+    }
+
+}
+
+const QString &MainWindow::consumableInitDate() const
+{
+    return m_consuambleInitDate;
 }
 #endif
 

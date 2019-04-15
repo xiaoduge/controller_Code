@@ -581,12 +581,12 @@ void WaterQualityPage::update_up_msg(int isIdx,float fValue)
     {
         if(fValue > 200)
         {
-//            tmpMsg = QString(" > 200");
             tmpMsg = upmsg[iIdx].arg(" > 200");
         }
         else
         {
-            tmpMsg = upmsg[iIdx].arg((int)fValue);
+//            tmpMsg = upmsg[iIdx].arg((int)fValue);
+            tmpMsg = upmsg[iIdx].arg(QString::number(fValue,'f',0));
         }
 //        tmpMsg = upmsg[iIdx].arg((int)fValue);
         break;
@@ -788,14 +788,15 @@ void WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                      &&(MACHINE_PURIST != gGlobalParam.iMachineType)
                      &&(MACHINE_RO != gGlobalParam.iMachineType))
             {
-                update_tank_msg(CIR_WATER_QUA,toOneDecimal(fQ));
+//                update_tank_msg(CIR_WATER_QUA,toOneDecimal(fQ));
+                update_tank_msg(CIR_WATER_QUA, fQ);
                 m_aTankHistoryEco[CIR_WATER_QUA].fShowInfo = info->fQuality;
             }
             else if (DispGetTankCirFlag()
                 && (MACHINE_PURIST != gGlobalParam.iMachineType))
             {
-//                update_tank_msg(CIR_WATER_QUA,toOneDecimal(fQ));
-//                m_aTankHistoryEco[CIR_WATER_QUA].fShowInfo = info->fQuality;
+                update_tank_msg(CIR_WATER_QUA, fQ);
+                m_aTankHistoryEco[CIR_WATER_QUA].fShowInfo = info->fQuality;
             }
             else if (bForceUpd
                      && (MACHINE_PURIST != gGlobalParam.iMachineType)
@@ -1005,7 +1006,7 @@ void WaterQualityPage::updFlowInfo(int iIndex,int iValue)
             update_up_msg(UP_SPEED,toOneDecimal(fUnit*(iValue*1.0)/1000));      
             m_aUpHistoryEco[UP_SPEED].fShowInfo = ((iValue*1.0)/1000);
         }
-        else if(DispGetEdiQtwFlag()) //0629
+        else if(DispGetEdiQtwFlag() || DispGetTankCirFlag()) //0629
         {
             if (0 != m_aUpHistoryEco[UP_SPEED].fShowInfo)
             {
@@ -1108,11 +1109,13 @@ void WaterQualityPage::update_tank_msg(int isIdx,float fValue)
     case CIR_WATER_QUA:
         if(1 > fValue)
         {
-            tmpMsg = tankmsg[iIdx].arg(fValue,0,'f',3);
+            QString strValue = QString::number(fValue,'f',3);
+            tmpMsg = tankmsg[iIdx].arg(strValue);
         }
         else
         {
-            tmpMsg = tankmsg[iIdx].arg(fValue,0,'f',1);
+            QString strValue = QString::number(fValue,'f',1);
+            tmpMsg = tankmsg[iIdx].arg(strValue);
         }
         break;
     case CIR_SPEED:         
