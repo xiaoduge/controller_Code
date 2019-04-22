@@ -341,8 +341,12 @@ void MenuPage::mouseReleaseEvent(QMouseEvent *e)
     if (abs(m_curX - m_lstX) >= PAGE_X_DIMENSION
         && abs(m_curY - m_lstY) <= PAGE_Y_DIMENSION)
     {
-       
+#ifdef FLOWCHART
+        m_wndMain->naviPage(2,m_curX - m_lstX > 0 ? 1 : 0);
+#else
         m_wndMain->naviPage(1,m_curX - m_lstX > 0 ? 1 : 0);
+#endif
+
     }
     m_lstFlag = 0;
 }

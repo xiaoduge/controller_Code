@@ -53,7 +53,7 @@ void Ex_CheckConsumaleInstall::initRfid()
 
 }
 
-void Ex_CheckConsumaleInstall::check(int iRfId)
+bool Ex_CheckConsumaleInstall::check(int iRfId)
 {
     m_isBusy = true;
     int iRet;
@@ -64,12 +64,12 @@ void Ex_CheckConsumaleInstall::check(int iRfId)
     memset(cn,0,sizeof(CATNO));
     memset(ln,0,sizeof(LOTNO));
 
-    if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)))
+   // if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)))
     {
         iRet = gpMainWnd->readRfid(m_curRfId);
         if (iRet)
         {
-            return;
+            return false;
         }
     }
 
@@ -82,6 +82,7 @@ void Ex_CheckConsumaleInstall::check(int iRfId)
 
     parseType();
     qDebug() << QString("CheckConsumale instanceID: %1 ,RfID: %2").arg(m_instanceID).arg(m_curRfId);
+    return true;
 }
 
 void Ex_CheckConsumaleInstall::parseType()

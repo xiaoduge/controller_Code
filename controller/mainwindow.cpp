@@ -87,6 +87,7 @@
 #include "ex_factorytestpage.h"
 #include "ex_checkconsumaleinstall.h"
 #include "ex_consumableinstalldialog.h"
+#include "ex_flowchartpage.h"
 
 #include "ex_screensleepthread.h"
 /***********************************************
@@ -191,7 +192,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.7.190409_release");
+QString strSoftwareVersion = QString("0.1.8_190419_debug");
 
 MainWindow *gpMainWnd;
 
@@ -3423,6 +3424,9 @@ void MainWindow::initUI()
     int /*row,*/index;
 
     QString astrPageName [PAGE_NUM] = {
+#ifdef FLOWCHART
+        "flowchart",
+#endif
         "main",
         "menu",
         "service",
@@ -3506,7 +3510,10 @@ void MainWindow::initUI()
         m_pSubWidget[index]->hide();
         m_pSubWidget[index]->setGeometry(0,0,800,600);
     }
-
+#ifdef FLOWCHART
+    m_pSubPages[PAGE_FLOWCHART]    = new Ex_FlowChartPage(0,(CBaseWidget *)m_pSubWidget[PAGE_FLOWCHART] , this);
+    connect(this, SIGNAL(unitsChanged()), m_pSubPages[PAGE_FLOWCHART], SLOT(updateUnits()));
+#endif
     m_pSubPages[PAGE_MAIN]    = new MainPage(0,(CBaseWidget *)m_pSubWidget[PAGE_MAIN] , this);
 
     m_pSubPages[PAGE_MENU]    = new MenuPage(0 , (CBaseWidget *)m_pSubWidget[PAGE_MENU],this );
@@ -3735,6 +3742,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1] &= (~((1 << DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE)
                                                          |(1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE)
+                                                         |(1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE)
+                                                         |(1 << DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_HIGHER_EDI_PRODUCT_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE)
@@ -3856,8 +3865,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
                                                          |(1 << DISP_ALARM_PART1_LOWER_RO_WASTE_FLOWING_VELOCITY)
                                                          |(1 << DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY)
                                                          |(1 << DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY)
-                                                         |(1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_HIGHER_EDI_PRODUCT_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_LOWER_EDI_PRODUCT_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_HIGHER_TUBE_TEMPERATURE)
@@ -4500,8 +4507,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     if(ex_gGlobalParam.Ex_Default == 0)
     {
-        m_pExInitPages[Ex_Init_Lan]->show(true);
         m_startCheckConsumale = false;
+        m_pExInitPages[Ex_Init_Lan]->show(true);    
     }
     else
     {
@@ -4679,6 +4686,12 @@ void MainWindow::updEcoInfo(int index)
         page->updEcoInfo(index,&m_EcoInfo[index]);
     }
 
+    if (NULL != m_pSubPages[PAGE_FLOWCHART])
+    {
+        Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
+        page->updEcoInfo(index, &m_EcoInfo[index]);
+    }
+
     if (NULL != m_pSubPages[PAGE_MENU])
     {
         MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
@@ -4703,6 +4716,11 @@ void MainWindow::updTank()
     float liter = (m_fPressure[APP_EXE_PM2_NO]/100)*gGlobalParam.PmParam.afCap[APP_EXE_PM2_NO];
     int   level = (int)((liter*100) / gGlobalParam.PmParam.afCap[APP_EXE_PM2_NO]);
 
+    if (NULL != m_pSubPages[PAGE_FLOWCHART])
+    {
+        Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
+        page->updTank(level, liter);
+    }
 
     if (NULL != m_pSubPages[PAGE_MAIN])
     {
@@ -4797,6 +4815,12 @@ void MainWindow::updPressure(int iIdx)
             subpage->updatePressure(iIdx, m_fPressure[iIdx]);
         }
 
+        if (NULL != m_pSubPages[PAGE_FLOWCHART])
+        {
+            Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
+            page->updPressure(iIdx, m_fPressure[iIdx]);
+        }
+
         break;
      }
     case APP_EXE_PM2_NO:
@@ -4848,6 +4872,24 @@ void MainWindow::updFlowInfo(int iIdx)
                 iFmDelta = m_ulFlowMeter[iIdx] - m_ulLstFlowMeter[iIdx];
 
                 subpage->updateFlow(iIdx,(iFmDelta * TOMLPERMIN / iTmDelta));
+            }
+        }
+
+    }
+
+    if (NULL != m_pSubPages[PAGE_FLOWCHART])
+    {
+        Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
+        {
+            int iTmDelta = m_periodEvents - m_iLstFlowMeterTick[iIdx];
+            int iFmDelta;
+
+            if ((iTmDelta >= (FM_CALC_PERIOD/PERIOD_EVENT_LENGTH))
+                && (m_ulLstFlowMeter[iIdx] != 0))
+            {
+                iFmDelta = m_ulFlowMeter[iIdx] - m_ulLstFlowMeter[iIdx];
+
+                page->updFlowInfo(iIdx,(iFmDelta * TOMLPERMIN / iTmDelta));
             }
         }
 
@@ -6582,7 +6624,12 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     {
                         SystemMonitorPage *page = (SystemMonitorPage *)m_pCurPage;
                         page->updateRectInfo(pItem->ucId);
-                    }                    
+                    }
+                    else if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
+                    {
+                        Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
+                        page->updateRectInfo(pItem->ucId);
+                    }
                 }
                 pItem++;
             }
@@ -6614,7 +6661,12 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     {
                         SystemMonitorPage *page = (SystemMonitorPage *)m_pCurPage;
                         page->updateGpumpInfo(pItem->ucId);
-                    }                     
+                    }
+                    else if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
+                    {
+                        Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
+                        page->updateGpumpInfo(pItem->ucId);
+                    }
                  }
                 pItem++;
             }
@@ -6649,6 +6701,13 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                          
                          page->updateRpumpInfo(pItem->ucId);
                      }  
+
+                     else if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
+                     {
+                         Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
+
+                         page->updateRpumpInfo(pItem->ucId);
+                     }
                      
                      qDebug("DISP_NOT_RPUMP %d\r\n",pItem->ucId);
                  }
@@ -6683,6 +6742,11 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                          SystemMonitorPage *page = (SystemMonitorPage *)m_pCurPage;
                          page->updateEdiInfo(pItem->ucId);
                      }  
+                     else if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
+                     {
+                         Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
+                         page->updateEdiInfo(pItem->ucId);
+                     }
 
                      //alarmCommProc(bAlarm,iAlarmId);
 
@@ -6934,6 +6998,12 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 page->updateWorkState();
             }
 
+            if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
+            {
+                Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
+                page->updateWorkState();
+            }
+
             if (typeid(*m_pCurPage) == typeid(MainPage))
             {
                 pMainPage->updMainpageState();
@@ -6994,6 +7064,12 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             if (typeid(*m_pCurPage) == typeid(SystemMonitorPage))
             {
                 SystemMonitorPage *page = (SystemMonitorPage *)m_pCurPage;
+                page->updateWorkState();
+            }
+
+            if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
+            {
+                Ex_FlowChartPage *page = (Ex_FlowChartPage*)m_pCurPage;
                 page->updateWorkState();
             }
 
@@ -7100,8 +7176,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             {
             case APP_WORK_MODE_NORMAL:
                 if(DISP_WORK_STATE_IDLE == DispGetWorkState4Pw()
-                   && m_startCheckConsumale
-                   &&(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))))
+                   && m_startCheckConsumale)
                 {
                     checkConsumableInstall(pItem->ucId); //2019.1.21
                 }
@@ -7249,7 +7324,13 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             {
                 SystemMonitorPage *page = (SystemMonitorPage *)m_pCurPage;
                 page->updateSwitchInfo();
-            }     
+            }
+
+            if (!m_bSplash && (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage)))
+            {
+                Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
+                page->updateSwitchInfo();
+            }
         }
         break;
     case DISP_NOT_RPUMP_STATE:
@@ -7263,6 +7344,15 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
 
                 NOT_RPUMP_STATE_ITEM_STRU *pItem = (NOT_RPUMP_STATE_ITEM_STRU *)pNotify->aucData;
                 
+                page->updateRpumpInfo(pItem->ucId);
+            }
+
+            if (!m_bSplash && (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage)))
+            {
+                Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
+
+                NOT_RPUMP_STATE_ITEM_STRU *pItem = (NOT_RPUMP_STATE_ITEM_STRU *)pNotify->aucData;
+
                 page->updateRpumpInfo(pItem->ucId);
             }
             
@@ -7314,6 +7404,11 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 subpage->updTOC(fToc);
             }
             //end
+            if (NULL != m_pSubPages[PAGE_FLOWCHART])
+            {
+                Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
+                page->updTOC(fToc);
+            }
 
             DispSndHoPpbAndTankLevel(APP_PROTOL_CANID_BROADCAST,APP_PACKET_HO_QL_TYPE_PPB,0,fToc);
         }        
@@ -7726,7 +7821,12 @@ void MainWindow::run(bool bRun)
 void MainWindow::home()
 {
     int iIdx;
+#ifdef FLOWCHART
+    m_curPageIdx = 1;
+#else
     m_curPageIdx = 0;
+#endif
+
 
     for (iIdx = 0; iIdx < m_pageList.count();iIdx++)
     {
@@ -7743,6 +7843,20 @@ void MainWindow::home()
 
 void MainWindow::naviPage(int iCurPage,int iDir)
 {
+#ifdef FLOWCHART
+    if (iCurPage < 4 && !iDir )
+    {
+        m_pSubPages[iCurPage]->show(false);
+        m_pSubPages[iCurPage + 1]->show(true);
+        m_curPageIdx += 1;
+    }
+    else if (iCurPage > 0 && iDir )
+    {
+        m_pSubPages[iCurPage]->show(false);
+        m_pSubPages[iCurPage - 1]->show(true);
+        m_curPageIdx -= 1;
+    }
+#else
     if (iCurPage < 3 && !iDir )
     {
         m_pSubPages[iCurPage]->show(false);
@@ -7755,6 +7869,7 @@ void MainWindow::naviPage(int iCurPage,int iDir)
         m_pSubPages[iCurPage - 1]->show(true);
         m_curPageIdx -= 1;
     }
+#endif
 }
 
 void MainWindow::saveLoginfo(QString strUserName)
@@ -8621,7 +8736,10 @@ void MainWindow::checkConsumableInstall(int iRfId)
         return;
     }
 
-    m_checkConsumaleInstall[iRfId]->check(iRfId);
+    if(!m_checkConsumaleInstall[iRfId]->check(iRfId))
+    {
+        return;
+    }
 
     if(!m_checkConsumaleInstall[iRfId]->isCorrectRfId())
     {
@@ -8637,6 +8755,11 @@ void MainWindow::checkConsumableInstall(int iRfId)
 QStringList MainWindow::consumableCatNo(CONSUMABLE_CATNO iType)
 {
     return m_strConsuamble[iType];
+}
+
+void MainWindow::emitUnitsChanged()
+{
+    emit unitsChanged();
 }
 
 void MainWindow::retriveCMInfoWithRFID()

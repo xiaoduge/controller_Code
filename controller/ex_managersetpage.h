@@ -44,7 +44,14 @@ public:
         MANGER_PAGE_AUDIO,
         MANGER_PAGE_UNITS,
         MANGER_PAGE_LCD,
+        MANGER_PAGE_ADDSETTINGS, //Additional settings
         MANGER_PAGE_NUM
+    };
+
+    enum ADDITIONAL_SETTINGS_NUM
+    {
+        HPCIR_SETTING,
+        ADDITIONAL_NUM
     };
 
 public:
@@ -88,6 +95,10 @@ protected slots:
     void on_comboBox_currentIndexChanged(int index);
     void setValue(int);
 
+    //Additional Settings
+    void on_AdditionalBtnSave_clicked();
+    void on_HPCircheckBox_changeState(int state);
+
 private:
     void initFlowPage();
     void initTimePage();
@@ -95,6 +106,7 @@ private:
     void initAudioPage();
     void initUnitsPage();
     void initLcdPage();
+    void initAdditionalSettingsPage();
 
     void changeTime();
 
@@ -166,7 +178,11 @@ private:
     int            m_iBrightness;
     int            m_iSleepTime;
 
-
+    //Additional Settings
+    QPushButton   *m_pAddBtnSave;
+    QLabel        *m_pAdditionalLb[ADDITIONAL_NUM];
+    QCheckBox     *m_pAdditionalCheck[ADDITIONAL_NUM];
+    QWidget       *m_pAdditionalWidget[ADDITIONAL_NUM];
 };
 
 #endif // EX_MANAGERSETPAGE_H

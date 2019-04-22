@@ -25,6 +25,7 @@
 #include "ex_calcpackflow.h"
 #include <QMutex>
 
+#define FLOWCHART
 
 #define RFIDTEST
 
@@ -72,7 +73,12 @@ enum GLOBAL_BMP_ENUM
 
 enum
 {
+#ifdef FLOWCHART
+    PAGE_FLOWCHART = 0,
+    PAGE_MAIN,
+#else
     PAGE_MAIN = 0,
+#endif
     PAGE_MENU,
     PAGE_SERVICE,
     PAGE_SET,
@@ -380,6 +386,8 @@ public:
     //Static Public Members
     static QStringList consumableCatNo(CONSUMABLE_CATNO iType);
 
+    void emitUnitsChanged();
+
 public slots:
 #ifdef RFIDTEST
     void retriveCMInfoWithRFID();
@@ -425,6 +433,7 @@ signals:
     void iapIndication(IAP_NOTIFY_STRU *pIapNotify);
 
     void SleepPageShow(bool); //ex
+    void unitsChanged();
 
 protected:
     void mousePressEvent(QMouseEvent *e);

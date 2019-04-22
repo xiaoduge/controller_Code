@@ -828,7 +828,8 @@ void WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
             {
                 fT = toFahrenheit(info->fTemperature);
             }              
-            update_edi_msg(EDI_PRODUCT_QUALITY,toOneDecimal(fQ));
+//            update_edi_msg(EDI_PRODUCT_QUALITY,toOneDecimal(fQ));
+            update_edi_msg(EDI_PRODUCT_QUALITY, fQ);
             m_aEDIHistoryEco[EDI_PRODUCT_QUALITY].fShowInfo = info->fQuality;
             
             update_edi_msg(EDI_PRODUCT_T,toOneDecimal(fT));
@@ -838,7 +839,8 @@ void WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
             {
                 if (DispGetEdiQtwFlag() || DispGetTankCirFlag())
                 {
-                    update_tank_msg(CIR_WATER_QUA,toOneDecimal(fQ));
+//                    update_tank_msg(CIR_WATER_QUA,toOneDecimal(fQ));
+                    update_tank_msg(CIR_WATER_QUA, fQ);
                     m_aTankHistoryEco[CIR_WATER_QUA].fShowInfo = info->fQuality;
                 }
             }

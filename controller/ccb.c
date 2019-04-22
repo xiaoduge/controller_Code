@@ -84,6 +84,7 @@ int Check_TOC_Alarm = 0;
 int AlarmHighWorkPress = 0;
 const float cor_H_PurtTank = 0.08;
 int isAdaptPreAlarm = 0;
+int isAdaptQtwFlush = 0;
 
 //end
 
@@ -6647,12 +6648,21 @@ void work_stop_key(void *para)
 
 DISPHANDLE CcbInnerWorkStartKeyWok(int iKey)
 {
+    int iLoop;
     //2018.12.18 add
     if(iKey == APP_EXE_DIN_RF_KEY || iKey == APP_EXE_DIN_LEAK_KEY)
     {
         if (DISP_WORK_STATE_IDLE != DispGetWorkState())
         {
             DispCmdEntry(DISP_CMD_HALT,NULL,0);
+        }
+
+        for (iLoop = 0; iLoop < MAX_HANDLER_NUM; iLoop++)
+        {
+            if (gCcb.aHandler[iLoop].bit1Qtw)
+            {
+                gCcb.aHandler[iLoop].bit1Qtw = 0;
+            }
         }
     } //end
 
@@ -8637,6 +8647,13 @@ int CanCcbAfDataHOQtwReqMsg(MAIN_CANITF_MSG_STRU *pCanItfMsg)
                     {
                         ucResult = APP_PACKET_HO_ERROR_CODE_UNSUPPORT; // current only support one tw
                     }
+               }
+               else if(CcbGetTwPendingFlag())
+               {
+                   if(!(CcbGetTwPendingFlag() & (1 << ucIndex)))
+                   {
+                       ucResult = APP_PACKET_HO_ERROR_CODE_UNSUPPORT; // current only support one tw
+                   }
                }
                else
                {

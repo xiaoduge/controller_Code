@@ -2,11 +2,13 @@
 #define EX_FLOWCHARTPAGE_H
 
 #include "page.h"
+#include "Display.h"
 
 class MainWindow;
-class navigatorBar;
+class titleBar;
 class QLabel;
 class QMouseEvent;
+class Ex_FlowChartWidget;
 
 class Ex_FlowChartPage : public CPage
 {
@@ -37,27 +39,30 @@ public:
 
     void updateWorkState();
 
-    void updateDeviceState();
-
-    void updateTankLevel(int level); //ex
-
-    void createList();
-
-    void setBackColor();
+    void updTank(int iIndex,float fVolume);
+    void updEcoInfo(int iIndex, ECO_INFO_STRU *info);
+    void updPressure(int iIndex,float fvalue);
+    void updFlowInfo(int iIndex,int Value);
+    void updSourceTank(float fvalue);
+    void updTOC(float fToc);
 
     void buildTitles();
 
-    //
+public slots:
+    void on_navi_clicked(int tmp);
+    void updateUnits();
 
-    //
 protected:
     void mousePressEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
 
 private:
-    navigatorBar *m_pNaviBar;
-    QLabel        *m_pLbPageId[5];
+    titleBar      *m_pTitleBar;
+    Ex_FlowChartWidget *m_pFlowChartWidget;
+
+    int   m_iTankLevel;
+    float m_fTankLevel;
 };
 
 

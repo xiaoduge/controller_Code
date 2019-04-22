@@ -1,5 +1,6 @@
 #include "ex_userinfo.h"
 #include "mainwindow.h"
+#include "ExtraDisplay.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
 
@@ -11,6 +12,11 @@ Ex_UserInfo::Ex_UserInfo(QObject *parent) :
 int Ex_UserInfo::checkUserInfo(const QString &userName, const QString &passWord)
 {
     //超级用户，内部使用
+    if((ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer.right(5) == QString("debug"))
+        && (!userName.isEmpty()))
+    {
+        return 4;
+    }
     if((userName.compare("Super", Qt::CaseInsensitive) == 0) && (passWord.compare("888888") == 0))
     {
         return 4;

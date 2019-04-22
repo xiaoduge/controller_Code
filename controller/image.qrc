@@ -128,4 +128,36 @@
         <file alias="G_E_8.png">pics/Manual/Genie_G_EN/G_E_8.png</file>
         <file alias="Genie_0.png">pics/Manual/Genie_0.png</file>
     </qresource>
+    <qresource prefix="/flowchart_background">
+        <file alias="Genie_A.png">pics/background/Genie_A.png</file>
+        <file alias="Genie_A_TOC.png">pics/background/Genie_A_TOC.png</file>
+        <file alias="Genie_E.png">pics/background/Genie_E.png</file>
+        <file alias="Genie_E_HPCIR.png">pics/background/Genie_E_HPCIR.png</file>
+        <file alias="Genie_G.png">pics/background/Genie_G.png</file>
+        <file alias="Genie_G_HPCIR.png">pics/background/Genie_G_HPCIR.png</file>
+        <file alias="Genie_PURIST.png">pics/background/Genie_PURIST.png</file>
+        <file alias="Genie_PURIST_TOC.png">pics/background/Genie_PURIST_TOC.png</file>
+        <file alias="Genie_R.png">pics/background/Genie_R.png</file>
+        <file alias="Genie_R_HPCIR.png">pics/background/Genie_R_HPCIR.png</file>
+        <file alias="Genie_U.png">pics/background/Genie_U.png</file>
+        <file alias="Genie_U_HPCIR.png">pics/background/Genie_U_HPCIR.png</file>
+        <file alias="Genie_U_TOC.png">pics/background/Genie_U_TOC.png</file>
+        <file alias="Genie_U_TOC_HPCIR.png">pics/background/Genie_U_TOC_HPCIR.png</file>
+    </qresource>
+    <qresource prefix="/flowchart_device">
+        <file alias="E_3_H1.png">pics/device/E_3_H1.png</file>
+        <file alias="E_3_H2.png">pics/device/E_3_H2.png</file>
+        <file alias="E_3_V1.png">pics/device/E_3_V1.png</file>
+        <file alias="E_3_V2.png">pics/device/E_3_V2.png</file>
+        <file alias="E_ON.png">pics/device/E_ON.png</file>
+        <file alias="Pump1.png">pics/device/Pump1.png</file>
+        <file alias="Pump2.png">pics/device/Pump2.png</file>
+        <file alias="UVOFF.png">pics/device/UVOFF.png</file>
+        <file alias="UVON.png">pics/device/UVON.png</file>
+        <file alias="UVON2.png">pics/device/UVON2.png</file>
+        <file alias="E_3_H3.png">pics/device/E_3_H3.png</file>
+        <file alias="E_3_H4.png">pics/device/E_3_H4.png</file>
+        <file alias="E_3_H5.png">pics/device/E_3_H5.png</file>
+        <file alias="EDI.png">pics/device/EDI.png</file>
+    </qresource>
 </RCC>

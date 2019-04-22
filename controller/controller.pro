@@ -126,7 +126,8 @@ SOURCES += main.cpp\
     ex_permissionsetpage.cpp \
     ex_hintdialog.cpp \
     ex_basewindow.cpp \
-    ex_dialogtitle.cpp
+    ex_dialogtitle.cpp \
+    ex_flowchartwidget.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -226,7 +227,8 @@ HEADERS  += mainwindow.h \
     ex_permissionsetpage.h \
     ex_hintdialog.h \
     ex_basewindow.h \
-    ex_dialogtitle.h
+    ex_dialogtitle.h \
+    ex_flowchartwidget.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

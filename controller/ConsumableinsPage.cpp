@@ -748,7 +748,7 @@ void ConsumableInsPage::updateRfidInfo(int iRfId)
       }
       else
       {
-          if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)))
+         // if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)))
           {
               iRet = m_wndMain->readRfid(iRfId);
           
@@ -821,7 +821,7 @@ void ConsumableInsPage::on_btn_clicked(int index)
               else
               {
               
-                  if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)))
+                 // if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)))
                   {
                       iRet = m_wndMain->readRfid(aIds[iMapIdx].iRfid);
     
@@ -873,11 +873,11 @@ void ConsumableInsPage::on_btn_clicked(int index)
               strncpy(ln,strLn.toAscii(),APP_LOT_LENGTH);
    
               //MainSaveCMSnItem(gGlobalParam.iMachineType,cn,ln,cmIdx);
-              if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
-              {
-                MainSaveExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0);
-              }
-              else
+         //     if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
+         //     {
+         //        MainSaveExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0);
+         //     }
+         //     else
               {
                 m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0, installDate, aIds[iMapIdx].iRfid);
               }
@@ -904,11 +904,11 @@ void ConsumableInsPage::on_btn_clicked(int index)
              strncpy(ln,strLn.toAscii(),APP_LOT_LENGTH);
              
              //MainSaveMacSnItem(gGlobalParam.iMachineType,cn,ln,macIdx);
-             if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
-             {
-                MainSaveExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1);
-             }
-             else
+            // if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
+            // {
+            //    MainSaveExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1);
+            // }
+            // else
              {
                 m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1, installDate, aIds[iMapIdx].iRfid);
              }

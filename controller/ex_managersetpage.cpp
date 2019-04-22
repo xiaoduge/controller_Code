@@ -42,6 +42,7 @@ void Ex_ManagerSetPage::buildTranslation()
     m_tabWidget->setTabText(2, tr("Audio"));
     m_tabWidget->setTabText(3, tr("Units"));
     m_tabWidget->setTabText(4, tr("LCD"));
+    m_tabWidget->setTabText(5, tr("Additional Settings"));
 //    m_tabWidget->setTabText(5, tr("Flowrate"));
 
 //    m_flowLabel->setText(tr("Flowrate"));
@@ -135,6 +136,10 @@ void Ex_ManagerSetPage::buildTranslation()
         laName[iLoop]->setText(m_DispNames[iLoop]);
     }
     m_pLcdBtnSave->setText(tr("Save"));
+
+    m_pAdditionalLb[HPCIR_SETTING]->setText(tr("HP Recir."));
+    m_pAddBtnSave->setText(tr("Save"));
+
 }
 
 void Ex_ManagerSetPage::switchLanguage()
@@ -181,6 +186,7 @@ void Ex_ManagerSetPage::initUi()
     initUnitsPage();
     initLcdPage();
     initFlowPage();
+    initAdditionalSettingsPage();
 
     mainLayout->addWidget(m_tabWidget, 0, 0);
     m_mainWidget->setLayout(mainLayout);
@@ -244,6 +250,15 @@ void Ex_ManagerSetPage::update()
     {
         m_pCheckEnergySave->setCheckState(Qt::Unchecked);
         m_pLcdBackWidget[2]->hide();
+    }
+
+    if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+    {
+        m_pAdditionalCheck[HPCIR_SETTING]->setChecked(true);
+    }
+    else
+    {
+        m_pAdditionalCheck[HPCIR_SETTING]->setChecked(false);
     }
 
     m_iSleepTime = ex_gGlobalParam.Ex_Config_Param.iScreenSleepTime;
@@ -510,6 +525,7 @@ void Ex_ManagerSetPage::on_unitsSaveBtn_clicked()
        MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
 
        m_wndMain->switchLanguage();
+       m_wndMain->emitUnitsChanged();
 
        m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_UNIT);
 
@@ -591,6 +607,29 @@ void Ex_ManagerSetPage::setValue(int value)
     m_iBrightness = value;
 
     Write_sys_int(PWMLCD_FILE,m_iBrightness);
+}
+
+void Ex_ManagerSetPage::on_AdditionalBtnSave_clicked()
+{
+    DISP_MISC_SETTING_STRU        miscParam = gGlobalParam.MiscParam;
+    if(Qt::Checked == m_pAdditionalCheck[HPCIR_SETTING]->checkState())
+    {
+        miscParam.ulMisFlags |= 1 << DISP_SM_HP_Water_Cir;
+    }
+    else
+    {
+        miscParam.ulMisFlags &= ~(1 << DISP_SM_HP_Water_Cir);
+    }
+    MainSaveMiscParam(gGlobalParam.iMachineType,miscParam);
+    MainUpdateGlobalParam();
+
+    m_wndMain->prepareKeyStroke();
+
+    Ex_HintDialog::getInstance(tr("Successfully saved"));
+}
+
+void Ex_ManagerSetPage::on_HPCircheckBox_changeState(int state)
+{
 }
 
 void Ex_ManagerSetPage::initFlowPage()
@@ -816,7 +855,7 @@ void Ex_ManagerSetPage::initAudioPage()
 
         QPalette pal(m_pAudioBackWidget[iLoop]->palette());
 
-        pal.setColor(QPalette::Background, Qt::gray);
+        pal.setColor(QPalette::Background, Qt::white);
 
         m_pAudioBackWidget[iLoop]->setAutoFillBackground(true);
         m_pAudioBackWidget[iLoop]->setPalette(pal);
@@ -826,7 +865,7 @@ void Ex_ManagerSetPage::initAudioPage()
 
         m_lblNames[iLoop] = new QLabel(m_pAudioBackWidget[iLoop]);
         m_lblNames[iLoop]->setPixmap(NULL);
-        m_lblNames[iLoop]->setGeometry(QRect(25, 30 , 140 , 20));
+        m_lblNames[iLoop]->setGeometry(QRect(25, 25 , 140 , 20));
         m_lblNames[iLoop]->setText("Sound");
         m_lblNames[iLoop]->setStyleSheet(" font-size:18px;color:#16181e;font-family:Arial;QFont::Bold");
         m_lblNames[iLoop]->show();
@@ -1054,6 +1093,71 @@ void Ex_ManagerSetPage::initLcdPage()
 
     QIcon icon1(":/pic/unselected.png");
     m_tabWidget->addTab(m_pageWidget[MANGER_PAGE_LCD], icon1, tr("LCD"));
+}
+
+void Ex_ManagerSetPage::initAdditionalSettingsPage()
+{
+    setBackColor();
+    m_pageWidget[MANGER_PAGE_ADDSETTINGS] = new QWidget;
+
+    int iLoop ;
+
+    QPixmap back(":/pic/SubPageBack.png");
+    QSize size(back.width(), back.height());
+    QImage image_bg = QImage(size, QImage::Format_ARGB32);
+    QPainter p(&image_bg);
+
+    p.fillRect(image_bg.rect(), QColor(255, 255, 255));
+
+    for(iLoop = 0 ; iLoop < ADDITIONAL_NUM ; iLoop++)
+    {
+        m_pAdditionalWidget[iLoop] = new QWidget(m_pageWidget[MANGER_PAGE_ADDSETTINGS]);
+
+        QPalette pal(m_pAdditionalWidget[iLoop]->palette());
+
+        pal.setColor(QPalette::Background, Qt::white);
+
+        m_pAdditionalWidget[iLoop]->setAutoFillBackground(true);
+        m_pAdditionalWidget[iLoop]->setPalette(pal);
+
+        m_pAdditionalWidget[iLoop]->setGeometry(QRect(120 , 120 + 70 * iLoop , 530 ,60));
+
+        m_pAdditionalLb[iLoop] = new QLabel(m_pAdditionalWidget[iLoop]);
+        m_pAdditionalLb[iLoop]->setPixmap(NULL);
+        m_pAdditionalLb[iLoop]->setGeometry(QRect(25, 25 , 140 , 20));
+        m_pAdditionalLb[iLoop]->setText("HP Recir.");
+        m_pAdditionalLb[iLoop]->setStyleSheet(" font-size:18px;color:#16181e;font-family:Arial;QFont::Bold");
+        m_pAdditionalLb[iLoop]->show();
+        m_pAdditionalLb[iLoop]->setAlignment(Qt::AlignLeft);
+
+        m_pAdditionalCheck[iLoop] = new QCheckBox(m_pAdditionalWidget[iLoop]);
+
+        m_pAdditionalCheck[iLoop]->setGeometry(QRect(480 , 9 ,40,40));
+
+        QString strQss4Chk = m_wndMain->getQss4Chk();
+        m_pAdditionalCheck[iLoop]->setStyleSheet(strQss4Chk);
+
+        m_pAdditionalCheck[iLoop]->show();
+
+        if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+        {
+            m_pAdditionalCheck[iLoop]->setChecked(true);
+        }
+        else
+        {
+            m_pAdditionalCheck[iLoop]->setChecked(false);
+        }
+
+        connect(m_pAdditionalCheck[iLoop], SIGNAL(stateChanged(int)), this, SLOT(on_HPCircheckBox_changeState(int)));
+
+    }
+
+    m_pAddBtnSave = new QPushButton(m_pageWidget[MANGER_PAGE_ADDSETTINGS]);
+    m_pAddBtnSave->move(580, 420);
+    connect(m_pAddBtnSave, SIGNAL(clicked()), this, SLOT(on_AdditionalBtnSave_clicked()));
+
+    QIcon icon1(":/pic/unselected.png");
+    m_tabWidget->addTab(m_pageWidget[MANGER_PAGE_ADDSETTINGS], icon1, tr("Additional Settings"));
 }
 
 void Ex_ManagerSetPage::changeTime()

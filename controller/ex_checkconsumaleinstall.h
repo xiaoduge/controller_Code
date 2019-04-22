@@ -11,7 +11,7 @@ class Ex_CheckConsumaleInstall : public QObject
 public:
     explicit Ex_CheckConsumaleInstall(int id, QObject *parent = 0);
 
-    void check(int iRfId);
+    bool check(int iRfId);
 
     int consumableType();
     bool comparedWithSql();

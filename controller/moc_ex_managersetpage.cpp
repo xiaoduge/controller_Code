@@ -22,7 +22,7 @@ static const uint qt_meta_data_Ex_ManagerSetPage[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+      17,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -45,6 +45,8 @@ static const uint qt_meta_data_Ex_ManagerSetPage[] = {
      362,  208,   18,   18, 0x09,
      399,  168,   18,   18, 0x09,
      436,   18,   18,   18, 0x09,
+     450,   18,   18,   18, 0x09,
+     481,  208,   18,   18, 0x09,
 
        0        // eod
 };
@@ -64,7 +66,8 @@ static const char qt_meta_stringdata_Ex_ManagerSetPage[] = {
     "on_LcdSaveBtn_clicked()\0"
     "on_CheckEnergySave_stateChanged(int)\0"
     "on_comboBox_currentIndexChanged(int)\0"
-    "setValue(int)\0"
+    "setValue(int)\0on_AdditionalBtnSave_clicked()\0"
+    "on_HPCircheckBox_changeState(int)\0"
 };
 
 void Ex_ManagerSetPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -88,6 +91,8 @@ void Ex_ManagerSetPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         case 12: _t->on_CheckEnergySave_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 13: _t->on_comboBox_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 14: _t->setValue((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 15: _t->on_AdditionalBtnSave_clicked(); break;
+        case 16: _t->on_HPCircheckBox_changeState((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -125,9 +130,9 @@ int Ex_ManagerSetPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 15)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 15;
+        _id -= 17;
     }
     return _id;
 }

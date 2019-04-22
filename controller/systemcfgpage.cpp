@@ -52,8 +52,8 @@ SystemCfgPage::SystemCfgPage(QObject *parent,CBaseWidget *widget ,MainWindow *wn
     case MACHINE_ADAPT:
         break;
     default:
-        aCHKsIds[iIdx].iId = DISP_SM_HP_Water_Cir;
-        iIdx++;
+//        aCHKsIds[iIdx].iId = DISP_SM_HP_Water_Cir;
+//        iIdx++;
         break;
     }
 
