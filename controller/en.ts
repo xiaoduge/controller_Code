@@ -588,13 +588,13 @@
     <message>
         <location filename="alarmsetpage.cpp" line="151"/>
         <source>Low Tap Pressure</source>
-        <translation type="unfinished"></translation>
+        <translation>Low Feed Water Pressure</translation>
     </message>
     <message>
         <location filename="alarmsetpage.cpp" line="157"/>
         <source>High Tap Conductivity</source>
         <oldsource>Higher Source Water Conductivity Alarm</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>High Tap Feed Conductivity</translation>
     </message>
     <message>
         <location filename="alarmsetpage.cpp" line="166"/>
@@ -684,7 +684,7 @@
     <message>
         <location filename="alarmsetpage.cpp" line="349"/>
         <source>Leak or Tank Overflow</source>
-        <translation type="unfinished"></translation>
+        <translation>Leakage or Tank Overflow</translation>
     </message>
     <message>
         <location filename="alarmsetpage.cpp" line="355"/>
@@ -4991,7 +4991,7 @@
         <location filename="setpoint.cpp" line="408"/>
         <source>Tap Pressure</source>
         <oldsource>Tap Pres.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Feed Water Pressure</translation>
     </message>
     <message>
         <location filename="setpoint.cpp" line="409"/>
@@ -5106,7 +5106,7 @@
     <message>
         <location filename="setpoint.cpp" line="488"/>
         <source>Tap Cond.</source>
-        <translation type="unfinished">Tap Conductivity</translation>
+        <translation>Tap Feed Conductivity</translation>
     </message>
     <message>
         <location filename="setpoint.cpp" line="495"/>
@@ -5135,7 +5135,7 @@
     <message>
         <location filename="setpoint.cpp" line="518"/>
         <source>Tap Temp.</source>
-        <translation type="unfinished">Tap Temperature</translation>
+        <translation type="unfinished">Tap Feed Temperature</translation>
     </message>
     <message>
         <location filename="setpoint.cpp" line="531"/>
@@ -5804,7 +5804,7 @@
     <message>
         <location filename="systemcfgpage.cpp" line="191"/>
         <source>Feed PUMP</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Feed Pump</translation>
     </message>
     <message>
         <location filename="systemcfgpage.cpp" line="203"/>

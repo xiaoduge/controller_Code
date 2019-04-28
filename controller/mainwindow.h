@@ -104,7 +104,7 @@ enum GLOBAL_FONT
     GLOBAL_FONT_30,
     GLOBAL_FONT_40,
     GLOBAL_FONT_60,
-    GLOBAL_FONT_NUM,
+    GLOBAL_FONT_NUM
 };
 
 enum SETPAGE_NAME
@@ -194,7 +194,7 @@ class navigatorBar;
 
 class SetDevicePage;
 
-class Ex_ScreenSleepThread;
+//class Ex_ScreenSleepThread;
 class Ex_CheckConsumaleInstall;
 class Ex_ConsumableInstallDialog;
 
@@ -397,6 +397,7 @@ private slots:
     void on_timerEvent();
     void on_timerPeriodEvent();
     void on_timerSecondEvent();
+    void on_timerScreenSleepEvent();
     
     void on_dispIndication(unsigned char *pucData,int iLength);
 
@@ -434,6 +435,7 @@ signals:
 
     void SleepPageShow(bool); //ex
     void unitsChanged();
+    void updateFlowChartAlarm(const QString &msg, bool isAdd);
 
 protected:
     void mousePressEvent(QMouseEvent *e);
@@ -527,6 +529,7 @@ private:
     QTimer* m_timeTimer;
     QTimer* m_timerPeriodEvent;
     QTimer* m_timeSecondTimer;
+    QTimer* m_screenSleepTimer;
     
     int  m_periodEvents;
 
@@ -756,7 +759,7 @@ private:
 
 private:
     //ex  screenSleep
-    Ex_ScreenSleepThread* m_screenSleepThread;
+//    Ex_ScreenSleepThread* m_screenSleepThread;
 
     Ex_CheckConsumaleInstall* m_checkConsumaleInstall[APP_RFID_SUB_TYPE_NUM];
     Ex_ConsumableInstallDialog* m_consumaleInstallDialog[APP_RFID_SUB_TYPE_NUM];

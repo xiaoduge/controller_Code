@@ -4,6 +4,7 @@
 #include "titlebar.h"
 #include "mainwindow.h"
 #include "ex_flowchartwidget.h"
+#include "dtextticker.h"
 
 #include <QPainter>
 
@@ -49,6 +50,11 @@ void Ex_FlowChartPage::updateUnits()
     m_pFlowChartWidget->updateUnits();
 }
 
+void Ex_FlowChartPage::on_updateAlarmMsg(const QString &msg, bool isAdd)
+{
+    m_pTextTicker->updateShowText(msg, isAdd);
+}
+
 void Ex_FlowChartPage::switchLanguage()
 {
     buildTranslation();
@@ -74,6 +80,9 @@ void Ex_FlowChartPage::initUi()
 
     m_pFlowChartWidget = new Ex_FlowChartWidget(m_widget);
     m_pFlowChartWidget->setGeometry(10, 60, 780, 500);
+
+    m_pTextTicker = new DTextTicker(m_widget);
+    m_pTextTicker->move(0, 565);
 
     m_pTitleBar = new titleBar(m_widget);
 

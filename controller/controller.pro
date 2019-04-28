@@ -127,7 +127,8 @@ SOURCES += main.cpp\
     ex_hintdialog.cpp \
     ex_basewindow.cpp \
     ex_dialogtitle.cpp \
-    ex_flowchartwidget.cpp
+    ex_flowchartwidget.cpp \
+    dtextticker.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -228,7 +229,8 @@ HEADERS  += mainwindow.h \
     ex_hintdialog.h \
     ex_basewindow.h \
     ex_dialogtitle.h \
-    ex_flowchartwidget.h
+    ex_flowchartwidget.h \
+    dtextticker.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

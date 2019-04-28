@@ -9,6 +9,7 @@ class titleBar;
 class QLabel;
 class QMouseEvent;
 class Ex_FlowChartWidget;
+class DTextTicker;
 
 class Ex_FlowChartPage : public CPage
 {
@@ -51,6 +52,7 @@ public:
 public slots:
     void on_navi_clicked(int tmp);
     void updateUnits();
+    void on_updateAlarmMsg(const QString& msg, bool isAdd);
 
 protected:
     void mousePressEvent(QMouseEvent *);
@@ -60,6 +62,7 @@ protected:
 private:
     titleBar      *m_pTitleBar;
     Ex_FlowChartWidget *m_pFlowChartWidget;
+    DTextTicker *m_pTextTicker;
 
     int   m_iTankLevel;
     float m_fTankLevel;

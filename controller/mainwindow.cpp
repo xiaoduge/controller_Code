@@ -89,7 +89,7 @@
 #include "ex_consumableinstalldialog.h"
 #include "ex_flowchartpage.h"
 
-#include "ex_screensleepthread.h"
+//#include "ex_screensleepthread.h"
 /***********************************************
 B3: source water tank
 B2: pure water tank
@@ -192,7 +192,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8_190419_debug");
+QString strSoftwareVersion = QString("0.1.8_190424_debug");
 
 MainWindow *gpMainWnd;
 
@@ -3513,6 +3513,8 @@ void MainWindow::initUI()
 #ifdef FLOWCHART
     m_pSubPages[PAGE_FLOWCHART]    = new Ex_FlowChartPage(0,(CBaseWidget *)m_pSubWidget[PAGE_FLOWCHART] , this);
     connect(this, SIGNAL(unitsChanged()), m_pSubPages[PAGE_FLOWCHART], SLOT(updateUnits()));
+    connect(this, SIGNAL(updateFlowChartAlarm(const QString&,bool)),
+            m_pSubPages[PAGE_FLOWCHART], SLOT(on_updateAlarmMsg(const QString&, bool)));
 #endif
     m_pSubPages[PAGE_MAIN]    = new MainPage(0,(CBaseWidget *)m_pSubWidget[PAGE_MAIN] , this);
 
@@ -3694,6 +3696,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             /*alarm masks */
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_HPACK_OOP)
+                                                          |(1 << DISP_ALARM_PART0_PREPACK_OOP)
                                                           |(1 << DISP_ALARM_PART0_TUBEUV_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1 ;
@@ -3706,6 +3709,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             /*alarm masks */
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_ATPACK_OOP)
+                                                          |(1 << DISP_ALARM_PART0_PREPACK_OOP)
                                                           |(1 << DISP_ALARM_PART0_TUBEUV_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;            
@@ -3720,6 +3724,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_UPACK_OOP)
                                                           |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
+                                                          |(1 << DISP_ALARM_PART0_PREPACK_OOP)
                                                           |(1 << DISP_ALARM_PART0_185UV_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
@@ -3737,6 +3742,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= ( ~((1 << DISP_ALARM_PART0_ATPACK_OOP)
                                                            |(1 << DISP_ALARM_PART0_UPACK_OOP)
                                                            |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
+                                                           |(1 << DISP_ALARM_PART0_PREPACK_OOP)
                                                            |(1 << DISP_ALARM_PART0_185UV_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
@@ -3757,6 +3763,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_ATPACK_OOP)
                                                           |(1 << DISP_ALARM_PART0_HPACK_OOP)
+                                                          |(1 << DISP_ALARM_PART0_PREPACK_OOP)
                                                           |(1 << DISP_ALARM_PART0_TUBEUV_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
@@ -3774,6 +3781,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             /*alarm masks */
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_ATPACK_OOP)
+                                                         |(1 << DISP_ALARM_PART0_PREPACK_OOP)
                                                          |(1 << DISP_ALARM_PART0_TUBEUV_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
@@ -3795,6 +3803,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_185UV_OOP)
                                                          |(1 << DISP_ALARM_PART0_ATPACK_OOP)
+                                                         |(1 << DISP_ALARM_PART0_PREPACK_OOP)
                                                          |(1 << DISP_ALARM_PART0_HPACK_OOP) //2018.11.19
                                                          |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
                                                          |(1 << DISP_ALARM_PART0_UPACK_OOP)));
@@ -3823,6 +3832,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
                                                          |(1 << DISP_ALARM_PART0_ATPACK_OOP)
                                                          |(1 << DISP_ALARM_PART0_HPACK_OOP) //2018.11.12
                                                          |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
+                                                         |(1 << DISP_ALARM_PART0_PREPACK_OOP)
                                                          |(1 << DISP_ALARM_PART0_UPACK_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
@@ -3852,6 +3862,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
                                                           |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
                                                           |(1 << DISP_ALARM_PART0_PPACK_OOP)
                                                           |(1 << DISP_ALARM_PART0_ACPACK_OOP)
+                                                          |(1 << DISP_ALARM_PART0_PREPACK_OOP)
                                                           |(1 << DISP_ALARM_PART0_ATPACK_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
@@ -3882,6 +3893,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_254UV_OOP)
                                                          |(1 << DISP_ALARM_PART0_TANKUV_OOP)
                                                          |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
+                                                         |(1 << DISP_ALARM_PART0_PREPACK_OOP)
                                                          |(1 << DISP_ALARM_PART0_ATPACK_OOP)));
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
@@ -4685,13 +4697,13 @@ void MainWindow::updEcoInfo(int index)
         MainPage *page = (MainPage *)m_pSubPages[PAGE_MAIN];
         page->updEcoInfo(index,&m_EcoInfo[index]);
     }
-
+#ifdef FLOWCHART
     if (NULL != m_pSubPages[PAGE_FLOWCHART])
     {
         Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
         page->updEcoInfo(index, &m_EcoInfo[index]);
     }
-
+#endif
     if (NULL != m_pSubPages[PAGE_MENU])
     {
         MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
@@ -4715,13 +4727,13 @@ void MainWindow::updTank()
     /* calc */
     float liter = (m_fPressure[APP_EXE_PM2_NO]/100)*gGlobalParam.PmParam.afCap[APP_EXE_PM2_NO];
     int   level = (int)((liter*100) / gGlobalParam.PmParam.afCap[APP_EXE_PM2_NO]);
-
+#ifdef FLOWCHART
     if (NULL != m_pSubPages[PAGE_FLOWCHART])
     {
         Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
         page->updTank(level, liter);
     }
-
+#endif
     if (NULL != m_pSubPages[PAGE_MAIN])
     {
         MainPage *page = (MainPage *)m_pSubPages[PAGE_MAIN];
@@ -4814,13 +4826,13 @@ void MainWindow::updPressure(int iIdx)
 
             subpage->updatePressure(iIdx, m_fPressure[iIdx]);
         }
-
+#ifdef FLOWCHART
         if (NULL != m_pSubPages[PAGE_FLOWCHART])
         {
             Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
             page->updPressure(iIdx, m_fPressure[iIdx]);
         }
-
+#endif
         break;
      }
     case APP_EXE_PM2_NO:
@@ -4876,7 +4888,7 @@ void MainWindow::updFlowInfo(int iIdx)
         }
 
     }
-
+#ifdef FLOWCHART
     if (NULL != m_pSubPages[PAGE_FLOWCHART])
     {
         Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
@@ -4894,7 +4906,7 @@ void MainWindow::updFlowInfo(int iIdx)
         }
 
     }
-
+#endif
     if ( (0 == m_ulLstFlowMeter[iIdx]) 
         || (m_periodEvents - m_iLstFlowMeterTick[iIdx] >= ((FM_UPDATE_PERIOD)/PERIOD_EVENT_LENGTH)))
     {
@@ -5173,11 +5185,11 @@ void MainWindow::Splash()
 
 MainWindow::~MainWindow()
 {
-    if(m_screenSleepThread->isRunning())
-    {
-        m_screenSleepThread->stop();
-        m_screenSleepThread->wait();
-    }
+//    if(m_screenSleepThread->isRunning())
+//    {
+//        m_screenSleepThread->stop();
+//        m_screenSleepThread->wait();
+//    }
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *e)
@@ -5423,6 +5435,17 @@ void MainWindow::on_timerSecondEvent()
            updFlowInfo(APP_FM_FM4_NO);
         }  
         
+    }
+}
+
+void MainWindow::on_timerScreenSleepEvent()
+{
+    QMutexLocker locker(&ex_gMutex);
+    g_screenSleep++;
+
+    if(g_screenSleep == ex_gGlobalParam.Ex_Config_Param.iScreenSleepTime * 6)
+    {
+        on_ScreenSleep(true);
     }
 }
 
@@ -5864,6 +5887,7 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
             m_iAlarmRcdMask[1][iAlarmPart] &= ~iAlarmMask; // prepare to receive alarm restore message
 
             bChanged = true;
+            updateFlowChartAlarm(gastrAlarmName[(iAlarmPart * DISP_ALARM_PART0_NUM) + iAlarmId], true);
         }
     }
     else
@@ -5882,6 +5906,7 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
             m_iAlarmRcdMask[0][iAlarmPart] &= ~iAlarmMask;  // prepare to receive alarm fire message
             
             bChanged = true;
+            updateFlowChartAlarm(gastrAlarmName[(iAlarmPart * DISP_ALARM_PART0_NUM) + iAlarmId], false);
         }
     }    
 
@@ -6055,9 +6080,12 @@ void MainWindow::saveFmData(int id,unsigned int ulValue)
 
 void MainWindow::initScreenSleep()
 {
-    m_screenSleepThread = new Ex_ScreenSleepThread(this);
-    m_screenSleepThread->start();
-    connect(m_screenSleepThread, SIGNAL(screenSleep(bool)), this, SLOT(on_ScreenSleep(bool)));
+//    m_screenSleepThread = new Ex_ScreenSleepThread(this);
+//    m_screenSleepThread->start();
+//    connect(m_screenSleepThread, SIGNAL(screenSleep(bool)), this, SLOT(on_ScreenSleep(bool)));
+    m_screenSleepTimer = new QTimer(this);
+    connect(m_screenSleepTimer, SIGNAL(timeout()), this, SLOT(on_timerScreenSleepEvent()));
+    m_screenSleepTimer->start(1000*10);
 }
 
 void MainWindow::autoCirPreHour()
@@ -6625,11 +6653,13 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                         SystemMonitorPage *page = (SystemMonitorPage *)m_pCurPage;
                         page->updateRectInfo(pItem->ucId);
                     }
+#ifdef FLOWCHART
                     else if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
                     {
                         Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
                         page->updateRectInfo(pItem->ucId);
                     }
+#endif
                 }
                 pItem++;
             }
@@ -6662,11 +6692,13 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                         SystemMonitorPage *page = (SystemMonitorPage *)m_pCurPage;
                         page->updateGpumpInfo(pItem->ucId);
                     }
+#ifdef FLOWCHART
                     else if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
                     {
                         Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
                         page->updateGpumpInfo(pItem->ucId);
                     }
+#endif
                  }
                 pItem++;
             }
@@ -6701,14 +6733,14 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                          
                          page->updateRpumpInfo(pItem->ucId);
                      }  
-
+#ifdef FLOWCHART
                      else if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
                      {
                          Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
 
                          page->updateRpumpInfo(pItem->ucId);
                      }
-                     
+#endif
                      qDebug("DISP_NOT_RPUMP %d\r\n",pItem->ucId);
                  }
                 pItem++;
@@ -6742,12 +6774,13 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                          SystemMonitorPage *page = (SystemMonitorPage *)m_pCurPage;
                          page->updateEdiInfo(pItem->ucId);
                      }  
+#ifdef FLOWCHART
                      else if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
                      {
                          Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
                          page->updateEdiInfo(pItem->ucId);
                      }
-
+#endif
                      //alarmCommProc(bAlarm,iAlarmId);
 
                  }
@@ -6997,13 +7030,13 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 SystemMonitorPage *page = (SystemMonitorPage *)m_pCurPage;
                 page->updateWorkState();
             }
-
+#ifdef FLOWCHART
             if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
             {
                 Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
                 page->updateWorkState();
             }
-
+#endif
             if (typeid(*m_pCurPage) == typeid(MainPage))
             {
                 pMainPage->updMainpageState();
@@ -7066,13 +7099,13 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 SystemMonitorPage *page = (SystemMonitorPage *)m_pCurPage;
                 page->updateWorkState();
             }
-
+#ifdef FLOWCHART
             if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
             {
                 Ex_FlowChartPage *page = (Ex_FlowChartPage*)m_pCurPage;
                 page->updateWorkState();
             }
-
+#endif
             if (typeid(*m_pCurPage) == typeid(MainPage))
             {
                 pMainPage->updMainpageState();
@@ -7325,12 +7358,13 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 SystemMonitorPage *page = (SystemMonitorPage *)m_pCurPage;
                 page->updateSwitchInfo();
             }
-
+#ifdef FLOWCHART
             if (!m_bSplash && (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage)))
             {
                 Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
                 page->updateSwitchInfo();
             }
+#endif
         }
         break;
     case DISP_NOT_RPUMP_STATE:
@@ -7346,7 +7380,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 
                 page->updateRpumpInfo(pItem->ucId);
             }
-
+#ifdef FLOWCHART
             if (!m_bSplash && (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage)))
             {
                 Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
@@ -7355,6 +7389,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
 
                 page->updateRpumpInfo(pItem->ucId);
             }
+#endif
             
         }
         break;
@@ -7404,12 +7439,13 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 subpage->updTOC(fToc);
             }
             //end
+#ifdef FLOWCHART
             if (NULL != m_pSubPages[PAGE_FLOWCHART])
             {
                 Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
                 page->updTOC(fToc);
             }
-
+#endif
             DispSndHoPpbAndTankLevel(APP_PROTOL_CANID_BROADCAST,APP_PACKET_HO_QL_TYPE_PPB,0,fToc);
         }        
         break;

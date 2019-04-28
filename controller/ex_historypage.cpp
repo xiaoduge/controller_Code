@@ -81,6 +81,8 @@ void Ex_HistoryPage::buildTranslation()
     m_QryObjNameCbox->setItemText(2, tr("PWater"));
     m_QryObjNameCbox->setItemText(3, tr("Log"));
 //    m_QryObjNameCbox->setItemText(4, tr("Water"));
+
+    initTabelHeaderData(m_pTableModel, m_QryObjNameCbox->currentIndex() + 1);
 }
 
 void Ex_HistoryPage::switchLanguage()

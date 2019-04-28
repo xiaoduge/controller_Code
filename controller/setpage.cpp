@@ -17,12 +17,6 @@
 #include "systemcfgpage.h"
 #include "parametercalibration.h"
 #include "maintenancecycle.h"
-//#include "displaypage.h"
-//#include "languagepage.h"
-//#include "soundpage.h"
-//#include "unitpage.h"
-//#include "timepage.h"
-//#include "allocationsetpage.h"
 #include "networkpage.h"
 
 #include "alarmsetpage.h"
@@ -48,15 +42,8 @@ static QString SubPageName[SET_BTN_NUMBER] =
     "Param Calibrate",
     "Set Point",
     "System Config",
-//    "Display Set",
     "Network Set",
-//    "Allocation Set",
-//    "Time Set",
-//    "Language",
-//    "Sound Set",
-//    "Unit Set",
     "device set",
-//    "User Config",
     "Super Power",
     "Factory"
 };
@@ -72,13 +59,6 @@ static CONFIG_BTN1 sBtns[SET_BTN_NUMBER] =
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
@@ -150,68 +130,18 @@ void SetPage::createSubPage()
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[index] = new SystemCfgPage(this , tmpWidget , m_wndMain);
             break;
-            /*
-        case SET_BTN_SYSTEM_DISPLAY:
-            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
-            tmpWidget->setObjectName(SubPageName[index]);
-            tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new DisplayPage(this , tmpWidget , m_wndMain);
-            break;
-            */
         case SET_BTN_SYSTEM_NETWORK:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[index] = new NetworkPage(this , tmpWidget , m_wndMain);
             break;
-            /*
-        case SET_BTN_SYSTEM_ALLOCATION:
-            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
-            tmpWidget->setObjectName(SubPageName[index]);
-            tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new AllocationSetPage(this , tmpWidget , m_wndMain);
-            break;
-            */
         case SET_BTN_SYSTEM_PARAMETER_CALIBRATE:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[index] = new ParameterCalibrationPage(this , tmpWidget , m_wndMain);
             break;
-            /*
-        case SET_BTN_SYSTEM_LANGUAGE:
-            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
-            tmpWidget->setObjectName(SubPageName[index]);
-            tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new LanguagePage(this , tmpWidget , m_wndMain);
-            break;
-
-        case SET_BTN_SYSTEM_TIME:
-            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
-            tmpWidget->setObjectName(SubPageName[index]);
-            tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new TimePage(this , tmpWidget , m_wndMain);
-            break;
-        case SET_BTN_SYSTEM_SOUND:
-            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
-            tmpWidget->setObjectName(SubPageName[index]);
-            tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new SoundPage(this , tmpWidget , m_wndMain);
-            break;
-        case SET_BTN_SYSTEM_UNIT:
-            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
-            tmpWidget->setObjectName(SubPageName[index]);
-            tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new UnitPage(this , tmpWidget , m_wndMain);
-            break;
-
-        case SET_BTN_USER_CFG:
-            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
-            tmpWidget->setObjectName(SubPageName[index]);
-            tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new Ex_UserCfgPage(this , tmpWidget , m_wndMain);
-            break;
-            */
         case SET_BTN_SYSTEM_SUPER:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
@@ -254,15 +184,7 @@ void SetPage::buildTranslation()
     m_pBtns[SET_BTN_SYSTEM_PARAM_CONFIG]->setTip(tr("Alarm Set Point"));
     m_pBtns[SET_BTN_SYSTEM_DEVICE_CONFIG]->setTip(tr("System Config."));
     m_pBtns[SET_BTN_SYSTEM_NETWORK]->setTip(tr("Connectivity"));
-    /*
-    m_pBtns[SET_BTN_SYSTEM_DISPLAY]->setTip(tr("LCD"));
-    m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->setTip(tr("Dist. Control"));
-    m_pBtns[SET_BTN_SYSTEM_TIME]->setTip(tr("Time & Date"));
-    m_pBtns[SET_BTN_SYSTEM_LANGUAGE]->setTip(tr("Language"));
-    m_pBtns[SET_BTN_SYSTEM_SOUND]->setTip(tr("Audio"));
-    m_pBtns[SET_BTN_SYSTEM_UNIT]->setTip(tr("Units"));
-    m_pBtns[SET_BTN_USER_CFG]->setTip(tr("User Config"));
-    */
+
     m_pBtns[SET_BTN_PERIPHERAL_DEVICE_MANAGER]->setTip(tr("Connecting Device"));
 
     m_pBtns[SET_BTN_SYSTEM_SUPER]->setTip(tr("Super Power"));
@@ -396,7 +318,6 @@ void SetPage::on_btn_clicked(int index)
         case SET_BTN_SYSTEM_PARAMETER_CALIBRATE:
         case SET_BTN_SYSTEM_PARAM_CONFIG:
         case SET_BTN_SYSTEM_DEVICE_CONFIG:
-//        case SET_BTN_SYSTEM_DISPLAY:
         case SET_BTN_SYSTEM_NETWORK:
         case SET_BTN_PERIPHERAL_DEVICE_MANAGER:
         case SET_BTN_SYSTEM_SUPER: //
@@ -458,38 +379,6 @@ void SetPage::on_btn_clicked(int index)
             }
             break;
         }
-#if 0
-        case SET_BTN_USER_CFG: //
-        {
-            m_pBtns[SET_BTN_SYSTEM_SUPER]->hide(); //
-            m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
-            LoginDlg dlg;
-            dlg.exec() ;
-            if(0 == dlg.m_iLogInResult)
-            {
-                int ret = checkUserInfo(dlg.m_strUserName, dlg.m_strPassword);
-                switch(ret)
-                {
-                case 4:
-                case 3:
-                    m_wndMain->saveLoginfo(dlg.m_strUserName);
-                    m_pSubPages[index]->show(true);
-                    break;
-                case 2:
-                case 1:
-                    show(true);
-                    break;
-                default:
-                    break;
-                }
-             }
-            else
-            {
-                show(true);
-            }
-            break;
-        }
-#endif
         default:
             break;
         }

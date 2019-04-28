@@ -22,7 +22,7 @@ static const uint qt_meta_data_Ex_FlowChartPage[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,13 +32,15 @@ static const uint qt_meta_data_Ex_FlowChartPage[] = {
  // slots: signature, parameters, type, tag, flags
       22,   18,   17,   17, 0x0a,
       43,   17,   17,   17, 0x0a,
+      67,   57,   17,   17, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_Ex_FlowChartPage[] = {
     "Ex_FlowChartPage\0\0tmp\0on_navi_clicked(int)\0"
-    "updateUnits()\0"
+    "updateUnits()\0msg,isAdd\0"
+    "on_updateAlarmMsg(QString,bool)\0"
 };
 
 void Ex_FlowChartPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -49,6 +51,7 @@ void Ex_FlowChartPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         switch (_id) {
         case 0: _t->on_navi_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 1: _t->updateUnits(); break;
+        case 2: _t->on_updateAlarmMsg((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -86,9 +89,9 @@ int Ex_FlowChartPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

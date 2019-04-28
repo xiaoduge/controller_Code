@@ -4,16 +4,10 @@
 #include "menupage.h"
 
 #include "mainwindow.h"
-
 #include "titlebar.h"
-
 #include "waterqualitypage.h"
-
 #include "consumablestatepage.h"
-
 #include "systemmonitorpage.h"
-
-#include "historypage.h"
 #include "alarmdisplaypage.h"
 #include "sysmsgpage.h"
 #include "ex_sysmsgpage.h"
@@ -33,7 +27,6 @@ static QString sPixelmapName[MENU_BTN_NUMBER] =
     ":/pic/menu_consume_material_status.png",
     ":/pic/menu_sys_noti_alarm.png",
     ":/pic/menu_monitor.png",
-//    ":/pic/menu_history_record.png",
     ":/pic/menu_user_manu.png",
     ":/pic/menu_sys_info.png",
 };
@@ -44,7 +37,6 @@ static QString SubPageName[MENU_PAGE_NUM] =
     "Material Status",
     "System Monitor",
     "Alarm",
-//    "History",
     "User Manu",
     "System Info",
 };
@@ -58,7 +50,6 @@ static CONFIG_BTN1 sBtns[MENU_BTN_NUMBER] =
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
 };
@@ -71,7 +62,6 @@ static CONFIG_BTN_TIP menuBtnTips[MENU_BTN_NUMBER] =
     {&sTipBmps[3],BITMAPBUTTON_ICON_TOPCENTER},
     {&sTipBmps[4],BITMAPBUTTON_ICON_TOPCENTER},
     {&sTipBmps[5],BITMAPBUTTON_ICON_TOPCENTER},
-//    {&sTipBmps[6],BITMAPBUTTON_ICON_TOPCENTER},
 };
 
 
@@ -223,14 +213,6 @@ void MenuPage::Create_subPage()
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[index] = new SystemMonitorPage(this , tmpWidget , m_wndMain);
             break;
-/*
-        case MENU_BTN_HISTORY_RECORD:
-            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
-            tmpWidget->setObjectName(SubPageName[index]);
-            tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new HistoryPage(this , tmpWidget , m_wndMain);
-            break;
-*/
         case MENU_BTN_SYSTEM_NOTIFICATION_ALARM:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
