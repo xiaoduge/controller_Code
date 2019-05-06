@@ -1,7 +1,6 @@
 #include "dtextticker.h"
 #include <QTimer>
 #include <QPainter>
-#include <QDebug>
 
 
 DTextTicker::DTextTicker(QWidget *parent, Qt::WindowFlags f):QLabel(parent, f)

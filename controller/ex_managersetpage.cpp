@@ -137,9 +137,17 @@ void Ex_ManagerSetPage::buildTranslation()
     }
     m_pLcdBtnSave->setText(tr("Save"));
 
-    m_pAdditionalLb[HPCIR_SETTING]->setText(tr("HP Recir."));
-    m_pAddBtnSave->setText(tr("Save"));
 
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        break;
+    default:
+        m_pAdditionalLb[HPCIR_SETTING]->setText(tr("HP Recir."));
+        m_pAddBtnSave->setText(tr("Save"));
+        break;
+    }
 }
 
 void Ex_ManagerSetPage::switchLanguage()
@@ -186,7 +194,16 @@ void Ex_ManagerSetPage::initUi()
     initUnitsPage();
     initLcdPage();
     initFlowPage();
-    initAdditionalSettingsPage();
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        break;
+    default:
+        initAdditionalSettingsPage();
+        break;
+    }
 
     mainLayout->addWidget(m_tabWidget, 0, 0);
     m_mainWidget->setLayout(mainLayout);
@@ -252,13 +269,17 @@ void Ex_ManagerSetPage::update()
         m_pLcdBackWidget[2]->hide();
     }
 
-    if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+    if((gGlobalParam.iMachineType != MACHINE_ADAPT)
+        && (gGlobalParam.iMachineType != MACHINE_PURIST))
     {
-        m_pAdditionalCheck[HPCIR_SETTING]->setChecked(true);
-    }
-    else
-    {
-        m_pAdditionalCheck[HPCIR_SETTING]->setChecked(false);
+        if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+        {
+            m_pAdditionalCheck[HPCIR_SETTING]->setChecked(true);
+        }
+        else
+        {
+            m_pAdditionalCheck[HPCIR_SETTING]->setChecked(false);
+        }
     }
 
     m_iSleepTime = ex_gGlobalParam.Ex_Config_Param.iScreenSleepTime;
@@ -611,6 +632,12 @@ void Ex_ManagerSetPage::setValue(int value)
 
 void Ex_ManagerSetPage::on_AdditionalBtnSave_clicked()
 {
+    if((gGlobalParam.iMachineType == MACHINE_PURIST)
+       && (gGlobalParam.iMachineType == MACHINE_ADAPT))
+    {
+        return;
+    }
+
     DISP_MISC_SETTING_STRU        miscParam = gGlobalParam.MiscParam;
     if(Qt::Checked == m_pAdditionalCheck[HPCIR_SETTING]->checkState())
     {

@@ -13,7 +13,6 @@
 #include <QString>
 #include <QBrush>
 #include <QRadialGradient>
-#include <QDebug>
 #include <QStringListModel>
 #include <QPushButton>
 #include <QComboBox>
@@ -192,7 +191,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8_190424_debug");
+QString strSoftwareVersion = QString("0.1.8_190429_debug");
 
 MainWindow *gpMainWnd;
 
@@ -5221,7 +5220,6 @@ int MainWindow:: getAlarmState()
     if (gCMUsage.ulUsageState & getMachineNotifyMask(gGlobalParam.iMachineType,0))
     {
         qDebug() << "Yellow notify:" << gCMUsage.ulUsageState;
-        qDebug() << "Yellow notify:" << tr("Yellow");
     
         iType |= MAINPAGE_NOTIFY_STATE_NOT;
     }
@@ -5266,7 +5264,7 @@ void MainWindow::on_timerEvent()
     {
         m_iLstDay = DispGetDay();
 
-        memset(m_iAlarmRcdMask ,0,sizeof(m_iAlarmRcdMask));
+        //memset(m_iAlarmRcdMask ,0,sizeof(m_iAlarmRcdMask));
 
         if (gCMUsage.bit1PendingInfoSave)
         {
@@ -9011,37 +9009,30 @@ void MainWindow::readCMInfoFromRFID(int iRfId, int type)
     case DISP_PRE_PACK:
         gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY] = installTime.toTime_t();
         gCMUsage.info.aulCms[DISP_PRE_PACKLIFEL]   = volUsed;
-        qDebug() << "*******Pre*********";
         break;
     case DISP_AC_PACK:
         gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY] = installTime.toTime_t();
         gCMUsage.info.aulCms[DISP_AC_PACKLIFEL]   = volUsed;
-        qDebug() << "*******AC*********";
         break;
     case DISP_T_PACK:
         gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY] = installTime.toTime_t();
         gCMUsage.info.aulCms[DISP_T_PACKLIFEL]   = volUsed;
-        qDebug() << "*******T*********";
         break;
     case DISP_P_PACK:
         gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY] = installTime.toTime_t();
         gCMUsage.info.aulCms[DISP_P_PACKLIFEL]   = volUsed;
-        qDebug() << "*******P Pack*********";
         break;
     case DISP_U_PACK:
         gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY] = installTime.toTime_t();
         gCMUsage.info.aulCms[DISP_U_PACKLIFEL]   = volUsed;
-        qDebug() << "*******U Pack*********";
         break;
     case DISP_AT_PACK:
         gCMUsage.info.aulCms[DISP_AT_PACKLIFEDAY] = installTime.toTime_t();
         gCMUsage.info.aulCms[DISP_AT_PACKLIFEL]   = volUsed;
-        qDebug() << "*******AT Pack*********";
         break;
     case DISP_H_PACK:
         gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY] = installTime.toTime_t();
         gCMUsage.info.aulCms[DISP_H_PACKLIFEL]   = volUsed;
-        qDebug() << "*******H Pack*********";
         break;
     }
     if(!m_isInitCMInfo)
@@ -9085,7 +9076,7 @@ void MainWindow::writeCMInfoToRFID(int iRfId, int type)
     iRet = this->writeRfid(iRfId, RF_DATA_LAYOUT_UNKNOW_DATA, volData);
     if(iRet != 0)
     {
-        qDebug() << "************write pack info error*************";
+        qDebug() << "write pack info error";
     }
 }
 

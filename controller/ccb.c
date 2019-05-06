@@ -5210,22 +5210,24 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                     }
                     case CIR_TYPE_HP:
                         {
-                            if (iEcoId == APP_EXE_I4_NO)
-                            {
-                                float fValue = gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV.fWaterQ;
-                                if (fValue >= CcbGetSp11())
-                                {
-                                    /* Stop Circulation */
-                                    CcbInnerWorkStopCir();
-                                }
-                            }
-
                             if((gCcb.ulMachineType == MACHINE_UP)
                                || (gCcb.ulMachineType == MACHINE_RO))
                             {
                                 if(iEcoId == APP_EXE_I3_NO)
                                 {
                                     float fValue = gCcb.ExeBrd.aEcoObjs[APP_EXE_I3_NO].Value.eV.fWaterQ;
+                                    if (fValue >= CcbGetSp11())
+                                    {
+                                        /* Stop Circulation */
+                                        CcbInnerWorkStopCir();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (iEcoId == APP_EXE_I4_NO)
+                                {
+                                    float fValue = gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV.fWaterQ;
                                     if (fValue >= CcbGetSp11())
                                     {
                                         /* Stop Circulation */
@@ -9804,6 +9806,7 @@ void CcbWorMsgProc(SAT_MSG_HEAD *pucMsg)
                 switch(gCcb.ulMachineType)
                 {
                 case MACHINE_ADAPT:
+                case MACHINE_PURIST:
                     break;
                 default:
                     /* start circulation if any */
@@ -13616,6 +13619,7 @@ DISPHANDLE DispCmdCir(unsigned char *pucData, int iLength)
        switch(gCcb.ulMachineType)
        {
        case MACHINE_ADAPT:
+       case MACHINE_PURIST:
            break;
        default:
            if ((DISP_WORK_STATE_RUN == gCcb.curWorkState.iMainWorkState4Pw)

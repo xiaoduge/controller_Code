@@ -5409,7 +5409,7 @@
     <message>
         <location filename="setpoint.cpp" line="422"/>
         <source>UP Feed Cond.</source>
-        <translation type="unfinished"></translation>
+        <translation>UP进水水质</translation>
     </message>
     <message>
         <location filename="setpoint.cpp" line="426"/>
@@ -5530,7 +5530,7 @@
     <message>
         <location filename="setpoint.cpp" line="531"/>
         <source>UP Feed Temp.</source>
-        <translation type="unfinished"></translation>
+        <translation>UP 进水温度</translation>
     </message>
     <message>
         <location filename="setpoint.cpp" line="535"/>
