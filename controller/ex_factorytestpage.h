@@ -12,6 +12,7 @@ class QLabel;
 class QLineEdit;
 class QFrame;
 class QComboBox;
+class QTextBrowser;
 
 class Ex_FactoryTestPage : public CSubPage
 {
@@ -43,6 +44,7 @@ public:
     {
         FACTORY_PAGE_RFID = 0,
         FACTORY_PAGE_FLOW,
+        FACTORY_PAGE_UPDWIFI,
         FACTORY_PAGE_NUM
     };
 
@@ -76,6 +78,9 @@ public:
     //RFID
     void updateRFIDInfo(int iRfId);
 
+    //wifi
+    void updateWifiTestMsg(const QString& msg);
+
 private:
     void buildTitles();
     void setBackColor();
@@ -83,6 +88,7 @@ private:
 
     void initFlowTestPage();
     void initRFIDTestPage();
+    void initUpdateWifiPage();
 
 private slots:
     void on_flowBtn_clicked();
@@ -92,6 +98,8 @@ private slots:
     void on_writeBtn_clicked();
     void on_readBtn_clicked();
     void on_clearBtn_clicked();
+
+    void on_clearWifiMsgBtn_clicked();
 
 private:
     bool isFlow;
@@ -120,9 +128,13 @@ private:
     QLabel* m_pIndexLabel;
     QComboBox* m_pIndexCombo;
 
-    QPushButton* m_pWriteBtn;
-    QPushButton* m_pReadBtn;
-    QPushButton* m_pClearBtn;
+    QPushButton *m_pWriteBtn;
+    QPushButton *m_pReadBtn;
+    QPushButton *m_pClearBtn;
+
+    //update wifi Library
+    QPushButton *m_pClearWifiMsgBtn;
+    QTextBrowser *m_pWifiMsgTBrowser;
 };
 
 extern CtrlApplication *gApp;

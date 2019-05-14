@@ -10,6 +10,7 @@
 #include "basewidget.h"
 #include "subpage.h"
 #include "cbitmapbutton.h"
+#include "mainwindow.h"
 #include <QLineEdit>
 #include <QLabel>
 #include <QTextEdit>
@@ -19,11 +20,12 @@
 
 
 class MainWindow;
+class QProcess;
 
 enum NETWORKPAGE_BTN_ENUM
 {
    NETWORKPAGE_BTN_SAVE = 0,
-   NETWORKPAGE_BTN_NUM,
+   NETWORKPAGE_BTN_NUM
 };
 
 class NetworkPage : public CSubPage
@@ -59,11 +61,30 @@ private:
     
     CBitmapButton     *m_pBtnSave;   
 
-public slots:
+    //add for wifi config
+#ifdef D_HTTPWORK
+    QWidget *m_pWifiConfigWidget;
+    QPushButton *m_pWifiConfigBtn;
+    QLabel *m_pSSIDLab;
+    QLabel *m_pPSKLab;
+    QLineEdit *m_pSSIDEdit;
+    QLineEdit *m_pPSKEdit;
+    QListWidget *m_pWifiMsgListWidget;
+    QPushButton *m_pRefreshWifiBtn;
 
+    QProcess *m_pProcess;
+#endif
+
+public slots:
     void on_btn_clicked(int);
     void on_checkBox_changeState(int state);
 
+#ifdef D_HTTPWORK
+    void on_wifiConfigBtn_clicked();
+    void on_wifiRefreshBtn_clicked();
+    void on_refreshWifiMsg();
+    void on_wifiListWidget_currentRowChanged(int currentRow );
+#endif
 
 };
 

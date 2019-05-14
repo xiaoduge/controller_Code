@@ -7,6 +7,8 @@
 QT       += core gui
 QT       += sql
 
+QT       += network
+
 TRANSLATIONS = cn.ts
 TRANSLATIONS += de.ts
 TRANSLATIONS += en.ts
@@ -128,7 +130,8 @@ SOURCES += main.cpp\
     ex_basewindow.cpp \
     ex_dialogtitle.cpp \
     ex_flowchartwidget.cpp \
-    dtextticker.cpp
+    dtextticker.cpp \
+    dnetworkaccessmanager.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -230,7 +233,9 @@ HEADERS  += mainwindow.h \
     ex_basewindow.h \
     ex_dialogtitle.h \
     ex_flowchartwidget.h \
-    dtextticker.h
+    dtextticker.h \
+    DNetworkConfig.h \
+    dnetworkaccessmanager.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

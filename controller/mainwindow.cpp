@@ -63,6 +63,13 @@
 #include "SterilizePage.h"
 #include <QMovie>
 #include <typeinfo>
+#include <QTcpSocket>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QSslSocket>
+#include <QSslConfiguration>
+#include "dnetworkaccessmanager.h"
 
 #include "setdevicepage.h"
 #include "systestpage.h"
@@ -87,6 +94,7 @@
 #include "ex_checkconsumaleinstall.h"
 #include "ex_consumableinstalldialog.h"
 #include "ex_flowchartpage.h"
+#include "DNetworkConfig.h"
 
 //#include "ex_screensleepthread.h"
 /***********************************************
@@ -191,7 +199,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8_190429_debug");
+QString strSoftwareVersion = QString("0.1.8_190514_debug");
 
 MainWindow *gpMainWnd;
 
@@ -1591,11 +1599,12 @@ void MainRetriveCleanParam(int iMachineType,DISP_CLEAN_SETTING_STRU  &Param)
         int iValue;
         QString strV = "/CLEAN/";
         strV += QString::number(iLoop);
-
-        iValue = config->value(strV + "/LASTIME",0).toInt();
+        int defaultValue = QDateTime::currentDateTime().toTime_t();
+        iValue = config->value(strV + "/LASTIME",defaultValue).toInt();
         Param.aCleans[iLoop].lstTime = iValue;
 
-        iValue = config->value(strV + "/PERIOD",0).toInt();
+        defaultValue = QDateTime::currentDateTime().addDays(gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY]).toTime_t();
+        iValue = config->value(strV + "/PERIOD",defaultValue).toInt();
         Param.aCleans[iLoop].period = iValue;
     }    
     
@@ -3089,7 +3098,20 @@ void CheckConsumptiveMaterialState(void)
         }
     } 
 
-    
+    if (ulCurTime > gGlobalParam.CleanParam.aCleans[DISP_CLEAN_RO].period)
+    {
+        if(!(gGlobalParam.iMachineType == MACHINE_PURIST))
+        {
+            gCMUsage.ulUsageState |= (1 << DISP_ROC12LIFEDAY);
+        }
+
+    }
+    else
+    {
+        gCMUsage.ulUsageState &= ~(1 << DISP_ROC12LIFEDAY);
+    }
+
+    /*
     if (ulCurTime > gCMUsage.info.aulCms[DISP_ROC12LIFEDAY])
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_ROC12LIFEDAY])/DISP_DAYININSECOND;
@@ -3102,7 +3124,8 @@ void CheckConsumptiveMaterialState(void)
             }
         }
         
-   }      
+    }
+    */
     
 }
 
@@ -3112,9 +3135,9 @@ void MainResetCmInfo(int iSel)
     {
     case DISP_PRE_PACK:
         gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY] = DispGetCurSecond();
-#ifndef RFIDTEST
+//#ifndef RFIDTEST
         gCMUsage.info.aulCms[DISP_PRE_PACKLIFEL]   = 0;
-#endif
+//#endif
         gCMUsage.ulUsageState &= ~(1 << DISP_PRE_PACKLIFEDAY);
         gCMUsage.ulUsageState &= ~(1 << DISP_PRE_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEDAY] = 0;
@@ -3244,11 +3267,13 @@ void MainResetCmInfo(int iSel)
         gCMUsage.ulUsageState &= ~(1 << DISP_TUBE_DI_LIFE);
         gCMUsage.cmInfo.aulCumulatedData[DISP_TUBE_DI_LIFE] = 0;
         break;
+        /*
     case DISP_ROC12:
         gCMUsage.info.aulCms[DISP_ROC12LIFEDAY] = DispGetCurSecond();
         gCMUsage.ulUsageState &= ~(1 << DISP_ROC12LIFEDAY);
         gCMUsage.cmInfo.aulCumulatedData[DISP_ROC12LIFEDAY] = 0;
         break;
+        */
     }
 
     MainSaveCMInfo(gGlobalParam.iMachineType,gCMUsage.info);
@@ -3973,6 +3998,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
             m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACK)
                                          |(1 << DISP_N1_UV)
+                                         |(1 << DISP_N4_UV)
                                          |(1 << DISP_N5_UV)
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
@@ -4020,9 +4046,10 @@ MainWindow::MainWindow(QMainWindow *parent) :
                                          |(1 << DISP_T_PACK)
                                          |(1 << DISP_P_PACK)
                                          |(1 << DISP_AT_PACK)
+                                         |(1 << DISP_T_B_FILTER)
                                          |(1 << DISP_N1_UV)
                                          |(1 << DISP_N3_UV)
-                                         |(1 << DISP_T_B_FILTER)
+                                         |(1 << DISP_N4_UV)
                                          |(1 << DISP_N5_UV)
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
@@ -4039,6 +4066,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
                                            |(1 << DISP_T_PACK)
                                            |(1 << DISP_N1_UV)
                                            |(1 << DISP_N3_UV)
+                                           |(1 << DISP_N4_UV)
                                            |(1 << DISP_N5_UV)
                                            |(1 << DISP_TUBE_FILTER)
                                            |(1 << DISP_TUBE_DI)));
@@ -4139,11 +4167,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4158,11 +4186,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4178,11 +4206,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4197,11 +4225,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4217,11 +4245,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_H_PACK;
         
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4236,11 +4264,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_H_PACK;
         
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4256,11 +4284,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4275,11 +4303,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4298,27 +4326,27 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
 
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         /*rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_PPACK_CLEANPACK] = DISP_P_PACK | (1 << 16);
         
-        MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
-        MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
+//        MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
+//        MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
 
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4333,11 +4361,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4352,11 +4380,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4368,11 +4396,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
         */
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4384,11 +4412,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
         */
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4400,11 +4428,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
         */
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4416,11 +4444,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
         */
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4443,11 +4471,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
 
 
         /* rfid for cleaning stage */
@@ -4458,11 +4486,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
         
-        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-        {
-            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
-            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
-        }
+//        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+//        {
+//            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_PREPACK);
+//            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_PREPACK] = DISP_PRE_PACK;
+//        }
         
         break;
     } 
@@ -4530,6 +4558,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
     initMachineFlow();  //ex 2018.11.19
 
     QTimer::singleShot(3000, this, SLOT(retriveCMInfoWithRFID()));
+
+#ifdef D_NETWORK
+    initNetwork();
+#endif
+
+#ifdef D_HTTPWORK
+    initHttp();
+#endif
 }
 
 void MainWindow::on_timerBuzzerEvent()
@@ -5237,6 +5273,13 @@ void MainWindow::on_timerEvent()
 
     CheckConsumptiveMaterialState();
 
+#ifdef D_NETWORK
+    if(m_isDisconnect)
+    {
+        connectToServer();
+    }
+#endif
+
     //More than 1 hour, start cir;
     switch(gGlobalParam.iMachineType)
     {
@@ -5355,6 +5398,16 @@ void MainWindow::on_timerSecondEvent()
     updateRectState(); //ex
     updateRectAlarmState();//
     updatePackFlow(); //
+
+#ifdef D_NETWORK
+    if(m_isConnect)
+    {
+        m_code += 1;
+        sendHeartbeat();
+    }
+#endif
+
+
 
     if (m_iRfidDelayedMask)
     {
@@ -6075,6 +6128,173 @@ void MainWindow::saveFmData(int id,unsigned int ulValue)
     m_ulFlowMeter[id]   = ulValue;
     m_ulFlowRptTick[id] = m_periodEvents;
 }
+
+#ifdef D_HTTPWORK
+void MainWindow::on_timerNetworkEvent()
+{
+    if(gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
+    {
+        if(m_replayFinished)
+        {
+            heartHttpPost();
+        }
+    }
+}
+
+void MainWindow::initHttp()
+{
+    m_networkTimer = new QTimer(this);
+    connect(m_networkTimer, SIGNAL(timeout()), this, SLOT(on_timerNetworkEvent()),Qt::QueuedConnection);
+    m_networkTimer->start(1000*3); // peroid of one second
+    m_replayFinished = true;
+    m_pNetworkManager = new DNetworkAccessManager(this);
+}
+
+void MainWindow::heartHttpPost()
+{
+    QNetworkRequest request;
+   // request.setUrl(QUrl("http://government.inongyao.com.cn/api/client"));  //http
+    request.setUrl(QUrl("https://s.yzzhushu.com/api/client"));  //https
+
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray append("{\"quality\":\"18.2\", \"temp\":25.2, \"Pressure\":5.2,\"Genie\":1}");
+
+    m_pReply =  m_pNetworkManager->post(request, append);
+    m_replayFinished = false;
+    if(m_pReply)
+    {
+        connect(m_pReply, SIGNAL(finished()), this, SLOT(onReplyFinished()));
+    }
+}
+
+void MainWindow::sendDataToServer(const QByteArray &msg)
+{
+    QNetworkRequest request;
+    request.setUrl(QUrl("https://s.yzzhushu.com/api/client"));  //https
+
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    m_pReply =  m_pNetworkManager->post(request, msg);
+    m_replayFinished = false;
+    if(m_pReply)
+    {
+        connect(m_pReply, SIGNAL(finished()), this, SLOT(onReplyFinished()));
+    }
+}
+
+void MainWindow::onReplyFinished()
+{
+    if(m_pReply->error() == QNetworkReply::NoError)
+    {
+        QString array = m_pReply->readAll();
+        qDebug() << "m_pReply: " << array;
+
+        if (NULL != m_pSubPages[PAGE_SET])
+        {
+            SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
+            Ex_FactoryTestPage *subpage = (Ex_FactoryTestPage *)page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+            if(subpage->isVisible())
+            {
+                subpage->updateWifiTestMsg(array);
+            }
+        }
+    }
+    else
+    {
+        qDebug() << "http post error: " << m_pReply->error();
+
+        if (NULL != m_pSubPages[PAGE_SET])
+        {
+            SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
+            Ex_FactoryTestPage *subpage = (Ex_FactoryTestPage *)page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+            if(subpage->isVisible())
+            {
+                QString strError = QString("http post error: %1").arg(m_pReply->error());
+                subpage->updateWifiTestMsg(strError);
+            }
+        }
+    }
+
+    m_pReply->deleteLater();
+    m_replayFinished = true;
+
+}
+#endif
+
+#ifdef D_NETWORK
+void MainWindow::initNetwork()
+{
+    m_isConnect = false;
+    m_isDisconnect = false;
+
+    m_pTcpSocket = new QTcpSocket(this);
+    connect(m_pTcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
+            this, SLOT(displayError(QAbstractSocket::SocketError)));
+    connect(m_pTcpSocket, SIGNAL(disconnected()), this, SLOT(reConnect()));
+    m_code = 0;
+
+    connectToServer();
+}
+
+void MainWindow::connectToServer()
+{
+    m_pTcpSocket->abort();
+    m_pTcpSocket->connectToHost("192.168.31.229", 8864);
+    m_isConnect = true;
+}
+
+void MainWindow::sendHeartbeat()
+{
+    UploadMsg data;
+    memset(&data, 0, sizeof(struct UploadMsg));
+
+    data.code = m_code;
+
+    data.waterQuality[0].fG25x = 2000;
+    data.waterQuality[0].tx = 50;
+
+    data.waterQuality[1].fG25x = 50;
+    data.waterQuality[1].tx = 100;
+
+    data.waterQuality[2].fG25x = 15.0;
+    data.waterQuality[2].tx = 150;
+
+    data.waterQuality[3].fG25x = 160;
+    data.waterQuality[3].tx = 250;
+
+    data.waterQuality[4].fG25x = 18.2;
+    data.waterQuality[4].tx = 550;
+
+    data.fToc = 3.0;
+
+    data.flowRate[0].flowValue = 1000;
+    data.flowRate[1].flowValue = 500;
+    data.flowRate[2].flowValue = 50;
+    data.flowRate[3].flowValue = 5;
+    data.pressure.pureTank = 80;
+    data.pressure.sourceTank = 100;
+    data.pressure.workPressure = 5.6;
+
+    data.alarmCode = 0;
+
+    char buff[128];
+    memcpy(buff, &data, sizeof(struct UploadMsg));
+    m_pTcpSocket->write(buff, sizeof(struct UploadMsg));
+    qDebug() << "TcpSocket write: " << QTime::currentTime().toString("hh:mm:ss:zzz");
+}
+
+void MainWindow::displayError(QAbstractSocket::SocketError)
+{
+//    qDebug() << m_pTcpSocket->errorString();
+    m_isDisconnect = true;
+}
+
+void MainWindow::reConnect()
+{
+    m_isDisconnect = true;
+    qDebug() << "Tcp socket disconnect";
+}
+#endif
 
 void MainWindow::initScreenSleep()
 {

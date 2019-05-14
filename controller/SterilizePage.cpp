@@ -98,7 +98,7 @@ void SterilizePage::buildTranslation()
         {
             strTitle = tr("Next Due Date:");
     
-            tmInfo += gGlobalParam.CleanParam.aCleans[iLoop].period;
+            tmInfo = gGlobalParam.CleanParam.aCleans[iLoop].period;
 
             lstDateTime = QDateTime::fromTime_t(tmInfo);
             strLstDateTime = lstDateTime.toString("d/M/yyyy"); //hh:mm:ss
@@ -330,7 +330,12 @@ void SterilizePage::on_btn_clicked(int index)
                     }
                 }
             }
-            hdl = m_wndMain->startClean(index,(state == BITMAPBUTTON_STATE_SEL));  
+            hdl = m_wndMain->startClean(index,(state == BITMAPBUTTON_STATE_SEL));
+
+            gGlobalParam.CleanParam.aCleans[index].lstTime = QDateTime::currentDateTime().toTime_t();
+            gGlobalParam.CleanParam.aCleans[index].period = QDateTime::currentDateTime().addDays(gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY]).toTime_t();
+
+            MainSaveCleanParam(gGlobalParam.iMachineType,gGlobalParam.CleanParam);
 
             if (DISP_INVALID_HANDLE == hdl)
             {

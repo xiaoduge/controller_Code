@@ -114,6 +114,7 @@ void MainRetrivePmParam(int iMachineType,DISP_PM_SETTING_STRU  &Param);
 void MainRetriveCalParam(int iMachineType,DISP_CAL_SETTING_STRU  &Param);
 void MainSaveCalParam(int iMachineType,DISP_CAL_SETTING_STRU  &Param);
 void MainSaveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param);
+void MainSaveCleanParam(int iMachineType,DISP_CLEAN_SETTING_STRU  &Param);
 #ifdef __cplusplus
 }
 #endif

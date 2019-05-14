@@ -2,8 +2,6 @@
 
 #include "titlebar.h"
 
-#include "mainwindow.h"
-
 #include <QPainter>
 
 #include <QScrollBar>
@@ -13,6 +11,7 @@
 #include "cbitmapbutton.h"
 
 #include <QRect>
+#include <QProcess>
 
 
 
@@ -60,6 +59,13 @@ void NetworkPage::buildTranslation()
     }
      
     m_pBtnSave->setTip(tr("Save"),QColor(228, 231, 240),BITMAPBUTTON_TIP_CENTER);
+
+#ifdef D_HTTPWORK
+    m_pSSIDLab->setText(tr("SSID:"));
+    m_pPSKLab->setText(tr("PSK:"));
+    m_pWifiConfigBtn->setText(tr("Config"));
+    m_pRefreshWifiBtn->setText(tr("Refresh"));
+#endif
 }
 
 void NetworkPage::switchLanguage()
@@ -109,7 +115,7 @@ void NetworkPage::initUi()
         m_pBackWidget[iLoop]->setPalette(pal);
 
 //        m_pBackWidget[iLoop]->setGeometry(QRect(124 , 160 + 70 * iLoop , 530 ,60));
-        m_pBackWidget[iLoop]->setGeometry(QRect(124 , 160 + 80 * (iLoop - 1) , 530 ,60));
+        m_pBackWidget[iLoop]->setGeometry(QRect(124 , 100 + 80 * (iLoop - 1) , 530 ,60));
 
         m_laName[iLoop]      = new QLabel(m_pBackWidget[iLoop]);
         m_laName[iLoop]->setPixmap(NULL);
@@ -141,6 +147,50 @@ void NetworkPage::initUi()
             m_pBackWidget[iLoop]->hide();
         }
     }
+
+    //add for wifi config
+#ifdef D_HTTPWORK
+    m_pWifiConfigWidget = new QWidget(m_widget);
+    QPalette pal(m_pWifiConfigWidget->palette());
+    pal.setColor(QPalette::Background, Qt::gray);
+    m_pWifiConfigWidget->setAutoFillBackground(true);
+    m_pWifiConfigWidget->setPalette(pal);
+    m_pWifiConfigWidget->setGeometry(QRect(124 , 100 + 80 * 1 + 65 , 530 ,300));
+
+    m_pSSIDLab = new QLabel(m_pWifiConfigWidget);
+    m_pSSIDLab->setGeometry(QRect(5, 5 , 50 , 30));
+
+    m_pSSIDEdit = new QLineEdit(m_pWifiConfigWidget);
+    m_pSSIDEdit->setGeometry(QRect(60, 5 , 190 , 30));
+
+    m_pPSKLab = new QLabel(m_pWifiConfigWidget);
+    m_pPSKLab->setGeometry(QRect(255, 5 , 50 , 30));
+
+    m_pPSKEdit = new QLineEdit(m_pWifiConfigWidget);
+    m_pPSKEdit->setGeometry(QRect(310, 5, 190 , 30));
+
+    m_pWifiConfigBtn = new QPushButton(m_pWifiConfigWidget);
+    m_pWifiConfigBtn->setGeometry(320, 40, 100, 30);
+    m_pRefreshWifiBtn = new QPushButton(m_pWifiConfigWidget);
+    m_pRefreshWifiBtn->setGeometry(70, 40, 100, 30);
+    m_pWifiMsgListWidget = new QListWidget(m_pWifiConfigWidget);
+    m_pWifiMsgListWidget->setGeometry(5, 72, 520, 200);
+
+    connect(m_pWifiConfigBtn, SIGNAL(clicked()), this, SLOT(on_wifiConfigBtn_clicked()));
+    connect(m_pRefreshWifiBtn, SIGNAL(clicked()), this, SLOT(on_wifiRefreshBtn_clicked()));
+    connect(m_pWifiMsgListWidget, SIGNAL(currentRowChanged(int)),
+            this, SLOT(on_wifiListWidget_currentRowChanged(int)));
+
+    m_pProcess = new QProcess(this);
+    connect(m_pProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(on_refreshWifiMsg()));
+
+    if(!(Qt::Checked == m_chkSwitchs[DISPLAY_NETWORK_WIFI]->checkState()))
+    {
+        m_pWifiConfigWidget->hide();
+    }
+
+#endif
+    //end
     
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,NETWORKPAGE_BTN_SAVE);
     
@@ -222,8 +272,96 @@ void NetworkPage::on_checkBox_changeState(int state)
        }
     }
 
+#ifdef D_HTTPWORK
+    if(Qt::Checked == m_chkSwitchs[DISPLAY_NETWORK_WIFI]->checkState())
+    {
+        m_pWifiConfigWidget->show();
+    }
+    else
+    {
+        m_pWifiConfigWidget->hide();
+    }
+#endif
 }
 
+#ifdef D_HTTPWORK
+void NetworkPage::on_wifiConfigBtn_clicked()
+{
+    if(m_pSSIDEdit->text().isEmpty())
+    {
+        QMessageBox::warning(NULL, tr("Waring"), tr("Invalid SSID"), QMessageBox::Ok);
+        return;
+    }
+
+    QString strFileName(WIFICONFIG_FILE);
+    if(strFileName.isEmpty())
+    {
+        return;
+    }
+
+    QFile sourceFile(strFileName);
+
+    if(!sourceFile.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text))
+    {
+        qDebug() << "Open wifi config file failed: 1";
+        return;
+    }
+
+    QString strAll = QString("# WPA-PSK/TKIP\n\nctrl_interface=/var/run/wpa_supplicant\n\nnetwork={\n\tssid=\"%1\"\n\tscan_ssid=1\n\tkey_mgmt=WPA-PSK WPA-EAP\n\tproto=RSN\n\tpairwise=TKIP CCMP\n\tgroup=TKIP CCMP\n\tpsk=\"%2\"\n        auth_alg=OPEN\n\tpriority=1\n}\n\n")
+            .arg(m_pSSIDEdit->text())
+            .arg(m_pPSKEdit->text());
+
+    QByteArray array = strAll.toLatin1();
+    char *data = array.data();
+
+    sourceFile.write(data);
+
+    if(sourceFile.isOpen())
+    {
+        sourceFile.close();
+    }
+}
+
+void NetworkPage::on_wifiRefreshBtn_clicked()
+{
+    m_pProcess->start("iwlist wlan0 scanning");
+    m_pWifiMsgListWidget->clear();
+    m_pWifiMsgListWidget->addItem("Searching");
+}
+
+void NetworkPage::on_refreshWifiMsg()
+{
+    QString strAll = m_pProcess->readAllStandardOutput();
+
+    QRegExp ssidRx("ESSID:\"([^\"]*)\"");
+    QStringList ssidList;
+    int pos = 0;
+    while((pos = ssidRx.indexIn(strAll, pos)) != -1)
+    {
+        QString strSSID = ssidRx.cap(0);
+        ssidList << strSSID;
+        pos += ssidRx.matchedLength();
+    }
+
+    m_pWifiMsgListWidget->clear();
+    QSet<QString> ssidSet = ssidList.toSet();
+    QSet<QString>::const_iterator it;
+    for(it = ssidSet.begin(); it != ssidSet.end(); ++it)
+    {
+        m_pWifiMsgListWidget->addItem(*it);
+    }
+}
+
+void NetworkPage::on_wifiListWidget_currentRowChanged(int currentRow)
+{
+    if(currentRow < 0)
+    {
+        return;
+    }
+    QString strSSID = m_pWifiMsgListWidget->item(currentRow)->text().remove("ESSID:").remove("\"");
+    m_pSSIDEdit->setText(strSSID);
+}
+#endif
 
 void NetworkPage::leaveSubPage()
 {    

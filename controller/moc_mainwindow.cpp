@@ -22,7 +22,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      32,   14, // methods
+      34,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -63,7 +63,9 @@ static const uint qt_meta_data_MainWindow[] = {
      690,   11,   11,   11, 0x08,
      712,   11,   11,   11, 0x08,
      736,   11,   11,   11, 0x08,
-     765,  759,   11,   11, 0x08,
+     759,   11,   11,   11, 0x08,
+     777,   11,   11,   11, 0x08,
+     806,  800,   11,   11, 0x08,
 
        0        // eod
 };
@@ -88,7 +90,8 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_Ex_Init_Network(int)\0on_Ex_Init_Time(int)\0"
     "on_Ex_Init_TankCfg(int)\0on_Ex_Init_Syscfg(int)\0"
     "on_Ex_Init_Finished()\0on_Ex_Init_Handler(int)\0"
-    "on_Ex_ScreenPageHide()\0sleep\0"
+    "on_Ex_ScreenPageHide()\0onReplyFinished()\0"
+    "on_timerNetworkEvent()\0sleep\0"
     "on_ScreenSleep(bool)\0"
 };
 
@@ -129,7 +132,9 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 28: _t->on_Ex_Init_Finished(); break;
         case 29: _t->on_Ex_Init_Handler((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 30: _t->on_Ex_ScreenPageHide(); break;
-        case 31: _t->on_ScreenSleep((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 31: _t->onReplyFinished(); break;
+        case 32: _t->on_timerNetworkEvent(); break;
+        case 33: _t->on_ScreenSleep((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -167,9 +172,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 32)
+        if (_id < 34)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 32;
+        _id -= 34;
     }
     return _id;
 }

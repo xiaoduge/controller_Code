@@ -8,6 +8,9 @@
 #include <QMessageBox>
 #include <QGridLayout>
 #include <QFormLayout>
+#include <QDir>
+#include <QTextBrowser>
+#include <QProcess>
 
 
 Ex_FactoryTestPage::Ex_FactoryTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain)
@@ -93,6 +96,7 @@ void Ex_FactoryTestPage::buildTranslation()
 
     m_pBtn[FTESTPAGE_ILOOP]->setText(tr("Start"));
 
+    m_pClearWifiMsgBtn->setText(tr("Clear"));
 }
 
 void Ex_FactoryTestPage::switchLanguage()
@@ -330,6 +334,24 @@ void Ex_FactoryTestPage::initRFIDTestPage()
     connect(m_pClearBtn, SIGNAL(clicked()), this, SLOT(on_clearBtn_clicked()));
 }
 
+void Ex_FactoryTestPage::initUpdateWifiPage()
+{
+    m_pageWidget[FACTORY_PAGE_UPDWIFI] = new QWidget(m_widget);
+    m_pageWidget[FACTORY_PAGE_UPDWIFI]->setGeometry(0, 55, 800, 545);
+    QString qss = ".QWidget{ background-color:rgb(250, 250, 250);}";
+    m_pageWidget[FACTORY_PAGE_UPDWIFI]->setStyleSheet(qss);
+
+    m_pClearWifiMsgBtn = new QPushButton(m_pageWidget[FACTORY_PAGE_UPDWIFI]);
+    m_pClearWifiMsgBtn->setGeometry(550, 50, 80, 30);
+    connect(m_pClearWifiMsgBtn, SIGNAL(clicked()), this, SLOT(on_clearWifiMsgBtn_clicked()));
+
+    m_pWifiMsgTBrowser = new QTextBrowser(m_pageWidget[FACTORY_PAGE_UPDWIFI]);
+    m_pWifiMsgTBrowser->setGeometry(50, 85, 700, 400);
+
+    QIcon icon1(":/pic/unselected.png");
+    m_tabWidget->addTab(m_pageWidget[FACTORY_PAGE_UPDWIFI], icon1, tr("Update Wifi"));
+}
+
 void Ex_FactoryTestPage::on_flowBtn_clicked()
 {
     if(isFlow)
@@ -422,6 +444,11 @@ void Ex_FactoryTestPage::on_clearBtn_clicked()
     m_pConfigLineEdit[CONFIG_VOLUMEOFUSE]->clear();
 }
 
+void Ex_FactoryTestPage::on_clearWifiMsgBtn_clicked()
+{
+    m_pWifiMsgTBrowser->clear();
+}
+
 
 void Ex_FactoryTestPage::initUi()
 {
@@ -435,6 +462,7 @@ void Ex_FactoryTestPage::initUi()
     //add page
     initRFIDTestPage();
     initFlowTestPage();
+    initUpdateWifiPage();
 
     mainLayout->addWidget(m_tabWidget, 0, 0);
     m_mainWidget->setLayout(mainLayout);
@@ -545,6 +573,12 @@ void Ex_FactoryTestPage::updateRFIDInfo(int iRfId)
     m_pConfigLineEdit[CONFIG_LOT]->setText(ln);
     m_pConfigLineEdit[CONFIG_INSTALLDATE]->setText(installDate.toString("yyyy-MM-dd"));
     m_pConfigLineEdit[CONFIG_VOLUMEOFUSE]->setText(QString("%1").arg(volUsed));
+}
+
+void Ex_FactoryTestPage::updateWifiTestMsg(const QString &msg)
+{
+    QString strContent = m_pWifiMsgTBrowser->toPlainText();
+    m_pWifiMsgTBrowser->setText(strContent + "\n" + msg);
 }
 
 

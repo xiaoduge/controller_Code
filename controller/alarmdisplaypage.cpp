@@ -1195,33 +1195,18 @@ void AlarmDisplayPage::csUpdate()
             if (gCMUsage.ulUsageState & (1 << DISP_ROC12LIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_ROC12LIFEDAY))
             {
-            
-                /* for DISP_TUBE_DI column */
-                strTmp = tr("Last Maintenance ") + decodeTime(gCMUsage.info.aulCms[DISP_ROC12LIFEDAY]);
+                strTmp = tr("Last Maintenance ") + decodeTime(gGlobalParam.CleanParam.aCleans[DISP_CLEAN_RO].lstTime);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
-                
-//                tmp = gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY] -
-//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_ROC12LIFEDAY])/ DISP_DAYININSECOND;
 
-                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_ROC12LIFEDAY])/ DISP_DAYININSECOND) -
-                        gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY];
-
-
+                QDateTime lstDateTime = QDateTime::fromTime_t(gGlobalParam.CleanParam.aCleans[DISP_CLEAN_RO].period);
+                int tmp = lstDateTime.daysTo(QDateTime::currentDateTime());
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");\
+
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strROMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
-
-                /*
-                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_ROC12LIFEDAY];
-                m_pCslistItem[iIdx]->setCatNo(strTmp);
-                
-                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_ROC12LIFEDAY];
-                m_pCslistItem[iIdx]->setLotNo(strTmp);
-                */
 
                 m_pCslistItem[iIdx]->updateState(1);
                 m_pCslistItem[iIdx]->setId(iIdx);

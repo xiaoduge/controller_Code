@@ -24,10 +24,16 @@
 #include "ex_init_handlecfgpage.h"
 #include "ex_calcpackflow.h"
 #include <QMutex>
+#include <QAbstractSocket>
+#include <QSslError>
+#include <QNetworkReply>
 
 #define FLOWCHART
 
 #define RFIDTEST
+
+//#define D_NETWORK
+#define D_HTTPWORK
 
 #define PAGEID_MARGIN (4)
 
@@ -197,6 +203,10 @@ class SetDevicePage;
 //class Ex_ScreenSleepThread;
 class Ex_CheckConsumaleInstall;
 class Ex_ConsumableInstallDialog;
+class QTcpSocket;
+class QNetworkReply;
+class DNetworkAccessManager;
+class QSslError;
 
 typedef struct
 {
@@ -398,7 +408,7 @@ private slots:
     void on_timerPeriodEvent();
     void on_timerSecondEvent();
     void on_timerScreenSleepEvent();
-    
+
     void on_dispIndication(unsigned char *pucData,int iLength);
 
     void on_Opt_clicked();
@@ -496,6 +506,43 @@ private:
 
     void saveFmData(int id,unsigned int ulValue);
 
+
+//2019.5.6 add for network
+#ifdef D_NETWORK
+private:
+    void initNetwork();
+    void connectToServer();
+    void sendHeartbeat();
+
+private slots:
+    void displayError(QAbstractSocket::SocketError);
+    void reConnect();
+
+private:
+    QTcpSocket *m_pTcpSocket;
+    bool m_isConnect;
+    int m_heartTimer;
+    int m_code;
+    bool m_isDisconnect;
+#endif
+
+#ifdef D_HTTPWORK
+private:
+    void initHttp();
+    void heartHttpPost();
+    void sendDataToServer(const QByteArray& msg);
+
+private slots:
+    void onReplyFinished();
+    void on_timerNetworkEvent();
+
+private:
+    QNetworkReply *m_pReply;
+    DNetworkAccessManager *m_pNetworkManager;
+    QTimer* m_networkTimer;
+    bool m_replayFinished;
+#endif
+
 private:
     QTimer* m_timerBuzzer;
     
@@ -511,7 +558,8 @@ private:
     CBaseWidget* m_pScreenSleepWidget;
     CPage* m_pScreenSleepPage;
     CPage* m_pPreviousPage;
-    //
+    //end
+
 
     bool m_bSplash;
     int  m_curPageIdx;
@@ -530,6 +578,8 @@ private:
     QTimer* m_timerPeriodEvent;
     QTimer* m_timeSecondTimer;
     QTimer* m_screenSleepTimer;
+
+
     
     int  m_periodEvents;
 
@@ -790,5 +840,6 @@ void Write_sys_int(char *sysfilename,int value);
 extern QMutex ex_gMutex;
 
 #define PWMLCD_FILE       "/sys/class/backlight/pwm-backlight/brightness"
+#define WIFICONFIG_FILE   "/etc/wpa_supplicant.conf"
 
 #endif // MAINWINDOW_H

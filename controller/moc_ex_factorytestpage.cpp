@@ -22,7 +22,7 @@ static const uint qt_meta_data_Ex_FactoryTestPage[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,6 +36,7 @@ static const uint qt_meta_data_Ex_FactoryTestPage[] = {
       83,   19,   19,   19, 0x08,
      105,   19,   19,   19, 0x08,
      126,   19,   19,   19, 0x08,
+     148,   19,   19,   19, 0x08,
 
        0        // eod
 };
@@ -45,6 +46,7 @@ static const char qt_meta_stringdata_Ex_FactoryTestPage[] = {
     "on_iLoopBtn_clicked()\0on_keyBtn_clicked()\0"
     "on_writeBtn_clicked()\0on_readBtn_clicked()\0"
     "on_clearBtn_clicked()\0"
+    "on_clearWifiMsgBtn_clicked()\0"
 };
 
 void Ex_FactoryTestPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -59,6 +61,7 @@ void Ex_FactoryTestPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         case 3: _t->on_writeBtn_clicked(); break;
         case 4: _t->on_readBtn_clicked(); break;
         case 5: _t->on_clearBtn_clicked(); break;
+        case 6: _t->on_clearWifiMsgBtn_clicked(); break;
         default: ;
         }
     }
@@ -97,9 +100,9 @@ int Ex_FactoryTestPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }
