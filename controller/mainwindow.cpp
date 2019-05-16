@@ -64,12 +64,6 @@
 #include <QMovie>
 #include <typeinfo>
 #include <QTcpSocket>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QNetworkRequest>
-#include <QSslSocket>
-#include <QSslConfiguration>
-#include "dnetworkaccessmanager.h"
 
 #include "setdevicepage.h"
 #include "systestpage.h"
@@ -95,6 +89,7 @@
 #include "ex_consumableinstalldialog.h"
 #include "ex_flowchartpage.h"
 #include "DNetworkConfig.h"
+#include "dhttpworker.h"
 
 //#include "ex_screensleepthread.h"
 /***********************************************
@@ -199,7 +194,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8_190514_debug");
+QString strSoftwareVersion = QString("0.1.8.190515_debug");
 
 MainWindow *gpMainWnd;
 
@@ -4564,7 +4559,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
 #endif
 
 #ifdef D_HTTPWORK
-    initHttp();
+    initHttpWorker();
 #endif
 }
 
@@ -5220,11 +5215,8 @@ void MainWindow::Splash()
 
 MainWindow::~MainWindow()
 {
-//    if(m_screenSleepThread->isRunning())
-//    {
-//        m_screenSleepThread->stop();
-//        m_screenSleepThread->wait();
-//    }
+    m_workerThread.quit();
+    m_workerThread.wait();
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *e)
@@ -6134,90 +6126,63 @@ void MainWindow::on_timerNetworkEvent()
 {
     if(gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
     {
-        if(m_replayFinished)
-        {
-            heartHttpPost();
-        }
+        //test
+        QString strTime = QTime::currentTime().toString("hh:mm:ss:z");
+        emit sendHttpMsg(QString("{\"type\":0,\"code\":1,\"status\":1,\"time\":\"%1\"}").arg(strTime), 0, 0);
+        emit sendHttpMsg(QString("{\"I1\":{\"quality\":%1,\"temp\":%2,\"time\":\"%3\"}}")
+                         .arg(2000).arg(18.5).arg(strTime), 1, 0);
+        emit sendHttpMsg(QString("{\"I2\":{\"quality\":%1,\"temp\":%2,\"time\":\"%3\"}}")
+                         .arg(50.2).arg(20.5).arg(strTime), 1, 1);
+        emit sendHttpMsg(QString("{\"I3\":{\"quality\":%1,\"temp\":%2,\"time\":\"%3\"}}")
+                         .arg(16.0).arg(22.5).arg(strTime), 1, 2);
+        emit sendHttpMsg(QString("{\"I4\":{\"quality\":%1,\"temp\":%2,\"time\":\"%3\"}}")
+                         .arg(18.0).arg(24.5).arg(strTime), 1, 3);
+        emit sendHttpMsg(QString("{\"I5\":{\"quality\":%1,\"temp\":%2,\"time\":\"%3\"}}")
+                         .arg(18.2).arg(26.5).arg(strTime), 1, 4);
+
+        emit sendHttpMsg(QString("{\"S1\":{\"value\":%1}}")
+                         .arg(1.5), 1, 5);
+
+        emit sendHttpMsg(QString("{\"getWater\":{\"type\":\"%1\",\"quantity\":%2,\"quality\":%3,\"temp\":%4,\"time\":\"%5\"}}")
+                         .arg("UP").arg(1.5).arg(18.2).arg(24.3).arg(strTime), 2, 0);
+
+        emit httpPost();
     }
 }
 
-void MainWindow::initHttp()
+void MainWindow::initHttpWorker()
 {
+    DHttpWorker *worker = new DHttpWorker;
+    worker->moveToThread(&m_workerThread);
+
+    connect(&m_workerThread, SIGNAL(finished()), worker, SLOT(deleteLater()));
+    connect(&m_workerThread, SIGNAL(started()), worker, SLOT(on_initHttp()));
+    connect(this, SIGNAL(sendHttpMsg(const QString&, int, int)), worker, SLOT(on_updateMsgList(const QString&, int, int)));
+    connect(this, SIGNAL(httpPost()), worker, SLOT(on_heartHttpPost()));
+    connect(worker, SIGNAL(feedback(const QByteArray&)), this, SLOT(on_updateText(const QByteArray&)));
+
+    m_workerThread.start();
+
     m_networkTimer = new QTimer(this);
     connect(m_networkTimer, SIGNAL(timeout()), this, SLOT(on_timerNetworkEvent()),Qt::QueuedConnection);
     m_networkTimer->start(1000*3); // peroid of one second
-    m_replayFinished = true;
-    m_pNetworkManager = new DNetworkAccessManager(this);
+
+    emit sendHttpMsg(QString("\"status\":%1")
+                     .arg(0), 3, 0);
 }
 
-void MainWindow::heartHttpPost()
+void MainWindow::on_updateText(const QByteArray& array)
 {
-    QNetworkRequest request;
-   // request.setUrl(QUrl("http://government.inongyao.com.cn/api/client"));  //http
-    request.setUrl(QUrl("https://s.yzzhushu.com/api/client"));  //https
-
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QByteArray append("{\"quality\":\"18.2\", \"temp\":25.2, \"Pressure\":5.2,\"Genie\":1}");
-
-    m_pReply =  m_pNetworkManager->post(request, append);
-    m_replayFinished = false;
-    if(m_pReply)
+    qDebug() << array;
+    if (NULL != m_pSubPages[PAGE_SET])
     {
-        connect(m_pReply, SIGNAL(finished()), this, SLOT(onReplyFinished()));
-    }
-}
-
-void MainWindow::sendDataToServer(const QByteArray &msg)
-{
-    QNetworkRequest request;
-    request.setUrl(QUrl("https://s.yzzhushu.com/api/client"));  //https
-
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-    m_pReply =  m_pNetworkManager->post(request, msg);
-    m_replayFinished = false;
-    if(m_pReply)
-    {
-        connect(m_pReply, SIGNAL(finished()), this, SLOT(onReplyFinished()));
-    }
-}
-
-void MainWindow::onReplyFinished()
-{
-    if(m_pReply->error() == QNetworkReply::NoError)
-    {
-        QString array = m_pReply->readAll();
-        qDebug() << "m_pReply: " << array;
-
-        if (NULL != m_pSubPages[PAGE_SET])
+        SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
+        Ex_FactoryTestPage *subpage = (Ex_FactoryTestPage *)page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+        if(subpage->isVisible())
         {
-            SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
-            Ex_FactoryTestPage *subpage = (Ex_FactoryTestPage *)page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
-            if(subpage->isVisible())
-            {
-                subpage->updateWifiTestMsg(array);
-            }
+            subpage->updateWifiTestMsg(array);
         }
     }
-    else
-    {
-        qDebug() << "http post error: " << m_pReply->error();
-
-        if (NULL != m_pSubPages[PAGE_SET])
-        {
-            SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
-            Ex_FactoryTestPage *subpage = (Ex_FactoryTestPage *)page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
-            if(subpage->isVisible())
-            {
-                QString strError = QString("http post error: %1").arg(m_pReply->error());
-                subpage->updateWifiTestMsg(strError);
-            }
-        }
-    }
-
-    m_pReply->deleteLater();
-    m_replayFinished = true;
-
 }
 #endif
 

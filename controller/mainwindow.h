@@ -25,8 +25,7 @@
 #include "ex_calcpackflow.h"
 #include <QMutex>
 #include <QAbstractSocket>
-#include <QSslError>
-#include <QNetworkReply>
+#include <QThread>
 
 #define FLOWCHART
 
@@ -527,20 +526,22 @@ private:
 #endif
 
 #ifdef D_HTTPWORK
+    //
+signals:
+    void sendHttpMsg(const QString&, int code, int index);
+    void httpPost();
+
 private:
-    void initHttp();
-    void heartHttpPost();
-    void sendDataToServer(const QByteArray& msg);
+    void initHttpWorker();
 
 private slots:
-    void onReplyFinished();
+    void on_updateText(const QByteArray&);
     void on_timerNetworkEvent();
 
 private:
-    QNetworkReply *m_pReply;
-    DNetworkAccessManager *m_pNetworkManager;
-    QTimer* m_networkTimer;
-    bool m_replayFinished;
+    QThread m_workerThread;
+    QTimer *m_networkTimer;
+    //
 #endif
 
 private:

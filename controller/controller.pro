@@ -131,7 +131,8 @@ SOURCES += main.cpp\
     ex_dialogtitle.cpp \
     ex_flowchartwidget.cpp \
     dtextticker.cpp \
-    dnetworkaccessmanager.cpp
+    dnetworkaccessmanager.cpp \
+    dhttpworker.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -235,7 +236,8 @@ HEADERS  += mainwindow.h \
     ex_flowchartwidget.h \
     dtextticker.h \
     DNetworkConfig.h \
-    dnetworkaccessmanager.h
+    dnetworkaccessmanager.h \
+    dhttpworker.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

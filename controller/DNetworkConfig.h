@@ -29,5 +29,26 @@ struct UploadMsg
     unsigned short alarmCode;
 };
 
+enum Network_Operating_Data
+{
+    I1_DATA = 0,
+    I2_DATA,
+    I3_DATA,
+    I4_DATA,
+    I5_DATA,
+
+    S1_DATA,
+    S2_DATA,
+    S3_DATA,
+    S4_DATA,
+
+    SOURCE_TANK_DATA,
+    PURE_TANK_DATA,
+    WORK_PRESSURE_DATA,
+
+    NETWORK_DATA_NUM
+
+};
+
 
 #endif // DNETWORKCONFIG_H

@@ -1,17 +1,12 @@
 #include "networkpage.h"
-
 #include "titlebar.h"
-
 #include <QPainter>
-
 #include <QScrollBar>
-
 #include <QListWidgetItem>
-
 #include "cbitmapbutton.h"
-
 #include <QRect>
 #include <QProcess>
+#include "ex_hintdialog.h"
 
 
 
@@ -320,6 +315,7 @@ void NetworkPage::on_wifiConfigBtn_clicked()
     {
         sourceFile.close();
     }
+    Ex_HintDialog::getInstance(tr("Successfully"));
 }
 
 void NetworkPage::on_wifiRefreshBtn_clicked()

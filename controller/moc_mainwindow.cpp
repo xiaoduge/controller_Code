@@ -22,12 +22,12 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      34,   14, // methods
+      36,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       6,       // signalCount
+       8,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       28,   12,   11,   11, 0x05,
@@ -36,36 +36,38 @@ static const uint qt_meta_data_MainWindow[] = {
      118,   11,   11,   11, 0x05,
      138,   11,   11,   11, 0x05,
      163,  153,   11,   11, 0x05,
+     210,  198,   11,   11, 0x05,
+     239,   11,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-     198,   11,   11,   11, 0x0a,
-     222,   11,   11,   11, 0x08,
-     238,   11,   11,   11, 0x08,
-     260,   11,   11,   11, 0x08,
-     282,   11,   11,   11, 0x08,
-     309,   12,   11,   11, 0x08,
-     347,   11,   11,   11, 0x08,
-     364,   11,   11,   11, 0x08,
-     382,   11,   11,   11, 0x08,
-     400,   11,   11,   11, 0x08,
-     419,   11,   11,   11, 0x08,
-     434,   75,   11,   11, 0x08,
-     469,   11,   11,   11, 0x08,
-     495,  491,   11,   11, 0x08,
-     515,   11,   11,   11, 0x08,
-     537,   11,   11,   11, 0x08,
-     559,   11,   11,   11, 0x08,
-     578,   11,   11,   11, 0x08,
-     598,   11,   11,   11, 0x08,
-     622,   11,   11,   11, 0x08,
-     643,   11,   11,   11, 0x08,
-     667,   11,   11,   11, 0x08,
-     690,   11,   11,   11, 0x08,
-     712,   11,   11,   11, 0x08,
-     736,   11,   11,   11, 0x08,
-     759,   11,   11,   11, 0x08,
-     777,   11,   11,   11, 0x08,
-     806,  800,   11,   11, 0x08,
+     250,   11,   11,   11, 0x0a,
+     274,   11,   11,   11, 0x08,
+     290,   11,   11,   11, 0x08,
+     312,   11,   11,   11, 0x08,
+     334,   11,   11,   11, 0x08,
+     361,   12,   11,   11, 0x08,
+     399,   11,   11,   11, 0x08,
+     416,   11,   11,   11, 0x08,
+     434,   11,   11,   11, 0x08,
+     452,   11,   11,   11, 0x08,
+     471,   11,   11,   11, 0x08,
+     486,   75,   11,   11, 0x08,
+     521,   11,   11,   11, 0x08,
+     547,  543,   11,   11, 0x08,
+     567,   11,   11,   11, 0x08,
+     589,   11,   11,   11, 0x08,
+     611,   11,   11,   11, 0x08,
+     630,   11,   11,   11, 0x08,
+     650,   11,   11,   11, 0x08,
+     674,   11,   11,   11, 0x08,
+     695,   11,   11,   11, 0x08,
+     719,   11,   11,   11, 0x08,
+     742,   11,   11,   11, 0x08,
+     764,   11,   11,   11, 0x08,
+     788,   11,   11,   11, 0x08,
+     811,   11,   11,   11, 0x08,
+     837,   11,   11,   11, 0x08,
+     866,  860,   11,   11, 0x08,
 
        0        // eod
 };
@@ -77,9 +79,10 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "iapIndication(IAP_NOTIFY_STRU*)\0"
     "SleepPageShow(bool)\0unitsChanged()\0"
     "msg,isAdd\0updateFlowChartAlarm(QString,bool)\0"
-    "retriveCMInfoWithRFID()\0on_timerEvent()\0"
-    "on_timerPeriodEvent()\0on_timerSecondEvent()\0"
-    "on_timerScreenSleepEvent()\0"
+    ",code,index\0sendHttpMsg(QString,int,int)\0"
+    "httpPost()\0retriveCMInfoWithRFID()\0"
+    "on_timerEvent()\0on_timerPeriodEvent()\0"
+    "on_timerSecondEvent()\0on_timerScreenSleepEvent()\0"
     "on_dispIndication(unsigned char*,int)\0"
     "on_Opt_clicked()\0on_Stop_clicked()\0"
     "on_Exit_clicked()\0on_pbRun_clicked()\0"
@@ -90,7 +93,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_Ex_Init_Network(int)\0on_Ex_Init_Time(int)\0"
     "on_Ex_Init_TankCfg(int)\0on_Ex_Init_Syscfg(int)\0"
     "on_Ex_Init_Finished()\0on_Ex_Init_Handler(int)\0"
-    "on_Ex_ScreenPageHide()\0onReplyFinished()\0"
+    "on_Ex_ScreenPageHide()\0on_updateText(QByteArray)\0"
     "on_timerNetworkEvent()\0sleep\0"
     "on_ScreenSleep(bool)\0"
 };
@@ -107,34 +110,36 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->SleepPageShow((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 4: _t->unitsChanged(); break;
         case 5: _t->updateFlowChartAlarm((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 6: _t->retriveCMInfoWithRFID(); break;
-        case 7: _t->on_timerEvent(); break;
-        case 8: _t->on_timerPeriodEvent(); break;
-        case 9: _t->on_timerSecondEvent(); break;
-        case 10: _t->on_timerScreenSleepEvent(); break;
-        case 11: _t->on_dispIndication((*reinterpret_cast< unsigned char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 12: _t->on_Opt_clicked(); break;
-        case 13: _t->on_Stop_clicked(); break;
-        case 14: _t->on_Exit_clicked(); break;
-        case 15: _t->on_pbRun_clicked(); break;
-        case 16: _t->on_AutoLogin(); break;
-        case 17: _t->on_IapIndication((*reinterpret_cast< IAP_NOTIFY_STRU*(*)>(_a[1]))); break;
-        case 18: _t->on_pbDevice_clicked(); break;
-        case 19: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 20: _t->on_Gif_State_Change(); break;
-        case 21: _t->on_timerBuzzerEvent(); break;
-        case 22: _t->buildTranslation(); break;
-        case 23: _t->on_Ex_Init_Lan((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 24: _t->on_Ex_Init_Network((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 25: _t->on_Ex_Init_Time((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 26: _t->on_Ex_Init_TankCfg((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 27: _t->on_Ex_Init_Syscfg((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 28: _t->on_Ex_Init_Finished(); break;
-        case 29: _t->on_Ex_Init_Handler((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 30: _t->on_Ex_ScreenPageHide(); break;
-        case 31: _t->onReplyFinished(); break;
-        case 32: _t->on_timerNetworkEvent(); break;
-        case 33: _t->on_ScreenSleep((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 6: _t->sendHttpMsg((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 7: _t->httpPost(); break;
+        case 8: _t->retriveCMInfoWithRFID(); break;
+        case 9: _t->on_timerEvent(); break;
+        case 10: _t->on_timerPeriodEvent(); break;
+        case 11: _t->on_timerSecondEvent(); break;
+        case 12: _t->on_timerScreenSleepEvent(); break;
+        case 13: _t->on_dispIndication((*reinterpret_cast< unsigned char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 14: _t->on_Opt_clicked(); break;
+        case 15: _t->on_Stop_clicked(); break;
+        case 16: _t->on_Exit_clicked(); break;
+        case 17: _t->on_pbRun_clicked(); break;
+        case 18: _t->on_AutoLogin(); break;
+        case 19: _t->on_IapIndication((*reinterpret_cast< IAP_NOTIFY_STRU*(*)>(_a[1]))); break;
+        case 20: _t->on_pbDevice_clicked(); break;
+        case 21: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 22: _t->on_Gif_State_Change(); break;
+        case 23: _t->on_timerBuzzerEvent(); break;
+        case 24: _t->buildTranslation(); break;
+        case 25: _t->on_Ex_Init_Lan((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 26: _t->on_Ex_Init_Network((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 27: _t->on_Ex_Init_Time((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 28: _t->on_Ex_Init_TankCfg((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 29: _t->on_Ex_Init_Syscfg((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 30: _t->on_Ex_Init_Finished(); break;
+        case 31: _t->on_Ex_Init_Handler((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 32: _t->on_Ex_ScreenPageHide(); break;
+        case 33: _t->on_updateText((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
+        case 34: _t->on_timerNetworkEvent(); break;
+        case 35: _t->on_ScreenSleep((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -172,9 +177,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 34)
+        if (_id < 36)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 34;
+        _id -= 36;
     }
     return _id;
 }
@@ -217,5 +222,18 @@ void MainWindow::updateFlowChartAlarm(const QString & _t1, bool _t2)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 5, _a);
+}
+
+// SIGNAL 6
+void MainWindow::sendHttpMsg(const QString & _t1, int _t2, int _t3)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
+    QMetaObject::activate(this, &staticMetaObject, 6, _a);
+}
+
+// SIGNAL 7
+void MainWindow::httpPost()
+{
+    QMetaObject::activate(this, &staticMetaObject, 7, 0);
 }
 QT_END_MOC_NAMESPACE
