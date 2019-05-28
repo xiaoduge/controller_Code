@@ -16,34 +16,54 @@ public:
     explicit DHttpWorker(QObject *parent = 0);
     ~DHttpWorker();
 
+protected:
+    void timerEvent(QTimerEvent *event);
+
 signals:
     void feedback(const QByteArray&);
 
 public slots:
-    void on_updateMsgList(const QString&, int code, int index);
+    void on_updateRunMsgList(const QString&, int index);
+    void on_updateAlarmList(const QString&);
+    void on_updateHeartList(const NetworkData&);
+
     void on_heartHttpPost();
+    void on_alarmHttpPost();
+    void on_runMsgHttpPost();
 
     void on_initHttp();
 
 private slots:
-    void onReplyFinished();
+    void onHeartReplyFinished();
+    void onAlarmReplyFinished();
+    void onRunMsgReplyFinished();
 
 private:
     void updateOperatingData(const QString&, int index);
+    void initJsonFormat();
 
 
 private:
     DNetworkAccessManager *m_networkAccessManager;
-    QNetworkReply *m_pNetworkReply;
+    QNetworkReply *m_pHeartNetworkReply;
+    QNetworkReply *m_pAlarmNetworkReply;
+
+    QString m_heartJson;
 
     QStringList strAlarmList;
+    QStringList strAlarmTempList;
+
     QStringList strOperatingList; //Operating parameters
     QString strOperatingData[NETWORK_DATA_NUM]; //Operating parameters
-    QStringList strHistoryList;
-    QString strRunStatus;
+    QString strHeartMsg;
 
-    bool m_idle;
+    bool m_idleHeart;
+    bool m_idleAlarm;
+    bool m_idleRunMsg;
+
     QMutex m_mutex;
+
+    int m_timerID;
 };
 
 #endif // DHTTPWORKER_H

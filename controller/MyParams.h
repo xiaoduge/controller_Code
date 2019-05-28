@@ -64,6 +64,7 @@ typedef struct
 extern MACHINE_TYPE_STRU gaMachineType[MACHINE_NUM];
 
 //ex_dcj
+void MainRetriveLastRunState(int iMachineType);
 void MainRetriveDefaultState(int iMachineType);
 void MainRetriveExMachineMsg(int iMachineType);
 void MainRetriveProductMsg(int iMachineType);
@@ -90,6 +91,7 @@ void MainSaveFMParam(int iMachineType,DISP_FM_SETTING_STRU  &Param);
 void MainRetriveFmParam(int iMachineType,DISP_FM_SETTING_STRU  &Param);
 
 //ex_dcj
+void MainSaveLastRunState(int iMachineType);
 void MainSaveDefaultState(int iMachineType);
 void MainSaveExMachineMsg(int iMachineType);
 void MainSaveProductMsg(int iMachineType);

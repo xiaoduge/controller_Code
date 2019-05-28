@@ -57,9 +57,9 @@ void NetworkPage::buildTranslation()
 
 #ifdef D_HTTPWORK
     m_pSSIDLab->setText(tr("SSID:"));
-    m_pPSKLab->setText(tr("PSK:"));
-    m_pWifiConfigBtn->setText(tr("Config"));
+    m_pAddSSIDBtn->setText(tr("Add"));
     m_pRefreshWifiBtn->setText(tr("Refresh"));
+    m_pAddCheckBox->setText(tr("Add network"));
 #endif
 }
 
@@ -150,31 +150,42 @@ void NetworkPage::initUi()
     pal.setColor(QPalette::Background, Qt::gray);
     m_pWifiConfigWidget->setAutoFillBackground(true);
     m_pWifiConfigWidget->setPalette(pal);
-    m_pWifiConfigWidget->setGeometry(QRect(124 , 100 + 80 * 1 + 65 , 530 ,300));
+    m_pWifiConfigWidget->setGeometry(QRect(124 , 245 , 530 ,242));
 
-    m_pSSIDLab = new QLabel(m_pWifiConfigWidget);
-    m_pSSIDLab->setGeometry(QRect(5, 5 , 50 , 30));
-
-    m_pSSIDEdit = new QLineEdit(m_pWifiConfigWidget);
-    m_pSSIDEdit->setGeometry(QRect(60, 5 , 190 , 30));
-
-    m_pPSKLab = new QLabel(m_pWifiConfigWidget);
-    m_pPSKLab->setGeometry(QRect(255, 5 , 50 , 30));
-
-    m_pPSKEdit = new QLineEdit(m_pWifiConfigWidget);
-    m_pPSKEdit->setGeometry(QRect(310, 5, 190 , 30));
-
-    m_pWifiConfigBtn = new QPushButton(m_pWifiConfigWidget);
-    m_pWifiConfigBtn->setGeometry(320, 40, 100, 30);
-    m_pRefreshWifiBtn = new QPushButton(m_pWifiConfigWidget);
-    m_pRefreshWifiBtn->setGeometry(70, 40, 100, 30);
     m_pWifiMsgListWidget = new QListWidget(m_pWifiConfigWidget);
-    m_pWifiMsgListWidget->setGeometry(5, 72, 520, 200);
+    m_pWifiMsgListWidget->setGeometry(5, 5, 520, 200);
 
-    connect(m_pWifiConfigBtn, SIGNAL(clicked()), this, SLOT(on_wifiConfigBtn_clicked()));
+    m_pRefreshWifiBtn = new QPushButton(m_pWifiConfigWidget);
+    m_pRefreshWifiBtn->setGeometry(210, 208, 100, 30);
+
+    m_pAddCheckBox = new QCheckBox(m_pWifiConfigWidget);
+    m_pAddCheckBox->setGeometry(390, 208, 120, 30);
+    connect(m_pAddCheckBox, SIGNAL(stateChanged(int)), this, SLOT(on_addCheckBox_stateChanged(int)));
+
+    QString strQss4Chk = m_wndMain->getQss4Chk();
+    m_pAddCheckBox->setStyleSheet(strQss4Chk);
+
+    m_pWifiSSIDAddWidget = new QWidget(m_widget);
+    pal = m_pWifiSSIDAddWidget->palette();
+    pal.setColor(QPalette::Background, Qt::gray);
+    m_pWifiSSIDAddWidget->setAutoFillBackground(true);
+    m_pWifiSSIDAddWidget->setPalette(pal);
+    m_pWifiSSIDAddWidget->setGeometry(QRect(124 , 495, 530 ,50));
+
+    m_pSSIDLab = new QLabel(m_pWifiSSIDAddWidget);
+    m_pSSIDLab->setGeometry(QRect(5, 10 , 50 , 30));
+
+    m_pSSIDEdit = new QLineEdit(m_pWifiSSIDAddWidget);
+    m_pSSIDEdit->setGeometry(QRect(60, 10 , 190 , 30));
+
+    m_pAddSSIDBtn = new QPushButton(m_pWifiSSIDAddWidget);
+    m_pAddSSIDBtn->setGeometry(400, 10, 100, 30);
+
+    connect(m_pAddSSIDBtn, SIGNAL(clicked()), this, SLOT(on_addSSIDBtn_clicked()));
     connect(m_pRefreshWifiBtn, SIGNAL(clicked()), this, SLOT(on_wifiRefreshBtn_clicked()));
-    connect(m_pWifiMsgListWidget, SIGNAL(currentRowChanged(int)),
-            this, SLOT(on_wifiListWidget_currentRowChanged(int)));
+
+    connect(m_pWifiMsgListWidget, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(on_wifiListWidget_itemClicked(QListWidgetItem*)));
 
     m_pProcess = new QProcess(this);
     connect(m_pProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(on_refreshWifiMsg()));
@@ -182,6 +193,12 @@ void NetworkPage::initUi()
     if(!(Qt::Checked == m_chkSwitchs[DISPLAY_NETWORK_WIFI]->checkState()))
     {
         m_pWifiConfigWidget->hide();
+        m_pWifiSSIDAddWidget->hide();
+    }
+
+    if(!(Qt::Checked == m_pAddCheckBox->checkState()))
+    {
+        m_pWifiSSIDAddWidget->hide();
     }
 
 #endif
@@ -275,47 +292,16 @@ void NetworkPage::on_checkBox_changeState(int state)
     else
     {
         m_pWifiConfigWidget->hide();
+        m_pWifiSSIDAddWidget->hide();
     }
 #endif
 }
 
 #ifdef D_HTTPWORK
-void NetworkPage::on_wifiConfigBtn_clicked()
+void NetworkPage::on_addSSIDBtn_clicked()
 {
-    if(m_pSSIDEdit->text().isEmpty())
-    {
-        QMessageBox::warning(NULL, tr("Waring"), tr("Invalid SSID"), QMessageBox::Ok);
-        return;
-    }
-
-    QString strFileName(WIFICONFIG_FILE);
-    if(strFileName.isEmpty())
-    {
-        return;
-    }
-
-    QFile sourceFile(strFileName);
-
-    if(!sourceFile.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text))
-    {
-        qDebug() << "Open wifi config file failed: 1";
-        return;
-    }
-
-    QString strAll = QString("# WPA-PSK/TKIP\n\nctrl_interface=/var/run/wpa_supplicant\n\nnetwork={\n\tssid=\"%1\"\n\tscan_ssid=1\n\tkey_mgmt=WPA-PSK WPA-EAP\n\tproto=RSN\n\tpairwise=TKIP CCMP\n\tgroup=TKIP CCMP\n\tpsk=\"%2\"\n        auth_alg=OPEN\n\tpriority=1\n}\n\n")
-            .arg(m_pSSIDEdit->text())
-            .arg(m_pPSKEdit->text());
-
-    QByteArray array = strAll.toLatin1();
-    char *data = array.data();
-
-    sourceFile.write(data);
-
-    if(sourceFile.isOpen())
-    {
-        sourceFile.close();
-    }
-    Ex_HintDialog::getInstance(tr("Successfully"));
+    QString strSSID = QString("ESSID:\"%1\"").arg(m_pSSIDEdit->text());
+    m_pWifiMsgListWidget->addItem(strSSID);
 }
 
 void NetworkPage::on_wifiRefreshBtn_clicked()
@@ -348,20 +334,62 @@ void NetworkPage::on_refreshWifiMsg()
     }
 }
 
-void NetworkPage::on_wifiListWidget_currentRowChanged(int currentRow)
+void NetworkPage::on_wifiListWidget_itemClicked(QListWidgetItem *item)
 {
-    if(currentRow < 0)
+    //
+    QString strName = item->text().remove("ESSID:").remove("\"");
+    m_wndMain->showWifiConfigDlg(strName);
+}
+
+void NetworkPage::on_addCheckBox_stateChanged(int state)
+{
+    if(state == Qt::Checked)
     {
-        return;
+        m_pSSIDEdit->clear();
+        m_pWifiSSIDAddWidget->show();
     }
-    QString strSSID = m_pWifiMsgListWidget->item(currentRow)->text().remove("ESSID:").remove("\"");
-    m_pSSIDEdit->setText(strSSID);
+    else
+    {
+        m_pWifiSSIDAddWidget->hide();
+    }
 }
 #endif
 
 void NetworkPage::leaveSubPage()
 {    
     CSubPage::leaveSubPage();
+}
+
+void NetworkPage::update()
+{
+#ifdef D_HTTPWORK
+    m_pAddCheckBox->setChecked(false);
+#endif
+
+    if(gGlobalParam.MiscParam.iNetworkMask & 1 << DISPLAY_NETWORK_ZIGBEE)
+    {
+        m_chkSwitchs[DISPLAY_NETWORK_ZIGBEE]->setChecked(true);
+    }
+    else
+    {
+        m_chkSwitchs[DISPLAY_NETWORK_ZIGBEE]->setChecked(false);
+    }
+
+    if(gGlobalParam.MiscParam.iNetworkMask & 1 << DISPLAY_NETWORK_WIFI)
+    {
+        m_chkSwitchs[DISPLAY_NETWORK_WIFI]->setChecked(true);
+#ifdef D_HTTPWORK
+        m_pWifiConfigWidget->show();
+#endif
+    }
+    else
+    {
+        m_chkSwitchs[DISPLAY_NETWORK_WIFI]->setChecked(false);
+#ifdef D_HTTPWORK
+        m_pWifiConfigWidget->hide();
+        m_pWifiSSIDAddWidget->hide();
+#endif
+    }
 }
 
 

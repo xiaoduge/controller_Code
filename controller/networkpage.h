@@ -43,6 +43,7 @@ public:
     virtual void initUi();
 
     void leaveSubPage();
+    void update();
 
 private:
 
@@ -64,13 +65,15 @@ private:
     //add for wifi config
 #ifdef D_HTTPWORK
     QWidget *m_pWifiConfigWidget;
-    QPushButton *m_pWifiConfigBtn;
-    QLabel *m_pSSIDLab;
-    QLabel *m_pPSKLab;
-    QLineEdit *m_pSSIDEdit;
-    QLineEdit *m_pPSKEdit;
-    QListWidget *m_pWifiMsgListWidget;
     QPushButton *m_pRefreshWifiBtn;
+    QCheckBox *m_pAddCheckBox;
+
+    QPushButton *m_pAddSSIDBtn;
+    QLabel *m_pSSIDLab;
+    QLineEdit *m_pSSIDEdit;
+
+    QListWidget *m_pWifiMsgListWidget;
+    QWidget *m_pWifiSSIDAddWidget;
 
     QProcess *m_pProcess;
 #endif
@@ -80,10 +83,11 @@ public slots:
     void on_checkBox_changeState(int state);
 
 #ifdef D_HTTPWORK
-    void on_wifiConfigBtn_clicked();
+    void on_addSSIDBtn_clicked();
     void on_wifiRefreshBtn_clicked();
     void on_refreshWifiMsg();
-    void on_wifiListWidget_currentRowChanged(int currentRow );
+    void on_wifiListWidget_itemClicked(QListWidgetItem *item);
+    void on_addCheckBox_stateChanged(int state);
 #endif
 
 };

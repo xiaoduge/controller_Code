@@ -22,7 +22,7 @@ static const uint qt_meta_data_DHttpWorker[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,19 +33,29 @@ static const uint qt_meta_data_DHttpWorker[] = {
       13,   12,   12,   12, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      46,   34,   12,   12, 0x0a,
-      80,   12,   12,   12, 0x0a,
-      99,   12,   12,   12, 0x0a,
-     113,   12,   12,   12, 0x08,
+      41,   34,   12,   12, 0x0a,
+      74,   12,   12,   12, 0x0a,
+     102,   12,   12,   12, 0x0a,
+     134,   12,   12,   12, 0x0a,
+     153,   12,   12,   12, 0x0a,
+     172,   12,   12,   12, 0x0a,
+     192,   12,   12,   12, 0x0a,
+     206,   12,   12,   12, 0x08,
+     229,   12,   12,   12, 0x08,
+     252,   12,   12,   12, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_DHttpWorker[] = {
     "DHttpWorker\0\0feedback(QByteArray)\0"
-    ",code,index\0on_updateMsgList(QString,int,int)\0"
-    "on_heartHttpPost()\0on_initHttp()\0"
-    "onReplyFinished()\0"
+    ",index\0on_updateRunMsgList(QString,int)\0"
+    "on_updateAlarmList(QString)\0"
+    "on_updateHeartList(NetworkData)\0"
+    "on_heartHttpPost()\0on_alarmHttpPost()\0"
+    "on_runMsgHttpPost()\0on_initHttp()\0"
+    "onHeartReplyFinished()\0onAlarmReplyFinished()\0"
+    "onRunMsgReplyFinished()\0"
 };
 
 void DHttpWorker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -55,10 +65,16 @@ void DHttpWorker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         DHttpWorker *_t = static_cast<DHttpWorker *>(_o);
         switch (_id) {
         case 0: _t->feedback((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
-        case 1: _t->on_updateMsgList((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 2: _t->on_heartHttpPost(); break;
-        case 3: _t->on_initHttp(); break;
-        case 4: _t->onReplyFinished(); break;
+        case 1: _t->on_updateRunMsgList((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 2: _t->on_updateAlarmList((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 3: _t->on_updateHeartList((*reinterpret_cast< const NetworkData(*)>(_a[1]))); break;
+        case 4: _t->on_heartHttpPost(); break;
+        case 5: _t->on_alarmHttpPost(); break;
+        case 6: _t->on_runMsgHttpPost(); break;
+        case 7: _t->on_initHttp(); break;
+        case 8: _t->onHeartReplyFinished(); break;
+        case 9: _t->onAlarmReplyFinished(); break;
+        case 10: _t->onRunMsgReplyFinished(); break;
         default: ;
         }
     }
@@ -96,9 +112,9 @@ int DHttpWorker::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 11;
     }
     return _id;
 }

@@ -10,6 +10,7 @@
 #include "basewidget.h"
 #include "subpage.h"
 #include "cbitmapbutton.h"
+#include "mainwindow.h"
 #include <QLineEdit>
 #include <QLabel>
 #include <QTextEdit>
@@ -20,7 +21,7 @@
 
 class MainWindow;
 class QPushButton;
-
+class QProcess;
 
 class Ex_Init_Networkpage : public CSubPage
 {
@@ -29,7 +30,7 @@ public:
     enum NETWORKPAGE_BTN_ENUM
     {
        NETWORKPAGE_BTN_SAVE = 0,
-       NETWORKPAGE_BTN_NUM,
+       NETWORKPAGE_BTN_NUM
     };
 
 public:
@@ -44,6 +45,8 @@ public:
     virtual void initUi();
 
     void leaveSubPage();
+
+    void update();
 
 private:
 
@@ -64,6 +67,21 @@ private:
     QPushButton* m_pExNextBtn; //
     QPushButton* m_pExBackBtn; //
 
+#ifdef D_HTTPWORK
+    QWidget *m_pWifiConfigWidget;
+    QPushButton *m_pRefreshWifiBtn;
+    QCheckBox *m_pAddCheckBox;
+
+    QPushButton *m_pAddSSIDBtn;
+    QLabel *m_pSSIDLab;
+    QLineEdit *m_pSSIDEdit;
+
+    QListWidget *m_pWifiMsgListWidget;
+    QWidget *m_pWifiSSIDAddWidget;
+
+    QProcess *m_pProcess;
+#endif
+
 signals:
     void networkSwitchBtnClicked(int);
 
@@ -74,6 +92,13 @@ public slots:
     void on_m_pExNextBtn_clicked(); //
     void on_m_pExBackBtn_clicked(); //
 
+#ifdef D_HTTPWORK
+    void on_addSSIDBtn_clicked();
+    void on_wifiRefreshBtn_clicked();
+    void on_refreshWifiMsg();
+    void on_wifiListWidget_itemClicked(QListWidgetItem *item);
+    void on_addCheckBox_stateChanged(int state);
+#endif
 
 };
 

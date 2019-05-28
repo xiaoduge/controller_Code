@@ -370,7 +370,11 @@ int main(int argc, char *argv[])
     //ex
     Ex_EventFilter eventF;
     a.installEventFilter(&eventF);
+    //Register a custom type
+    qRegisterMetaType<NetworkData>("NetworkData");
+    qRegisterMetaType<NetworkData>("NetworkData&");
     //end
+
     chdir(dirname(argv[0]));
     
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));

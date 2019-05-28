@@ -26,13 +26,12 @@
 #include <QMutex>
 #include <QAbstractSocket>
 #include <QThread>
+#include "DNetworkConfig.h"
 
 #define FLOWCHART
+#define D_HTTPWORK
 
 #define RFIDTEST
-
-//#define D_NETWORK
-#define D_HTTPWORK
 
 #define PAGEID_MARGIN (4)
 
@@ -206,6 +205,7 @@ class QTcpSocket;
 class QNetworkReply;
 class DNetworkAccessManager;
 class QSslError;
+class DWifiConfigDialog;
 
 typedef struct
 {
@@ -401,6 +401,7 @@ public slots:
 #ifdef RFIDTEST
     void retriveCMInfoWithRFID();
 #endif
+    void retriveLastRunState();
 
 private slots:
     void on_timerEvent();
@@ -505,31 +506,18 @@ private:
 
     void saveFmData(int id,unsigned int ulValue);
 
-
-//2019.5.6 add for network
-#ifdef D_NETWORK
-private:
-    void initNetwork();
-    void connectToServer();
-    void sendHeartbeat();
-
-private slots:
-    void displayError(QAbstractSocket::SocketError);
-    void reConnect();
-
-private:
-    QTcpSocket *m_pTcpSocket;
-    bool m_isConnect;
-    int m_heartTimer;
-    int m_code;
-    bool m_isDisconnect;
-#endif
-
 #ifdef D_HTTPWORK
     //
+public:
+    void showWifiConfigDlg(const QString& name);
+    void emitHttpAlarm(const QString& strAlarm);
+    void checkConsumableAlarm();
+
 signals:
-    void sendHttpMsg(const QString&, int code, int index);
-    void httpPost();
+    void sendHttpRunMsg(const QString&, int index);
+    void sendHttpHeartData(const NetworkData& networkData);
+    void sendHttpAlarm(const QString&);
+    void httpHeartPost();
 
 private:
     void initHttpWorker();
@@ -541,6 +529,11 @@ private slots:
 private:
     QThread m_workerThread;
     QTimer *m_networkTimer;
+
+    DWifiConfigDialog *m_pWifiConfigDlg;
+
+    NetworkData m_networkData;
+    bool m_conAlarmMark[HTTP_NOTIFY_NUM];
     //
 #endif
 

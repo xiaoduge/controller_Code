@@ -31,6 +31,7 @@ typedef struct
     Ex_SYSTEM_MSG Ex_System_Msg;
     Ex_COFIG_PARAM Ex_Config_Param;
     Ex_MACHINE_MSG Ex_Machine_Msg;
+    int lastRunState;  //0:standby 1:run
 }Ex_DISP_GLOBAL_PARAM_STRU;
 
 extern Ex_LoginState global_LoginState; //dcj_ex;

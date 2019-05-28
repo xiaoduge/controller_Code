@@ -1,0 +1,10 @@
+"heartData": [
+{"I1": {"quality": %1,"temp": %2}},
+{"I2": {"quality": %3,"temp": %4}}, 
+{"I3": {"quality": %5,"temp": %6}},
+{"I4": {"quality": %7,"temp": %8}},
+{"I5": {"quality": %9,"temp": %10}},
+{"RO Rejection": {"value": %11}}, 
+{"TOC": {"value": %12}},
+{"RunStatus": {"status": %13}}
+]

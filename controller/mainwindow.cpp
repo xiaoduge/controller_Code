@@ -90,6 +90,8 @@
 #include "ex_flowchartpage.h"
 #include "DNetworkConfig.h"
 #include "dhttpworker.h"
+#include "dwificonfigdialog.h"
+#include "dwificonfigwidget.h"
 
 //#include "ex_screensleepthread.h"
 /***********************************************
@@ -194,7 +196,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190515_debug");
+QString strSoftwareVersion = QString("0.1.8.190521_debug");
 
 MainWindow *gpMainWnd;
 
@@ -434,6 +436,22 @@ QString gastrAlarmName[] =
     "Leakage or Tank Overflow",
     "High Work Pressure"
 };
+
+void MainRetriveLastRunState(int iMachineType)
+{
+    QString strCfgName = gaMachineType[iMachineType].strName;
+    strCfgName += ".ini";
+    QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
+    QString strV = "/LastRunState/";
+    ex_gGlobalParam.lastRunState = config->value(strV, 0).toInt();
+    qDebug() << strV << ":" << ex_gGlobalParam.lastRunState;
+
+    if (config)
+    {
+        delete config;
+        config = NULL;
+    }
+}
 
 void MainRetriveDefaultState(int iMachineType)//
 {
@@ -1677,6 +1695,24 @@ void MainRetriveMacSn(int iMachineType,DISP_MACHINERY_SN_STRU  &Param)
     }
 }
 
+void MainSaveLastRunState(int iMachineType)
+{
+    QString strCfgName = gaMachineType[iMachineType].strName;
+    strCfgName += ".ini";
+
+    QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
+    QString strV = "/LastRunState/";
+    QString strTmp = QString::number(ex_gGlobalParam.lastRunState);
+    config->setValue(strV, strTmp);
+
+    if (config)
+    {
+        delete config;
+        config = NULL;
+    }
+    sync();
+}
+
 void MainSaveDefaultState(int iMachineType) //ex_dcj
 {
     QString strCfgName = gaMachineType[iMachineType].strName;
@@ -2720,6 +2756,7 @@ void MainRetriveGlobalParam(void)
 
     MainRetriveMachineType(gGlobalParam.iMachineType);
 
+    MainRetriveLastRunState(gGlobalParam.iMachineType); //20190521
     MainRetriveDefaultState(gGlobalParam.iMachineType); //ex_dcj
     MainRetriveExMachineMsg(gGlobalParam.iMachineType);
     MainRetriveProductMsg(gGlobalParam.iMachineType); //ex_dcj
@@ -3105,23 +3142,13 @@ void CheckConsumptiveMaterialState(void)
     {
         gCMUsage.ulUsageState &= ~(1 << DISP_ROC12LIFEDAY);
     }
-
-    /*
-    if (ulCurTime > gCMUsage.info.aulCms[DISP_ROC12LIFEDAY])
+#ifdef D_HTTPWORK
+    if((gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
+        && ex_gGlobalParam.Ex_Default)
     {
-        ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_ROC12LIFEDAY])/DISP_DAYININSECOND;
-
-        if (ulTemp >= gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY])
-        {
-            if(!(gGlobalParam.iMachineType == MACHINE_PURIST))
-            {
-                gCMUsage.ulUsageState |= (1 << DISP_ROC12LIFEDAY);
-            }
-        }
-        
+        gpMainWnd->checkConsumableAlarm();
     }
-    */
-    
+#endif
 }
 
 void MainResetCmInfo(int iSel)
@@ -4554,11 +4581,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     QTimer::singleShot(3000, this, SLOT(retriveCMInfoWithRFID()));
 
-#ifdef D_NETWORK
-    initNetwork();
-#endif
-
 #ifdef D_HTTPWORK
+    for(int i = 0; i < HTTP_NOTIFY_NUM; i++)
+    {
+        m_conAlarmMark[i] = false;
+    }
     initHttpWorker();
 #endif
 }
@@ -4717,6 +4744,11 @@ void MainWindow::mainDisplay()
     m_bSplash = false;
 
     m_pSubPages[PAGE_MAIN]->show(true);
+
+    if(ex_gGlobalParam.Ex_Default)
+    {
+        QTimer::singleShot(1000, this, SLOT(retriveLastRunState()));
+    }
 }
 
 void MainWindow::updEcoInfo(int index)
@@ -4750,6 +4782,15 @@ void MainWindow::updEcoInfo(int index)
             m_fSourceWaterConductivity = m_EcoInfo[index].fQuality;
         }
     }
+
+#ifdef D_HTTPWORK
+    m_networkData.waterQuality[index].fG25x = m_EcoInfo[index].fQuality;
+    m_networkData.waterQuality[index].tx = m_EcoInfo[index].fTemperature;
+    if(index == APP_EXE_I2_NO)
+    {
+         DispGetREJ(&m_networkData.fResidue);
+    }
+#endif
 }
 
 void MainWindow::updTank()
@@ -5265,13 +5306,6 @@ void MainWindow::on_timerEvent()
 
     CheckConsumptiveMaterialState();
 
-#ifdef D_NETWORK
-    if(m_isDisconnect)
-    {
-        connectToServer();
-    }
-#endif
-
     //More than 1 hour, start cir;
     switch(gGlobalParam.iMachineType)
     {
@@ -5390,16 +5424,6 @@ void MainWindow::on_timerSecondEvent()
     updateRectState(); //ex
     updateRectAlarmState();//
     updatePackFlow(); //
-
-#ifdef D_NETWORK
-    if(m_isConnect)
-    {
-        m_code += 1;
-        sendHeartbeat();
-    }
-#endif
-
-
 
     if (m_iRfidDelayedMask)
     {
@@ -5931,6 +5955,17 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
 
             bChanged = true;
             updateFlowChartAlarm(gastrAlarmName[(iAlarmPart * DISP_ALARM_PART0_NUM) + iAlarmId], true);
+
+#ifdef D_HTTPWORK
+            if((gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
+                && ex_gGlobalParam.Ex_Default)
+            {
+                QString strHttpAlarm = QString("{\"type\":0,\"code\":%1,\"status\":1,\"time\":\"%2\"}")
+                                            .arg((iAlarmPart * DISP_ALARM_PART0_NUM) + iAlarmId)
+                                            .arg(strdataTime);
+                emitHttpAlarm(strHttpAlarm);
+            }
+#endif
         }
     }
     else
@@ -5950,6 +5985,17 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
             
             bChanged = true;
             updateFlowChartAlarm(gastrAlarmName[(iAlarmPart * DISP_ALARM_PART0_NUM) + iAlarmId], false);
+
+#ifdef D_HTTPWORK
+            if((gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
+                && ex_gGlobalParam.Ex_Default)
+            {
+                QString strHttpAlarm = QString("{\"type\":0,\"code\":%1,\"status\":0,\"time\":\"%2\"}")
+                                            .arg((iAlarmPart * DISP_ALARM_PART0_NUM) + iAlarmId)
+                                            .arg(strdataTime);
+                emitHttpAlarm(strHttpAlarm);
+            }
+#endif
         }
     }    
 
@@ -6122,31 +6168,399 @@ void MainWindow::saveFmData(int id,unsigned int ulValue)
 }
 
 #ifdef D_HTTPWORK
+void MainWindow::showWifiConfigDlg(const QString& name)
+{
+    m_pWifiConfigDlg->setSSIDName(name);
+    m_pWifiConfigDlg->show();
+}
+
+void MainWindow::emitHttpAlarm(const QString &strAlarm)
+{
+    emit sendHttpAlarm(strAlarm);
+}
+
+void MainWindow::checkConsumableAlarm()
+{
+    QString strCurTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+    QString strJson = QString("{\"type\":1,\"code\":%1,\"status\":%2,\"time\":\"%3\"}");
+
+    if (gCMUsage.ulUsageState & (1 << DISP_PRE_PACKLIFEDAY)
+        || gCMUsage.ulUsageState & (1 << DISP_PRE_PACKLIFEL))
+    {
+        if(!m_conAlarmMark[DISP_PRE_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_PRE_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_PRE_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_PRE_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_PRE_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_PRE_NOTIFY] = false;
+        }
+    }
+
+    if (gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEDAY)
+        || gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEL))
+    {
+        if(!m_conAlarmMark[DISP_AC_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_AC_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_AC_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_AC_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_AC_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_AC_NOTIFY] = false;
+        }
+    }
+
+    if (gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEDAY)
+        || gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEL))
+    {
+        if(!m_conAlarmMark[DISP_T_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_T_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_T_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_T_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_T_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_T_NOTIFY] = false;
+        }
+    }
+
+
+    if (gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEDAY)
+        || gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEL))
+    {
+        if(!m_conAlarmMark[DISP_P_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_P_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_P_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_P_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_P_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_P_NOTIFY] = false;
+        }
+    }
+
+    if (gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEDAY)
+        || gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEL))
+    {
+        if(!m_conAlarmMark[DISP_U_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_U_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_U_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_U_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_U_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_U_NOTIFY] = false;
+        }
+    }
+
+    if (gCMUsage.ulUsageState & (1 << DISP_AT_PACKLIFEDAY)
+        || gCMUsage.ulUsageState & (1 << DISP_AT_PACKLIFEL))
+    {
+        if(!m_conAlarmMark[DISP_AT_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_AT_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_AT_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_AT_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_AT_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_AT_NOTIFY] = false;
+        }
+    }
+
+    if (gCMUsage.ulUsageState & (1 << DISP_H_PACKLIFEDAY)
+        || gCMUsage.ulUsageState & (1 << DISP_H_PACKLIFEL))
+    {
+        if(!m_conAlarmMark[DISP_H_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_H_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_H_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_H_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_H_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_H_NOTIFY] = false;
+        }
+    }
+
+    if (gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEDAY)
+        || gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEHOUR))
+    {
+        if(!m_conAlarmMark[DISP_N1_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_N1_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_N1_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_N1_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_N1_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_N1_NOTIFY] = false;
+        }
+    }
+
+    if (gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEDAY)
+        || gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEHOUR))
+    {
+        if(!m_conAlarmMark[DISP_N2_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_N2_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_N2_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_N2_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_N2_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_N2_NOTIFY] = false;
+        }
+    }
+
+    if (gCMUsage.ulUsageState & (1 << DISP_N3_UVLIFEDAY)
+        || gCMUsage.ulUsageState & (1 << DISP_N3_UVLIFEHOUR))
+    {
+        if(!m_conAlarmMark[DISP_N3_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_N3_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_N3_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_N3_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_N3_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_N3_NOTIFY] = false;
+        }
+    }
+
+    if (gCMUsage.ulUsageState & (1 << DISP_N4_UVLIFEDAY)
+        || gCMUsage.ulUsageState & (1 << DISP_N4_UVLIFEHOUR))
+    {
+        if(!m_conAlarmMark[DISP_N4_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_N4_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_N4_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_N4_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_N4_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_N4_NOTIFY] = false;
+        }
+    }
+
+    if (gCMUsage.ulUsageState & (1 << DISP_N5_UVLIFEDAY)
+        || gCMUsage.ulUsageState & (1 << DISP_N5_UVLIFEHOUR))
+    {
+        if(!m_conAlarmMark[DISP_N5_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_N5_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_N5_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_N5_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_N5_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_N5_NOTIFY] = false;
+        }
+    }
+
+
+    if ((gCMUsage.ulUsageState & (1 << DISP_W_FILTERLIFE)
+        || gCMUsage.ulUsageState & (1 << DISP_W_FILTERLIFE))
+        && (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2)))
+    {
+        if(!m_conAlarmMark[DISP_W_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_W_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_W_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_W_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_W_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_W_NOTIFY] = false;
+        }
+    }
+
+    if (gCMUsage.ulUsageState & (1 << DISP_T_B_FILTERLIFE)
+        || gCMUsage.ulUsageState & (1 << DISP_T_B_FILTERLIFE))
+    {
+        if(!m_conAlarmMark[DISP_T_B_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_T_B_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_T_B_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_T_B_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_T_B_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_T_B_NOTIFY] = false;
+        }
+    }
+
+
+    if (gCMUsage.ulUsageState & (1 << DISP_T_A_FILTERLIFE)
+        || gCMUsage.ulUsageState & (1 << DISP_T_A_FILTERLIFE))
+    {
+        if(!m_conAlarmMark[DISP_T_A_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_T_A_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_T_A_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_T_A_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_T_A_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_T_A_NOTIFY] = false;
+        }
+    }
+
+    if (gCMUsage.ulUsageState & (1 << DISP_TUBE_FILTERLIFE)
+        || gCMUsage.ulUsageState & (1 << DISP_TUBE_FILTERLIFE))
+    {
+        if(!m_conAlarmMark[DISP_TUBE_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_TUBE_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_TUBE_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_TUBE_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_TUBE_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_TUBE_NOTIFY] = false;
+        }
+    }
+
+
+    if (gCMUsage.ulUsageState & (1 << DISP_TUBE_DI_LIFE)
+        || gCMUsage.ulUsageState & (1 << DISP_TUBE_DI_LIFE))
+    {
+        if(!m_conAlarmMark[DISP_TUBE_DI_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_TUBE_DI_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_TUBE_DI_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_TUBE_DI_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_TUBE_DI_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_TUBE_DI_NOTIFY] = false;
+        }
+    }
+
+    if (gCMUsage.ulUsageState & (1 << DISP_ROC12LIFEDAY)
+        || gCMUsage.ulUsageState & (1 << DISP_ROC12LIFEDAY))
+    {
+        if(!m_conAlarmMark[DISP_ROC12_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_ROC12_NOTIFY).arg(1).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_ROC12_NOTIFY] = true;
+        }
+    }
+    else
+    {
+        if(m_conAlarmMark[DISP_ROC12_NOTIFY])
+        {
+            QString strAlarm = strJson.arg(DISP_ROC12_NOTIFY).arg(0).arg(strCurTime);
+            emitHttpAlarm(strAlarm);
+            m_conAlarmMark[DISP_ROC12_NOTIFY] = false;
+        }
+    }
+}
+
 void MainWindow::on_timerNetworkEvent()
 {
+    if(ex_gGlobalParam.Ex_Default == 0)
+    {
+        return;
+    }
     if(gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
     {
         //test
-        QString strTime = QTime::currentTime().toString("hh:mm:ss:z");
-        emit sendHttpMsg(QString("{\"type\":0,\"code\":1,\"status\":1,\"time\":\"%1\"}").arg(strTime), 0, 0);
-        emit sendHttpMsg(QString("{\"I1\":{\"quality\":%1,\"temp\":%2,\"time\":\"%3\"}}")
-                         .arg(2000).arg(18.5).arg(strTime), 1, 0);
-        emit sendHttpMsg(QString("{\"I2\":{\"quality\":%1,\"temp\":%2,\"time\":\"%3\"}}")
-                         .arg(50.2).arg(20.5).arg(strTime), 1, 1);
-        emit sendHttpMsg(QString("{\"I3\":{\"quality\":%1,\"temp\":%2,\"time\":\"%3\"}}")
-                         .arg(16.0).arg(22.5).arg(strTime), 1, 2);
-        emit sendHttpMsg(QString("{\"I4\":{\"quality\":%1,\"temp\":%2,\"time\":\"%3\"}}")
-                         .arg(18.0).arg(24.5).arg(strTime), 1, 3);
-        emit sendHttpMsg(QString("{\"I5\":{\"quality\":%1,\"temp\":%2,\"time\":\"%3\"}}")
-                         .arg(18.2).arg(26.5).arg(strTime), 1, 4);
-
-        emit sendHttpMsg(QString("{\"S1\":{\"value\":%1}}")
-                         .arg(1.5), 1, 5);
-
-        emit sendHttpMsg(QString("{\"getWater\":{\"type\":\"%1\",\"quantity\":%2,\"quality\":%3,\"temp\":%4,\"time\":\"%5\"}}")
-                         .arg("UP").arg(1.5).arg(18.2).arg(24.3).arg(strTime), 2, 0);
-
-        emit httpPost();
+        emit sendHttpHeartData(m_networkData);
+        emit httpHeartPost();
     }
 }
 
@@ -6157,18 +6571,44 @@ void MainWindow::initHttpWorker()
 
     connect(&m_workerThread, SIGNAL(finished()), worker, SLOT(deleteLater()));
     connect(&m_workerThread, SIGNAL(started()), worker, SLOT(on_initHttp()));
-    connect(this, SIGNAL(sendHttpMsg(const QString&, int, int)), worker, SLOT(on_updateMsgList(const QString&, int, int)));
-    connect(this, SIGNAL(httpPost()), worker, SLOT(on_heartHttpPost()));
+
+    connect(this, SIGNAL(sendHttpRunMsg(const QString&, int)), worker, SLOT(on_updateRunMsgList(const QString&, int)));
+    connect(this, SIGNAL(sendHttpAlarm(const QString&)), worker, SLOT(on_updateAlarmList(const QString&)));
+    connect(this, SIGNAL(sendHttpHeartData(const NetworkData&)), worker, SLOT(on_updateHeartList(const NetworkData&)));
+
+    connect(this, SIGNAL(httpHeartPost()), worker, SLOT(on_heartHttpPost()));
     connect(worker, SIGNAL(feedback(const QByteArray&)), this, SLOT(on_updateText(const QByteArray&)));
 
     m_workerThread.start();
 
     m_networkTimer = new QTimer(this);
     connect(m_networkTimer, SIGNAL(timeout()), this, SLOT(on_timerNetworkEvent()),Qt::QueuedConnection);
-    m_networkTimer->start(1000*3); // peroid of one second
+    m_networkTimer->start(1000*10); // peroid of one second
 
-    emit sendHttpMsg(QString("\"status\":%1")
-                     .arg(0), 3, 0);
+    m_pWifiConfigDlg = new DWifiConfigDialog(this);
+    m_pWifiConfigDlg->hide();
+    m_pWifiConfigDlg->move(250, 210);
+
+    //test
+    m_networkData.waterQuality[0].fG25x = 2000;
+    m_networkData.waterQuality[0].tx = 25.0;
+
+    m_networkData.waterQuality[1].fG25x = 50;
+    m_networkData.waterQuality[1].tx = 25.1;
+
+    m_networkData.waterQuality[2].fG25x = 16.0;
+    m_networkData.waterQuality[2].tx = 25.2;
+
+    m_networkData.waterQuality[3].fG25x = 18.0;
+    m_networkData.waterQuality[3].tx = 25.3;
+
+    m_networkData.waterQuality[4].fG25x = 18.2;
+    m_networkData.waterQuality[4].tx = 25.4;
+
+    m_networkData.fResidue = 98;
+    m_networkData.fToc = 3;
+
+    m_networkData.runStatus = 0;
 }
 
 void MainWindow::on_updateText(const QByteArray& array)
@@ -6183,81 +6623,6 @@ void MainWindow::on_updateText(const QByteArray& array)
             subpage->updateWifiTestMsg(array);
         }
     }
-}
-#endif
-
-#ifdef D_NETWORK
-void MainWindow::initNetwork()
-{
-    m_isConnect = false;
-    m_isDisconnect = false;
-
-    m_pTcpSocket = new QTcpSocket(this);
-    connect(m_pTcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),
-            this, SLOT(displayError(QAbstractSocket::SocketError)));
-    connect(m_pTcpSocket, SIGNAL(disconnected()), this, SLOT(reConnect()));
-    m_code = 0;
-
-    connectToServer();
-}
-
-void MainWindow::connectToServer()
-{
-    m_pTcpSocket->abort();
-    m_pTcpSocket->connectToHost("192.168.31.229", 8864);
-    m_isConnect = true;
-}
-
-void MainWindow::sendHeartbeat()
-{
-    UploadMsg data;
-    memset(&data, 0, sizeof(struct UploadMsg));
-
-    data.code = m_code;
-
-    data.waterQuality[0].fG25x = 2000;
-    data.waterQuality[0].tx = 50;
-
-    data.waterQuality[1].fG25x = 50;
-    data.waterQuality[1].tx = 100;
-
-    data.waterQuality[2].fG25x = 15.0;
-    data.waterQuality[2].tx = 150;
-
-    data.waterQuality[3].fG25x = 160;
-    data.waterQuality[3].tx = 250;
-
-    data.waterQuality[4].fG25x = 18.2;
-    data.waterQuality[4].tx = 550;
-
-    data.fToc = 3.0;
-
-    data.flowRate[0].flowValue = 1000;
-    data.flowRate[1].flowValue = 500;
-    data.flowRate[2].flowValue = 50;
-    data.flowRate[3].flowValue = 5;
-    data.pressure.pureTank = 80;
-    data.pressure.sourceTank = 100;
-    data.pressure.workPressure = 5.6;
-
-    data.alarmCode = 0;
-
-    char buff[128];
-    memcpy(buff, &data, sizeof(struct UploadMsg));
-    m_pTcpSocket->write(buff, sizeof(struct UploadMsg));
-    qDebug() << "TcpSocket write: " << QTime::currentTime().toString("hh:mm:ss:zzz");
-}
-
-void MainWindow::displayError(QAbstractSocket::SocketError)
-{
-//    qDebug() << m_pTcpSocket->errorString();
-    m_isDisconnect = true;
-}
-
-void MainWindow::reConnect()
-{
-    m_isDisconnect = true;
-    qDebug() << "Tcp socket disconnect";
 }
 #endif
 
@@ -7236,7 +7601,10 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             case NOT_STATE_INIT:
                 {
                     qDebug("on_dispIndication:DISP_NOT_STATE DISP_NOT_STATE NOT_STATE_INIT \r\n");
-                    
+
+#ifdef D_HTTPWORK
+                    m_networkData.runStatus = 0;
+#endif
                     if (typeid(*m_pCurPage) == typeid(MainPage))
                     {
                          pMainPage->updateRunInfo(false);                         
@@ -7246,7 +7614,9 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             case NOT_STATE_RUN:
                 {
                     qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_RUN \r\n");
-
+#ifdef D_HTTPWORK
+                    m_networkData.runStatus = 1;
+#endif
                     if (typeid(*m_pCurPage) == typeid(MainPage))
                     {
                         pMainPage->updateRunInfo(true);
@@ -7611,6 +7981,10 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             }
 
             pMainPage->updToc(fToc);
+
+#ifdef D_HTTPWORK
+            m_networkData.fToc = fToc;
+#endif
 
             //2018.11.13
             if (NULL != m_pSubPages[PAGE_MENU])
@@ -7988,6 +8362,7 @@ void MainWindow::run(bool bRun)
                case DISP_H_PACK:
                     ToastDlg::makeToast(tr("No H-PACK detected!"));
                     break;
+#if 0
                case (DISP_PRE_PACK | 0xFF00):
                     ToastDlg::makeToast(tr("False Pre-PACK detected!"));
                     break;
@@ -8006,9 +8381,67 @@ void MainWindow::run(bool bRun)
                case (DISP_H_PACK | 0xFF00):
                     ToastDlg::makeToast(tr("False H-PACK detected!"));
                     break;
-                    
+#endif
                }
                return;
+            }
+        }
+
+        //Check whether the Pack is installed correctly, whether or not the RFID is turned on.
+        {
+            iRet = getActiveRfidBrds();
+
+            if (iRet <= 0)
+            {
+               if (typeid(*m_pCurPage) == typeid(MainPage))
+               {
+                   pMainPage->updateRunInfo(false);
+               }
+               bool isError = false;
+               QMessageBox msgBox;
+
+               switch(-iRet)
+               {
+               case (DISP_PRE_PACK | 0xFF00):
+                    msgBox.setText(tr("False Pre-PACK detected!"));
+                    isError = true;
+                    break;
+               case (DISP_AC_PACK | 0xFF00):
+                    msgBox.setText(tr("False AC-PACK detected!"));
+                    isError = true;
+                    break;
+               case (DISP_P_PACK | 0xFF00):
+                    msgBox.setText(tr("False P-PACK detected!"));
+                    isError = true;
+                    break;
+               case (DISP_U_PACK | 0xFF00):
+                    msgBox.setText(tr("False U-PACK detected!"));
+                    isError = true;
+                    break;
+               case (DISP_AT_PACK | 0xFF00):
+                    msgBox.setText(tr("False AT-PACK detected!"));
+                    isError = true;
+                    break;
+               case (DISP_H_PACK | 0xFF00):
+                    msgBox.setText(tr("False H-PACK detected!"));
+                    isError = true;
+                    break;
+               }
+
+               if(isError)
+               {
+                    msgBox.setInformativeText("Do you want to continue?");
+                    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+                    msgBox.setDefaultButton(QMessageBox::No);
+                    int ret = msgBox.exec();
+                    if(QMessageBox::No == ret)
+                    {
+                        ex_gGlobalParam.lastRunState = 0;
+                        MainSaveLastRunState(gGlobalParam.iMachineType);
+
+                        return;
+                    }
+               }
             }
         }
         
@@ -8016,6 +8449,10 @@ void MainWindow::run(bool bRun)
             || DISP_WORK_STATE_LPP == DispGetWorkState())
         {
             DispCmdEntry(DISP_CMD_RUN,NULL,0);
+
+            ex_gGlobalParam.lastRunState = 1;
+            MainSaveLastRunState(gGlobalParam.iMachineType);
+
             return;
         }
 
@@ -8031,6 +8468,9 @@ void MainWindow::run(bool bRun)
     if (DISP_WORK_STATE_IDLE != DispGetWorkState())
     {
         DispCmdEntry(DISP_CMD_HALT,NULL,0);
+
+        ex_gGlobalParam.lastRunState = 0;
+        MainSaveLastRunState(gGlobalParam.iMachineType);
     
         return ;
     }
@@ -8985,6 +9425,14 @@ void MainWindow::retriveCMInfoWithRFID()
 {
     updateCMInfoWithRFID(0);
     MainSaveCMInfo(gGlobalParam.iMachineType,gCMUsage.info);
+}
+
+void MainWindow::retriveLastRunState()
+{
+    if(ex_gGlobalParam.lastRunState)
+    {
+        this->run(true);
+    }
 }
 
 #ifdef RFIDTEST

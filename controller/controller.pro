@@ -132,7 +132,9 @@ SOURCES += main.cpp\
     ex_flowchartwidget.cpp \
     dtextticker.cpp \
     dnetworkaccessmanager.cpp \
-    dhttpworker.cpp
+    dhttpworker.cpp \
+    dwificonfigwidget.cpp \
+    dwificonfigdialog.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -237,7 +239,9 @@ HEADERS  += mainwindow.h \
     dtextticker.h \
     DNetworkConfig.h \
     dnetworkaccessmanager.h \
-    dhttpworker.h
+    dhttpworker.h \
+    dwificonfigwidget.h \
+    dwificonfigdialog.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \
@@ -249,7 +253,8 @@ RESOURCES += \
     app.qrc \
     image.qrc \
     language.qrc \
-    other.qrc
+    other.qrc \
+    json.qrc
 
 OTHER_FILES += \
     pics/image/arrow_down_active.png \
