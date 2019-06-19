@@ -620,11 +620,17 @@ void Ex_ManagerSetPage::on_comboBox_currentIndexChanged(int index)
 
 void Ex_ManagerSetPage::setValue(int value)
 {
+#ifdef VWR
+    if (value < 20)
+    {
+        return;
+    }
+#else
     if (value < 50)
     {
         return;
     }
-
+#endif
     m_iBrightness = value;
 
     Write_sys_int(PWMLCD_FILE,m_iBrightness);
@@ -1076,7 +1082,11 @@ void Ex_ManagerSetPage::initLcdPage()
     pSlider[0]->setStyleSheet(qsss);
     pSlider[0]->setGeometry(QRect(140 , 10 ,370,40));
     pSlider[0]->setMinimum(0);
+#ifdef VWR
+    pSlider[0]->setMaximum(100);
+#else
     pSlider[0]->setMaximum(255);
+#endif
     pSlider[0]->setValue(m_iBrightness);
 
     connect(pSlider[0], SIGNAL(valueChanged(int)), this, SLOT(setValue(int)));

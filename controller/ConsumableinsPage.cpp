@@ -914,8 +914,8 @@ void ConsumableInsPage::on_btn_clicked(int index)
                 m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1, installDate, aIds[iMapIdx].iRfid);
              }
 
-             strncpy(gGlobalParam.cmSn.aCn[macIdx],cn,APP_CAT_LENGTH);
-             strncpy(gGlobalParam.cmSn.aLn[macIdx],ln,APP_LOT_LENGTH);
+//             strncpy(gGlobalParam.cmSn.aCn[macIdx],cn,APP_CAT_LENGTH);
+//             strncpy(gGlobalParam.cmSn.aLn[macIdx],ln,APP_LOT_LENGTH);
 
              /* reset state info */
              m_wndMain->MainWriteMacInstallInfo2Db(macIdx,0,cn,ln);

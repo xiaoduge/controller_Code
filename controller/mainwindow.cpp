@@ -64,6 +64,8 @@
 #include <QMovie>
 #include <typeinfo>
 #include <QTcpSocket>
+#include <QFileSystemWatcher>
+#include <QDir>
 
 #include "setdevicepage.h"
 #include "systestpage.h"
@@ -92,6 +94,7 @@
 #include "dhttpworker.h"
 #include "dwificonfigdialog.h"
 #include "dwificonfigwidget.h"
+#include "ex_hintdialog.h"
 
 //#include "ex_screensleepthread.h"
 /***********************************************
@@ -99,40 +102,40 @@ B3: source water tank
 B2: pure water tank
 B1: tube water pressure
 
-RO²úË®:  I2
-RO½øË®£º I1
-EDI²úË®£ºI3
-TOCµç¼«/Ë®ÏäË®¼ì²â(Ë®ÏäÑ­»·)£ºI4 
-UP²úË®£º I5
+ROË®:  I2
+ROË® I1
+EDIË®I3
+TOCç¼«/Ë®Ë®(Ë®Ñ­)I4 
+UPË® I5
 
-S4: RO·ÏË®
-S3: RO²úË®/EDI½øË®
-S2£ºRO ½øË®
-S1£º³¬´¿Ë®£¬U pack
+S4: ROË®
+S3: ROË®/EDIË®
+S2RO Ë®
+S1Ë®U pack
 
 
 
-¹ÜÂ·DI: 
-¹ÜÂ·UV:
+Â·DI: 
+Â·UV:
 
-×¢Òâ£ºE1ºÍC1Í¬Ê±¹Ø±ÕÊ±£¬E1±ÈC1ÑÓÊ±5s
+×¢â£ºE1C1Í¬Ê±Ø±Ê±E1C1Ê±5s
 
-C4£ºÍâÖÃÑ­»·±Ã (¹ÜÂ·UV)
+C4Ñ­ (Â·UV)
 
-RO²úË®Á÷ËÙ : S3 ¶ÁÊı
-ROÆúË®Á÷ËÙ : S4 ¶ÁÊı
-RO½øË®Á÷ËÙ : S2 ¶ÁÊı
-×ÔÀ´Ë®Á÷ËÙ £ºS3+S4
-EDI²úË®Á÷ËÙ: S3*0.8
-EDIÆúË®Á÷ËÙ: S3*0.2
+ROË® : S3 
+ROË® : S4 
+ROË® : S2 
+Ë® S3+S4
+EDIË®: S3*0.8
+EDIË®: S3*0.2
 
-Í³¼ÆÁ¿:
+Í³:
 
-Ô¤´¦ÀíÖù: S3+S4
+Ô¤: S3+S4
 
 P-PACK = S3+S4
 
-U-PACK = UPµÄË®Á¿(S1)
+U-PACK = UPË®(S1)
 
 AT-PACK= S3
 
@@ -141,47 +144,47 @@ H-PACK=  S1
 ************************************************/
 
 /************************************************
-E1  RO½øË®µç´Å·§    
-E2  ROÆúË®µç´Å·§    
-E3  RO²»ºÏ¸ñÅÅ·Å·§  
-E4  ´¿Ë®½øË®µç´Å·§  
-E5  UPÑ­»·µç´Å·§    
-E6  HPÑ­»·µç´Å·§    
-E7/E8   ²úË®µç´Å·§(UP/HP¸ù¾İÅäÖÃ£©  
-E9  TOC³åÏ´µç´Å·§   
-E10 Ô­Ë®µç´Å·§  
+E1  ROË®Å·    
+E2  ROË®Å·    
+E3  ROÏ¸Å·Å·  
+E4  Ë®Ë®Å·  
+E5  UPÑ­Å·    
+E6  HPÑ­Å·    
+E7/E8   Ë®Å·(UP/HPÃ£  
+E9  TOCÏ´Å·   
+E10 Ô­Ë®Å·  
         
-C1  ROÔöÑ¹±Ã    
-C2  UPÑ­»·±Ã    
-C3  Ô­Ë®ÔöÑ¹±Ã  
-C4  ¹ÜÂ·Ñ­»·±Ã  
+C1  ROÑ¹    
+C2  UPÑ­    
+C3  Ô­Ë®Ñ¹  
+C4  Â·Ñ­  
         
-B1  Ñ¹Á¦´«¸ĞÆ÷  
-B2  ´¿Ë®ÏäÒºÎ»´«¸ĞÆ÷    
-B3  Ô­Ë®ÏäÒºÎ»´«¸ĞÆ÷    
+B1  Ñ¹  
+B2  Ë®ÒºÎ»    
+B3  Ô­Ë®ÒºÎ»    
         
-K1/K2   ²úË®¿ª¹Ø£¨UP/HP¸ù¾İÅäÖÃ£©£¨ĞèÒªµã´¥ºÍ³¤°´Á½Ö»Ä£Ê½£© 
-K3  Ô¤´¦Àí·´Ï´ĞÅºÅ  
-K4  ´¿Ë®ÏäÒçÁ÷ĞÅºÅ/Â©Ë®ĞÅºÅ 
-K5  ½øË®Ñ¹Á¦µÍĞÅºÅ  
+K1/K2   Ë®Ø£UP/HPÃ£Òªã´¥Í³Ö»Ä£Ê½ 
+K3  Ô¤Ï´Åº  
+K4  Ë®Åº/Â©Ë®Åº 
+K5  Ë®Ñ¹Åº  
         
-N1  254nm×ÏÍâµÆ 
-N2  185nm×ÏÍâµÆ 
-N3  Ë®ÏäÏû¶¾×ÏÍâµÆ  
-N4  ¹ÜÂ·×ÏÍâµÆ  
+N1  254nm 
+N2  185nm 
+N3  Ë®  
+N4  Â·  
         
-T   EDIÄ£¿é 
+T   EDIÄ£ 
         
-S1  ´¿Ë®½øË®Á÷ËÙ    
-S2  RO½øË®Á÷ËÙ  
-S3  RO²úË®Á÷ËÙ  
-S4  ROÆúË®Á÷ËÙ  
+S1  Ë®Ë®    
+S2  ROË®  
+S3  ROË®  
+S4  ROË®  
         
-I1  RO½øË®µçµ¼ÂÊ    
-I2  RO²úË®µçµ¼ÂÊ    
-I3  EDI²úË®µç×èÂÊ   
-I4  Ñ­»·Ë®µç×èÂÊ    
-I5  UP²úË®µç×èÂÊ    
+I1  ROË®çµ¼    
+I2  ROË®çµ¼    
+I3  EDIË®   
+I4  Ñ­Ë®    
+I5  UPË®    
 
 
 *************************************************/
@@ -196,9 +199,10 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190521_debug");
+QString strSoftwareVersion = QString("0.1.8.190618_debug");
 
 MainWindow *gpMainWnd;
+
 
 QPixmap    *gpGlobalPixmaps[GLOBAL_BMP_NUM];
 
@@ -921,7 +925,14 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     }
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_W_FILTERLIFE])
     {
-        Param.aulCms[DISP_W_FILTERLIFE] = 360; // 
+        if(iMachineType == MACHINE_PURIST)
+        {
+            Param.aulCms[DISP_W_FILTERLIFE] = 0; //
+        }
+        else
+        {
+            Param.aulCms[DISP_W_FILTERLIFE] = 360; //
+        }
     }
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_T_B_FILTERLIFE])
@@ -1815,6 +1826,7 @@ void MainSaveExConfigParam(int iMachineType)
         delete config;
         config = NULL;
     }
+    sync();
 }
 
 void MainSaveExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int category)
@@ -1825,6 +1837,7 @@ void MainSaveExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int 
 
     query.prepare(select_sql_Consumable);
     query.addBindValue(iIndex);
+    query.addBindValue(category);
     ret = query.exec();
     qDebug() << QString("MainSaveExConsumableMsg consumable compared with Sql: %1").arg(ret);
     if(query.next())
@@ -1843,6 +1856,7 @@ void MainSaveExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int 
                 queryUpdate.addBindValue(ln);
                 queryUpdate.addBindValue(strCurDate);
                 queryUpdate.addBindValue(iIndex);
+                queryUpdate.addBindValue(category);
                 bool ret = queryUpdate.exec();
                 qDebug() << QString("consumable update Sql: %1").arg(ret);
             }
@@ -1860,6 +1874,7 @@ void MainSaveExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int 
         bool ret = queryInsert.exec();
         qDebug() << QString("consumable insert Sql: %1").arg(ret);
     }
+    sync();
 }
 
 
@@ -3622,28 +3637,31 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_pCurPage              = NULL;
     m_curExInitPage         = NULL;
 
-    m_strConsuamble[ACPACK_CATNO] << "RR700AC01";
-    m_strConsuamble[TPACK_CATNO] << "RR700T101";
-    m_strConsuamble[PPACK_CATNO] << "RR700CP01" << "RR700CP02";
+    m_strConsuamble[ACPACK_CATNO] << "RR700AC01" << "171-1254";
+    m_strConsuamble[TPACK_CATNO] << "RR700T101" << "171-1259";
+    m_strConsuamble[PPACK_CATNO] << "RR700CP01" << "RR700CP02" << "171-1255" << "171-1256";
     m_strConsuamble[UPACK_CATNO] << "RR700Q101" << "RR700Q201" << "RR700Q301"
-                 << "RR700Q501" << "RR700Q601" << "RR700Q701";
+                                 << "RR700Q501" << "RR700Q601" << "RR700Q701"
+                                 << "171-1258" << "171-1260" << "171-1261";
 
-    m_strConsuamble[HPACK_CATNO] << "RR700H101";
-    m_strConsuamble[CLEANPACK_CATNO] << "RR700CL01";
+    m_strConsuamble[HPACK_CATNO] << "RR700H101" << "171-1257";
+    m_strConsuamble[CLEANPACK_CATNO] << "RR700CL01" << "171-1281";
 
-    m_strConsuamble[UV254_CATNO] << "RAUV135A7";
-    m_strConsuamble[UV185_CATNO] << "RAUV357B7";
-    m_strConsuamble[UVTANK_CATNO] << "RAUV357A7";
+    m_strConsuamble[UV254_CATNO] << "RAUV135A7" << "171-1282";
+    m_strConsuamble[UV185_CATNO] << "RAUV357B7" << "171-1283";
+    m_strConsuamble[UVTANK_CATNO] << "RAUV357A7" << "171-1270";
 
-    m_strConsuamble[TANKVENTFILTER_CATNO] << "RATANKVN7";
-    m_strConsuamble[FINALFILTER_CATNO] << "RAFFC7250" << "RAFFB7201";
+    m_strConsuamble[TANKVENTFILTER_CATNO] << "RATANKVN7" << "171-1267";
+    m_strConsuamble[FINALFILTER_CATNO] << "RAFFC7250" << "RAFFB7201"
+                                       << "171-1262" << "171-1263";
 
-    m_strConsuamble[UPPUMP_CATNO] << "RASP743";
-    m_strConsuamble[ROPACK_CATNO] << "RR70R0501" << "RR70R1001" << "RR70R1501";
-    m_strConsuamble[ROPUMP_CATNO] << "RASP742";
+    m_strConsuamble[UPPUMP_CATNO] << "RASP743" << "171-1280";
+    m_strConsuamble[ROPACK_CATNO] << "RR70R0501" << "RR70R1001" << "RR70R1501"
+                                  << "171-1276" << "171-1277";
+    m_strConsuamble[ROPUMP_CATNO] << "RASP742" << "171-1279";
 
-    m_strConsuamble[EDI_CATNO] << "W3T101572" << "W3T101573" << "W3T262701";
-
+    m_strConsuamble[EDI_CATNO] << "W3T101572" << "W3T101573" << "W3T262701"
+                               << "171-1288" << "171-1289" << "171-1290";
     gCMUsage.ulUsageState = 0;
 
     memset(m_iAlarmRcdMask ,0,sizeof(m_iAlarmRcdMask));
@@ -4125,6 +4143,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
        }
     }
 
+    checkCMParam(); //2019.6.17 add
+
     initUI();  
     
     /* other init */
@@ -4574,7 +4594,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
     else
     {
         m_startCheckConsumale = true;
+#ifdef VWR
+        mainDisplay();
+#else
         Splash();
+#endif
     }
     initScreenSleep(); //ex
     initMachineFlow();  //ex 2018.11.19
@@ -4735,12 +4759,13 @@ void MainWindow::buzzerHandle()
 
 void MainWindow::mainDisplay()
 {
+#ifndef VWR
     m_pMovieGif->stop();
     m_pLabelGif->hide();
 
     delete m_pLabelGif;
     delete m_pMovieGif;
-
+#endif
     m_bSplash = false;
 
     m_pSubPages[PAGE_MAIN]->show(true);
@@ -5256,8 +5281,11 @@ void MainWindow::Splash()
 
 MainWindow::~MainWindow()
 {
+#ifdef D_HTTPWORK
     m_workerThread.quit();
     m_workerThread.wait();
+#endif
+
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *e)
@@ -6552,6 +6580,10 @@ void MainWindow::checkConsumableAlarm()
 
 void MainWindow::on_timerNetworkEvent()
 {
+    QString strCurTime = QTime::currentTime().toString("hh:mm:ss:zzz");
+    QString msg = QString("Genie client Message: hello Mqtt %1").arg(strCurTime);
+    publishMqttMessage(msg.toUtf8());
+
     if(ex_gGlobalParam.Ex_Default == 0)
     {
         return;
@@ -6561,6 +6593,20 @@ void MainWindow::on_timerNetworkEvent()
         //test
         emit sendHttpHeartData(m_networkData);
         emit httpHeartPost();
+    }
+}
+
+bool MainWindow::isDirExist(const QString &fullPath)
+{
+    QDir dir(fullPath);
+    if(dir.exists())
+    {
+        return true;
+    }
+    else
+    {
+        bool ok = dir.mkdir(fullPath);//åªåˆ›å»ºä¸€çº§å­ç›®å½•ï¼Œå³å¿…é¡»ä¿è¯ä¸Šçº§ç›®å½•å­˜åœ¨
+        return ok;
     }
 }
 
@@ -6609,11 +6655,95 @@ void MainWindow::initHttpWorker()
     m_networkData.fToc = 3;
 
     m_networkData.runStatus = 0;
+
+    initMqtt();
+}
+
+void MainWindow::initMqtt()
+{ 
+    mqttProcessRun = false;
+    mqttNum = 1;
+    if(QFile::exists("/opt/shzn/MqttClient"))
+    {
+        m_mqttProcess.start("/opt/shzn/MqttClient");
+        connect(&m_mqttProcess, SIGNAL(started()), this, SLOT(on_mqttProcess_started()));
+        connect(&m_mqttProcess, SIGNAL(finished(int,QProcess::ExitStatus)),
+                this, SLOT(on_mqttProcess_finished(int, QProcess::ExitStatus)));
+        qDebug() << "start MqttClient";
+    }
+    else
+    {
+        qDebug() << "can not find MqttClient";
+    }
+}
+
+void MainWindow::on_mqttWatcher_fileChanged(const QString &fileName)
+{
+    QFile file(fileName);
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "Controller: " <<"Open subscribe file failed";
+        return;
+    }
+
+    QByteArray array = file.readAll();
+    if(0 == array.size())
+    {
+        return;
+    }
+    qDebug() << QString("Controller Mqtt %1: ").arg(mqttNum) << array;
+    mqttNum++;
+
+}
+
+void MainWindow::on_mqttProcess_started()
+{
+    qDebug() << "The MQTT process started successfully";
+    //å¯åŠ¨è®¢é˜…æ–‡ä»¶æ£€æµ‹
+    if(isDirExist("/opt/mqttTempFile") && !mqttProcessRun)
+    {
+        QStringList fileList;
+        fileList << "/opt/mqttTempFile/subscribeFile.txt";
+        m_pFileWatcher = new QFileSystemWatcher(fileList, this);
+        connect(m_pFileWatcher, SIGNAL(fileChanged (const QString &)),
+                this, SLOT(on_mqttWatcher_fileChanged(const QString &)));
+
+        mqttProcessRun = true;
+    }
+}
+
+void MainWindow::on_mqttProcess_finished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    qDebug() << QString("mqtt process finished code: %1, exitStatus: %2").arg(exitCode)
+                .arg(exitStatus);
+
+    m_mqttProcess.start("/opt/shzn/MqttClient");
+}
+
+//å‘å‘å¸ƒæ–‡ä»¶ä¸­å†™å…¥éœ€è¦å‘å¸ƒçš„æ–°å†…å®¹
+void MainWindow::publishMqttMessage(const QByteArray &msg)
+{
+    if(!mqttProcessRun)
+    {
+        return;
+    }
+    if(isDirExist("/opt/mqttTempFile"))
+    {
+        QFile file("/opt/mqttTempFile/publishFile.txt");
+        if(!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
+        {
+            qDebug() << "Controller: " << "Open publish file failed";
+            return;
+        }
+
+        QTextStream out(&file);
+        out << msg;
+        file.close();
+    }
 }
 
 void MainWindow::on_updateText(const QByteArray& array)
 {
-    qDebug() << array;
     if (NULL != m_pSubPages[PAGE_SET])
     {
         SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
@@ -7605,6 +7735,10 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
 #ifdef D_HTTPWORK
                     m_networkData.runStatus = 0;
 #endif
+                    //2019.6.3
+                    ex_gGlobalParam.lastRunState = 0;
+                    MainSaveLastRunState(gGlobalParam.iMachineType);
+
                     if (typeid(*m_pCurPage) == typeid(MainPage))
                     {
                          pMainPage->updateRunInfo(false);                         
@@ -7617,6 +7751,10 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
 #ifdef D_HTTPWORK
                     m_networkData.runStatus = 1;
 #endif
+                    //2019.6.3
+                    ex_gGlobalParam.lastRunState = 1;
+                    MainSaveLastRunState(gGlobalParam.iMachineType);
+
                     if (typeid(*m_pCurPage) == typeid(MainPage))
                     {
                         pMainPage->updateRunInfo(true);
@@ -7751,7 +7889,9 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                         /* delay a moment */
                         addRfid2DelayList(pItem->ucId);
                     }
-                    
+                    //Set to idle when abnormal 2019.06.19
+                    m_checkConsumaleInstall[pItem->ucId]->setBusystatus(false);
+
                     m_iRfidActiveMask &= ~(1 << pItem->ucId);
                     
                     m_aRfidInfo[pItem->ucId].ucValid = 0;
@@ -8063,36 +8203,42 @@ void MainWindow :: rmvRfidFromDelayList(int iRfId)
             if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_PPACK_OOP))
             {
                 alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP);
+                checkConsumableInstall(iRfId);
             }
             break;
         case DISP_PRE_PACK:
             if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_PREPACK_OOP))
             {
                 alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP);
+                checkConsumableInstall(iRfId);
             }
             break;
         case DISP_AC_PACK:
             if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_ACPACK_OOP))
             {
                 alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP);
+                checkConsumableInstall(iRfId);
             }
             break;
         case DISP_U_PACK:
             if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_UPACK_OOP))
             {
                 alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP);
+                checkConsumableInstall(iRfId);
             }
             break;
         case DISP_AT_PACK:
             if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_ATPACK_OOP))
             {
                 alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_ATPACK_OOP);
+                checkConsumableInstall(iRfId);
             }
             break;
         case DISP_H_PACK:
             if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_HPACK_OOP))
             {
                 alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_HPACK_OOP);
+                checkConsumableInstall(iRfId);
             }
             break;
             
@@ -9000,7 +9146,12 @@ void MainWindow::on_Ex_Init_Syscfg(int index)
 void MainWindow::on_Ex_Init_Finished()
 {
     m_curExInitPage = NULL;
-    Splash();
+
+#ifdef VWR
+        mainDisplay();
+#else
+        Splash();
+#endif
 }
 
 void MainWindow::on_Ex_Init_Handler(int index)
@@ -9109,6 +9260,112 @@ int MainWindow::getMachineAlarmMask(int iMachineType,int iPart)
 int MainWindow::getMachineNotifyMask(int iMachineType,int iPart) 
 {
     return m_cMas[iMachineType].aulMask[iPart];
+}
+
+//dcj add 2019.6.17
+void MainWindow::checkCMParam()
+{
+    if ((0 == gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEDAY])
+        ||(0 == gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEL]))
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_PRE_PACK);
+    }
+
+    if ((0 == gGlobalParam.CMParam.aulCms[DISP_AC_PACKLIFEDAY])
+        ||(0 == gGlobalParam.CMParam.aulCms[DISP_AC_PACKLIFEL]))
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_AC_PACK);
+    }
+
+    if ((0 == gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEDAY])
+        ||(0 == gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEL]))
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_T_PACK);
+    }
+
+    if ((0 == gGlobalParam.CMParam.aulCms[DISP_P_PACKLIFEDAY])
+        ||(0 == gGlobalParam.CMParam.aulCms[DISP_P_PACKLIFEL]))
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_P_PACK);
+    }
+
+    if ((0 == gGlobalParam.CMParam.aulCms[DISP_U_PACKLIFEDAY])
+        ||(0 == gGlobalParam.CMParam.aulCms[DISP_U_PACKLIFEL]))
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_U_PACK);
+    }
+
+    if ((0 == gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEDAY])
+        ||(0 == gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEL]))
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_AT_PACK);
+    }
+
+    if ((0 == gGlobalParam.CMParam.aulCms[DISP_H_PACKLIFEDAY])
+        ||(0 == gGlobalParam.CMParam.aulCms[DISP_H_PACKLIFEL]))
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_H_PACK);
+    }
+
+    if ((0 == gGlobalParam.CMParam.aulCms[DISP_N1_UVLIFEDAY])
+        ||(0 == gGlobalParam.CMParam.aulCms[DISP_N1_UVLIFEHOUR]))
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_N1_UV);
+    }
+
+    if ((0 == gGlobalParam.CMParam.aulCms[DISP_N2_UVLIFEDAY])
+        ||(0 == gGlobalParam.CMParam.aulCms[DISP_N2_UVLIFEHOUR]))
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_N2_UV);
+    }
+
+    if ((0 == gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEDAY])
+        ||(0 == gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEHOUR]))
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_N3_UV);
+    }
+
+    if ((0 == gGlobalParam.CMParam.aulCms[DISP_N4_UVLIFEDAY])
+        ||(0 == gGlobalParam.CMParam.aulCms[DISP_N4_UVLIFEHOUR]))
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_N4_UV);
+    }
+
+    if ((0 == gGlobalParam.CMParam.aulCms[DISP_N5_UVLIFEDAY])
+        ||(0 == gGlobalParam.CMParam.aulCms[DISP_N5_UVLIFEHOUR]))
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_N5_UV);
+    }
+
+    if (0 == gGlobalParam.CMParam.aulCms[DISP_W_FILTERLIFE])
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_W_FILTER);
+    }
+
+    if (0 == gGlobalParam.CMParam.aulCms[DISP_T_B_FILTERLIFE])
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 << DISP_T_B_FILTER);
+    }
+
+    if (0 == gGlobalParam.CMParam.aulCms[DISP_T_A_FILTERLIFE])
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 << DISP_T_A_FILTER);
+    }
+
+    if (0 == gGlobalParam.CMParam.aulCms[DISP_TUBE_FILTERLIFE])
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 << DISP_TUBE_FILTER);
+    }
+
+    if (0 == gGlobalParam.CMParam.aulCms[DISP_TUBE_DI_LIFE])
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 << DISP_TUBE_DI);
+    }
+
+    if (0 == gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY])
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 << DISP_ROC12);
+    }
 }
 
 void MainWindow::ClearToc()
@@ -9390,6 +9647,10 @@ void MainWindow::updatePackFlow()
 
 void MainWindow::checkConsumableInstall(int iRfId)
 {
+    if(!m_startCheckConsumale)
+    {
+        return;
+    }
     if(m_checkConsumaleInstall[iRfId]->ischeckBusy())
     {
         return;
@@ -9722,6 +9983,7 @@ void MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int
 
     query.prepare(select_sql_Consumable);
     query.addBindValue(iIndex);
+    query.addBindValue(category);
     ret = query.exec();
     if(query.next())
     {
@@ -9740,6 +10002,7 @@ void MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int
                 queryUpdate.addBindValue(ln);
                 queryUpdate.addBindValue(installDate);
                 queryUpdate.addBindValue(iIndex);
+                queryUpdate.addBindValue(category);
                 bool ret = queryUpdate.exec();
                 qDebug() << QString("consumable update Sql: %1").arg(ret);
             }
@@ -9798,6 +10061,7 @@ const QString &MainWindow::consumableInitDate() const
 {
     return m_consuambleInitDate;
 }
+
 #endif
 
 

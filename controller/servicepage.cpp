@@ -233,7 +233,7 @@ void ServicePage::initUi()
         connect(m_pBtns[index], SIGNAL(clicked(int)), this, SLOT(on_btn_clicked(int)));
         m_pBtns[index]->show();
     }
-    
+
     if(MACHINE_PURIST == gGlobalParam.iMachineType)
     {
         m_pBtns[SERVICE_BTN_STERILIZE]->enable(false);

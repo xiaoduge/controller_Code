@@ -81,7 +81,8 @@ bool Ex_CheckConsumaleInstall::check(int iRfId)
     m_lotNo = ln;
 
     parseType();
-    qDebug() << QString("CheckConsumale instanceID: %1 ,RfID: %2").arg(m_instanceID).arg(m_curRfId);
+    qDebug() << QString("CheckConsumale instanceID: %1 ,RfID: %2, cat: %3, lot: %4")
+                .arg(m_instanceID).arg(m_curRfId).arg(m_catNo).arg(m_lotNo);
     return true;
 }
 
@@ -387,6 +388,7 @@ bool Ex_CheckConsumaleInstall::comparedWithSql()
 
     query.prepare(select_sql_Consumable);
     query.addBindValue(m_iType);
+    query.addBindValue(m_category);
     ret = query.exec();
     qDebug() << QString("%1, consumable compared with Sql: %2").arg(m_instanceID).arg(ret);
     if(query.next())
@@ -435,6 +437,7 @@ void Ex_CheckConsumaleInstall::updateSql()
     query.addBindValue(m_lotNo);
     query.addBindValue(strCurDate);
     query.addBindValue(m_iType);
+    query.addBindValue(m_category);
     bool ret = query.exec();
     qDebug() << QString("%1, consumable update Sql: %1").arg(m_instanceID).arg(ret);
 

@@ -82,7 +82,7 @@ void DHttpWorker::on_heartHttpPost()
     strContent += strHeartMsg;
     strContent += QString("}");
 
-    qDebug() << strContent;
+//    qDebug() << strContent;
 
     QByteArray msgArray = strContent.toLatin1();
 
@@ -125,7 +125,7 @@ void DHttpWorker::on_alarmHttpPost()
 
     strContent += QString("}");
 
-    qDebug() << strContent;
+//    qDebug() << strContent;
 
     QByteArray msgArray = strContent.toLatin1();
 

@@ -156,9 +156,9 @@ QString select_sql_User    = "SELECT id , Name , PassWord , Permission FROM User
 QString update_sql_Water = "update Water SET quality = ?, time = ? where ecoid = ? and time > ? and time < ?";
 
 //consumable
-QString select_sql_Consumable = "select LotNo from Consumable  where iPackType = ?";
+QString select_sql_Consumable = "select LotNo from Consumable  where iPackType = ? and category = ?";
 QString insert_sql_Consumable = "insert into Consumable (id, iPackType, CatNo, LotNo, category, time) values(:id, :iPackType, :CatNo, :LotNo, :category, :time)";
-QString update_sql_Consumable = "update Consumable set CatNo = ?, LotNo = ?, time = ? where iPackType = ?";
+QString update_sql_Consumable = "update Consumable set CatNo = ?, LotNo = ?, time = ? where iPackType = ? and category = ?";
 //end
 
 User *gpActiveU;

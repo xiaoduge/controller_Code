@@ -27,9 +27,11 @@
 #include <QAbstractSocket>
 #include <QThread>
 #include "DNetworkConfig.h"
+#include <QProcess>
 
-#define FLOWCHART
-#define D_HTTPWORK
+#define VWR
+//#define FLOWCHART
+//#define D_HTTPWORK
 
 #define RFIDTEST
 
@@ -206,6 +208,7 @@ class QNetworkReply;
 class DNetworkAccessManager;
 class QSslError;
 class DWifiConfigDialog;
+class QFileSystemWatcher;
 
 typedef struct
 {
@@ -373,6 +376,9 @@ public:
     int getMachineAlarmMask(int iMachineType,int iPart);
     int getMachineNotifyMask(int iMachineType,int iPart);
 
+    //Check if the consumable life is zero
+    void checkCMParam();
+
     void prepareKeyStroke();
 
     int getActiveRfidBrds4Cleaning() ;
@@ -521,10 +527,16 @@ signals:
 
 private:
     void initHttpWorker();
+    void initMqtt();
+    void publishMqttMessage(const QByteArray& msg);
+    bool isDirExist(const QString& fullPath);
 
 private slots:
     void on_updateText(const QByteArray&);
     void on_timerNetworkEvent();
+    void on_mqttWatcher_fileChanged(const QString& fileName);
+    void on_mqttProcess_started();
+    void on_mqttProcess_finished(int exitCode, QProcess::ExitStatus exitStatus);
 
 private:
     QThread m_workerThread;
@@ -534,6 +546,11 @@ private:
 
     NetworkData m_networkData;
     bool m_conAlarmMark[HTTP_NOTIFY_NUM];
+
+    QFileSystemWatcher *m_pFileWatcher;
+    QProcess m_mqttProcess;
+    bool mqttProcessRun;
+    int mqttNum;
     //
 #endif
 
