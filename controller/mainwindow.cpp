@@ -199,7 +199,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190618_debug");
+QString strSoftwareVersion = QString("0.1.8.190619_VWR_RC");
 
 MainWindow *gpMainWnd;
 
@@ -7889,8 +7889,6 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                         /* delay a moment */
                         addRfid2DelayList(pItem->ucId);
                     }
-                    //Set to idle when abnormal 2019.06.19
-                    m_checkConsumaleInstall[pItem->ucId]->setBusystatus(false);
 
                     m_iRfidActiveMask &= ~(1 << pItem->ucId);
                     
@@ -8203,42 +8201,36 @@ void MainWindow :: rmvRfidFromDelayList(int iRfId)
             if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_PPACK_OOP))
             {
                 alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP);
-                checkConsumableInstall(iRfId);
             }
             break;
         case DISP_PRE_PACK:
             if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_PREPACK_OOP))
             {
                 alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP);
-                checkConsumableInstall(iRfId);
             }
             break;
         case DISP_AC_PACK:
             if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_ACPACK_OOP))
             {
                 alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP);
-                checkConsumableInstall(iRfId);
             }
             break;
         case DISP_U_PACK:
             if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_UPACK_OOP))
             {
                 alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP);
-                checkConsumableInstall(iRfId);
             }
             break;
         case DISP_AT_PACK:
             if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_ATPACK_OOP))
             {
                 alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_ATPACK_OOP);
-                checkConsumableInstall(iRfId);
             }
             break;
         case DISP_H_PACK:
             if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_HPACK_OOP))
             {
                 alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_HPACK_OOP);
-                checkConsumableInstall(iRfId);
             }
             break;
             

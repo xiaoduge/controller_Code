@@ -55,6 +55,7 @@ void Ex_CheckConsumaleInstall::initRfid()
 
 bool Ex_CheckConsumaleInstall::check(int iRfId)
 {
+//    QMutexLocker locker(&m_mutex);
     m_isBusy = true;
     int iRet;
     m_curRfId = iRfId;
@@ -69,7 +70,8 @@ bool Ex_CheckConsumaleInstall::check(int iRfId)
         iRet = gpMainWnd->readRfid(m_curRfId);
         if (iRet)
         {
-            return false;
+            qDebug() << "readRfid failed";
+//            return false;
         }
     }
 
@@ -383,6 +385,7 @@ bool Ex_CheckConsumaleInstall::clearVolofUse()
 */
 bool Ex_CheckConsumaleInstall::comparedWithSql()
 {
+//    QMutexLocker locker(&m_mutex);
     QSqlQuery query;
     bool ret;
 
@@ -500,6 +503,7 @@ void Ex_CheckConsumaleInstall::updateConsumableType(int iType)
 
 void Ex_CheckConsumaleInstall::updateConsumaleMsg()
 {
+//    QMutexLocker locker(&m_mutex);
     switch(m_operateID)
     {
     case 1:

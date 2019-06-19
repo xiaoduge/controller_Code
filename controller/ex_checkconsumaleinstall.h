@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QStringList>
 #include "mainwindow.h"
+#include <QMutex>
 
 class Ex_CheckConsumaleInstall : public QObject
 {
@@ -48,7 +49,7 @@ private:
     bool m_isRfidType;
     int m_operateID;
     bool m_isBusy;
-    
+//    QMutex m_mutex;
 };
 
 #endif // EX_CHECKCONSUMALEINSTALL_H
