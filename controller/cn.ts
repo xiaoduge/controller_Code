@@ -1783,7 +1783,7 @@
     <message>
         <location filename="ex_consumableinstalldialog.cpp" line="256"/>
         <source>254 UV Lamp</source>
-        <translation>185 UV</translation>
+        <translation>254 UV</translation>
     </message>
     <message>
         <location filename="ex_consumableinstalldialog.cpp" line="259"/>

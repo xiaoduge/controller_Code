@@ -15,6 +15,8 @@ Ex_CheckConsumaleInstall::Ex_CheckConsumaleInstall(int id, QObject *parent) :
     m_instanceID(id)
 {
     initRfid();
+    initTypeMap();
+    initCategoryMap();
     m_isRfidType = false;
     m_isBusy = false;
 }
@@ -55,7 +57,6 @@ void Ex_CheckConsumaleInstall::initRfid()
 
 bool Ex_CheckConsumaleInstall::check(int iRfId)
 {
-//    QMutexLocker locker(&m_mutex);
     m_isBusy = true;
     int iRet;
     m_curRfId = iRfId;
@@ -65,15 +66,12 @@ bool Ex_CheckConsumaleInstall::check(int iRfId)
     memset(cn,0,sizeof(CATNO));
     memset(ln,0,sizeof(LOTNO));
 
-   // if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)))
+    iRet = gpMainWnd->readRfid(m_curRfId);
+    if (iRet)
     {
-        iRet = gpMainWnd->readRfid(m_curRfId);
-        if (iRet)
-        {
-            qDebug() << "readRfid failed";
-//            return false;
-        }
+        qDebug() << "readRfid failed";
     }
+
 
     gpMainWnd->getRfidCatNo(m_curRfId, cn);
     gpMainWnd->getRfidLotNo(m_curRfId, ln);
@@ -92,266 +90,32 @@ void Ex_CheckConsumaleInstall::parseType()
 {
     m_iType = DISP_CM_NAME_NUM;
 
-    //P Pack
-    if (MainWindow::consumableCatNo(PPACK_CATNO).contains(m_catNo))
+    for(int i = 0; i < CAT_NUM; i++)
     {
-       m_iType = DISP_P_PACK;
-       m_category = 0;
-       if(m_iRfid[PPACK_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-    //AC Pack
-    else if(MainWindow::consumableCatNo(ACPACK_CATNO).contains(m_catNo))
-    {
-        m_iType = DISP_AC_PACK;
-        m_category = 0;
-        if(m_iRfid[ACPACK_CATNO] == m_curRfId)
+        if (MainWindow::consumableCatNo(static_cast<CONSUMABLE_CATNO>(i)).contains(m_catNo))
         {
-            m_isRfidType = true;
-        }
-        else
-        {
-            m_isRfidType = false;
+            m_iType = m_typeMap.value(i);
+            m_category = m_categoryMap.value(i);
+            if(m_iRfid[i] == m_curRfId)
+            {
+                m_isRfidType = true;
+            }
+            else
+            {
+                m_isRfidType = false;
+            }
+            break;
         }
     }
-    //U Pack
-    else if (MainWindow::consumableCatNo(UPACK_CATNO).contains(m_catNo))
-    {
-       m_iType = DISP_U_PACK;
-       m_category = 0;
-       if(m_iRfid[UPACK_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-    //H Pack
-    else if (MainWindow::consumableCatNo(HPACK_CATNO).contains(m_catNo))
-    {
-       m_iType = DISP_H_PACK;
-       m_category = 0;
-       if(m_iRfid[HPACK_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-    //Pre Pack
-    else if (MainWindow::consumableCatNo(PREPACK_CATNO).contains(m_catNo))
-    {
-       m_iType = DISP_PRE_PACK;
-       m_category = 0;
-       if(m_iRfid[PREPACK_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-    //Clean Pack
-    else if (MainWindow::consumableCatNo(CLEANPACK_CATNO).contains(m_catNo)) //
-    {
-       m_iType = DISP_P_PACK | (1 <<16); /* multiplex flag */
-       m_category = 0;
-       if(m_iRfid[CLEANPACK_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-    //AT Pack
-    else if (MainWindow::consumableCatNo(ATPACK_CATNO).contains(m_catNo))
-    {
-       m_iType = DISP_AT_PACK;
-       m_category = 0;
-       if(m_iRfid[ATPACK_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-    //T Pack
-    else if (MainWindow::consumableCatNo(TPACK_CATNO).contains(m_catNo))
-    {
-        m_iType = DISP_T_PACK;
-        m_category = 0;
-        if(m_iRfid[TPACK_CATNO] == m_curRfId)
-        {
-            m_isRfidType = true;
-        }
-        else
-        {
-            m_isRfidType = false;
-        }
-    }
-    //RO Pack
-    else if (MainWindow::consumableCatNo(ROPACK_CATNO).contains(m_catNo))
-    {
-       m_iType = DISP_MACHINERY_RO_MEMBRANE;
-       m_category = 1;
-       if(m_iRfid[ROPACK_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-    //185 UV
-    else if (MainWindow::consumableCatNo(UV185_CATNO).contains(m_catNo))
-    {
-       m_iType = DISP_N2_UV;
-       m_category = 0;
-       if(m_iRfid[UV185_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-    //254 UV
-    else if (MainWindow::consumableCatNo(UV254_CATNO).contains(m_catNo))
-    {
-       m_iType = DISP_N1_UV;
-       m_category = 0;
-       if(m_iRfid[UV254_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-    //Tank UV
-    else if (MainWindow::consumableCatNo(UVTANK_CATNO).contains(m_catNo))
-    {
-       m_iType = DISP_N3_UV;
-       m_category = 0;
-       if(m_iRfid[UVTANK_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-    //RO Pump
-    else if (MainWindow::consumableCatNo(ROPUMP_CATNO).contains(m_catNo))
-    {
-       m_iType = DISP_MACHINERY_RO_BOOSTER_PUMP;
-       m_category = 1;
-       if(m_iRfid[ROPUMP_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-    //UP Pump
-    else if (MainWindow::consumableCatNo(UPPUMP_CATNO).contains(m_catNo))
-    {
-       m_iType = DISP_MACHINERY_CIR_PUMP ;
-       m_category = 1;
-       if(m_iRfid[UPPUMP_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-    //Final Filter
-    else if (MainWindow::consumableCatNo(FINALFILTER_CATNO).contains(m_catNo))
-    {
-       m_iType =  DISP_T_A_FILTER;
-       m_category = 0;
-       if(m_iRfid[FINALFILTER_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-    //EDI
-    else if (MainWindow::consumableCatNo(EDI_CATNO).contains(m_catNo))
-    {
-       m_iType = DISP_MACHINERY_EDI;
-       m_category = 1;
-       if(m_iRfid[EDI_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-    //Tank vent filter
-    else if (MainWindow::consumableCatNo(TANKVENTFILTER_CATNO).contains(m_catNo))
-    {
-       m_iType =  DISP_W_FILTER;
-       m_category = 0;
-       if(m_iRfid[TANKVENTFILTER_CATNO] == m_curRfId)
-       {
-           m_isRfidType = true;
-       }
-       else
-       {
-           m_isRfidType = false;
-       }
-    }
-
 }
 
-bool Ex_CheckConsumaleInstall::isNewPack()
+bool Ex_CheckConsumaleInstall::newPack()
 {
-    switch(m_iType)
+    if(m_installDate.toString("yyyy-MM-dd") == gpMainWnd->consumableInitDate())
     {
-    case DISP_P_PACK:
-    case DISP_U_PACK:
-    case DISP_H_PACK:
-    case DISP_AC_PACK:
-    {
-        if(m_installDate.toString("yyyy-MM-dd") == gpMainWnd->consumableInitDate())
-        {
-            return true;
-        }
-        return false;
-    }
-    default:
         return true;
     }
-
+    return false;
 }
 
 bool Ex_CheckConsumaleInstall::writeInstallDate()
@@ -377,6 +141,48 @@ bool Ex_CheckConsumaleInstall::clearVolofUse()
     return true;
 }
 
+void Ex_CheckConsumaleInstall::initTypeMap()
+{
+    m_typeMap.insert(PPACK_CATNO, DISP_P_PACK);
+    m_typeMap.insert(ACPACK_CATNO, DISP_AC_PACK);
+    m_typeMap.insert(UPACK_CATNO, DISP_U_PACK);
+    m_typeMap.insert(HPACK_CATNO, DISP_H_PACK);
+    m_typeMap.insert(PREPACK_CATNO, DISP_PRE_PACK);
+    m_typeMap.insert(CLEANPACK_CATNO, DISP_P_PACK | (1 <<16));
+    m_typeMap.insert(ATPACK_CATNO, DISP_AT_PACK);
+    m_typeMap.insert(TPACK_CATNO, DISP_T_PACK);
+    m_typeMap.insert(ROPACK_CATNO, DISP_MACHINERY_RO_MEMBRANE);
+    m_typeMap.insert(UV185_CATNO, DISP_N2_UV);
+    m_typeMap.insert(UV254_CATNO, DISP_N1_UV);
+    m_typeMap.insert(UVTANK_CATNO, DISP_N3_UV);
+    m_typeMap.insert(ROPUMP_CATNO, DISP_MACHINERY_RO_BOOSTER_PUMP);
+    m_typeMap.insert(UPPUMP_CATNO, DISP_MACHINERY_CIR_PUMP);
+    m_typeMap.insert(FINALFILTER_CATNO, DISP_T_A_FILTER);
+    m_typeMap.insert(EDI_CATNO, DISP_MACHINERY_EDI);
+    m_typeMap.insert(TANKVENTFILTER_CATNO, DISP_W_FILTER);
+}
+
+void Ex_CheckConsumaleInstall::initCategoryMap()
+{
+    m_categoryMap.insert(PPACK_CATNO, 0);
+    m_categoryMap.insert(ACPACK_CATNO, 0);
+    m_categoryMap.insert(UPACK_CATNO, 0);
+    m_categoryMap.insert(HPACK_CATNO, 0);
+    m_categoryMap.insert(PREPACK_CATNO, 0);
+    m_categoryMap.insert(CLEANPACK_CATNO, 0);
+    m_categoryMap.insert(ATPACK_CATNO, 0);
+    m_categoryMap.insert(TPACK_CATNO, 0);
+    m_categoryMap.insert(ROPACK_CATNO, 1);
+    m_categoryMap.insert(UV185_CATNO, 0);
+    m_categoryMap.insert(UV254_CATNO, 0);
+    m_categoryMap.insert(UVTANK_CATNO, 0);
+    m_categoryMap.insert(ROPUMP_CATNO, 1);
+    m_categoryMap.insert(UPPUMP_CATNO, 1);
+    m_categoryMap.insert(FINALFILTER_CATNO, 0);
+    m_categoryMap.insert(EDI_CATNO, 1);
+    m_categoryMap.insert(TANKVENTFILTER_CATNO, 0);
+}
+
 /*
   return 0 : do nothing
   return 1 : insert new
@@ -385,7 +191,6 @@ bool Ex_CheckConsumaleInstall::clearVolofUse()
 */
 bool Ex_CheckConsumaleInstall::comparedWithSql()
 {
-//    QMutexLocker locker(&m_mutex);
     QSqlQuery query;
     bool ret;
 
@@ -399,7 +204,7 @@ bool Ex_CheckConsumaleInstall::comparedWithSql()
         QString lotno = query.value(0).toString();
         if(m_lotNo == lotno)
         {
-            if(isNewPack())
+            if(newPack())
             {
                 m_operateID = 3;
                 emit consumableMsg(m_iType, m_catNo, m_lotNo);
@@ -503,13 +308,12 @@ void Ex_CheckConsumaleInstall::updateConsumableType(int iType)
 
 void Ex_CheckConsumaleInstall::updateConsumaleMsg()
 {
-//    QMutexLocker locker(&m_mutex);
     switch(m_operateID)
     {
     case 1:
     {
         insertSql();
-        if(isNewPack())
+        if(newPack())
         {
             writeInstallDate();
             clearVolofUse();
@@ -520,7 +324,7 @@ void Ex_CheckConsumaleInstall::updateConsumaleMsg()
     case 2:
     {
         updateSql();
-        if(isNewPack())
+        if(newPack())
         {
             writeInstallDate();
             clearVolofUse();

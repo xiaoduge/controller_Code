@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QStringList>
 #include "mainwindow.h"
-#include <QMutex>
+#include <QMap>
 
 class Ex_CheckConsumaleInstall : public QObject
 {
@@ -32,9 +32,11 @@ public slots:
 private:
     void initRfid();
     void parseType();
-    bool isNewPack();
+    bool newPack();
     bool writeInstallDate();
     bool clearVolofUse();
+    void initTypeMap();
+    void initCategoryMap();
 
 private:
     int m_instanceID;
@@ -49,7 +51,8 @@ private:
     bool m_isRfidType;
     int m_operateID;
     bool m_isBusy;
-//    QMutex m_mutex;
+    QMap<short int, short int> m_typeMap;
+    QMap<short int, short int> m_categoryMap;
 };
 
 #endif // EX_CHECKCONSUMALEINSTALL_H

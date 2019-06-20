@@ -199,7 +199,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190619_VWR_RC");
+QString strSoftwareVersion = QString("0.1.8.190620_release");
 
 MainWindow *gpMainWnd;
 
@@ -7875,12 +7875,11 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
 
                     m_iRfidActiveMask       |= (1 << pItem->ucId);
                     m_iRfidBufferActiveMask |= (1 << pItem->ucId);
-                    rmvRfidFromDelayList(pItem->ucId);
 
                     iRet = readRfid(pItem->ucId);
+                    qDebug() << "readRfid " << pItem->ucId << iRet;
 
-                    qDebug() << "readRfid " << pItem->ucId << iRet; 
-
+                    rmvRfidFromDelayList(pItem->ucId);
                 }
                 else
                 {
@@ -7899,11 +7898,6 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             switch(m_eWorkMode)
             {
             case APP_WORK_MODE_NORMAL:
-                if(DISP_WORK_STATE_IDLE == DispGetWorkState4Pw()
-                   && m_startCheckConsumale)
-                {
-                    checkConsumableInstall(pItem->ucId); //2019.1.21
-                }
                 break;
             case APP_WORK_MODE_CLEAN:
                 switch(pItem->ucId)
@@ -8237,6 +8231,14 @@ void MainWindow :: rmvRfidFromDelayList(int iRfId)
         }
     }
     m_iRfidDelayedMask &= ~(1 << iRfId);
+
+
+    if((DISP_WORK_STATE_IDLE == DispGetWorkState4Pw())
+       && (APP_WORK_MODE_NORMAL == m_eWorkMode)
+       && m_startCheckConsumale)
+    {
+         checkConsumableInstall(iRfId); //2019.06.20
+    }
 }
 
 void MainWindow::on_AutoLogin(void)
