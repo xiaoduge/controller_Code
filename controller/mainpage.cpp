@@ -989,6 +989,7 @@ void MainPage::on_btn_clicked(int index)
         m_wndMain->startCir(CIR_TYPE_HP);
         break;
     case BTN_NAVI_UP_TW:
+    {
         if(DISP_WORK_STATE_IDLE == DispGetWorkState4Pw())
         {
             DB_HANDLER_STRU * hdl;
@@ -1008,8 +1009,12 @@ void MainPage::on_btn_clicked(int index)
             }   
             m_wndMain->startQtw(APP_DEV_HS_SUB_HYPER,m_abQtwFlag[APP_DEV_HS_SUB_HYPER]);
         }
+        QString strCurTime2 = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+        qDebug() << QString("dcjhost UP TW btn clicked: %1").arg(strCurTime2);
+    }
         break;
     case BTN_NAVI_EDI_TW:
+    {
         if(DISP_WORK_STATE_IDLE == DispGetWorkState4Pw())
         {
             DB_HANDLER_STRU * hdl;
@@ -1029,6 +1034,9 @@ void MainPage::on_btn_clicked(int index)
             }   
             m_wndMain->startQtw(APP_DEV_HS_SUB_REGULAR,m_abQtwFlag[APP_DEV_HS_SUB_REGULAR]);
         }
+        QString strCurTime1 = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+        qDebug() << QString("dcjhost EDI TW btn clicked: %1").arg(strCurTime1);
+    }
         break;
     case BTN_ALARM_NOTIFY:
         {
