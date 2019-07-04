@@ -95,6 +95,7 @@
 #include "dwificonfigdialog.h"
 #include "dwificonfigwidget.h"
 #include "ex_hintdialog.h"
+#include "ex_waterqualitypage.h"
 
 //#include "ex_screensleepthread.h"
 /***********************************************
@@ -199,7 +200,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190624_debug");
+QString strSoftwareVersion = QString("0.1.8.190704_debug");
 
 MainWindow *gpMainWnd;
 
@@ -1087,212 +1088,41 @@ void MainRetriveCalParam(int iMachineType,DISP_CAL_SETTING_STRU  &Param)
     }
 }
 
-void MainRetriveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
+//2019.6.25 add dcj
+void MainRetriveCalibrateParam(int iMachineType)
 {
     /* retrive parameter from configuration */
-    int iLoop;
-
     QString strCfgName = gaMachineType[iMachineType].strName;
 
-    strCfgName += ".ini";
+    strCfgName += "_CaliParam.ini";
 
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
 
-    for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
+    QStringList keysList = config->allKeys();
+
+    if(keysList.isEmpty())
     {
-        QString strV = "/PCCOFF/";
-        float fValue ;
-
-        strV += QString::number(iLoop);
-
-        QString strV1 = "/K" + strV;
-        fValue = config->value(strV1,1).toFloat(); // max 200mm
-        Param.pc[iLoop].fk = fValue;
-
-        QString strV2 = "/C" + strV;
-        fValue = config->value(strV2,1).toFloat(); // max 200mm
-        Param.pc[iLoop].fc = fValue;
-
-        QString strV3 = "/V" + strV;
-        fValue = config->value(strV3,1).toFloat(); // max 200mm
-        Param.pc[iLoop].fv = fValue;
-    }
-
-    //
-    switch(iMachineType)
-    {
-    case MACHINE_L_Genie:
-    {
-        for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
+        for(int iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
         {
-            ex_global_Cali.pc[iLoop].fk = Param.pc[iLoop].fk;
+            ex_global_Cali.pc[iLoop].fk = 1.0;
+            ex_global_Cali.pc[iLoop].fc = 1.0;
         }
-        break;
+
     }
-    case MACHINE_L_UP:
+    else
     {
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[3].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk = Param.pc[4].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_TEMP].fk = Param.pc[5].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[6].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[7].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[8].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_S2 ].fk = Param.pc[9].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S2].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_S3].fk = Param.pc[10].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S3].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_S4].fk = Param.pc[11].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S4].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[12].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk = Param.pc[13].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[14].fk;
-        break;
+        QList<QVariant> defaultList;
+        defaultList << QVariant(1.0) << QVariant(1.0) << QVariant(1.0);
+
+        for(int i = 0; i < keysList.size(); i++)
+        {
+            QList<QVariant> list = config->value(keysList[i], defaultList).toList();
+            int key = keysList[i].toInt();
+            ex_global_Cali.pc[key].fk = list[0].toFloat();
+            ex_global_Cali.pc[key].fc = list[1].toFloat();
+        }
     }
-    case MACHINE_L_EDI_LOOP:
-    {
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[3].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk = Param.pc[4].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk = Param.pc[5].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[6].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[7].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[8].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_S2 ].fk = Param.pc[9].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S2 ].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_S3].fk = Param.pc[10].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S3].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_S4].fk = Param.pc[11].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S4].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[12].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk = Param.pc[13].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[14].fk;
-        break;
-    }
-    case MACHINE_L_RO_LOOP:
-    {
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[3].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[4].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S2 ].fk = Param.pc[5].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S3].fk = Param.pc[6].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S4].fk = Param.pc[7].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_S2 ].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_S3].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_S4].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[8].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk = Param.pc[9].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[10].fk;
-        break;
-    }
-    case MACHINE_Genie:
-    {
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[3].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk = Param.pc[4].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk = Param.pc[5].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk = Param.pc[6].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_TEMP].fk = Param.pc[7].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[8].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[9].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[10].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[11].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[12].fk;
-        break;
-    }
-    case MACHINE_UP:
-    {
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[3].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk = Param.pc[4].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk = Param.pc[5].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk = Param.pc[6].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_TEMP].fk = Param.pc[7].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[8].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[9].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[10].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[11].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[12].fk;
-        break;
-    }
-    case MACHINE_EDI:
-    {
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[3].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk = Param.pc[4].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk = Param.pc[5].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[6].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[7].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[8].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[9].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[10].fk;
-        break;
-    }
-    case MACHINE_RO:
-    {
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[3].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk = Param.pc[4].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk = Param.pc[5].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[6].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[7].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[8].fk;
-        break;
-    }
-    case MACHINE_PURIST:
-    {
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[0].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[1].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk = Param.pc[2].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_TEMP].fk = Param.pc[3].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[4].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[5].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[6].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk = Param.pc[7].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[8].fk;
-        break;
-    }
-    case MACHINE_ADAPT:
-    {
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk = Param.pc[0].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk = Param.pc[1].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk = Param.pc[2].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk = Param.pc[3].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk = Param.pc[4].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_TEMP].fk = Param.pc[5].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk = Param.pc[6].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk = Param.pc[7].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fk = Param.pc[8].fk;
-        ex_global_Cali.pc[DISP_PC_COFF_S1].fc = 0;
-        ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk = Param.pc[9].fk;
-        break;
-    }
-    default:
-        break;
-    }
-    
+
     if (config)
     {
         delete config;
@@ -2240,51 +2070,24 @@ void MainSaveCalParam(int iMachineType,DISP_CAL_SETTING_STRU  &Param)
     sync();
 }
 
-void MainSaveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
+//2019.6.25 add
+void MainSaveCalibrateParam(int iMachineType, QMap<int, DISP_PARAM_CALI_ITEM_STRU> &map)
 {
-    /* retrive parameter from configuration */
-    int iLoop;
-
-    DISP_PARAM_CALI_STRU  tmpParam;
-
     QString strCfgName = gaMachineType[iMachineType].strName;
-
-    strCfgName += ".ini";
-
-    MainRetriveCalibrateParam(iMachineType,tmpParam);    
-
+    strCfgName += "_CaliParam.ini";
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
 
-    for(iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++) //DISP_PM_NUM
+    QMap<int, DISP_PARAM_CALI_ITEM_STRU>::const_iterator iter = map.constBegin();
+    for(; iter != map.constEnd(); ++iter)
     {
-        QString strV = "/PCCOFF/";
-        QString strTmp;
+        QString strKey = QString("%1").arg(iter.key());
+        QList<QVariant> list;
+        list << QVariant(iter.value().fk)
+             << QVariant(iter.value().fc)
+             << QVariant(iter.value().fv);
+        config->setValue(strKey, list);
+    }
 
-        strV  += QString::number(iLoop);
-
-        if (Param.pc[iLoop].fk != tmpParam.pc[iLoop].fk)
-        {
-            strTmp = QString::number(Param.pc[iLoop].fk,'f', 3);
-            QString strV1 = "/K" + strV;
-            config->setValue(strV1,strTmp);
-        }
-        
-        if (Param.pc[iLoop].fc != tmpParam.pc[iLoop].fc)
-        {
-            strTmp = QString::number(Param.pc[iLoop].fc,'f', 3);
-            QString strV2 = "/C" + strV;
-            config->setValue(strV2,strTmp);
-        }
-        
-        if (Param.pc[iLoop].fv != tmpParam.pc[iLoop].fv)
-        {
-            strTmp = QString::number(Param.pc[iLoop].fv,'f', 3);
-            QString strV3 = "/V" + strV;
-            config->setValue(strV3,strTmp);
-        }
-    }    
-
-    //2019.1.3
     DISP_FM_SETTING_STRU fmParam;
 
     float default_L_Machine = 450.0;
@@ -2293,68 +2096,33 @@ void MainSaveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param)
     switch(iMachineType)
     {
     case MACHINE_L_Genie:
-        for(int i = 0;i < DISP_PC_COFF_NUM ; i++)
-        {
-            fmParam.aulCfg[DISP_FM_FM1] = default_L_Machine / Param.pc[DISP_PC_COFF_S1].fk;
-            fmParam.aulCfg[DISP_FM_FM2]= default_L_Machine / Param.pc[DISP_PC_COFF_S2].fk;
-            fmParam.aulCfg[DISP_FM_FM3] = default_L_Machine / Param.pc[DISP_PC_COFF_S3].fk;
-            fmParam.aulCfg[DISP_FM_FM4] = default_L_Machine / Param.pc[DISP_PC_COFF_S4].fk;
-        }
-        break;
     case MACHINE_L_UP:
-    {
-        fmParam.aulCfg[DISP_FM_FM1] = default_L_Machine / Param.pc[8].fk;
-        fmParam.aulCfg[DISP_FM_FM2] = default_L_Machine / Param.pc[9].fk;
-        fmParam.aulCfg[DISP_FM_FM3] = default_L_Machine / Param.pc[10].fk;
-        fmParam.aulCfg[DISP_FM_FM4] = default_L_Machine / Param.pc[11].fk;
-        break;
-    }
     case MACHINE_L_EDI_LOOP:
-    {
-        fmParam.aulCfg[DISP_FM_FM1] = default_L_Machine / Param.pc[8].fk;
-        fmParam.aulCfg[DISP_FM_FM2] = default_L_Machine / Param.pc[9].fk;
-        fmParam.aulCfg[DISP_FM_FM3] = default_L_Machine / Param.pc[10].fk;
-        fmParam.aulCfg[DISP_FM_FM4] = default_L_Machine / Param.pc[11].fk;
-        break;
-    }
     case MACHINE_L_RO_LOOP:
-    {
-        fmParam.aulCfg[DISP_FM_FM1] = default_L_Machine / Param.pc[4].fk;
-        fmParam.aulCfg[DISP_FM_FM2] = default_L_Machine / Param.pc[5].fk;
-        fmParam.aulCfg[DISP_FM_FM3] = default_L_Machine / Param.pc[6].fk;
-        fmParam.aulCfg[DISP_FM_FM4] = default_L_Machine / Param.pc[7].fk;
+        fmParam.aulCfg[DISP_FM_FM1] = default_L_Machine / map.value(DISP_PC_COFF_S1).fk;
+        fmParam.aulCfg[DISP_FM_FM2]= default_L_Machine / map.value(DISP_PC_COFF_S1).fk;
+        fmParam.aulCfg[DISP_FM_FM3] = default_L_Machine / map.value(DISP_PC_COFF_S1).fk;
+        fmParam.aulCfg[DISP_FM_FM4] = default_L_Machine / map.value(DISP_PC_COFF_S1).fk;
         break;
-    }
     case MACHINE_Genie:
-        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / Param.pc[10].fk;
-        break;
     case MACHINE_UP:
-        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / Param.pc[10].fk;
-        break;
     case MACHINE_EDI:
-        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / Param.pc[8].fk;
-        break;
     case MACHINE_RO:
-        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / Param.pc[6].fk;
-        break;
     case MACHINE_PURIST:
-        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / Param.pc[6].fk;
-        break;
     case MACHINE_ADAPT:
-        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / Param.pc[8].fk;
+        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / map.value(DISP_PC_COFF_S1).fk;
         break;
     default:
         break;
     }
     MainSaveFMParam(iMachineType, fmParam);
 
-    //end
     if (config)
     {
         delete config;
         config = NULL;
     }
-    
+
     sync();
 }
 
@@ -2791,7 +2559,7 @@ void MainRetriveGlobalParam(void)
     MainRetriveCleanParam(gGlobalParam.iMachineType,gGlobalParam.CleanParam);
 //    MainRetriveCMSn(gGlobalParam.iMachineType,gGlobalParam.cmSn);
 //    MainRetriveMacSn(gGlobalParam.iMachineType,gGlobalParam.macSn);
-    MainRetriveCalibrateParam(gGlobalParam.iMachineType,gGlobalParam.Caliparam);
+    MainRetriveCalibrateParam(gGlobalParam.iMachineType);
 
 #ifdef SYSTEM_TEST
     //gGlobalParam.MMParam.SP[MACHINE_PARAM_SP1] = -100000;
@@ -4795,8 +4563,8 @@ void MainWindow::updEcoInfo(int index)
     {
         MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
 
-        WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
-
+//        WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+        Ex_WaterQualityPage *subpage = (Ex_WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
         subpage->updEcoInfo(index,&m_EcoInfo[index]);
     }
 
@@ -4840,8 +4608,8 @@ void MainWindow::updTank()
     {
         MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
 
-        WaterQualityPage *subpage =(WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
-        
+      //  WaterQualityPage *subpage =(WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+         Ex_WaterQualityPage *subpage =(Ex_WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
         subpage->updTank(level,liter);
     }   
     //ex
@@ -4871,7 +4639,7 @@ void MainWindow::updTank()
     }
 }
 
-void MainWindow::updSoureTank()
+void MainWindow::updSourceTank()
 {
     /* calc */
     float liter = (m_fPressure[APP_EXE_PM3_NO]/100)*gGlobalParam.PmParam.afCap[APP_EXE_PM3_NO];
@@ -4883,7 +4651,15 @@ void MainWindow::updSoureTank()
 
         Ex_FactoryTestPage *subpage =(Ex_FactoryTestPage *)page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
 
-        subpage->updSoureTank(level,liter);
+        subpage->updSourceTank(level,liter);
+    }
+
+    if (NULL != m_pSubPages[PAGE_MENU])
+    {
+        MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
+        Ex_WaterQualityPage *subpage = (Ex_WaterQualityPage*)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+
+        subpage->updSourceTank(level,liter);
     }
 }
 
@@ -4909,8 +4685,8 @@ void MainWindow::updPressure(int iIdx)
         {
             MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
         
-            WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
-
+           // WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+            Ex_WaterQualityPage *subpage = (Ex_WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
             subpage->updPressure(iIdx, m_fPressure[iIdx]);
 
         }
@@ -4936,7 +4712,7 @@ void MainWindow::updPressure(int iIdx)
         break;
 
     case APP_EXE_PM3_NO:
-        updSoureTank();
+        updSourceTank();
         break;
     }
 
@@ -4948,7 +4724,8 @@ void MainWindow::updFlowInfo(int iIdx)
     {
         MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
     
-        WaterQualityPage *subpage =(WaterQualityPage *) page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+       // WaterQualityPage *subpage =(WaterQualityPage *) page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+        Ex_WaterQualityPage *subpage =(Ex_WaterQualityPage *) page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
     
         {
             int iTmDelta = m_periodEvents - m_iLstFlowMeterTick[iIdx];
@@ -7252,8 +7029,8 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             {
                 MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
             
-                WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
-                
+               // WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+                Ex_WaterQualityPage *subpage = (Ex_WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
                 subpage->updSwPressure(m_fPressure[APP_EXE_PM1_NO]);
             }
             
@@ -8123,8 +7900,8 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             {
                 MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
 
-                WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
-
+                //WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+                Ex_WaterQualityPage *subpage = (Ex_WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
                 subpage->updTOC(fToc);
             }
             //end

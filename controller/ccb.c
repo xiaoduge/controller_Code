@@ -4794,7 +4794,8 @@ void CanCcbPmMeasurePostProcess(int iPmId)
                 if (gCcb.bit1FillingTank)
                 {
                     float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
-                    if (is_B3_FULL(fValue))
+                    //if (is_B3_FULL(fValue))
+                    if(fValue >= B3_FULL)
                     {
                         if (!SearchWork(work_stop_fill_water))
                         {
@@ -4926,7 +4927,8 @@ void CanCcbPmMeasurePostProcess(int iPmId)
                 if (gCcb.bit1FillingTank)
                 {
                     float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
-                    if (is_B3_FULL(fValue))
+                    //if (is_B3_FULL(fValue))
+                    if(fValue >= B3_FULL)
                     {
                         if (!SearchWork(work_stop_fill_water))
                         {

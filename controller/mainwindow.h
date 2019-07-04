@@ -479,7 +479,7 @@ private:
     void updEcoInfo(int iIdx);
 
     void updTank();
-    void updSoureTank();
+    void updSourceTank();
     
     void updQtwState(int iType,bool bStart);
 

@@ -8,6 +8,8 @@
 #include <QLabel>
 #include <QCheckBox>
 
+class DLineEdit;
+
 class LoginDlg : public QDialog {
     Q_OBJECT
 public:
@@ -31,8 +33,10 @@ private:
     QPushButton *m_pBtnLogin;
     QPushButton *m_pBtnCanCel;
 
-    QLineEdit   *m_pEditUserName;
-    QLineEdit   *m_pEditPassWord;
+//    QLineEdit   *m_pEditUserName;
+//    QLineEdit   *m_pEditPassWord;
+    DLineEdit* m_pEditUserName;
+    DLineEdit* m_pEditPassWord;
 
     QLabel      *m_pLUserNameL;
     QLabel      *m_pLPassWordL;

@@ -542,7 +542,6 @@ void Ex_SuperPowerPage::on_btnDelCfg_clicked()
     {
         qDebug() <<" not existe";
         QMessageBox::warning(m_widget, tr("DeleteCfg"), tr("Cfg File not existe"), QMessageBox::Ok);
-        return;
     }
     else
     {
@@ -554,6 +553,29 @@ void Ex_SuperPowerPage::on_btnDelCfg_clicked()
         {
             qDebug() << "Delete failed";
             QMessageBox::warning(m_widget, tr("DeleteCfg"), tr("Cfg File delete failed"), QMessageBox::Ok);
+        }
+    }
+
+    strCfgName = gaMachineType[gGlobalParam.iMachineType].strName;
+    strCfgName += "_CaliParam.ini";
+
+    QFile cailFile(strCfgName);
+    if(!cailFile.exists())
+    {
+        qDebug() <<" not existe";
+        QMessageBox::warning(m_widget, tr("Delete Calibrate"), tr("Calibrate File not existe"), QMessageBox::Ok);
+        return;
+    }
+    else
+    {
+        if(cailFile.remove())
+        {
+            qDebug() << "Delete success";
+        }
+        else
+        {
+            qDebug() << "Delete failed";
+            QMessageBox::warning(m_widget, tr("Delete Calibrate"), tr("Calibrate File delete failed"), QMessageBox::Ok);
         }
     }
 }

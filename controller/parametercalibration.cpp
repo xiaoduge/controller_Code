@@ -3,6 +3,7 @@
 #include "titlebar.h"
 
 #include "mainwindow.h"
+#include "Ex_Display_c.h"
 
 #include <QPainter>
 
@@ -600,7 +601,26 @@ void ParameterCalibrationPage::initUi()
     m_pBtnSave->show();
 }
 
+void ParameterCalibrationPage::update()
+{
+    int iIdx = 0;
 
+    for (iIdx = 0; iIdx < m_iRealItems; iIdx++) //DISP_PC_COFF_NUM  m_iRealItems
+    {
+        if(gGlobalParam.Caliparam.pc[iIdx].fk > 100)
+        {
+            m_aParameterlistItem[iIdx]->setP1(QString::number(ex_global_Cali.pc[aParameters[iIdx].id].fk));
+        }
+        else
+        {
+            m_aParameterlistItem[iIdx]->setP1(QString::number(ex_global_Cali.pc[aParameters[iIdx].id].fk,'f',3));
+        }
+        m_aParameterlistItem[iIdx]->setP2(QString::number(ex_global_Cali.pc[aParameters[iIdx].id].fc));
+    }
+}
+
+
+#if 0
 void ParameterCalibrationPage::update()
 {
     int iIdx = 0;
@@ -621,7 +641,7 @@ void ParameterCalibrationPage::update()
     }
     
 }
-
+#endif
 void ParameterCalibrationPage::ItemClicked(QListWidgetItem * item)
 {
 
@@ -633,19 +653,24 @@ void ParameterCalibrationPage::save()
 
     float fTemp;
 
-    DISP_PARAM_CALI_STRU  pcParam = gGlobalParam.Caliparam;  
-
+    QMap<int, DISP_PARAM_CALI_ITEM_STRU> cMap;
     for (iIdx = 0; iIdx < m_iRealItems; iIdx++)
     {
+        int key = aParameters[iIdx].id;
+        DISP_PARAM_CALI_ITEM_STRU values;
+
         fTemp = m_aParameterlistItem[iIdx]->getP1().toFloat();
-        pcParam.pc[iIdx].fk = fTemp;
+        values.fk = fTemp;
         fTemp = m_aParameterlistItem[iIdx]->getP2().toFloat();
-        pcParam.pc[iIdx].fc = fTemp;
+        values.fc = fTemp;
         fTemp = m_aParameterlistItem[iIdx]->getP3().toFloat();
-        pcParam.pc[iIdx].fv = fTemp;
+        values.fv = fTemp;
+
+        cMap.insert(key, values);
+
     }
-    
-    MainSaveCalibrateParam(gGlobalParam.iMachineType,pcParam);
+    MainSaveCalibrateParam(gGlobalParam.iMachineType, cMap);
+
     MainUpdateGlobalParam();
 
     m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_PARAMETER_CALIBRATE);

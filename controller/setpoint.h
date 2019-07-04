@@ -11,7 +11,6 @@
 #include "basewidget.h"
 #include "subpage.h"
 #include "cbitmapbutton.h"
-#include <QLineEdit>
 #include <QLabel>
 #include <QTextEdit>
 #include <QHBoxLayout>

@@ -463,8 +463,8 @@ void SetPoint::buildTranslation()
         case MACHINE_PARAM_SP9:
             /* 源水箱液位     水箱空 10%  恢复注水 80% */
             pSetPlistItem[iLoop]->setName(tr("Feed Tank Level"));
-            pSetPlistItem[iLoop]->setP2Name(tr("Empty"));
-            pSetPlistItem[iLoop]->setP1Name(tr("Refill"));
+            pSetPlistItem[iLoop]->setP1Name(tr("Empty"));
+            pSetPlistItem[iLoop]->setP2Name(tr("Refill"));
             pSetPlistItem[iLoop]->setP1Unit(tr("%"));
             pSetPlistItem[iLoop]->setP2Unit(tr("%"));
             break;

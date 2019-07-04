@@ -73,7 +73,7 @@ public:
     void updateFlow(int iIndex, int value);
     void updatePressure(int iIndex,float fvalue);
     void updTank(int iLevel,float fVolume);
-    void updSoureTank(int iLevel,float fVolume);
+    void updSourceTank(int iLevel,float fVolume);
 
     //RFID
     void updateRFIDInfo(int iRfId);

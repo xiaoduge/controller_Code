@@ -12,6 +12,7 @@
 #include "sysmsgpage.h"
 #include "ex_sysmsgpage.h"
 #include "ex_usermanualpage.h"
+#include "ex_waterqualitypage.h"
 
 #include <QPainter>
 
@@ -197,8 +198,8 @@ void MenuPage::Create_subPage()
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new WaterQualityPage(this , tmpWidget , m_wndMain);
-            
+            //m_pSubPages[index] = new WaterQualityPage(this , tmpWidget , m_wndMain);
+            m_pSubPages[index] = new Ex_WaterQualityPage(this , tmpWidget , m_wndMain);
             break;
         case MENU_BTN_CONSUMPATION_MATERAIL_SATUS:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());

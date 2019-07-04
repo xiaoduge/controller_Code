@@ -2,6 +2,7 @@
 #define MYPARAMS_H
 
 #include "Display.h"
+#include <QMap>
 
 #ifdef __cplusplus
  extern "C"
@@ -24,7 +25,7 @@
 typedef enum
 {
     MACHINE_MODEL_DESK = 0,
-    MACHINE_MODEL_MID  = 1,
+    MACHINE_MODEL_MID  = 1
 }MACHINE_MODEL_ENUM;
 
 
@@ -38,7 +39,7 @@ typedef enum
    ROP = 0,
    PHP ,
    DelP ,
-   AddUserP ,
+   AddUserP
 }NOT_USER_PER_ENUM;
 
 #define AdminP (1 << ROP | 1 << PHP | 1 << DelP | 1 << AddUserP)
@@ -46,7 +47,7 @@ typedef enum
 typedef enum
 {
    MACHINE_FUNCTION_UP  = 0x1,
-   MACHINE_FUNCTION_EDI = 0x2,
+   MACHINE_FUNCTION_EDI = 0x2
 }MACHINE_FUNCTION_ENUM;
 
 #define MACHINE_FUNCTION_ALL (MACHINE_FUNCTION_UP|MACHINE_FUNCTION_EDI)
@@ -98,6 +99,7 @@ void MainSaveProductMsg(int iMachineType);
 void MainSaveInstallMsg(int iMachineType);
 void MainSaveExConfigParam(int iMachineType);
 void MainSaveExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int category);
+void MainSaveCalibrateParam(int iMachineType, QMap<int, DISP_PARAM_CALI_ITEM_STRU> &map);
 //end
 
 void MainSavePMParam(int iMachineType,DISP_PM_SETTING_STRU  &Param);
@@ -115,7 +117,6 @@ void MainSavePMParam(int iMachineType,DISP_PM_SETTING_STRU  &Param);
 void MainRetrivePmParam(int iMachineType,DISP_PM_SETTING_STRU  &Param);
 void MainRetriveCalParam(int iMachineType,DISP_CAL_SETTING_STRU  &Param);
 void MainSaveCalParam(int iMachineType,DISP_CAL_SETTING_STRU  &Param);
-void MainSaveCalibrateParam(int iMachineType,DISP_PARAM_CALI_STRU  &Param);
 void MainSaveCleanParam(int iMachineType,DISP_CLEAN_SETTING_STRU  &Param);
 #ifdef __cplusplus
 }

@@ -529,7 +529,7 @@ void Ex_FactoryTestPage::updTank(int iLevel, float fVolume)
     m_pPreDisplayLE[P2_DISPLAY]->setText(QString("%1").arg(iLevel));
 }
 
-void Ex_FactoryTestPage::updSoureTank(int iLevel, float fVolume)
+void Ex_FactoryTestPage::updSourceTank(int iLevel, float fVolume)
 {
     Q_UNUSED(fVolume);
     m_pPreDisplayLE[P3_DISPLAY]->setText(QString("%1").arg(iLevel));

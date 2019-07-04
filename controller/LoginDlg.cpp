@@ -21,6 +21,8 @@
 #include "user.h"
 #include "MyParams.h"
 
+#include "dlineedit.h"
+
 extern QString select_sql_User;
 LoginDlg::LoginDlg(QWidget *parent,bool bPassword) :
     QDialog(parent)
@@ -35,8 +37,11 @@ LoginDlg::LoginDlg(QWidget *parent,bool bPassword) :
     m_pBtnCanCel = new QPushButton;
     m_pBtnCanCel->setText(tr("CanCel"));
 
-    m_pEditUserName = new QLineEdit;
-    m_pEditPassWord = new QLineEdit;
+//    m_pEditUserName = new QLineEdit;
+//    m_pEditPassWord = new QLineEdit;
+
+    m_pEditUserName = new DLineEdit;
+    m_pEditPassWord = new DLineEdit;
 
     m_pLUserNameL = new QLabel;
     m_pLUserNameL->setObjectName(QString::fromUtf8("User Name"));

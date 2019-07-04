@@ -98,7 +98,7 @@ void SyszuxPinyin::initGb()
     ctl_geo_ec_vector.push_back(pCtrlInfo);
 
     // for digi keyboard
-    {
+    {
         int voffset,hoffset;
         int hmargin = 5,vmargin = 5,id;
 

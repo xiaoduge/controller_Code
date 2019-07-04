@@ -134,7 +134,10 @@ SOURCES += main.cpp\
     dnetworkaccessmanager.cpp \
     dhttpworker.cpp \
     dwificonfigwidget.cpp \
-    dwificonfigdialog.cpp
+    dwificonfigdialog.cpp \
+    ex_waterqualitypage.cpp \
+    dwaterqualitywidget.cpp \
+    dlineedit.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -241,7 +244,10 @@ HEADERS  += mainwindow.h \
     dnetworkaccessmanager.h \
     dhttpworker.h \
     dwificonfigwidget.h \
-    dwificonfigdialog.h
+    dwificonfigdialog.h \
+    ex_waterqualitypage.h \
+    dwaterqualitywidget.h \
+    dlineedit.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

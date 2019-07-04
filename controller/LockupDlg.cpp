@@ -8,7 +8,6 @@
 #include <QVBoxLayout>
 #include <QMouseEvent>
 #include <QPushButton>
-#include <QLineEdit>
 
 #include <QSqlError>
 #include <QSqlDriver>
