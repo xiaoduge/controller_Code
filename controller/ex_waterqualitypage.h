@@ -55,7 +55,7 @@ public:
         UNIT_G_MIN,
         UNIT_BAR,
         UNIT_MPA,
-        UNIT__PSI,
+        UNIT_PSI,
         UNIT_PPB,
         UNIT_PERCENTAGE,//percentage
         UNIT_VOLUME,    //volume
@@ -93,7 +93,7 @@ private:
     void initAllValue();
     void initTagsArray();
     void initConfigList();
-    void updateValue(const DTags& t, const QString& value1, const QString& value2 = "/");
+    void updateValue(const DTags& t, const QString& value1, const QString& value2 = "--");
 
     void updHistoryEcoInfo();
     void updHistoryPressure();

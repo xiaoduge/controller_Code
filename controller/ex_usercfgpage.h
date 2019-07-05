@@ -7,10 +7,10 @@
 #include "ctrlapplication.h"
 
 class QPushButton;
-class QLineEdit;
 class QLabel;
 class QTableView;
 class QSqlTableModel;
+class DLineEdit;
 
 class Ex_UserCfgPage : public CSubPage
 {
@@ -49,7 +49,7 @@ private:
     QPushButton* m_pAddBtn;
     QPushButton* m_pDeleteRowBtn;
 
-    QLineEdit* m_pNameLineEdit;
+    DLineEdit* m_pNameLineEdit;
     QLabel* m_pPageHeaderLB;
     QLabel* m_pNameLB;
 

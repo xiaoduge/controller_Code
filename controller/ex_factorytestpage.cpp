@@ -11,6 +11,7 @@
 #include <QDir>
 #include <QTextBrowser>
 #include <QProcess>
+#include "dlineedit.h"
 
 
 Ex_FactoryTestPage::Ex_FactoryTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain)
@@ -106,89 +107,6 @@ void Ex_FactoryTestPage::switchLanguage()
     selectTitle(titleIndex());
 }
 
-
-void Ex_FactoryTestPage::createControl()
-{
-    int i;
-    QWidget* tmpWidget = new QWidget(m_widget);
-    tmpWidget->setGeometry(0, 55, 800, 545);
-    QString qss = ".QWidget{ background-color:rgb(250, 250, 250);}";
-    tmpWidget->setStyleSheet(qss);
-
-    for(i = 0; i < FTESTPAGE_NUM; i++)
-    {
-        m_pFrame[i] = new QFrame(tmpWidget);
-        m_pBtn[i] = new QPushButton;
-        m_pBtn[i]->setFixedWidth(80);
-        m_pAreaLab[i] = new QLabel;
-    }
-
-    for(i = 0; i < FLOW_DISPLAY_NUM; i++)
-    {
-        m_pFlowDisplayLE[i] = new QLineEdit;
-        m_pFlowDisplayLE[i]->setReadOnly(true);
-        m_pFlowDisplayLab[i] = new QLabel;
-    }
-
-    for(i = 0; i <  PRESSURE_DISPLAY_NUM; i++)
-    {
-        m_pPreDisplayLE[i] = new QLineEdit;
-        m_pPreDisplayLE[i]->setReadOnly(true);
-        m_pPreDisplayLab[i] = new QLabel;
-    }
-    m_pFrame[FTESTPAGE_FLOW]->setGeometry(10, 60, 770, 120);
-    m_pFrame[FTESTPAGE_ILOOP]->setGeometry(10, 220, 770, 120);
-   //    m_pFrame[FTESTPAGE_KEY]->setGeometry(0, 340, 800, 120);
-
-    qss = ".QFrame{ background-color: white;\
-                     border: 2px solid; \
-                     border-color: rgb(135,206,250);\
-                     border-radius: 4px; \
-                     padding: 2px;\
-                   }";
-
-    m_pFrame[FTESTPAGE_FLOW]->setStyleSheet(qss);
-    m_pFrame[FTESTPAGE_ILOOP]->setStyleSheet(qss);
-
-    QGridLayout* gLayout_Flow = new QGridLayout;
-    gLayout_Flow->addWidget(m_pAreaLab[FTESTPAGE_FLOW], 0, 0, 1, 1);
-    gLayout_Flow->addWidget(m_pFlowDisplayLab[S1_DISPLAY], 0, 1, 1, 1);
-    gLayout_Flow->addWidget(m_pFlowDisplayLab[S2_DISPLAY], 0, 2, 1, 1);
-    gLayout_Flow->addWidget(m_pFlowDisplayLab[S3_DISPLAY], 0, 3, 1, 1);
-    gLayout_Flow->addWidget(m_pFlowDisplayLab[S4_DISPLAY], 0, 4, 1, 1);
-
-    gLayout_Flow->addWidget(m_pBtn[FTESTPAGE_FLOW], 1, 0, 1, 1);
-    gLayout_Flow->addWidget(m_pFlowDisplayLE[S1_DISPLAY], 1, 1, 1, 1);
-    gLayout_Flow->addWidget(m_pFlowDisplayLE[S2_DISPLAY], 1, 2, 1, 1);
-    gLayout_Flow->addWidget(m_pFlowDisplayLE[S3_DISPLAY], 1, 3, 1, 1);
-    gLayout_Flow->addWidget(m_pFlowDisplayLE[S4_DISPLAY], 1, 4, 1, 1);
-
-    gLayout_Flow->setHorizontalSpacing(50);
-    gLayout_Flow->setVerticalSpacing(30);
-    m_pFrame[FTESTPAGE_FLOW]->setLayout(gLayout_Flow);
-
-    QGridLayout* gLayout_ILoop = new QGridLayout;
-    gLayout_ILoop->addWidget(m_pAreaLab[FTESTPAGE_ILOOP], 0, 0, 1, 1);
-    gLayout_ILoop->addWidget(m_pPreDisplayLab[P1_DISPLAY], 0, 1, 1, 1);
-    gLayout_ILoop->addWidget(m_pPreDisplayLab[P2_DISPLAY], 0, 2, 1, 1);
-    gLayout_ILoop->addWidget(m_pPreDisplayLab[P3_DISPLAY], 0, 3, 1, 1);
-
-
-    gLayout_ILoop->addWidget(m_pBtn[FTESTPAGE_ILOOP], 1, 0, 1, 1);
-    gLayout_ILoop->addWidget(m_pPreDisplayLE[P1_DISPLAY], 1, 1, 1, 1);
-    gLayout_ILoop->addWidget(m_pPreDisplayLE[P2_DISPLAY], 1, 2, 1, 1);
-    gLayout_ILoop->addWidget(m_pPreDisplayLE[P3_DISPLAY], 1, 3, 1, 1);
-
-    gLayout_ILoop->setHorizontalSpacing(60);
-    gLayout_ILoop->setVerticalSpacing(30);
-    m_pFrame[FTESTPAGE_ILOOP]->setLayout(gLayout_ILoop);
-
-    connect(m_pBtn[FTESTPAGE_FLOW], SIGNAL(clicked()), this, SLOT(on_flowBtn_clicked()));
-    connect(m_pBtn[FTESTPAGE_ILOOP], SIGNAL(clicked()), this, SLOT(on_iLoopBtn_clicked()));
-    //    connect(m_pBtn[FTESTPAGE_KEY], SIGNAL(clicked()), this, SLOT(on_keyBtn_clicked()));
-
-}
-
 void Ex_FactoryTestPage::initFlowTestPage()
 {
     int i;
@@ -207,14 +125,14 @@ void Ex_FactoryTestPage::initFlowTestPage()
 
     for(i = 0; i < FLOW_DISPLAY_NUM; i++)
     {
-        m_pFlowDisplayLE[i] = new QLineEdit;
+        m_pFlowDisplayLE[i] = new DLineEdit;
         m_pFlowDisplayLE[i]->setReadOnly(true);
         m_pFlowDisplayLab[i] = new QLabel;
     }
 
     for(i = 0; i <  PRESSURE_DISPLAY_NUM; i++)
     {
-        m_pPreDisplayLE[i] = new QLineEdit;
+        m_pPreDisplayLE[i] = new DLineEdit;
         m_pPreDisplayLE[i]->setReadOnly(true);
         m_pPreDisplayLab[i] = new QLabel;
     }
@@ -298,7 +216,7 @@ void Ex_FactoryTestPage::initRFIDTestPage()
     for(int i = 0; i < CONFIG_NUM; i++)
     {
         m_pConfigLabel[i] = new QLabel;
-        m_pConfigLineEdit[i] = new QLineEdit;
+        m_pConfigLineEdit[i] = new DLineEdit;
 //        m_pConfigLineEdit[i]->setMaximumWidth(180);
         fLayout->addRow(m_pConfigLabel[i], m_pConfigLineEdit[i]);
     }

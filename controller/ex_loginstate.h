@@ -13,18 +13,17 @@ public:
     ~Ex_LoginState();
 
 public:
-    void setStartTime(QDateTime& startTime);
-    void setEndTime(QDateTime& endTime);
-    int getInterval();
-    bool getLoginState(int minute);
+    void setLoginState(bool login);
+    bool loginState();
+
+    void checkAutoLogout();
     
 signals:
     
 public slots:
 
 private:
-    QDateTime m_startTime;
-    QDateTime m_endTime;
+
     bool m_loginState;
 };
 

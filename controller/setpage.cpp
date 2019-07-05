@@ -323,9 +323,10 @@ void SetPage::on_btn_clicked(int index)
         case SET_BTN_SYSTEM_SUPER: //
         case SET_BTN_SYSTEM_FACTORYTEST:
         {
-            QDateTime endTime = QDateTime::currentDateTime();
-            global_LoginState.setEndTime(endTime);
-            if(!global_LoginState.getLoginState(gGlobalParam.MiscParam.iAutoLogoutTime))
+            Ex_UserInfo userInfo;
+            QString userlog = m_wndMain->getLoginfo();
+            bool iEngineer = userInfo.checkEngineerInfo(userlog);
+            if(!user_LoginState.loginState() || (!iEngineer))
             {
                 m_pBtns[SET_BTN_SYSTEM_SUPER]->hide(); //
                 m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
@@ -342,8 +343,7 @@ void SetPage::on_btn_clicked(int index)
                     {
                         m_wndMain->saveLoginfo(dlg.m_strUserName);
                         m_pSubPages[index]->show(true);
-                        QDateTime startTime = QDateTime::currentDateTime();
-                        global_LoginState.setStartTime(startTime);
+                        user_LoginState.setLoginState(true);
                         m_pBtns[SET_BTN_SYSTEM_SUPER]->show(); //
                         m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->show();
                         break;
@@ -352,8 +352,7 @@ void SetPage::on_btn_clicked(int index)
                     {
                         m_wndMain->saveLoginfo(dlg.m_strUserName);
                         m_pSubPages[index]->show(true);
-                        QDateTime startTime = QDateTime::currentDateTime();
-                        global_LoginState.setStartTime(startTime);
+                        user_LoginState.setLoginState(true);
                         break;
                     }
                     case 2:

@@ -7,6 +7,7 @@
 #include <QRect>
 #include <QProcess>
 #include "ex_hintdialog.h"
+#include "dlineedit.h"
 
 
 
@@ -175,7 +176,7 @@ void NetworkPage::initUi()
     m_pSSIDLab = new QLabel(m_pWifiSSIDAddWidget);
     m_pSSIDLab->setGeometry(QRect(5, 10 , 50 , 30));
 
-    m_pSSIDEdit = new QLineEdit(m_pWifiSSIDAddWidget);
+    m_pSSIDEdit = new DLineEdit(m_pWifiSSIDAddWidget);
     m_pSSIDEdit->setGeometry(QRect(60, 10 , 190 , 30));
 
     m_pAddSSIDBtn = new QPushButton(m_pWifiSSIDAddWidget);

@@ -17,6 +17,7 @@ bool Ex_EventFilter::eventFilter(QObject *watched, QEvent *event)
     {
         QMutexLocker locker(&ex_gMutex);
         g_screenSleep = 0;
+        g_AutoLogoutTimer = 0;
 
         if(g_isScreenSleep)
         {

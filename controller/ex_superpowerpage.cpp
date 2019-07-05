@@ -8,6 +8,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QMessageBox>
+#include "dlineedit.h"
 
 #define ControlNum 6
 
@@ -167,25 +168,25 @@ void Ex_SuperPowerPage::createControl()
     QHBoxLayout* hLayout = new QHBoxLayout;
 
     m_pExLabel[SYSCFGPAGE_LB_CATALOGNO] = new QLabel;
-    m_ExLineEdit[SYSCFGPAGE_LB_CATALOGNO] = new QLineEdit;
+    m_ExLineEdit[SYSCFGPAGE_LB_CATALOGNO] = new DLineEdit;
     m_pExLabel[SYSCFGPAGE_LB_CATALOGNO]->setBuddy(m_ExLineEdit[SYSCFGPAGE_LB_CATALOGNO]);
 
     m_pExLabel[SYSCFGPAGE_LB_SERIALNO] = new QLabel;
-    m_ExLineEdit[SYSCFGPAGE_LB_SERIALNO] = new QLineEdit;
+    m_ExLineEdit[SYSCFGPAGE_LB_SERIALNO] = new DLineEdit;
     m_pExLabel[SYSCFGPAGE_LB_SERIALNO]->setBuddy(m_ExLineEdit[SYSCFGPAGE_LB_SERIALNO]);
 
     m_pExLabel[SYSCFGPAGE_LB_PRODATE] = new QLabel;
-    m_ExLineEdit[SYSCFGPAGE_LB_PRODATE] = new QLineEdit;
+    m_ExLineEdit[SYSCFGPAGE_LB_PRODATE] = new DLineEdit;
     m_ExLineEdit[SYSCFGPAGE_LB_PRODATE]->setInputMask("0000-00-00");
     m_pExLabel[SYSCFGPAGE_LB_PRODATE]->setBuddy(m_ExLineEdit[SYSCFGPAGE_LB_PRODATE]);
 
     m_pExLabel[SYSCFGPAGE_LB_INSTALLDATE] = new QLabel;
-    m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE] = new QLineEdit;
+    m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE] = new DLineEdit;
     m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE]->setInputMask("0000-00-00");
     m_pExLabel[SYSCFGPAGE_LB_INSTALLDATE]->setBuddy(m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE]);
 
     m_pExLabel[SYSCFGPAGE_LB_SOFTVER] = new QLabel;
-    m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER] = new QLineEdit;
+    m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER] = new DLineEdit;
     m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]->setReadOnly(true);
     m_pExLabel[SYSCFGPAGE_LB_SOFTVER]->setBuddy(m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]);
 

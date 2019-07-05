@@ -17,6 +17,8 @@ void DWaterQualityWidget::setConfigList(const QList<DTags> &list)
 
 void DWaterQualityWidget::updateValue(const DTags& t, const QString& value1, const QString& value2)
 {
+    QMutexLocker locker(&m_mutex);
+
     DTags tag = t;
 
     int iType = tag.type();
@@ -64,6 +66,8 @@ void DWaterQualityWidget::initUI()
 
 void DWaterQualityWidget::initLabel(const QList<DTags>& configList)
 {
+    QMutexLocker locker(&m_mutex);
+
     if(configList.isEmpty())
     {
         return;
@@ -126,20 +130,9 @@ void DWaterQualityWidget::updateValueOne(const QPoint &point, const QString &val
     int row = point.x();
     int col = point.y() + 1;
 
-    QTableWidgetItem* item = m_pTableWidget->item(row, col);
-
-    if(item)
-    {
-        item->setText(value);
-        qDebug() << "have item";
-    }
-    else
-    {
-        item = new QTableWidgetItem(value);
-        item->setTextAlignment(Qt::AlignCenter);
-        m_pTableWidget->setItem(row, col, item);
-        qDebug() << "new item";
-    }
+    QTableWidgetItem* item = new QTableWidgetItem(value);
+    item->setTextAlignment(Qt::AlignCenter);
+    m_pTableWidget->setItem(row, col, item);
 
 }
 

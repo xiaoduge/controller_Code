@@ -1,9 +1,9 @@
 #include "ex_loginstate.h"
+#include "ExtraDisplay.h"
 #include <QDateTime>
 
 Ex_LoginState::Ex_LoginState(QObject *parent) :
     QObject(parent),
-    m_startTime(QDateTime::fromString("1.30.1", "M.d.s")),
     m_loginState(false)
 {
 
@@ -14,35 +14,20 @@ Ex_LoginState::~Ex_LoginState()
 
 }
 
-void Ex_LoginState::setStartTime(QDateTime &startTime)
+void Ex_LoginState::setLoginState(bool login)
 {
-    m_startTime = startTime;
+    m_loginState = login;
 }
 
-void Ex_LoginState::setEndTime(QDateTime &endTime)
+bool Ex_LoginState::loginState()
 {
-    m_endTime = endTime;
-}
-
-int Ex_LoginState::getInterval()
-{
-    return m_startTime.secsTo(m_endTime);
-}
-
-bool Ex_LoginState::getLoginState(int minute)
-{
-    if(m_startTime == QDateTime::fromString("1.30.1", "M.d.s"))
-    {
-        m_loginState = false;
-        return m_loginState;
-    }
-    if(((minute*60) > getInterval()))
-    {
-        m_loginState = true;
-    }
-    else
-    {
-        m_loginState = false;
-    }
     return m_loginState;
+}
+
+void Ex_LoginState::checkAutoLogout()
+{
+    if(g_AutoLogoutTimer >= (gGlobalParam.MiscParam.iAutoLogoutTime * 60))
+    {
+        setLoginState(false);
+    }
 }

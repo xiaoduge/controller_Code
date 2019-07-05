@@ -2218,16 +2218,25 @@ void  MainPage::updMainpageState(void)
         {
             if(NOT_RUNING_STATE_FLUSH == DispGetRunningStateFlag())
             {
-                m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_STATE]]->setText(tr("Flush"));
+                QString strFlushTime = QString(" %1s").arg(m_wndMain->runningFlushTime());
+                m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_STATE]]->setText(tr("Flush") + strFlushTime);
             }
         }
         break;
     case DISP_WORK_STATE_RUN:
+
         if (MACHINE_FUNCTION_EDI == (MACHINE_FUNCTION_EDI & gaMachineType[gGlobalParam.iMachineType].iFunctions))
         {
             if(NOT_RUNING_STATE_CLEAN == DispGetRunningStateFlag())
             {
                 m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_STATE]]->setText(tr("Rinsing"));
+            }
+
+            //2019.7.5 add
+            if(NOT_RUNING_STATE_FLUSH == DispGetRunningStateFlag())
+            {
+                QString strFlushTime = QString(" %1s").arg(m_wndMain->runningFlushTime());
+                m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_STATE]]->setText(tr("Flush") + strFlushTime);
             }
         }
          

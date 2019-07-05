@@ -408,7 +408,7 @@ void SystemCfgPage::createControl()
 
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 10);
     rectTmp.setWidth(X_ITEM_WIDTH);
-    m_lePWTankUVValue = new QLineEdit(tmpWidget);
+    m_lePWTankUVValue = new DLineEdit(tmpWidget);
     m_lePWTankUVValue->setGeometry(rectTmp);
     m_lePWTankUVValue->setValidator(new QIntValidator(0, 100, this));
     m_lePWTankUVValue->hide();
@@ -454,7 +454,7 @@ void SystemCfgPage::createControl()
     
         rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 25);
         rectTmp.setWidth(X_ITEM_WIDTH);
-        m_lePOweronFlushValue = new QLineEdit(tmpWidget);
+        m_lePOweronFlushValue = new DLineEdit(tmpWidget);
         m_lePOweronFlushValue->setGeometry(rectTmp);
         m_lePOweronFlushValue->setValidator(new QIntValidator(0, 100, this));
         m_lePOweronFlushValue->hide();
@@ -473,7 +473,7 @@ void SystemCfgPage::createControl()
     
         rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 25);
         rectTmp.setWidth(X_ITEM_WIDTH);
-        m_lePOweronFlushValue = new QLineEdit(tmpWidget);
+        m_lePOweronFlushValue = new DLineEdit(tmpWidget);
         m_lePOweronFlushValue->setGeometry(rectTmp);
         m_lePOweronFlushValue->setValidator(new QIntValidator(0, 100, this));
             
@@ -492,7 +492,7 @@ void SystemCfgPage::createControl()
         
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 20);
     rectTmp.setWidth(X_ITEM_WIDTH);
-    m_leLoginLingerValue = new QLineEdit(tmpWidget);
+    m_leLoginLingerValue = new DLineEdit(tmpWidget);
     m_leLoginLingerValue->setGeometry(rectTmp);
     m_leLoginLingerValue->setValidator(new QIntValidator(0, 100, this));
 
@@ -537,7 +537,7 @@ void SystemCfgPage::createControl()
     
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
     rectTmp.setWidth(X_VALUE_WIDTH);
-    m_lePWTankHeight = new QLineEdit(tmpWidget);
+    m_lePWTankHeight = new DLineEdit(tmpWidget);
     m_lePWTankHeight->setGeometry(rectTmp);
     m_lePWTankHeight->setValidator(new QRegExpValidator(double_rx,this));
     m_lePWTankHeight->hide();
@@ -551,7 +551,7 @@ void SystemCfgPage::createControl()
     
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
     rectTmp.setWidth(X_VALUE_WIDTH);
-    m_lePWTankCap = new QLineEdit(tmpWidget);
+    m_lePWTankCap = new DLineEdit(tmpWidget);
     m_lePWTankCap->setGeometry(rectTmp);
     m_lePWTankCap->setValidator(new QIntValidator(0, 9999, this));
     m_lePWTankCap->hide();
@@ -603,7 +603,7 @@ void SystemCfgPage::createControl()
     
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
     rectTmp.setWidth(X_ITEM_WIDTH);
-    m_leSWTankHeight = new QLineEdit(tmpWidget);
+    m_leSWTankHeight = new DLineEdit(tmpWidget);
     m_leSWTankHeight->setGeometry(rectTmp);
     m_leSWTankHeight->setValidator(new QRegExpValidator(double_rx,this));
     m_leSWTankHeight->hide();
@@ -617,7 +617,7 @@ void SystemCfgPage::createControl()
     
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
     rectTmp.setWidth(X_VALUE_WIDTH);
-    m_leSWTankCap = new QLineEdit(tmpWidget);
+    m_leSWTankCap = new DLineEdit(tmpWidget);
     m_leSWTankCap->setGeometry(rectTmp);
     m_leSWTankCap->setValidator(new QIntValidator(0, 9999, this));
     m_leSWTankCap->hide();

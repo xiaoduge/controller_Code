@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "ConsumableinsPage.h"
 
+
 #define LEFT_MARGIN       10
 #define TOP_MARGIN        5
 #define BOTTOM_MARGIN     5
@@ -28,7 +29,7 @@ CosumableInsListWidgtItem::CosumableInsListWidgtItem(QWidget *parent,ConsumableI
     m_lbCatName->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
     xOffset += SHORT_ITEM_WIDTH;
     
-    m_editP1Value = new QLineEdit(this);
+    m_editP1Value = new DLineEdit(this);
     m_editP1Value->setGeometry(QRect(xOffset, TOP_MARGIN  ,VALUE_ITEM_WIDTH , CI_LIST_WIDGET_HEIGHT - (TOP_MARGIN + BOTTOM_MARGIN)));
     m_editP1Value->setAlignment(Qt::AlignCenter);
     m_editP1Value->setStyleSheet("QLineEdit{border-width:2;border-style:outset;}");
@@ -40,7 +41,7 @@ CosumableInsListWidgtItem::CosumableInsListWidgtItem(QWidget *parent,ConsumableI
     m_lbLotName->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
     xOffset += SHORT_ITEM_WIDTH;
     
-    m_editP2Value = new QLineEdit(this);
+    m_editP2Value = new DLineEdit(this);
     m_editP2Value->setGeometry(QRect(xOffset, TOP_MARGIN  ,VALUE_ITEM_WIDTH , CI_LIST_WIDGET_HEIGHT - (TOP_MARGIN + BOTTOM_MARGIN)));
     m_editP2Value->setAlignment(Qt::AlignCenter);
     m_editP2Value->setStyleSheet("QLineEdit{border-width:2;border-style:outset;}");

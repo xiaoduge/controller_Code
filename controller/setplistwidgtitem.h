@@ -2,10 +2,8 @@
 #define SETPLISTWIDGTITEM_H
 
 #include <QWidget>
-
-
 #include <QLabel>
-#include <QLineEdit>
+#include "dlineedit.h"
 
 enum SET_POINT_ENUM
 {
@@ -41,11 +39,11 @@ private:
 
     QLabel     *m_lbName;
     QLabel     *m_lbP1Name;
-    QLineEdit  *m_editP1Value;
+    DLineEdit  *m_editP1Value;
     QLabel     *m_lbP1Unit;
     
     QLabel     *m_lbP2Name;
-    QLineEdit  *m_editP2Value;
+    DLineEdit  *m_editP2Value;
     QLabel     *m_lbP2Unit;
     
     int        m_iItems;

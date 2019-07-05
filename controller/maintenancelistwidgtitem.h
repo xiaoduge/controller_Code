@@ -4,7 +4,7 @@
 #include <QWidget>
 
 #include <QLabel>
-#include <QLineEdit>
+#include "dlineedit.h"
 
 #define MTN_LIST_WIDGET_HEIGHT (60)
 
@@ -36,9 +36,9 @@ private:
 
     QLabel     *m_lbName;
     QLabel     *m_lbP1Name;
-    QLineEdit  *m_editP1Value;
+    DLineEdit  *m_editP1Value;
     QLabel     *m_lbP2Name;
-    QLineEdit  *m_editP2Value;
+    DLineEdit  *m_editP2Value;
     int        m_iItems;
 
     

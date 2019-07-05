@@ -1,5 +1,4 @@
 #include "ex_usercfgpage.h"
-#include <QLineEdit>
 #include <QLabel>
 #include <QPushButton>
 #include <QTableView>
@@ -10,7 +9,7 @@
 #include <QSqlError>
 #include <QHeaderView>
 #include <QMessageBox>
-
+#include "dlineedit.h"
 #include "ex_comboboxdelegate.h"
 #include "mainwindow.h"
 
@@ -97,7 +96,7 @@ void Ex_UserCfgPage::createControl()
     m_pTableView->setEditTriggers(QAbstractItemView::SelectedClicked);
 
     m_pNameLB = new QLabel;
-    m_pNameLineEdit = new QLineEdit;
+    m_pNameLineEdit = new DLineEdit;
     m_pQueryBtn = new QPushButton;
     m_pDisplayAllBtn = new QPushButton;
 

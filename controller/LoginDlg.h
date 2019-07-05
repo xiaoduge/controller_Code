@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include <QPushButton>
-#include <QLineEdit>
 #include <QGridLayout>
 #include <QLabel>
 #include <QCheckBox>
@@ -33,8 +32,6 @@ private:
     QPushButton *m_pBtnLogin;
     QPushButton *m_pBtnCanCel;
 
-//    QLineEdit   *m_pEditUserName;
-//    QLineEdit   *m_pEditPassWord;
     DLineEdit* m_pEditUserName;
     DLineEdit* m_pEditPassWord;
 

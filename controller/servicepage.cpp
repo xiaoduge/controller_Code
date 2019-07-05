@@ -310,9 +310,7 @@ void ServicePage::on_btn_clicked(int index)
         case SERVICE_BTN_STERILIZE:
         case SERVICE_BTN_MANAGERCONFIG:
         {
-            QDateTime endTime = QDateTime::currentDateTime();
-            user_LoginState.setEndTime(endTime);
-            if(!user_LoginState.getLoginState(gGlobalParam.MiscParam.iAutoLogoutTime))
+            if(!user_LoginState.loginState())
             {
                 LoginDlg dlg;
                 dlg.exec() ;
@@ -329,8 +327,7 @@ void ServicePage::on_btn_clicked(int index)
                     {
                         m_wndMain->saveLoginfo(dlg.m_strUserName);
                         m_pSubPages[index]->show(true);
-                        QDateTime startTime = QDateTime::currentDateTime();
-                        user_LoginState.setStartTime(startTime);
+                        user_LoginState.setLoginState(true);
                         break;
                     }
                     case 0:
@@ -357,12 +354,10 @@ void ServicePage::on_btn_clicked(int index)
         case SET_BTN_PERMISSION:
         case SET_BTN_USER_CFG:
         {
-            QDateTime endTime = QDateTime::currentDateTime();
-            user_LoginState.setEndTime(endTime);
             Ex_UserInfo userInfo;
             QString userlog = m_wndMain->getLoginfo();
             bool isManager = userInfo.checkManagerInfo(userlog);
-            if((!user_LoginState.getLoginState(gGlobalParam.MiscParam.iAutoLogoutTime))
+            if((!user_LoginState.loginState())
                || (!isManager))
             {
                 LoginDlg dlg;
@@ -379,8 +374,7 @@ void ServicePage::on_btn_clicked(int index)
                     {
                         m_wndMain->saveLoginfo(dlg.m_strUserName);
                         m_pSubPages[index]->show(true);
-                        QDateTime startTime = QDateTime::currentDateTime();
-                        user_LoginState.setStartTime(startTime);
+                        user_LoginState.setLoginState(true);
                         break;
                     }
                     case 1:

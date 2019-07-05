@@ -10,7 +10,6 @@
 #include "basewidget.h"
 #include "subpage.h"
 #include "cbitmapbutton.h"
-#include <QLineEdit>
 #include <QLabel>
 #include <QTextEdit>
 #include <QCheckBox>
@@ -18,6 +17,7 @@
 
 #include "Display.h"
 #include "ctrlapplication.h"
+#include "dlineedit.h"
 
 
 class MainWindow;
@@ -60,29 +60,29 @@ private:
 private:
     QLabel    *m_lbPWTankName;
     QComboBox *m_cmbPWTankVolume;
-    QLineEdit *m_lePWTankHeight;
+    DLineEdit *m_lePWTankHeight;
     QLabel    *m_lbPWHUnit;
-    QLineEdit *m_lePWTankCap;
+    DLineEdit *m_lePWTankCap;
     QLabel    *m_lbPWCUnit;
 
     QLabel    *m_lbSWTankName;
     QComboBox *m_cmbSWTankVolume;
-    QLineEdit *m_leSWTankHeight;
+    DLineEdit *m_leSWTankHeight;
     QLabel    *m_lbSWHUnit;
-    QLineEdit *m_leSWTankCap;
+    DLineEdit *m_leSWTankCap;
     QLabel    *m_lbSWCUnit;
 
     QCheckBox *m_chkPWTankUV;
     QLabel    *m_lbPWTankUVName;
-    QLineEdit *m_lePWTankUVValue;
+    DLineEdit *m_lePWTankUVValue;
     QLabel    *m_lbPWTankUVUnit;
     
     QLabel    *m_lbPOweronFlushName;
-    QLineEdit *m_lePOweronFlushValue;
+    DLineEdit *m_lePOweronFlushValue;
     QLabel    *m_lbPOweronFlushUnit;
 
     QLabel    *m_lbLoginLingerName;
-    QLineEdit *m_leLoginLingerValue;
+    DLineEdit *m_leLoginLingerValue;
     QLabel    *m_lbLoginLingerUnit;
 
 //    QLabel    *m_lbDeviceTypeName;

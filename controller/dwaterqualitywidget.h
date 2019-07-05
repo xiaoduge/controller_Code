@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QMap>
+#include <QMutex>
 
 class QTableWidget;
 
@@ -48,7 +49,7 @@ public:
     explicit DWaterQualityWidget(QWidget *parent = 0);
 
     void setConfigList(const QList<DTags>& list);
-    void updateValue(const DTags& t, const QString& value1, const QString& value2 = "/");
+    void updateValue(const DTags& t, const QString& value1, const QString& value2 = "--");
 
 private:
     void initUI();
@@ -61,6 +62,8 @@ private:
     QTableWidget* m_pTableWidget;
 
     QMap<QString, QPoint> m_coorMap;
+
+    QMutex m_mutex;
 };
 
 #endif // DWATERQUALITYWIDGET_H

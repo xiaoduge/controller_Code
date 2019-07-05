@@ -9,7 +9,6 @@
 #include "basewidget.h"
 #include "subpage.h"
 #include "cbitmapbutton.h"
-#include <QLineEdit>
 #include <QComboBox>
 #include <QLabel>
 
@@ -19,6 +18,7 @@
 
 class MainWindow;
 class QPushButton;
+class DLineEdit;
 
 class Ex_SuperPowerPage : public CSubPage
 {
@@ -27,7 +27,7 @@ public:
     enum SYSCFGPAGE_BTN_ENUM
     {
         SYSCFGPAGE_BTN_SAVE = 0,
-        SYSCFGPAGE_BTN_NUM,
+        SYSCFGPAGE_BTN_NUM
     };
 
     enum SYSCFGPAGE_LABEL_ENUM
@@ -80,7 +80,7 @@ private:
     CBitmapButton* m_pBtnSave;
 
     QLabel* m_pExLabel[SYSCFGPAGE_LB_NUM];
-    QLineEdit* m_ExLineEdit[SYSCFGPAGE_LB_NUM];
+    DLineEdit* m_ExLineEdit[SYSCFGPAGE_LB_NUM];
 
 
     QLabel* m_pLbDbDel;

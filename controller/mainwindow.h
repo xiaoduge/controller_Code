@@ -394,6 +394,9 @@ public:
 
     void checkConsumableInstall(int iRfId);
 
+    void checkUserLoginStatus();
+    void updateRunningFlushTime();
+    int runningFlushTime();
     /* for all kinds of state related measurements */
     float        m_fSourceWaterPressure;
     float        m_fSourceWaterConductivity;
@@ -830,11 +833,14 @@ private:
     int m_flushMachineFlow;
     int m_productMachineFlow;
 
+    int m_runningFlushTime;
 //    Ex_CalcPackFlow m_calcPFlow;
 
 private:
     void initScreenSleep();
     void autoCirPreHour();
+    //Determine the I number of HP history data need to save
+    int idForHPGetWHistory();
 
 private slots:
     void on_ScreenSleep(bool sleep);

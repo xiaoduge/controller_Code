@@ -9,7 +9,7 @@
 class MainWindow;
 class QPushButton;
 class QLabel;
-class QLineEdit;
+class DLineEdit;
 class QFrame;
 class QComboBox;
 class QTextBrowser;
@@ -84,7 +84,6 @@ public:
 private:
     void buildTitles();
     void setBackColor();
-    void createControl();
 
     void initFlowTestPage();
     void initRFIDTestPage();
@@ -115,15 +114,15 @@ private:
     QPushButton* m_pBtn[FTESTPAGE_NUM];
     QLabel* m_pAreaLab[FTESTPAGE_NUM];
 
-    QLineEdit* m_pFlowDisplayLE[FLOW_DISPLAY_NUM];
+    DLineEdit* m_pFlowDisplayLE[FLOW_DISPLAY_NUM];
     QLabel* m_pFlowDisplayLab[FLOW_DISPLAY_NUM];
 
-    QLineEdit* m_pPreDisplayLE[PRESSURE_DISPLAY_NUM];
+    DLineEdit* m_pPreDisplayLE[PRESSURE_DISPLAY_NUM];
     QLabel* m_pPreDisplayLab[PRESSURE_DISPLAY_NUM];
 
     //
     QLabel* m_pConfigLabel[CONFIG_NUM];
-    QLineEdit* m_pConfigLineEdit[CONFIG_NUM];
+    DLineEdit* m_pConfigLineEdit[CONFIG_NUM];
 
     QLabel* m_pIndexLabel;
     QComboBox* m_pIndexCombo;

@@ -4,7 +4,7 @@
 #include <QWidget>
 
 #include <QLabel>
-#include <QLineEdit>
+#include "dlineedit.h"
 
 enum PARAMETER_CALIBRATION_ENUM
 {
@@ -47,9 +47,11 @@ public slots:
 private:
     
     QLabel     *m_lbName;
-    QLineEdit  *m_editP1Value;
-    QLineEdit  *m_editP2Value;
-    QLineEdit  *m_editP3Value;
+
+    DLineEdit  *m_editP1Value;
+    DLineEdit  *m_editP2Value;
+    DLineEdit  *m_editP3Value;
+
     QLabel     *m_lbP1Name;
     QLabel     *m_lbP2Name;
     QLabel     *m_lbP3Name;

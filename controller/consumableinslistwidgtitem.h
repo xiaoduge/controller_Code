@@ -2,10 +2,9 @@
 #define CONSUMABLE_INS_LISTWIDGTITEM_H
 
 #include <QWidget>
-
 #include <QLabel>
-#include <QLineEdit>
 #include "cbitmapbutton.h"
+#include "dlineedit.h"
 
 #define CI_LIST_WIDGET_HEIGHT (50)
 #define CI_LIST_WIDGET_WIDTH  (760)
@@ -49,8 +48,8 @@ private:
 
     QLabel     *m_lbCatName;
     QLabel     *m_lbLotName;
-    QLineEdit  *m_editP1Value;
-    QLineEdit  *m_editP2Value;
+    DLineEdit  *m_editP1Value;
+    DLineEdit  *m_editP2Value;
 
     CBitmapButton *m_btnInstall;
 

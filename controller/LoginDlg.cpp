@@ -37,9 +37,6 @@ LoginDlg::LoginDlg(QWidget *parent,bool bPassword) :
     m_pBtnCanCel = new QPushButton;
     m_pBtnCanCel->setText(tr("CanCel"));
 
-//    m_pEditUserName = new QLineEdit;
-//    m_pEditPassWord = new QLineEdit;
-
     m_pEditUserName = new DLineEdit;
     m_pEditPassWord = new DLineEdit;
 

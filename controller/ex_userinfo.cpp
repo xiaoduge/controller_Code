@@ -94,3 +94,16 @@ bool Ex_UserInfo::checkManagerInfo(const QString &userName)
 
     return false;
 }
+
+bool Ex_UserInfo::checkEngineerInfo(const QString &userName)
+{
+    if(userName.compare("Super", Qt::CaseInsensitive) == 0)
+    {
+        return true;
+    }
+    if(userName.compare("Service", Qt::CaseInsensitive) == 0)
+    {
+        return true;
+    }
+    return false;
+}

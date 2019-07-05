@@ -200,7 +200,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190704_debug");
+QString strSoftwareVersion = QString("0.1.8.190705_debug");
 
 MainWindow *gpMainWnd;
 
@@ -247,12 +247,16 @@ QString gGlobalPixelmapName[GLOBAL_BMP_NUM] =
 DISP_GLOBAL_PARAM_STRU gGlobalParam ;
 
 Ex_DISP_PARAM_CALI_STRU ex_global_Cali; //dcj_ex;
-Ex_LoginState global_LoginState; //dcj_ex;
+
 Ex_LoginState user_LoginState; //ex
+
 Ex_DISP_GLOBAL_PARAM_STRU ex_gGlobalParam; //dcj_ex;
 EX_CCB  ex_gCcb; //dcj_ex
+
 unsigned int g_screenSleep;
 bool g_isScreenSleep;
+unsigned int g_AutoLogoutTimer;
+
 unsigned int ex_gulSecond = 0;
 unsigned short ex_isPackNew;
 QMutex ex_gMutex;
@@ -1229,7 +1233,7 @@ void MainRetriveMiscParam(int iMachineType,DISP_MISC_SETTING_STRU  &Param)
         Param.iTankUvOnTime = iValue;        
         
         strV = "/MISC/AUTOLOGOUTTIME";
-        iValue = config->value(strV,30).toInt();
+        iValue = config->value(strV,1).toInt();
         Param.iAutoLogoutTime = iValue;  
         
         strV = "/MISC/POWERONFLUSHTIME";
@@ -5229,6 +5233,8 @@ void MainWindow::on_timerSecondEvent()
     updateRectState(); //ex
     updateRectAlarmState();//
     updatePackFlow(); //
+    checkUserLoginStatus(); //User login status check;
+    updateRunningFlushTime(); //Running Flush countdown
 
     if (m_iRfidDelayedMask)
     {
@@ -6556,6 +6562,52 @@ void MainWindow::autoCirPreHour()
 
 }
 
+int MainWindow::idForHPGetWHistory()
+{
+    int num;
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+    {
+        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+        {
+            num = APP_EXE_I4_NO;
+        }
+        else
+        {
+            num = APP_EXE_I3_NO;
+        }
+        break;
+    }
+    case MACHINE_L_UP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_UP:
+    case MACHINE_RO:
+    {
+        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+        {
+            num = APP_EXE_I3_NO;
+        }
+        else
+        {
+            num = APP_EXE_I2_NO;
+        }
+        break;
+    }
+    case MACHINE_ADAPT:
+        num = APP_EXE_I2_NO;
+        break;
+    default:
+        num = APP_EXE_I4_NO;
+        break;
+    }
+
+    return num;
+}
+
 void MainWindow::on_ScreenSleep(bool sleep)
 {
     if(sleep && (g_screenSleep != 0) && (!g_isScreenSleep) && gGlobalParam.MiscParam.iEnerySave)
@@ -7369,11 +7421,12 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                  {
                  case APP_DEV_HS_SUB_REGULAR:
                     {
-                         float tmpI4 = (m_EcowCurr[APP_EXE_I4_NO].iTemp*1.0)/10;
+                         int num = idForHPGetWHistory();
+                         float tmpI4 = (m_EcowCurr[num].iTemp*1.0)/10;
                          query.prepare(INSERT_sql_GetW);
                          query.bindValue(":name", "HP");
                          query.bindValue(":quantity",fQuantity);
-                         query.bindValue(":quality",m_EcowCurr[APP_EXE_I4_NO].iQuality);
+                         query.bindValue(":quality",m_EcowCurr[num].iQuality);
                          query.bindValue(":tmp",tmpI4);
                          query.bindValue(":time", strTime);
                          bDbResult = query.exec();
@@ -9441,6 +9494,47 @@ void MainWindow::checkConsumableInstall(int iRfId)
     {
         m_consumaleInstallDialog[iRfId]->show();
     }
+}
+
+void MainWindow::checkUserLoginStatus()
+{
+    g_AutoLogoutTimer++;
+
+    if(user_LoginState.loginState())
+    {
+        user_LoginState.checkAutoLogout();
+    }
+}
+
+void MainWindow::updateRunningFlushTime()
+{
+    if(NOT_RUNING_STATE_FLUSH == DispGetRunningStateFlag())
+    {
+        ++m_runningFlushTime;
+
+        MainPage *pMainPage = (MainPage *)m_pSubPages[PAGE_MAIN];
+        if (typeid(*m_pCurPage) == typeid(MainPage))
+        {
+            pMainPage->updMainpageState();
+        }
+    }
+    else
+    {
+        m_runningFlushTime = 0;
+    }
+}
+
+int MainWindow::runningFlushTime()
+{
+    if(!ex_isPackNew)
+    {
+        return gGlobalParam.MiscParam.iPowerOnFlushTime* 60 + 10 - m_runningFlushTime;
+    }
+    else
+    {
+        return 20 * 60 + 10 - m_runningFlushTime;
+    }
+
 }
 
 QStringList MainWindow::consumableCatNo(CONSUMABLE_CATNO iType)

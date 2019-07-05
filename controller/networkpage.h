@@ -11,7 +11,6 @@
 #include "subpage.h"
 #include "cbitmapbutton.h"
 #include "mainwindow.h"
-#include <QLineEdit>
 #include <QLabel>
 #include <QTextEdit>
 #include <QHBoxLayout>
@@ -21,6 +20,7 @@
 
 class MainWindow;
 class QProcess;
+class DLineEdit;
 
 enum NETWORKPAGE_BTN_ENUM
 {
@@ -70,7 +70,7 @@ private:
 
     QPushButton *m_pAddSSIDBtn;
     QLabel *m_pSSIDLab;
-    QLineEdit *m_pSSIDEdit;
+    DLineEdit *m_pSSIDEdit;
 
     QListWidget *m_pWifiMsgListWidget;
     QWidget *m_pWifiSSIDAddWidget;

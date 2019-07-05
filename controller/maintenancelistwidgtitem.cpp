@@ -29,7 +29,7 @@ MaintenanceListWidgtItem::MaintenanceListWidgtItem(QWidget *parent,int iItems) :
     m_lbName->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
     xOffset += NAME_ITEM_WIDTH;
     
-    m_editP1Value = new QLineEdit(this);
+    m_editP1Value = new DLineEdit(this);
     m_editP1Value->setGeometry(QRect(xOffset, TOP_MARGIN  ,VALUE_ITEM_WIDTH , MTN_LIST_WIDGET_HEIGHT - (TOP_MARGIN + BOTTOM_MARGIN)));
     m_editP1Value->setAlignment(Qt::AlignCenter);
     m_editP1Value->setStyleSheet("QLineEdit{border-width:2;border-style:outset;}");
@@ -46,7 +46,7 @@ MaintenanceListWidgtItem::MaintenanceListWidgtItem(QWidget *parent,int iItems) :
     {
         xOffset = (NAME_ITEM_WIDTH + ITEM_SPACE) + (MTN_LIST_WIDGET_WIDTH - NAME_ITEM_WIDTH - ITEM_SPACE) /2 ;
         
-        m_editP2Value = new QLineEdit(this);
+        m_editP2Value = new DLineEdit(this);
         m_editP2Value->setGeometry(QRect(xOffset, TOP_MARGIN  ,VALUE_ITEM_WIDTH , MTN_LIST_WIDGET_HEIGHT - (TOP_MARGIN + BOTTOM_MARGIN)));
         m_editP2Value->setAlignment(Qt::AlignCenter);
         m_editP2Value->setStyleSheet("QLineEdit{border-width:2;border-style:outset;}");

@@ -11,7 +11,6 @@
 #include "subpage.h"
 #include "cbitmapbutton.h"
 #include "mainwindow.h"
-#include <QLineEdit>
 #include <QLabel>
 #include <QTextEdit>
 #include <QHBoxLayout>
@@ -22,6 +21,7 @@
 class MainWindow;
 class QPushButton;
 class QProcess;
+class DLineEdit;
 
 class Ex_Init_Networkpage : public CSubPage
 {
@@ -74,7 +74,7 @@ private:
 
     QPushButton *m_pAddSSIDBtn;
     QLabel *m_pSSIDLab;
-    QLineEdit *m_pSSIDEdit;
+    DLineEdit *m_pSSIDEdit;
 
     QListWidget *m_pWifiMsgListWidget;
     QWidget *m_pWifiSSIDAddWidget;

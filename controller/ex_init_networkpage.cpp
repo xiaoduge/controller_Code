@@ -1,21 +1,15 @@
 #include "ex_init_networkpage.h"
-
 #include "titlebar.h"
-
 #include "mainwindow.h"
 
 #include <QPainter>
-
 #include <QScrollBar>
-
 #include <QListWidgetItem>
-
-#include "cbitmapbutton.h"
-
 #include <QRect>
 #include <QProcess>
 
-
+#include "cbitmapbutton.h"
+#include "dlineedit.h"
 
 Ex_Init_Networkpage::Ex_Init_Networkpage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
@@ -191,7 +185,7 @@ void Ex_Init_Networkpage::initUi()
     m_pSSIDLab = new QLabel(m_pWifiSSIDAddWidget);
     m_pSSIDLab->setGeometry(QRect(5, 5 , 50 , 30));
 
-    m_pSSIDEdit = new QLineEdit(m_pWifiSSIDAddWidget);
+    m_pSSIDEdit = new DLineEdit(m_pWifiSSIDAddWidget);
     m_pSSIDEdit->setGeometry(QRect(60, 5 , 190 , 30));
 
     m_pAddSSIDBtn = new QPushButton(m_pWifiSSIDAddWidget);

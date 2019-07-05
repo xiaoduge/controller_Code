@@ -39,7 +39,7 @@ SetPlistwidgtitem::SetPlistwidgtitem(QWidget *parent,int iItems) :
     m_lbP1Name->setGeometry(QRect(xOffset, TOP_MARGIN ,VALUE_ITEM_WIDTH , SET_P_LIST_WIDGET_HEIGHT/2 - 2*TOP_MARGIN));
     m_lbP1Name->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
 
-    m_editP1Value = new QLineEdit(this);
+    m_editP1Value = new DLineEdit(this);
     m_editP1Value->setGeometry(QRect(xOffset, TOP_MARGIN + (SET_P_LIST_WIDGET_HEIGHT/2) ,VALUE_ITEM_WIDTH , SET_P_LIST_WIDGET_HEIGHT/2 - 2*TOP_MARGIN));
     m_editP1Value->setAlignment(Qt::AlignCenter);
     m_editP1Value->setStyleSheet("QLineEdit{border-width:2;border-style:outset;}");
@@ -59,7 +59,7 @@ SetPlistwidgtitem::SetPlistwidgtitem(QWidget *parent,int iItems) :
         m_lbP2Name->setGeometry(QRect(xOffset, TOP_MARGIN ,VALUE_ITEM_WIDTH , SET_P_LIST_WIDGET_HEIGHT/2 - 2*TOP_MARGIN));
         m_lbP2Name->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
         
-        m_editP2Value = new QLineEdit(this);
+        m_editP2Value = new DLineEdit(this);
         m_editP2Value->setGeometry(QRect(xOffset, TOP_MARGIN + (SET_P_LIST_WIDGET_HEIGHT/2) ,VALUE_ITEM_WIDTH , SET_P_LIST_WIDGET_HEIGHT/2 - 2*TOP_MARGIN));
         m_editP2Value->setAlignment(Qt::AlignCenter);
         m_editP2Value->setStyleSheet("QLineEdit{border-width:2;border-style:outset;}");

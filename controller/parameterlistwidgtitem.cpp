@@ -39,7 +39,7 @@ Parameterlistwidgtitem::Parameterlistwidgtitem(QWidget *parent,int iType,int iId
     m_lbP1Name->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
     xOffset += NAME_ITEM_SHORT_LENGTH;
 
-    m_editP1Value = new QLineEdit(this);
+    m_editP1Value = new DLineEdit(this);
     m_editP1Value->setGeometry(QRect(xOffset, TOP_MARGIN  ,VALUE_ITEM_WIDTH , PC_LIST_WIDGET_HEIGHT - (TOP_MARGIN + BOTTOM_MARGIN)));
     m_editP1Value->setAlignment(Qt::AlignCenter);
     m_editP1Value->setStyleSheet("QLineEdit{border-width:2;border-style:outset;}");
@@ -58,7 +58,7 @@ Parameterlistwidgtitem::Parameterlistwidgtitem(QWidget *parent,int iType,int iId
         xOffset += NAME_ITEM_SHORT_LENGTH;
         m_lbP2Name->hide(); //
         
-        m_editP2Value = new QLineEdit(this);
+        m_editP2Value = new DLineEdit(this);
         m_editP2Value->setGeometry(QRect(xOffset, TOP_MARGIN  ,VALUE_ITEM_WIDTH , PC_LIST_WIDGET_HEIGHT - (TOP_MARGIN + BOTTOM_MARGIN)));
         m_editP2Value->setAlignment(Qt::AlignCenter);
         m_editP2Value->setStyleSheet("QLineEdit{border-width:2;border-style:outset;}");
@@ -67,7 +67,7 @@ Parameterlistwidgtitem::Parameterlistwidgtitem(QWidget *parent,int iType,int iId
         m_editP2Value->hide(); //
 
         xOffset += ITEM_SPACE ;
-        m_editP3Value = new QLineEdit(this);
+        m_editP3Value = new DLineEdit(this);
         m_editP3Value->setGeometry(QRect(xOffset, TOP_MARGIN  ,VALUE_ITEM_WIDTH , PC_LIST_WIDGET_HEIGHT - (TOP_MARGIN + BOTTOM_MARGIN)));
         m_editP3Value->setAlignment(Qt::AlignCenter);
         m_editP3Value->setStyleSheet("QLineEdit{border-width:2;border-style:outset;}");
@@ -85,7 +85,7 @@ Parameterlistwidgtitem::Parameterlistwidgtitem(QWidget *parent,int iType,int iId
     case PARAMETER_CALIBRATION_FORMAT1:
 
         xOffset += NAME_ITEM_SHORT_LENGTH + VALUE_ITEM_WIDTH + ITEM_SPACE ;
-        m_editP3Value = new QLineEdit(this);
+        m_editP3Value = new DLineEdit(this);
         m_editP3Value->setGeometry(QRect(xOffset, TOP_MARGIN  ,VALUE_ITEM_WIDTH , PC_LIST_WIDGET_HEIGHT - (TOP_MARGIN + BOTTOM_MARGIN)));
         m_editP3Value->setAlignment(Qt::AlignCenter);
         m_editP3Value->setStyleSheet("QLineEdit{border-width:2;border-style:outset;}");
@@ -106,7 +106,7 @@ Parameterlistwidgtitem::Parameterlistwidgtitem(QWidget *parent,int iType,int iId
         xOffset += NAME_ITEM_SHORT_LENGTH;
         m_lbP2Name->hide();
 
-        m_editP2Value = new QLineEdit(this);
+        m_editP2Value = new DLineEdit(this);
         m_editP2Value->setGeometry(QRect(xOffset, TOP_MARGIN  ,VALUE_ITEM_WIDTH , PC_LIST_WIDGET_HEIGHT - (TOP_MARGIN + BOTTOM_MARGIN)));
         m_editP2Value->setAlignment(Qt::AlignCenter);
         m_editP2Value->setStyleSheet("QLineEdit{border-width:2;border-style:outset;}");

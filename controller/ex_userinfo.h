@@ -11,6 +11,7 @@ public:
 
     int checkUserInfo(const QString& userName, const QString& passWord);
     bool checkManagerInfo(const QString &userName);
+    bool checkEngineerInfo(const QString &userName);
     
 signals:
     

@@ -34,11 +34,11 @@ typedef struct
     int lastRunState;  //0:standby 1:run
 }Ex_DISP_GLOBAL_PARAM_STRU;
 
-extern Ex_LoginState global_LoginState; //dcj_ex;
 extern Ex_LoginState user_LoginState; //ex
 extern Ex_DISP_GLOBAL_PARAM_STRU ex_gGlobalParam;
 
 extern unsigned int g_screenSleep;
 extern bool g_isScreenSleep;
+extern unsigned int g_AutoLogoutTimer;
 
 #endif // EXTRADISPLAY_H

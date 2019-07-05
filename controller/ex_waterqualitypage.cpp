@@ -78,7 +78,7 @@ void Ex_WaterQualityPage::buildTranslation()
     strUnitMsg[UNIT_G_MIN] = "%1 " + tr("G/min");
     strUnitMsg[UNIT_BAR] = "%1 " + tr("bar");
     strUnitMsg[UNIT_MPA] = "%1 " + tr("mpa");
-    strUnitMsg[UNIT__PSI] = "%1 " + tr("psi");
+    strUnitMsg[UNIT_PSI] = "%1 " + tr("psi");
     strUnitMsg[UNIT_PPB] = "%1 " + tr("ppb");
     strUnitMsg[UNIT_PERCENTAGE] = "%1 " + tr("%");
     strUnitMsg[UNIT_VOLUME] = "%1 " + tr("L");
@@ -107,6 +107,7 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
 {
     QString strWaterUnit = strUnitMsg[UNIT_OMG];
     QString strTempUnit = strUnitMsg[UNIT_CELSIUS];
+
     switch(iIndex)
     {
     case APP_EXE_I5_NO:
@@ -231,13 +232,13 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
             {
                 updateValue(m_tags[EDI_Product],
                             strWaterUnit.arg(">16"),
-                            strTempUnit.arg(toOneDecimal(fT)));
+                            strTempUnit.arg(fT, 0, 'f', 1));
             }
             else
             {
                 updateValue(m_tags[EDI_Product],
-                            strWaterUnit.arg(toOneDecimal(fQ)),
-                            strTempUnit.arg(toOneDecimal(fT)));
+                            strWaterUnit.arg(fQ, 0, 'f', 1),
+                            strTempUnit.arg(fT, 0, 'f', 1));
             }
             m_historyInfo[EDI_Product].value1 = info->fQuality;
             m_historyInfo[EDI_Product].value2 = info->fTemperature;
@@ -247,8 +248,8 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
                 if (DispGetEdiQtwFlag() || DispGetTankCirFlag())
                 {
                     updateValue(m_tags[HP_Resis],
-                                strWaterUnit.arg(toOneDecimal(fQ)),
-                                strTempUnit.arg(toOneDecimal(fT)));
+                                strWaterUnit.arg(fQ, 0, 'f', 1),
+                                strTempUnit.arg(fT, 0, 'f', 1));
                     m_historyInfo[HP_Resis].value1 = info->fQuality;
                     m_historyInfo[HP_Resis].value2 = info->fTemperature;
                 }
@@ -260,12 +261,11 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
             float fResidue;
             float fT;
 
-            strWaterUnit = strUnitMsg[UNIT_USCM];
-
             if (DispGetREJ(&fResidue)
                 && (MACHINE_PURIST != gGlobalParam.iMachineType))
             {
-                updateValue(m_tags[RO_Rejection], strUnitMsg[UNIT_PERCENTAGE].arg(fResidue));
+                updateValue(m_tags[RO_Rejection],
+                            strUnitMsg[UNIT_PERCENTAGE].arg(fResidue, 0, 'f', 0));
                 m_historyInfo[RO_Rejection].value1 = fResidue;
             }
 
@@ -282,8 +282,8 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
             if(MACHINE_PURIST != gGlobalParam.iMachineType)
             {
                 updateValue(m_tags[RO_Product],
-                            strWaterUnit.arg(toOneDecimal(info->fQuality)),
-                            strTempUnit.arg(toOneDecimal(fT)));
+                            strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
+                            strTempUnit.arg(fT, 0, 'f', 1));
 
                 m_historyInfo[RO_Product].value1 = info->fQuality;
                 m_historyInfo[RO_Product].value2 = info->fTemperature;
@@ -291,8 +291,8 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
             else
             {
                 updateValue(m_tags[UP_IN],
-                            strWaterUnit.arg(toOneDecimal(info->fQuality)),
-                            strTempUnit.arg(toOneDecimal(fT)));
+                            strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
+                            strTempUnit.arg(fT, 0, 'f', 1));
 
                 m_historyInfo[UP_IN].value1 = info->fQuality;
                 m_historyInfo[UP_IN].value2 = info->fTemperature;
@@ -302,7 +302,6 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
     case APP_EXE_I1_NO: // RO In
         {
             float fT;
-            strWaterUnit = strUnitMsg[UNIT_USCM];
 
             if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
             {
@@ -316,20 +315,29 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
 
             if (DispGetInitRunFlag())
             {
-                updateValue(m_tags[Tap_Cond], strWaterUnit.arg(info->fQuality));
+                updateValue(m_tags[Tap_Cond],
+                            strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
+                            strTempUnit.arg(fT, 0, 'f', 1));
 
                 m_historyInfo[Tap_Cond].value1 = info->fQuality;
+                m_historyInfo[Tap_Cond].value2 = info->fTemperature;
             }
             else
             {
                 updateValue(m_tags[RO_Feed_Cond],
-                            strWaterUnit.arg(toOneDecimal(info->fQuality)),
-                            strTempUnit.arg(toOneDecimal(fT)));
+                            strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
+                            strTempUnit.arg(fT, 0, 'f', 1));
 
                 m_historyInfo[RO_Feed_Cond].value1 = info->fQuality;
+                m_historyInfo[RO_Feed_Cond].value2 = info->fTemperature;
+
+                updateValue(m_tags[Tap_Cond],
+                            strUnitMsg[UNIT_USCM].arg(m_historyInfo[Tap_Cond].value1, 0, 'f', 1),
+                            strTempUnit.arg(fT, 0, 'f', 1));
+                m_historyInfo[Tap_Cond].value2 = info->fTemperature;
             }
 
-            m_historyInfo[RO_Feed_Cond].value2 = info->fTemperature;
+
         }
         break;
     }
@@ -337,11 +345,10 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
 
 void Ex_WaterQualityPage::updPressure(int iIndex,float fvalue)
 {
-
     if (APP_EXE_PM1_NO == iIndex)
     {
         float fP ;
-        QString strUint = strUint = strUnitMsg[UNIT_BAR];
+        QString strUint = strUnitMsg[UNIT_BAR];
         if (PRESSURE_UINT_BAR == gGlobalParam.MiscParam.iUint4Pressure)
         {
             fP = toOneDecimal(fvalue);
@@ -355,13 +362,14 @@ void Ex_WaterQualityPage::updPressure(int iIndex,float fvalue)
         else
         {
             fP = toPsi(fvalue);
-            strUint = strUnitMsg[UNIT_MPA];
+            strUint = strUnitMsg[UNIT_PSI];
         }
         QString strValue = strUint.arg(fP);
         updateValue(m_tags[RO_Pressure], strValue);
 
         m_historyInfo[RO_Pressure].value1 = fvalue;
     }
+
 }
 
 void Ex_WaterQualityPage::updSwPressure(float fvalue)
@@ -382,7 +390,7 @@ void Ex_WaterQualityPage::updSwPressure(float fvalue)
     else
     {
         fP = toPsi(fvalue);
-        strUint = strUnitMsg[UNIT__PSI];
+        strUint = strUnitMsg[UNIT_PSI];
     }
 
     QString strValue = strUint.arg(fP);
@@ -404,35 +412,15 @@ void Ex_WaterQualityPage::updTOC(float fToc)
 
 void Ex_WaterQualityPage::initAllValue()
 {
-    updateValue(m_tags[Tap_Cond], "/", "/");
-    updateValue(m_tags[RO_Feed_Cond], "/", "/");
-    updateValue(m_tags[RO_Product], "/", "/");
-    updateValue(m_tags[RO_Rejection], "/");
-    updateValue(m_tags[EDI_Product], "/", "/");
-
-    updateValue(m_tags[RO_Feed_Pressure], "/");
-    updateValue(m_tags[RO_Pressure], "/");
-
-    updateValue(m_tags[RO_Product_Rate], "/");
-    updateValue(m_tags[RO_Reject_Rate], "/");
-    updateValue(m_tags[RO_Feed_Rate], "/");
-    updateValue(m_tags[Tap_Rate], "/");
-    updateValue(m_tags[EDI_Product_Rate], "/");
-    updateValue(m_tags[EDI_Reject_Rate], "/");
-
-    updateValue(m_tags[Source_Tank_Level], "/", "/");
-    updateValue(m_tags[Pure_Tank_Level], "/", "/");
-    updateValue(m_tags[HP_Resis], "/", "/");
-    updateValue(m_tags[HP_Disp_Rate], "/");
-    updateValue(m_tags[UP_IN], "/", "/");
-    updateValue(m_tags[UP_Resis], "/", "/");
-    updateValue(m_tags[TOC_Value], "/");
-    updateValue(m_tags[UP_Disp_Rate], "/");
+    for(int i = 0; i < MSG_NUM; ++i)
+    {
+        updateValue(m_tags[i], "--");
+    }
 }
 
 void Ex_WaterQualityPage::initTagsArray()
 {
-    m_tags[Tap_Cond] = DTags(strMsg[Tap_Cond], 1);
+    m_tags[Tap_Cond] = DTags(strMsg[Tap_Cond], 2);
     m_tags[RO_Feed_Cond] = DTags(strMsg[RO_Feed_Cond], 2);
     m_tags[RO_Product] = DTags(strMsg[RO_Product], 2);
     m_tags[RO_Rejection] = DTags(strMsg[RO_Rejection], 1);
@@ -660,11 +648,6 @@ void Ex_WaterQualityPage::initConfigList()
     default:
         break;
     }
-    for(int i = 0; i < m_cfglist.size(); ++i)
-    {
-        DTags temp = m_cfglist.at(i);
-        qDebug() << QString("list(%1)").arg(i)  << temp.tag();
-    }
     m_pQualityWidget->setConfigList(m_cfglist);
 }
 
@@ -770,10 +753,11 @@ void Ex_WaterQualityPage::updHistoryEcoInfo()
     }
 
     updateValue(m_tags[Tap_Cond],
-                strUnitMsg[UNIT_USCM].arg(m_historyInfo[Tap_Cond].value1, 0, 'f', 1));
+                strUnitMsg[UNIT_USCM].arg(m_historyInfo[Tap_Cond].value1, 0, 'f', 1),
+                strTempUnit.arg(m_historyInfo[Tap_Cond].value2, 0, 'f', 1));
 
     updateValue(m_tags[RO_Rejection],
-                strUnitMsg[UNIT_PERCENTAGE].arg(m_historyInfo[RO_Rejection].value1));
+                strUnitMsg[UNIT_PERCENTAGE].arg(m_historyInfo[RO_Rejection].value1, 0, 'f', 0));
 
     if( MACHINE_PURIST == gGlobalParam.iMachineType)
     {
@@ -805,10 +789,10 @@ void Ex_WaterQualityPage::updHistoryPressure()
     else
     {
         updateValue(m_tags[RO_Feed_Pressure],
-                    strUnitMsg[UNIT__PSI].arg(m_historyInfo[RO_Feed_Pressure].value1, 0, 'f', 1));
+                    strUnitMsg[UNIT_PSI].arg(m_historyInfo[RO_Feed_Pressure].value1, 0, 'f', 1));
 
         updateValue(m_tags[RO_Pressure],
-                    strUnitMsg[UNIT__PSI].arg(m_historyInfo[RO_Pressure].value1, 0, 'f', 1));
+                    strUnitMsg[UNIT_PSI].arg(m_historyInfo[RO_Pressure].value1, 0, 'f', 1));
     }
 }
 
@@ -842,11 +826,11 @@ void Ex_WaterQualityPage::updHistoryTank()
 {
     updateValue(m_tags[Source_Tank_Level],
                 strUnitMsg[UNIT_PERCENTAGE].arg(m_historyInfo[Source_Tank_Level].value1),
-                strUnitMsg[UNIT_VOLUME].arg(m_historyInfo[Source_Tank_Level].value2));
+                strUnitMsg[UNIT_VOLUME].arg(m_historyInfo[Source_Tank_Level].value2, 0, 'f', 0));
 
     updateValue(m_tags[Pure_Tank_Level],
                 strUnitMsg[UNIT_PERCENTAGE].arg(m_historyInfo[Pure_Tank_Level].value1),
-                strUnitMsg[UNIT_VOLUME].arg(m_historyInfo[Pure_Tank_Level].value2));
+                strUnitMsg[UNIT_VOLUME].arg(m_historyInfo[Pure_Tank_Level].value2, 0, 'f', 0));
 }
 
 void Ex_WaterQualityPage::updHistoryTOC()
@@ -939,7 +923,7 @@ void Ex_WaterQualityPage::updTank(int iLevel,float fVolume)
 {
     updateValue(m_tags[Pure_Tank_Level],
                 strUnitMsg[UNIT_PERCENTAGE].arg(iLevel),
-                strUnitMsg[UNIT_VOLUME].arg(fVolume));
+                strUnitMsg[UNIT_VOLUME].arg(fVolume, 0, 'f', 0));
     m_historyInfo[Pure_Tank_Level].value1 = iLevel;
     m_historyInfo[Pure_Tank_Level].value2 = fVolume;
 }
@@ -948,7 +932,7 @@ void Ex_WaterQualityPage::updSourceTank(int iLevel, float fVolume)
 {
     updateValue(m_tags[Source_Tank_Level],
                 strUnitMsg[UNIT_PERCENTAGE].arg(iLevel),
-                strUnitMsg[UNIT_VOLUME].arg(fVolume));
+                strUnitMsg[UNIT_VOLUME].arg(fVolume, 0, 'f', 0));
     m_historyInfo[Source_Tank_Level].value1 = iLevel;
     m_historyInfo[Source_Tank_Level].value2 = fVolume;
 }
@@ -973,16 +957,37 @@ void Ex_WaterQualityPage::setBackColor()
 
 void Ex_WaterQualityPage::update()
 {
+    if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
+    {
+        if(!m_cfglist.contains(m_tags[TOC_Value]))
+        {
+            initConfigList();
+        }
+    }
+    else
+    {
+        if(m_cfglist.contains(m_tags[TOC_Value]))
+        {
+            initConfigList();
+        }
+    }
+
+    if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB3))
+    {
+        if(!m_cfglist.contains(m_tags[Source_Tank_Level]))
+        {
+            initConfigList();
+        }
+    }
+    else
+    {
+        if(m_cfglist.contains(m_tags[Source_Tank_Level]))
+        {
+            initConfigList();
+        }
+    }
+
     updAllInfo();
-//    if(!m_showFirst)
-//    {
-//        updAllInfo();
-//    }
-//    else
-//    {
-//        initAllValue();
-//        m_showFirst = false;
-//    }
 }
 
 void Ex_WaterQualityPage::initUi()
