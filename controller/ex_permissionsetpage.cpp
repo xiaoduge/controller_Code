@@ -104,7 +104,7 @@ void Ex_PermissionSetPage::update()
         m_chRfid->setChecked(false);
     }
     //Consumable install Permission
-    if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_ConsumableInstall_Authorization))
+    if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_User_Authorization))
     {
         m_chPermission->setChecked(true);
     }
@@ -140,11 +140,11 @@ void Ex_PermissionSetPage::on_PermissionsaveBtn_clicked()
     DISP_MISC_SETTING_STRU  miscParam = gGlobalParam.MiscParam;
     if ((Qt::Checked == m_chPermission->checkState()))
     {
-        miscParam.ulMisFlags |= 1 << DISP_SM_ConsumableInstall_Authorization;
+        miscParam.ulMisFlags |= 1 << DISP_SM_User_Authorization;
     }
     else
     {
-        miscParam.ulMisFlags &= ~(1 << DISP_SM_ConsumableInstall_Authorization);
+        miscParam.ulMisFlags &= ~(1 << DISP_SM_User_Authorization);
     }
 
     MainSaveMiscParam(gGlobalParam.iMachineType,miscParam);

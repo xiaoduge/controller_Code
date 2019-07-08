@@ -9,7 +9,7 @@
 class QPushButton;
 class QLabel;
 class QTableView;
-class QSqlTableModel;
+class DSqlTableModelForUser;
 class DLineEdit;
 
 class Ex_UserCfgPage : public CSubPage
@@ -55,7 +55,7 @@ private:
 
     QTableView* m_pTableView;
 
-    QSqlTableModel* m_pTableModel;
+    DSqlTableModelForUser* m_pTableModel;
 
 };
 

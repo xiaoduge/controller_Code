@@ -123,6 +123,10 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
             {
                 fQ = toConductivity(info->fQuality);
                 strWaterUnit = strUnitMsg[UNIT_USCM];
+                if(fQ < 0.055)
+                {
+                    fQ = 0.055;
+                }
             }
 
 
@@ -158,6 +162,10 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
             {
                 fQ = toConductivity(info->fQuality);
                 strWaterUnit = strUnitMsg[UNIT_USCM];
+                if(fQ < 0.055)
+                {
+                    fQ = 0.055;
+                }
             }
 
             if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
@@ -216,6 +224,10 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
             {
                 fQ = toConductivity(info->fQuality);
                 strWaterUnit = strUnitMsg[UNIT_USCM];
+                if(fQ < 0.055)
+                {
+                    fQ = 0.055;
+                }
             }
 
             if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
@@ -678,6 +690,14 @@ void Ex_WaterQualityPage::updHistoryEcoInfo()
         tempValue[1].value1  = toConductivity(m_historyInfo[HP_Resis].value1);
         tempValue[2].value1  = toConductivity(m_historyInfo[UP_Resis].value1);
 
+        for(int i = 0; i < 3; ++i)
+        {
+            if(tempValue[i].value1 < 0.055)
+            {
+                tempValue[i].value1 = 0.055;
+            }
+        }
+
         strWaterUnit = strUnitMsg[UNIT_USCM];
     }
 
@@ -945,7 +965,7 @@ void Ex_WaterQualityPage::setBackColor()
 
     QPainter p(&image_bg);
 
-    p.fillRect(image_bg.rect(), QColor(228, 231, 240));
+    p.fillRect(image_bg.rect(), QColor(228, 231, 240)); //
 
     QPalette pal(m_widget->palette());
 

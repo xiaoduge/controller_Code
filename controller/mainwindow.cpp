@@ -200,7 +200,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190705_debug");
+QString strSoftwareVersion = QString("0.1.8.190708_debug");
 
 MainWindow *gpMainWnd;
 
@@ -501,6 +501,9 @@ void MainRetriveProductMsg(int iMachineType) //ex_dcj
     strCfgName += ".ini";
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
     QString strV;
+
+    strV = "/ProductMsg/iCompany/";
+    ex_gGlobalParam.Ex_System_Msg.Ex_iCompany = config->value(strV, 0).toInt();
 
     strV = "/ProductMsg/CatalogNo/";
     ex_gGlobalParam.Ex_System_Msg.Ex_CatalogNo = config->value(strV, "unknow").toString();
@@ -1603,6 +1606,9 @@ void MainSaveProductMsg(int iMachineType) //ex_dcj
 
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
     QString strV;
+
+    strV = "/ProductMsg/iCompany/";
+    config->setValue(strV, ex_gGlobalParam.Ex_System_Msg.Ex_iCompany);
 
     strV = "/ProductMsg/CatalogNo/";
     config->setValue(strV, ex_gGlobalParam.Ex_System_Msg.Ex_CatalogNo);
@@ -3366,6 +3372,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
 {
     int iLoop;
 
+    m_bSplash = false;
+
     m_bC1Regulator = false;
     m_isInitCMInfo = false; //2019.3.1 add
     ex_isPackNew = 0;
@@ -4366,11 +4374,15 @@ MainWindow::MainWindow(QMainWindow *parent) :
     else
     {
         m_startCheckConsumale = true;
-#ifdef VWR
-        mainDisplay();
-#else
-        Splash();
-#endif
+
+        if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+        {
+            Splash();
+        }
+        else
+        {
+            mainDisplay();
+        }
     }
     initScreenSleep(); //ex
     initMachineFlow();  //ex 2018.11.19
@@ -4531,14 +4543,16 @@ void MainWindow::buzzerHandle()
 
 void MainWindow::mainDisplay()
 {
-#ifndef VWR
-    m_pMovieGif->stop();
-    m_pLabelGif->hide();
+    if(m_bSplash)
+    {
+        m_pMovieGif->stop();
+        m_pLabelGif->hide();
 
-    delete m_pLabelGif;
-    delete m_pMovieGif;
-#endif
-    m_bSplash = false;
+        delete m_pLabelGif;
+        delete m_pMovieGif;
+
+        m_bSplash = false;
+    }
 
     m_pSubPages[PAGE_MAIN]->show(true);
 
@@ -8971,11 +8985,14 @@ void MainWindow::on_Ex_Init_Finished()
 {
     m_curExInitPage = NULL;
 
-#ifdef VWR
-        mainDisplay();
-#else
+    if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+    {
         Splash();
-#endif
+    }
+    else
+    {
+        mainDisplay();
+    }
 }
 
 void MainWindow::on_Ex_Init_Handler(int index)
@@ -9545,6 +9562,19 @@ QStringList MainWindow::consumableCatNo(CONSUMABLE_CATNO iType)
 void MainWindow::emitUnitsChanged()
 {
     emit unitsChanged();
+}
+
+void MainWindow::restart()
+{
+    QStringList  list;
+    list<<"-qws";
+
+    //gApp->quit();
+    //gApp->closeAllWindows();
+
+    QProcess::startDetached(gApp->applicationFilePath(),list);
+
+    *((int *)(0)) = 0;
 }
 
 void MainWindow::retriveCMInfoWithRFID()

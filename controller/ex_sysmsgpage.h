@@ -41,17 +41,17 @@ public:
     virtual void update();
 
 private:
-
     void setBackColor();
-
     void setTitleMsg();
-
     void setNameMsg(int iIdx,QString strInfo);
-
     void updateNameMsg();
+
+    void buildTranslationTitleRephile();
+    void buildTranslationTitleVWR();
 
     void buildTitles();
 
+private:
     QWidget       *m_pWidget;
     QLabel* m_pExmsgLabel[SYSMS_PAGE_LB_NUM];
     QString m_ExMsgName[SYSMS_PAGE_LB_NUM];

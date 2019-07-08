@@ -13,6 +13,7 @@
 #include "ex_sysmsgpage.h"
 #include "ex_usermanualpage.h"
 #include "ex_waterqualitypage.h"
+#include "ExtraDisplay.h"
 
 #include <QPainter>
 
@@ -282,6 +283,13 @@ void MenuPage::switchLanguage()
 void MenuPage::on_btn_clicked(int index)
 {
     printf("tmp = %d\r\n" , index);
+    if(0 != ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+    {
+        if(MENU_BTN_USER_MANU == index)
+        {
+            return;
+        }
+    }
 
     if (m_pSubPages[index])
     {

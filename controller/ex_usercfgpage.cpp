@@ -5,13 +5,13 @@
 #include <QPainter>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QSqlTableModel>
 #include <QSqlError>
 #include <QHeaderView>
 #include <QMessageBox>
 #include "dlineedit.h"
 #include "ex_comboboxdelegate.h"
 #include "mainwindow.h"
+#include "dsqltablemodelforuser.h"
 
 #include <unistd.h>
 
@@ -150,7 +150,7 @@ void Ex_UserCfgPage::createControl()
 
 void Ex_UserCfgPage::initDBTabelModel()
 {
-    m_pTableModel = new QSqlTableModel(m_widget);
+    m_pTableModel = new DSqlTableModelForUser(m_widget);
     m_pTableModel->setTable("User");
     m_pTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
     m_pTableModel->select();

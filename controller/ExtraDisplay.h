@@ -5,6 +5,7 @@
 
 typedef struct
 {
+    int Ex_iCompany;
     QString Ex_CatalogNo;
     QString Ex_SerialNo;
     QString Ex_ProDate;

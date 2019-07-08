@@ -26,7 +26,7 @@
 #include "ex_usercfgpage.h"
 #include "ex_userinfo.h"
 #include "ex_factorytestpage.h"
-
+#include "dloginwarningdialog.h"
 
 #define BTNS_PER_ROW (4)
 
@@ -52,6 +52,7 @@ static QString SubPageName[SET_BTN_NUMBER] =
 
 static CONFIG_BTN1 sBtns[SET_BTN_NUMBER] = 
 {
+    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
@@ -156,11 +157,15 @@ void SetPage::createSubPage()
             break;
         }
     }
-
 }
 
 void SetPage::update()
 {
+    if(!user_LoginState.loginState())
+    {
+        m_pBtns[SET_BTN_SYSTEM_SUPER]->hide();
+        m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
+    }
 }
 
 void SetPage::buildTitles()
@@ -186,6 +191,7 @@ void SetPage::buildTranslation()
     m_pBtns[SET_BTN_SYSTEM_NETWORK]->setTip(tr("Connectivity"));
 
     m_pBtns[SET_BTN_PERIPHERAL_DEVICE_MANAGER]->setTip(tr("Connecting Device"));
+    m_pBtns[SET_BTN_INITIALIZE]->setTip(tr("Initialize"));
 
     m_pBtns[SET_BTN_SYSTEM_SUPER]->setTip(tr("Super Power"));
     m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->setTip(tr("Factory"));
@@ -307,6 +313,56 @@ void SetPage::initUi()
 void SetPage::on_btn_clicked(int index)
 {
     printf("tmp = %d\r\n" , index);
+    if(index == SET_BTN_INITIALIZE)
+    {
+        Ex_UserInfo userInfo;
+        QString userlog = m_wndMain->getLoginfo();
+        bool iEngineer = userInfo.checkEngineerInfo(userlog);
+        if(!user_LoginState.loginState() || (!iEngineer))
+        {
+            m_pBtns[SET_BTN_SYSTEM_SUPER]->hide(); //
+            m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
+            LoginDlg dlg;
+            dlg.exec() ;
+            if(0 == dlg.m_iLogInResult)
+            {
+                Ex_UserInfo userInfo;
+                int ret = userInfo.checkUserInfo(dlg.m_strUserName, dlg.m_strPassword);
+
+                switch(ret)
+                {
+                case 3:
+                case 4:
+                {
+                    m_wndMain->saveLoginfo(dlg.m_strUserName);
+                    user_LoginState.setLoginState(true);
+                    if(4 == ret)
+                    {
+                        m_pBtns[SET_BTN_SYSTEM_SUPER]->show(); //
+                        m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->show();
+                    }
+                    break;
+                }
+                case 1:
+                case 2:
+                    DLoginWarningDialog::getInstance(tr("User's privilege is low, please use the service account to log in!"));
+                    break;
+                case 0:
+                    DLoginWarningDialog::getInstance(tr("Login failed!"));
+                    break;
+                default:
+                    break;
+                }
+            }
+
+        }
+        else
+        {
+            toInitializePage();
+        }
+
+    }
+
     if(m_pSubPages[index])
     {
         show(false);
@@ -339,27 +395,29 @@ void SetPage::on_btn_clicked(int index)
 
                     switch(ret)
                     {
+                    case 3:
                     case 4:
                     {
                         m_wndMain->saveLoginfo(dlg.m_strUserName);
                         m_pSubPages[index]->show(true);
                         user_LoginState.setLoginState(true);
-                        m_pBtns[SET_BTN_SYSTEM_SUPER]->show(); //
-                        m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->show();
+                        if(4 == ret)
+                        {
+                            m_pBtns[SET_BTN_SYSTEM_SUPER]->show();
+                            m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->show();
+                        }
                         break;
                     }
-                    case 3:
-                    {
-                        m_wndMain->saveLoginfo(dlg.m_strUserName);
-                        m_pSubPages[index]->show(true);
-                        user_LoginState.setLoginState(true);
-                        break;
-                    }
+
                     case 2:
                     case 1:
+                        show(true);
+                        DLoginWarningDialog::getInstance(tr("User's privilege is low, please use the service account to log in!"));
+                        break;
                     case 0:
                     {
                         show(true);
+                        DLoginWarningDialog::getInstance(tr("Login failed!"));
                         break;
                     }
                     default:
@@ -407,6 +465,22 @@ void SetPage::mouseMoveEvent(QMouseEvent *e)
 
     m_curX = e->x();
     m_curY = e->y();
+}
+
+void SetPage::toInitializePage()
+{
+    QMessageBox::StandardButton rb = QMessageBox::question(NULL,
+                                                           tr("NOTIFY"),
+                                                           tr("Do you want to restart the system immediately\n to enter the initialization interface?"),
+                                                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+
+    if(rb != QMessageBox::Yes)
+    {
+        return;
+    }
+    ex_gGlobalParam.Ex_Default = 0;
+    MainSaveDefaultState(gGlobalParam.iMachineType);
+    m_wndMain->restart();
 }
 
 void SetPage::mouseReleaseEvent(QMouseEvent *e)

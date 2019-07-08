@@ -79,6 +79,8 @@ private:
 
     CBitmapButton* m_pBtnSave;
 
+    QLabel* m_pCompanyLabel;
+    QComboBox* m_pCompanyComboBox;
     QLabel* m_pExLabel[SYSCFGPAGE_LB_NUM];
     DLineEdit* m_ExLineEdit[SYSCFGPAGE_LB_NUM];
 
@@ -93,7 +95,6 @@ public slots:
 
     void on_btn_clicked(int);
     void on_CmbIndexChange_DefaultState(int index);
-    void Restart(void);
 
     void on_CmbIndexChange_deviceType(int index);
 

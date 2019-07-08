@@ -126,7 +126,7 @@ void Ex_Init_HandleCfgpage::on_pushButton_FinishBtn()
     MainSaveDefaultState(gGlobalParam.iMachineType);
     MainUpdateGlobalParam();
 
-    Restart();
+    m_wndMain->restart();
 }
 
 void Ex_Init_HandleCfgpage::on_pushButton_BackBtn()
@@ -318,13 +318,6 @@ void Ex_Init_HandleCfgpage::cfgHandlerRsp()
     ToastDlg::makeToast(tr("Be sure to save the handsets' configuration when collected all responses!"));
 }
 
-void Ex_Init_HandleCfgpage::Restart()
-{
-    QStringList  list;
-    list<<"-qws";
-    QProcess::startDetached(gApp->applicationFilePath(),list);
-    *((int *)(0)) = 0;
-}
 
 void Ex_Init_HandleCfgpage::on_pushButton_CfgHandler()
 {

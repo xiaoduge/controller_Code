@@ -681,7 +681,10 @@ void SystemCfgPage::on_CmbIndexChange_DefaultState(int index)
     int iIdx = m_cmbDefaultState->currentIndex();
     if (iIdx == 0)
     {
-         QMessageBox::StandardButton rb = QMessageBox::question(NULL, tr("NOTIFY"), tr("Whether to restart the device immediately?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+         QMessageBox::StandardButton rb = QMessageBox::question(NULL,
+                                                                tr("NOTIFY"),
+                                                                tr("Do you want to restart the system immediately\n to enter the initialization interface?"),
+                                                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
          if(rb != QMessageBox::Yes)
          {
@@ -694,8 +697,9 @@ void SystemCfgPage::on_CmbIndexChange_DefaultState(int index)
          MainUpdateGlobalParam();
          update();
          /**/
-         Restart();
+         m_wndMain->restart();
      }
+
 }
 
 
@@ -1330,50 +1334,6 @@ void SystemCfgPage::on_CmbIndexChange_sw(int index)
         }
         break;
     }
-}
-
-#if 0
-void SystemCfgPage::on_CmbIndexChange_device_type(int index)
-{
-    int iIdx = m_cmbDeviceType->currentIndex();
-
-    (void)index;
-
-     if (iIdx != gGlobalParam.iMachineType)
-     {
-     
-         QMessageBox::StandardButton rb = QMessageBox::question(NULL, tr("NOTIFY"), tr("Change Device Type?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No); 
-
-         if(rb != QMessageBox::Yes) 
-         { 
-             return;
-         }
-         
-         MainSaveMachineType(iIdx);
-         
-         MainUpdateGlobalParam(); 
-         
-         update();
-         
-         /**/
-         Restart();
-
-     }
-}
-#endif
-
-void SystemCfgPage::Restart(void)
-{
-    QStringList  list;
-    list<<"-qws";
-
-    //gApp->quit(); 
-    //gApp->closeAllWindows();
-    
-    QProcess::startDetached(gApp->applicationFilePath(),list);
-
-    *((int *)(0)) = 0;
-
 }
 
 void SystemCfgPage::on_btn_clicked(int index)

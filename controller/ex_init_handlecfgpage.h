@@ -26,7 +26,6 @@ public:
 
     void addHandler(int iType,const QString& text0,const QString& text1);
     void cfgHandlerRsp();
-    void Restart(void);
 
 signals:
     void exInitFinished();

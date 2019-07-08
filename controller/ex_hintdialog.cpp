@@ -53,10 +53,13 @@ void Ex_HintDialog::getInstance(QString strText)
     if (NULL == instance)
     {
         QMutexLocker locker(&hintDialogmutex);
-        Ex_HintDialog *pDlg = new Ex_HintDialog();
-        pDlg->setInfo(strText);
-        pDlg->start();
-        instance = pDlg;
+        if(NULL == instance)
+        {
+            Ex_HintDialog *pDlg = new Ex_HintDialog();
+            pDlg->setInfo(strText);
+            pDlg->start();
+            instance = pDlg;
+        }
     }
 }
 
@@ -68,7 +71,10 @@ void Ex_HintDialog::start()
 
 void Ex_HintDialog::on_timer_event()
 {
-    m_timer->stop();
-    delete this;
-    instance = NULL;
+    if(instance != NULL)
+    {
+        m_timer->stop();
+        delete this;
+        instance = NULL;
+    }
 }

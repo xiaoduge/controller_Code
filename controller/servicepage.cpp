@@ -21,6 +21,7 @@
 #include "ex_permissionsetpage.h"
 
 #include "ex_languagepage.h"
+#include "dloginwarningdialog.h"
 
 #define BTNS_PER_ROW (4)
 
@@ -310,10 +311,11 @@ void ServicePage::on_btn_clicked(int index)
         case SERVICE_BTN_STERILIZE:
         case SERVICE_BTN_MANAGERCONFIG:
         {
-            if(!user_LoginState.loginState())
+            if(!user_LoginState.loginState()
+            && !(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_User_Authorization)))
             {
                 LoginDlg dlg;
-                dlg.exec() ;
+                dlg.exec();
                 if(0 == dlg.m_iLogInResult)
                 {
                     Ex_UserInfo userInfo;
@@ -333,6 +335,7 @@ void ServicePage::on_btn_clicked(int index)
                     case 0:
                     {
                         show(true);
+                        DLoginWarningDialog::getInstance(tr("Login failed!"));
                         break;
                     }
                     default:
@@ -378,11 +381,13 @@ void ServicePage::on_btn_clicked(int index)
                         break;
                     }
                     case 1:
-                    case 0:
-                    {
                         show(true);
+                        DLoginWarningDialog::getInstance(tr("User's privilege is low, please use the manager account or service account to log in!"));
                         break;
-                    }
+                    case 0:
+                        show(true);
+                        DLoginWarningDialog::getInstance(tr("Login failed!"));
+                        break;
                     default:
                         break;
                     }

@@ -12,11 +12,6 @@ Ex_UserInfo::Ex_UserInfo(QObject *parent) :
 int Ex_UserInfo::checkUserInfo(const QString &userName, const QString &passWord)
 {
     //超级用户，内部使用
-    if((ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer.right(5) == QString("debug"))
-        && (!userName.isEmpty()))
-    {
-        return 4;
-    }
     if((userName.compare("Super", Qt::CaseInsensitive) == 0) && (passWord.compare("888888") == 0))
     {
         return 4;
@@ -55,8 +50,7 @@ int Ex_UserInfo::checkUserInfo(const QString &userName, const QString &passWord)
     {
         QString name = query.value(1).toString();
         QString pass = query.value(2).toString();
-        qDebug() << "Name: " << name;
-        qDebug() << "Password: " << pass;
+
         if((userName.compare(name, Qt::CaseInsensitive) == 0) && (passWord.compare(pass, Qt::CaseInsensitive) == 0))
         {
             return 1;

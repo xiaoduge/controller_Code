@@ -10,7 +10,7 @@ QWidget *Ex_ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionVi
 {
     QComboBox* editor = new QComboBox(parent);
     QStringList strList;
-    strList << "1" << "2";
+    strList << "User" << "Manager";
     editor->addItems(strList);
     return editor;
 }
@@ -19,7 +19,7 @@ void Ex_ComboBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &inde
 {
     int value = index.model()->data(index, Qt::EditRole).toInt();
     QComboBox* comboBox = static_cast<QComboBox*>(editor);
-    comboBox->setCurrentIndex(value);
+    comboBox->setCurrentIndex(value - 1);
 }
 
 void Ex_ComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const

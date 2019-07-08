@@ -29,7 +29,6 @@
 #include "DNetworkConfig.h"
 #include <QProcess>
 
-#define VWR
 //#define FLOWCHART
 //#define D_HTTPWORK
 
@@ -40,6 +39,15 @@
 #define PAGE_X_DIMENSION (40)
 //#define PAGE_Y_DIMENSION (20)
 #define PAGE_Y_DIMENSION (40)
+
+enum GLOBAL_COMPANY
+{
+    COMPANY_REPHILE = 0,
+    COMPANY_VWR,
+    COMPANY_NUM
+};
+
+
 enum GLOBAL_BMP_ENUM
 {
     GLOBAL_BMP_HOME = 0,
@@ -405,6 +413,8 @@ public:
     static QStringList consumableCatNo(CONSUMABLE_CATNO iType);
 
     void emitUnitsChanged();
+
+    void restart();
 
 public slots:
 #ifdef RFIDTEST

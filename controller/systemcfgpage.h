@@ -105,16 +105,11 @@ private:
     }aCHKsIds[32];
 
     int m_iRealChkNum;
-
     
 public slots:
-
     void on_btn_clicked(int);
     void on_CmbIndexChange_pw(int index);
     void on_CmbIndexChange_sw(int index);
-    //void on_CmbIndexChange_device_type(int index);
-    void Restart(void);
-
 };
 
 extern CtrlApplication *gApp;

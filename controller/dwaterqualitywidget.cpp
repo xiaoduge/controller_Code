@@ -46,6 +46,13 @@ void DWaterQualityWidget::initUI()
     this->setLayout(layout);
     m_pTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
+//    QString qss = "QTableWidget{border:0px;background-color:#E4E7F0; }\
+//                   QTableWidget::item{border:1px solid;}\
+//                   QTableWidget::item::selected{background-color:#6495ED; text-color:white;}";
+    QString qss = "QTableWidget{border:0px;background-color:#E4E7F0; }";
+
+    m_pTableWidget->setStyleSheet(qss);
+
     m_pTableWidget->setColumnCount(6);
     for(int i = 0; i < 6; ++i)
     {
@@ -132,6 +139,7 @@ void DWaterQualityWidget::updateValueOne(const QPoint &point, const QString &val
 
     QTableWidgetItem* item = new QTableWidgetItem(value);
     item->setTextAlignment(Qt::AlignCenter);
+    item->setBackgroundColor(Qt::white);
     m_pTableWidget->setItem(row, col, item);
 
 }

@@ -90,7 +90,7 @@ void Ex_ConsumableInstallDialog::initUI()
     m_pInstallBtn->setStyleSheet(qss);
 
 
-    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_ConsumableInstall_Authorization))
+    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_User_Authorization))
     {
         m_pUserLabel->hide();
         m_pLineEditUser->hide();
@@ -140,7 +140,7 @@ void Ex_ConsumableInstallDialog::buildTranslation()
 void Ex_ConsumableInstallDialog::updatePage()
 {
     buildTranslation();
-    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_ConsumableInstall_Authorization))
+    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_User_Authorization))
     {
         if(m_pUserLabel->isVisible())
         {
@@ -166,7 +166,7 @@ void Ex_ConsumableInstallDialog::on_closeBtn_clicked()
 
 void Ex_ConsumableInstallDialog::on_installBtn_clicked()
 {
-    if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_ConsumableInstall_Authorization)))
+    if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_User_Authorization)))
     {
         QString userName = m_pLineEditUser->text();
         if(userName.isEmpty())

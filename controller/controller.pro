@@ -137,7 +137,9 @@ SOURCES += main.cpp\
     dwificonfigdialog.cpp \
     ex_waterqualitypage.cpp \
     dwaterqualitywidget.cpp \
-    dlineedit.cpp
+    dlineedit.cpp \
+    dsqltablemodelforuser.cpp \
+    dloginwarningdialog.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -247,7 +249,9 @@ HEADERS  += mainwindow.h \
     dwificonfigdialog.h \
     ex_waterqualitypage.h \
     dwaterqualitywidget.h \
-    dlineedit.h
+    dlineedit.h \
+    dsqltablemodelforuser.h \
+    dloginwarningdialog.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

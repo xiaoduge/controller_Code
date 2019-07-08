@@ -55,6 +55,7 @@ void Ex_SuperPowerPage::buildTranslation()
 
     m_lbDeviceTypeName->setText(tr("System Type"));
 
+    m_pCompanyLabel->setText(tr("Company"));
     m_pExLabel[SYSCFGPAGE_LB_CATALOGNO]->setText(tr("Catalog No"));
     m_pExLabel[SYSCFGPAGE_LB_SERIALNO]->setText(tr("Serial No"));
     m_pExLabel[SYSCFGPAGE_LB_PRODATE]->setText(tr("Production Date"));
@@ -160,12 +161,20 @@ void Ex_SuperPowerPage::createControl()
     tmpWidget = new QWidget(m_widget);
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
-    tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT*4));
-    yOffset += (BACKWIDGET_HEIGHT*4 + 20);
+    tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT*5));
+    yOffset += (BACKWIDGET_HEIGHT*5 + 20);
 
     QVBoxLayout* v1Layout = new QVBoxLayout;
-    QVBoxLayout* v2Layout = new QVBoxLayout;
+    QVBoxLayout* v2Layout = new QVBoxLayout; 
     QHBoxLayout* hLayout = new QHBoxLayout;
+
+    m_pCompanyLabel = new QLabel;
+    m_pCompanyComboBox = new QComboBox;
+    QStringList companyList;
+    companyList << "Rephile" << "VWR";
+    m_pCompanyComboBox->addItems(companyList);
+    m_pCompanyComboBox->setCurrentIndex(0);
+
 
     m_pExLabel[SYSCFGPAGE_LB_CATALOGNO] = new QLabel;
     m_ExLineEdit[SYSCFGPAGE_LB_CATALOGNO] = new DLineEdit;
@@ -190,12 +199,15 @@ void Ex_SuperPowerPage::createControl()
     m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]->setReadOnly(true);
     m_pExLabel[SYSCFGPAGE_LB_SOFTVER]->setBuddy(m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]);
 
+
+    v1Layout->addWidget(m_pCompanyLabel);
     v1Layout->addWidget(m_pExLabel[SYSCFGPAGE_LB_CATALOGNO]);
     v1Layout->addWidget(m_pExLabel[SYSCFGPAGE_LB_SERIALNO]);
     v1Layout->addWidget(m_pExLabel[SYSCFGPAGE_LB_PRODATE]);
     v1Layout->addWidget(m_pExLabel[SYSCFGPAGE_LB_INSTALLDATE]);
     v1Layout->addWidget(m_pExLabel[SYSCFGPAGE_LB_SOFTVER]);
 
+    v2Layout->addWidget(m_pCompanyComboBox);
     v2Layout->addWidget(m_ExLineEdit[SYSCFGPAGE_LB_CATALOGNO]);
     v2Layout->addWidget(m_ExLineEdit[SYSCFGPAGE_LB_SERIALNO]);
     v2Layout->addWidget(m_ExLineEdit[SYSCFGPAGE_LB_PRODATE]);
@@ -271,17 +283,9 @@ void Ex_SuperPowerPage::update()
 
 void Ex_SuperPowerPage::connectData()
 {
-    switch(ex_gGlobalParam.Ex_Default)
-    {
-    case 0:
-        m_cmbDefaultState->setCurrentIndex(0);
-        break;
-    case 1:
-        m_cmbDefaultState->setCurrentIndex(1);
-        break;
-    default:
-        break;
-    }
+    m_cmbDefaultState->setCurrentIndex(ex_gGlobalParam.Ex_Default);
+
+    m_pCompanyComboBox->setCurrentIndex(ex_gGlobalParam.Ex_System_Msg.Ex_iCompany);
 }
 
 bool Ex_SuperPowerPage::deleteDbAll()
@@ -414,6 +418,8 @@ void Ex_SuperPowerPage::save()
 
     ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow = m_cmbDeviceFlow->currentText().toInt();
 
+    ex_gGlobalParam.Ex_System_Msg.Ex_iCompany = m_pCompanyComboBox->currentIndex();
+
     MainSaveExMachineMsg(gGlobalParam.iMachineType);
     MainSaveProductMsg(gGlobalParam.iMachineType);
     MainSaveInstallMsg(gGlobalParam.iMachineType);
@@ -433,7 +439,10 @@ void Ex_SuperPowerPage :: on_CmbIndexChange_DefaultState(int index)
     int iIdx = m_cmbDefaultState->currentIndex();
     if (iIdx == 0)
     {
-         QMessageBox::StandardButton rb = QMessageBox::question(NULL, tr("NOTIFY"), tr("Whether to restart the device immediately?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+         QMessageBox::StandardButton rb = QMessageBox::question(NULL,
+                                                                tr("NOTIFY"),
+                                                                tr("Do you want to restart the system immediately\n to enter the initialization interface?"),
+                                                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
          if(rb != QMessageBox::Yes)
          {
@@ -448,22 +457,9 @@ void Ex_SuperPowerPage :: on_CmbIndexChange_DefaultState(int index)
          MainUpdateGlobalParam();
          update();
          /**/
-         Restart();
+
+         m_wndMain->restart();
      }
-}
-
-void Ex_SuperPowerPage::Restart(void)
-{
-    QStringList  list;
-    list<<"-qws";
-
-    //gApp->quit();
-    //gApp->closeAllWindows();
-
-    QProcess::startDetached(gApp->applicationFilePath(),list);
-
-    *((int *)(0)) = 0;
-
 }
 
 void Ex_SuperPowerPage::on_CmbIndexChange_deviceType(int index)
@@ -479,7 +475,7 @@ void Ex_SuperPowerPage::on_CmbIndexChange_deviceType(int index)
 //        MainUpdateGlobalParam();
         update();
          /**/
-        Restart();
+        m_wndMain->restart();
     }
 }
 
@@ -514,7 +510,7 @@ void Ex_SuperPowerPage::on_btnDbDel_clicked()
 void Ex_SuperPowerPage::on_btnDelCfg_clicked()
 {
     QString strCfgName = gaMachineType[gGlobalParam.iMachineType].strName;
-    strCfgName += "_info.ini";
+    strCfgName += "_info.ini"; //耗材信息配置文件
 
     QFile infoFile(strCfgName);
     if(!infoFile.exists())
@@ -536,7 +532,7 @@ void Ex_SuperPowerPage::on_btnDelCfg_clicked()
     }
 
     strCfgName = gaMachineType[gGlobalParam.iMachineType].strName;
-    strCfgName += ".ini";
+    strCfgName += ".ini"; //系统参数配置文件
 
     QFile cfgFile(strCfgName);
     if(!cfgFile.exists())
@@ -558,7 +554,7 @@ void Ex_SuperPowerPage::on_btnDelCfg_clicked()
     }
 
     strCfgName = gaMachineType[gGlobalParam.iMachineType].strName;
-    strCfgName += "_CaliParam.ini";
+    strCfgName += "_CaliParam.ini";  //参数校正配置文件
 
     QFile cailFile(strCfgName);
     if(!cailFile.exists())

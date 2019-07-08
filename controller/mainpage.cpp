@@ -1433,6 +1433,10 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
                     else
                     {
                         fQ = toConductivity(info->fQuality);
+                        if(fQ < 0.055)
+                        {
+                            fQ = 0.055;
+                        }
                     }
 
                     //if (DispGetUpQtwFlag())
@@ -1462,6 +1466,10 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
             else
             {
                 fQ = toConductivity(info->fQuality);
+                if(fQ < 0.055)
+                {
+                    fQ = 0.055;
+                }
             }
 
             switch(gGlobalParam.iMachineType)
@@ -1532,6 +1540,10 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
         else
         {
             fQ = toConductivity(info->fQuality);
+            if(fQ < 0.055)
+            {
+                fQ = 0.055;
+            }
         }
 
         switch(gGlobalParam.iMachineType)
@@ -1730,6 +1742,10 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                 else
                 {
                     fQ = toConductivity(info->fQuality);
+                    if(fQ < 0.055)
+                    {
+                        fQ = 0.055;
+                    }
                 }
 
                 if (DispGetUpQtwFlag()
@@ -1765,6 +1781,10 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
             else
             {
                 fQ = toConductivity(info->fQuality);
+                if(fQ < 0.055)
+                {
+                    fQ = 0.055;
+                }
             }
 
             switch(gGlobalParam.iMachineType)
@@ -1902,6 +1922,10 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
         else
         {
             fQ = toConductivity(info->fQuality);
+            if(fQ < 0.055)
+            {
+                fQ = 0.055;
+            }
         }
         switch(gGlobalParam.iMachineType)
         {
