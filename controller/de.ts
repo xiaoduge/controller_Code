@@ -1608,8 +1608,9 @@
     <message>
         <location filename="ex_consumableinstalldialog.cpp" line="174"/>
         <location filename="ex_consumableinstalldialog.cpp" line="181"/>
-        <source>Waring</source>
-        <translation type="unfinished"></translation>
+        <source>Warning</source>
+        <oldsource>Waring</oldsource>
+        <translation type="unfinished">Warnung</translation>
     </message>
     <message>
         <location filename="ex_consumableinstalldialog.cpp" line="174"/>
@@ -3119,87 +3120,83 @@
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="237"/>
+        <location filename="ex_superpowerpage.cpp" line="234"/>
+        <location filename="ex_superpowerpage.cpp" line="243"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="237"/>
+        <location filename="ex_superpowerpage.cpp" line="234"/>
         <source>Consumables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="343"/>
+        <location filename="ex_superpowerpage.cpp" line="243"/>
+        <source>Consumables Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="243"/>
+        <source>Config Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="243"/>
+        <source>Cailbration Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="347"/>
         <source>Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="405"/>
+        <location filename="ex_superpowerpage.cpp" line="409"/>
         <source>Consumable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="405"/>
+        <location filename="ex_superpowerpage.cpp" line="409"/>
         <source>Deleting table failed: Consumable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="444"/>
+        <location filename="ex_superpowerpage.cpp" line="448"/>
         <source>Do you want to restart the system immediately
  to enter the initialization interface?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="519"/>
-        <location filename="ex_superpowerpage.cpp" line="530"/>
-        <source>DeleteInfoCfg</source>
+        <location filename="ex_superpowerpage.cpp" line="593"/>
+        <location filename="ex_superpowerpage.cpp" line="598"/>
+        <location filename="ex_superpowerpage.cpp" line="603"/>
+        <location filename="ex_superpowerpage.cpp" line="610"/>
+        <location filename="ex_superpowerpage.cpp" line="617"/>
+        <location filename="ex_superpowerpage.cpp" line="624"/>
+        <source>Warning</source>
+        <translation type="unfinished">Warnung</translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="593"/>
+        <location filename="ex_superpowerpage.cpp" line="610"/>
+        <source>Delete Consumables info file failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="519"/>
-        <source>info File not existe</source>
+        <location filename="ex_superpowerpage.cpp" line="598"/>
+        <location filename="ex_superpowerpage.cpp" line="617"/>
+        <source>Delete Config info file failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="530"/>
-        <source>info File delete failed</source>
+        <location filename="ex_superpowerpage.cpp" line="603"/>
+        <location filename="ex_superpowerpage.cpp" line="624"/>
+        <source>Delete Caliration info file failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="541"/>
-        <location filename="ex_superpowerpage.cpp" line="552"/>
-        <source>DeleteCfg</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="541"/>
-        <source>Cfg File not existe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="552"/>
-        <source>Cfg File delete failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="563"/>
-        <location filename="ex_superpowerpage.cpp" line="575"/>
-        <source>Delete Calibrate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="563"/>
-        <source>Calibrate File not existe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="575"/>
-        <source>Calibrate File delete failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="237"/>
-        <location filename="ex_superpowerpage.cpp" line="356"/>
+        <location filename="ex_superpowerpage.cpp" line="234"/>
+        <location filename="ex_superpowerpage.cpp" line="360"/>
         <source>Alarm</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3209,64 +3206,64 @@
         <translation>Initialisieren</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="237"/>
+        <location filename="ex_superpowerpage.cpp" line="234"/>
         <source>GetW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="237"/>
+        <location filename="ex_superpowerpage.cpp" line="234"/>
         <source>PWater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="237"/>
-        <location filename="ex_superpowerpage.cpp" line="392"/>
+        <location filename="ex_superpowerpage.cpp" line="234"/>
+        <location filename="ex_superpowerpage.cpp" line="396"/>
         <source>Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="343"/>
+        <location filename="ex_superpowerpage.cpp" line="347"/>
         <source>Deleting table failed: Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="356"/>
+        <location filename="ex_superpowerpage.cpp" line="360"/>
         <source>Deleting table failed: Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="368"/>
+        <location filename="ex_superpowerpage.cpp" line="372"/>
         <source>GetWater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="368"/>
+        <location filename="ex_superpowerpage.cpp" line="372"/>
         <source>Deleting table failed: GetW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="380"/>
+        <location filename="ex_superpowerpage.cpp" line="384"/>
         <source>Product Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="380"/>
+        <location filename="ex_superpowerpage.cpp" line="384"/>
         <source>Deleting table failed: pWater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="392"/>
+        <location filename="ex_superpowerpage.cpp" line="396"/>
         <source>Deleting table failed: Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="443"/>
-        <location filename="ex_superpowerpage.cpp" line="469"/>
+        <location filename="ex_superpowerpage.cpp" line="447"/>
+        <location filename="ex_superpowerpage.cpp" line="473"/>
         <source>NOTIFY</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="469"/>
+        <location filename="ex_superpowerpage.cpp" line="473"/>
         <source>Change Device Type?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4904,8 +4901,11 @@
         <location filename="sendtopage.cpp" line="361"/>
         <location filename="sendtopage.cpp" line="387"/>
         <location filename="sendtopage.cpp" line="394"/>
-        <source>Waring</source>
-        <translation type="unfinished"></translation>
+        <location filename="sendtopage.cpp" line="411"/>
+        <location filename="sendtopage.cpp" line="422"/>
+        <source>Warning</source>
+        <oldsource>Waring</oldsource>
+        <translation type="unfinished">Warnung</translation>
     </message>
     <message>
         <location filename="sendtopage.cpp" line="203"/>
@@ -4952,6 +4952,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="sendtopage.cpp" line="203"/>
+        <location filename="sendtopage.cpp" line="227"/>
+        <location filename="sendtopage.cpp" line="234"/>
+        <location filename="sendtopage.cpp" line="251"/>
+        <location filename="sendtopage.cpp" line="279"/>
+        <location filename="sendtopage.cpp" line="286"/>
+        <location filename="sendtopage.cpp" line="302"/>
+        <location filename="sendtopage.cpp" line="338"/>
+        <location filename="sendtopage.cpp" line="345"/>
+        <location filename="sendtopage.cpp" line="361"/>
+        <location filename="sendtopage.cpp" line="387"/>
+        <location filename="sendtopage.cpp" line="394"/>
         <location filename="sendtopage.cpp" line="411"/>
         <location filename="sendtopage.cpp" line="422"/>
         <source>Warning</source>

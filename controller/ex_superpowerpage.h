@@ -69,6 +69,10 @@ private:
     bool deleteDbLog();
     bool deleteDbConsumables();
 
+    bool deleteInfoConfig();
+    bool deleteConfig();
+    bool deleteCaliParamConfig();
+
 private:
     QLabel    *m_lbDefaultState;
     QComboBox *m_cmbDefaultState;
@@ -84,15 +88,14 @@ private:
     QLabel* m_pExLabel[SYSCFGPAGE_LB_NUM];
     DLineEdit* m_ExLineEdit[SYSCFGPAGE_LB_NUM];
 
-
     QLabel* m_pLbDbDel;
     QComboBox* m_pCmDbDel;
     QPushButton* m_pBtnDbDel;
 
+    QComboBox* m_pCmConfigDel;
     QPushButton* m_pBtnDelCfg;
 
 public slots:
-
     void on_btn_clicked(int);
     void on_CmbIndexChange_DefaultState(int index);
 

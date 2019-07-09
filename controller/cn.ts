@@ -1710,7 +1710,7 @@
         <location filename="ex_checkconsumaleinstall.cpp" line="127"/>
         <location filename="ex_checkconsumaleinstall.cpp" line="138"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">提示</translation>
     </message>
     <message>
         <location filename="ex_checkconsumaleinstall.cpp" line="127"/>
@@ -1760,7 +1760,8 @@
     <message>
         <location filename="ex_consumableinstalldialog.cpp" line="174"/>
         <location filename="ex_consumableinstalldialog.cpp" line="181"/>
-        <source>Waring</source>
+        <source>Warning</source>
+        <oldsource>Waring</oldsource>
         <translation type="unfinished">提示</translation>
     </message>
     <message>
@@ -2027,7 +2028,7 @@
         <location filename="ex_factorytestpage.cpp" line="336"/>
         <location filename="ex_factorytestpage.cpp" line="341"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">提示</translation>
     </message>
     <message>
         <location filename="ex_factorytestpage.cpp" line="325"/>
@@ -3335,87 +3336,91 @@
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="237"/>
+        <location filename="ex_superpowerpage.cpp" line="234"/>
+        <location filename="ex_superpowerpage.cpp" line="243"/>
         <source>All</source>
         <translation>全部</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="237"/>
+        <location filename="ex_superpowerpage.cpp" line="234"/>
         <source>Consumables</source>
         <translation>耗材信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="343"/>
+        <location filename="ex_superpowerpage.cpp" line="243"/>
+        <source>Consumables Info</source>
+        <translation>耗材配置文件</translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="243"/>
+        <source>Config Info</source>
+        <translation>系统配置文件</translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="243"/>
+        <source>Cailbration Info</source>
+        <translation>参数校正文件</translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="347"/>
         <source>Water</source>
         <translation>水质信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="405"/>
+        <location filename="ex_superpowerpage.cpp" line="409"/>
         <source>Consumable</source>
-        <translation type="unfinished">耗材信息</translation>
+        <translation>耗材信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="405"/>
+        <location filename="ex_superpowerpage.cpp" line="409"/>
         <source>Deleting table failed: Consumable</source>
         <translation>删除耗材信息失败</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="444"/>
+        <location filename="ex_superpowerpage.cpp" line="448"/>
         <source>Do you want to restart the system immediately
  to enter the initialization interface?</source>
         <translation>是否立刻重启系统进入初始化界面?</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="519"/>
-        <location filename="ex_superpowerpage.cpp" line="530"/>
+        <location filename="ex_superpowerpage.cpp" line="593"/>
+        <location filename="ex_superpowerpage.cpp" line="598"/>
+        <location filename="ex_superpowerpage.cpp" line="603"/>
+        <location filename="ex_superpowerpage.cpp" line="610"/>
+        <location filename="ex_superpowerpage.cpp" line="617"/>
+        <location filename="ex_superpowerpage.cpp" line="624"/>
+        <source>Warning</source>
+        <translation>提示</translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="593"/>
+        <location filename="ex_superpowerpage.cpp" line="610"/>
+        <source>Delete Consumables info file failed</source>
+        <translation>删除耗材配置文件失败</translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="598"/>
+        <location filename="ex_superpowerpage.cpp" line="617"/>
+        <source>Delete Config info file failed</source>
+        <translation>删除系统配置文件失败</translation>
+    </message>
+    <message>
+        <location filename="ex_superpowerpage.cpp" line="603"/>
+        <location filename="ex_superpowerpage.cpp" line="624"/>
+        <source>Delete Caliration info file failed</source>
+        <translation>删除参数校正配置文件失败</translation>
+    </message>
+    <message>
         <source>DeleteInfoCfg</source>
-        <translation>删除配置文件</translation>
+        <translation type="obsolete">删除配置文件</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="519"/>
-        <source>info File not existe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="530"/>
-        <source>info File delete failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="541"/>
-        <location filename="ex_superpowerpage.cpp" line="552"/>
         <source>DeleteCfg</source>
-        <translation>删除配置文件</translation>
+        <translation type="obsolete">删除配置文件</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="541"/>
-        <source>Cfg File not existe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="552"/>
-        <source>Cfg File delete failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="563"/>
-        <location filename="ex_superpowerpage.cpp" line="575"/>
-        <source>Delete Calibrate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="563"/>
-        <source>Calibrate File not existe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="575"/>
-        <source>Calibrate File delete failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="237"/>
-        <location filename="ex_superpowerpage.cpp" line="356"/>
+        <location filename="ex_superpowerpage.cpp" line="234"/>
+        <location filename="ex_superpowerpage.cpp" line="360"/>
         <source>Alarm</source>
         <translation>报警信息</translation>
     </message>
@@ -3425,59 +3430,59 @@
         <translation>初始化</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="237"/>
+        <location filename="ex_superpowerpage.cpp" line="234"/>
         <source>GetW</source>
         <translation>取水信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="237"/>
+        <location filename="ex_superpowerpage.cpp" line="234"/>
         <source>PWater</source>
         <translation>产水信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="237"/>
-        <location filename="ex_superpowerpage.cpp" line="392"/>
+        <location filename="ex_superpowerpage.cpp" line="234"/>
+        <location filename="ex_superpowerpage.cpp" line="396"/>
         <source>Log</source>
         <translation>日志</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="343"/>
+        <location filename="ex_superpowerpage.cpp" line="347"/>
         <source>Deleting table failed: Water</source>
         <translation>删除数据表失败：水质信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="356"/>
+        <location filename="ex_superpowerpage.cpp" line="360"/>
         <source>Deleting table failed: Alarm</source>
         <translation>删除数据表失败：报警信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="368"/>
+        <location filename="ex_superpowerpage.cpp" line="372"/>
         <source>GetWater</source>
         <translation>取水信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="368"/>
+        <location filename="ex_superpowerpage.cpp" line="372"/>
         <source>Deleting table failed: GetW</source>
         <translation>删除数据表失败：取水信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="380"/>
+        <location filename="ex_superpowerpage.cpp" line="384"/>
         <source>Product Water</source>
         <translation>产水信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="380"/>
+        <location filename="ex_superpowerpage.cpp" line="384"/>
         <source>Deleting table failed: pWater</source>
         <translation>删除数据表失败：产水信息</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="392"/>
+        <location filename="ex_superpowerpage.cpp" line="396"/>
         <source>Deleting table failed: Log</source>
         <translation>删除数据表失败：日志</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="443"/>
-        <location filename="ex_superpowerpage.cpp" line="469"/>
+        <location filename="ex_superpowerpage.cpp" line="447"/>
+        <location filename="ex_superpowerpage.cpp" line="473"/>
         <source>NOTIFY</source>
         <translation>提示</translation>
     </message>
@@ -3486,7 +3491,7 @@
         <translation type="obsolete">是否立刻重启设备?</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="469"/>
+        <location filename="ex_superpowerpage.cpp" line="473"/>
         <source>Change Device Type?</source>
         <translation>改变设备类型?</translation>
     </message>
@@ -4450,7 +4455,7 @@
     <message>
         <location filename="mainpage.cpp" line="1322"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">提示</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="1323"/>
@@ -4627,7 +4632,7 @@
         <location filename="mainwindow.cpp" line="9936"/>
         <location filename="mainwindow.cpp" line="9942"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">提示</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="9936"/>
@@ -5235,7 +5240,10 @@
         <location filename="sendtopage.cpp" line="361"/>
         <location filename="sendtopage.cpp" line="387"/>
         <location filename="sendtopage.cpp" line="394"/>
-        <source>Waring</source>
+        <location filename="sendtopage.cpp" line="411"/>
+        <location filename="sendtopage.cpp" line="422"/>
+        <source>Warning</source>
+        <oldsource>Waring</oldsource>
         <translation type="unfinished">提示</translation>
     </message>
     <message>
@@ -5280,12 +5288,6 @@
         <location filename="sendtopage.cpp" line="387"/>
         <location filename="sendtopage.cpp" line="394"/>
         <source>Failed to send data:Log.dcj</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="sendtopage.cpp" line="411"/>
-        <location filename="sendtopage.cpp" line="422"/>
-        <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

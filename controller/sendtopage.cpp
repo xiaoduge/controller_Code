@@ -200,7 +200,7 @@ void SendToPage::copyAlarmFile()
     QFile file("/media/sda1/GenieData/Alarm.csv");
     if(!file.open(QFile::WriteOnly | QFile::Truncate))
     {
-        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:Alarm"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:Alarm"), QMessageBox::Ok);
         return;
     }
 
@@ -224,14 +224,14 @@ void SendToPage::copyAlarmFile()
    //tobase64
     if(!file.open(QFile::ReadOnly | QFile::Truncate))
     {
-        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:Alarm.dcj"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:Alarm.dcj"), QMessageBox::Ok);
         return;
     }
     QByteArray content = file.readAll().toBase64();
     QFile fileBase64("/media/sda1/GenieData/Alarm.dcj");
     if(!fileBase64.open(QFile::WriteOnly | QFile::Truncate))
     {
-        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:Alarm.dcj"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:Alarm.dcj"), QMessageBox::Ok);
         return;
     }
     fileBase64.write(content);
@@ -248,7 +248,7 @@ void SendToPage::copyGetWater()
     QFile file("/media/sda1/GenieData/GetWater.csv");
     if(!file.open(QFile::WriteOnly | QFile::Truncate))
     {
-        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:GetWater"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:GetWater"), QMessageBox::Ok);
         return;
     }
 
@@ -276,14 +276,14 @@ void SendToPage::copyGetWater()
     //tobase64
     if(!file.open(QFile::ReadOnly | QFile::Truncate))
     {
-        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:GetWater.dcj"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:GetWater.dcj"), QMessageBox::Ok);
         return;
     }
     QByteArray content = file.readAll().toBase64();
     QFile fileBase64("/media/sda1/GenieData/GetWater.dcj");
     if(!fileBase64.open(QFile::WriteOnly | QFile::Truncate))
     {
-        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:GetWater.dcj"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:GetWater.dcj"), QMessageBox::Ok);
         return;
     }
     fileBase64.write(content);
@@ -299,7 +299,7 @@ void SendToPage::copyProduceWater()
     QFile file("/media/sda1/GenieData/ProductWater.csv");
     if(!file.open(QFile::WriteOnly | QFile::Truncate))
     {
-        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:ProduceWater"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:ProduceWater"), QMessageBox::Ok);
         return;
     }
 
@@ -335,14 +335,14 @@ void SendToPage::copyProduceWater()
     //tobase64
     if(!file.open(QFile::ReadOnly | QFile::Truncate))
     {
-        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:ProduceWater.dcj"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:ProduceWater.dcj"), QMessageBox::Ok);
         return;
     }
     QByteArray content = file.readAll().toBase64();
     QFile fileBase64("/media/sda1/GenieData/ProduceWater.dcj");
     if(!fileBase64.open(QFile::WriteOnly | QFile::Truncate))
     {
-        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:ProduceWater.dcj"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:ProduceWater.dcj"), QMessageBox::Ok);
         return;
     }
     fileBase64.write(content);
@@ -358,7 +358,7 @@ void SendToPage::copyLog()
     QFile file("/media/sda1/GenieData/log.csv");
     if(!file.open(QFile::WriteOnly | QFile::Truncate))
     {
-        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:Log"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:Log"), QMessageBox::Ok);
         return;
     }
 
@@ -384,14 +384,14 @@ void SendToPage::copyLog()
     //tobase64
     if(!file.open(QFile::ReadOnly | QFile::Truncate))
     {
-        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:Log.dcj"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:Log.dcj"), QMessageBox::Ok);
         return;
     }
     QByteArray content = file.readAll().toBase64();
     QFile fileBase64("/media/sda1/GenieData/Log.dcj");
     if(!fileBase64.open(QFile::WriteOnly | QFile::Truncate))
     {
-        QMessageBox::warning(NULL, tr("Waring"), tr("Failed to send data:Log.dcj"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:Log.dcj"), QMessageBox::Ok);
         return;
     }
     fileBase64.write(content);

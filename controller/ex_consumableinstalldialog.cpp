@@ -171,14 +171,14 @@ void Ex_ConsumableInstallDialog::on_installBtn_clicked()
         QString userName = m_pLineEditUser->text();
         if(userName.isEmpty())
         {
-            QMessageBox::warning(this, tr("Waring"), tr("Please enter a valid username"), QMessageBox::Ok);
+            QMessageBox::warning(this, tr("Warning"), tr("Please enter a valid username"), QMessageBox::Ok);
             return;
         }
 
         bool ok = this->checkUserInfo(userName);
         if(!ok)
         {
-            QMessageBox::warning(this, tr("Waring"), tr("Invalid username"), QMessageBox::Ok);
+            QMessageBox::warning(this, tr("Warning"), tr("Invalid username"), QMessageBox::Ok);
             return;
         }
         gpMainWnd->saveLoginfo(userName);

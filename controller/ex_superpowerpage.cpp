@@ -220,36 +220,41 @@ void Ex_SuperPowerPage::createControl()
     tmpWidget->setLayout(hLayout);
 
     //Database Delete
+    QHBoxLayout* deleteLayout = new QHBoxLayout;
+
     tmpWidget = new QWidget(m_widget);
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
     tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
 
-    rectTmp = QRect(5,  15, 120, 30);;
-    m_pLbDbDel = new QLabel(tmpWidget);
-    m_pLbDbDel->setGeometry(rectTmp);
-    m_pLbDbDel->show();
+    m_pLbDbDel = new QLabel;
 
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
-    rectTmp.setWidth(X_VALUE_WIDTH*2 + 5);
-    m_pCmDbDel = new QComboBox(tmpWidget);
+    m_pCmDbDel = new QComboBox;
     QStringList cbList;
     cbList << tr("All") << tr("Alarm") << tr("GetW") << tr("PWater") << tr("Log") << tr("Consumables");//  << tr("Water");
     m_pCmDbDel->addItems(cbList);
     m_pCmDbDel->setCurrentIndex(0);
-    m_pCmDbDel->setGeometry(rectTmp);
 
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN*2);
-    rectTmp.setWidth(X_VALUE_WIDTH*2 + 5);
-    m_pBtnDbDel = new QPushButton(tmpWidget);
-    m_pBtnDbDel->setGeometry(rectTmp);
+    m_pBtnDbDel = new QPushButton;
     connect(m_pBtnDbDel, SIGNAL(clicked()), this, SLOT(on_btnDbDel_clicked()));
 
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN*2);
-    rectTmp.setWidth(X_VALUE_WIDTH*2 + 5);
-    m_pBtnDelCfg = new QPushButton(tmpWidget);
-    m_pBtnDelCfg->setGeometry(rectTmp);
+    m_pCmConfigDel = new QComboBox;
+    QStringList configFileList;
+    configFileList << tr("All") << tr("Consumables Info") << tr("Config Info") << tr("Cailbration Info");
+    m_pCmConfigDel->addItems(configFileList);
+    m_pCmConfigDel->setCurrentIndex(0);
+    m_pBtnDelCfg = new QPushButton;
     connect(m_pBtnDelCfg, SIGNAL(clicked()), this, SLOT(on_btnDelCfg_clicked()));
+
+    deleteLayout->addWidget(m_pLbDbDel);
+    deleteLayout->addSpacing(8);
+    deleteLayout->addWidget(m_pCmDbDel);
+    deleteLayout->addWidget(m_pBtnDbDel);
+    deleteLayout->addSpacing(30);
+    deleteLayout->addWidget(m_pCmConfigDel);
+    deleteLayout->addWidget(m_pBtnDelCfg);
+    deleteLayout->addStretch();
+    tmpWidget->setLayout(deleteLayout);
 
     //Save Btn
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,SYSCFGPAGE_BTN_SAVE);
@@ -507,7 +512,7 @@ void Ex_SuperPowerPage::on_btnDbDel_clicked()
     }
 }
 
-void Ex_SuperPowerPage::on_btnDelCfg_clicked()
+bool Ex_SuperPowerPage::deleteInfoConfig()
 {
     QString strCfgName = gaMachineType[gGlobalParam.iMachineType].strName;
     strCfgName += "_info.ini"; //耗材信息配置文件
@@ -515,65 +520,113 @@ void Ex_SuperPowerPage::on_btnDelCfg_clicked()
     QFile infoFile(strCfgName);
     if(!infoFile.exists())
     {
-        qDebug() <<" not existe";
-        QMessageBox::warning(m_widget, tr("DeleteInfoCfg"), tr("info File not existe"), QMessageBox::Ok);
+        return true;
     }
     else
     {
         if(infoFile.remove())
         {
-            qDebug() << "Delete success";
+            return true;
         }
         else
         {
-            qDebug() << "Delete failed";
-            QMessageBox::warning(m_widget, tr("DeleteInfoCfg"), tr("info File delete failed"), QMessageBox::Ok);
+            return false;
         }
     }
+}
 
-    strCfgName = gaMachineType[gGlobalParam.iMachineType].strName;
+bool Ex_SuperPowerPage::deleteConfig()
+{
+    QString strCfgName = gaMachineType[gGlobalParam.iMachineType].strName;
     strCfgName += ".ini"; //系统参数配置文件
 
     QFile cfgFile(strCfgName);
     if(!cfgFile.exists())
     {
-        qDebug() <<" not existe";
-        QMessageBox::warning(m_widget, tr("DeleteCfg"), tr("Cfg File not existe"), QMessageBox::Ok);
+        return true;
     }
     else
     {
         if(cfgFile.remove())
         {
-            qDebug() << "Delete success";
+            return true;
         }
         else
         {
-            qDebug() << "Delete failed";
-            QMessageBox::warning(m_widget, tr("DeleteCfg"), tr("Cfg File delete failed"), QMessageBox::Ok);
+            return false;
         }
     }
+}
 
-    strCfgName = gaMachineType[gGlobalParam.iMachineType].strName;
+bool Ex_SuperPowerPage::deleteCaliParamConfig()
+{
+    QString strCfgName = gaMachineType[gGlobalParam.iMachineType].strName;
     strCfgName += "_CaliParam.ini";  //参数校正配置文件
 
     QFile cailFile(strCfgName);
     if(!cailFile.exists())
     {
-        qDebug() <<" not existe";
-        QMessageBox::warning(m_widget, tr("Delete Calibrate"), tr("Calibrate File not existe"), QMessageBox::Ok);
-        return;
+        return true;
     }
     else
     {
         if(cailFile.remove())
         {
-            qDebug() << "Delete success";
+            return true;
         }
         else
         {
-            qDebug() << "Delete failed";
-            QMessageBox::warning(m_widget, tr("Delete Calibrate"), tr("Calibrate File delete failed"), QMessageBox::Ok);
+            return false;
         }
+    }
+}
+
+void Ex_SuperPowerPage::on_btnDelCfg_clicked()
+{
+    int index = m_pCmConfigDel->currentIndex();
+    bool ret;
+    switch(index)
+    {
+    case 0:
+        ret = deleteInfoConfig();
+        if(!ret)
+        {
+            QMessageBox::warning(NULL, tr("Warning"), tr("Delete Consumables info file failed"), QMessageBox::Ok);
+        }
+        ret = deleteConfig();
+        if(!ret)
+        {
+            QMessageBox::warning(NULL, tr("Warning"), tr("Delete Config info file failed"), QMessageBox::Ok);
+        }
+        ret = deleteCaliParamConfig();
+        if(!ret)
+        {
+            QMessageBox::warning(NULL, tr("Warning"), tr("Delete Caliration info file failed"), QMessageBox::Ok);
+        }
+        break;
+    case 1:
+        ret = deleteInfoConfig();
+        if(!ret)
+        {
+            QMessageBox::warning(NULL, tr("Warning"), tr("Delete Consumables info file failed"), QMessageBox::Ok);
+        }
+        break;
+    case 2:
+        ret = deleteConfig();
+        if(!ret)
+        {
+            QMessageBox::warning(NULL, tr("Warning"), tr("Delete Config info file failed"), QMessageBox::Ok);
+        }
+        break;
+    case 3:
+        ret = deleteCaliParamConfig();
+        if(!ret)
+        {
+            QMessageBox::warning(NULL, tr("Warning"), tr("Delete Caliration info file failed"), QMessageBox::Ok);
+        }
+        break;
+    default:
+        break;
     }
 }
 
