@@ -79,6 +79,7 @@ QString CREATE_TABLE_GetW = "CREATE TABLE IF NOT EXISTS  GetW (id INTEGER PRIMAR
                                                                   "name VARCHAR(20) NOT NULL,"
                                                                   "quantity double NULL,"
                                                                   "quality double NULL,"
+                                                                  "TOC int NULL,"
                                                                   "tmp double NULL,"
                                                                   "time VARCHAR(20) NOT NULL)";
 
@@ -123,7 +124,7 @@ QString delete_sql_Water = "delete from Water where time > ? and time < ?";
 QString select_sql_Alarm = "SELECT id, type, status, time FROM Alarm  where time > ? and time < ?";
 QString delete_sql_Alarm = "delete from Alarm where time > ? and time < ?";
 
-QString select_sql_GetW  = "SELECT id, name, quantity, quality, tmp, time FROM GetW where time > ? and time < ?";
+QString select_sql_GetW  = "SELECT id, name, quantity, quality, TOC, tmp, time FROM GetW where time > ? and time < ?";
 QString delete_sql_GetW  = "delete from GetW where time > ? and time < ?";
 
 QString select_sql_PW    = "SELECT id, time, ecoroin, tmproin, ecorores, ecoropw, tmpropw, ecoedi, tmpedi, duration FROM PWater where time > ? and time < ?";
@@ -136,7 +137,7 @@ QString delete_sql_Log    = "delete from Log where time > ? and time < ?";
 
 QString INSERT_sql_Water = "INSERT INTO Water (id, ecoid, quality, time) VALUES (:id, :ecoid, :quality, :time)";
 QString INSERT_sql_Alarm = "INSERT INTO Alarm (id, type, status ,time) VALUES (:id, :type, :status, :time)";
-QString INSERT_sql_GetW  = "INSERT INTO GetW (id, name, quantity, quality, tmp, time) VALUES (:id, :name, :quantity, :quality, :tmp, :time)";
+QString INSERT_sql_GetW  = "INSERT INTO GetW (id, name, quantity, quality, TOC, tmp, time) VALUES (:id, :name, :quantity, :quality, :TOC, :tmp, :time)";
 QString INSERT_sql_PW    = "INSERT INTO PWater (id, duration, ecoroin, tmproin, ecorores, ecoropw, tmpropw, ecoedi, tmpedi, time) VALUES (:id, :duration, :ecoroin, :tmproin, :ecorores, :ecoropw, :tmpropw, :ecoedi, :tmpedi, :time)";
 QString INSERT_sql_Log   = "INSERT INTO Log (id, name, action, info, time) VALUES (:id, :name, :action, :info, :time)";
 

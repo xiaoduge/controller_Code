@@ -258,6 +258,40 @@ void Ex_Init_TimePage::update()
     m_pBtns[TIMEPAGE_BTN_TIME_SET]->setTip(sysDateTime.toString("hh:mm:ss"));
 }
 
+void Ex_Init_TimePage::mousePressEvent(QMouseEvent *e)
+{
+    if (!m_lstFlag)
+    {
+        m_lstX = e->x();
+        m_lstY = e->y();
+        m_curX = e->x();
+        m_curY = e->y();
+        m_lstFlag = 1;
+    }
+}
+
+void Ex_Init_TimePage::mouseMoveEvent(QMouseEvent *e)
+{
+    if (0 == e->x()
+        && 0 == e->y())
+    {
+       return;
+    }
+
+    m_curX = e->x();
+    m_curY = e->y();
+}
+
+void Ex_Init_TimePage::mouseReleaseEvent(QMouseEvent *e)
+{
+    if (abs(m_curX - m_lstX) >= PAGE_X_DIMENSION
+        && abs(m_curY - m_lstY) <= PAGE_Y_DIMENSION)
+    {
+        m_wndMain->naviInitPage(Ex_Init_Time, m_curX - m_lstX > 0 ? 1 : 0);
+    }
+    m_lstFlag = 0;
+}
+
 
 void Ex_Init_TimePage::Date_show_hide(bool show)
 {
@@ -398,13 +432,13 @@ void Ex_Init_TimePage::on_btn_clicked(int index)
 
 void Ex_Init_TimePage::on_ExNextBtn_clicked()
 {
-    emit timecfgSwitchBtnClicked(1);
+    m_wndMain->naviInitPage(Ex_Init_Time, 0);
     m_wndMain->prepareKeyStroke();
 }
 
 void Ex_Init_TimePage::on_ExBackBtn_Clicked()
 {
-    emit timecfgSwitchBtnClicked(0);
+    m_wndMain->naviInitPage(Ex_Init_Time, 1);
     m_wndMain->prepareKeyStroke();
 }
 

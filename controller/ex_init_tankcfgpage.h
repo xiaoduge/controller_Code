@@ -34,10 +34,13 @@ public:
     virtual void initUi();
 
     virtual void update();
+
     void createHeader();
 
-signals:
-    void tankcfgSwitchBtnClicked(int);
+protected:
+    void mousePressEvent(QMouseEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
 
 private:
 

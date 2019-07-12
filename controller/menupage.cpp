@@ -159,7 +159,7 @@ void MenuPage::initUi()
     }
 
     x = 400 - PAGEID_MARGIN/2 - PAGEID_MARGIN - gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->width()*2;
-    for ( index = 0 ; index < 4 ; index++)
+    for ( index = 0 ; index < 3 ; index++)
     {
         m_pLbPageId[index] = new QLabel(m_widget);
         m_pLbPageId[index]->setGeometry(x ,560,gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->width(),gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->height());

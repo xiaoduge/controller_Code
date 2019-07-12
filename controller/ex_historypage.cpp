@@ -401,8 +401,9 @@ void Ex_HistoryPage::initTabelHeaderData(QSqlTableModel *tableModel, int tableID
         tableModel->setHeaderData(1, Qt::Horizontal, tr("WName"));  //
         tableModel->setHeaderData(2, Qt::Horizontal, tr("Quantity")); //取水量
         tableModel->setHeaderData(3, Qt::Horizontal, tr("Quality")); //水质
-        tableModel->setHeaderData(4, Qt::Horizontal, tr("Tmp"));    //温度
-        tableModel->setHeaderData(5, Qt::Horizontal, tr("Time"));    //
+        tableModel->setHeaderData(4, Qt::Horizontal, tr("TOC"));  //
+        tableModel->setHeaderData(5, Qt::Horizontal, tr("Tmp"));    //温度
+        tableModel->setHeaderData(6, Qt::Horizontal, tr("Time"));    //
         break;
     case HISTORYPAGE_DATA_PWATER:
         tableModel->setHeaderData(0, Qt::Horizontal, tr("ID"));

@@ -281,6 +281,41 @@ void Ex_Init_Tankcfgpage::createHeader()
 
 }
 
+void Ex_Init_Tankcfgpage::mousePressEvent(QMouseEvent *e)
+{
+    if (!m_lstFlag)
+    {
+        m_lstX = e->x();
+        m_lstY = e->y();
+        m_curX = e->x();
+        m_curY = e->y();
+        m_lstFlag = 1;
+    }
+}
+
+void Ex_Init_Tankcfgpage::mouseMoveEvent(QMouseEvent *e)
+{
+    if (0 == e->x()
+        && 0 == e->y())
+    {
+       return;
+    }
+
+    m_curX = e->x();
+    m_curY = e->y();
+}
+
+void Ex_Init_Tankcfgpage::mouseReleaseEvent(QMouseEvent *e)
+{
+    if (abs(m_curX - m_lstX) >= PAGE_X_DIMENSION
+        && abs(m_curY - m_lstY) <= PAGE_Y_DIMENSION)
+    {
+        save();
+        m_wndMain->naviInitPage(Ex_Init_Tankcfg, m_curX - m_lstX > 0 ? 1 : 0);
+    }
+    m_lstFlag = 0;
+}
+
 
 void Ex_Init_Tankcfgpage::connectData()
 {
@@ -547,13 +582,13 @@ void Ex_Init_Tankcfgpage::on_CmbIndexChange_sw(int index)
 void Ex_Init_Tankcfgpage::on_ExNextBtn_clicked()
 {
     save();
-    emit tankcfgSwitchBtnClicked(1);
+    m_wndMain->naviInitPage(Ex_Init_Tankcfg, 0);
     m_wndMain->prepareKeyStroke();
 }
 
 void Ex_Init_Tankcfgpage::on_ExBackBtn_clicked()
 {
-    emit tankcfgSwitchBtnClicked(0);
+    m_wndMain->naviInitPage(Ex_Init_Tankcfg, 1);
     m_wndMain->prepareKeyStroke();
 }
 

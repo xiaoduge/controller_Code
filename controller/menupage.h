@@ -68,7 +68,7 @@ private:
     
     titleBar      *m_pTitleBar;
     
-    QLabel        *m_pLbPageId[4];
+    QLabel        *m_pLbPageId[3];
 
 
 public slots:

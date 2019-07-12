@@ -14,11 +14,21 @@ Ex_CheckConsumaleInstall::Ex_CheckConsumaleInstall(int id, QObject *parent) :
     QObject(parent),
     m_instanceID(id)
 {
+    initSqlDatabase();
+
     initRfid();
     initTypeMap();
     initCategoryMap();
     m_isRfidType = false;
     m_isBusy = false;
+}
+
+Ex_CheckConsumaleInstall::~Ex_CheckConsumaleInstall()
+{
+    if(m_db.isOpen())
+    {
+        m_db.close();
+    }
 }
 
 int Ex_CheckConsumaleInstall::consumableType()
@@ -183,6 +193,36 @@ void Ex_CheckConsumaleInstall::initCategoryMap()
     m_categoryMap.insert(TANKVENTFILTER_CATNO, 0);
 }
 
+bool Ex_CheckConsumaleInstall::checkDatabaseConnect()
+{
+    if(m_db.isOpen())
+    {
+        return true;
+    }
+    else
+    {
+        return initSqlDatabase();
+    }
+
+}
+
+bool Ex_CheckConsumaleInstall::initSqlDatabase()
+{
+    m_db = QSqlDatabase::addDatabase("QSQLITE", QString("CIC%1").arg(m_instanceID));
+    m_db.setHostName("SHZN");
+    m_db.setDatabaseName("SHZN");
+    m_db.setUserName("SHZN");
+    m_db.setPassword("SHZN");
+    if(m_db.open())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 /*
   return 0 : do nothing
   return 1 : insert new
@@ -191,7 +231,12 @@ void Ex_CheckConsumaleInstall::initCategoryMap()
 */
 bool Ex_CheckConsumaleInstall::comparedWithSql()
 {
-    QSqlQuery query;
+    if(!checkDatabaseConnect())
+    {
+        return false;
+    }
+
+    QSqlQuery query(m_db);
     bool ret;
 
     query.prepare(select_sql_Consumable);
@@ -239,7 +284,7 @@ bool Ex_CheckConsumaleInstall::comparedWithSql()
 void Ex_CheckConsumaleInstall::updateSql()
 {
     QString strCurDate = QDate::currentDate().toString("yyyy-MM-dd");
-    QSqlQuery query;
+    QSqlQuery query(m_db);
     query.prepare(update_sql_Consumable);
     query.addBindValue(m_catNo);
     query.addBindValue(m_lotNo);
@@ -262,7 +307,7 @@ void Ex_CheckConsumaleInstall::updateSql()
 void Ex_CheckConsumaleInstall::insertSql()
 {
     QString strCurDate = QDate::currentDate().toString("yyyy-MM-dd");
-    QSqlQuery query;
+    QSqlQuery query(m_db);
     query.prepare(insert_sql_Consumable);
     query.bindValue(":iPackType", m_iType);
     query.bindValue(":CatNo", m_catNo);
@@ -308,6 +353,11 @@ void Ex_CheckConsumaleInstall::updateConsumableType(int iType)
 
 void Ex_CheckConsumaleInstall::updateConsumaleMsg()
 {
+    if(!checkDatabaseConnect())
+    {
+        return;
+    }
+
     switch(m_operateID)
     {
     case 1:
@@ -362,4 +412,6 @@ void Ex_CheckConsumaleInstall::updateConsumaleMsg()
     {
         gpMainWnd->MainWriteCMInstallInfo2Db(m_iType, 0, cat, lot);
     }
+
+    emit consumableInstallFinished(m_iType);
 }

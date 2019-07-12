@@ -40,6 +40,11 @@ public:
 
     virtual void leaveSubPage();
 
+protected:
+    void mousePressEvent(QMouseEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
+
 private:
 
     void buildTitles();
@@ -51,9 +56,6 @@ private:
     int    m_iLanguage;
 
     QPushButton* m_nextBtn;
-
-signals:
-    void languageSwitchBtnClicked(int);
 
 public slots:
     void on_saveBtn_clicked();

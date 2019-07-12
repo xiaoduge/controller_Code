@@ -81,6 +81,7 @@
 #include "ex_loginstate.h"
 #include "ex_init_languagepage.h"
 #include "ex_init_networkpage.h"
+#include "ex_initconsumableinspage.h"
 #include "ex_init_handlecfgpage.h"
 #include "ex_init_timepage.h"
 #include "ex_init_tankcfgpage.h"
@@ -200,7 +201,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190708_debug");
+QString strSoftwareVersion = QString("0.1.8.190712_debug");
 
 MainWindow *gpMainWnd;
 
@@ -3269,7 +3270,7 @@ void MainWindow::initUI()
         "main",
         "menu",
         "service",
-        "set",
+//        "set",
     };
 
     QString initPageName[Ex_Init_Num] =
@@ -3279,6 +3280,7 @@ void MainWindow::initUI()
         "InitTankSet",
         "InitSysConfig",
         "InitNetwork",
+        "InitInstallConsumable",
         "InitHandler",
     };
 
@@ -3303,6 +3305,7 @@ void MainWindow::initUI()
     m_pFonts[GLOBAL_FONT_24] = new QFont("" , 24 ,  QFont::Bold);
     m_pFonts[GLOBAL_FONT_30] = new QFont("" , 30 ,  QFont::Bold);
     m_pFonts[GLOBAL_FONT_40] = new QFont("" , 40 ,  QFont::Bold);
+    m_pFonts[GLOBAL_FONT_48] = new QFont("" , 48 ,  QFont::Bold);
     m_pFonts[GLOBAL_FONT_60] = new QFont("" , 60 ,  QFont::Bold);
     //ex_dcj
     if(ex_gGlobalParam.Ex_Default == 0)
@@ -3319,16 +3322,9 @@ void MainWindow::initUI()
         m_pExInitPages[Ex_Init_Tankcfg] = new Ex_Init_Tankcfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Tankcfg] , this);
         m_pExInitPages[Ex_Init_Syscfg] = new Ex_Init_Syscfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Syscfg] , this);
         m_pExInitPages[Ex_Init_Network] = new Ex_Init_Networkpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Network] , this);
+        m_pExInitPages[Ex_Init_InstallConsumable] = new Ex_InitConsumableInsPage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_InstallConsumable] , this);
         m_pExInitPages[Ex_Init_Handlercfg] = new Ex_Init_HandleCfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Handlercfg] , this);
         m_curExInitPage = m_pExInitPages[Ex_Init_Lan];
-
-        connect(m_pExInitPages[Ex_Init_Lan], SIGNAL(languageSwitchBtnClicked(int)), this, SLOT(on_Ex_Init_Lan(int))); //on_Ex_Init_Lan
-        connect(m_pExInitPages[Ex_Init_Time], SIGNAL(timecfgSwitchBtnClicked(int)), this, SLOT(on_Ex_Init_Time(int))); //
-        connect(m_pExInitPages[Ex_Init_Tankcfg], SIGNAL(tankcfgSwitchBtnClicked(int)), this, SLOT(on_Ex_Init_TankCfg(int))); //
-        connect(m_pExInitPages[Ex_Init_Syscfg], SIGNAL(initcfgSwitchBtnClicked(int)), this, SLOT(on_Ex_Init_Syscfg(int))); //
-        connect(m_pExInitPages[Ex_Init_Network], SIGNAL(networkSwitchBtnClicked(int)), this, SLOT(on_Ex_Init_Network(int))); //on_Ex_Init_Networ
-        connect(m_pExInitPages[Ex_Init_Handlercfg], SIGNAL(exInitFinished()), this, SLOT(on_Ex_Init_Finished()));
-        connect(m_pExInitPages[Ex_Init_Handlercfg], SIGNAL(handlercfgSwitchBtnClicked(int)), this, SLOT(on_Ex_Init_Handler(int)));
     }
     //ScreenPage
     m_pScreenSleepWidget = new CBaseWidget(mainWidget);
@@ -3360,8 +3356,6 @@ void MainWindow::initUI()
     m_pSubPages[PAGE_MENU]    = new MenuPage(0 , (CBaseWidget *)m_pSubWidget[PAGE_MENU],this );
 
     m_pSubPages[PAGE_SERVICE] = new ServicePage(0 , (CBaseWidget *)m_pSubWidget[PAGE_SERVICE] , this);
-
-    m_pSubPages[PAGE_SET]     = new SetPage(0 , (CBaseWidget *)m_pSubWidget[PAGE_SET] , this);
 
     m_pCurPage   = m_pSubPages[PAGE_MAIN];
     m_curPageIdx = PAGE_MAIN;
@@ -3498,20 +3492,22 @@ MainWindow::MainWindow(QMainWindow *parent) :
         m_ulFlowRptTick[iLoop]     = 0;
     }
 
-    m_EcoInfo[APP_EXE_I1_NO].fQuality    = 2000;
-    m_EcoInfo[APP_EXE_I1_NO].fTemperature = 25;
+    m_EcoInfo[APP_EXE_I1_NO].fQuality    = 0;
+    m_EcoInfo[APP_EXE_I1_NO].fTemperature = 0;
 
-    m_EcoInfo[APP_EXE_I2_NO].fQuality    = 2000;
-    m_EcoInfo[APP_EXE_I2_NO].fTemperature = 25;
+    m_EcoInfo[APP_EXE_I2_NO].fQuality    = 0;
+    m_EcoInfo[APP_EXE_I2_NO].fTemperature = 0;
 
-    m_EcoInfo[APP_EXE_I3_NO].fQuality    = 1.0;
-    m_EcoInfo[APP_EXE_I3_NO].fTemperature = 25;
+    m_EcoInfo[APP_EXE_I3_NO].fQuality    = 0;
+    m_EcoInfo[APP_EXE_I3_NO].fTemperature = 0;
 
-    m_EcoInfo[APP_EXE_I4_NO].fQuality    = 1.0;
-    m_EcoInfo[APP_EXE_I4_NO].fTemperature = 25;
+    m_EcoInfo[APP_EXE_I4_NO].fQuality    = 0;
+    m_EcoInfo[APP_EXE_I4_NO].fTemperature = 0;
 
-    m_EcoInfo[APP_EXE_I5_NO].fQuality    = 18.2;
-    m_EcoInfo[APP_EXE_I5_NO].fTemperature = 25;
+    m_EcoInfo[APP_EXE_I5_NO].fQuality    = 0;
+    m_EcoInfo[APP_EXE_I5_NO].fTemperature = 0;
+
+    m_curToc = 0;
 
     memset(m_aHandler,0,sizeof(m_aHandler));
 
@@ -4346,6 +4342,12 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
         connect(m_consumaleInstallDialog[iLoop], SIGNAL(consumableTypeChanged(int)),
                 m_checkConsumaleInstall[iLoop], SLOT(updateConsumableType(int)));
+
+        if(0 == ex_gGlobalParam.Ex_Default)
+        {
+            connect(m_checkConsumaleInstall[iLoop], SIGNAL(consumableInstallFinished(int)),
+                m_pExInitPages[Ex_Init_InstallConsumable], SLOT(updateConsumableInstall(int)));
+        }
     }
 
 
@@ -4368,12 +4370,12 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     if(ex_gGlobalParam.Ex_Default == 0)
     {
-        m_startCheckConsumale = false;
+        setStartCheckConsumable(false);
         m_pExInitPages[Ex_Init_Lan]->show(true);    
     }
     else
     {
-        m_startCheckConsumale = true;
+        setStartCheckConsumable(true);
 
         if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
         {
@@ -4640,13 +4642,15 @@ void MainWindow::updTank()
         subpage->updateTankLevel(level);
     }
 
-    if (NULL != m_pSubPages[PAGE_SET])
+    if (NULL != m_pSubPages[PAGE_SERVICE])
     {
-        SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
+        ServicePage *page = (ServicePage *)m_pSubPages[PAGE_SERVICE];
 
-        Ex_FactoryTestPage *subpage =(Ex_FactoryTestPage *)page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+        SetPage* subpage = (SetPage*)page->getSubPage(SET_BTN_SERVICE);
 
-        subpage->updTank(level,liter);
+        Ex_FactoryTestPage *subSubpage = (Ex_FactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+
+        subSubpage->updTank(level,liter);
     }
     //end
     if (abs(m_iLevel - level) >= 1)
@@ -4663,13 +4667,15 @@ void MainWindow::updSourceTank()
     float liter = (m_fPressure[APP_EXE_PM3_NO]/100)*gGlobalParam.PmParam.afCap[APP_EXE_PM3_NO];
     int   level = (int)((liter*100) / gGlobalParam.PmParam.afCap[APP_EXE_PM3_NO]);
 
-    if (NULL != m_pSubPages[PAGE_SET])
+    if (NULL != m_pSubPages[PAGE_SERVICE])
     {
-        SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
+        ServicePage *page = (ServicePage *)m_pSubPages[PAGE_SERVICE];
 
-        Ex_FactoryTestPage *subpage =(Ex_FactoryTestPage *)page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+        SetPage* subpage = (SetPage*)page->getSubPage(SET_BTN_SERVICE);
 
-        subpage->updSourceTank(level,liter);
+        Ex_FactoryTestPage *subSubpage = (Ex_FactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+
+        subSubpage->updSourceTank(level,liter);
     }
 
     if (NULL != m_pSubPages[PAGE_MENU])
@@ -4708,13 +4714,16 @@ void MainWindow::updPressure(int iIdx)
             subpage->updPressure(iIdx, m_fPressure[iIdx]);
 
         }
-        if (NULL != m_pSubPages[PAGE_SET])
+
+        if (NULL != m_pSubPages[PAGE_SERVICE])
         {
-            SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
+            ServicePage *page = (ServicePage *)m_pSubPages[PAGE_SERVICE];
 
-            Ex_FactoryTestPage *subpage =(Ex_FactoryTestPage *)page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+            SetPage* subpage = (SetPage*)page->getSubPage(SET_BTN_SERVICE);
 
-            subpage->updatePressure(iIdx, m_fPressure[iIdx]);
+            Ex_FactoryTestPage *subSubpage = (Ex_FactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+
+            subSubpage->updatePressure(iIdx, m_fPressure[iIdx]);
         }
 #ifdef FLOWCHART
         if (NULL != m_pSubPages[PAGE_FLOWCHART])
@@ -4759,11 +4768,14 @@ void MainWindow::updFlowInfo(int iIdx)
         }       
         
     }
-    if (NULL != m_pSubPages[PAGE_SET])
-    {
-        SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
 
-        Ex_FactoryTestPage *subpage =(Ex_FactoryTestPage *) page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+    if (NULL != m_pSubPages[PAGE_SERVICE])
+    {
+        ServicePage *page = (ServicePage *)m_pSubPages[PAGE_SERVICE];
+
+        SetPage* subpage = (SetPage*)page->getSubPage(SET_BTN_SERVICE);
+
+        Ex_FactoryTestPage *subSubpage = (Ex_FactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
 
         {
             int iTmDelta = m_periodEvents - m_iLstFlowMeterTick[iIdx];
@@ -4774,10 +4786,9 @@ void MainWindow::updFlowInfo(int iIdx)
             {
                 iFmDelta = m_ulFlowMeter[iIdx] - m_ulLstFlowMeter[iIdx];
 
-                subpage->updateFlow(iIdx,(iFmDelta * TOMLPERMIN / iTmDelta));
+                subSubpage->updateFlow(iIdx,(iFmDelta * TOMLPERMIN / iTmDelta));
             }
         }
-
     }
 #ifdef FLOWCHART
     if (NULL != m_pSubPages[PAGE_FLOWCHART])
@@ -6541,13 +6552,17 @@ void MainWindow::publishMqttMessage(const QByteArray &msg)
 
 void MainWindow::on_updateText(const QByteArray& array)
 {
-    if (NULL != m_pSubPages[PAGE_SET])
+    if (NULL != m_pSubPages[PAGE_SERVICE])
     {
-        SetPage *page = (SetPage *)m_pSubPages[PAGE_SET];
-        Ex_FactoryTestPage *subpage = (Ex_FactoryTestPage *)page->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
-        if(subpage->isVisible())
+        ServicePage *page = (ServicePage *)m_pSubPages[PAGE_SERVICE];
+
+        SetPage* subpage = (SetPage*)page->getSubPage(SET_BTN_SERVICE);
+
+        Ex_FactoryTestPage *subSubpage = (Ex_FactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+
+        if(subSubpage->isVisible())
         {
-            subpage->updateWifiTestMsg(array);
+            subSubpage->updateWifiTestMsg(array);
         }
     }
 }
@@ -7457,6 +7472,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                          query.bindValue(":name", "UP");
                          query.bindValue(":quantity",fQuantity);
                          query.bindValue(":quality" ,m_EcowCurr[APP_EXE_I5_NO].iQuality);
+                         query.bindValue(":TOC", m_curToc);
                          query.bindValue(":tmp"     ,tmpI5);
                          query.bindValue(":time"    ,strTime);
                          bDbResult = query.exec();
@@ -7583,9 +7599,11 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     ex_gGlobalParam.lastRunState = 0;
                     MainSaveLastRunState(gGlobalParam.iMachineType);
 
-                    if (typeid(*m_pCurPage) == typeid(MainPage))
+
+                    if (NULL != m_pSubPages[PAGE_MAIN])
                     {
-                         pMainPage->updateRunInfo(false);                         
+                        MainPage *page = (MainPage *)m_pSubPages[PAGE_MAIN];
+                        page->updateRunInfo(false);
                     }
                 }
                 break;
@@ -7599,10 +7617,10 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     ex_gGlobalParam.lastRunState = 1;
                     MainSaveLastRunState(gGlobalParam.iMachineType);
 
-                    if (typeid(*m_pCurPage) == typeid(MainPage))
+                    if (NULL != m_pSubPages[PAGE_MAIN])
                     {
-                        pMainPage->updateRunInfo(true);
-                        
+                        MainPage *page = (MainPage *)m_pSubPages[PAGE_MAIN];
+                        page->updateRunInfo(true);
                     }
                     
                 }
@@ -7927,17 +7945,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             NOT_TOC_ITEM_STRU *pItem = (NOT_TOC_ITEM_STRU *)pNotify->aucData;
 
             float fToc;
-#if 0
-            if(pItem->fP > 4)
-            {
-                fToc = 2;
-            }
-            else
-            {
-                fToc = 6.395*pow(pItem->fP, 4) - 91.15*pow(pItem->fP, 3) + 479*pow(pItem->fP, 2) - 1102*(pItem->fP) + 940;
-            }
-//            float fToc = 6.395*pow(pItem->fP, 4) - 91.15*pow(pItem->fP, 3) + 479*pow(pItem->fP, 2) - 1102*(pItem->fP) + 940;
-#endif
+
             if(pItem->fP < 2.5)
             {
                 fToc = -315.5*pow(pItem->fP, 3) + 2041*pow(pItem->fP, 2) - 4404*(pItem->fP) + 3195;
@@ -7957,6 +7965,8 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             }
 
             pMainPage->updToc(fToc);
+
+            m_curToc = (int)(fToc + 0.5);
 
 #ifdef D_HTTPWORK
             m_networkData.fToc = fToc;
@@ -8012,6 +8022,18 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 {
                     setWaterQuantity(pItem->ucType,pItem->ulValue / APP_QTW_UNIT);
                 }
+            }
+        }
+        break;
+    case DISP_NOT_REALTIME_QTW_VOLUME:
+        {
+            NOT_REALTIME_QTW_VOLUME_ITEM_STRU *pItem = (NOT_REALTIME_QTW_VOLUME_ITEM_STRU *)pNotify->aucData;
+
+            unsigned int volume = pItem->ulValue;
+
+            if (typeid(*m_pCurPage) == typeid(MainPage))
+            {
+                pMainPage->updRealTimeQtwVolume(volume);
             }
         }
         break;
@@ -8079,7 +8101,7 @@ void MainWindow :: rmvRfidFromDelayList(int iRfId)
 
     if((DISP_WORK_STATE_IDLE == DispGetWorkState4Pw())
        && (APP_WORK_MODE_NORMAL == m_eWorkMode)
-       && m_startCheckConsumale)
+       && m_startCheckConsumable)
     {
          checkConsumableInstall(iRfId); //2019.06.20
     }
@@ -8487,7 +8509,7 @@ void MainWindow::home()
 void MainWindow::naviPage(int iCurPage,int iDir)
 {
 #ifdef FLOWCHART
-    if (iCurPage < 4 && !iDir )
+    if (iCurPage < (PAGE_NUM - 1) && !iDir )
     {
         m_pSubPages[iCurPage]->show(false);
         m_pSubPages[iCurPage + 1]->show(true);
@@ -8500,7 +8522,7 @@ void MainWindow::naviPage(int iCurPage,int iDir)
         m_curPageIdx -= 1;
     }
 #else
-    if (iCurPage < 3 && !iDir )
+    if (iCurPage < (PAGE_NUM - 1) && !iDir )
     {
         m_pSubPages[iCurPage]->show(false);
         m_pSubPages[iCurPage + 1]->show(true);
@@ -8515,18 +8537,86 @@ void MainWindow::naviPage(int iCurPage,int iDir)
 #endif
 }
 
-void MainWindow::saveLoginfo(QString strUserName)
+void MainWindow::naviInitPage(int iCurPage, int iDir)
 {
-    
-    m_strUserName = strUserName;
-    //m_strPassword = strPassword;
-    
-    qDebug() << "saveLoginfo  " << m_strUserName;
+    if (iCurPage < (Ex_Init_Num - 1) && !iDir )
+    {
+        m_pExInitPages[iCurPage]->show(false);
+        switch(iCurPage)
+        {
+        case Ex_Init_Time:
+            if(gGlobalParam.iMachineType != MACHINE_ADAPT)
+            {
+                m_pExInitPages[iCurPage + 1]->show(true);
+                m_curExInitPage = m_pExInitPages[iCurPage + 1];
+            }
+            else
+            {
+                m_pExInitPages[iCurPage + 3]->show(true);
+                m_curExInitPage = m_pExInitPages[iCurPage + 3];
+            }
+            break;
+        case Ex_Init_Tankcfg:
+            if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2))
+            {
+                m_pExInitPages[iCurPage + 1]->show(true);
+                m_curExInitPage = m_pExInitPages[iCurPage + 1];
+            }
+            else
+            {
+                m_pExInitPages[iCurPage + 2]->show(true);
+                m_curExInitPage = m_pExInitPages[iCurPage + 2];
+            }
+            break;
+        default:
+            m_pExInitPages[iCurPage + 1]->show(true);
+            m_curExInitPage = m_pExInitPages[iCurPage + 1];
+            break;
+        }
+    }
+
+    else if (iCurPage > 0 && iDir )
+    {
+        m_pExInitPages[iCurPage]->show(false);
+        switch(iCurPage)
+        {
+        case Ex_Init_Network:
+            if(gGlobalParam.iMachineType != MACHINE_ADAPT)
+            {
+                if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2))
+                {
+                    m_pExInitPages[iCurPage - 1]->show(true);
+                    m_curExInitPage = m_pExInitPages[iCurPage - 1];
+                }
+                else
+                {
+                    m_pExInitPages[iCurPage - 2]->show(true);
+                    m_curExInitPage = m_pExInitPages[iCurPage - 2];
+                }
+            }
+            else
+            {
+                m_pExInitPages[iCurPage - 3]->show(true);
+                m_curExInitPage = m_pExInitPages[iCurPage - 3];
+            }
+            break;
+        default:
+            m_pExInitPages[iCurPage - 1]->show(true);
+            m_curExInitPage = m_pExInitPages[iCurPage - 1];
+            break;
+        }
+    }
 }
 
-QString MainWindow::getLoginfo()
+void MainWindow::saveLoginfo(const QString& strUserName, const QString& strPassword)
+{  
+    m_userInfo.m_strUserName = strUserName;
+    m_userInfo.m_strPassword = strPassword;
+}
+
+const DUserInfo MainWindow::getLoginfo()
 {
-    return m_strUserName;
+    return m_userInfo;
 }
 
 void MainWindow::MainWriteLoginOperationInfo2Db(int iActId)
@@ -8543,13 +8633,13 @@ void MainWindow::MainWriteLoginOperationInfo2Db(int iActId)
    
    strTime.sprintf("%04d-%02d-%02d %02d:%02d:%02d",tblock->tm_year + 1900,tblock->tm_mon + 1,tblock->tm_mday,tblock->tm_hour,tblock->tm_min,tblock->tm_sec);
    query.prepare(INSERT_sql_Log);
-   query.bindValue(":name"  ,m_strUserName);
+   query.bindValue(":name"  ,m_userInfo.m_strUserName);
    query.bindValue(":action",gastrLoginOperateActionName[iActId]);
    query.bindValue(":info"  ,"none");
    query.bindValue(":time"  ,strTime);
    bResult = query.exec();
 
-   qDebug() << "MainWriteLoginOperationInfo2Db  " << m_strUserName <<gastrLoginOperateActionName[iActId] << bResult;
+   qDebug() << "MainWriteLoginOperationInfo2Db  " << m_userInfo.m_strUserName <<gastrLoginOperateActionName[iActId] << bResult;
 }
 
 void MainWindow::MainWriteCMInstallInfo2Db(int iActId,int iItemIdx,CATNO cn,LOTNO ln)
@@ -8571,7 +8661,7 @@ void MainWindow::MainWriteCMInstallInfo2Db(int iActId,int iItemIdx,CATNO cn,LOTN
    strTime.sprintf("%04d-%02d-%02d %02d:%02d:%02d",tblock->tm_year + 1900,tblock->tm_mon + 1,tblock->tm_mday,tblock->tm_hour,tblock->tm_min,tblock->tm_sec);
    
    query.prepare(INSERT_sql_Log);
-   query.bindValue(":name"  ,m_strUserName);
+   query.bindValue(":name"  ,m_userInfo.m_strUserName);
    query.bindValue(":action",gastrCMActionName[iActId]);
    query.bindValue(":info"  ,strInfo);
    query.bindValue(":time"  ,strTime);
@@ -8597,7 +8687,7 @@ void MainWindow::MainWriteMacInstallInfo2Db(int iActId,int iItemIdx,CATNO cn,LOT
    strInfo += ln;
    
    query.prepare(INSERT_sql_Log);
-   query.bindValue(":name"  ,m_strUserName);
+   query.bindValue(":name"  ,m_userInfo.m_strUserName);
    query.bindValue(":action",gastrMachineryActionName[iActId]);
    query.bindValue(":info"  ,strInfo);
    query.bindValue(":time"  ,strTime);
@@ -8832,185 +8922,6 @@ void MainWindow::buildTranslation()
     m_astrDbName[4] = tr("PWater");
     m_astrDbName[5] = tr("Log");
 
-}
-
-void MainWindow::on_Ex_Init_Lan(int index)
-{
-    switch(index)
-    {
-    case 0:
-        break;
-    case 1:
-    {
-        m_pExInitPages[Ex_Init_Lan]->show(false);
-        m_pExInitPages[Ex_Init_Time]->show(true);
-        m_curExInitPage = m_pExInitPages[Ex_Init_Time];
-        break;
-    }
-    default:
-        break;
-    }
-}
-void MainWindow::on_Ex_Init_Network(int index)
-{
-    switch(index)
-    {
-    case 0:
-    {
-        if(gGlobalParam.iMachineType == MACHINE_ADAPT)
-        {
-            m_pExInitPages[Ex_Init_Network]->show(false);
-            m_pExInitPages[Ex_Init_Time]->show(true);
-            m_curExInitPage = m_pExInitPages[Ex_Init_Time];
-        }
-        else
-        {
-            if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2))
-            {
-                m_pExInitPages[Ex_Init_Network]->show(false);
-                m_pExInitPages[Ex_Init_Syscfg]->show(true);
-                m_curExInitPage = m_pExInitPages[Ex_Init_Syscfg];
-            }
-            else
-            {
-                m_pExInitPages[Ex_Init_Network]->show(false);
-                m_pExInitPages[Ex_Init_Tankcfg]->show(true);
-                m_curExInitPage = m_pExInitPages[Ex_Init_Tankcfg];
-            }
-
-        }
-        break;
-    }
-    case 1:
-    {
-        m_pExInitPages[Ex_Init_Network]->show(false);
-        m_pExInitPages[Ex_Init_Handlercfg]->show(true);
-        m_curExInitPage = m_pExInitPages[Ex_Init_Handlercfg];
-        break;
-    }
-    default:
-        break;
-    }
-}
-
-void MainWindow::on_Ex_Init_Time(int index)
-{
-    switch(index)
-    {
-    case 0:
-    {
-        m_pExInitPages[Ex_Init_Time]->show(false);
-        m_pExInitPages[Ex_Init_Lan]->show(true);
-        m_curExInitPage = m_pExInitPages[Ex_Init_Lan];
-        break;
-    }
-    case 1:
-    {
-        if(gGlobalParam.iMachineType == MACHINE_ADAPT)
-        {
-            m_pExInitPages[Ex_Init_Time]->show(false);
-            m_pExInitPages[Ex_Init_Network]->show(true);
-            m_curExInitPage = m_pExInitPages[Ex_Init_Network];
-        }
-        else
-        {
-            m_pExInitPages[Ex_Init_Time]->show(false);
-            m_pExInitPages[Ex_Init_Tankcfg]->show(true);
-            m_curExInitPage = m_pExInitPages[Ex_Init_Tankcfg];
-        }
-        break;
-    }
-    default:
-        break;
-    }
-}
-
-void MainWindow::on_Ex_Init_TankCfg(int index)
-{
-    switch(index)
-    {
-    case 0:
-    {
-        m_pExInitPages[Ex_Init_Tankcfg]->show(false);
-        m_pExInitPages[Ex_Init_Time]->show(true);
-        m_curExInitPage = m_pExInitPages[Ex_Init_Time];
-        break;
-    }
-    case 1:
-    {
-        if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2))
-        {
-            m_pExInitPages[Ex_Init_Tankcfg]->show(false);
-            m_pExInitPages[Ex_Init_Syscfg]->show(true);
-            m_curExInitPage = m_pExInitPages[Ex_Init_Syscfg];
-        }
-        else
-        {
-            m_pExInitPages[Ex_Init_Tankcfg]->show(false);
-            m_pExInitPages[Ex_Init_Network]->show(true);
-            m_curExInitPage = m_pExInitPages[Ex_Init_Network];
-        }
-
-        break;
-    }
-    default:
-        break;
-    }
-}
-
-void MainWindow::on_Ex_Init_Syscfg(int index)
-{
-    switch(index)
-    {
-    case 0:
-    {
-        m_pExInitPages[Ex_Init_Syscfg]->show(false);
-        m_pExInitPages[Ex_Init_Tankcfg]->show(true);
-        m_curExInitPage = m_pExInitPages[Ex_Init_Tankcfg];
-        break;
-    }
-    case 1:
-    {
-        m_pExInitPages[Ex_Init_Syscfg]->show(false);
-        m_pExInitPages[Ex_Init_Network]->show(true);
-        m_curExInitPage = m_pExInitPages[Ex_Init_Network];
-        break;
-    }
-    default:
-        break;
-    }
-}
-
-void MainWindow::on_Ex_Init_Finished()
-{
-    m_curExInitPage = NULL;
-
-    if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
-    {
-        Splash();
-    }
-    else
-    {
-        mainDisplay();
-    }
-}
-
-void MainWindow::on_Ex_Init_Handler(int index)
-{
-    switch(index)
-    {
-    case 0:
-    {
-        m_pExInitPages[Ex_Init_Handlercfg]->show(false);
-        m_pExInitPages[Ex_Init_Network]->show(true);
-        m_curExInitPage = m_pExInitPages[Ex_Init_Network];
-        break;
-    }
-    case 1:
-        break;
-    default:
-        break;
-    }
 }
 
 void MainWindow::on_Ex_ScreenPageHide()
@@ -9488,7 +9399,7 @@ void MainWindow::updatePackFlow()
 
 void MainWindow::checkConsumableInstall(int iRfId)
 {
-    if(!m_startCheckConsumale)
+    if(!m_startCheckConsumable)
     {
         return;
     }
@@ -9575,6 +9486,11 @@ void MainWindow::restart()
     QProcess::startDetached(gApp->applicationFilePath(),list);
 
     *((int *)(0)) = 0;
+}
+
+void MainWindow::setStartCheckConsumable(bool isStart)
+{
+    m_startCheckConsumable = isStart;
 }
 
 void MainWindow::retriveCMInfoWithRFID()

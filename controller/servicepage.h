@@ -24,6 +24,7 @@ enum SERVICE_BTN_NAME
     SET_BTN_PERMISSION, //Permission
     SERVICE_BTN_STERILIZE,
     SET_BTN_SYSTEM_ALLOCATION,
+    SET_BTN_SERVICE,
     SERVICE_BTN_NUMBER
 };
 
@@ -50,6 +51,8 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent *);
     virtual void mouseMoveEvent(QMouseEvent *);
 
+    CPage *getSubPage(int iIdx) { return m_pSubPages[iIdx];}
+
 private:
     void buildTitles();
     void Create_subPage();
@@ -59,7 +62,7 @@ private:
     CPage *m_pSubPages[SERVICE_PAGE_NUM];
     CBitmapButton *m_pBtns[SERVICE_BTN_NUMBER];   
     titleBar      *m_pTitleBar;
-    QLabel        *m_pLbPageId[4];
+    QLabel        *m_pLbPageId[3];
     
 
 public slots:

@@ -55,6 +55,8 @@ typedef enum
 
    DISP_NOT_DEC_PRESSURE,
 
+   DISP_NOT_REALTIME_QTW_VOLUME, //2019.7.9 dcj add
+
    DISP_NOT_NUM,
 
 }NOT_CODE_ENUM;
@@ -154,6 +156,10 @@ typedef struct
     unsigned int  ulValue; /* Qtw volumn */
 }NOT_QTW_VOLUME_ITEM_STRU;
 
+typedef struct
+{
+    unsigned int  ulValue;    //2019.7.9 dcj add
+}NOT_REALTIME_QTW_VOLUME_ITEM_STRU;
 
 
 typedef NOT_RFID_ITEM_STRU NOT_HANDLER_ITEM_STRU;

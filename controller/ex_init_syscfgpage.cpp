@@ -125,6 +125,41 @@ void Ex_Init_Syscfgpage::createHeader()
 
 }
 
+void Ex_Init_Syscfgpage::mousePressEvent(QMouseEvent *e)
+{
+    if (!m_lstFlag)
+    {
+        m_lstX = e->x();
+        m_lstY = e->y();
+        m_curX = e->x();
+        m_curY = e->y();
+        m_lstFlag = 1;
+    }
+}
+
+void Ex_Init_Syscfgpage::mouseMoveEvent(QMouseEvent *e)
+{
+    if (0 == e->x()
+        && 0 == e->y())
+    {
+       return;
+    }
+
+    m_curX = e->x();
+    m_curY = e->y();
+}
+
+void Ex_Init_Syscfgpage::mouseReleaseEvent(QMouseEvent *e)
+{
+    if (abs(m_curX - m_lstX) >= PAGE_X_DIMENSION
+        && abs(m_curY - m_lstY) <= PAGE_Y_DIMENSION)
+    {
+        save();
+        m_wndMain->naviInitPage(Ex_Init_Syscfg, m_curX - m_lstX > 0 ? 1 : 0);
+    }
+    m_lstFlag = 0;
+}
+
 
 void Ex_Init_Syscfgpage::connectData()
 {
@@ -193,13 +228,13 @@ void Ex_Init_Syscfgpage::save()
 void Ex_Init_Syscfgpage::on_ExNextBtn_clicked()
 {
     save();
-    emit initcfgSwitchBtnClicked(1);
+    m_wndMain->naviInitPage(Ex_Init_Syscfg,  0);
     m_wndMain->prepareKeyStroke();
 }
 
 void Ex_Init_Syscfgpage::on_ExBackBtn_clicked()
 {
-    emit initcfgSwitchBtnClicked(0);
+    m_wndMain->naviInitPage(Ex_Init_Syscfg, 1);
     m_wndMain->prepareKeyStroke();
 }
 

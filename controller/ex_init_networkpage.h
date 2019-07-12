@@ -48,6 +48,11 @@ public:
 
     void update();
 
+protected:
+    void mousePressEvent(QMouseEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
+
 private:
 
     void buildTitles();
@@ -81,9 +86,6 @@ private:
 
     QProcess *m_pProcess;
 #endif
-
-signals:
-    void networkSwitchBtnClicked(int);
 
 public slots:
     void on_btn_clicked(int);

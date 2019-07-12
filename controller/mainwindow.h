@@ -95,7 +95,7 @@ enum
 #endif
     PAGE_MENU,
     PAGE_SERVICE,
-    PAGE_SET,
+//    PAGE_SET,
     PAGE_NUM
 };
 
@@ -106,6 +106,7 @@ enum   //ex_dcj
     Ex_Init_Tankcfg,
     Ex_Init_Syscfg,
     Ex_Init_Network,
+    Ex_Init_InstallConsumable,
     Ex_Init_Handlercfg,
     Ex_Init_Num
 };
@@ -117,6 +118,7 @@ enum GLOBAL_FONT
     GLOBAL_FONT_24,    
     GLOBAL_FONT_30,
     GLOBAL_FONT_40,
+    GLOBAL_FONT_48,
     GLOBAL_FONT_60,
     GLOBAL_FONT_NUM
 };
@@ -240,6 +242,11 @@ typedef struct
     theClass* pContainer = ((theClass*)((char*)(this) - \
     offsetof(theClass, m_x##localClass)));
 
+struct DUserInfo
+{
+    QString m_strUserName;
+    QString m_strPassword;
+};
 
 class MainWindow : public QMainWindow
 {
@@ -273,8 +280,11 @@ public:
     void addPage(CPage *page) {m_pageList << page;}
 
     void naviPage(int iCurPage,int iDir);
-    void saveLoginfo(QString strUserName);
-    QString getLoginfo();
+    void naviInitPage(int iCurPage,int iDir);
+
+    void saveLoginfo(const QString& strUserName, const QString& strPassword = "unknow");
+    const DUserInfo getLoginfo();
+
     void MainWriteLoginOperationInfo2Db(int iActId);
     
     void MainWriteCMInstallInfo2Db(int iActId,int iItemIdx,CATNO cn,LOTNO ln);
@@ -416,6 +426,8 @@ public:
 
     void restart();
 
+    void setStartCheckConsumable(bool isStart);
+
 public slots:
 #ifdef RFIDTEST
     void retriveCMInfoWithRFID();
@@ -444,14 +456,6 @@ private slots:
     void on_timerBuzzerEvent();
 
     void buildTranslation();
-
-    void on_Ex_Init_Lan(int); //ex
-    void on_Ex_Init_Network(int);//ex
-    void on_Ex_Init_Time(int);
-    void on_Ex_Init_TankCfg(int);
-    void on_Ex_Init_Syscfg(int);
-    void on_Ex_Init_Finished();
-    void on_Ex_Init_Handler(int);
 
     void on_Ex_ScreenPageHide();
 
@@ -637,6 +641,7 @@ private:
 
     ECO_W       m_EcowOfDay[APP_EXE_ECO_NUM];
     ECO_W       m_EcowCurr[APP_EXE_ECO_NUM];
+    int         m_curToc;
 
     int         m_nTimerId;
 
@@ -697,8 +702,7 @@ private:
 
     RF_DATA_LAYOUT_ITEMS m_RfDataItems;
     
-    QString      m_strUserName;
-    QString      m_strPassword;
+    DUserInfo  m_userInfo;
 
     static QStringList m_strConsuamble[CAT_NUM];
 
@@ -837,7 +841,7 @@ private:
 
     Ex_CheckConsumaleInstall* m_checkConsumaleInstall[APP_RFID_SUB_TYPE_NUM];
     Ex_ConsumableInstallDialog* m_consumaleInstallDialog[APP_RFID_SUB_TYPE_NUM];
-    bool m_startCheckConsumale;
+    bool m_startCheckConsumable;
     //end
 
     int m_flushMachineFlow;

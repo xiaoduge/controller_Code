@@ -58,6 +58,9 @@ private:
 
     void toCurrentItem(int index);
 
+    void initTypeMap();
+
+private:
     QListWidget *listWidget;
 
     QListWidgetItem *listWidgetIem[MAX_ConsumableNum];
@@ -78,6 +81,7 @@ private:
        int iRfid; /*0xff for items not using rfid or having no corresponding RFID reader */
     }aIds[MAX_ConsumableNum];
 
+    QMap<short int, short int> m_typeMap;
 
 public slots:
     void on_btn_clicked(int index);

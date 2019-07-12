@@ -8,10 +8,10 @@
 #include <QInputDialog>
 
 #include "basewidget.h"
-#include "page.h"
 #include "cbitmapbutton.h"
 #include <QLineEdit>
 #include <QLabel>
+#include "subpage.h"
 
 
 class MainWindow;
@@ -34,9 +34,8 @@ enum SET_BTN_NAME
 
 #define SET_PAGE_NUM SET_BTN_NUMBER
 
-class titleBar;
 
-class SetPage : public CPage
+class SetPage : public CSubPage //CPage
 {
     Q_OBJECT
 public:
@@ -44,39 +43,32 @@ public:
 
     virtual void creatTitle();
 
-    virtual  void update();
-
     virtual void switchLanguage();
 
     virtual void buildTranslation();
     
     virtual void initUi();
-    virtual void mousePressEvent(QMouseEvent *);
-    virtual void mouseReleaseEvent(QMouseEvent *);
-    virtual void mouseMoveEvent(QMouseEvent *);
 
     CPage *getSubPage(int iIdx) { return m_pSubPages[iIdx];}
 
     void toInitializePage();
+
+    void setSuperPage(bool bShow);
 
 private:
     void buildTitles();
 
     void createSubPage();
 
+    void checkLoginInfo();
+
 private:
     CPage *m_pSubPages[SET_PAGE_NUM];
 
     CBitmapButton *m_pBtns[SET_PAGE_NUM];
-    
-    titleBar      *m_pTitleBar;
-    
-    QLabel        *m_pLbPageId[4];
-    
 
 public slots:
     void on_btn_clicked(int tmp);
-    void on_navi_clicked(int tmp);
 
 };
 

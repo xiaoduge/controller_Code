@@ -53,8 +53,10 @@ public:
 
     virtual void update();
 
-signals:
-    void timecfgSwitchBtnClicked(int);
+protected:
+    void mousePressEvent(QMouseEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
 
 private:
     void setBackColor();

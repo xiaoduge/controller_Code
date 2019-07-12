@@ -22,7 +22,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      33,   14, // methods
+      26,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -57,14 +57,7 @@ static const uint qt_meta_data_MainWindow[] = {
      559,   11,   11,   11, 0x08,
      581,   11,   11,   11, 0x08,
      600,   11,   11,   11, 0x08,
-     620,   11,   11,   11, 0x08,
-     644,   11,   11,   11, 0x08,
-     665,   11,   11,   11, 0x08,
-     689,   11,   11,   11, 0x08,
-     712,   11,   11,   11, 0x08,
-     734,   11,   11,   11, 0x08,
-     758,   11,   11,   11, 0x08,
-     787,  781,   11,   11, 0x08,
+     629,  623,   11,   11, 0x08,
 
        0        // eod
 };
@@ -85,12 +78,8 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_AutoLogin()\0on_IapIndication(IAP_NOTIFY_STRU*)\0"
     "on_pbDevice_clicked()\0tmp\0on_btn_clicked(int)\0"
     "on_Gif_State_Change()\0on_timerBuzzerEvent()\0"
-    "buildTranslation()\0on_Ex_Init_Lan(int)\0"
-    "on_Ex_Init_Network(int)\0on_Ex_Init_Time(int)\0"
-    "on_Ex_Init_TankCfg(int)\0on_Ex_Init_Syscfg(int)\0"
-    "on_Ex_Init_Finished()\0on_Ex_Init_Handler(int)\0"
-    "on_Ex_ScreenPageHide()\0sleep\0"
-    "on_ScreenSleep(bool)\0"
+    "buildTranslation()\0on_Ex_ScreenPageHide()\0"
+    "sleep\0on_ScreenSleep(bool)\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -123,15 +112,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 21: _t->on_Gif_State_Change(); break;
         case 22: _t->on_timerBuzzerEvent(); break;
         case 23: _t->buildTranslation(); break;
-        case 24: _t->on_Ex_Init_Lan((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 25: _t->on_Ex_Init_Network((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 26: _t->on_Ex_Init_Time((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 27: _t->on_Ex_Init_TankCfg((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 28: _t->on_Ex_Init_Syscfg((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 29: _t->on_Ex_Init_Finished(); break;
-        case 30: _t->on_Ex_Init_Handler((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 31: _t->on_Ex_ScreenPageHide(); break;
-        case 32: _t->on_ScreenSleep((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 24: _t->on_Ex_ScreenPageHide(); break;
+        case 25: _t->on_ScreenSleep((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -169,9 +151,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 33)
+        if (_id < 26)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 33;
+        _id -= 26;
     }
     return _id;
 }

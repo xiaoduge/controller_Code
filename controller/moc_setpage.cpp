@@ -22,7 +22,7 @@ static const uint qt_meta_data_SetPage[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       1,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -31,14 +31,12 @@ static const uint qt_meta_data_SetPage[] = {
 
  // slots: signature, parameters, type, tag, flags
       13,    9,    8,    8, 0x0a,
-      33,    9,    8,    8, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_SetPage[] = {
     "SetPage\0\0tmp\0on_btn_clicked(int)\0"
-    "on_navi_clicked(int)\0"
 };
 
 void SetPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -48,7 +46,6 @@ void SetPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         SetPage *_t = static_cast<SetPage *>(_o);
         switch (_id) {
         case 0: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->on_navi_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -59,7 +56,7 @@ const QMetaObjectExtraData SetPage::staticMetaObjectExtraData = {
 };
 
 const QMetaObject SetPage::staticMetaObject = {
-    { &CPage::staticMetaObject, qt_meta_stringdata_SetPage,
+    { &CSubPage::staticMetaObject, qt_meta_stringdata_SetPage,
       qt_meta_data_SetPage, &staticMetaObjectExtraData }
 };
 
@@ -77,18 +74,18 @@ void *SetPage::qt_metacast(const char *_clname)
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_SetPage))
         return static_cast<void*>(const_cast< SetPage*>(this));
-    return CPage::qt_metacast(_clname);
+    return CSubPage::qt_metacast(_clname);
 }
 
 int SetPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = CPage::qt_metacall(_c, _id, _a);
+    _id = CSubPage::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 1)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 1;
     }
     return _id;
 }

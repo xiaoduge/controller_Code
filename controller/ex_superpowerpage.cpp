@@ -9,6 +9,7 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 #include "dlineedit.h"
+#include "ex_userinfo.h"
 
 #define ControlNum 6
 
@@ -222,10 +223,10 @@ void Ex_SuperPowerPage::createControl()
     //Database Delete
     QHBoxLayout* deleteLayout = new QHBoxLayout;
 
-    tmpWidget = new QWidget(m_widget);
-    tmpWidget->setAutoFillBackground(true);
-    tmpWidget->setPalette(pal);
-    tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
+    m_pDeleteWidget = new QWidget(m_widget);
+    m_pDeleteWidget->setAutoFillBackground(true);
+    m_pDeleteWidget->setPalette(pal);
+    m_pDeleteWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
 
     m_pLbDbDel = new QLabel;
 
@@ -254,7 +255,7 @@ void Ex_SuperPowerPage::createControl()
     deleteLayout->addWidget(m_pCmConfigDel);
     deleteLayout->addWidget(m_pBtnDelCfg);
     deleteLayout->addStretch();
-    tmpWidget->setLayout(deleteLayout);
+    m_pDeleteWidget->setLayout(deleteLayout);
 
     //Save Btn
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,SYSCFGPAGE_BTN_SAVE);
@@ -284,6 +285,7 @@ void Ex_SuperPowerPage::update()
     m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]->setText(ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer);
 
     m_cmbDeviceType->setCurrentIndex(gGlobalParam.iMachineType);
+    checkLoginInfo();
 }
 
 void Ex_SuperPowerPage::connectData()
@@ -291,6 +293,23 @@ void Ex_SuperPowerPage::connectData()
     m_cmbDefaultState->setCurrentIndex(ex_gGlobalParam.Ex_Default);
 
     m_pCompanyComboBox->setCurrentIndex(ex_gGlobalParam.Ex_System_Msg.Ex_iCompany);
+}
+
+void Ex_SuperPowerPage::checkLoginInfo()
+{
+    Ex_UserInfo userInfo;
+    DUserInfo userlog = m_wndMain->getLoginfo();
+    bool iSuper = userInfo.checkSuperInfo(userlog.m_strUserName);
+    if(iSuper)
+    {
+        m_pCompanyComboBox->setEnabled(true);
+        m_pDeleteWidget->show();
+    }
+    else
+    {
+        m_pCompanyComboBox->setEnabled(false);
+        m_pDeleteWidget->hide();
+    }
 }
 
 bool Ex_SuperPowerPage::deleteDbAll()
@@ -340,7 +359,7 @@ bool Ex_SuperPowerPage::deleteDbAll()
 
 bool Ex_SuperPowerPage::deleteDbWater()
 {
-    QString strSql = "Delete from Water";
+    QString strSql = "Drop Table Water";
     QSqlQuery query;
     bool ret = query.exec(strSql);
     if(!ret)
@@ -353,7 +372,7 @@ bool Ex_SuperPowerPage::deleteDbWater()
 }
 bool Ex_SuperPowerPage::deleteDbAlarm()
 {
-    QString strSql = "Delete from Alarm";
+    QString strSql = "Drop Table Alarm";
     QSqlQuery query;
     bool ret = query.exec(strSql);
     if(!ret)
@@ -365,7 +384,7 @@ bool Ex_SuperPowerPage::deleteDbAlarm()
 }
 bool Ex_SuperPowerPage::deleteDbGetWater()
 {
-    QString strSql = "Delete from GetW";
+    QString strSql = "Drop Table GetW";
     QSqlQuery query;
     bool ret = query.exec(strSql);
     if(!ret)
@@ -377,7 +396,7 @@ bool Ex_SuperPowerPage::deleteDbGetWater()
 }
 bool Ex_SuperPowerPage::deleteDbPWater()
 {
-    QString strSql = "Delete from PWater";
+    QString strSql = "Drop Table PWater";
     QSqlQuery query;
     bool ret = query.exec(strSql);
     if(!ret)
@@ -389,7 +408,7 @@ bool Ex_SuperPowerPage::deleteDbPWater()
 }
 bool Ex_SuperPowerPage::deleteDbLog()
 {
-    QString strSql = "Delete from Log";
+    QString strSql = "Drop Table Log";
     QSqlQuery query;
     bool ret = query.exec(strSql);
     if(!ret)

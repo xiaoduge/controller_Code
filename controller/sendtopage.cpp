@@ -257,6 +257,7 @@ void SendToPage::copyGetWater()
         << QString("WName") << ","
         << QString("Quantity") << ","
         << QString("Quantity") << ","
+        << QString("TOC") << ","
         << QString("Tmp") << ","
         << QString("Time") << "\n";
 
@@ -268,8 +269,9 @@ void SendToPage::copyGetWater()
             << query.value(1).toString() << ","
             << query.value(2).toDouble() << ","
             << query.value(3).toDouble() << ","
-            << query.value(4).toDouble() << ","
-            << query.value(5).toString() << "\n";
+            << query.value(4).toInt() << ","
+            << query.value(5).toDouble() << ","
+            << query.value(6).toString() << "\n";
     }
     file.close();
 

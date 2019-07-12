@@ -413,12 +413,15 @@ void Ex_WaterQualityPage::updSwPressure(float fvalue)
 
 void Ex_WaterQualityPage::updTOC(float fToc)
 {
-    QString str = strUnitMsg[UNIT_PPB].arg((int)(fToc + 0.5));
     if(fToc >= 200)
     {
-        str = strUnitMsg[UNIT_PPB].arg(">200");
+        QString str = strUnitMsg[UNIT_PPB].arg(">200");
+        updateValue(m_tags[TOC_Value], str);
     }
-    updateValue(m_tags[TOC_Value], str);
+    else
+    {
+        updateValue(m_tags[TOC_Value], strUnitMsg[UNIT_PPB].arg(fToc, 0, 'f', 0));
+    }
     m_historyInfo[TOC_Value].value1 = fToc;
 }
 
@@ -855,7 +858,16 @@ void Ex_WaterQualityPage::updHistoryTank()
 
 void Ex_WaterQualityPage::updHistoryTOC()
 {
-    updateValue(m_tags[TOC_Value], strUnitMsg[UNIT_PPB].arg(m_historyInfo[TOC_Value].value1));
+    if(m_historyInfo[TOC_Value].value1 >= 200)
+    {
+        QString str = strUnitMsg[UNIT_PPB].arg(">200");
+        updateValue(m_tags[TOC_Value], str);
+    }
+    else
+    {
+        updateValue(m_tags[TOC_Value],
+                    strUnitMsg[UNIT_PPB].arg(m_historyInfo[TOC_Value].value1, 0, 'f', 0));
+    }
 }
 
 void Ex_WaterQualityPage::updFlowInfo(int iIndex,int iValue)

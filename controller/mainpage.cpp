@@ -51,24 +51,24 @@ static CONFIG_BTN sBtns[BTN_NUMBER] =
 
 static CONFIG_LABEL sLabels[LABEL_NUMBER] = {
     /* UP */
-    {77,106,146,50,GLOBAL_FONT_60,QColor(255,255,255),NULL,"18.2",0,0},
+    {77,106,146,50,GLOBAL_FONT_48,QColor(255,255,255),NULL,"0.0",0,0},
     {233,140,50,20,GLOBAL_FONT_14,QColor(255,255,255),NULL,"O",0,0},//M¦¸.cm
     {100,190,40,15,GLOBAL_FONT_14,QColor(255,255,255),NULL,"TOC",0,0},
     {145,177,90,30,GLOBAL_FONT_30,QColor(255,255,255),NULL," ",0,0}, //3, 2018.11.23
     {240,190,30,15,GLOBAL_FONT_14,QColor(255,255,255),NULL,"ppb",0,0},
-    {130,230,70,30,GLOBAL_FONT_30,QColor(255,255,255),NULL,"25.0",0,0},
+    {130,230,70,30,GLOBAL_FONT_30,QColor(255,255,255),NULL,"0.0",0,0},
     {205,240,15,20,GLOBAL_FONT_14,QColor(255,255,255),NULL,"C",0,0}, // ¡æ
     {40,275,46,30,GLOBAL_FONT_30,QColor(255,255,255),":/pics/image/indicator.png","UP",0,0},
    // {97,88,146,16,GLOBAL_FONT_14,QColor(255,255,255),NULL,0,0,TEXT_ALIGN_LEFT},
     {97,80,146,24,GLOBAL_FONT_14,QColor(255,255,255),NULL,0,0,TEXT_ALIGN_LEFT},
 
     /* EDI */
-    {530,106,146,50,GLOBAL_FONT_60,QColor(255,255,255),NULL,"15.0",0,0},
+    {530,106,146,50,GLOBAL_FONT_48,QColor(255,255,255),NULL,"0.0",0,0},
     {686,140,50,20,GLOBAL_FONT_14,QColor(255,255,255),NULL,"O",0,0},
     {548,190,40,15,GLOBAL_FONT_14,QColor(255,255,255),NULL,"LOOP",0,0},
-    {600,177,58,30,GLOBAL_FONT_30,QColor(255,255,255),NULL,"10.0",0,0},
+    {600,177,58,30,GLOBAL_FONT_30,QColor(255,255,255),NULL,"0.0",0,0},
     {663,190,50,20,GLOBAL_FONT_14,QColor(255,255,255),NULL,"us",0,0},
-    {588,230,70,30,GLOBAL_FONT_30,QColor(255,255,255),NULL,"25.0",0,0},
+    {588,230,70,30,GLOBAL_FONT_30,QColor(255,255,255),NULL,"0.0",0,0},
     {665,240,15,20,GLOBAL_FONT_14,QColor(255,255,255),NULL,"C",0,0},
     {718,275,46,30,GLOBAL_FONT_30,QColor(255,255,255),":/pics/image/indicator.png","EDI",0,0},
     //{550,88,146,16,GLOBAL_FONT_14,QColor(255,255,255),NULL,0,0,TEXT_ALIGN_LEFT},
@@ -100,7 +100,7 @@ MainPage::MainPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CP
 {
     int iLoop;
 
-    m_fToc = 3;
+    m_fToc = 0;
 
     m_bSingleMachine = false;
 
@@ -502,7 +502,7 @@ void MainPage::initUi()
     }
 
     x = 400 - PAGEID_MARGIN/2 - PAGEID_MARGIN - gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->width()*2;
-    for ( index = 0 ; index < 4 ; index++)
+    for ( index = 0 ; index < 3 ; index++)
     {
         m_pLbPageId[index] = new QLabel(m_widget);
         m_pLbPageId[index]->setGeometry(x ,560,gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->width(),gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->height());
@@ -759,8 +759,54 @@ void MainPage::InitNames(void)
             m_aWaterUnit[iLoop][1] = "";
             break;
         }
-    }    
+    }
 }
+
+void MainPage::updRealTimeQtwVolume(unsigned int uIValue)
+{
+    if (isVisible())
+    {
+        float value = (uIValue * 1.0)/1000;
+        if (DispGetUpQtwFlag())
+        {
+            m_pLabels[m_aiLblMap[LABEL_NAVI_UPWQUANTITY_VALUE]]->show();
+            m_pLabels[m_aiLblMap[LABEL_NAVI_UPWQUANTITY_UNIT]]->show();
+            if(value < 100.0)
+            {
+                m_pLabels[m_aiLblMap[LABEL_NAVI_UPWQUANTITY_VALUE]]->setText(QString::number(value, 'f', 1));
+            }
+            else
+            {
+                m_pLabels[m_aiLblMap[LABEL_NAVI_UPWQUANTITY_VALUE]]->setText(QString::number(value, 'f', 0));
+            }
+        }
+        else
+        {
+            m_pLabels[m_aiLblMap[LABEL_NAVI_UPWQUANTITY_VALUE]]->hide();
+            m_pLabels[m_aiLblMap[LABEL_NAVI_UPWQUANTITY_UNIT]]->hide();
+        }
+
+        if (DispGetEdiQtwFlag())
+        {
+            m_pLabels[m_aiLblMap[LABEL_NAVI_EDIWQUANTITY_VALUE]]->show();
+            m_pLabels[m_aiLblMap[LABEL_NAVI_EDIWQUANTITY_UNIT]]->show();
+            if(value < 100.0)
+            {
+                m_pLabels[m_aiLblMap[LABEL_NAVI_EDIWQUANTITY_VALUE]]->setText(QString::number(value, 'f', 1));
+            }
+            else
+            {
+                m_pLabels[m_aiLblMap[LABEL_NAVI_EDIWQUANTITY_VALUE]]->setText(QString::number(value, 'f', 0));
+            }
+        }
+        else
+        {
+            m_pLabels[m_aiLblMap[LABEL_NAVI_EDIWQUANTITY_VALUE]]->hide();
+            m_pLabels[m_aiLblMap[LABEL_NAVI_EDIWQUANTITY_UNIT]]->hide();
+        }
+    }
+}
+
 void MainPage::buildTranslation()
 {
     QString strOmg = tr("omg");

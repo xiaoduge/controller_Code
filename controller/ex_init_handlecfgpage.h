@@ -27,9 +27,11 @@ public:
     void addHandler(int iType,const QString& text0,const QString& text1);
     void cfgHandlerRsp();
 
-signals:
-    void exInitFinished();
-    void handlercfgSwitchBtnClicked(int);
+protected:
+    void mousePressEvent(QMouseEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
+
 private:
     void buildTitles();
     void setBackColor();

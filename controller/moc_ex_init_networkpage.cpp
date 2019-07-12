@@ -22,29 +22,25 @@ static const uint qt_meta_data_Ex_Init_Networkpage[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
-
- // signals: signature, parameters, type, tag, flags
-      21,   20,   20,   20, 0x05,
+       0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      50,   20,   20,   20, 0x0a,
-      76,   70,   20,   20, 0x0a,
-     105,   20,   20,   20, 0x0a,
-     131,   20,   20,   20, 0x0a,
+      21,   20,   20,   20, 0x0a,
+      47,   41,   20,   20, 0x0a,
+      76,   20,   20,   20, 0x0a,
+     102,   20,   20,   20, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_Ex_Init_Networkpage[] = {
-    "Ex_Init_Networkpage\0\0networkSwitchBtnClicked(int)\0"
-    "on_btn_clicked(int)\0state\0"
-    "on_checkBox_changeState(int)\0"
+    "Ex_Init_Networkpage\0\0on_btn_clicked(int)\0"
+    "state\0on_checkBox_changeState(int)\0"
     "on_m_pExNextBtn_clicked()\0"
     "on_m_pExBackBtn_clicked()\0"
 };
@@ -55,11 +51,10 @@ void Ex_Init_Networkpage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         Q_ASSERT(staticMetaObject.cast(_o));
         Ex_Init_Networkpage *_t = static_cast<Ex_Init_Networkpage *>(_o);
         switch (_id) {
-        case 0: _t->networkSwitchBtnClicked((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 2: _t->on_checkBox_changeState((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 3: _t->on_m_pExNextBtn_clicked(); break;
-        case 4: _t->on_m_pExBackBtn_clicked(); break;
+        case 0: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: _t->on_checkBox_changeState((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->on_m_pExNextBtn_clicked(); break;
+        case 3: _t->on_m_pExBackBtn_clicked(); break;
         default: ;
         }
     }
@@ -97,17 +92,10 @@ int Ex_Init_Networkpage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 4;
     }
     return _id;
-}
-
-// SIGNAL 0
-void Ex_Init_Networkpage::networkSwitchBtnClicked(int _t1)
-{
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

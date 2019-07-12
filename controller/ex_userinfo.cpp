@@ -3,6 +3,7 @@
 #include "ExtraDisplay.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include "dloginwarningdialog.h"
 
 Ex_UserInfo::Ex_UserInfo(QObject *parent) :
     QObject(parent)
@@ -12,21 +13,32 @@ Ex_UserInfo::Ex_UserInfo(QObject *parent) :
 int Ex_UserInfo::checkUserInfo(const QString &userName, const QString &passWord)
 {
     //超级用户，内部使用
-    if((userName.compare("Super", Qt::CaseInsensitive) == 0) && (passWord.compare("888888") == 0))
+    if((userName.compare(managerName[Super_Name], Qt::CaseInsensitive) == 0)
+        && (passWord.compare(userPassword[Super_Name]) == 0))
     {
         return 4;
     }
     //工程师权限，
-    if((userName.compare("Service", Qt::CaseInsensitive) == 0) && (passWord.compare("860860") == 0))
+    if((userName.compare(managerName[Service_Name], Qt::CaseInsensitive) == 0)
+        && (passWord.compare(userPassword[Service_Name]) == 0))
     {
         return 3;
     }
 
+    //VWR， 超级用户
+    if((userName.compare(managerName[Super_Service_Name], Qt::CaseInsensitive) == 0)
+        && (passWord.compare(userPassword[Super_Service_Name]) == 0))
+    {
+        return 31;
+    }
+
     //用户管理权限，
-    if((userName.compare("Manager", Qt::CaseInsensitive) == 0) && (passWord.compare("111111") == 0))
+    if((userName.compare(managerName[Manager_Name], Qt::CaseInsensitive) == 0)
+        && (passWord.compare(userPassword[Manager_Name]) == 0))
     {
         return 2;
     }
+
 
     QString strQuery = "select * from User where Permission = 2";
     QSqlQuery query;
@@ -61,15 +73,15 @@ int Ex_UserInfo::checkUserInfo(const QString &userName, const QString &passWord)
 
 bool Ex_UserInfo::checkManagerInfo(const QString &userName)
 {
-    if(userName.compare("Super", Qt::CaseInsensitive) == 0)
+    if(userName.compare(managerName[Super_Name], Qt::CaseInsensitive) == 0)
     {
         return true;
     }
-    if(userName.compare("Service", Qt::CaseInsensitive) == 0)
+    if(userName.compare(managerName[Service_Name], Qt::CaseInsensitive) == 0)
     {
         return true;
     }
-    if(userName.compare("Manager", Qt::CaseInsensitive) == 0)
+    if(userName.compare(managerName[Manager_Name], Qt::CaseInsensitive) == 0)
     {
         return true;
     }
@@ -91,11 +103,38 @@ bool Ex_UserInfo::checkManagerInfo(const QString &userName)
 
 bool Ex_UserInfo::checkEngineerInfo(const QString &userName)
 {
-    if(userName.compare("Super", Qt::CaseInsensitive) == 0)
+    if(userName.compare(managerName[Super_Name], Qt::CaseInsensitive) == 0)
     {
         return true;
     }
-    if(userName.compare("Service", Qt::CaseInsensitive) == 0)
+    if(userName.compare(managerName[Service_Name], Qt::CaseInsensitive) == 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool Ex_UserInfo::checkSuperService(const QString &userName, const QString& password)
+{
+    //超级用户，内部使用
+    if((userName.compare(managerName[Super_Name], Qt::CaseInsensitive) == 0)
+        && (0 == password.compare(userPassword[Super_Name])))
+    {
+        return true;
+    }
+
+    //VWR， 超级用户
+    if((userName.compare(managerName[Service_Name], Qt::CaseInsensitive) == 0)
+        && (0 == password.compare(userPassword[Super_Service_Name])))
+    {
+        return true;
+    }
+    return false;
+}
+
+bool Ex_UserInfo::checkSuperInfo(const QString &userName)
+{
+    if(userName.compare(managerName[Super_Name], Qt::CaseInsensitive) == 0)
     {
         return true;
     }

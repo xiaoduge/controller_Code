@@ -131,7 +131,7 @@ void Ex_Init_HandleCfgpage::on_pushButton_FinishBtn()
 
 void Ex_Init_HandleCfgpage::on_pushButton_BackBtn()
 {
-    emit handlercfgSwitchBtnClicked(0);
+    m_wndMain->naviInitPage(Ex_Init_Handlercfg, 1);
     m_wndMain->prepareKeyStroke();
 }
 
@@ -139,10 +139,6 @@ void Ex_Init_HandleCfgpage::initUi()
 {
     setBackColor();
 
-    //QFile qss(":/app/checkbox.qss");
-    //qss.open(QFile::ReadOnly);
-    //m_strQss4Chk = QLatin1String (qss.readAll());
-    //qss.close();
     m_strQss4Chk = m_wndMain->getQss4Chk();
 
     QHBoxLayout *layout = new QHBoxLayout();
@@ -316,6 +312,40 @@ void Ex_Init_HandleCfgpage::on_pushButton_QueryHandler()
 void Ex_Init_HandleCfgpage::cfgHandlerRsp()
 {
     ToastDlg::makeToast(tr("Be sure to save the handsets' configuration when collected all responses!"));
+}
+
+void Ex_Init_HandleCfgpage::mousePressEvent(QMouseEvent *e)
+{
+    if (!m_lstFlag)
+    {
+        m_lstX = e->x();
+        m_lstY = e->y();
+        m_curX = e->x();
+        m_curY = e->y();
+        m_lstFlag = 1;
+    }
+}
+
+void Ex_Init_HandleCfgpage::mouseMoveEvent(QMouseEvent *e)
+{
+    if (0 == e->x()
+        && 0 == e->y())
+    {
+       return;
+    }
+
+    m_curX = e->x();
+    m_curY = e->y();
+}
+
+void Ex_Init_HandleCfgpage::mouseReleaseEvent(QMouseEvent *e)
+{
+    if (abs(m_curX - m_lstX) >= PAGE_X_DIMENSION
+        && abs(m_curY - m_lstY) <= PAGE_Y_DIMENSION)
+    {
+        m_wndMain->naviInitPage(Ex_Init_Handlercfg, m_curX - m_lstX > 0 ? 1 : 0);
+    }
+    m_lstFlag = 0;
 }
 
 

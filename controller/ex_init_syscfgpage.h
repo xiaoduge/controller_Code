@@ -42,9 +42,10 @@ public:
 
     virtual void update();
     void createHeader();
-
-signals:
-    void initcfgSwitchBtnClicked(int);
+protected:
+    void mousePressEvent(QMouseEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
 
 private:
     void buildTitles();

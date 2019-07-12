@@ -139,7 +139,9 @@ SOURCES += main.cpp\
     dwaterqualitywidget.cpp \
     dlineedit.cpp \
     dsqltablemodelforuser.cpp \
-    dloginwarningdialog.cpp
+    dloginwarningdialog.cpp \
+    ex_initconsumableinspage.cpp \
+    dconsumableinstallwidget.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -251,7 +253,9 @@ HEADERS  += mainwindow.h \
     dwaterqualitywidget.h \
     dlineedit.h \
     dsqltablemodelforuser.h \
-    dloginwarningdialog.h
+    dloginwarningdialog.h \
+    ex_initconsumableinspage.h \
+    dconsumableinstallwidget.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

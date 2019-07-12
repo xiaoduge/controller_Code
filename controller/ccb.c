@@ -6050,7 +6050,25 @@ void CcbTwStaticsNotify(int iType,int iIdx,QTW_MEAS_STRU *pMeas)
     DispIndicationEntry(gaucNotifyBuffer,iLength);
 }
 
+void CcbRealTimeQTwVolumnNotify(unsigned int value)
+{
+    int iLength;
 
+    NOT_INFO_STRU *pNotify = (NOT_INFO_STRU *)gaucNotifyBuffer;
+
+    NOT_REALTIME_QTW_VOLUME_ITEM_STRU *pItem = (NOT_REALTIME_QTW_VOLUME_ITEM_STRU *)pNotify->aucData;
+
+    pNotify->Hdr.ucCode = DISP_NOT_REALTIME_QTW_VOLUME;
+
+    iLength = sizeof(NOT_HEADER_STRU);
+
+    pItem->ulValue = value;
+
+    iLength += sizeof(NOT_REALTIME_QTW_VOLUME_ITEM_STRU);
+
+    DispIndicationEntry(gaucNotifyBuffer,iLength);
+
+}
 
 void CcbQTwVolumnNotify(int iType,int iIdx,QTW_MEAS_STRU *pMeas)
 {
@@ -7480,6 +7498,7 @@ int CanCcbAfDataClientRpt4FlowMeter(MAIN_CANITF_MSG_STRU *pCanItfMsg)
                         /* enough water has been taken */
                         CcbStopQtw();
                     }
+                    CcbRealTimeQTwVolumnNotify(CcbConvert2Fm1Data(gCcb.QtwMeas.ulCurFm - gCcb.QtwMeas.ulBgnFm));
                 }
             }
 

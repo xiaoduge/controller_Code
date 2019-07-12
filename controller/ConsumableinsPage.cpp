@@ -11,7 +11,9 @@
 ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
     int iIdx = 0;
-    
+
+    initTypeMap();
+
     if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter)) //DISP_SM_PreFilterColumn
     {
         aIds[iIdx].iType = 0;
@@ -782,6 +784,27 @@ void ConsumableInsPage::toCurrentItem(int index)
     m_iCurrentItem = index;
 }
 
+void ConsumableInsPage::initTypeMap()
+{
+    m_typeMap.insert(PPACK_CATNO, DISP_P_PACK);
+    m_typeMap.insert(ACPACK_CATNO, DISP_AC_PACK);
+    m_typeMap.insert(UPACK_CATNO, DISP_U_PACK);
+    m_typeMap.insert(HPACK_CATNO, DISP_H_PACK);
+    m_typeMap.insert(PREPACK_CATNO, DISP_PRE_PACK);
+    m_typeMap.insert(CLEANPACK_CATNO, DISP_P_PACK | (1 <<16));
+    m_typeMap.insert(ATPACK_CATNO, DISP_AT_PACK);
+    m_typeMap.insert(TPACK_CATNO, DISP_T_PACK);
+    m_typeMap.insert(ROPACK_CATNO, DISP_MACHINERY_RO_MEMBRANE);
+    m_typeMap.insert(UV185_CATNO, DISP_N2_UV);
+    m_typeMap.insert(UV254_CATNO, DISP_N1_UV);
+    m_typeMap.insert(UVTANK_CATNO, DISP_N3_UV);
+    m_typeMap.insert(ROPUMP_CATNO, DISP_MACHINERY_RO_BOOSTER_PUMP);
+    m_typeMap.insert(UPPUMP_CATNO, DISP_MACHINERY_CIR_PUMP);
+    m_typeMap.insert(FINALFILTER_CATNO, DISP_T_A_FILTER);
+    m_typeMap.insert(EDI_CATNO, DISP_MACHINERY_EDI);
+    m_typeMap.insert(TANKVENTFILTER_CATNO, DISP_W_FILTER);
+}
+
 void ConsumableInsPage::on_btn_clicked(int index)
 {  
    int iOffset = 0;
@@ -857,43 +880,53 @@ void ConsumableInsPage::on_btn_clicked(int index)
            QMessageBox::about(NULL, tr("About"), tr("Please Input Serial Number !"));
            return;
        }
-       switch(aIds[iMapIdx].iType)
-       {
-       case 0:
-          {
-              int cmIdx = aIds[iMapIdx].iId;
-          
-              //if (0 == strcmp(strCn.toAscii(),gGlobalParam.cmSn.aCn[cmIdx])
-              //    || 0 == strcmp(strLn.toAscii(),gGlobalParam.cmSn.aLn[cmIdx]))
-              //{
-              //   return ;
-              //}
-   
+        switch(aIds[iMapIdx].iType)
+        {
+        case 0:
+        {
+            int cmIdx = aIds[iMapIdx].iId;
+
+            int value = m_typeMap.key(cmIdx);
+            bool verify = MainWindow::consumableCatNo(static_cast<CONSUMABLE_CATNO>(value)).contains(strCn);
+            if(!verify)
+            {
+                QMessageBox::warning(NULL,
+                                     tr("Warning"),
+                                     tr("The type of consumable is wrong, failed installation!"),
+                                     QMessageBox::Ok
+                                     );
+                return;
+            }
+
               /* install */
-              strncpy(cn,strCn.toAscii(),APP_CAT_LENGTH);
-              strncpy(ln,strLn.toAscii(),APP_LOT_LENGTH);
+            strncpy(cn,strCn.toAscii(),APP_CAT_LENGTH);
+            strncpy(ln,strLn.toAscii(),APP_LOT_LENGTH);
    
-              //MainSaveCMSnItem(gGlobalParam.iMachineType,cn,ln,cmIdx);
-         //     if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
-         //     {
-         //        MainSaveExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0);
-         //     }
-         //     else
-              {
-                m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0, installDate, aIds[iMapIdx].iRfid);
-              }
+            m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0, installDate, aIds[iMapIdx].iRfid);
               
-              strncpy(gGlobalParam.cmSn.aCn[cmIdx],cn,APP_CAT_LENGTH);
-              strncpy(gGlobalParam.cmSn.aLn[cmIdx],ln,APP_LOT_LENGTH);
+            strncpy(gGlobalParam.cmSn.aCn[cmIdx],cn,APP_CAT_LENGTH);
+            strncpy(gGlobalParam.cmSn.aLn[cmIdx],ln,APP_LOT_LENGTH);
    
-              MainResetCmInfo(cmIdx);
+            MainResetCmInfo(cmIdx);
    
-              m_wndMain->MainWriteCMInstallInfo2Db(cmIdx,0,cn,ln);
-          }        
-           break;
-       case 1:
-         {
+            m_wndMain->MainWriteCMInstallInfo2Db(cmIdx,0,cn,ln);
+        }
+            break;
+        case 1:
+        {
              int macIdx = aIds[iMapIdx].iId - DISP_MACHINERY_SOURCE_BOOSTER_PUMP;
+
+             int value = m_typeMap.key(aIds[iMapIdx].iId);
+             bool verify = MainWindow::consumableCatNo(static_cast<CONSUMABLE_CATNO>(value)).contains(strCn);
+             if(!verify)
+             {
+                 QMessageBox::warning(NULL,
+                                      tr("Warning"),
+                                      tr("The type of consumable is wrong, failed installation!"),
+                                      QMessageBox::Ok
+                                      );
+                 return;
+             }
              if (0 == strcmp(strCn.toAscii(),gGlobalParam.macSn.aCn[macIdx])
                 || 0 == strcmp(strLn.toAscii(),gGlobalParam.macSn.aLn[macIdx]))
              {

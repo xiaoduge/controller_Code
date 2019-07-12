@@ -22,28 +22,24 @@ static const uint qt_meta_data_Ex_Init_TimePage[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
-
- // signals: signature, parameters, type, tag, flags
-      18,   17,   17,   17, 0x05,
+       0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      47,   17,   17,   17, 0x0a,
-      67,   17,   17,   17, 0x0a,
-      90,   17,   17,   17, 0x0a,
+      18,   17,   17,   17, 0x0a,
+      38,   17,   17,   17, 0x0a,
+      61,   17,   17,   17, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_Ex_Init_TimePage[] = {
-    "Ex_Init_TimePage\0\0timecfgSwitchBtnClicked(int)\0"
-    "on_btn_clicked(int)\0on_ExNextBtn_clicked()\0"
-    "on_ExBackBtn_Clicked()\0"
+    "Ex_Init_TimePage\0\0on_btn_clicked(int)\0"
+    "on_ExNextBtn_clicked()\0on_ExBackBtn_Clicked()\0"
 };
 
 void Ex_Init_TimePage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -52,10 +48,9 @@ void Ex_Init_TimePage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         Q_ASSERT(staticMetaObject.cast(_o));
         Ex_Init_TimePage *_t = static_cast<Ex_Init_TimePage *>(_o);
         switch (_id) {
-        case 0: _t->timecfgSwitchBtnClicked((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 2: _t->on_ExNextBtn_clicked(); break;
-        case 3: _t->on_ExBackBtn_Clicked(); break;
+        case 0: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: _t->on_ExNextBtn_clicked(); break;
+        case 2: _t->on_ExBackBtn_Clicked(); break;
         default: ;
         }
     }
@@ -93,17 +88,10 @@ int Ex_Init_TimePage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 3;
     }
     return _id;
-}
-
-// SIGNAL 0
-void Ex_Init_TimePage::timecfgSwitchBtnClicked(int _t1)
-{
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

@@ -297,13 +297,13 @@ void Ex_Init_Networkpage::on_m_pExNextBtn_clicked()
 {
     save(); //next clicked save
 
-    emit networkSwitchBtnClicked(1);
+    m_wndMain->naviInitPage(Ex_Init_Network, 0);
 
 }
 
 void Ex_Init_Networkpage::on_m_pExBackBtn_clicked()
 {
-    emit networkSwitchBtnClicked(0);
+    m_wndMain->naviInitPage(Ex_Init_Network, 1);
     m_wndMain->prepareKeyStroke();
 }
 
@@ -357,6 +357,41 @@ void Ex_Init_Networkpage::update()
         m_pExNextBtn->move(500, 420);
 #endif
     }
+}
+
+void Ex_Init_Networkpage::mousePressEvent(QMouseEvent *e)
+{
+    if (!m_lstFlag)
+    {
+        m_lstX = e->x();
+        m_lstY = e->y();
+        m_curX = e->x();
+        m_curY = e->y();
+        m_lstFlag = 1;
+    }
+}
+
+void Ex_Init_Networkpage::mouseMoveEvent(QMouseEvent *e)
+{
+    if (0 == e->x()
+        && 0 == e->y())
+    {
+       return;
+    }
+
+    m_curX = e->x();
+    m_curY = e->y();
+}
+
+void Ex_Init_Networkpage::mouseReleaseEvent(QMouseEvent *e)
+{
+    if (abs(m_curX - m_lstX) >= PAGE_X_DIMENSION
+        && abs(m_curY - m_lstY) <= PAGE_Y_DIMENSION)
+    {
+        save();
+        m_wndMain->naviInitPage(Ex_Init_Network, m_curX - m_lstX > 0 ? 1 : 0);
+    }
+    m_lstFlag = 0;
 }
 
 #ifdef D_HTTPWORK

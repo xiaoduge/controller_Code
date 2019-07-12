@@ -138,6 +138,8 @@ public:
 
     void    InitNames(void);
 
+    void  updRealTimeQtwVolume(unsigned int uIValue);
+
 private:
     void buildTitles();
 
@@ -159,7 +161,7 @@ private:
     
     navigatorBar *m_pNaviBar;
     
-    QLabel        *m_pLbPageId[4];
+    QLabel        *m_pLbPageId[3];
 
 
 

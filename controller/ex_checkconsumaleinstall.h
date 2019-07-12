@@ -5,12 +5,14 @@
 #include <QStringList>
 #include "mainwindow.h"
 #include <QMap>
+#include <QSqlDatabase>
 
 class Ex_CheckConsumaleInstall : public QObject
 {
     Q_OBJECT
 public:
     explicit Ex_CheckConsumaleInstall(int id, QObject *parent = 0);
+    ~Ex_CheckConsumaleInstall();
 
     bool check(int iRfId);
 
@@ -23,6 +25,8 @@ public:
     
 signals:
     void consumableMsg(int iType, const QString& catNo, const QString& lotNo);
+
+    void consumableInstallFinished(int);
     
 public slots:
     void updateConsumaleMsg();
@@ -37,6 +41,9 @@ private:
     bool clearVolofUse();
     void initTypeMap();
     void initCategoryMap();
+
+    bool checkDatabaseConnect();
+    bool initSqlDatabase();
 
 private:
     int m_instanceID;
@@ -53,6 +60,8 @@ private:
     bool m_isBusy;
     QMap<short int, short int> m_typeMap;
     QMap<short int, short int> m_categoryMap;
+
+    QSqlDatabase m_db;
 };
 
 #endif // EX_CHECKCONSUMALEINSTALL_H

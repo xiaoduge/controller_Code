@@ -60,6 +60,8 @@ private:
     void createControl();
     void connectData();
 
+    void checkLoginInfo();
+
     //delete db table data;
     bool deleteDbAll();
     bool deleteDbWater();
@@ -88,6 +90,8 @@ private:
     QLabel* m_pExLabel[SYSCFGPAGE_LB_NUM];
     DLineEdit* m_ExLineEdit[SYSCFGPAGE_LB_NUM];
 
+
+    QWidget* m_pDeleteWidget;
     QLabel* m_pLbDbDel;
     QComboBox* m_pCmDbDel;
     QPushButton* m_pBtnDbDel;

@@ -65,7 +65,7 @@ static CONFIG_BTN1 sBtns[SET_BTN_NUMBER] =
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
 };
 
-SetPage::SetPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CPage(parent,widget,wndMain)
+SetPage::SetPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CSubPage(parent,widget,wndMain) //CPage(parent,widget,wndMain)
 {
     initUi();
 
@@ -78,7 +78,7 @@ SetPage::SetPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CPag
 
 void SetPage::creatTitle()
 {
-    CPage::creatTitle();
+    CSubPage::creatTitle();
     buildTitles();
     selectTitle(0);
 }
@@ -159,13 +159,8 @@ void SetPage::createSubPage()
     }
 }
 
-void SetPage::update()
+void SetPage::checkLoginInfo()
 {
-    if(!user_LoginState.loginState())
-    {
-        m_pBtns[SET_BTN_SYSTEM_SUPER]->hide();
-        m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
-    }
 }
 
 void SetPage::buildTitles()
@@ -283,28 +278,7 @@ void SetPage::initUi()
     }
     */
     x = 400 - PAGEID_MARGIN/2 - PAGEID_MARGIN - gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->width()*2;
-    for ( index = 0 ; index < 4 ; index++)
-    {
-        m_pLbPageId[index] = new QLabel(m_widget);
-        m_pLbPageId[index]->setGeometry(x ,560,gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->width(),gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->height());
-        x += (PAGEID_MARGIN + gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->width());
 
-        if (index == 3)
-        {
-            m_pLbPageId[index]->setPixmap(*gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]);
-        }
-        else
-        {
-            m_pLbPageId[index]->setPixmap(*gpGlobalPixmaps[GLOBAL_BMP_PAGE_UNSELECT]);
-        }
-    }
-
-        
-    m_pTitleBar = new titleBar(m_widget);
-
-    m_pTitleBar->setGeometry(0,0,800,55);
-    
-    connect(m_pTitleBar, SIGNAL(clicked(int)), this, SLOT(on_navi_clicked(int)));
     m_pBtns[SET_BTN_SYSTEM_SUPER]->hide();
     m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
 
@@ -315,9 +289,15 @@ void SetPage::on_btn_clicked(int index)
     printf("tmp = %d\r\n" , index);
     if(index == SET_BTN_INITIALIZE)
     {
+        if (DISP_WORK_STATE_IDLE != DispGetWorkState())
+        {
+            QMessageBox::about(NULL, tr("Notice"), tr("Please Stop System First!"));
+            return;
+        }
+
         Ex_UserInfo userInfo;
-        QString userlog = m_wndMain->getLoginfo();
-        bool iEngineer = userInfo.checkEngineerInfo(userlog);
+        DUserInfo userlog = m_wndMain->getLoginfo();
+        bool iEngineer = userInfo.checkEngineerInfo(userlog.m_strUserName);
         if(!user_LoginState.loginState() || (!iEngineer))
         {
             m_pBtns[SET_BTN_SYSTEM_SUPER]->hide(); //
@@ -332,11 +312,12 @@ void SetPage::on_btn_clicked(int index)
                 switch(ret)
                 {
                 case 3:
+                case 31:
                 case 4:
                 {
-                    m_wndMain->saveLoginfo(dlg.m_strUserName);
+                    m_wndMain->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
                     user_LoginState.setLoginState(true);
-                    if(4 == ret)
+                    if(3 != ret)
                     {
                         m_pBtns[SET_BTN_SYSTEM_SUPER]->show(); //
                         m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->show();
@@ -380,8 +361,8 @@ void SetPage::on_btn_clicked(int index)
         case SET_BTN_SYSTEM_FACTORYTEST:
         {
             Ex_UserInfo userInfo;
-            QString userlog = m_wndMain->getLoginfo();
-            bool iEngineer = userInfo.checkEngineerInfo(userlog);
+            DUserInfo userlog = m_wndMain->getLoginfo();
+            bool iEngineer = userInfo.checkEngineerInfo(userlog.m_strUserName);
             if(!user_LoginState.loginState() || (!iEngineer))
             {
                 m_pBtns[SET_BTN_SYSTEM_SUPER]->hide(); //
@@ -396,14 +377,15 @@ void SetPage::on_btn_clicked(int index)
                     switch(ret)
                     {
                     case 3:
+                    case 31:
                     case 4:
                     {
-                        m_wndMain->saveLoginfo(dlg.m_strUserName);
+                        m_wndMain->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
                         m_pSubPages[index]->show(true);
                         user_LoginState.setLoginState(true);
-                        if(4 == ret)
+                        if(3 != ret)
                         {
-                            m_pBtns[SET_BTN_SYSTEM_SUPER]->show();
+                            m_pBtns[SET_BTN_SYSTEM_SUPER]->show(); //
                             m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->show();
                         }
                         break;
@@ -421,6 +403,7 @@ void SetPage::on_btn_clicked(int index)
                         break;
                     }
                     default:
+                        show(true);
                         break;
                     }
                 }
@@ -443,30 +426,6 @@ void SetPage::on_btn_clicked(int index)
     m_wndMain->prepareKeyStroke();
 }
 
-void SetPage::mousePressEvent(QMouseEvent *e)
-{
-    if (!m_lstFlag)
-    {
-        m_lstX = e->x();
-        m_lstY = e->y();
-        m_curX = e->x();
-        m_curY = e->y();
-        m_lstFlag = 1;
-    }
-}
-
-void SetPage::mouseMoveEvent(QMouseEvent *e)
-{
-    if (0 == e->x()
-        && 0 == e->y())
-    {
-       return;
-    }
-
-    m_curX = e->x();
-    m_curY = e->y();
-}
-
 void SetPage::toInitializePage()
 {
     QMessageBox::StandardButton rb = QMessageBox::question(NULL,
@@ -483,35 +442,18 @@ void SetPage::toInitializePage()
     m_wndMain->restart();
 }
 
-void SetPage::mouseReleaseEvent(QMouseEvent *e)
+void SetPage::setSuperPage(bool bShow)
 {
-
-    if (abs(m_curX - m_lstX) >= PAGE_X_DIMENSION
-        && abs(m_curY - m_lstY) <= PAGE_Y_DIMENSION)
+    if(bShow)
     {
-#ifdef FLOWCHART
-        m_wndMain->naviPage(4,m_curX - m_lstX > 0 ? 1 : 0);
-#else
-        m_wndMain->naviPage(3,m_curX - m_lstX > 0 ? 1 : 0);
-#endif
+        m_pBtns[SET_BTN_SYSTEM_SUPER]->show();
+        m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->show();
     }
-    m_lstFlag = 0;
+    else
+    {
+        m_pBtns[SET_BTN_SYSTEM_SUPER]->hide();
+        m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
+    }
 }
 
-
-void SetPage::on_navi_clicked(int index)
-{
-    switch(index)
-    {
-    case TITLE_BAR_ID_POWER_OFF:
-        break;
-    case TITLE_BAR_ID_BACK:
-        break;
-    case TITLE_BAR_ID_HOME:
-        show(false);
-        m_wndMain->home();
-        break;
-    }
-    printf("tmp = %d\r\n" , index);
-}
 
