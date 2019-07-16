@@ -201,7 +201,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190712_debug");
+QString strSoftwareVersion = QString("0.1.8.190715_debug");
 
 MainWindow *gpMainWnd;
 
@@ -3369,7 +3369,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_bSplash = false;
 
     m_bC1Regulator = false;
-    m_isInitCMInfo = false; //2019.3.1 add
     ex_isPackNew = 0;
 
     //Set the factory default time for RFID tags
@@ -4389,8 +4388,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
     initScreenSleep(); //ex
     initMachineFlow();  //ex 2018.11.19
 
-    QTimer::singleShot(3000, this, SLOT(retriveCMInfoWithRFID()));
-
 #ifdef D_HTTPWORK
     for(int i = 0; i < HTTP_NOTIFY_NUM; i++)
     {
@@ -5240,11 +5237,6 @@ void MainWindow::on_timerEvent()
         }
     }
 
-    //2019.3.1
-    if(!m_isInitCMInfo)
-    {
-        updateCMInfoWithRFID(0);
-    }
 }
 
 void MainWindow::on_timerPeriodEvent()
@@ -8405,6 +8397,8 @@ void MainWindow::run(bool bRun)
                }
                bool isError = false;
                QMessageBox msgBox;
+               msgBox.setWindowTitle(tr("Warning"));
+               msgBox.setIcon(QMessageBox::Question);
 
                switch(-iRet)
                {
@@ -8436,7 +8430,7 @@ void MainWindow::run(bool bRun)
 
                if(isError)
                {
-                    msgBox.setInformativeText("Do you want to continue?");
+                    msgBox.setInformativeText(tr("Do you want to continue?"));
                     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
                     msgBox.setDefaultButton(QMessageBox::No);
                     int ret = msgBox.exec();
@@ -9493,12 +9487,6 @@ void MainWindow::setStartCheckConsumable(bool isStart)
     m_startCheckConsumable = isStart;
 }
 
-void MainWindow::retriveCMInfoWithRFID()
-{
-    updateCMInfoWithRFID(0);
-    MainSaveCMInfo(gGlobalParam.iMachineType,gCMUsage.info);
-}
-
 void MainWindow::retriveLastRunState()
 {
     if(ex_gGlobalParam.lastRunState)
@@ -9673,23 +9661,7 @@ void MainWindow::readCMInfoFromRFID(int iRfId, int type)
 
     memset(cn, 0, sizeof(CATNO));
     memset(ln, 0, sizeof(LOTNO));
-#if 0
-    if (this->getRfidState(iRfId))
-    {
-        if(m_aRfidInfo[iRfId].getPackType() == type)
-        {
-            this->getRfidInstallDate(iRfId, &installDate);
-            this->getRfidVolofUse(iRfId, volUsed);
-        }
-        else
-        {
-            return;
-        }
 
-    }
-
-    else
-#endif
     {
         iRet = this->readRfid(iRfId);
         if (iRet)
@@ -9740,20 +9712,10 @@ void MainWindow::readCMInfoFromRFID(int iRfId, int type)
         gCMUsage.info.aulCms[DISP_H_PACKLIFEL]   = volUsed;
         break;
     }
-    if(!m_isInitCMInfo)
-    {
-        m_isInitCMInfo = true;
-    }
 }
 
 void MainWindow::writeCMInfoToRFID(int iRfId, int type)
 {
-    qDebug() << QString("writeCMInfoToRFIF(%1, %2)").arg(iRfId).arg(type);
-    if(!m_isInitCMInfo)
-    {
-        return;
-    }
-
     int iRet;
     QString volData;
     switch(type)

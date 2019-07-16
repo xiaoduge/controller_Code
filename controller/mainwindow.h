@@ -429,9 +429,6 @@ public:
     void setStartCheckConsumable(bool isStart);
 
 public slots:
-#ifdef RFIDTEST
-    void retriveCMInfoWithRFID();
-#endif
     void retriveLastRunState();
 
 private slots:
@@ -591,7 +588,6 @@ private:
 
     bool m_bSplash;
     int  m_curPageIdx;
-    bool m_isInitCMInfo;
 
     CPage *m_pCurPage;
 

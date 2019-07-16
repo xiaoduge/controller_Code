@@ -2064,8 +2064,8 @@
         <location filename="ex_historypage.cpp" line="388"/>
         <location filename="ex_historypage.cpp" line="394"/>
         <location filename="ex_historypage.cpp" line="400"/>
-        <location filename="ex_historypage.cpp" line="408"/>
-        <location filename="ex_historypage.cpp" line="420"/>
+        <location filename="ex_historypage.cpp" line="409"/>
+        <location filename="ex_historypage.cpp" line="421"/>
         <source>ID</source>
         <translation type="unfinished">ID</translation>
     </message>
@@ -2083,9 +2083,9 @@
     <message>
         <location filename="ex_historypage.cpp" line="391"/>
         <location filename="ex_historypage.cpp" line="397"/>
-        <location filename="ex_historypage.cpp" line="405"/>
-        <location filename="ex_historypage.cpp" line="417"/>
-        <location filename="ex_historypage.cpp" line="424"/>
+        <location filename="ex_historypage.cpp" line="406"/>
+        <location filename="ex_historypage.cpp" line="418"/>
+        <location filename="ex_historypage.cpp" line="425"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2110,62 +2110,62 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="404"/>
+        <location filename="ex_historypage.cpp" line="405"/>
         <source>Tmp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="409"/>
+        <location filename="ex_historypage.cpp" line="410"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="410"/>
+        <location filename="ex_historypage.cpp" line="411"/>
         <source>Ecoroin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="411"/>
+        <location filename="ex_historypage.cpp" line="412"/>
         <source>Tmproin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="412"/>
+        <location filename="ex_historypage.cpp" line="413"/>
         <source>Ecorores</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="413"/>
+        <location filename="ex_historypage.cpp" line="414"/>
         <source>eEcoropw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="414"/>
+        <location filename="ex_historypage.cpp" line="415"/>
         <source>Tmpropw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="415"/>
+        <location filename="ex_historypage.cpp" line="416"/>
         <source>Ecoedi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="416"/>
+        <location filename="ex_historypage.cpp" line="417"/>
         <source>Tmpedi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="421"/>
+        <location filename="ex_historypage.cpp" line="422"/>
         <source>Name</source>
         <translation type="unfinished">Имя</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="422"/>
+        <location filename="ex_historypage.cpp" line="423"/>
         <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="423"/>
+        <location filename="ex_historypage.cpp" line="424"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2173,83 +2173,83 @@
 <context>
     <name>Ex_InitConsumableInsPage</name>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="23"/>
+        <location filename="ex_initconsumableinspage.cpp" line="26"/>
         <source>Next</source>
         <translation type="unfinished">Далее</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="24"/>
+        <location filename="ex_initconsumableinspage.cpp" line="27"/>
         <source>Back</source>
         <translation type="unfinished">Назад</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="26"/>
+        <location filename="ex_initconsumableinspage.cpp" line="29"/>
         <source>Note:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="27"/>
+        <location filename="ex_initconsumableinspage.cpp" line="30"/>
         <source>Install the AC Pack after all other components with RFID chip are installed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="28"/>
+        <location filename="ex_initconsumableinspage.cpp" line="31"/>
         <source>Scan the final filter and install it to the dispenser after finishing system setting-up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="175"/>
+        <location filename="ex_initconsumableinspage.cpp" line="194"/>
         <source>U Pack</source>
         <translation type="unfinished">Картридж U Pack</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="191"/>
-        <location filename="ex_initconsumableinspage.cpp" line="198"/>
+        <location filename="ex_initconsumableinspage.cpp" line="210"/>
+        <location filename="ex_initconsumableinspage.cpp" line="217"/>
         <source>H Pack</source>
         <translation type="unfinished">Картридж H Pack</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="219"/>
+        <location filename="ex_initconsumableinspage.cpp" line="238"/>
         <source>P Pack</source>
         <translation type="unfinished">Картридж P Pack</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="239"/>
+        <location filename="ex_initconsumableinspage.cpp" line="258"/>
         <source>AC Pack</source>
         <translation type="unfinished">Картридж AC Pack </translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="260"/>
+        <location filename="ex_initconsumableinspage.cpp" line="279"/>
         <source>RO Membrane</source>
         <translation type="unfinished">RO мембрана</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="277"/>
+        <location filename="ex_initconsumableinspage.cpp" line="296"/>
         <source>Final Fliter B</source>
         <translation type="unfinished">Финишный фильтр В</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="299"/>
+        <location filename="ex_initconsumableinspage.cpp" line="318"/>
         <source>Final Fliter A</source>
         <translation type="unfinished">Финишный фильтр A</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="317"/>
+        <location filename="ex_initconsumableinspage.cpp" line="336"/>
         <source>254 UV Lamp</source>
         <translation type="unfinished">254 УФ лампа</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="337"/>
+        <location filename="ex_initconsumableinspage.cpp" line="356"/>
         <source>185 UV Lamp</source>
         <translation type="unfinished">185 УФ лампа</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="355"/>
+        <location filename="ex_initconsumableinspage.cpp" line="374"/>
         <source>Tank UV Lamp</source>
         <translation type="unfinished">Бак УФ лампа</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="375"/>
+        <location filename="ex_initconsumableinspage.cpp" line="394"/>
         <source>Tank Vent Filter</source>
         <translation type="unfinished">Бак вент фильтр</translation>
     </message>
@@ -4265,69 +4265,74 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8356"/>
+        <location filename="mainwindow.cpp" line="8354"/>
         <source>No Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8359"/>
+        <location filename="mainwindow.cpp" line="8357"/>
         <source>No AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8362"/>
+        <location filename="mainwindow.cpp" line="8360"/>
         <source>No P-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8365"/>
+        <location filename="mainwindow.cpp" line="8363"/>
         <source>No U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8368"/>
+        <location filename="mainwindow.cpp" line="8366"/>
         <source>No AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8371"/>
+        <location filename="mainwindow.cpp" line="8369"/>
         <source>No H-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8375"/>
+        <location filename="mainwindow.cpp" line="8373"/>
         <location filename="mainwindow.cpp" line="8414"/>
         <source>False Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8378"/>
+        <location filename="mainwindow.cpp" line="8376"/>
         <location filename="mainwindow.cpp" line="8418"/>
         <source>False AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8381"/>
+        <location filename="mainwindow.cpp" line="8379"/>
         <location filename="mainwindow.cpp" line="8422"/>
         <source>False P-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8384"/>
+        <location filename="mainwindow.cpp" line="8382"/>
         <location filename="mainwindow.cpp" line="8426"/>
         <source>False U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8387"/>
+        <location filename="mainwindow.cpp" line="8385"/>
         <location filename="mainwindow.cpp" line="8430"/>
         <source>False AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8390"/>
+        <location filename="mainwindow.cpp" line="8388"/>
         <location filename="mainwindow.cpp" line="8434"/>
         <source>False H-PACK detected!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="8441"/>
+        <source>Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4361,6 +4366,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="mainwindow.cpp" line="8408"/>
         <location filename="mainwindow.cpp" line="9854"/>
         <location filename="mainwindow.cpp" line="9860"/>
         <source>Warning</source>
@@ -4893,16 +4899,16 @@
         <location filename="sendtopage.cpp" line="227"/>
         <location filename="sendtopage.cpp" line="234"/>
         <location filename="sendtopage.cpp" line="251"/>
-        <location filename="sendtopage.cpp" line="279"/>
-        <location filename="sendtopage.cpp" line="286"/>
-        <location filename="sendtopage.cpp" line="302"/>
-        <location filename="sendtopage.cpp" line="338"/>
-        <location filename="sendtopage.cpp" line="345"/>
-        <location filename="sendtopage.cpp" line="361"/>
-        <location filename="sendtopage.cpp" line="387"/>
-        <location filename="sendtopage.cpp" line="394"/>
-        <location filename="sendtopage.cpp" line="411"/>
-        <location filename="sendtopage.cpp" line="422"/>
+        <location filename="sendtopage.cpp" line="281"/>
+        <location filename="sendtopage.cpp" line="288"/>
+        <location filename="sendtopage.cpp" line="304"/>
+        <location filename="sendtopage.cpp" line="340"/>
+        <location filename="sendtopage.cpp" line="347"/>
+        <location filename="sendtopage.cpp" line="363"/>
+        <location filename="sendtopage.cpp" line="389"/>
+        <location filename="sendtopage.cpp" line="396"/>
+        <location filename="sendtopage.cpp" line="413"/>
+        <location filename="sendtopage.cpp" line="424"/>
         <source>Warning</source>
         <oldsource>Waring</oldsource>
         <translation type="unfinished">Внимание</translation>
@@ -4924,40 +4930,40 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sendtopage.cpp" line="279"/>
-        <location filename="sendtopage.cpp" line="286"/>
+        <location filename="sendtopage.cpp" line="281"/>
+        <location filename="sendtopage.cpp" line="288"/>
         <source>Failed to send data:GetWater.dcj</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sendtopage.cpp" line="302"/>
+        <location filename="sendtopage.cpp" line="304"/>
         <source>Failed to send data:ProduceWater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sendtopage.cpp" line="338"/>
-        <location filename="sendtopage.cpp" line="345"/>
+        <location filename="sendtopage.cpp" line="340"/>
+        <location filename="sendtopage.cpp" line="347"/>
         <source>Failed to send data:ProduceWater.dcj</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sendtopage.cpp" line="361"/>
+        <location filename="sendtopage.cpp" line="363"/>
         <source>Failed to send data:Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sendtopage.cpp" line="387"/>
-        <location filename="sendtopage.cpp" line="394"/>
+        <location filename="sendtopage.cpp" line="389"/>
+        <location filename="sendtopage.cpp" line="396"/>
         <source>Failed to send data:Log.dcj</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sendtopage.cpp" line="411"/>
+        <location filename="sendtopage.cpp" line="413"/>
         <source>U disk does not exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sendtopage.cpp" line="422"/>
+        <location filename="sendtopage.cpp" line="424"/>
         <source>Directory does not exist</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4991,19 +4997,19 @@
         <translation type="unfinished">Разрешения</translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="349"/>
-        <location filename="servicepage.cpp" line="400"/>
-        <location filename="servicepage.cpp" line="458"/>
+        <location filename="servicepage.cpp" line="355"/>
+        <location filename="servicepage.cpp" line="406"/>
+        <location filename="servicepage.cpp" line="464"/>
         <source>Login failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="396"/>
+        <location filename="servicepage.cpp" line="402"/>
         <source>User&apos;s privilege is low, please use the manager account or service account to log in!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="453"/>
+        <location filename="servicepage.cpp" line="459"/>
         <source>User&apos;s privilege is low, please use the service account to log in!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5047,14 +5053,14 @@
         <translation type="obsolete">RFID установки</translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="298"/>
-        <location filename="servicepage.cpp" line="306"/>
+        <location filename="servicepage.cpp" line="304"/>
+        <location filename="servicepage.cpp" line="312"/>
         <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="298"/>
-        <location filename="servicepage.cpp" line="306"/>
+        <location filename="servicepage.cpp" line="304"/>
+        <location filename="servicepage.cpp" line="312"/>
         <source>Please Stop System First!</source>
         <translation type="unfinished"></translation>
     </message>

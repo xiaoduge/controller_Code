@@ -11,6 +11,9 @@ Ex_InitConsumableInsPage::Ex_InitConsumableInsPage(QObject *parent, CBaseWidget 
 {
     initUi();
     buildTranslation();
+
+    m_pTimer = new QTimer(this);
+    connect(m_pTimer, SIGNAL(timeout()), this, SLOT(on_timer_event()));
 }
 
 void Ex_InitConsumableInsPage::switchLanguage()
@@ -93,17 +96,33 @@ void Ex_InitConsumableInsPage::on_ExBackBtn_clicked()
     m_wndMain->naviInitPage(Ex_Init_InstallConsumable, 1);
 }
 
+void Ex_InitConsumableInsPage::on_timer_event()
+{
+    activeReadRFID();
+    m_pTimer->stop();
+}
+
 void Ex_InitConsumableInsPage::show(bool bShow)
 {
     if (bShow)
     {
         m_wndMain->setStartCheckConsumable(true);
+        m_pTimer->start(1000);
     }
     else
     {
         m_wndMain->setStartCheckConsumable(false);
     }
     CSubPage::show(bShow);
+}
+
+void Ex_InitConsumableInsPage::activeReadRFID()
+{
+    for(int i = 0; i < APP_RFID_SUB_TYPE_NUM; ++i)
+    {
+        m_wndMain->readRfid(i);
+        m_wndMain->checkConsumableInstall(i);
+    }
 }
 
 void Ex_InitConsumableInsPage::updateConsumableInstall(int type)

@@ -439,7 +439,7 @@ void Ex_WaterQualityPage::initTagsArray()
     m_tags[RO_Feed_Cond] = DTags(strMsg[RO_Feed_Cond], 2);
     m_tags[RO_Product] = DTags(strMsg[RO_Product], 2);
     m_tags[RO_Rejection] = DTags(strMsg[RO_Rejection], 1);
-    m_tags[EDI_Product] = DTags(strMsg[EDI_Product], 1);
+    m_tags[EDI_Product] = DTags(strMsg[EDI_Product], 2);
 
     m_tags[RO_Feed_Pressure] = DTags(strMsg[RO_Feed_Pressure], 1);
     m_tags[RO_Pressure] = DTags(strMsg[RO_Pressure], 1);
@@ -637,7 +637,6 @@ void Ex_WaterQualityPage::initConfigList()
         m_cfglist.append(m_tags[RO_Feed_Cond]);
         m_cfglist.append(m_tags[RO_Product]);
         m_cfglist.append(m_tags[RO_Rejection]);
-        m_cfglist.append(m_tags[EDI_Product]);
         m_cfglist.append(m_tags[RO_Feed_Pressure]);
         m_cfglist.append(m_tags[RO_Pressure]);
 

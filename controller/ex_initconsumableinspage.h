@@ -24,6 +24,7 @@ public:
     void initUi();
 
     void show(bool bShow);
+    void activeReadRFID();
 
 public slots:
     void updateConsumableInstall(int type);
@@ -42,6 +43,8 @@ private slots:
     void on_ExNextBtn_clicked();
     void on_ExBackBtn_clicked();
 
+    void on_timer_event();
+
 private:
     QMap<int, Consumable_Install_Info> m_map;
     QMap<int, QPoint> m_coorMap;
@@ -52,6 +55,8 @@ private:
 
     QPushButton* m_pExNextBtn;
     QPushButton* m_pExBackBtn;
+
+    QTimer* m_pTimer;
 };
 
 #endif // EX_INITCONSUMABLEINSPAGE_H

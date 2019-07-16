@@ -86,13 +86,13 @@ bool Ex_CheckConsumaleInstall::check(int iRfId)
     gpMainWnd->getRfidCatNo(m_curRfId, cn);
     gpMainWnd->getRfidLotNo(m_curRfId, ln);
     gpMainWnd->getRfidInstallDate(m_curRfId, &m_installDate);
+    gpMainWnd->getRfidVolofUse(m_curRfId, m_volUsed);
 
     m_catNo = cn;
     m_lotNo = ln;
 
     parseType();
-    qDebug() << QString("CheckConsumale instanceID: %1 ,RfID: %2, cat: %3, lot: %4")
-                .arg(m_instanceID).arg(m_curRfId).arg(m_catNo).arg(m_lotNo);
+
     return true;
 }
 
@@ -108,6 +108,7 @@ void Ex_CheckConsumaleInstall::parseType()
             m_category = m_categoryMap.value(i);
             if(m_iRfid[i] == m_curRfId)
             {
+                retriveCMInfoWithRFID(m_iType);
                 m_isRfidType = true;
             }
             else
@@ -223,6 +224,42 @@ bool Ex_CheckConsumaleInstall::initSqlDatabase()
     }
 }
 
+void Ex_CheckConsumaleInstall::retriveCMInfoWithRFID(int type)
+{
+    QDateTime installTime(m_installDate);
+    switch(type)
+    {
+    case DISP_PRE_PACK:
+        gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_PRE_PACKLIFEL]   = m_volUsed;
+        break;
+    case DISP_AC_PACK:
+        gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_AC_PACKLIFEL]   = m_volUsed;
+        break;
+    case DISP_T_PACK:
+        gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_T_PACKLIFEL]   = m_volUsed;
+        break;
+    case DISP_P_PACK:
+        gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_P_PACKLIFEL]   = m_volUsed;
+        break;
+    case DISP_U_PACK:
+        gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_U_PACKLIFEL]   = m_volUsed;
+        break;
+    case DISP_AT_PACK:
+        gCMUsage.info.aulCms[DISP_AT_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_AT_PACKLIFEL]   = m_volUsed;
+        break;
+    case DISP_H_PACK:
+        gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_H_PACKLIFEL]   = m_volUsed;
+        break;
+    }
+}
+
 /*
   return 0 : do nothing
   return 1 : insert new
@@ -243,7 +280,7 @@ bool Ex_CheckConsumaleInstall::comparedWithSql()
     query.addBindValue(m_iType);
     query.addBindValue(m_category);
     ret = query.exec();
-    qDebug() << QString("%1, consumable compared with Sql: %2").arg(m_instanceID).arg(ret);
+
     if(query.next())
     {
         QString lotno = query.value(0).toString();
@@ -292,7 +329,6 @@ void Ex_CheckConsumaleInstall::updateSql()
     query.addBindValue(m_iType);
     query.addBindValue(m_category);
     bool ret = query.exec();
-    qDebug() << QString("%1, consumable update Sql: %1").arg(m_instanceID).arg(ret);
 
     if(ret)
     {
@@ -315,7 +351,6 @@ void Ex_CheckConsumaleInstall::insertSql()
     query.bindValue(":category", m_category);
     query.bindValue(":time", strCurDate);
     bool ret = query.exec();
-    qDebug() << QString("%1, consumable insert Sql: %1").arg(m_instanceID).arg(ret);
 
     if(ret)
     {

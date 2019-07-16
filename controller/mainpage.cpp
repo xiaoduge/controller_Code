@@ -1839,7 +1839,7 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
             {
                 if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
                 {
-                    if(DispGetEdiQtwFlag())
+                    if(DispGetEdiQtwFlag() || DispGetTankCirFlag())
                     {
                         if (bVisible)
                         {
@@ -2018,7 +2018,7 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
         {
             if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
             {
-                if(DispGetEdiQtwFlag())
+                if(DispGetEdiQtwFlag() || DispGetTankCirFlag())
                 {
                     if (bVisible)
                     {

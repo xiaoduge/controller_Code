@@ -22,7 +22,7 @@ static const uint qt_meta_data_Ex_InitConsumableInsPage[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,6 +33,7 @@ static const uint qt_meta_data_Ex_InitConsumableInsPage[] = {
       31,   26,   25,   25, 0x0a,
       60,   25,   25,   25, 0x08,
       83,   25,   25,   25, 0x08,
+     106,   25,   25,   25, 0x08,
 
        0        // eod
 };
@@ -41,6 +42,7 @@ static const char qt_meta_stringdata_Ex_InitConsumableInsPage[] = {
     "Ex_InitConsumableInsPage\0\0type\0"
     "updateConsumableInstall(int)\0"
     "on_ExNextBtn_clicked()\0on_ExBackBtn_clicked()\0"
+    "on_timer_event()\0"
 };
 
 void Ex_InitConsumableInsPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -52,6 +54,7 @@ void Ex_InitConsumableInsPage::qt_static_metacall(QObject *_o, QMetaObject::Call
         case 0: _t->updateConsumableInstall((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 1: _t->on_ExNextBtn_clicked(); break;
         case 2: _t->on_ExBackBtn_clicked(); break;
+        case 3: _t->on_timer_event(); break;
         default: ;
         }
     }
@@ -89,9 +92,9 @@ int Ex_InitConsumableInsPage::qt_metacall(QMetaObject::Call _c, int _id, void **
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
 }

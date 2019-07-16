@@ -45,6 +45,8 @@ private:
     bool checkDatabaseConnect();
     bool initSqlDatabase();
 
+    void retriveCMInfoWithRFID(int type);
+
 private:
     int m_instanceID;
 
@@ -55,6 +57,7 @@ private:
     QString m_catNo;
     QString m_lotNo;
     QDate m_installDate;
+    int m_volUsed;
     bool m_isRfidType;
     int m_operateID;
     bool m_isBusy;
