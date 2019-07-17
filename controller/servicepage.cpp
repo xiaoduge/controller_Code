@@ -23,6 +23,8 @@
 #include "ex_languagepage.h"
 #include "dloginwarningdialog.h"
 #include "setpage.h"
+#include "ex_languagepage.h"
+#include "unitpage.h"
 
 #define BTNS_PER_ROW (4)
 
@@ -35,8 +37,10 @@ static QString SubPageName[SERVICE_BTN_NUMBER] =
     "Material Install",
     "ManagerConfig",
     "User Config",
-    "History",
     "Permission",
+    "History",
+    "Language",
+    "Units",
     "Sterilize",
     "Allocation Set",
     "Service"
@@ -44,6 +48,8 @@ static QString SubPageName[SERVICE_BTN_NUMBER] =
 
 static CONFIG_BTN1 sBtns[SERVICE_BTN_NUMBER] = 
 {
+    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
+    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
@@ -127,6 +133,18 @@ void ServicePage::Create_subPage()
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[index] = new Ex_PermissionSetPage(this , tmpWidget , m_wndMain);
             break;
+        case SET_BTN_LANGUAGE:
+            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
+            tmpWidget->setObjectName(SubPageName[index]);
+            tmpWidget->setGeometry(0,0,800,600);
+            m_pSubPages[index] = new Ex_Languagepage(this , tmpWidget , m_wndMain);
+            break;
+        case SET_BTN_UNITS:
+            tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
+            tmpWidget->setObjectName(SubPageName[index]);
+            tmpWidget->setGeometry(0,0,800,600);
+            m_pSubPages[index] = new UnitPage(this , tmpWidget , m_wndMain);
+            break;
         case SET_BTN_SERVICE:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
@@ -164,6 +182,8 @@ void ServicePage::buildTranslation()
     m_pBtns[SET_BTN_HISTORY_RECORD]->setTip(tr("History"));
     m_pBtns[SET_BTN_PERMISSION]->setTip(tr("Permission"));
     m_pBtns[SET_BTN_SERVICE]->setTip(tr("Service"));
+    m_pBtns[SET_BTN_LANGUAGE]->setTip(tr("Language"));
+    m_pBtns[SET_BTN_UNITS]->setTip(tr("Units"));
 
     for (index = 0; index < SERVICE_BTN_NUMBER; index++)
     {
@@ -547,5 +567,17 @@ void ServicePage::on_navi_clicked(int index)
         break;
     }
     printf("tmp = %d\r\n" , index);
+}
+
+void ServicePage::userVerify(int index)
+{
+}
+
+void ServicePage::managerVerify(int index)
+{
+}
+
+void ServicePage::serviceVerify(int index)
+{
 }
 

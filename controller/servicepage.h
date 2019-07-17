@@ -20,8 +20,12 @@ enum SERVICE_BTN_NAME
     SERVICE_BTN_INSTALL = 0,
     SERVICE_BTN_MANAGERCONFIG,
     SET_BTN_USER_CFG,
-    SET_BTN_HISTORY_RECORD,
     SET_BTN_PERMISSION, //Permission
+
+    SET_BTN_HISTORY_RECORD,
+    SET_BTN_LANGUAGE,
+    SET_BTN_UNITS,
+
     SERVICE_BTN_STERILIZE,
     SET_BTN_SYSTEM_ALLOCATION,
     SET_BTN_SERVICE,
@@ -57,6 +61,10 @@ private:
     void buildTitles();
     void Create_subPage();
     int checkUserInfo(const QString& userName, const QString& passWord);
+
+    void userVerify(int index);
+    void managerVerify(int index);
+    void serviceVerify(int index);
 
 private:
     CPage *m_pSubPages[SERVICE_PAGE_NUM];
