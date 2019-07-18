@@ -22,9 +22,11 @@
 
 #include "ex_languagepage.h"
 #include "dloginwarningdialog.h"
+#include "ex_hintdialog.h"
 #include "setpage.h"
 #include "ex_languagepage.h"
 #include "unitpage.h"
+#include "dpushbutton.h"
 
 #define BTNS_PER_ROW (4)
 
@@ -34,13 +36,13 @@
 
 static QString SubPageName[SERVICE_BTN_NUMBER] = 
 {    
-    "Material Install",
+    "Language",
+    "Units",
+//    "Material Install",
     "ManagerConfig",
     "User Config",
     "Permission",
     "History",
-    "Language",
-    "Units",
     "Sterilize",
     "Allocation Set",
     "Service"
@@ -50,7 +52,7 @@ static CONFIG_BTN1 sBtns[SERVICE_BTN_NUMBER] =
 {
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
+//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
     {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
@@ -103,12 +105,14 @@ void ServicePage::Create_subPage()
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[SERVICE_BTN_MANAGERCONFIG] = new Ex_ManagerSetPage(this , tmpWidget , m_wndMain);
             break;
+#if 0
         case SERVICE_BTN_INSTALL:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[SERVICE_BTN_INSTALL] = new ConsumableInsPage(this , tmpWidget , m_wndMain);
             break;
+#endif
         case SET_BTN_SYSTEM_ALLOCATION:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
@@ -159,6 +163,14 @@ void ServicePage::Create_subPage()
 
 void ServicePage::update()
 {
+    if(user_LoginState.loginState())
+    {
+        m_pLogoutBtn->show();
+    }
+    else
+    {
+        m_pLogoutBtn->hide();
+    }
 }
 
 void ServicePage::buildTitles()
@@ -176,13 +188,13 @@ void ServicePage::buildTranslation()
     int index;
     m_pBtns[SERVICE_BTN_STERILIZE]->setTip(tr("Cleaning & Sanitization"));
     m_pBtns[SERVICE_BTN_MANAGERCONFIG]->setTip(tr("Setting"));
-    m_pBtns[SERVICE_BTN_INSTALL]->setTip(tr("Components Installation"));
+//    m_pBtns[SERVICE_BTN_INSTALL]->setTip(tr("Components Installation"));
     m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->setTip(tr("Dist. Control"));
     m_pBtns[SET_BTN_USER_CFG]->setTip(tr("User Config"));
     m_pBtns[SET_BTN_HISTORY_RECORD]->setTip(tr("History"));
     m_pBtns[SET_BTN_PERMISSION]->setTip(tr("Permission"));
     m_pBtns[SET_BTN_SERVICE]->setTip(tr("Service"));
-    m_pBtns[SET_BTN_LANGUAGE]->setTip(tr("Language"));
+    m_pBtns[SET_BTN_LANGUAGE]->setTip(tr("Select Language"));
     m_pBtns[SET_BTN_UNITS]->setTip(tr("Units"));
 
     for (index = 0; index < SERVICE_BTN_NUMBER; index++)
@@ -209,10 +221,6 @@ void ServicePage::initUi()
     int itemWidth;
 
     int x;
-
-    //QPixmap back(":/pic/navigator_bg.png");
-
-    //QSize size(back.width(), back.height());
     
     QSize size(width(),height());
 
@@ -221,8 +229,6 @@ void ServicePage::initUi()
     QPainter p(&image_bg);
 
     p.fillRect(image_bg.rect(), QColor(255, 255, 255));
-
-    //p.drawPixmap(0,0,back);
 
     QPalette pal(m_widget->palette());
 
@@ -236,7 +242,7 @@ void ServicePage::initUi()
 
     itemWidth = (width() - BTNS_H_MARGE * 2) / BTNS_PER_ROW;
 
-    yStartPos = height()/2 ;
+    yStartPos = height()/2  - 20;
 
     for( index = 0 ; index < SERVICE_BTN_NUMBER ; index++)
     {
@@ -310,12 +316,14 @@ void ServicePage::initUi()
     
     connect(m_pTitleBar, SIGNAL(clicked(int)), this, SLOT(on_navi_clicked(int)));
 
+    QPixmap pixmap(":/pic/logout.png");
+    m_pLogoutBtn = new DPushButton(pixmap, m_widget);
+    m_pLogoutBtn->move(740, 545);
+    connect(m_pLogoutBtn, SIGNAL(clicked()), this, SLOT(on_logoutBtn_clicked()));
 }
 
 void ServicePage::on_btn_clicked(int index)
 {
-    printf("tmp = %d\r\n" , index);
-
     switch(index)
     {
     case SERVICE_BTN_STERILIZE:
@@ -326,6 +334,7 @@ void ServicePage::on_btn_clicked(int index)
             return;
         }
         break;
+#if 0
     case SERVICE_BTN_INSTALL:
         if (DISP_WORK_STATE_IDLE != DispGetWorkState())
         {
@@ -334,179 +343,37 @@ void ServicePage::on_btn_clicked(int index)
             return;
         }
         break;
+#endif
     }
 
     if (m_pSubPages[index])
     {
         show(false);
-        //ex
         switch(index)
         {
-        case SERVICE_BTN_INSTALL:
+        case SET_BTN_LANGUAGE:
+        case SET_BTN_UNITS:
+            notVerify(index);
+            break;
+//        case SERVICE_BTN_INSTALL:
         case SET_BTN_HISTORY_RECORD:
         case SET_BTN_SYSTEM_ALLOCATION:
         case SERVICE_BTN_STERILIZE:
         case SERVICE_BTN_MANAGERCONFIG:
-        {
-            if(!user_LoginState.loginState()
-            && !(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_User_Authorization)))
-            {
-                LoginDlg dlg;
-                dlg.exec();
-                if(0 == dlg.m_iLogInResult)
-                {
-                    Ex_UserInfo userInfo;
-                    int ret = userInfo.checkUserInfo(dlg.m_strUserName, dlg.m_strPassword);
-                    switch(ret)
-                    {
-                    case 4:
-                    case 3:
-                    case 2:
-                    case 1:
-                    {
-                        m_wndMain->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
-                        m_pSubPages[index]->show(true);
-                        user_LoginState.setLoginState(true);
-                        break;
-                    }
-                    case 0:
-                    {
-                        show(true);
-                        DLoginWarningDialog::getInstance(tr("Login failed!"));
-                        break;
-                    }
-                    default:
-                        break;
-                    }
-                }
-                else
-                {
-                    show(true);
-                }
-
-            }
-            else
-            {
-                m_pSubPages[index]->show(true);
-            }
+            userVerify(index);
             break;
-        }
         case SET_BTN_PERMISSION:
         case SET_BTN_USER_CFG:
-        {
-            Ex_UserInfo userInfo;
-            DUserInfo userlog = m_wndMain->getLoginfo();
-            bool isManager = userInfo.checkManagerInfo(userlog.m_strUserName);
-            if((!user_LoginState.loginState())
-               || (!isManager))
-            {
-                LoginDlg dlg;
-                dlg.exec() ;
-                if(0 == dlg.m_iLogInResult)
-                {
-
-                    int ret = userInfo.checkUserInfo(dlg.m_strUserName, dlg.m_strPassword);
-                    switch(ret)
-                    {
-                    case 4:
-                    case 3:
-                    case 2:
-                    {
-                        m_wndMain->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
-                        m_pSubPages[index]->show(true);
-                        user_LoginState.setLoginState(true);
-                        break;
-                    }
-                    case 1:
-                        show(true);
-                        DLoginWarningDialog::getInstance(tr("User's privilege is low, please use the manager account or service account to log in!"));
-                        break;
-                    case 0:
-                        show(true);
-                        DLoginWarningDialog::getInstance(tr("Login failed!"));
-                        break;
-                    default:
-                        break;
-                    }
-                }
-                else
-                {
-                    show(true);
-                }
-
-            }
-            else
-            {
-                m_pSubPages[index]->show(true);
-            }
+            managerVerify(index);
             break;
-        }
         case SET_BTN_SERVICE:
-        {
-            Ex_UserInfo userInfo;
-            DUserInfo userlog = m_wndMain->getLoginfo();
-            bool iEngineer = userInfo.checkEngineerInfo(userlog.m_strUserName);
-            if(!user_LoginState.loginState() || (!iEngineer))
-            {
-                LoginDlg dlg;
-                dlg.exec() ;
-                if(0 == dlg.m_iLogInResult)
-                {
-                    Ex_UserInfo userInfo;
-                    int ret = userInfo.checkUserInfo(dlg.m_strUserName, dlg.m_strPassword);
-                    SetPage* setpage = qobject_cast<SetPage*>(m_pSubPages[index]);
-                    setpage->setSuperPage(false);
-                    switch(ret)
-                    {
-                    case 3:
-                    case 31:
-                    case 4:
-                    {
-                        m_wndMain->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
-                        m_pSubPages[index]->show(true);
-                        user_LoginState.setLoginState(true);
-                        if(3 != ret)
-                        {
-                            SetPage* setpage = qobject_cast<SetPage*>(m_pSubPages[index]);
-                            setpage->setSuperPage(true);
-                        }
-                        break;
-                    }
-
-                    case 2:
-                    case 1:
-                        show(true);
-                        DLoginWarningDialog::getInstance(tr("User's privilege is low, please use the service account to log in!"));
-                        break;
-                    case 0:
-                    {
-                        show(true);
-                        DLoginWarningDialog::getInstance(tr("Login failed!"));
-                        break;
-                    }
-                    default:
-                        show(true);
-                        break;
-                    }
-                }
-                else
-                {
-                    show(true);
-                }
-
-            }
-            else
-            {
-                m_pSubPages[index]->show(true);
-            }
-        }
+            serviceVerify(index);
             break;
         default:
             break;
 
         }
     }
-    //end
     m_wndMain->prepareKeyStroke();
 }
 
@@ -569,15 +436,182 @@ void ServicePage::on_navi_clicked(int index)
     printf("tmp = %d\r\n" , index);
 }
 
+void ServicePage::on_logoutBtn_clicked()
+{
+    if(user_LoginState.loginState())
+    {
+        user_LoginState.setLoginState(false);
+        m_pLogoutBtn->hide();
+    }
+    Ex_HintDialog::getInstance(tr("Signed out"));
+}
+
+void ServicePage::notVerify(int index)
+{
+    m_pSubPages[index]->show(true);
+}
+
 void ServicePage::userVerify(int index)
 {
+    if((gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_User_Authorization))
+     &&(index != SERVICE_BTN_MANAGERCONFIG))
+    {
+        m_pSubPages[index]->show(true);
+        return;
+    }
+
+    if(user_LoginState.loginState())
+    {
+        m_pSubPages[index]->show(true);
+    }
+
+    else
+    {
+        LoginDlg dlg;
+        dlg.exec();
+        if(0 == dlg.m_iLogInResult)
+        {
+            Ex_UserInfo userInfo;
+            int ret = userInfo.checkUserInfo(dlg.m_strUserName, dlg.m_strPassword);
+            switch(ret)
+            {
+            case 4:
+            case 3:
+            case 2:
+            case 1:
+            {
+                m_wndMain->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
+                m_pSubPages[index]->show(true);
+                user_LoginState.setLoginState(true);
+                break;
+            }
+            case 0:
+            {
+                show(true);
+                DLoginWarningDialog::getInstance(tr("Login failed!"));
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        else
+        {
+            show(true);
+        }
+
+    }
 }
 
 void ServicePage::managerVerify(int index)
 {
+    Ex_UserInfo userInfo;
+    DUserInfo userlog = m_wndMain->getLoginfo();
+    bool isManager = userInfo.checkManagerInfo(userlog.m_strUserName);
+
+    if(user_LoginState.loginState() && isManager)
+    {
+        m_pSubPages[index]->show(true);
+    }
+    else
+    {
+        LoginDlg dlg;
+        dlg.exec() ;
+        if(0 == dlg.m_iLogInResult)
+        {
+
+            int ret = userInfo.checkUserInfo(dlg.m_strUserName, dlg.m_strPassword);
+            switch(ret)
+            {
+            case 4:
+            case 3:
+            case 2:
+            {
+                m_wndMain->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
+                m_pSubPages[index]->show(true);
+                user_LoginState.setLoginState(true);
+                break;
+            }
+            case 1:
+                show(true);
+                DLoginWarningDialog::getInstance(tr("User's privilege is low, please use the manager account or service account to log in!"));
+                break;
+            case 0:
+                show(true);
+                DLoginWarningDialog::getInstance(tr("Login failed!"));
+                break;
+            default:
+                break;
+            }
+        }
+        else
+        {
+            show(true);
+        }
+
+    }
 }
 
 void ServicePage::serviceVerify(int index)
 {
+    Ex_UserInfo userInfo;
+    DUserInfo userlog = m_wndMain->getLoginfo();
+    bool isEngineer = userInfo.checkEngineerInfo(userlog.m_strUserName);
+
+    if(user_LoginState.loginState() && isEngineer )
+    {
+        m_pSubPages[index]->show(true);
+    }
+    else
+    {
+        LoginDlg dlg;
+        dlg.exec() ;
+        if(0 == dlg.m_iLogInResult)
+        {
+            Ex_UserInfo userInfo;
+            int ret = userInfo.checkUserInfo(dlg.m_strUserName, dlg.m_strPassword);
+            SetPage* setpage = qobject_cast<SetPage*>(m_pSubPages[index]);
+            setpage->setSuperPage(false);
+            switch(ret)
+            {
+            case 3:
+            case 31:
+            case 4:
+            {
+                m_wndMain->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
+                m_pSubPages[index]->show(true);
+                user_LoginState.setLoginState(true);
+                if(3 != ret)
+                {
+                    SetPage* setpage = qobject_cast<SetPage*>(m_pSubPages[index]);
+                    setpage->setSuperPage(true);
+                }
+                break;
+            }
+
+            case 2:
+            case 1:
+                show(true);
+                DLoginWarningDialog::getInstance(tr("User's privilege is low, please use the service account to log in!"));
+                break;
+            case 0:
+            {
+                show(true);
+                DLoginWarningDialog::getInstance(tr("Login failed!"));
+                break;
+            }
+            default:
+                show(true);
+                break;
+            }
+        }
+        else
+        {
+            show(true);
+        }
+
+    }
+
 }
+
 

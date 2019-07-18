@@ -28,15 +28,15 @@ CsListItem::CsListItem(QWidget *parent ,ConsumableStatePage *owner,int iId) :
     this->setPalette(pal);
 
     this->lbWaterValue = new QLabel(this);
-    this->lbWaterValue->setGeometry(QRect(145 , 15 , 60 , 20)); //85
+    this->lbWaterValue->setGeometry(QRect(145 , 15 , 80 , 20)); //85
     //this->lbWaterValue->setText("3000L");
 
     this->lbInstDate = new QLabel(this);
-    this->lbInstDate->setGeometry(QRect(230 , 15 , 215 , 20));
+    this->lbInstDate->setGeometry(QRect(230 , 15 , 240 , 20));
     //this->lbInstDate->setText("InstDate:2017.10.10");
 
     this->lbChangeDate = new QLabel(this);
-    this->lbChangeDate->setGeometry(QRect(230 , 45 , 215 , 20));
+    this->lbChangeDate->setGeometry(QRect(230 , 45 , 240 , 20));
 //    this->lbChangeDate->setGeometry(QRect(170 , 45 , 220 , 20));
     //this->lbChangeDate->setText("ChangeDate:2018.10.10");
 

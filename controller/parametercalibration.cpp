@@ -463,7 +463,7 @@ void ParameterCalibrationPage::buildTranslation()
             /*
             取水流量计S1  1.000 1.8L/min
             */
-            m_aParameterlistItem[iLoop]->setName(tr("UP Rate"));
+            m_aParameterlistItem[iLoop]->setName(tr("Disp. Rate"));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
             m_aParameterlistItem[iLoop]->setP3Name(tr("L/Min"));
             break;

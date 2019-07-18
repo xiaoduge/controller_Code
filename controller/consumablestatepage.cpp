@@ -935,26 +935,27 @@ void ConsumableStatePage::createList()
     
     QColor colors[] = {QColor(200,200,188),QColor(228, 231, 240)};
     
-     m_listWidget = new QListWidget(m_widget);//m_wndMain->getMainWidget()
+    m_listWidget = new QListWidget(m_widget);//m_wndMain->getMainWidget()
 
-     m_listWidget->setStyleSheet("background-color:transparent");
-     m_listWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-     m_listWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-     m_listWidget->setFrameShape(QListWidget::NoFrame);
-     m_listWidget->setGeometry(QRect((800-CS_LIST_WIDGET_WIDTH)/2,55 ,CS_LIST_WIDGET_WIDTH,540));
+    m_listWidget->setStyleSheet("background-color:transparent");
 
-     for(index = 0 ; index < m_realCsNum ; index++ )
-     {
-         listWidgetItem[index] = new QListWidgetItem;
-         listWidgetItem[index]->setSizeHint(QSize(CS_LIST_WIDGET_WIDTH , CS_LIST_WIDGET_HEIGHT));
-         listWidgetItem[index]->setBackground(colors[index % 2]);
+    m_listWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    m_listWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_listWidget->setFrameShape(QListWidget::NoFrame);
+    m_listWidget->setGeometry(QRect((800-CS_LIST_WIDGET_WIDTH)/2,55 ,CS_LIST_WIDGET_WIDTH,540));
 
-         m_pCslistItem[index] = new CsListItem(0,this,aIds[index].iId);
+    for(index = 0 ; index < m_realCsNum ; index++ )
+    {
+        listWidgetItem[index] = new QListWidgetItem;
+        listWidgetItem[index]->setSizeHint(QSize(CS_LIST_WIDGET_WIDTH , CS_LIST_WIDGET_HEIGHT));
+        listWidgetItem[index]->setBackground(colors[index % 2]);
 
-         m_listWidget->insertItem(index,listWidgetItem[index]);
+        m_pCslistItem[index] = new CsListItem(0,this,aIds[index].iId);
 
-         m_listWidget->setItemWidget(listWidgetItem[index] , m_pCslistItem[index]);
-     }
+        m_listWidget->insertItem(index,listWidgetItem[index]);
+
+        m_listWidget->setItemWidget(listWidgetItem[index] , m_pCslistItem[index]);
+    }
 }
 
 void ConsumableStatePage::setBackColor()

@@ -196,7 +196,7 @@ void Ex_Init_TimePage::Create_Date_Time()
         else if(TIME_SET == iLoop)
         {
             TimeHCbox = new QComboBox(m_widget);
-            TimeHCbox->setGeometry(270,200,50,30);
+            TimeHCbox->setGeometry(230,200,80,30);
             TimeHCbox->hide();
 
             for(tmp = 0 ; tmp < 24 ; tmp++ )
@@ -205,7 +205,7 @@ void Ex_Init_TimePage::Create_Date_Time()
             }
 
             TimeMCbox = new QComboBox(m_widget);
-            TimeMCbox->setGeometry(340,200,50,30);
+            TimeMCbox->setGeometry(330,200,80,30);
             TimeMCbox->hide();
 
             for(tmp = 0 ; tmp < 60 ; tmp++ )
@@ -214,7 +214,7 @@ void Ex_Init_TimePage::Create_Date_Time()
             }
 
             TimeSCbox = new QComboBox(m_widget);
-            TimeSCbox->setGeometry(410,200,50,30);
+            TimeSCbox->setGeometry(430,200,80,30);
             TimeSCbox->hide();
 
             for(tmp = 0 ; tmp < 60 ; tmp++ )

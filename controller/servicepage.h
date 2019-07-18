@@ -14,18 +14,19 @@
 #include <QLabel>
 
 class MainWindow;
+class DPushButton;
 
 enum SERVICE_BTN_NAME
 {  
-    SERVICE_BTN_INSTALL = 0,
+    SET_BTN_LANGUAGE = 0,
+    SET_BTN_UNITS,
+
+//    SERVICE_BTN_INSTALL,
     SERVICE_BTN_MANAGERCONFIG,
     SET_BTN_USER_CFG,
     SET_BTN_PERMISSION, //Permission
 
     SET_BTN_HISTORY_RECORD,
-    SET_BTN_LANGUAGE,
-    SET_BTN_UNITS,
-
     SERVICE_BTN_STERILIZE,
     SET_BTN_SYSTEM_ALLOCATION,
     SET_BTN_SERVICE,
@@ -62,6 +63,7 @@ private:
     void Create_subPage();
     int checkUserInfo(const QString& userName, const QString& passWord);
 
+    void notVerify(int index);
     void userVerify(int index);
     void managerVerify(int index);
     void serviceVerify(int index);
@@ -71,12 +73,15 @@ private:
     CBitmapButton *m_pBtns[SERVICE_BTN_NUMBER];   
     titleBar      *m_pTitleBar;
     QLabel        *m_pLbPageId[3];
+
+    DPushButton* m_pLogoutBtn;
     
 
 public slots:
     void on_btn_clicked(int tmp);
     void on_navi_clicked(int tmp);
 
+    void on_logoutBtn_clicked();
 };
 
 #endif // RUNPAGE_H

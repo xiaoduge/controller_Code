@@ -116,6 +116,7 @@
         <file alias="SouthKorea.png">pics/image/SouthKorea.png</file>
         <file alias="world.png">pics/image/world.png</file>
         <file alias="blueWorld.png">pics/image/blueWorld.png</file>
+        <file alias="logout.png">pics/image/logout.png</file>
     </qresource>
     <qresource prefix="/userManual">
         <file alias="G_E_1.png">pics/Manual/Genie_G_EN/G_E_1.png</file>

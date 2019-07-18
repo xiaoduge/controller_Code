@@ -5,6 +5,7 @@
 #include "ExtraDisplay.h"
 #include "ex_hintdialog.h"
 #include <QRadioButton>
+#include "dlineedit.h"
 
 #include <fcntl.h>
 #include <sys/ioctl.h>
@@ -37,13 +38,15 @@ void Ex_ManagerSetPage::buildTitles()
 
 void Ex_ManagerSetPage::buildTranslation()
 {
-    m_tabWidget->setTabText(0, tr("Time & Date"));
-    m_tabWidget->setTabText(1, tr("Language"));
-    m_tabWidget->setTabText(2, tr("Audio"));
-    m_tabWidget->setTabText(3, tr("Units"));
-    m_tabWidget->setTabText(4, tr("LCD"));
-    m_tabWidget->setTabText(5, tr("Additional Settings"));
+//    m_tabWidget->setTabText(1, tr("Language"));
+//    m_tabWidget->setTabText(3, tr("Units"));
 //    m_tabWidget->setTabText(5, tr("Flowrate"));
+    m_tabWidget->setTabText(0, tr("Time & Date"));
+    m_tabWidget->setTabText(1, tr("Calibration"));
+    m_tabWidget->setTabText(2, tr("Audio"));
+    m_tabWidget->setTabText(3, tr("LCD"));
+    m_tabWidget->setTabText(4, tr("Additional Settings"));
+
 
 //    m_flowLabel->setText(tr("Flowrate"));
 //    m_flowUnit->setText(QString("L/min"));
@@ -66,17 +69,9 @@ void Ex_ManagerSetPage::buildTranslation()
     m_pBtns[TIMEPAGE_BTN_CANCEL]->setText(tr("Cancel"));
     m_pBtns[TIMEPAGE_BTN_OK]->setText(tr("OK"));
 
-    //Language
-    m_pCbLan->setItemText(0, tr("English"));
-    m_pCbLan->setItemText(1, tr("Chinese"));
-    m_pCbLan->setItemText(2, tr("Spanish"));
-    m_pCbLan->setItemText(3, tr("French"));
-    m_pCbLan->setItemText(4, tr("German"));
-    m_pCbLan->setItemText(5, tr("Italian"));
-    m_pCbLan->setItemText(6, tr("Korean"));
-    m_pCbLan->setItemText(7, tr("Russian"));
-
-    m_pLanBtnSave->setText(tr("Save"));
+    //Dispense Rate
+    m_pCaliS1Label->setText(tr("Disp. Rate"));
+    m_pCaliBtn->setText(tr("Save"));
 
     //Audio
     m_strSounds[0] = tr("Touch-tone");
@@ -88,6 +83,44 @@ void Ex_ManagerSetPage::buildTranslation()
         m_lblNames[iLoop]->setText(m_strSounds[iLoop]);
     }
     m_pAudioBtnSave->setText(tr("Save"));
+
+
+
+    //LCD
+    m_DispNames[0] = tr("Brightness");
+    m_DispNames[1] = tr("Energy-saving");
+    m_sleepLabel -> setText(tr("SleepTime"));
+
+    for( iLoop = 0 ; iLoop < 2 ; iLoop++)
+    {
+        laName[iLoop]->setText(m_DispNames[iLoop]);
+    }
+    m_pLcdBtnSave->setText(tr("Save"));
+
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        break;
+    default:
+        m_pAdditionalLb[HPCIR_SETTING]->setText(tr("HP Recir."));
+        m_pAddBtnSave->setText(tr("Save"));
+        break;
+    }
+
+#if 0
+    //Language
+    m_pCbLan->setItemText(0, tr("English"));
+    m_pCbLan->setItemText(1, tr("Chinese"));
+    m_pCbLan->setItemText(2, tr("Spanish"));
+    m_pCbLan->setItemText(3, tr("French"));
+    m_pCbLan->setItemText(4, tr("German"));
+    m_pCbLan->setItemText(5, tr("Italian"));
+    m_pCbLan->setItemText(6, tr("Korean"));
+    m_pCbLan->setItemText(7, tr("Russian"));
+
+    m_pLanBtnSave->setText(tr("Save"));
 
     //Units
     strItemName[0] = tr("Resistivity/Conductivity");
@@ -125,29 +158,8 @@ void Ex_ManagerSetPage::buildTranslation()
         }
     }
     m_pUnitsBtnSave->setText(tr("Save"));
+#endif
 
-    //LCD
-    m_DispNames[0] = tr("Brightness");
-    m_DispNames[1] = tr("Energy-saving");
-    m_sleepLabel -> setText(tr("SleepTime"));
-
-    for( iLoop = 0 ; iLoop < 2 ; iLoop++)
-    {
-        laName[iLoop]->setText(m_DispNames[iLoop]);
-    }
-    m_pLcdBtnSave->setText(tr("Save"));
-
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        break;
-    default:
-        m_pAdditionalLb[HPCIR_SETTING]->setText(tr("HP Recir."));
-        m_pAddBtnSave->setText(tr("Save"));
-        break;
-    }
 }
 
 void Ex_ManagerSetPage::switchLanguage()
@@ -189,11 +201,13 @@ void Ex_ManagerSetPage::initUi()
     m_tabWidget = new QTabWidget;
     //add page
     initTimePage();
-    initLanguagePage();
+    initCalibrationPage();
     initAudioPage();
-    initUnitsPage();
     initLcdPage();
-    initFlowPage();
+
+//    initLanguagePage();
+//    initUnitsPage();
+//    initFlowPage();
 
     switch(gGlobalParam.iMachineType)
     {
@@ -221,9 +235,6 @@ void Ex_ManagerSetPage::initUi()
 
 void Ex_ManagerSetPage::update()
 {
-    float flowRate = ex_gGlobalParam.Ex_Config_Param.flowRate;
-    m_flowLineEdit->setText(QString::number(flowRate, 'f', 2));
-
     //Time
     QDateTime sysDateTime;
     sysDateTime = QDateTime::currentDateTime();
@@ -231,29 +242,14 @@ void Ex_ManagerSetPage::update()
     m_pBtns[TIMEPAGE_BTN_DATE_SET]->setText(sysDateTime.toString("yyyy-MM-dd"));
     m_pBtns[TIMEPAGE_BTN_TIME_SET]->setText(sysDateTime.toString("hh:mm:ss"));
 
-    //units
-    int iLoop;
-    for(iLoop = 0 ; iLoop < UnitNum ; iLoop++)
+    //rate
+    if(gGlobalParam.Caliparam.pc[m_caliId].fk > 100)
     {
-        switch(iLoop)
-        {
-        case 0:
-            m_aiUnit[iLoop] = gGlobalParam.MiscParam.iUint4Conductivity;
-            break;
-        case 1:
-            m_aiUnit[iLoop] = gGlobalParam.MiscParam.iUint4Temperature;
-            break;
-        case 2:
-            m_aiUnit[iLoop] = gGlobalParam.MiscParam.iUint4Pressure;
-            break;
-        case 3:
-            m_aiUnit[iLoop] = gGlobalParam.MiscParam.iUint4LiquidLevel;
-            break;
-        case 4:
-            m_aiUnit[iLoop] = gGlobalParam.MiscParam.iUint4FlowVelocity;
-            break;
-        }
-        if (m_btnradios[iLoop][m_aiUnit[iLoop]]) m_btnradios[iLoop][m_aiUnit[iLoop]]->setChecked(true);
+        m_pCaliS1LineEdit->setText(QString::number(ex_global_Cali.pc[m_caliId].fk));
+    }
+    else
+    {
+        m_pCaliS1LineEdit->setText(QString::number(ex_global_Cali.pc[m_caliId].fk,'f',3));
     }
 
     //
@@ -284,6 +280,38 @@ void Ex_ManagerSetPage::update()
 
     m_iSleepTime = ex_gGlobalParam.Ex_Config_Param.iScreenSleepTime;
     m_comboBox->setCurrentIndex(m_iSleepTime - 1);
+
+#if 0
+    // flow
+    float flowRate = ex_gGlobalParam.Ex_Config_Param.flowRate;
+    m_flowLineEdit->setText(QString::number(flowRate, 'f', 2));
+
+    //units
+    int iLoop;
+    for(iLoop = 0 ; iLoop < UnitNum ; iLoop++)
+    {
+        switch(iLoop)
+        {
+        case 0:
+            m_aiUnit[iLoop] = gGlobalParam.MiscParam.iUint4Conductivity;
+            break;
+        case 1:
+            m_aiUnit[iLoop] = gGlobalParam.MiscParam.iUint4Temperature;
+            break;
+        case 2:
+            m_aiUnit[iLoop] = gGlobalParam.MiscParam.iUint4Pressure;
+            break;
+        case 3:
+            m_aiUnit[iLoop] = gGlobalParam.MiscParam.iUint4LiquidLevel;
+            break;
+        case 4:
+            m_aiUnit[iLoop] = gGlobalParam.MiscParam.iUint4FlowVelocity;
+            break;
+        }
+        if (m_btnradios[iLoop][m_aiUnit[iLoop]]) m_btnradios[iLoop][m_aiUnit[iLoop]]->setChecked(true);
+    }
+#endif
+
 }
 
 void Ex_ManagerSetPage::show(bool bShow)
@@ -449,6 +477,28 @@ void Ex_ManagerSetPage::on_timeCancelBtn_clicked()
         ShowWidget[TIME_SET]->show();
     }
     m_wndMain->prepareKeyStroke();
+}
+
+void Ex_ManagerSetPage::on_caliSaveBtn_clicked()
+{
+    QMap<int, DISP_PARAM_CALI_ITEM_STRU> cMap;
+    DISP_PARAM_CALI_ITEM_STRU values;
+
+    float fTemp = m_pCaliS1LineEdit->text().toFloat();
+    values.fk = fTemp;
+    values.fc = 1;
+    values.fv = 1;
+
+    cMap.insert(m_caliId, values);
+
+    MainSaveCalibrateParam(gGlobalParam.iMachineType, cMap);
+
+    MainUpdateGlobalParam();
+
+    m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_PARAMETER_CALIBRATE);
+
+    m_wndMain->prepareKeyStroke();
+    Ex_HintDialog::getInstance(tr("Successfully saved"));
 }
 
 void Ex_ManagerSetPage::on_lanSaveBtn_clicked()
@@ -671,9 +721,9 @@ void Ex_ManagerSetPage::on_HPCircheckBox_changeState(int state)
 
 void Ex_ManagerSetPage::initFlowPage()
 {
-    m_pageWidget[MANGER_PAGE_FLOW] = new QWidget;
+    m_pageWidget[MANAGER_PAGE_FLOW] = new QWidget;
 
-    m_pFlowBackWidget = new QWidget(m_pageWidget[MANGER_PAGE_FLOW]);
+    m_pFlowBackWidget = new QWidget(m_pageWidget[MANAGER_PAGE_FLOW]);
 
     QPalette pal(m_pFlowBackWidget->palette());
     pal.setColor(QPalette::Background, Qt::white);
@@ -695,39 +745,39 @@ void Ex_ManagerSetPage::initFlowPage()
     m_flowUnit = new QLabel(m_pFlowBackWidget);
     m_flowUnit->setGeometry(QRect(255, 20 , 100 , 20));
 
-    m_flowSaveBtn = new QPushButton(m_pageWidget[MANGER_PAGE_FLOW]);
+    m_flowSaveBtn = new QPushButton(m_pageWidget[MANAGER_PAGE_FLOW]);
     m_flowSaveBtn->move(580, 400);
 
     connect(m_flowSaveBtn, SIGNAL(clicked()), this, SLOT(on_flowSaveBtn_clicked()));
 
 //    QIcon icon1(":/pic/unselected.png");
-//    m_tabWidget->addTab(m_pageWidget[MANGER_PAGE_FLOW], icon1, tr("Flowrate"));
+//    m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_FLOW], icon1, tr("Flowrate"));
 }
 
 void Ex_ManagerSetPage::initTimePage()
 {
-    m_pageWidget[MANGER_PAGE_TIME] = new QWidget;
+    m_pageWidget[MANAGER_PAGE_TIME] = new QWidget;
 
     //createHeads
     QPixmap PixTit;
     PixTit.load(":/pic/time.png");
 
-    lbTitPic = new QLabel(m_pageWidget[MANGER_PAGE_TIME]);
+    lbTitPic = new QLabel(m_pageWidget[MANAGER_PAGE_TIME]);
     lbTitPic->setGeometry(QRect(150, 100 , 28 , 28));
     lbTitPic->setPixmap(PixTit);
 
-    lbTitName = new QLabel(m_pageWidget[MANGER_PAGE_TIME]);
+    lbTitName = new QLabel(m_pageWidget[MANAGER_PAGE_TIME]);
     lbTitName->setGeometry(QRect(210, 105 , 200 , 28));
     lbTitName->setStyleSheet(" font-size:24pt;color:#000000;font-family:Arial;QFont::Bold");
 
     //Create_Cal_Ok
-    m_pBtns[TIMEPAGE_BTN_CANCEL] = new QPushButton(m_pageWidget[MANGER_PAGE_TIME]);
+    m_pBtns[TIMEPAGE_BTN_CANCEL] = new QPushButton(m_pageWidget[MANAGER_PAGE_TIME]);
     m_pBtns[TIMEPAGE_BTN_CANCEL]->setGeometry(QRect(230, 400, 76, 42));
     m_pBtns[TIMEPAGE_BTN_CANCEL]->hide();
 
     connect(m_pBtns[TIMEPAGE_BTN_CANCEL], SIGNAL(clicked()), this, SLOT(on_timeCancelBtn_clicked()));
 
-    m_pBtns[TIMEPAGE_BTN_OK]     = new QPushButton(m_pageWidget[MANGER_PAGE_TIME]);
+    m_pBtns[TIMEPAGE_BTN_OK]     = new QPushButton(m_pageWidget[MANAGER_PAGE_TIME]);
     m_pBtns[TIMEPAGE_BTN_OK]->setGeometry(QRect(430, 400, 76, 42));
     m_pBtns[TIMEPAGE_BTN_OK]->hide();
 
@@ -740,7 +790,7 @@ void Ex_ManagerSetPage::initTimePage()
     {
         qDebug() << "Create_Date_Time : " << iLoop;
 
-        ShowWidget[iLoop] = new QWidget(m_pageWidget[MANGER_PAGE_TIME]);
+        ShowWidget[iLoop] = new QWidget(m_pageWidget[MANAGER_PAGE_TIME]);
 
         QPalette pal(ShowWidget[iLoop]->palette());
 
@@ -761,7 +811,7 @@ void Ex_ManagerSetPage::initTimePage()
         if(DATE_SET == iLoop)
         {
             connect(m_pBtns[iLoop], SIGNAL(clicked()), this, SLOT(on_timeDateSet_clicked()));
-            CalS = new QCalendarWidget(m_pageWidget[MANGER_PAGE_TIME]);
+            CalS = new QCalendarWidget(m_pageWidget[MANAGER_PAGE_TIME]);
 
             switch(gGlobalParam.MiscParam.iLan)
             {
@@ -799,7 +849,7 @@ void Ex_ManagerSetPage::initTimePage()
         {
             connect(m_pBtns[iLoop], SIGNAL(clicked()), this, SLOT(on_timeTimeSet_clicked()));
 
-            TimeHCbox = new QComboBox(m_pageWidget[MANGER_PAGE_TIME]);
+            TimeHCbox = new QComboBox(m_pageWidget[MANAGER_PAGE_TIME]);
             TimeHCbox->setGeometry(230,200,80,30);
             TimeHCbox->hide();
 
@@ -808,7 +858,7 @@ void Ex_ManagerSetPage::initTimePage()
                 TimeHCbox->addItem(QString::number(tmp,10));
             }
 
-            TimeMCbox = new QComboBox(m_pageWidget[MANGER_PAGE_TIME]);
+            TimeMCbox = new QComboBox(m_pageWidget[MANAGER_PAGE_TIME]);
             TimeMCbox->setGeometry(330,200,80,30);
             TimeMCbox->hide();
 
@@ -817,7 +867,7 @@ void Ex_ManagerSetPage::initTimePage()
                 TimeMCbox->addItem(QString::number(tmp,10));
             }
 
-            TimeSCbox = new QComboBox(m_pageWidget[MANGER_PAGE_TIME]);
+            TimeSCbox = new QComboBox(m_pageWidget[MANAGER_PAGE_TIME]);
             TimeSCbox->setGeometry(430,200,80,30);
             TimeSCbox->hide();
 
@@ -830,7 +880,45 @@ void Ex_ManagerSetPage::initTimePage()
 
     }
     QIcon icon1(":/pic/unselected.png");
-    m_tabWidget->addTab(m_pageWidget[MANGER_PAGE_TIME], icon1, tr("Time & Date"));
+    m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_TIME], icon1, tr("Time & Date"));
+}
+
+void Ex_ManagerSetPage::initCalibrationPage()
+{
+    m_caliId = DISP_PC_COFF_S1;
+    setBackColor();
+    m_pageWidget[MANAGER_PAGE_CALIBRATION] = new QWidget;
+
+    QPixmap back(":/pic/SubPageBack.png");
+    QSize size(back.width(), back.height());
+    QImage image_bg = QImage(size, QImage::Format_ARGB32);
+    QPainter p(&image_bg);
+    p.fillRect(image_bg.rect(), QColor(255, 255, 255));
+
+    m_pCaliS1Widget = new QWidget(m_pageWidget[MANAGER_PAGE_CALIBRATION]);
+
+    QPalette pal(m_pCaliS1Widget->palette());
+    pal.setColor(QPalette::Background, Qt::white);
+
+    m_pCaliS1Widget->setAutoFillBackground(true);
+    m_pCaliS1Widget->setPalette(pal);
+
+    m_pCaliS1Widget->setGeometry(QRect(120 , 150 , 530 ,60));
+
+    m_pCaliS1Label = new QLabel(m_pCaliS1Widget);
+    m_pCaliS1Label->setGeometry(10, 10, 220, 40);
+    m_pCaliS1Label->setStyleSheet(" font-size:18px;color:#16181e;font-family:Arial;QFont::Bold");
+    m_pCaliS1Label->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
+
+    m_pCaliS1LineEdit = new DLineEdit(m_pCaliS1Widget);
+    m_pCaliS1LineEdit->setGeometry(290, 8, 120, 40);
+
+    m_pCaliBtn = new QPushButton(m_pageWidget[MANAGER_PAGE_CALIBRATION]);
+    m_pCaliBtn->move(580, 420);
+    connect(m_pCaliBtn, SIGNAL(clicked()), this, SLOT(on_caliSaveBtn_clicked()));
+
+    QIcon icon1(":/pic/unselected.png");
+    m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_CALIBRATION], icon1, tr("Calibration"));
 }
 
 void Ex_ManagerSetPage::initLanguagePage()
@@ -838,15 +926,15 @@ void Ex_ManagerSetPage::initLanguagePage()
     m_iLanguage = gGlobalParam.MiscParam.iLan;
 //    setBackColor();
 
-    m_pageWidget[MANGER_PAGE_LAN] = new QWidget;
+    m_pageWidget[MANAGER_PAGE_LAN] = new QWidget;
 
     QPixmap worldPix = QPixmap(":/pic/blueWorld.png");
 
-    m_pLbWorld = new QLabel(m_pageWidget[MANGER_PAGE_LAN]);
+    m_pLbWorld = new QLabel(m_pageWidget[MANAGER_PAGE_LAN]);
     m_pLbWorld->setPixmap(worldPix);
     m_pLbWorld->setGeometry(20, 50, worldPix.width(), worldPix.height());
 
-    m_pCbLan = new QComboBox(m_pageWidget[MANGER_PAGE_LAN]);
+    m_pCbLan = new QComboBox(m_pageWidget[MANAGER_PAGE_LAN]);
     QStringList strList;
     strList << tr("English")
             << tr("Chinese")
@@ -861,19 +949,19 @@ void Ex_ManagerSetPage::initLanguagePage()
     m_pCbLan->setGeometry(570, 55, 160, 40);
     connect(m_pCbLan, SIGNAL(currentIndexChanged(int)), this, SLOT(on_cbLan_currentIndexChanged(int)));
 
-    m_pLanBtnSave = new QPushButton(m_pageWidget[MANGER_PAGE_LAN]);
+    m_pLanBtnSave = new QPushButton(m_pageWidget[MANAGER_PAGE_LAN]);
     m_pLanBtnSave->setGeometry(570, 130, 160, 40);
     connect(m_pLanBtnSave, SIGNAL(clicked()), this, SLOT(on_lanSaveBtn_clicked()));
 
     QIcon icon1(":/pic/unselected.png");
-    m_tabWidget->addTab(m_pageWidget[MANGER_PAGE_LAN], icon1, tr("Language"));
+    m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_LAN], icon1, tr("Language"));
 }
 
 void Ex_ManagerSetPage::initAudioPage()
 {
     m_iSoundMask = gGlobalParam.MiscParam.iSoundMask;
     setBackColor();
-    m_pageWidget[MANGER_PAGE_AUDIO] = new QWidget;
+    m_pageWidget[MANAGER_PAGE_AUDIO] = new QWidget;
 
     int iLoop ;
 
@@ -888,7 +976,7 @@ void Ex_ManagerSetPage::initAudioPage()
 
     for(iLoop = 0 ; iLoop < DISPLAY_SOUND_NUM ; iLoop++)
     {
-        m_pAudioBackWidget[iLoop] = new QWidget(m_pageWidget[MANGER_PAGE_AUDIO]);
+        m_pAudioBackWidget[iLoop] = new QWidget(m_pageWidget[MANAGER_PAGE_AUDIO]);
 
         QPalette pal(m_pAudioBackWidget[iLoop]->palette());
 
@@ -933,18 +1021,18 @@ void Ex_ManagerSetPage::initAudioPage()
         }
     }
 
-    m_pAudioBtnSave = new QPushButton(m_pageWidget[MANGER_PAGE_AUDIO]);
+    m_pAudioBtnSave = new QPushButton(m_pageWidget[MANAGER_PAGE_AUDIO]);
     m_pAudioBtnSave->move(580, 420);
     connect(m_pAudioBtnSave, SIGNAL(clicked()), this, SLOT(on_audioBtnSavebtn_clicked()));
 
     QIcon icon1(":/pic/unselected.png");
-    m_tabWidget->addTab(m_pageWidget[MANGER_PAGE_AUDIO], icon1, tr("Audio"));
+    m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_AUDIO], icon1, tr("Audio"));
 
 }
 
 void Ex_ManagerSetPage::initUnitsPage()
 {
-    m_pageWidget[MANGER_PAGE_UNITS] = new QWidget;
+    m_pageWidget[MANAGER_PAGE_UNITS] = new QWidget;
 
     int iLoop;
 
@@ -957,7 +1045,7 @@ void Ex_ManagerSetPage::initUnitsPage()
 
     for(iLoop = 0 ; iLoop < UnitNum ; iLoop++)
     {
-        m_pUnitsBackWidget[iLoop] = new QWidget(m_pageWidget[MANGER_PAGE_UNITS]);
+        m_pUnitsBackWidget[iLoop] = new QWidget(m_pageWidget[MANAGER_PAGE_UNITS]);
 
         QPalette pal(m_pUnitsBackWidget[iLoop]->palette());
         pal.setColor(QPalette::Background, Qt::white);
@@ -1041,17 +1129,17 @@ void Ex_ManagerSetPage::initUnitsPage()
 
     }
 
-    m_pUnitsBtnSave = new QPushButton(m_pageWidget[MANGER_PAGE_UNITS]);
+    m_pUnitsBtnSave = new QPushButton(m_pageWidget[MANAGER_PAGE_UNITS]);
     m_pUnitsBtnSave->move(580,450);
     connect(m_pUnitsBtnSave, SIGNAL(clicked()), this, SLOT(on_unitsSaveBtn_clicked()));
 
     QIcon icon1(":/pic/unselected.png");
-    m_tabWidget->addTab(m_pageWidget[MANGER_PAGE_UNITS], icon1, tr("Units"));
+    m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_UNITS], icon1, tr("Units"));
 }
 
 void Ex_ManagerSetPage::initLcdPage()
 {
-    m_pageWidget[MANGER_PAGE_LCD] = new QWidget;
+    m_pageWidget[MANAGER_PAGE_LCD] = new QWidget;
 
     int iLoop = 0;
 
@@ -1066,7 +1154,7 @@ void Ex_ManagerSetPage::initLcdPage()
 
     for( iLoop = 0 ; iLoop < 3 ; iLoop++)
     {
-        m_pLcdBackWidget[iLoop] = new QWidget(m_pageWidget[MANGER_PAGE_LCD]);
+        m_pLcdBackWidget[iLoop] = new QWidget(m_pageWidget[MANAGER_PAGE_LCD]);
         QPalette pal(m_pLcdBackWidget[iLoop]->palette());
         pal.setColor(QPalette::Background, Qt::white);
         m_pLcdBackWidget[iLoop]->setAutoFillBackground(true);
@@ -1131,20 +1219,20 @@ void Ex_ManagerSetPage::initLcdPage()
 
     //end
 
-    m_pLcdBtnSave = new QPushButton(m_pageWidget[MANGER_PAGE_LCD]);
+    m_pLcdBtnSave = new QPushButton(m_pageWidget[MANAGER_PAGE_LCD]);
     m_pLcdBtnSave->move(580,450);
 
     connect(m_pLcdBtnSave, SIGNAL(clicked()), this, SLOT(on_LcdSaveBtn_clicked()));
 
 
     QIcon icon1(":/pic/unselected.png");
-    m_tabWidget->addTab(m_pageWidget[MANGER_PAGE_LCD], icon1, tr("LCD"));
+    m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_LCD], icon1, tr("LCD"));
 }
 
 void Ex_ManagerSetPage::initAdditionalSettingsPage()
 {
     setBackColor();
-    m_pageWidget[MANGER_PAGE_ADDSETTINGS] = new QWidget;
+    m_pageWidget[MANAGER_PAGE_ADDSETTINGS] = new QWidget;
 
     int iLoop ;
 
@@ -1157,7 +1245,7 @@ void Ex_ManagerSetPage::initAdditionalSettingsPage()
 
     for(iLoop = 0 ; iLoop < ADDITIONAL_NUM ; iLoop++)
     {
-        m_pAdditionalWidget[iLoop] = new QWidget(m_pageWidget[MANGER_PAGE_ADDSETTINGS]);
+        m_pAdditionalWidget[iLoop] = new QWidget(m_pageWidget[MANAGER_PAGE_ADDSETTINGS]);
 
         QPalette pal(m_pAdditionalWidget[iLoop]->palette());
 
@@ -1198,12 +1286,12 @@ void Ex_ManagerSetPage::initAdditionalSettingsPage()
 
     }
 
-    m_pAddBtnSave = new QPushButton(m_pageWidget[MANGER_PAGE_ADDSETTINGS]);
+    m_pAddBtnSave = new QPushButton(m_pageWidget[MANAGER_PAGE_ADDSETTINGS]);
     m_pAddBtnSave->move(580, 420);
     connect(m_pAddBtnSave, SIGNAL(clicked()), this, SLOT(on_AdditionalBtnSave_clicked()));
 
     QIcon icon1(":/pic/unselected.png");
-    m_tabWidget->addTab(m_pageWidget[MANGER_PAGE_ADDSETTINGS], icon1, tr("Additional Settings"));
+    m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_ADDSETTINGS], icon1, tr("Additional Settings"));
 }
 
 void Ex_ManagerSetPage::changeTime()

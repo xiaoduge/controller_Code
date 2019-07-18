@@ -22,7 +22,7 @@ static const uint qt_meta_data_Ex_ManagerSetPage[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      17,   14, // methods
+      18,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,17 +36,18 @@ static const uint qt_meta_data_Ex_ManagerSetPage[] = {
       94,   18,   18,   18, 0x09,
      117,   18,   18,   18, 0x09,
      144,   18,   18,   18, 0x09,
-     174,  168,   18,   18, 0x09,
-     214,  208,   18,   18, 0x09,
-     243,   18,   18,   18, 0x09,
-     272,   18,   18,   18, 0x09,
-     305,  298,   18,   18, 0x09,
-     338,   18,   18,   18, 0x09,
-     362,  208,   18,   18, 0x09,
-     399,  168,   18,   18, 0x09,
-     436,   18,   18,   18, 0x09,
-     450,   18,   18,   18, 0x09,
-     481,  208,   18,   18, 0x09,
+     169,   18,   18,   18, 0x09,
+     199,  193,   18,   18, 0x09,
+     239,  233,   18,   18, 0x09,
+     268,   18,   18,   18, 0x09,
+     297,   18,   18,   18, 0x09,
+     330,  323,   18,   18, 0x09,
+     363,   18,   18,   18, 0x09,
+     387,  233,   18,   18, 0x09,
+     424,  193,   18,   18, 0x09,
+     461,   18,   18,   18, 0x09,
+     475,   18,   18,   18, 0x09,
+     506,  233,   18,   18, 0x09,
 
        0        // eod
 };
@@ -57,6 +58,7 @@ static const char qt_meta_stringdata_Ex_ManagerSetPage[] = {
     "on_timeTimeSet_clicked()\0"
     "on_timeOkBtn_clicked()\0"
     "on_timeCancelBtn_clicked()\0"
+    "on_caliSaveBtn_clicked()\0"
     "on_lanSaveBtn_clicked()\0index\0"
     "on_cbLan_currentIndexChanged(int)\0"
     "state\0on_checkBox_changeState(int)\0"
@@ -81,18 +83,19 @@ void Ex_ManagerSetPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         case 2: _t->on_timeTimeSet_clicked(); break;
         case 3: _t->on_timeOkBtn_clicked(); break;
         case 4: _t->on_timeCancelBtn_clicked(); break;
-        case 5: _t->on_lanSaveBtn_clicked(); break;
-        case 6: _t->on_cbLan_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 7: _t->on_checkBox_changeState((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 8: _t->on_audioBtnSavebtn_clicked(); break;
-        case 9: _t->on_unitsSaveBtn_clicked(); break;
-        case 10: _t->on_btn_clicked((*reinterpret_cast< QAbstractButton*(*)>(_a[1]))); break;
-        case 11: _t->on_LcdSaveBtn_clicked(); break;
-        case 12: _t->on_CheckEnergySave_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 13: _t->on_comboBox_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 14: _t->setValue((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 15: _t->on_AdditionalBtnSave_clicked(); break;
-        case 16: _t->on_HPCircheckBox_changeState((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 5: _t->on_caliSaveBtn_clicked(); break;
+        case 6: _t->on_lanSaveBtn_clicked(); break;
+        case 7: _t->on_cbLan_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 8: _t->on_checkBox_changeState((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 9: _t->on_audioBtnSavebtn_clicked(); break;
+        case 10: _t->on_unitsSaveBtn_clicked(); break;
+        case 11: _t->on_btn_clicked((*reinterpret_cast< QAbstractButton*(*)>(_a[1]))); break;
+        case 12: _t->on_LcdSaveBtn_clicked(); break;
+        case 13: _t->on_CheckEnergySave_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 14: _t->on_comboBox_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 15: _t->setValue((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 16: _t->on_AdditionalBtnSave_clicked(); break;
+        case 17: _t->on_HPCircheckBox_changeState((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -130,9 +133,9 @@ int Ex_ManagerSetPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 17)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 17;
+        _id -= 18;
     }
     return _id;
 }

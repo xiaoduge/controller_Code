@@ -9,9 +9,15 @@ class Ex_InitConsumableInsPage : public CSubPage
 {
     Q_OBJECT
 
+    enum Consumable_Type
+    {
+        Type0 = 0,  //Pack
+        Type1,
+        Consumable_Type_Num
+    };
+
     struct Consumable_Install_Info
     {
-       int iType;
        int iRfid;
        QString strName;
     };
@@ -36,8 +42,16 @@ protected:
 
 private:
     void setBackColor();
-    void initVector();
+
+    void initPackConfig();
+    void initOtherConfig();
+
     void initTable();
+    void initTypePackTable();
+    void initTypeOtherTable();
+
+    void updatePackInstall(int type);
+    void updateOtherInstall(int type);
 
 private slots:
     void on_ExNextBtn_clicked();
@@ -46,15 +60,19 @@ private slots:
     void on_timer_event();
 
 private:
-    QMap<int, Consumable_Install_Info> m_map;
-    QMap<int, QPoint> m_coorMap;
-    QList<int> m_list;
+    QMap<int, Consumable_Install_Info> m_map[Consumable_Type_Num];
+    QMap<int, QPoint> m_coorMap[Consumable_Type_Num];
+    QList<int> m_list[Consumable_Type_Num];
 
-    QLabel* m_pSuggestLb;
-    QTableWidget* m_pTableWidget;
+    QLabel* m_pTitleLb;
+    QLabel* m_pSuggestLb[Consumable_Type_Num];
+
+    QTableWidget* m_pTableWidget[Consumable_Type_Num];
 
     QPushButton* m_pExNextBtn;
     QPushButton* m_pExBackBtn;
+
+    int m_firstTableHeight;
 
     QTimer* m_pTimer;
 };

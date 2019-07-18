@@ -22,7 +22,7 @@ static const uint qt_meta_data_ServicePage[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,13 +32,14 @@ static const uint qt_meta_data_ServicePage[] = {
  // slots: signature, parameters, type, tag, flags
       17,   13,   12,   12, 0x0a,
       37,   13,   12,   12, 0x0a,
+      58,   12,   12,   12, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_ServicePage[] = {
     "ServicePage\0\0tmp\0on_btn_clicked(int)\0"
-    "on_navi_clicked(int)\0"
+    "on_navi_clicked(int)\0on_logoutBtn_clicked()\0"
 };
 
 void ServicePage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -49,6 +50,7 @@ void ServicePage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         switch (_id) {
         case 0: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 1: _t->on_navi_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->on_logoutBtn_clicked(); break;
         default: ;
         }
     }
@@ -86,9 +88,9 @@ int ServicePage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

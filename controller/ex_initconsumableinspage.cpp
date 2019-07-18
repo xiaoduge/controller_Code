@@ -29,23 +29,34 @@ void Ex_InitConsumableInsPage::buildTranslation()
     QString strSuggest = tr("Note:") + "\n"
             + tr("Install the AC Pack after all other components with RFID chip are installed.") + "\n"
             + tr("Scan the final filter and install it to the dispenser after finishing system setting-up.");
-    m_pSuggestLb->setText(strSuggest);
+    //扫描耗材
+    //安装纯化柱
+    m_pTitleLb->setText(tr("Follow the steps below to install and scan the chip for the consumables."));
+    m_pSuggestLb[Type1]->setText(tr("Step 1: ") + tr("Scan the consumables on the RFID tags position") + "\n" + tr("Note:") + tr("Scan the final filter and install it to the dispenser after finishing system setting-up."));
+    m_pSuggestLb[Type0]->setText(tr("Step 2: ") + tr("Install cartridges"));
+
     initTable();
 }
 
 void Ex_InitConsumableInsPage::initUi()
 {
-    m_pSuggestLb = new QLabel(m_widget);
-    m_pSuggestLb->setWordWrap(true);
-    m_pSuggestLb->setGeometry(10, 50, 780, 80);
-    m_pSuggestLb->setStyleSheet("font-size:18pt; color:#FF0000; QFont::Bold");
+    m_pTitleLb = new QLabel(m_widget);
+    m_pTitleLb->setWordWrap(true);
+    m_pTitleLb->setStyleSheet("font-size:18pt; color:#FF0000; QFont::Bold");
+    m_pTitleLb->setGeometry(10, 30, 780, 25);
 
-    m_pTableWidget = new QTableWidget(m_widget);
-    m_pTableWidget->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-    m_pTableWidget->horizontalHeader()->hide();
-    m_pTableWidget->verticalHeader()->hide();
+    for(int i = 0; i < Consumable_Type_Num; ++i)
+    {
+        m_pSuggestLb[i] = new QLabel(m_widget);
+        m_pSuggestLb[i]->setWordWrap(true);
+        m_pSuggestLb[i]->setStyleSheet("font-size:18pt; color:#FF0000; QFont::Bold");
 
-    m_pTableWidget->setGeometry(10, 140, 780, 350);
+        m_pTableWidget[i] = new QTableWidget(m_widget);
+        m_pTableWidget[i]->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+        m_pTableWidget[i]->horizontalHeader()->hide();
+        m_pTableWidget[i]->verticalHeader()->hide();
+    }
+    m_pSuggestLb[Type1]->setGeometry(10, 70, 780, 45);
 
     m_pExNextBtn = new QPushButton(m_widget);
     m_pExBackBtn = new QPushButton(m_widget);
@@ -59,31 +70,93 @@ void Ex_InitConsumableInsPage::initUi()
 
 void Ex_InitConsumableInsPage::initTable()
 {
-    initVector();
-    m_coorMap.clear();
+    initTypeOtherTable();
+    initTypePackTable();
+}
 
-    m_pTableWidget->setColumnCount(2);
-    int rows = (m_list.size() + 1) / 2;
-    m_pTableWidget->setRowCount(rows);
+void Ex_InitConsumableInsPage::initTypePackTable()
+{
+    initPackConfig();
 
-    for(int i = 0; i < m_list.size(); ++i)
+    m_coorMap[Type0].clear();
+
+    m_pTableWidget[Type0]->setColumnCount(2);
+    int rows = (m_list[Type0].size() + 1) / 2;
+    m_pTableWidget[Type0]->setRowCount(rows);
+
+    for(int i = 0; i < m_list[Type0].size(); ++i)
     {
         int row = i/2;
         int col = i%2;
         DConsumableInstallWidget* listWidget = new DConsumableInstallWidget;
-        listWidget->setID(m_list.at(i));
-        listWidget->setTag(m_map.value(m_list.at(i)).strName);
+        listWidget->setID(m_list[Type0].at(i));
+        listWidget->setTag(m_map[Type0].value(m_list[Type0].at(i)).strName);
 
         QTableWidgetItem* item = new QTableWidgetItem;
 
-        m_pTableWidget->setCellWidget(row, col, listWidget);
-        m_pTableWidget->setItem(row, col, item);
-        m_coorMap.insert(m_list.at(i), QPoint(row, col));
+        m_pTableWidget[Type0]->setCellWidget(row, col, listWidget);
+        m_pTableWidget[Type0]->setItem(row, col, item);
+        m_coorMap[Type0].insert(m_list[Type0].at(i), QPoint(row, col));
     }
     for(int i = 0; i < rows; ++i)
     {
-        m_pTableWidget->setRowHeight(i, 40);
+        m_pTableWidget[Type0]->setRowHeight(i, 40);
     }
+
+    int height = m_firstTableHeight + 125 + 20;
+    m_pSuggestLb[Type0]->setGeometry(10, height, 780, 25);
+    m_pTableWidget[Type0]->setGeometry(10, height + 35, 780, 40*rows + 4);
+}
+
+void Ex_InitConsumableInsPage::initTypeOtherTable()
+{
+    initOtherConfig();
+    m_coorMap[Type1].clear();
+
+    m_pTableWidget[Type1]->setColumnCount(2);
+    int rows = (m_list[Type1].size() + 1) / 2;
+    m_pTableWidget[Type1]->setRowCount(rows);
+
+    for(int i = 0; i < m_list[Type1].size(); ++i)
+    {
+        int row = i/2;
+        int col = i%2;
+        DConsumableInstallWidget* listWidget = new DConsumableInstallWidget;
+        listWidget->setID(m_list[Type1].at(i));
+        listWidget->setTag(m_map[Type1].value(m_list[Type1].at(i)).strName);
+
+        QTableWidgetItem* item = new QTableWidgetItem;
+
+        m_pTableWidget[Type1]->setCellWidget(row, col, listWidget);
+        m_pTableWidget[Type1]->setItem(row, col, item);
+        m_coorMap[Type1].insert(m_list[Type1].at(i), QPoint(row, col));
+    }
+    for(int i = 0; i < rows; ++i)
+    {
+        m_pTableWidget[Type1]->setRowHeight(i, 40);
+    }
+    m_firstTableHeight = 40 * rows + 4;
+    m_pTableWidget[Type1]->setGeometry(10, 125, 780, m_firstTableHeight);
+}
+
+void Ex_InitConsumableInsPage::updatePackInstall(int type)
+{
+    QPoint point = m_coorMap[Type0].value(type);
+    int row = point.x();
+    int col = point.y();
+    QWidget* widget = m_pTableWidget[Type0]->cellWidget(row, col);
+    DConsumableInstallWidget* listWidget = qobject_cast<DConsumableInstallWidget*>(widget);
+    listWidget->setInstallStatus(true);
+}
+
+void Ex_InitConsumableInsPage::updateOtherInstall(int type)
+{
+    QPoint point = m_coorMap[Type1].value(type);
+    int row = point.x();
+    int col = point.y();
+    QWidget* widget = m_pTableWidget[Type1]->cellWidget(row, col);
+    DConsumableInstallWidget* listWidget = qobject_cast<DConsumableInstallWidget*>(widget);
+    listWidget->setInstallStatus(true);
 }
 
 void Ex_InitConsumableInsPage::on_ExNextBtn_clicked()
@@ -127,14 +200,17 @@ void Ex_InitConsumableInsPage::activeReadRFID()
 
 void Ex_InitConsumableInsPage::updateConsumableInstall(int type)
 {
-    QPoint point = m_coorMap.value(type);
-    int row = point.x();
-    int col = point.y();
-    QWidget* widget = m_pTableWidget->cellWidget(row, col);
-    DConsumableInstallWidget* listWidget = qobject_cast<DConsumableInstallWidget*>(widget);
-    listWidget->setInstallStatus(true);
+    if(m_list[Type1].contains(type))
+    {
+        updateOtherInstall(type);
+        return;
+    }
 
-//    Ex_HintDialog::getInstance(QString("install: %1").arg(type));
+    if(m_list[Type0].contains(type))
+    {
+        updatePackInstall(type);
+        return;
+    }
 }
 
 void Ex_InitConsumableInsPage::mousePressEvent(QMouseEvent *e)
@@ -175,10 +251,10 @@ void Ex_InitConsumableInsPage::setBackColor()
 {
 }
 
-void Ex_InitConsumableInsPage::initVector()
+void Ex_InitConsumableInsPage::initPackConfig()
 {
-    m_list.clear();
-    m_map.clear();
+    m_list[Type0].clear();
+    m_map[Type0].clear();
     Consumable_Install_Info install_info;
 
     switch(gGlobalParam.iMachineType)
@@ -189,11 +265,10 @@ void Ex_InitConsumableInsPage::initVector()
     case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        install_info.iType = 0;
         install_info.iRfid = APP_RFID_SUB_TYPE_UPACK_HPACK;
         install_info.strName = tr("U Pack");
-        m_map.insert(DISP_U_PACK, install_info);
-        m_list.append(DISP_U_PACK);
+        m_map[Type0].insert(DISP_U_PACK, install_info);
+        m_list[Type0].append(DISP_U_PACK);
         break;
     default:
         break;
@@ -205,18 +280,16 @@ void Ex_InitConsumableInsPage::initVector()
     case MACHINE_L_RO_LOOP:
     case MACHINE_UP:
     case MACHINE_PURIST:
-        install_info.iType = 0;
         install_info.iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
         install_info.strName = tr("H Pack");
-        m_map.insert(DISP_H_PACK, install_info);
-        m_list.append(DISP_H_PACK);
+        m_map[Type0].insert(DISP_H_PACK, install_info);
+        m_list[Type0].append(DISP_H_PACK);
         break;
     case MACHINE_L_EDI_LOOP:
-        install_info.iType = 0;
         install_info.iRfid = APP_RFID_SUB_TYPE_UPACK_HPACK;
         install_info.strName = tr("H Pack");
-        m_map.insert(DISP_H_PACK, install_info);
-        m_list.append(DISP_H_PACK);
+        m_map[Type0].insert(DISP_H_PACK, install_info);
+        m_list[Type0].append(DISP_H_PACK);
         break;
     default:
         break;
@@ -233,11 +306,10 @@ void Ex_InitConsumableInsPage::initVector()
     case MACHINE_EDI:
     case MACHINE_RO:
     case MACHINE_ADAPT:
-        install_info.iType = 0;
         install_info.iRfid = APP_RFID_SUB_TYPE_PPACK_CLEANPACK;
         install_info.strName = tr("P Pack");
-        m_map.insert(DISP_P_PACK, install_info);
-        m_list.append(DISP_P_PACK);
+        m_map[Type0].insert(DISP_P_PACK, install_info);
+        m_list[Type0].append(DISP_P_PACK);
         break;
     default:
         break;
@@ -253,15 +325,21 @@ void Ex_InitConsumableInsPage::initVector()
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-        install_info.iType = 0;
         install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         install_info.strName = tr("AC Pack");
-        m_map.insert(DISP_AC_PACK, install_info);
-        m_list.append(DISP_AC_PACK);
+        m_map[Type0].insert(DISP_AC_PACK, install_info);
+        m_list[Type0].append(DISP_AC_PACK);
         break;
     default:
         break;
     }
+}
+
+void Ex_InitConsumableInsPage::initOtherConfig()
+{
+    m_list[Type1].clear();
+    m_map[Type1].clear();
+    Consumable_Install_Info install_info;
 
     switch(gGlobalParam.iMachineType)
     {
@@ -274,11 +352,10 @@ void Ex_InitConsumableInsPage::initVector()
     case MACHINE_EDI:
     case MACHINE_RO:
     case MACHINE_ADAPT:
-        install_info.iType = 1; //0
         install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         install_info.strName = tr("RO Membrane");
-        m_map.insert(DISP_MACHINERY_RO_MEMBRANE, install_info);
-        m_list.append(DISP_MACHINERY_RO_MEMBRANE);
+        m_map[Type1].insert(DISP_MACHINERY_RO_MEMBRANE, install_info);
+        m_list[Type1].append(DISP_MACHINERY_RO_MEMBRANE);
         break;
     default:
         break;
@@ -291,11 +368,10 @@ void Ex_InitConsumableInsPage::initVector()
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_ADAPT:
-        install_info.iType = 0;
         install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         install_info.strName = tr("Final Fliter B");
-        m_map.insert(DISP_T_B_FILTER, install_info);
-        m_list.append(DISP_T_B_FILTER);
+        m_map[Type1].insert(DISP_T_B_FILTER, install_info);
+        m_list[Type1].append(DISP_T_B_FILTER);
         break;
     default:
         break;
@@ -313,11 +389,10 @@ void Ex_InitConsumableInsPage::initVector()
     case MACHINE_RO:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        install_info.iType = 0;
         install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         install_info.strName = tr("Final Fliter A");
-        m_map.insert(DISP_T_A_FILTER, install_info);
-        m_list.append(DISP_T_A_FILTER);
+        m_map[Type1].insert(DISP_T_A_FILTER, install_info);
+        m_list[Type1].append(DISP_T_A_FILTER);
         break;
     default:
         break;
@@ -331,11 +406,10 @@ void Ex_InitConsumableInsPage::initVector()
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_EDI:
-        install_info.iType = 0;
         install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         install_info.strName = tr("254 UV Lamp");
-        m_map.insert(DISP_N1_UV, install_info);
-        m_list.append(DISP_N1_UV);
+        m_map[Type1].insert(DISP_N1_UV, install_info);
+        m_list[Type1].append(DISP_N1_UV);
         break;
     default:
         break;
@@ -351,11 +425,10 @@ void Ex_InitConsumableInsPage::initVector()
     case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        install_info.iType = 0;
         install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         install_info.strName = tr("185 UV Lamp");
-        m_map.insert(DISP_N2_UV, install_info);
-        m_list.append(DISP_N2_UV);
+        m_map[Type1].insert(DISP_N2_UV, install_info);
+        m_list[Type1].append(DISP_N2_UV);
         break;
     }
 
@@ -369,11 +442,10 @@ void Ex_InitConsumableInsPage::initVector()
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-        install_info.iType = 0;
         install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         install_info.strName = tr("Tank UV Lamp");
-        m_map.insert(DISP_N3_UV, install_info);
-        m_list.append(DISP_N3_UV);
+        m_map[Type1].insert(DISP_N3_UV, install_info);
+        m_list[Type1].append(DISP_N3_UV);
         break;
     default:
         break;
@@ -389,11 +461,10 @@ void Ex_InitConsumableInsPage::initVector()
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-        install_info.iType = 0;
         install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         install_info.strName = tr("Tank Vent Filter");
-        m_map.insert(DISP_W_FILTER, install_info);
-        m_list.append(DISP_W_FILTER);
+        m_map[Type1].insert(DISP_W_FILTER, install_info);
+        m_list[Type1].append(DISP_W_FILTER);
         break;
     default:
         break;

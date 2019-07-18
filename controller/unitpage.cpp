@@ -154,7 +154,7 @@ void UnitPage::initUi()
         m_pBackWidget[iLoop]->setAutoFillBackground(true);
         m_pBackWidget[iLoop]->setPalette(pal);
 
-        m_pBackWidget[iLoop]->setGeometry(QRect(134 , 120 + 80 * iLoop , 530 ,60));
+        m_pBackWidget[iLoop]->setGeometry(QRect(134 , 100 + 80 * iLoop , 530 ,60));
 
         m_laName[iLoop] = new QLabel(m_pBackWidget[iLoop]);
         m_laName[iLoop]->setPixmap(NULL);
@@ -229,7 +229,7 @@ void UnitPage::initUi()
     
     m_pBtnSave->setPressPicture(gpGlobalPixmaps[GLOBAL_BMP_PAGE_NAVI_ACTIVE]);
     
-    m_pBtnSave->setGeometry(700,560,m_pBtnSave->getPicWidth(),m_pBtnSave->getPicHeight());
+    m_pBtnSave->setGeometry(700,540,m_pBtnSave->getPicWidth(),m_pBtnSave->getPicHeight());
     
     m_pBtnSave->setStyleSheet("background-color:transparent");
     

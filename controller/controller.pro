@@ -141,7 +141,8 @@ SOURCES += main.cpp\
     dsqltablemodelforuser.cpp \
     dloginwarningdialog.cpp \
     ex_initconsumableinspage.cpp \
-    dconsumableinstallwidget.cpp
+    dconsumableinstallwidget.cpp \
+    dpushbutton.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -255,7 +256,8 @@ HEADERS  += mainwindow.h \
     dsqltablemodelforuser.h \
     dloginwarningdialog.h \
     ex_initconsumableinspage.h \
-    dconsumableinstallwidget.h
+    dconsumableinstallwidget.h \
+    dpushbutton.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

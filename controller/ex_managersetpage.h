@@ -14,6 +14,7 @@ class QComboBox;
 class QCheckBox;
 class QRadioButton;
 class QHBoxLayout;
+class DLineEdit;
 
 class Ex_ManagerSetPage : public CSubPage
 {
@@ -38,14 +39,15 @@ public:
 
     enum TABPAGE
     {
-        MANGER_PAGE_FLOW = 0,
-        MANGER_PAGE_TIME,
-        MANGER_PAGE_LAN,
-        MANGER_PAGE_AUDIO,
-        MANGER_PAGE_UNITS,
-        MANGER_PAGE_LCD,
-        MANGER_PAGE_ADDSETTINGS, //Additional settings
-        MANGER_PAGE_NUM
+        MANAGER_PAGE_FLOW = 0,
+        MANAGER_PAGE_TIME,
+        MANAGER_PAGE_CALIBRATION,
+        MANAGER_PAGE_LAN,
+        MANAGER_PAGE_AUDIO,
+        MANAGER_PAGE_UNITS,
+        MANAGER_PAGE_LCD,
+        MANAGER_PAGE_ADDSETTINGS, //Additional settings
+        MANAGER_PAGE_NUM
     };
 
     enum ADDITIONAL_SETTINGS_NUM
@@ -77,6 +79,9 @@ protected slots:
     void on_timeOkBtn_clicked();
     void on_timeCancelBtn_clicked();
 
+    //Dispense Rate
+    void on_caliSaveBtn_clicked();
+
     //language
     void on_lanSaveBtn_clicked();
     void on_cbLan_currentIndexChanged(int index);
@@ -102,6 +107,7 @@ protected slots:
 private:
     void initFlowPage();
     void initTimePage();
+    void initCalibrationPage();
     void initLanguagePage();
     void initAudioPage();
     void initUnitsPage();
@@ -116,7 +122,7 @@ private:
 
 private:
     QWidget *m_mainWidget;
-    QWidget *m_pageWidget[MANGER_PAGE_NUM];
+    QWidget *m_pageWidget[MANAGER_PAGE_NUM];
     QTabWidget *m_tabWidget;
 
     //Flow Rate
@@ -125,6 +131,7 @@ private:
     QLineEdit *m_flowLineEdit;
     QLabel *m_flowUnit;
     QPushButton *m_flowSaveBtn;
+    int m_caliId;
 
     //Time
     int m_secondTimer;
@@ -138,6 +145,12 @@ private:
     QComboBox *TimeSCbox;
     QPushButton *m_pBtns[TIMEPAGE_BTN_NUM];
     QString m_astrDateName[DATE_NUM];
+
+    //calibration
+    QWidget* m_pCaliS1Widget;
+    QLabel* m_pCaliS1Label;
+    DLineEdit* m_pCaliS1LineEdit;
+    QPushButton* m_pCaliBtn;
 
     //Language
     QComboBox* m_pCbLan;
