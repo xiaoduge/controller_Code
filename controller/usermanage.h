@@ -13,8 +13,6 @@
 #include <QLineEdit>
 #include <QButtonGroup>
 #include <QCheckBox>
-
-#include "keyboard.h"
 #include <QCloseEvent>  
 
 

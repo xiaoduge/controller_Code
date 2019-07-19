@@ -37,7 +37,6 @@
 
 #include "ctrlapplication.h"
 #include "user.h"
-#include "keyboard.h"
 #include "LoginDlg.h"
 
 #include "syszuxim.h"

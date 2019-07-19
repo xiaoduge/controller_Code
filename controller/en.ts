@@ -435,12 +435,12 @@
     <message>
         <location filename="alarmdisplaypage.cpp" line="1084"/>
         <source>Final Fliter B</source>
-        <translation type="unfinished">Final Filter B</translation>
+        <translation>Rephibio filter</translation>
     </message>
     <message>
         <location filename="alarmdisplaypage.cpp" line="1116"/>
         <source>Final Fliter A</source>
-        <translation type="unfinished">Final Filter A</translation>
+        <translation>0.2um Final filter</translation>
     </message>
     <message>
         <location filename="alarmdisplaypage.cpp" line="1153"/>
@@ -975,13 +975,13 @@
         <location filename="ConsumableinsPage.cpp" line="544"/>
         <source>Final Fliter B</source>
         <oldsource>Terminal B Filter</oldsource>
-        <translation>Final Filter B</translation>
+        <translation>Rephibio filter</translation>
     </message>
     <message>
         <location filename="ConsumableinsPage.cpp" line="551"/>
         <source>Final Fliter A</source>
         <oldsource>Terminal A Filter</oldsource>
-        <translation>Final Filter A</translation>
+        <translation>0.2um Final filter</translation>
     </message>
     <message>
         <location filename="ConsumableinsPage.cpp" line="558"/>
@@ -1204,13 +1204,13 @@
         <location filename="consumablestatepage.cpp" line="834"/>
         <source>Final Fliter B</source>
         <oldsource>Terminal B Filter</oldsource>
-        <translation type="unfinished">Final Filter B</translation>
+        <translation>Rephibio filter</translation>
     </message>
     <message>
         <location filename="consumablestatepage.cpp" line="861"/>
         <source>Final Fliter A</source>
         <oldsource>Terminal A Filter</oldsource>
-        <translation type="unfinished">Final Filter A</translation>
+        <translation>0.2um Final filter</translation>
     </message>
     <message>
         <location filename="consumablestatepage.cpp" line="889"/>
@@ -1708,12 +1708,12 @@
     <message>
         <location filename="ex_consumableinstalldialog.cpp" line="268"/>
         <source>Final Fliter A</source>
-        <translation type="unfinished">Final Filter A</translation>
+        <translation>0.2um Final filter</translation>
     </message>
     <message>
         <location filename="ex_consumableinstalldialog.cpp" line="269"/>
         <source>Final Fliter B</source>
-        <translation type="unfinished">Final Filter B</translation>
+        <translation>Rephibio filter</translation>
     </message>
     <message>
         <location filename="ex_consumableinstalldialog.cpp" line="272"/>
@@ -2121,7 +2121,7 @@
     <message>
         <location filename="ex_historypage.cpp" line="395"/>
         <source>type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location filename="ex_historypage.cpp" line="396"/>
@@ -2225,7 +2225,7 @@
         <location filename="ex_historypage.cpp" line="82"/>
         <location filename="ex_historypage.cpp" line="133"/>
         <source>Log</source>
-        <translation type="unfinished">Daily operation</translation>
+        <translation>Login history</translation>
     </message>
 </context>
 <context>
@@ -2255,12 +2255,12 @@
         <location filename="ex_initconsumableinspage.cpp" line="31"/>
         <location filename="ex_initconsumableinspage.cpp" line="35"/>
         <source>Scan the final filter and install it to the dispenser after finishing system setting-up.</source>
-        <translation type="unfinished"></translation>
+        <translation>UV lamps are preinstalled. Do not install final filters now.</translation>
     </message>
     <message>
         <location filename="ex_initconsumableinspage.cpp" line="34"/>
         <source>Follow the steps below to install and scan the chip for the consumables.</source>
-        <translation type="unfinished"></translation>
+        <translation>Follow the steps below to install consumables</translation>
     </message>
     <message>
         <location filename="ex_initconsumableinspage.cpp" line="35"/>
@@ -2270,7 +2270,7 @@
     <message>
         <location filename="ex_initconsumableinspage.cpp" line="35"/>
         <source>Scan the consumables on the RFID tags position</source>
-        <translation type="unfinished"></translation>
+        <translation>Scan and Install the following at the RFID position</translation>
     </message>
     <message>
         <location filename="ex_initconsumableinspage.cpp" line="36"/>
@@ -2311,12 +2311,12 @@
     <message>
         <location filename="ex_initconsumableinspage.cpp" line="372"/>
         <source>Final Fliter B</source>
-        <translation type="unfinished">Final Filter B</translation>
+        <translation>Rephibio filter</translation>
     </message>
     <message>
         <location filename="ex_initconsumableinspage.cpp" line="393"/>
         <source>Final Fliter A</source>
-        <translation type="unfinished">Final Filter A</translation>
+        <translation>0.2um Final filter</translation>
     </message>
     <message>
         <location filename="ex_initconsumableinspage.cpp" line="410"/>
@@ -2575,7 +2575,7 @@
     <message>
         <location filename="ex_init_syscfgpage.cpp" line="40"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Other Devices</translation>
     </message>
     <message>
         <location filename="ex_init_syscfgpage.cpp" line="42"/>
@@ -2608,7 +2608,7 @@
     <message>
         <location filename="ex_init_tankcfgpage.cpp" line="53"/>
         <source>Tank Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Set Tank</translation>
     </message>
     <message>
         <location filename="ex_init_tankcfgpage.cpp" line="55"/>
@@ -2621,7 +2621,7 @@
         <location filename="ex_init_tankcfgpage.cpp" line="125"/>
         <location filename="ex_init_tankcfgpage.cpp" line="200"/>
         <source>UDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Custom</translation>
     </message>
     <message>
         <location filename="ex_init_tankcfgpage.cpp" line="57"/>
@@ -2922,7 +2922,7 @@
     <message>
         <location filename="ex_managersetpage.cpp" line="73"/>
         <source>Disp. Rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Flow meter</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="78"/>
@@ -3075,7 +3075,7 @@
         <location filename="ex_permissionsetpage.cpp" line="43"/>
         <source>Users is free of verification.</source>
         <oldsource>Consumable installation is free of verification</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>User login waived</translation>
     </message>
     <message>
         <location filename="ex_permissionsetpage.cpp" line="135"/>
@@ -3511,7 +3511,7 @@
     <message>
         <location filename="ex_usercfgpage.cpp" line="175"/>
         <source>Permission</source>
-        <translation type="unfinished"></translation>
+        <translation>Permission level</translation>
     </message>
     <message>
         <location filename="ex_usercfgpage.cpp" line="218"/>
@@ -4626,13 +4626,13 @@
         <location filename="maintenancecycle.cpp" line="588"/>
         <source>Final Fliter B</source>
         <oldsource>Terminal Filter B</oldsource>
-        <translation type="unfinished">Final Filter B</translation>
+        <translation>Rephibio filter</translation>
     </message>
     <message>
         <location filename="maintenancecycle.cpp" line="595"/>
         <source>Final Fliter A</source>
         <oldsource>Terminal Filter A</oldsource>
-        <translation type="unfinished">Final Filter A</translation>
+        <translation>0.2um Final filter</translation>
     </message>
     <message>
         <location filename="maintenancecycle.cpp" line="602"/>
@@ -4812,7 +4812,7 @@
         <location filename="parametercalibration.cpp" line="466"/>
         <source>Disp. Rate</source>
         <oldsource>UP Rate</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Flow Meter</translation>
     </message>
     <message>
         <location filename="parametercalibration.cpp" line="474"/>
@@ -5326,7 +5326,7 @@
     <message>
         <location filename="setdevicepage.cpp" line="314"/>
         <source>RFReader</source>
-        <translation type="unfinished"></translation>
+        <translation>RFID Reader</translation>
     </message>
     <message>
         <location filename="setdevicepage.cpp" line="93"/>
@@ -5386,7 +5386,7 @@
     <message>
         <location filename="setpage.cpp" line="180"/>
         <source>Consumables Life</source>
-        <translation>Lifetime</translation>
+        <translation>Lifetime Setting</translation>
     </message>
     <message>
         <location filename="setpage.cpp" line="181"/>
@@ -5425,7 +5425,7 @@
     <message>
         <location filename="setpage.cpp" line="189"/>
         <source>Initialize</source>
-        <translation type="unfinished"></translation>
+        <translation>Factory Reset</translation>
     </message>
     <message>
         <location filename="setpage.cpp" line="191"/>
@@ -5474,7 +5474,7 @@
         <location filename="setpage.cpp" line="188"/>
         <source>Connecting Device</source>
         <oldsource>Device Set</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Connecting Devices</translation>
     </message>
 </context>
 <context>
@@ -6170,7 +6170,7 @@
         <location filename="systemcfgpage.cpp" line="529"/>
         <location filename="systemcfgpage.cpp" line="597"/>
         <source>UDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Custom</translation>
     </message>
     <message>
         <location filename="systemcfgpage.cpp" line="146"/>
@@ -6253,7 +6253,7 @@
     <message>
         <location filename="systemcfgpage.cpp" line="209"/>
         <source>Initialize</source>
-        <translation type="unfinished"></translation>
+        <translation>Factory Reset</translation>
     </message>
     <message>
         <location filename="systemcfgpage.cpp" line="210"/>

@@ -11,7 +11,6 @@
 #include <QPushButton>
 #include <QCheckBox>
 #include <QSlider>
-#include "keyboard.h"
 #include "MyParams.h"
 
 namespace Ui {

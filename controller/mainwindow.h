@@ -14,7 +14,6 @@
 #include "DefaultParams.h"
 #include "zbcomm.h"
 #include "Display.h"
-#include "keyboard.h"
 #include "opt.h"
 #include "cminterface.h"
 #include "eco_w.h"

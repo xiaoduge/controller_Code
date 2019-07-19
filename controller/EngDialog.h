@@ -10,7 +10,6 @@
 #include <QPushButton>
 #include <QCheckBox>
 #include <QButtonGroup>
-#include "keyboard.h"
 #include "MyParams.h"
 #include "qsliderex.h"
 #include "Display.h"

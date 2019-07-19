@@ -19,10 +19,7 @@
 #include <QSqlDriver>
 #include <QSqlRecord>
 #include <QTextCodec>
-
 #include <QDebug>
-
-#include "keyboard.h"
 #include "MyParams.h"
 #include "user.h"
 

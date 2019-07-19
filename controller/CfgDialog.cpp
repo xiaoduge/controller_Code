@@ -21,7 +21,6 @@
 #include <QMessageBox>
 #include "mainwindow.h"
 
-#include "keyboard.h"
 #include "Display.h"
 #include "MyParams.h"
 #include "notify.h"

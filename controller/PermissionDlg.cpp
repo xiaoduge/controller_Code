@@ -21,8 +21,6 @@
 #include "user.h"
 #include "MyParams.h"
 
-#include "keyboard.h"
-
 
 PermissionDlg::PermissionDlg(QWidget *parent) :
     QDialog(parent)

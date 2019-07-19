@@ -20,7 +20,6 @@
 #include <QMouseEvent>
 #include <QMessageBox>
 
-#include "keyboard.h"
 #include "Display.h"
 #include "MyParams.h"
 

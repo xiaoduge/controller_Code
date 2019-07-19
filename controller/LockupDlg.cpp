@@ -20,7 +20,6 @@
 #include "user.h"
 #include "MyParams.h"
 
-#include "keyboard.h"
 
 LockupDlg::LockupDlg(QWidget *parent) :
     QDialog(parent)
