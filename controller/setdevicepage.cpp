@@ -95,7 +95,7 @@ void SetDevicePage::buildTranslation()
     m_pTblWidget->setTabText(0,tr("Device"));
     m_pTblWidget->setTabText(1,tr("Dispenser"));
     m_pTblWidget->setTabText(2,tr("RF Reader"));
-    m_pTblWidget->setTabText(3,tr("Maintenance"));
+//    m_pTblWidget->setTabText(3,tr("Maintenance"));
 }
 
 void SetDevicePage::switchLanguage()
@@ -329,8 +329,8 @@ void SetDevicePage::initUi()
 
     widget->setLayout(pcfg4HBox);  
 
-    QIcon icon4(":/pic/unselected.png");  
-    m_pTblWidget->addTab(widget, icon4, tr("Maintenance"));  
+//    QIcon icon4(":/pic/unselected.png");
+//    m_pTblWidget->addTab(widget, icon4, tr("Maintenance"));
 
 
     layout->addWidget(m_pTblWidget); 

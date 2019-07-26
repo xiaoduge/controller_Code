@@ -16,8 +16,8 @@
 #define ControlNum 6
 
 #define BACKWIDGET_START_X      10
-#define BACKWIDGET_START_Y      80
-#define BACKWIDGET_START_HIATUS 80
+#define BACKWIDGET_START_Y      70
+#define BACKWIDGET_START_HIATUS 70
 #define BACKWIDGET_HEIGHT       60
 #define BACKWIDGET_WIDTH        (800 - BACKWIDGET_START_X*2)
 #define BACKWIDGET_ITEM_LENGTH  120
@@ -139,8 +139,6 @@ void SystemCfgPage::buildTitles()
 
 void SystemCfgPage::buildTranslation()
 {
-    int iLoop;
-
     m_lbPWTankName->setText(tr("Pure Water Tank"));
     m_cmbPWTankVolume->setItemText(5,tr("UDF"));
     m_cmbPWTankVolume->setItemText(6,tr("NO"));
@@ -149,8 +147,13 @@ void SystemCfgPage::buildTranslation()
     m_cmbSWTankVolume->setItemText(5,tr("UDF"));
     m_cmbSWTankVolume->setItemText(6,tr("NO"));
 
+    m_lbPWHUnit->setText(tr("Height(M)"));
+    m_lbPWCUnit->setText(tr("Volume(L)"));
+    m_lbSWHUnit->setText(tr("Height(M)"));
+    m_lbSWCUnit->setText(tr("Volume(L)"));
+
     
-    for (iLoop = 0; iLoop < m_iRealChkNum; iLoop++)
+    for (int iLoop = 0; iLoop < m_iRealChkNum; iLoop++)
     {
         switch (aCHKsIds[iLoop].iId)
         {
@@ -203,13 +206,7 @@ void SystemCfgPage::buildTranslation()
     m_lbLoginLingerName->setText(tr("Auto. Logout"));
     m_lbLoginLingerUnit->setText(tr("min"));
 
-//    m_lbDeviceTypeName->setText(tr("System Type"));
-
-    //2019.3.14
-    m_lbDefaultState->setText(tr("Initialize"));
-    m_cmbDefaultState->setItemText(0, tr("Yes"));
-    m_cmbDefaultState->setItemText(1, tr("No"));
-    //
+    m_lbDeviceTypeName->setText(tr("System Type"));
 
     m_chkDeviceTypeTOC->setText(tr("TOC"));
 
@@ -257,9 +254,6 @@ void SystemCfgPage::createControl()
     int yOffset = BACKWIDGET_START_Y ;
     QWidget *tmpWidget = NULL;
     QRect    rectTmp;
-    int      iLoop;
-
-    QFont ft12 = *m_wndMain->getFont(GLOBAL_FONT_12);
 
     /* line 1*/
     tmpWidget = new QWidget(m_widget);
@@ -274,38 +268,23 @@ void SystemCfgPage::createControl()
     yOffset += BACKWIDGET_START_HIATUS;
 
     rectTmp = sQrectAry[0];
-//    m_lbDeviceTypeName = new QLabel(tmpWidget);
-//    m_lbDeviceTypeName->setGeometry(rectTmp);
-//    m_lbDeviceTypeName->show();
 
-    m_lbDefaultState = new QLabel(tmpWidget);
-    m_lbDefaultState->setGeometry(rectTmp);
-    m_lbDefaultState->show();
-    m_lbDefaultState->setAlignment(Qt::AlignCenter);
+    m_lbDeviceTypeName = new QLabel(tmpWidget);
+    m_lbDeviceTypeName->setGeometry(rectTmp);
+    m_lbDeviceTypeName->show();
+    m_lbDeviceTypeName->setAlignment(Qt::AlignCenter);
 
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 10);
     rectTmp.setWidth(X_VALUE_WIDTH*2 + 30); //+5
-    /*
-    m_cmbDeviceType = new QComboBox(tmpWidget);
-    m_cmbDeviceType->setGeometry(rectTmp);
-   */
-//    m_lbDeviceType = new QLabel(tmpWidget);
-//    m_lbDeviceType->setGeometry(rectTmp);
-//    m_lbDeviceType->setFrameShape(QFrame::Box);
-//    m_lbDeviceType->setFrameShadow(QFrame::Plain);
-//    QString qssDT = "QLabel{border-width:1px;\
-//                            border-style:solid;\
-//                            border-radius: 4px;\
-//                            border-color: rgb(135,206,250);}";
-//    m_lbDeviceType->setStyleSheet(qssDT);
 
-    m_cmbDefaultState = new QComboBox(tmpWidget);
-    m_cmbDefaultState->addItem(tr("Yes"));
-    m_cmbDefaultState->addItem(tr("No"));
-    m_cmbDefaultState->setCurrentIndex(1);
-    m_cmbDefaultState->setGeometry(rectTmp);
-    connect(m_cmbDefaultState, SIGNAL(currentIndexChanged(int)),
-     this, SLOT(on_CmbIndexChange_DefaultState(int)));
+    m_lbDeviceType = new QLabel(tmpWidget);
+    m_lbDeviceType->setGeometry(rectTmp);
+    m_lbDeviceType->show();
+    m_lbDeviceType->setLineWidth(0);
+    m_lbDeviceType->setMidLineWidth(2);
+    m_lbDeviceType->setFrameStyle(QFrame::Box|QFrame::Raised);
+    m_lbDeviceType->setAlignment(Qt::AlignCenter);
+    m_lbDeviceType->setText(gaMachineType[gGlobalParam.iMachineType].strName);
 
     rectTmp.setX(BACKWIDGET_WIDTH/2 + X_MARGIN - 5);
     rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH);
@@ -327,18 +306,6 @@ void SystemCfgPage::createControl()
         m_chkDeviceTypeTOC->show();
         break;
     }
-   /*
-    for(iLoop = 0;iLoop < MACHINE_NUM; iLoop++)
-    {
-        m_cmbDeviceType->addItem(gaMachineType[iLoop].strName);
-    }
-
-    m_cmbDeviceType->setCurrentIndex(gGlobalParam.iMachineType);
-    
-    connect(m_cmbDeviceType, SIGNAL(currentIndexChanged(int)),
-     this, SLOT(on_CmbIndexChange_device_type(int)));
-   */
-//    m_lbDeviceType->setText(gaMachineType[gGlobalParam.iMachineType].strName);
 
     int iCols = (m_iRealChkNum + 1) / 2 ;
     int iRows = (m_iRealChkNum + iCols - 1)/ iCols;
@@ -517,7 +484,7 @@ void SystemCfgPage::createControl()
     m_lbPWTankName->hide();
     
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
-    rectTmp.setWidth(X_ITEM_WIDTH);
+    rectTmp.setWidth(X_ITEM_WIDTH + 30);
     m_cmbPWTankVolume = new QComboBox(tmpWidget);
     m_cmbPWTankVolume->setGeometry(rectTmp);
     
@@ -535,32 +502,32 @@ void SystemCfgPage::createControl()
 
     m_cmbPWTankVolume->hide();
     
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 20);
     rectTmp.setWidth(X_VALUE_WIDTH);
     m_lePWTankHeight = new DLineEdit(tmpWidget);
     m_lePWTankHeight->setGeometry(rectTmp);
     m_lePWTankHeight->setValidator(new QRegExpValidator(double_rx,this));
     m_lePWTankHeight->hide();
     
-    rectTmp.setX(rectTmp.x() + rectTmp.width());
-    rectTmp.setWidth(20);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
+    rectTmp.setWidth(90);
     m_lbPWHUnit = new QLabel(tmpWidget);
     m_lbPWHUnit->setGeometry(rectTmp);
-    m_lbPWHUnit->setText("M");
+//    m_lbPWHUnit->setText("M");
     m_lbPWHUnit->hide();
     
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 20);
     rectTmp.setWidth(X_VALUE_WIDTH);
     m_lePWTankCap = new DLineEdit(tmpWidget);
     m_lePWTankCap->setGeometry(rectTmp);
     m_lePWTankCap->setValidator(new QIntValidator(0, 9999, this));
     m_lePWTankCap->hide();
     
-    rectTmp.setX(rectTmp.x() + rectTmp.width());
-    rectTmp.setWidth(20);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
+    rectTmp.setWidth(90);
     m_lbPWCUnit = new QLabel(tmpWidget);
     m_lbPWCUnit->setGeometry(rectTmp);
-    m_lbPWCUnit->setText("L");
+//    m_lbPWCUnit->setText("L");
     m_lbPWCUnit->hide();
 
     switch(gGlobalParam.iMachineType)
@@ -577,15 +544,24 @@ void SystemCfgPage::createControl()
         m_lbPWCUnit->show();
         break;
     }
-    
-    rectTmp.setX(BACKWIDGET_WIDTH/2);
-    rectTmp.setWidth(sQrectAry[0].width());
+
+    /* line 7*/
+    tmpWidget = new QWidget(m_widget);
+
+    tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
+
+    tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
+    yOffset += BACKWIDGET_START_HIATUS;
+
+    rectTmp = sQrectAry[0];
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 20);
+
     m_lbSWTankName = new QLabel(tmpWidget);
     m_lbSWTankName->setGeometry(rectTmp);
-    m_lbSWTankName->hide();
     
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
-    rectTmp.setWidth(X_ITEM_WIDTH);
+    rectTmp.setWidth(X_ITEM_WIDTH + 30);
     m_cmbSWTankVolume = new QComboBox(tmpWidget);
     m_cmbSWTankVolume->setGeometry(rectTmp);
     
@@ -599,51 +575,40 @@ void SystemCfgPage::createControl()
     connect(m_cmbSWTankVolume, SIGNAL(currentIndexChanged(int)),
      this, SLOT(on_CmbIndexChange_sw(int)));
     
-    m_cmbSWTankVolume->hide();
-    
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN  + 20);
     rectTmp.setWidth(X_ITEM_WIDTH);
     m_leSWTankHeight = new DLineEdit(tmpWidget);
     m_leSWTankHeight->setGeometry(rectTmp);
     m_leSWTankHeight->setValidator(new QRegExpValidator(double_rx,this));
-    m_leSWTankHeight->hide();
     
-    rectTmp.setX(rectTmp.x() + rectTmp.width());
-    rectTmp.setWidth(20);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
+    rectTmp.setWidth(90);
     m_lbSWHUnit = new QLabel(tmpWidget);
     m_lbSWHUnit->setGeometry(rectTmp);
-    m_lbSWHUnit->setText("M");
-    m_lbSWHUnit->hide(); 
+//    m_lbSWHUnit->setText("M");
     
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 20);
     rectTmp.setWidth(X_VALUE_WIDTH);
     m_leSWTankCap = new DLineEdit(tmpWidget);
     m_leSWTankCap->setGeometry(rectTmp);
     m_leSWTankCap->setValidator(new QIntValidator(0, 9999, this));
-    m_leSWTankCap->hide();
     
-    rectTmp.setX(rectTmp.x() + rectTmp.width());
-    rectTmp.setWidth(20);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
+    rectTmp.setWidth(90);
     m_lbSWCUnit = new QLabel(tmpWidget);
     m_lbSWCUnit->setGeometry(rectTmp);
-    m_lbSWCUnit->setText("L");
-    m_lbSWCUnit->hide();
+//    m_lbSWCUnit->setText("L");
 
+    tmpWidget->hide();
     switch(gGlobalParam.iMachineType)
     {
      case MACHINE_L_Genie:
      case MACHINE_L_UP:
      case MACHINE_L_EDI_LOOP:
-     case MACHINE_L_RO_LOOP: 
-         m_lbSWTankName->show();
-         m_cmbSWTankVolume->show();
-         m_leSWTankHeight->show();
-         m_lbSWHUnit->show();
-         m_leSWTankCap->show();
-         m_lbSWCUnit->show();
-         break;
+     case MACHINE_L_RO_LOOP:
+        tmpWidget->show();
+        break;
     }
-
 
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,SYSCFGPAGE_BTN_SAVE);
     
@@ -673,33 +638,6 @@ void SystemCfgPage::initUi()
 void SystemCfgPage::update()
 {
     connectData();
-//    m_lbDeviceType->setText(gaMachineType[gGlobalParam.iMachineType].strName);
-}
-
-void SystemCfgPage::on_CmbIndexChange_DefaultState(int index)
-{
-    int iIdx = m_cmbDefaultState->currentIndex();
-    if (iIdx == 0)
-    {
-         QMessageBox::StandardButton rb = QMessageBox::question(NULL,
-                                                                tr("NOTIFY"),
-                                                                tr("Do you want to restart the system immediately\n to enter the initialization interface?"),
-                                                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-
-         if(rb != QMessageBox::Yes)
-         {
-             return;
-         }
-
-         ex_gGlobalParam.Ex_Default = m_cmbDefaultState->currentIndex();
-         MainSaveDefaultState(gGlobalParam.iMachineType);
-
-         MainUpdateGlobalParam();
-         update();
-         /**/
-         m_wndMain->restart();
-     }
-
 }
 
 
@@ -953,18 +891,6 @@ void SystemCfgPage::connectData()
     m_lePWTankUVValue->setText(QString::number(gGlobalParam.MiscParam.iTankUvOnTime));
     m_leLoginLingerValue->setText(QString::number(gGlobalParam.MiscParam.iAutoLogoutTime));
     m_lePOweronFlushValue->setText(QString::number(gGlobalParam.MiscParam.iPowerOnFlushTime));
-
-    switch(ex_gGlobalParam.Ex_Default)
-    {
-    case 0:
-        m_cmbDefaultState->setCurrentIndex(0);
-        break;
-    case 1:
-        m_cmbDefaultState->setCurrentIndex(1);
-        break;
-    default:
-        break;
-    }
 }
 
 void SystemCfgPage::save()
@@ -1248,9 +1174,6 @@ void SystemCfgPage::save()
    MainSaveSubModuleSetting(gGlobalParam.iMachineType,smParam);
    MainSaveMiscParam(gGlobalParam.iMachineType,miscParam);
    MainUpdateGlobalParam();
-
-   ex_gGlobalParam.Ex_Default = m_cmbDefaultState->currentIndex();
-   MainSaveDefaultState(gGlobalParam.iMachineType);
 
    m_wndMain->ClearToc();
    m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_DEVICE_CONFIG);

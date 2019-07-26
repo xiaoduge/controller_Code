@@ -115,7 +115,7 @@ void AllocationSetPage::initUi()
     m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
     
     m_lbNameTitle = new QLabel(m_pBackWidget[iIdx]);
-    m_lbNameTitle->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 140 , 20));
+    m_lbNameTitle->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 150 , 20));
     m_lbNameTitle->setAlignment(Qt::AlignLeft);
 
     m_pBtnEnable = new CBitmapButton(m_pBackWidget[iIdx],BITMAPBUTTON_STYLE_SWITCH,BITMAPBUTTON_PIC_STYLE_NORMAL,0);
@@ -206,7 +206,7 @@ void AllocationSetPage::initUi()
    m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
    
    m_lbNameIdlePeriod = new QLabel(m_pBackWidget[iIdx]);
-   m_lbNameIdlePeriod->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 140 , 20));
+   m_lbNameIdlePeriod->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 150 , 20));
    m_lbNameIdlePeriod->setAlignment(Qt::AlignLeft);
    
    m_leIdlePeriod = new QLineEdit(m_pBackWidget[iIdx]);
@@ -225,7 +225,7 @@ void AllocationSetPage::initUi()
    m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
    
    m_lbNameIdleCirTime = new QLabel(m_pBackWidget[iIdx]);
-   m_lbNameIdleCirTime->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 140 , 20));
+   m_lbNameIdleCirTime->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 150 , 20));
    m_lbNameIdleCirTime->setAlignment(Qt::AlignLeft);
    
    m_leIdleCirTime = new QLineEdit(m_pBackWidget[iIdx]);

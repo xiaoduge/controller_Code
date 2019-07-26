@@ -59,8 +59,10 @@ void Ex_FactoryTestPage::setBackColor()
 void Ex_FactoryTestPage::buildTranslation()
 {
     int i;
-    m_tabWidget->setTabText(0, "RFID");
-    m_tabWidget->setTabText(1, "Flow & Pressure");
+    m_tabWidget->setTabText(0, tr("RFID"));
+    m_tabWidget->setTabText(1, tr("Flow & Pressure"));
+    m_tabWidget->setTabText(2, tr("Wifi Test"));
+    m_tabWidget->setTabText(3, tr("Maintenance"));
 
     m_pConfigLabel[CONFIG_CAT]->setText(tr("Cat No.:"));
     m_pConfigLabel[CONFIG_LOT]->setText(tr("Lot No.:"));
@@ -98,6 +100,9 @@ void Ex_FactoryTestPage::buildTranslation()
     m_pBtn[FTESTPAGE_ILOOP]->setText(tr("Start"));
 
     m_pClearWifiMsgBtn->setText(tr("Clear"));
+
+    m_pBtnZigbeeUpd->setText(tr("Zigbee Upd"));
+
 }
 
 void Ex_FactoryTestPage::switchLanguage()
@@ -270,6 +275,32 @@ void Ex_FactoryTestPage::initUpdateWifiPage()
     m_tabWidget->addTab(m_pageWidget[FACTORY_PAGE_UPDWIFI], icon1, tr("Update Wifi"));
 }
 
+void Ex_FactoryTestPage::initzigbeePage()
+{
+    m_pageWidget[FACTORY_PAGE_UPDZIGBEE] = new QWidget(m_widget);
+    m_pageWidget[FACTORY_PAGE_UPDZIGBEE]->setGeometry(0, 55, 800, 545);
+    QString qss = ".QWidget{ background-color:rgb(250, 250, 250);}";
+    m_pageWidget[FACTORY_PAGE_UPDZIGBEE]->setStyleSheet(qss);
+
+    QHBoxLayout  *hLayout =  new QHBoxLayout;
+
+    m_plbZigbeeUpd = new QLabel;
+    m_plbZigbeeUpd->setAlignment(Qt::AlignCenter);
+    m_plbZigbeeUpd->setText("00");
+    hLayout->addWidget(m_plbZigbeeUpd);
+
+    m_pBtnZigbeeUpd  = new QPushButton;
+    m_pBtnZigbeeUpd->setText(tr("Zigbee Upd"));
+    hLayout->addWidget(m_pBtnZigbeeUpd);
+
+    m_pageWidget[FACTORY_PAGE_UPDZIGBEE]->setLayout(hLayout);
+
+    QIcon icon1(":/pic/unselected.png");
+    m_tabWidget->addTab(m_pageWidget[FACTORY_PAGE_UPDZIGBEE], icon1, tr("Maintenance"));
+
+    connect(m_pBtnZigbeeUpd, SIGNAL(clicked()), this, SLOT(on_updZigbeeBtn_clicked()));
+}
+
 void Ex_FactoryTestPage::on_flowBtn_clicked()
 {
     if(isFlow)
@@ -367,6 +398,31 @@ void Ex_FactoryTestPage::on_clearWifiMsgBtn_clicked()
     m_pWifiMsgTBrowser->clear();
 }
 
+void Ex_FactoryTestPage::on_updZigbeeBtn_clicked()
+{
+    int iLength;
+
+    QString BIN_FILE =  ":/other/shznApp.bin";
+
+
+    QFileInfo info(BIN_FILE);
+    if (info.exists())
+    {
+        iLength = info.size();
+    }
+
+    if (iLength <= MAX_FILE_SIZE)
+    {
+        QFile tmpfile(BIN_FILE);
+        tmpfile.open(QIODevice::ReadOnly);
+        tmpfile.read((char*)gFileMem, iLength);
+        tmpfile.close();
+
+        DispStartZigbeeUpd(iLength,NULL);
+    }
+    m_wndMain->prepareKeyStroke();
+}
+
 
 void Ex_FactoryTestPage::initUi()
 {
@@ -381,6 +437,7 @@ void Ex_FactoryTestPage::initUi()
     initRFIDTestPage();
     initFlowTestPage();
     initUpdateWifiPage();
+    initzigbeePage();
 
     mainLayout->addWidget(m_tabWidget, 0, 0);
     m_mainWidget->setLayout(mainLayout);
@@ -497,6 +554,18 @@ void Ex_FactoryTestPage::updateWifiTestMsg(const QString &msg)
 {
     QString strContent = m_pWifiMsgTBrowser->toPlainText();
     m_pWifiMsgTBrowser->setText(strContent + "\n" + msg);
+}
+
+void Ex_FactoryTestPage::zigbeeUpdResult(int iResult, int iPercent)
+{
+    if (iResult)
+    {
+        m_plbZigbeeUpd->setText(tr("FAIL"));
+    }
+    else
+    {
+        m_plbZigbeeUpd->setText(QString::number(iPercent));
+    }
 }
 
 

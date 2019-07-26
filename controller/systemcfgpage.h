@@ -46,8 +46,6 @@ public:
 
     virtual void update();
 
-protected slots:
-    void on_CmbIndexChange_DefaultState(int index);
 
 private:
 
@@ -85,12 +83,8 @@ private:
     DLineEdit *m_leLoginLingerValue;
     QLabel    *m_lbLoginLingerUnit;
 
-//    QLabel    *m_lbDeviceTypeName;
-//    QLabel *m_lbDeviceType;
-
-    //2019.3.14
-    QLabel    *m_lbDefaultState;
-    QComboBox *m_cmbDefaultState;
+    QLabel    *m_lbDeviceTypeName;
+    QLabel    *m_lbDeviceType;
 
     QCheckBox *m_chkDeviceTypeTOC;
 

@@ -45,6 +45,7 @@ public:
         FACTORY_PAGE_RFID = 0,
         FACTORY_PAGE_FLOW,
         FACTORY_PAGE_UPDWIFI,
+        FACTORY_PAGE_UPDZIGBEE,
         FACTORY_PAGE_NUM
     };
 
@@ -81,6 +82,9 @@ public:
     //wifi
     void updateWifiTestMsg(const QString& msg);
 
+    //upd zigbee
+    void zigbeeUpdResult(int iResult,int iPercent);
+
 private:
     void buildTitles();
     void setBackColor();
@@ -88,6 +92,7 @@ private:
     void initFlowTestPage();
     void initRFIDTestPage();
     void initUpdateWifiPage();
+    void initzigbeePage();
 
 private slots:
     void on_flowBtn_clicked();
@@ -99,6 +104,8 @@ private slots:
     void on_clearBtn_clicked();
 
     void on_clearWifiMsgBtn_clicked();
+
+    void on_updZigbeeBtn_clicked();
 
 private:
     bool isFlow;
@@ -134,6 +141,10 @@ private:
     //update wifi Library
     QPushButton *m_pClearWifiMsgBtn;
     QTextBrowser *m_pWifiMsgTBrowser;
+
+    //update zigbee
+    QPushButton *m_pBtnZigbeeUpd;
+    QLabel      *m_plbZigbeeUpd;
 };
 
 extern CtrlApplication *gApp;

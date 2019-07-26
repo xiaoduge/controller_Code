@@ -816,7 +816,7 @@
 <context>
     <name>CMDlg</name>
     <message>
-        <location filename="CMDialog.cpp" line="41"/>
+        <location filename="CMDialog.cpp" line="40"/>
         <source>CM MGR</source>
         <translation type="unfinished"></translation>
     </message>
@@ -824,14 +824,14 @@
 <context>
     <name>CfgDlg</name>
     <message>
-        <location filename="CfgDialog.cpp" line="103"/>
+        <location filename="CfgDialog.cpp" line="102"/>
         <source>CFG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="CfgDialog.cpp" line="225"/>
-        <location filename="CfgDialog.cpp" line="235"/>
-        <location filename="CfgDialog.cpp" line="245"/>
+        <location filename="CfgDialog.cpp" line="224"/>
+        <location filename="CfgDialog.cpp" line="234"/>
+        <location filename="CfgDialog.cpp" line="244"/>
         <source>User Defined</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1476,37 +1476,37 @@
 <context>
     <name>EngineerDlg</name>
     <message>
-        <location filename="EngDialog.cpp" line="150"/>
+        <location filename="EngDialog.cpp" line="149"/>
         <source>ENG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="EngDialog.cpp" line="752"/>
+        <location filename="EngDialog.cpp" line="751"/>
         <source>RF SR SUCC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="EngDialog.cpp" line="756"/>
+        <location filename="EngDialog.cpp" line="755"/>
         <source>RF SR FAIL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="EngDialog.cpp" line="773"/>
+        <location filename="EngDialog.cpp" line="772"/>
         <source>RF RD SUCC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="EngDialog.cpp" line="777"/>
+        <location filename="EngDialog.cpp" line="776"/>
         <source>RF RD FAIL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="EngDialog.cpp" line="787"/>
+        <location filename="EngDialog.cpp" line="786"/>
         <source>RF WR SUCC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="EngDialog.cpp" line="791"/>
+        <location filename="EngDialog.cpp" line="790"/>
         <source>RF WR FAIL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2569,16 +2569,16 @@
     <message>
         <location filename="ex_init_tankcfgpage.cpp" line="56"/>
         <location filename="ex_init_tankcfgpage.cpp" line="60"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="125"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="200"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="130"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="205"/>
         <source>UDF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="ex_init_tankcfgpage.cpp" line="57"/>
         <location filename="ex_init_tankcfgpage.cpp" line="61"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="127"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="201"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="132"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="206"/>
         <source>NO</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2598,32 +2598,48 @@
         <translation>Indietro</translation>
     </message>
     <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="120"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="195"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="66"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="68"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="150"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="223"/>
+        <source>Height(M)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_init_tankcfgpage.cpp" line="67"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="69"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="164"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="237"/>
+        <source>Volume(L)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_init_tankcfgpage.cpp" line="125"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="200"/>
         <source>30</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="121"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="196"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="126"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="201"/>
         <source>60</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="122"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="197"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="127"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="202"/>
         <source>100</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="123"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="198"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="128"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="203"/>
         <source>200</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="124"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="199"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="129"/>
+        <location filename="ex_init_tankcfgpage.cpp" line="204"/>
         <source>350</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6059,16 +6075,16 @@
     <message>
         <location filename="systemcfgpage.cpp" line="145"/>
         <location filename="systemcfgpage.cpp" line="149"/>
-        <location filename="systemcfgpage.cpp" line="529"/>
-        <location filename="systemcfgpage.cpp" line="597"/>
+        <location filename="systemcfgpage.cpp" line="503"/>
+        <location filename="systemcfgpage.cpp" line="580"/>
         <source>UDF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="systemcfgpage.cpp" line="146"/>
         <location filename="systemcfgpage.cpp" line="150"/>
-        <location filename="systemcfgpage.cpp" line="531"/>
-        <location filename="systemcfgpage.cpp" line="598"/>
+        <location filename="systemcfgpage.cpp" line="505"/>
+        <location filename="systemcfgpage.cpp" line="581"/>
         <source>NO</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6078,115 +6094,127 @@
         <translation>Tank di alimentazione </translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="158"/>
+        <location filename="systemcfgpage.cpp" line="152"/>
+        <location filename="systemcfgpage.cpp" line="154"/>
+        <source>Height(M)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="systemcfgpage.cpp" line="153"/>
+        <location filename="systemcfgpage.cpp" line="155"/>
+        <source>Volume(L)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="systemcfgpage.cpp" line="163"/>
         <source>Feed Valve</source>
         <translation>Valvola alimentazione</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="161"/>
+        <location filename="systemcfgpage.cpp" line="166"/>
         <source>Leak Protector</source>
         <translation>Protezione allagamenti</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="164"/>
+        <location filename="systemcfgpage.cpp" line="169"/>
         <source>Printer</source>
         <translation>Stampante</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="167"/>
+        <location filename="systemcfgpage.cpp" line="172"/>
         <source>Loop UV</source>
         <translation>UV Loop</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="170"/>
+        <location filename="systemcfgpage.cpp" line="175"/>
         <source>Loop DI</source>
         <translation>DI Loop</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="173"/>
+        <location filename="systemcfgpage.cpp" line="178"/>
         <source>Loop Filter</source>
         <translation>Filtro Loop</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="176"/>
+        <location filename="systemcfgpage.cpp" line="181"/>
         <source>HP Recir.</source>
         <translation>Ricircolazione HP</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="179"/>
+        <location filename="systemcfgpage.cpp" line="184"/>
         <source>Prefilter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="182"/>
+        <location filename="systemcfgpage.cpp" line="187"/>
         <source>Disable RFID</source>
         <translation type="unfinished">Disabilitare RFID</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="185"/>
+        <location filename="systemcfgpage.cpp" line="190"/>
         <source>H PACK</source>
         <translation type="unfinished">H Pack</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="188"/>
+        <location filename="systemcfgpage.cpp" line="193"/>
         <source>HP ELECTRODE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="191"/>
+        <location filename="systemcfgpage.cpp" line="196"/>
         <source>Feed PUMP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="196"/>
+        <location filename="systemcfgpage.cpp" line="201"/>
         <source>Tank UV</source>
         <translation>UV Tank</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="197"/>
+        <location filename="systemcfgpage.cpp" line="202"/>
         <source>Exposure Time</source>
         <translation>Tempo esposizione</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="198"/>
+        <location filename="systemcfgpage.cpp" line="203"/>
         <source>min/H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="200"/>
+        <location filename="systemcfgpage.cpp" line="205"/>
         <source>Flush Time</source>
         <translation>Tempo di risciacquo</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="201"/>
-        <location filename="systemcfgpage.cpp" line="204"/>
+        <location filename="systemcfgpage.cpp" line="206"/>
+        <location filename="systemcfgpage.cpp" line="209"/>
         <source>min</source>
         <translation>Min.</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="203"/>
+        <location filename="systemcfgpage.cpp" line="208"/>
         <source>Auto. Logout</source>
         <translation>Auto uscita</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="209"/>
+        <location filename="systemcfgpage.cpp" line="214"/>
         <source>Initialize</source>
         <translation>Inizializzare</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="210"/>
-        <location filename="systemcfgpage.cpp" line="303"/>
+        <location filename="systemcfgpage.cpp" line="215"/>
+        <location filename="systemcfgpage.cpp" line="289"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="211"/>
-        <location filename="systemcfgpage.cpp" line="304"/>
+        <location filename="systemcfgpage.cpp" line="216"/>
+        <location filename="systemcfgpage.cpp" line="290"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="686"/>
+        <location filename="systemcfgpage.cpp" line="658"/>
         <source>Do you want to restart the system immediately
  to enter the initialization interface?</source>
         <translation type="unfinished"></translation>
@@ -6196,47 +6224,47 @@
         <translation type="obsolete">Tipo sistema</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="214"/>
+        <location filename="systemcfgpage.cpp" line="219"/>
         <source>TOC</source>
         <translation>TOC</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="216"/>
+        <location filename="systemcfgpage.cpp" line="221"/>
         <source>Save</source>
         <translation>Salvare</translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="524"/>
-        <location filename="systemcfgpage.cpp" line="592"/>
+        <location filename="systemcfgpage.cpp" line="498"/>
+        <location filename="systemcfgpage.cpp" line="575"/>
         <source>30</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="525"/>
-        <location filename="systemcfgpage.cpp" line="593"/>
+        <location filename="systemcfgpage.cpp" line="499"/>
+        <location filename="systemcfgpage.cpp" line="576"/>
         <source>60</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="526"/>
-        <location filename="systemcfgpage.cpp" line="594"/>
+        <location filename="systemcfgpage.cpp" line="500"/>
+        <location filename="systemcfgpage.cpp" line="577"/>
         <source>100</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="527"/>
-        <location filename="systemcfgpage.cpp" line="595"/>
+        <location filename="systemcfgpage.cpp" line="501"/>
+        <location filename="systemcfgpage.cpp" line="578"/>
         <source>200</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="528"/>
-        <location filename="systemcfgpage.cpp" line="596"/>
+        <location filename="systemcfgpage.cpp" line="502"/>
+        <location filename="systemcfgpage.cpp" line="579"/>
         <source>350</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemcfgpage.cpp" line="685"/>
+        <location filename="systemcfgpage.cpp" line="657"/>
         <source>NOTIFY</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6598,18 +6626,18 @@
 <context>
     <name>UserManageDlg</name>
     <message>
-        <location filename="usermanage.cpp" line="169"/>
-        <location filename="usermanage.cpp" line="186"/>
+        <location filename="usermanage.cpp" line="166"/>
+        <location filename="usermanage.cpp" line="183"/>
         <source>warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="usermanage.cpp" line="169"/>
+        <location filename="usermanage.cpp" line="166"/>
         <source>User name or password NULL!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="usermanage.cpp" line="186"/>
+        <location filename="usermanage.cpp" line="183"/>
         <source>Add User false!</source>
         <translation type="unfinished"></translation>
     </message>

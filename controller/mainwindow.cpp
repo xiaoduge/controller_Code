@@ -201,7 +201,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190718_debug");
+QString strSoftwareVersion = QString("0.1.8.190724_debug");
 
 MainWindow *gpMainWnd;
 
@@ -245,7 +245,7 @@ QString gGlobalPixelmapName[GLOBAL_BMP_NUM] =
 };
 
 
-DISP_GLOBAL_PARAM_STRU gGlobalParam ;
+DISP_GLOBAL_PARAM_STRU gGlobalParam;
 
 Ex_DISP_PARAM_CALI_STRU ex_global_Cali; //dcj_ex;
 
@@ -7994,6 +7994,12 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 {
                     SetDevicePage *page = getDeviceDlg();
                     if (page) page->zigbeeUpdResult(pItem->iResult,pItem->iPercent);
+
+                    if (typeid(*m_pCurPage) == typeid(Ex_FactoryTestPage))
+                    {
+                        Ex_FactoryTestPage *page = qobject_cast<Ex_FactoryTestPage*>(m_pCurPage);
+                        page->zigbeeUpdResult(pItem->iResult,pItem->iPercent);
+                    }
                         
                 }
                 break;
