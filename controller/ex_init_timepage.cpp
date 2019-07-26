@@ -1,19 +1,17 @@
 #include "ex_init_timepage.h"
 #include "titlebar.h"
 #include "mainwindow.h"
-
-#include <QPainter>
-#include <QPixmap>
-#include <QLabel>
-#include <QPushButton>
-#include <QComboBox>
-
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <linux/rtc.h>
 #include <unistd.h>
 #include <time.h>
 
+#include <QMouseEvent>
+#include <QPixmap>
+#include <QLabel>
+#include <QPushButton>
+#include <QComboBox>
 
 Ex_Init_TimePage::Ex_Init_TimePage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {

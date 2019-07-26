@@ -1,10 +1,7 @@
 #include "ex_init_networkpage.h"
 #include "titlebar.h"
 #include "mainwindow.h"
-
-#include <QPainter>
-#include <QScrollBar>
-#include <QListWidgetItem>
+#include <QMouseEvent>
 #include <QRect>
 #include <QProcess>
 

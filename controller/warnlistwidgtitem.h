@@ -2,7 +2,6 @@
 #define WARNLISTWIDGTITEM_H
 
 #include <QWidget>
-#include <QLabel>
 #include <QBitArray>
 
 #define Type_X 27
@@ -11,9 +10,7 @@
 #define Msg_X 100
 #define Msg_Y 12
 
-
-
-#include <QWidget>
+class QLabel;
 
 class warnListWidgtItem : public QWidget
 {
@@ -29,9 +26,7 @@ signals:
 public slots:
     
 private:
-    
     QLabel *lbType;
-
     QLabel *lbMsg;
     
 };

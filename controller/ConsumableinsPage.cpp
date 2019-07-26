@@ -1,12 +1,6 @@
 #include "ConsumableinsPage.h"
-
 #include "titlebar.h"
-
 #include "mainwindow.h"
-
-#include <QPainter>
-
-#include <QScrollBar>
 
 ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {

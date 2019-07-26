@@ -4,8 +4,7 @@
 
 #include "mainwindow.h"
 
-#include <QPainter>
-
+#include <QFile>
 #include <QScrollBar>
 
 #include <QListWidgetItem>

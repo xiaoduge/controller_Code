@@ -474,8 +474,6 @@ void AlarmSetPage::ItemClicked(QListWidgetItem * item)
         break;
     }
 
-    //m_wndMain->showOptDlg(true);
-
     printf("list index %d\r\n",iIndex);
 #endif
 }
@@ -497,7 +495,6 @@ void AlarmSetPage::on_btn_clicked(int iIndex)
         default:
             break;
         }
-        printf("btn index %d\r\n",iIndex);
         return;
     }
 

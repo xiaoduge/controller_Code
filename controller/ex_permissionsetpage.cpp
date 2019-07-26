@@ -3,8 +3,7 @@
 #include "Display.h"
 #include "ex_hintdialog.h"
 
-#include <QDebug>
-#include <QPainter>
+#include <QFile>
 #include <QRadioButton>
 
 

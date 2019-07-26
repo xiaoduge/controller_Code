@@ -25,8 +25,4 @@ public slots:
     
 };
 
-extern User *gpActiveU;
-
-extern QLinkedList<User *>gUserList;
-
 #endif // USE_H

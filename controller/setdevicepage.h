@@ -6,7 +6,6 @@
 #include <QPixmap>
 #include <QPalette>
 #include <QLabel>
-#include <QInputDialog>
 #include <QLineEdit>
 #include <QGridLayout>
 #include <QCheckBox>

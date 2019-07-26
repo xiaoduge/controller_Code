@@ -1,8 +1,9 @@
 #include "ctrlapplication.h"
 #include "mainwindow.h"
-
+#include <cstdio>
 #include <QStringList>
 #include <QFontDatabase>
+#include <QDebug>
 
 
 CtrlApplication::CtrlApplication( int argc, char **argv ):

@@ -1,20 +1,18 @@
 #include "ex_init_handlecfgpage.h"
 #include "titlebar.h"
 #include "mainwindow.h"
-#include <QPainter>
-#include <QScrollBar>
-#include <QProcess>
-#include <QListWidgetItem>
-#include "cbitmapbutton.h"
-#include <QRect>
-#include <QtCore/QFile>
-#include <QFileInfo>
-#include <QDate>
 #include "rpc.h"
 #include "sapp.h"
 #include "Interface.h"
 #include "ToastDlg.h"
 #include "ExtraDisplay.h"
+
+#include <QMouseEvent>
+#include <QRect>
+#include <QFile>
+#include <QFileInfo>
+#include <QDate>
+
 
 Ex_Init_HandleCfgpage::Ex_Init_HandleCfgpage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {

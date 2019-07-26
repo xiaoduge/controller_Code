@@ -161,11 +161,6 @@ QString insert_sql_Consumable = "insert into Consumable (id, iPackType, CatNo, L
 QString update_sql_Consumable = "update Consumable set CatNo = ?, LotNo = ?, time = ? where iPackType = ? and category = ?";
 //end
 
-User *gpActiveU;
-QLinkedList<User *>gUserList;
-
-
-
 int help_aton(const char *cp)
 {
   int           val;

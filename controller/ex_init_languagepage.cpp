@@ -2,7 +2,7 @@
 
 #include "titlebar.h"
 #include "mainwindow.h"
-#include <QPainter>
+#include <QMouseEvent>
 #include <QScrollBar>
 #include <QListWidgetItem>
 #include "cbitmapbutton.h"

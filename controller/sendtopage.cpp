@@ -1,13 +1,9 @@
 #include "sendtopage.h"
-
 #include "titlebar.h"
-
 #include "mainwindow.h"
 
-#include <QPainter>
-
 #include <QScrollBar>
-
+#include <QTextStream>
 #include <QListWidgetItem>
 #include <QDir>
 #include <QSqlQuery>

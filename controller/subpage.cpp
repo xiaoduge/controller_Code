@@ -42,6 +42,5 @@ void CSubPage::on_navi_clicked(int index)
         m_wndMain->home();
         break;
     }
-    printf("tmp = %d\r\n" , index);
 }
 

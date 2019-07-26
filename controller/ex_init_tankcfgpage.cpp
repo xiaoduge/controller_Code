@@ -1,8 +1,8 @@
 #include "ex_init_tankcfgpage.h"
 #include "titlebar.h"
-
+#include <QMouseEvent>
 #include "mainwindow.h"
-#include <QPainter>
+
 #include <QLineEdit>
 #include <QLabel>
 #include <QComboBox>

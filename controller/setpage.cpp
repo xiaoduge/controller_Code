@@ -1,16 +1,6 @@
-#include <QDebug>
-#include <QString>
-
 #include "setpage.h"
-
 #include "mainwindow.h"
-
 #include "titlebar.h"
-
-#include <QPainter>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-
 #include "setdevicepage.h"
 #include "setpoint.h"
 #include "systestpage.h"

@@ -1,4 +1,5 @@
 #include "warnlistwidgtitem.h"
+#include <QLabel>
 
 warnListWidgtItem::warnListWidgtItem(QWidget *parent) :
     QWidget(parent)

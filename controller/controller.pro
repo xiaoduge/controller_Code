@@ -32,21 +32,14 @@ SOURCES += main.cpp\
     ctrlapplication.cpp \
     list.c \
     log.c \
-    CfgDialog.cpp \
-    DbDialog.cpp \
     LoginDlg.cpp \
     eco_w.cpp \
-    usermanage.cpp \
     keyboard.cpp \
-    opt.cpp \
     user.cpp \
-    CMDialog.cpp \
-    EngDialog.cpp \
     switchbtn.cpp \
     LockupDlg.cpp \
     syszuxim.cpp \
     syszuxpinyin.cpp \
-    PermissionDlg.cpp \
     navigatorbar.cpp \
     cbitmapbutton.cpp \
     basewidget.cpp \
@@ -59,12 +52,10 @@ SOURCES += main.cpp\
     menupage.cpp \
     waterqualitypage.cpp \
     systestlistwidgtitem.cpp \
-    historypage.cpp \
     historylistwidgtitem.cpp \
     consumablestatepage.cpp \
     ConsumableinsPage.cpp \
     SterilizePage.cpp \
-    reportpage.cpp \
     Cslistitem.cpp \
     warnlistwidgtitem.cpp \
     setdevicepage.cpp \
@@ -78,12 +69,9 @@ SOURCES += main.cpp\
     parametercalibration.cpp \
     parameterlistwidgtitem.cpp \
     languagepage.cpp \
-    soundpage.cpp \
     sendtopage.cpp \
     unitpage.cpp \
-    displaypage.cpp \
     msgbox.cpp \
-    timepage.cpp \
     networkpage.cpp \
     allocationsetpage.cpp \
     alarmsetpage.cpp \
@@ -146,22 +134,15 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
-    CfgDialog.h \
-    DbDialog.h \
     LoginDlg.h \
     eco_w.h \
-    usermanage.h \
     keyboard.h \
-    opt.h \
     user.h \
     MyParams.h \
-    CMDialog.h \
     switchbtn.h \
-    EngDialog.h \
     LockupDlg.h \
     syszuxpinyin.h \
     syszuxim.h \
-    PermissionDlg.h \
     qsliderex.h \
     navigatorbar.h \
     memory.h \
@@ -175,14 +156,12 @@ HEADERS  += mainwindow.h \
     servicepage.h \
     waterqualitypage.h \
     titlebar.h \
-    historypage.h \
     historylistwidgtitem.h \
     consumablestatepage.h \
     ConsumableinsPage.h \
     warnlistwidgtitem.h \
     SterilizePage.h \
     systestlistwidgtitem.h \
-    reportpage.h \
     Cslistitem.h \
     setdevicepage.h \
     setpoint.h \
@@ -194,13 +173,10 @@ HEADERS  += mainwindow.h \
     consumableinslistwidgtitem.h \
     parametercalibration.h \
     parameterlistwidgtitem.h \
-    soundpage.h \
     languagepage.h \
     sendtopage.h \
     unitpage.h \
-    displaypage.h \
     msgbox.h \
-    timepage.h \
     networkpage.h \
     allocationsetpage.h \
     alarmsetpage.h \

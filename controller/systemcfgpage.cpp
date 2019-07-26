@@ -1,17 +1,7 @@
 #include "systemcfgpage.h"
-
 #include "titlebar.h"
-
 #include "mainwindow.h"
-
 #include "ExtraDisplay.h"
-
-#include <QPainter>
-
-#include <QMessageBox>
-
-#include <QProcess>  
-
 
 #define ControlNum 6
 

@@ -1,13 +1,6 @@
 #include "SterilizePage.h"
-
 #include "titlebar.h"
-
 #include "mainwindow.h"
-
-#include <QPainter>
-
-#include <QMessageBox>
-
 #include "ToastDlg.h"
 
 #define ControlNum 6

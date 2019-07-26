@@ -1,8 +1,6 @@
-#include <QDebug>
-#include <QString>
+#include <QMouseEvent>
 
 #include "menupage.h"
-
 #include "mainwindow.h"
 #include "titlebar.h"
 #include "waterqualitypage.h"
@@ -15,7 +13,6 @@
 #include "ex_waterqualitypage.h"
 #include "ExtraDisplay.h"
 
-#include <QPainter>
 
 #define BTNS_PER_ROW (4)
 

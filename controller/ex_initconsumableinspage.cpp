@@ -1,6 +1,7 @@
 #include "ex_initconsumableinspage.h"
 #include "mainwindow.h"
 #include <QTableWidget>
+#include <QMouseEvent>
 #include <QHeaderView>
 #include <QVBoxLayout>
 #include "dconsumableinstallwidget.h"

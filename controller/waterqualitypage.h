@@ -1,17 +1,8 @@
 #ifndef WATER_QUALITY_PAGE_H
 #define WATER_QUALITY_PAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-#include <QInputDialog>
-
-#include "basewidget.h"
-#include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QLabel>
 #include <QTextEdit>
+#include "subpage.h"
 #include "Display.h"
 
 typedef enum
@@ -19,7 +10,7 @@ typedef enum
     WQ_TYPE_TANK,
     WQ_TYPE_UP,
     WQ_TYPE_EDI,
-    WQ_TYPE_NUM,
+    WQ_TYPE_NUM
 }WQ_TYPE_ENUM;
 
 typedef enum
@@ -29,7 +20,7 @@ typedef enum
     UP_PRODUCT_TEMT,
     UP_IN_QUA,
     UP_SPEED,
-    UP_NUM,
+    UP_NUM
 }UP_MSG_ENUM;
 
 typedef enum
@@ -59,7 +50,7 @@ typedef enum
     TAP_WATER_SPEED,  
     EDI_PROC_WATER_SPEED,
     EDI_DISCARD_WATER_SPEED,
-    EDI_NUM,
+    EDI_NUM
 }EDI_MSG_ENUM;
 
 
@@ -134,7 +125,6 @@ private:
     unsigned int    m_aulFlowMeter[APP_FM_FLOW_METER_NUM];
 
     int             m_aiRealNum[3];
-
     
     SHOW_INFO_STRU   m_aUpHistoryEco[UP_NUM];
     SHOW_INFO_STRU   m_aTankHistoryEco[TANK_NUM];

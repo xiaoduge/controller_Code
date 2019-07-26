@@ -4,13 +4,11 @@
 #include "ExtraDisplay.h"
 #include "Ex_Display_c.h"
 #include "ex_hintdialog.h"
-#include <QPainter>
-#include <QMessageBox>
+
 #include <QGridLayout>
 #include <QFormLayout>
 #include <QDir>
 #include <QTextBrowser>
-#include <QProcess>
 #include "dlineedit.h"
 
 
@@ -341,7 +339,6 @@ void Ex_FactoryTestPage::on_keyBtn_clicked()
 
 void Ex_FactoryTestPage::on_writeBtn_clicked()
 {
-#ifdef RFIDTEST
     m_wndMain->prepareKeyStroke();
     int index = m_pIndexCombo->currentIndex();
     QString catData = m_pConfigLineEdit[CONFIG_CAT]->text();
@@ -374,15 +371,12 @@ void Ex_FactoryTestPage::on_writeBtn_clicked()
 
     Ex_HintDialog::getInstance(tr("Write finished"));
     m_wndMain->updateCMInfoWithRFID(0);
-#endif
 }
 
 void Ex_FactoryTestPage::on_readBtn_clicked()
 {
-#ifdef RFIDTEST
     m_wndMain->prepareKeyStroke();
     updateRFIDInfo(m_pIndexCombo->currentIndex());
-#endif
 }
 
 void Ex_FactoryTestPage::on_clearBtn_clicked()

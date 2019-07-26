@@ -1,29 +1,23 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QWidget>
+
 #include <QMainWindow>
 #include <QTimer>
-#include <QLabel>
-#include <QSettings>
-#include <QLineEdit>
-#include <QListView>
-#include <QDialog>
-#include <QInputDialog>
-#include <QStringListModel>
+
 #include "DefaultParams.h"
 #include "zbcomm.h"
 #include "Display.h"
-#include "opt.h"
+#include "MyParams.h"
 #include "cminterface.h"
 #include "eco_w.h"
-#include "user.h"
+
 #include "cbitmapbutton.h"
 #include "basewidget.h"
 #include "ex_init_handlecfgpage.h"
 #include "ex_calcpackflow.h"
 #include <QMutex>
-#include <QAbstractSocket>
+
 #include <QThread>
 #include "DNetworkConfig.h"
 #include <QProcess>
@@ -31,12 +25,9 @@
 //#define FLOWCHART
 //#define D_HTTPWORK
 
-#define RFIDTEST
-
 #define PAGEID_MARGIN (4)
 
 #define PAGE_X_DIMENSION (40)
-//#define PAGE_Y_DIMENSION (20)
 #define PAGE_Y_DIMENSION (40)
 
 enum GLOBAL_COMPANY
@@ -315,10 +306,6 @@ public:
     
     DISPHANDLE startClean(int iType,bool bStart);
     
-    void showDeviceDlg(bool bShow);
-
-    void showOptDlg(bool bShow);
-    
     SetDevicePage *getDeviceDlg();
     Ex_Init_HandleCfgpage *getExInitPage(); //ex-dcj
 
@@ -369,7 +356,6 @@ public:
 
     void getRfidLotNo(int iRfId,LOTNO sn) {m_aRfidInfo[iRfId].getLotNo(sn);}
 
-#ifdef RFIDTEST
     void updateCMInfoWithRFID(int operate);
     int writeRfid(int iRfId, int dataLayout, QString strData);
     void getRfidInstallDate(int iRfId, QDate* date) {m_aRfidInfo[iRfId].getInstallDate(date);}
@@ -381,7 +367,6 @@ public:
     void updateExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int category, QDate& date, int iRfid);
     const QDate resetExConsumableMsg(QDate& date, int iRfid, int iType);
     const QString& consumableInitDate() const;
-#endif
 
     int getActiveExeBrds() { return m_iExeActiveMask ? 1 : 0;}
     int getActiveFmBrds() { return m_iExeActiveMask ? 1 : 0;}
@@ -438,15 +423,13 @@ private slots:
 
     void on_dispIndication(unsigned char *pucData,int iLength);
 
-    void on_Opt_clicked();
-
     void on_Stop_clicked();
 
     void on_Exit_clicked();
     void on_pbRun_clicked();
     void on_AutoLogin(void);
     void on_IapIndication(IAP_NOTIFY_STRU *pIapNotify);
-    void on_pbDevice_clicked();
+
     void on_btn_clicked(int tmp);
     void on_Gif_State_Change();
     void on_timerBuzzerEvent();
@@ -631,9 +614,6 @@ private:
     QPalette mQPALARM;
     QFont mQFALARM ;
 
-    COptDlg     *m_pOptDlg;
-    //DeviceDlg   *m_pDeviceDlg;
-
     ECO_W       m_EcowOfDay[APP_EXE_ECO_NUM];
     ECO_W       m_EcowCurr[APP_EXE_ECO_NUM];
     int         m_curToc;
@@ -757,7 +737,6 @@ private:
             sn[APP_LOT_LENGTH] = 0;
         }
 
-#ifdef RFIDTEST
         void getInstallDate(QDate* date)
         {
             char *src = (char *)&aucContent[pLayout->aItem[RF_DATA_LAYOUT_INSTALL_DATE].offset];
@@ -779,7 +758,7 @@ private:
             num3 = src[2];
             vol = num1 + num2*100 + num3*10000;
         }
-#endif
+
         void setLayOut(RF_DATA_LAYOUT_ITEMS *pLayout) {this->pLayout = pLayout;}
     
         void parse()
@@ -857,8 +836,6 @@ private slots:
 };
 
 extern MainWindow *gpMainWnd;
-extern User       *gpActiveU ;
-extern QLinkedList<User *>gUserList;
 extern MACHINE_TYPE_STRU gaMachineType[MACHINE_NUM];
 
 extern QPixmap    *gpGlobalPixmaps[GLOBAL_BMP_NUM];

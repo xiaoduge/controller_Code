@@ -2,12 +2,10 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QTableView>
-#include <QPainter>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QSqlError>
 #include <QHeaderView>
-#include <QMessageBox>
 #include "dlineedit.h"
 #include "ex_comboboxdelegate.h"
 #include "mainwindow.h"

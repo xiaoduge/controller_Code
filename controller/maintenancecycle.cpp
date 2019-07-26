@@ -864,14 +864,6 @@ void MaintenanceCyclePage:: update()
 
 void MaintenanceCyclePage::ItemClicked(QListWidgetItem * pItem)
 {
-    QListWidget *pTmpListWidget = (QListWidget *)this->sender();
-    
-    int iIndex = pTmpListWidget->row(pItem);
-
-    //m_wndMain->showOptDlg(true);
-
-    printf("iIndex %d\r\n",iIndex);
-
 }
 
 void MaintenanceCyclePage::save()

@@ -2,13 +2,16 @@
 #define CPAGE_H
 
 #include <QObject>
-#include <QDebug>
 #include <QLabel>
+#include <QMessageBox>
+#include <QPainter>
+#include <QDebug>
 
 #include "basewidget.h"
 
 class CBaseWidget;
 class MainWindow;
+class QLabel;
 
 class CPage : public QObject
 {
@@ -28,15 +31,15 @@ public:
     
     virtual void update(){}
 
-    virtual void fade(){};
+    virtual void fade(){}
 
     virtual void subPageEnd(bool ) {}
 
     virtual void switchLanguage(){}
 
-    virtual void buildTranslation(){};
+    virtual void buildTranslation(){}
 
-    virtual void initUi() {};
+    virtual void initUi() {}
 
     virtual void show(bool bShow);
 

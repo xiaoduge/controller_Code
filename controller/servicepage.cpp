@@ -1,8 +1,4 @@
-#include <QDebug>
-#include <QString>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QPainter>
+#include <QMouseEvent>
 
 #include "servicepage.h"
 #include "mainwindow.h"
@@ -11,7 +7,6 @@
 #include "ConsumableinsPage.h"
 #include "allocationsetpage.h"
 #include "ex_usercfgpage.h"
-#include "reportpage.h"
 #include "ex_historypage.h"
 #include "LoginDlg.h"
 #include "ex_userinfo.h"

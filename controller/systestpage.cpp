@@ -1,16 +1,12 @@
 #include "systestpage.h"
-
 #include "titlebar.h"
-
 #include "mainwindow.h"
-
-#include <QPainter>
-
-#include <QScrollBar>
-
-#include <QListWidgetItem>
 #include "Display.h"
 #include "notify.h"
+
+#include <QScrollBar>
+#include <QListWidgetItem>
+
 
 SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
@@ -689,8 +685,6 @@ void SysTestPage::ItemClicked(QListWidgetItem * item)
         break;
     }
 
-    //m_wndMain->showOptDlg(true);
-
     printf("list index %d\r\n",iIndex);
 #endif
 }
@@ -740,7 +734,6 @@ void SysTestPage::on_btn_clicked(int iIndex)
         }
         break;
     }
-    printf("btn index %d\r\n",iIndex);
     
     m_wndMain->prepareKeyStroke();
 

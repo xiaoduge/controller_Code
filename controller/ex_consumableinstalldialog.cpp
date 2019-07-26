@@ -8,7 +8,6 @@
 #include <QSqlQuery>
 #include <QSqlDatabase>
 #include <QSqlError>
-#include <QMessageBox>
 #include <QDebug>
 
 Ex_ConsumableInstallDialog::Ex_ConsumableInstallDialog(int id, QWidget * parent) :

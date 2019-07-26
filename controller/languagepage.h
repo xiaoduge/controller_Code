@@ -5,7 +5,6 @@
 #include <QPixmap>
 #include <QPalette>
 #include <QLabel>
-#include <QInputDialog>
 
 #include "basewidget.h"
 #include "subpage.h"

@@ -22,7 +22,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      25,   14, // methods
+      23,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -45,18 +45,16 @@ static const uint qt_meta_data_MainWindow[] = {
      280,   11,   11,   11, 0x08,
      307,   12,   11,   11, 0x08,
      345,   11,   11,   11, 0x08,
-     362,   11,   11,   11, 0x08,
-     380,   11,   11,   11, 0x08,
-     398,   11,   11,   11, 0x08,
-     417,   11,   11,   11, 0x08,
-     432,   75,   11,   11, 0x08,
-     467,   11,   11,   11, 0x08,
-     493,  489,   11,   11, 0x08,
-     513,   11,   11,   11, 0x08,
-     535,   11,   11,   11, 0x08,
-     557,   11,   11,   11, 0x08,
-     576,   11,   11,   11, 0x08,
-     605,  599,   11,   11, 0x08,
+     363,   11,   11,   11, 0x08,
+     381,   11,   11,   11, 0x08,
+     400,   11,   11,   11, 0x08,
+     415,   75,   11,   11, 0x08,
+     454,  450,   11,   11, 0x08,
+     474,   11,   11,   11, 0x08,
+     496,   11,   11,   11, 0x08,
+     518,   11,   11,   11, 0x08,
+     537,   11,   11,   11, 0x08,
+     566,  560,   11,   11, 0x08,
 
        0        // eod
 };
@@ -72,13 +70,13 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_timerPeriodEvent()\0on_timerSecondEvent()\0"
     "on_timerScreenSleepEvent()\0"
     "on_dispIndication(unsigned char*,int)\0"
-    "on_Opt_clicked()\0on_Stop_clicked()\0"
-    "on_Exit_clicked()\0on_pbRun_clicked()\0"
-    "on_AutoLogin()\0on_IapIndication(IAP_NOTIFY_STRU*)\0"
-    "on_pbDevice_clicked()\0tmp\0on_btn_clicked(int)\0"
-    "on_Gif_State_Change()\0on_timerBuzzerEvent()\0"
-    "buildTranslation()\0on_Ex_ScreenPageHide()\0"
-    "sleep\0on_ScreenSleep(bool)\0"
+    "on_Stop_clicked()\0on_Exit_clicked()\0"
+    "on_pbRun_clicked()\0on_AutoLogin()\0"
+    "on_IapIndication(IAP_NOTIFY_STRU*)\0"
+    "tmp\0on_btn_clicked(int)\0on_Gif_State_Change()\0"
+    "on_timerBuzzerEvent()\0buildTranslation()\0"
+    "on_Ex_ScreenPageHide()\0sleep\0"
+    "on_ScreenSleep(bool)\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -99,19 +97,17 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 9: _t->on_timerSecondEvent(); break;
         case 10: _t->on_timerScreenSleepEvent(); break;
         case 11: _t->on_dispIndication((*reinterpret_cast< unsigned char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 12: _t->on_Opt_clicked(); break;
-        case 13: _t->on_Stop_clicked(); break;
-        case 14: _t->on_Exit_clicked(); break;
-        case 15: _t->on_pbRun_clicked(); break;
-        case 16: _t->on_AutoLogin(); break;
-        case 17: _t->on_IapIndication((*reinterpret_cast< IAP_NOTIFY_STRU*(*)>(_a[1]))); break;
-        case 18: _t->on_pbDevice_clicked(); break;
-        case 19: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 20: _t->on_Gif_State_Change(); break;
-        case 21: _t->on_timerBuzzerEvent(); break;
-        case 22: _t->buildTranslation(); break;
-        case 23: _t->on_Ex_ScreenPageHide(); break;
-        case 24: _t->on_ScreenSleep((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 12: _t->on_Stop_clicked(); break;
+        case 13: _t->on_Exit_clicked(); break;
+        case 14: _t->on_pbRun_clicked(); break;
+        case 15: _t->on_AutoLogin(); break;
+        case 16: _t->on_IapIndication((*reinterpret_cast< IAP_NOTIFY_STRU*(*)>(_a[1]))); break;
+        case 17: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 18: _t->on_Gif_State_Change(); break;
+        case 19: _t->on_timerBuzzerEvent(); break;
+        case 20: _t->buildTranslation(); break;
+        case 21: _t->on_Ex_ScreenPageHide(); break;
+        case 22: _t->on_ScreenSleep((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -149,9 +145,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 25)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 25;
+        _id -= 23;
     }
     return _id;
 }

@@ -2,13 +2,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "notify.h"
-#include "CfgDialog.h"
-#include "DbDialog.h"
-#include "usermanage.h"
 
-#include "opt.h"
 #include "LoginDlg.h"
-
+#include <QSettings>
 #include <QLabel>
 #include <QString>
 #include <QBrush>
@@ -66,6 +62,7 @@
 #include <QTcpSocket>
 #include <QFileSystemWatcher>
 #include <QDir>
+#include <QMessageBox>
 
 #include "setdevicepage.h"
 #include "systestpage.h"
@@ -201,7 +198,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190724_debug");
+QString strSoftwareVersion = QString("0.1.8.190726_debug");
 
 MainWindow *gpMainWnd;
 
@@ -2951,9 +2948,9 @@ void MainResetCmInfo(int iSel)
     {
     case DISP_PRE_PACK:
         gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY] = DispGetCurSecond();
-//#ifndef RFIDTEST
+
         gCMUsage.info.aulCms[DISP_PRE_PACKLIFEL]   = 0;
-//#endif
+
         gCMUsage.ulUsageState &= ~(1 << DISP_PRE_PACKLIFEDAY);
         gCMUsage.ulUsageState &= ~(1 << DISP_PRE_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEDAY] = 0;
@@ -2961,9 +2958,9 @@ void MainResetCmInfo(int iSel)
         break;
     case DISP_AC_PACK:
         gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY] = DispGetCurSecond();
-#ifndef RFIDTEST
-        gCMUsage.info.aulCms[DISP_AC_PACKLIFEL]   = 0;
-#endif
+
+       // gCMUsage.info.aulCms[DISP_AC_PACKLIFEL]   = 0;
+
         gCMUsage.ulUsageState &= ~(1 << DISP_AC_PACKLIFEDAY);
         gCMUsage.ulUsageState &= ~(1 << DISP_AC_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_AC_PACKLIFEDAY] = 0;
@@ -2979,9 +2976,9 @@ void MainResetCmInfo(int iSel)
         break;
     case DISP_P_PACK:
         gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY] = DispGetCurSecond();
-#ifndef RFIDTEST
-        gCMUsage.info.aulCms[DISP_P_PACKLIFEL]   = 0;
-#endif
+
+        //gCMUsage.info.aulCms[DISP_P_PACKLIFEL]   = 0;
+
         gCMUsage.ulUsageState &= ~(1 << DISP_P_PACKLIFEDAY);
         gCMUsage.ulUsageState &= ~(1 << DISP_P_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEDAY] = 0;
@@ -2990,9 +2987,9 @@ void MainResetCmInfo(int iSel)
         break;
     case DISP_U_PACK:
         gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY] = DispGetCurSecond();
-#ifndef RFIDTEST
-        gCMUsage.info.aulCms[DISP_U_PACKLIFEL]   = 0;
-#endif
+
+        //gCMUsage.info.aulCms[DISP_U_PACKLIFEL]   = 0;
+
         gCMUsage.ulUsageState &= ~(1 << DISP_U_PACKLIFEDAY);
         gCMUsage.ulUsageState &= ~(1 << DISP_U_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_U_PACKLIFEDAY] = 0;
@@ -3000,9 +2997,9 @@ void MainResetCmInfo(int iSel)
         break;
     case DISP_AT_PACK:
         gCMUsage.info.aulCms[DISP_AT_PACKLIFEDAY] = DispGetCurSecond();
-#ifndef RFIDTEST
-        gCMUsage.info.aulCms[DISP_AT_PACKLIFEL]   = 0;
-#endif
+
+        //gCMUsage.info.aulCms[DISP_AT_PACKLIFEL]   = 0;
+
         gCMUsage.ulUsageState &= ~(1 << DISP_AT_PACKLIFEDAY);
         gCMUsage.ulUsageState &= ~(1 << DISP_AT_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_AT_PACKLIFEDAY] = 0;
@@ -3010,9 +3007,9 @@ void MainResetCmInfo(int iSel)
         break;
     case DISP_H_PACK:
         gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY] = DispGetCurSecond();
-#ifndef RFIDTEST
-        gCMUsage.info.aulCms[DISP_H_PACKLIFEL]   = 0;
-#endif
+
+        //gCMUsage.info.aulCms[DISP_H_PACKLIFEL]   = 0;
+
         gCMUsage.ulUsageState &= ~(1 << DISP_H_PACKLIFEDAY);
         gCMUsage.ulUsageState &= ~(1 << DISP_H_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_H_PACKLIFEDAY] = 0;
@@ -3893,29 +3890,25 @@ MainWindow::MainWindow(QMainWindow *parent) :
             m_cMas[iLoop].aulMask[0] &= ~(1 <<  DISP_T_PACK);
         }
 
-      // if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_Pre_Filter) //DISP_SM_PreFilterColumn
-       if(!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter)))
-       {
-           m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_PRE_PACK);
-       }
+        if(!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter)))
+        {
+            m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_PRE_PACK);
+        }
 
-      // if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_TubeUV)
-       if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeUV)))
-       {
-           m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_N4_UV);        
-       }
+        if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeUV)))
+        {
+            m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_N4_UV);
+        }
 
-       //if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_HaveTubeFilter)
-       if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTubeFilter)))
-       {
-           m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_TUBE_FILTER);                 
-       }
+        if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTubeFilter)))
+        {
+            m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_TUBE_FILTER);
+        }
     
-       //if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_TubeDI)
-       if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeDI)))
-       {
+        if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeDI)))
+        {
            m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_TUBE_DI);
-       }
+        }
     }
 
     checkCMParam(); //2019.6.17 add
@@ -3960,9 +3953,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
     {
         qDebug() << " open " << BUZZER_FILE << "failed" << endl;
     }
-
-    m_pOptDlg    = new COptDlg(this);
-    //m_pDeviceDlg = new DeviceDlg(this);
 
     CheckConsumptiveMaterialState();
 
@@ -5158,14 +5148,10 @@ void MainWindow::on_timerEvent()
     }
     //end
 
-  //  autoCirPreHour(); //More than 1 hour, start cir;
-
     if (m_iLstDay != DispGetDay())
     {
         m_iLstDay = DispGetDay();
-
         //memset(m_iAlarmRcdMask ,0,sizeof(m_iAlarmRcdMask));
-
         if (gCMUsage.bit1PendingInfoSave)
         {
             gCMUsage.bit1PendingInfoSave = FALSE;
@@ -5181,7 +5167,6 @@ void MainWindow::on_timerEvent()
     /* tube circulation check */
     if (gGlobalParam.MiscParam.ulAllocMask & (1 << DISPLAY_ALLOC_FLAG_SWITCHON))
     {
-
        /* get hour */
        QDateTime dt = QDateTime::currentDateTime();
        int wd       = dt.date().dayOfWeek();
@@ -5190,7 +5175,6 @@ void MainWindow::on_timerEvent()
 
        if ( (1 << wd) & gGlobalParam.MiscParam.ulAllocMask)
        {
-
            /* check current minute */
            if (m_iTubeCirFlags != min)
            {
@@ -5410,12 +5394,6 @@ void MainWindow::AfDataMsg(IAP_NOTIFY_STRU *pIapNotify)
                     QString strAddress = QString::number(iAddress);
                     offset += 2;
 
-                    //m_pDeviceDlg->addHandler(strSn,strAddress,strType); 
-//                    {
-//                        SetDevicePage *page = getDeviceDlg();
-//                        if (page) page->addHandler(1,strSn,strAddress);
-//                    }
-
                     if (ex_gGlobalParam.Ex_Default == 0)
                     {
                         Ex_Init_HandleCfgpage* ex_Page = getExInitPage();
@@ -5453,7 +5431,6 @@ void MainWindow::AfDataMsg(IAP_NOTIFY_STRU *pIapNotify)
                     iAddress = (pmg->aucData[offset] << 8) | (pmg->aucData[offset+1] << 0);
                     QString strAddress = QString::number(iAddress);
 
-                    //m_pDeviceDlg->addRfReader(strSn,strAddress);
                     {
                         SetDevicePage *page = getDeviceDlg();
                         if (page) page->addRfReader(strSn,strAddress); 
@@ -5466,7 +5443,6 @@ void MainWindow::AfDataMsg(IAP_NOTIFY_STRU *pIapNotify)
             case APP_PACKET_RF_SEARCH:
             case APP_PACKET_RF_READ:
             case APP_PACKET_RF_WRITE:
-                m_pOptDlg->EngRfMsg(pIapNotify);
                 /* check */
                 break;
             }        
@@ -5526,11 +5502,6 @@ void MainWindow::zigbeeDataMsg(IAP_NOTIFY_STRU *pIapNotify)
                     QString strAddress = QString::number(iAddress);
                     offset += 2;
 
-                    //m_pDeviceDlg->addHandler(strSn,strAddress,strType); 
-//                    {
-//                        SetDevicePage *page = getDeviceDlg();
-//                        if (page) page->addHandler(1,strSn,strAddress);
-//                    }
                     if (ex_gGlobalParam.Ex_Default == 0)
                     {
                         Ex_Init_HandleCfgpage* ex_Page = getExInitPage();
@@ -5617,8 +5588,7 @@ void MainWindow::on_IapIndication(IAP_NOTIFY_STRU *pIapNotify)
                             QString strInfo = atrsp;
     
                             QString strAdr = QString::number(CAN_SRC_ADDRESS(pIapNotify->ulCanId));
-    
-                            //m_pDeviceDlg->deviceVersion(strAdr,strInfo);            
+
                             {
                                 SetDevicePage *page = getDeviceDlg();
                                 if (page) page->deviceVersion(strAdr,strInfo);
@@ -5868,7 +5838,6 @@ int  MainWindow::readRfid(int iRfId)
     
         if (0 == iRet)
         {
-#ifdef RFIDTEST
             iRet =  CcbReadRfid(iRfId,2000,m_RfDataItems.aItem[RF_DATA_LAYOUT_INSTALL_DATE].offset,m_RfDataItems.aItem[RF_DATA_LAYOUT_LOT_NUMBER].size);
             if(0 != iRet)
             {
@@ -5879,7 +5848,7 @@ int  MainWindow::readRfid(int iRfId)
             {
                 return -1;
             }
-#endif
+
             iRet = CcbGetRfidCont(iRfId,m_RfDataItems.aItem[RF_DATA_LAYOUT_CATALOGUE_NUM].offset,m_RfDataItems.aItem[RF_DATA_LAYOUT_CATALOGUE_NUM].size,m_aRfidInfo[iRfId].aucContent + m_RfDataItems.aItem[RF_DATA_LAYOUT_CATALOGUE_NUM].offset);
             if (0 == iRet)
             {
@@ -5892,7 +5861,6 @@ int  MainWindow::readRfid(int iRfId)
                 return -1;
             }
 
-#ifdef RFIDTEST
             iRet = CcbGetRfidCont(iRfId,
                                   m_RfDataItems.aItem[RF_DATA_LAYOUT_INSTALL_DATE].offset,
                                   m_RfDataItems.aItem[RF_DATA_LAYOUT_INSTALL_DATE].size,
@@ -5909,7 +5877,6 @@ int  MainWindow::readRfid(int iRfId)
             {
                 return -1;
             }
-#endif
             
             m_aRfidInfo[iRfId].ucValid = 1;
 
@@ -5922,7 +5889,6 @@ int  MainWindow::readRfid(int iRfId)
     return iRet;
 }
 
-#ifdef RFIDTEST
 int MainWindow::writeRfid(int iRfId, int dataLayout, QString strData)
 {
     //make data
@@ -5987,7 +5953,7 @@ int MainWindow::writeRfid(int iRfId, int dataLayout, QString strData)
                  pData);
     return iRet;
 }
-#endif
+
 
 void MainWindow::saveFmData(int id,unsigned int ulValue)
 {
@@ -6767,10 +6733,6 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     m_EcowCurr[pItem->ucId].iQuality  = pItem->fValue;
                     m_EcowCurr[pItem->ucId].iTemp     = pItem->usValue;
 
-                    /* update for eng windwos */
-                    m_pOptDlg->EngNotify(pNotify->Hdr.ucCode,pItem);
-                    m_pOptDlg->CfgNotify(pNotify->Hdr.ucCode,pItem);
-
                     updEcoInfo(pItem->ucId);
 
                     switch(pItem->ucId)
@@ -7077,11 +7039,6 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     }
                     
                     qDebug() << "PM" << pItem->ucId << " " << pItem->ulValue;
-
-                    /* update for eng windwos */
-                    m_pOptDlg->EngNotify(pNotify->Hdr.ucCode,pItem);
-                    
-                    m_pOptDlg->CfgNotify(pNotify->Hdr.ucCode,pItem);
                     
                     if (!m_bSplash) updPressure(pItem->ucId);
                     
@@ -7138,13 +7095,8 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                      saveFmData(pItem->ucId,ulValue);
 
                      updFlowInfo(pItem->ucId);
-                     
-                     /* update for eng windwos */
-                     m_pOptDlg->EngNotify(pNotify->Hdr.ucCode,pItem);
 
-                     m_pOptDlg->CfgNotify(pNotify->Hdr.ucCode,pItem);
-
-                     qDebug() << "FM" <<pItem->ucId<< " " << ulValue;
+                     qDebug() << "FM" << pItem->ucId << " " << ulValue;
                      
                  }
                  pItem++;
@@ -7160,12 +7112,8 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             {
                 if (pItem->ucId < APP_EXE_RECT_NUM)
                 {
-       
                     //int iAlarmId = (DISP_ALARM_N1 + pItem->ucId);
                    // bool bAlarm  = (pItem->ulValue <= gGlobalParam.AlarmSettting.fAlarms[iAlarmId]);
-                
-                    /* Judge state */                     
-                    m_pOptDlg->CfgNotify(pNotify->Hdr.ucCode,pItem);
                     
                     m_fRectifier[pItem->ucId] = CcbConvert2RectAndEdiData(pItem->ulValue);
            
@@ -7202,9 +7150,6 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             {
                  if (pItem->ucId < APP_EXE_G_PUMP_NUM)
                  {
-                     /* Judge state */                     
-                     m_pOptDlg->CfgNotify(pNotify->Hdr.ucCode,pItem);
-    
                      //m_pEditGPump[pItem->ucId]->setText(QString::number(CcbConvert2GPumpData(pItem->ulValue)));
 
                      m_fPumpV[pItem->ucId] = CcbConvert2GPumpData(pItem->ulValue);
@@ -7240,9 +7185,6 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             {
                  if (pItem->ucId < APP_EXE_R_PUMP_NUM)
                  {
-                     /* Judge state */                     
-                     m_pOptDlg->CfgNotify(pNotify->Hdr.ucCode,pItem);
-
                      m_fRPumpV[pItem->ucId] = CcbGetRPumpVData(pItem->ucId);
 
                      m_fRPumpI[pItem->ucId] = CcbConvert2RPumpIData(pItem->ulValue);
@@ -7286,8 +7228,6 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                  {
                      //int iAlarmId    = (DISP_ALARM_EDI + pItem->ucId);
                      //bool bAlarm = (pItem->ulValue <= gGlobalParam.AlarmSettting.fAlarms[iAlarmId]);
-                 
-                     m_pOptDlg->CfgNotify(pNotify->Hdr.ucCode,pItem);
                      
                      m_fEDI[pItem->ucId] = CcbConvert2RectAndEdiData(pItem->ulValue);
 
@@ -8212,60 +8152,10 @@ ECO_INFO_STRU * MainWindow:: getEco(int index)
     return  &m_EcoInfo[index];
 }
 
-void MainWindow::on_Opt_clicked()
-{
-    if (m_bLoged)
-    {
-        m_pOptDlg->show();
-    }
-    else
-    {
-        emit autoLogin();
-    }
-}
-
 void MainWindow::on_Stop_clicked()
 {
     DispCmdEntry(DISP_CMD_HALT,NULL,0);
-
 }
-
-void MainWindow::on_pbDevice_clicked()
-{
-    if (m_bLoged)
-    {
-        //m_pDeviceDlg->show();
-    }
-    else
-    {
-        emit autoLogin();
-    }
-}
-
-void MainWindow::showDeviceDlg(bool bShow)
-{
-    if (bShow)
-    {
-        //m_pDeviceDlg->show();
-    }
-    else
-    {
-        //m_pDeviceDlg->hide();
-    }
-}
-
-void MainWindow::showOptDlg(bool bShow)
-{
-    if (bShow)
-    {
-        m_pOptDlg->show();
-    }
-    else
-    {
-        m_pOptDlg->hide();
-    }
-}
-
 
 SetDevicePage *MainWindow::getDeviceDlg()
 {
@@ -8341,53 +8231,34 @@ void MainWindow::run(bool bRun)
 
             if (iRet <= 0)
             {
-               if (typeid(*m_pCurPage) == typeid(MainPage))
-               {
-                   pMainPage->updateRunInfo(false);
-               }
+                if (typeid(*m_pCurPage) == typeid(MainPage))
+                {
+                    pMainPage->updateRunInfo(false);
+                }
 
-               switch(-iRet)
-               {
-               case DISP_PRE_PACK:
+                switch(-iRet)
+                {
+                case DISP_PRE_PACK:
                     ToastDlg::makeToast(tr("No Pre-PACK detected!"));
-                    break;
-               case DISP_AC_PACK:
+                    return;
+                case DISP_AC_PACK:
                     ToastDlg::makeToast(tr("No AC-PACK detected!"));
-                    break;
-               case DISP_P_PACK:
+                    return;
+                case DISP_P_PACK:
                     ToastDlg::makeToast(tr("No P-PACK detected!"));
-                    break;
-               case DISP_U_PACK:
+                    return;
+                case DISP_U_PACK:
                     ToastDlg::makeToast(tr("No U-PACK detected!"));
-                    break;
-               case DISP_AT_PACK:
+                    return;
+                case DISP_AT_PACK:
                     ToastDlg::makeToast(tr("No AT-PACK detected!"));
-                    break;
-               case DISP_H_PACK:
+                    return;
+                case DISP_H_PACK:
                     ToastDlg::makeToast(tr("No H-PACK detected!"));
-                    break;
-#if 0
-               case (DISP_PRE_PACK | 0xFF00):
-                    ToastDlg::makeToast(tr("False Pre-PACK detected!"));
-                    break;
-               case (DISP_AC_PACK | 0xFF00):
-                    ToastDlg::makeToast(tr("False AC-PACK detected!"));
-                    break;
-               case (DISP_P_PACK | 0xFF00):
-                    ToastDlg::makeToast(tr("False P-PACK detected!"));
-                    break;
-               case (DISP_U_PACK | 0xFF00):
-                    ToastDlg::makeToast(tr("False U-PACK detected!"));
-                    break;
-               case (DISP_AT_PACK | 0xFF00):
-                    ToastDlg::makeToast(tr("False AT-PACK detected!"));
-                    break;
-               case (DISP_H_PACK | 0xFF00):
-                    ToastDlg::makeToast(tr("False H-PACK detected!"));
-                    break;
-#endif
-               }
-               return;
+                    return;
+                default:
+                   break;
+                }
             }
         }
 
@@ -9501,7 +9372,6 @@ void MainWindow::retriveLastRunState()
     }
 }
 
-#ifdef RFIDTEST
 void MainWindow::updateCMInfoWithRFID(int operate)
 {
     int iRfId;
@@ -9841,6 +9711,5 @@ const QString &MainWindow::consumableInitDate() const
     return m_consuambleInitDate;
 }
 
-#endif
 
 

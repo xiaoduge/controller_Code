@@ -11,7 +11,6 @@
 #include <QSqlTableModel>
 #include <QTableView>
 #include <QHeaderView>
-
 #include <QLabel>
 #include <QComboBox>
 #include <QPushButton>
@@ -22,7 +21,6 @@
 
 #include "ToastDlg.h"
 
-#include <QDebug>
 
 
 Ex_HistoryPage::Ex_HistoryPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)

@@ -3,6 +3,7 @@
 #include "ExtraDisplay.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QDebug>
 #include "dloginwarningdialog.h"
 
 Ex_UserInfo::Ex_UserInfo(QObject *parent) :

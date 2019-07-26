@@ -1,10 +1,8 @@
-#include <QDebug>
-#include <QString>
-#include <QPainter>
-
 #include "mainwindow.h"
 #include "mainpage.h"
 #include "navigatorbar.h"
+#include <QMouseEvent>
+
 
 #define SINGLE_MACHINE_PANEL_XOFF (408)
 #define SINGLE_MACHINE_PANEL_YOFF (-162)

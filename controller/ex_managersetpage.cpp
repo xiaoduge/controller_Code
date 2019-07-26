@@ -1,18 +1,19 @@
 #include "ex_managersetpage.h"
 #include "mainwindow.h"
-#include <QPainter>
-#include "Display.h"
-#include "ExtraDisplay.h"
-#include "ex_hintdialog.h"
-#include <QRadioButton>
-#include "dlineedit.h"
-
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <linux/rtc.h>
 #include <unistd.h>
 #include <time.h>
-#include <QDebug>
+
+#include <QFile>
+#include "Display.h"
+#include "ExtraDisplay.h"
+#include "ex_hintdialog.h"
+#include <QRadioButton>
+#include "dlineedit.h"
+#include <QButtonGroup>
+#include <QCalendarWidget>
 
 Ex_ManagerSetPage::Ex_ManagerSetPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {

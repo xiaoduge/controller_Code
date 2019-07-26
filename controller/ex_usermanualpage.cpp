@@ -1,10 +1,8 @@
 #include "ex_usermanualpage.h"
 #include "titlebar.h"
-
 #include "mainwindow.h"
-#include <QPainter>
+#include <QMouseEvent>
 #include <QLabel>
-#include <QDebug>
 
 
 Ex_UserManualPage::Ex_UserManualPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)

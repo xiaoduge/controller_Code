@@ -2,12 +2,11 @@
 #include "titlebar.h"
 #include "mainwindow.h"
 #include "ExtraDisplay.h"
-#include <QPainter>
-#include <QMessageBox>
-#include <QProcess>
+#include <QMouseEvent>
+
 #include <QSqlDatabase>
 #include <QSqlQuery>
-#include <QMessageBox>
+
 #include "dlineedit.h"
 #include "ex_userinfo.h"
 
