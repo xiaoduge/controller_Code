@@ -1,8 +1,6 @@
 #include "sendtopage.h"
-#include "titlebar.h"
 #include "mainwindow.h"
-
-#include <QScrollBar>
+#include "cbitmapbutton.h"
 #include <QTextStream>
 #include <QListWidgetItem>
 #include <QDir>

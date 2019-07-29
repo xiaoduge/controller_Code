@@ -1,6 +1,6 @@
 #include "navigatorbar.h"
-#include <QtGui/qpainter.h>
 #include "mainwindow.h"
+#include "cbitmapbutton.h"
 
 navigatorBar::navigatorBar(QWidget *parent) :
     QWidget(parent)

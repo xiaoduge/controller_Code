@@ -2,8 +2,6 @@
 #define EX_LOGINSTATE_H
 
 #include <QObject>
-#include <QDateTime>
-#include <QDateTime>
 
 class Ex_LoginState : public QObject
 {
@@ -23,7 +21,6 @@ signals:
 public slots:
 
 private:
-
     bool m_loginState;
 };
 

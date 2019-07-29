@@ -1,20 +1,7 @@
 #ifndef EX_LANGUAGEPAGE_H
 #define EX_LANGUAGEPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
-#include <QTextEdit>
-#include <QHBoxLayout>
-
-#include "Display.h"
 
 #define LanguageNum  (APP_LAN_NUM)
 

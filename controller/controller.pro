@@ -34,8 +34,6 @@ SOURCES += main.cpp\
     log.c \
     LoginDlg.cpp \
     eco_w.cpp \
-    keyboard.cpp \
-    user.cpp \
     switchbtn.cpp \
     LockupDlg.cpp \
     syszuxim.cpp \
@@ -52,7 +50,6 @@ SOURCES += main.cpp\
     menupage.cpp \
     waterqualitypage.cpp \
     systestlistwidgtitem.cpp \
-    historylistwidgtitem.cpp \
     consumablestatepage.cpp \
     ConsumableinsPage.cpp \
     SterilizePage.cpp \
@@ -68,7 +65,6 @@ SOURCES += main.cpp\
     maintenancelistwidgtitem.cpp \
     parametercalibration.cpp \
     parameterlistwidgtitem.cpp \
-    languagepage.cpp \
     sendtopage.cpp \
     unitpage.cpp \
     msgbox.cpp \
@@ -136,8 +132,6 @@ HEADERS  += mainwindow.h \
     log.h \
     LoginDlg.h \
     eco_w.h \
-    keyboard.h \
-    user.h \
     MyParams.h \
     switchbtn.h \
     LockupDlg.h \
@@ -156,7 +150,6 @@ HEADERS  += mainwindow.h \
     servicepage.h \
     waterqualitypage.h \
     titlebar.h \
-    historylistwidgtitem.h \
     consumablestatepage.h \
     ConsumableinsPage.h \
     warnlistwidgtitem.h \
@@ -173,7 +166,6 @@ HEADERS  += mainwindow.h \
     consumableinslistwidgtitem.h \
     parametercalibration.h \
     parameterlistwidgtitem.h \
-    languagepage.h \
     sendtopage.h \
     unitpage.h \
     msgbox.h \

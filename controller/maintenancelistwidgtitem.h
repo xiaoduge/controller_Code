@@ -2,7 +2,6 @@
 #define MAINTENANCELISTWIDGTITEM_H
 
 #include <QWidget>
-
 #include <QLabel>
 #include "dlineedit.h"
 
@@ -26,14 +25,10 @@ public:
     void setP2Name(const QString &strText) {if(m_lbP2Name)m_lbP2Name->setText(strText);}
     
     void setP1Range(int iMin,int iMax);
-    
     void setP2Range(int iMin,int iMax);
-signals:
 
-public slots:
 
 private:
-
     QLabel     *m_lbName;
     QLabel     *m_lbP1Name;
     DLineEdit  *m_editP1Value;
@@ -41,7 +36,6 @@ private:
     DLineEdit  *m_editP2Value;
     int        m_iItems;
 
-    
 };
 
 #endif // MAINTENANCELISTWIDGTITEM_H

@@ -1,23 +1,12 @@
 #ifndef STERILIZEPAGE_H
 #define STERILIZEPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
 
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
-#include <QTextEdit>
-
 #include "Display.h"
 
-
 class MainWindow;
-
+class CBitmapButton;
 
 class Sterilize: public QObject
 {

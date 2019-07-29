@@ -1,10 +1,8 @@
 #include "ex_init_networkpage.h"
-#include "titlebar.h"
 #include "mainwindow.h"
 #include <QMouseEvent>
 #include <QRect>
 #include <QProcess>
-
 #include "cbitmapbutton.h"
 #include "dlineedit.h"
 

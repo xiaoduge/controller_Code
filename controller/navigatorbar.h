@@ -2,14 +2,11 @@
 #define NAVIGATOR_BAR_H
 
 #include <QWidget>
-#include <QLabel>
-#include <QPushButton>
-#include "cbitmapbutton.h"
-#include <QTimer>
+
 
 enum NBAR_ID_ENUM
 {
-    NBAR_ID_POWER_OFF = 0,
+    NBAR_ID_POWER_OFF = 0
 };
 
 enum NBAR_LABEL_NAME
@@ -18,11 +15,12 @@ enum NBAR_LABEL_NAME
 
     NBAR_LABEL_TIME,
     
-    NBAR_LABEL_NUMBER,
+    NBAR_LABEL_NUMBER
 };
 
 
 class CBitmapButton;
+class QLabel;
 
 class navigatorBar : public QWidget
 {
@@ -47,22 +45,19 @@ protected:
     virtual void paintEvent(QPaintEvent *pe);
 
 private:
-    CBitmapButton *m_pBtnPower;
-
     void showTime();
+
+private:
+    CBitmapButton *m_pBtnPower;
     QPixmap *m_pNaviBar;
     QPixmap *m_pTimeBar;
-
     QLabel *m_pLabelDate;
     QLabel *m_pLabelTime;
-
-    QFont   *m_pDateFont;
-    QFont   *m_pTimeFont;
-
-    QTimer* m_timeTimer;
+    QFont  *m_pDateFont;
+    QFont  *m_pTimeFont;
+    QTimer *m_timeTimer;
 
     int     m_timerCnt;
-
     int     m_iDuration;
 
 };

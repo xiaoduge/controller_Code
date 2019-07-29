@@ -1,7 +1,7 @@
 #include "Cslistitem.h"
-#include <QPixmap>
 #include "mainwindow.h"
 #include "consumablestatepage.h"
+#include "cbitmapbutton.h"
 
 
 CsListItem::CsListItem(QWidget *parent ,ConsumableStatePage *owner,int iId) :

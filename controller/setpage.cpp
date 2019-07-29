@@ -1,6 +1,5 @@
 #include "setpage.h"
 #include "mainwindow.h"
-#include "titlebar.h"
 #include "setdevicepage.h"
 #include "setpoint.h"
 #include "systestpage.h"
@@ -17,6 +16,7 @@
 #include "ex_userinfo.h"
 #include "ex_factorytestpage.h"
 #include "dloginwarningdialog.h"
+#include "cbitmapbutton.h"
 
 #define BTNS_PER_ROW (4)
 

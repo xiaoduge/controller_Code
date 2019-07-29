@@ -5,7 +5,7 @@
 #include <linux/rtc.h>
 #include <unistd.h>
 #include <time.h>
-
+#include <QButtonGroup>
 #include <QFile>
 #include "Display.h"
 #include "ExtraDisplay.h"
@@ -14,6 +14,7 @@
 #include "dlineedit.h"
 #include <QButtonGroup>
 #include <QCalendarWidget>
+#include <QSlider>
 
 Ex_ManagerSetPage::Ex_ManagerSetPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
@@ -737,7 +738,7 @@ void Ex_ManagerSetPage::initFlowPage()
     m_flowLabel = new QLabel(m_pFlowBackWidget);
     m_flowLabel->setGeometry(QRect(25, 20 , 120 , 20));
 
-    m_flowLineEdit = new QLineEdit(m_pFlowBackWidget);
+    m_flowLineEdit = new DLineEdit(m_pFlowBackWidget);
     m_flowLineEdit->setGeometry(QRect(150, 20 , 100 , 20));
 
     QDoubleValidator *dValidator = new QDoubleValidator(0.0, 1000.0, 3, this);

@@ -1,19 +1,7 @@
 #ifndef EX_INIT_NETWORKPAGE_H
 #define EX_INIT_NETWORKPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include "mainwindow.h"
-#include <QLabel>
-#include <QTextEdit>
-#include <QHBoxLayout>
-#include <QCheckBox>
 #include "Display.h"
 
 
@@ -21,6 +9,8 @@ class MainWindow;
 class QPushButton;
 class QProcess;
 class DLineEdit;
+class QCheckBox;
+class CBitmapButton;
 
 class Ex_Init_Networkpage : public CSubPage
 {
@@ -67,7 +57,7 @@ private:
     QString       m_strQss4Chk;
     int           m_iNetworkMask;
 
-    CBitmapButton     *m_pBtnSave;
+    CBitmapButton* m_pBtnSave;
     QPushButton* m_pExNextBtn; //
     QPushButton* m_pExBackBtn; //
 

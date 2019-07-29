@@ -1,20 +1,8 @@
 #include "ex_languagepage.h"
-
-#include "titlebar.h"
-
 #include "mainwindow.h"
 
-#include <QPainter>
-
-#include <QScrollBar>
-
-#include <QListWidgetItem>
-
 #include "cbitmapbutton.h"
-
 #include "ctrlapplication.h"
-
-#include "notify.h"
 
 #include <QRect>
 

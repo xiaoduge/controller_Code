@@ -1,12 +1,7 @@
 #ifndef ALARMSETLISTWIDGTITEM_H
 #define ALARMSETLISTWIDGTITEM_H
 
-#include <QWidget>
-
 #include <QLabel>
-#include <QRadioButton>
-#include <QButtonGroup>
-#include <QComboBox>
 #include "cbitmapbutton.h"
 
 
@@ -15,10 +10,11 @@
 
 class AlarmSetPage;
 class CBitmapButton;
+class CBitmapButton;
 
 typedef enum 
 {
-  ALARMSET_ITEM_TYPE_SWITCH = 0,
+  ALARMSET_ITEM_TYPE_SWITCH = 0
    
 }ALARM_SET_ITEM_TYPE_ENUM;
 
@@ -38,9 +34,6 @@ public:
 
     void setSwitchState(int state) {if  (NULL != m_pBtnSwitch)  m_pBtnSwitch->setState(state);}
 
-
-signals:
-public slots:
 private:
 
     QLabel *m_lbName;

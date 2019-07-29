@@ -1,22 +1,14 @@
 #ifndef EX_INIT_TIMEPAGE_H
 #define EX_INIT_TIMEPAGE_H
 
-
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-
-#include <QCalendarWidget>
-#include "cbitmapbutton.h"
 
 class MainWindow;
 class QPushButton;
 class QLabel;
 class QComboBox;
+class QCalendarWidget;
+class CBitmapButton;
 
 
 class Ex_Init_TimePage : public CSubPage

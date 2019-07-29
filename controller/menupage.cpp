@@ -1,13 +1,11 @@
 #include <QMouseEvent>
-
+#include "cbitmapbutton.h"
 #include "menupage.h"
 #include "mainwindow.h"
 #include "titlebar.h"
-#include "waterqualitypage.h"
 #include "consumablestatepage.h"
 #include "systemmonitorpage.h"
 #include "alarmdisplaypage.h"
-#include "sysmsgpage.h"
 #include "ex_sysmsgpage.h"
 #include "ex_usermanualpage.h"
 #include "ex_waterqualitypage.h"

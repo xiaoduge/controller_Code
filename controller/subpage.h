@@ -1,13 +1,7 @@
 #ifndef SUBPAGE_H
 #define SUBPAGE_H
 
-#include <QLabel>
-#include <QPushButton>
-#include <QListWidget>
-
-#include "basewidget.h"
 #include "page.h"
-#include "cbitmapbutton.h"
 
 class titleBar;
 
@@ -21,7 +15,6 @@ public:
     virtual void leaveSubPage();
     void hideTitleBar();
 protected:
-
     titleBar      *m_pTitleBar;
 
 public slots:

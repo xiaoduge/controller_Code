@@ -1,5 +1,7 @@
 #include "msgbox.h"
 #include <QRect>
+#include <QLabel>
+#include "cbitmapbutton.h"
 
 MsgBox::MsgBox(QWidget *parent) :
     QDialog(parent)

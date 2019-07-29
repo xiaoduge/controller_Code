@@ -1,17 +1,11 @@
 #include "unitpage.h"
-
-#include "titlebar.h"
-
 #include "mainwindow.h"
-
+#include "cbitmapbutton.h"
+#include <QRadioButton>
 #include <QFile>
-#include <QScrollBar>
-
-#include <QListWidgetItem>
-
+#include <QButtonGroup>
 #include <QRect>
 
-#include <QList>
 
 QString strItemName[UnitNum] ;
 
@@ -154,6 +148,14 @@ void UnitPage::initUi()
         m_pBackWidget[iLoop]->setPalette(pal);
 
         m_pBackWidget[iLoop]->setGeometry(QRect(134 , 100 + 80 * iLoop , 530 ,60));
+
+        if(gGlobalParam.iMachineType == MACHINE_ADAPT)
+        {
+            if(3 == iLoop)
+                m_pBackWidget[iLoop]->hide();
+            if(4 == iLoop)
+                m_pBackWidget[iLoop]->setGeometry(QRect(134 , 100 + 80 * (iLoop - 1) , 530 ,60));
+        }
 
         m_laName[iLoop] = new QLabel(m_pBackWidget[iLoop]);
         m_laName[iLoop]->setPixmap(NULL);

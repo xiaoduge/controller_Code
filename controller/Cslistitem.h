@@ -1,12 +1,9 @@
 #ifndef CSLISTITEM_H
 #define CSLISTITEM_H
 
-#include <QWidget>
 #include <QLabel>
-#include <QPushButton>
 
-#include "cbitmapbutton.h"
-
+class CBitmapButton;
 class ConsumableStatePage;
 
 #define CS_LIST_WIDGET_HEIGHT (65)

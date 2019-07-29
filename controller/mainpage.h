@@ -1,19 +1,13 @@
 #ifndef MAINPAGE_H
 #define MAINPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
 
-#include "basewidget.h"
 #include "page.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
 #include "Display.h"
 
 class MainWindow;
+class navigatorBar;
+class CBitmapButton;
 
 enum BTN_NAME
 {
@@ -35,7 +29,7 @@ enum BTN_NAME
     
     BTN_ALARM_NOTIFY, 
     
-    BTN_NUMBER,
+    BTN_NUMBER
 };
 
 enum LABEL_NAME
@@ -80,17 +74,15 @@ enum LABEL_NAME
 
     LABEL_EDI_SPEED,
 
-    LABEL_NUMBER,
+    LABEL_NUMBER
 };
 
 enum MAINPAGE_NOTIFY_STATE_ENUM
 {
     MAINPAGE_NOTIFY_STATE_NONE  = 0,
     MAINPAGE_NOTIFY_STATE_ALARM = APP_PACKET_HO_ALARM_TYPE_ALM,
-    MAINPAGE_NOTIFY_STATE_NOT   = APP_PACKET_HO_ALARM_TYPE_NOT,
+    MAINPAGE_NOTIFY_STATE_NOT   = APP_PACKET_HO_ALARM_TYPE_NOT
 };
-
-class navigatorBar;
 
 class MainPage : public CPage
 {
@@ -165,7 +157,7 @@ private:
 
 
     int           m_iVolumeBtnId;
-    QTimer*       m_timeTimer;
+    QTimer        *m_timeTimer;
 
     int           m_iTimerCnt;
     

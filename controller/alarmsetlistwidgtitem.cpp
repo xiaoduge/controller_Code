@@ -1,7 +1,8 @@
+#include "alarmsetlistwidgtitem.h"
 #include "systestlistwidgtitem.h"
-#include "cbitmapbutton.h"
 #include "mainwindow.h"
 #include "alarmsetpage.h"
+
 
 #define LEFT_MARGIN       5
 #define TOP_MARGIN        5

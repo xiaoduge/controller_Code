@@ -1,14 +1,8 @@
 #ifndef EX_SYSMSGPAGE_H
 #define EX_SYSMSGPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
 
-#include "basewidget.h"
 #include "subpage.h"
-#include <QLabel>
 
 
 class MainWindow;
@@ -25,7 +19,7 @@ public:
          SYSMS_PAGE_LB_3,
          SYSMS_PAGE_LB_4,
          SYSMS_PAGE_LB_5,
-         SYSMS_PAGE_LB_NUM,
+         SYSMS_PAGE_LB_NUM
     };
 
 public:
@@ -54,15 +48,6 @@ private:
     QWidget       *m_pWidget;
     QLabel* m_pExmsgLabel[SYSMS_PAGE_LB_NUM];
     QString m_ExMsgName[SYSMS_PAGE_LB_NUM];
-
-//    QTextEdit     *m_pMsgTextEdit[SYSMS_PAGE_TE_NUM];
-//    QLabel* m_pExmsgLabel[SYSMS_PAGE_LB_NUM];
-
-//    QString       m_TitleMsg;
-//    QString       m_astrMsgName[SYSMS_PAGE_INFO_NUM];
-
-//    QTextCharFormat charFormatName;
-//    QTextCharFormat charFormatValue;
 
 public slots:
 };

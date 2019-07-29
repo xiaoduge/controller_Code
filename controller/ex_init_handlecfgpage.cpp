@@ -6,7 +6,7 @@
 #include "Interface.h"
 #include "ToastDlg.h"
 #include "ExtraDisplay.h"
-
+#include <QListWidget>
 #include <QMouseEvent>
 #include <QRect>
 #include <QFile>

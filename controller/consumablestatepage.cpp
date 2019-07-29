@@ -1,12 +1,7 @@
 #include "consumablestatepage.h"
-
-#include "titlebar.h"
-
+#include "Cslistitem.h"
 #include "mainwindow.h"
-
-#include <QPainter>
-
-#include <QScrollBar>
+#include <QListWidget>
 
 ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain)
     : CSubPage(parent,widget,wndMain)

@@ -1,22 +1,9 @@
 #ifndef ALARMDISPLAYPAGE_H
 #define ALARMDISPLAYPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
 
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
-#include <QTextEdit>
-#include <QListWidgetItem>
-
-#include "alarmdisplaylistitem.h"
 #include "Display.h"
-
 
 #define ADS_MAX_CsListNum (DISP_ROC12 + 1)
 
@@ -24,10 +11,14 @@ typedef enum
 {   
     ALARM_TYPE_CS,
     ALARM_TYPE_AS,
-    ALARM_TYPE_NUM,
+    ALARM_TYPE_NUM
 }ALARM_TYPE_ENUM;
 
 class MainWindow;
+class QListWidget;
+class QListWidgetItem;
+class AdasListItem;
+class AdcsListItem;
 
 class AlarmDisplayPage : public CSubPage
 {

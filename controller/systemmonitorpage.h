@@ -1,26 +1,13 @@
 #ifndef SYSTEM_MONITOR_PAGE_H
 #define SYSTEM_MONITOR_PAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
 
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
-#include <QTextEdit>
-#include <QListWidgetItem>
-#include <QHBoxLayout>
-#include <QPushButton>
-
-#include "systemmonitorlistwidgtitem.h"
-
 
 class MainWindow;
-
+class QListWidget;
+class QListWidgetItem;
+class SystemMonitorListWidgtItem;
 
 enum SYSTEMPAGE_ITEM_NAME_ENUM
 {
@@ -35,7 +22,7 @@ enum SYSTEMPAGE_ITEM_NAME_ENUM
     SYSTEMPAGE_ITEM_NAME_C3C4_STATE,
     SYSTEMPAGE_ITEM_NAME_C1_STATE,
     SYSTEMPAGE_ITEM_NAME_C2_STATE,
-    SYSTEMPAGE_ITEM_NAME_NUM,
+    SYSTEMPAGE_ITEM_NAME_NUM
 };
 
 class SystemMonitorPage : public CSubPage

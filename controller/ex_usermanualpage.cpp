@@ -1,5 +1,4 @@
 #include "ex_usermanualpage.h"
-#include "titlebar.h"
 #include "mainwindow.h"
 #include <QMouseEvent>
 #include <QLabel>

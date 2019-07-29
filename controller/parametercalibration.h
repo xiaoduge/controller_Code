@@ -1,27 +1,16 @@
 #ifndef PARAMETERCALIBRATION_H
 #define PARAMETERCALIBRATION_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
-#include <QTextEdit>
-#include <QListWidgetItem>
-#include <QHBoxLayout>
-#include <QPushButton>
-
-#include "parameterlistwidgtitem.h"
 #include "Display.h"
 
 #define ParameterNUM DISP_PC_COFF_NUM
 
 class MainWindow;
+class CBitmapButton;
+class QListWidget;
+class QListWidgetItem;
+class Parameterlistwidgtitem;
 
 class ParameterCalibrationPage : public CSubPage
 {
@@ -41,14 +30,12 @@ public:
     virtual void update();
 
 private:
-
     void buildTitles();
     void save();
     void Create_list();
-
     void Set_Back_Color();
 
-
+private:
     QListWidget *listWidget;
 
     QListWidgetItem *listWidgetIem[ParameterNUM];
@@ -66,9 +53,7 @@ private:
     }aParameters[ParameterNUM];
 
 public slots:
-    
     void on_btn_clicked(int tmp);
-
     void ItemClicked(QListWidgetItem * item);
 };
 

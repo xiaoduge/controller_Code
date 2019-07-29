@@ -1,8 +1,5 @@
 #include "networkpage.h"
-#include "titlebar.h"
-#include <QPainter>
-#include <QScrollBar>
-#include <QListWidgetItem>
+#include "mainwindow.h"
 #include "cbitmapbutton.h"
 #include <QRect>
 #include <QProcess>

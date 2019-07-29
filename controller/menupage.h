@@ -1,19 +1,12 @@
 #ifndef MENUPAGE_H
 #define MENUPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-
-#include "basewidget.h"
 #include "page.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
 
 
 class MainWindow;
+class CBitmapButton;
+class titleBar;
 
 enum MENU_BTN_NAME
 {
@@ -28,10 +21,6 @@ enum MENU_BTN_NAME
 
 #define MENU_PAGE_NUM MENU_BTN_NUMBER
 
-
-class MainWindow;
-
-class titleBar;
 
 class MenuPage : public CPage
 {
@@ -58,15 +47,12 @@ public:
 
 private:
     void buildTitles();
-
     void Create_subPage();
 
+private:
     CPage         *m_pSubPages[MENU_PAGE_NUM];
-
     CBitmapButton *m_pBtns[MENU_BTN_NUMBER];
-    
     titleBar      *m_pTitleBar;
-    
     QLabel        *m_pLbPageId[3];
 
 

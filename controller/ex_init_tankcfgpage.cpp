@@ -1,9 +1,7 @@
 #include "ex_init_tankcfgpage.h"
-#include "titlebar.h"
 #include <QMouseEvent>
 #include "mainwindow.h"
-
-#include <QLineEdit>
+#include "dlineedit.h"
 #include <QLabel>
 #include <QComboBox>
 
@@ -138,7 +136,7 @@ void Ex_Init_Tankcfgpage::createControl()
 
     rectTmp.setX(250+20);
     rectTmp.setWidth(60);
-    m_lePWTankHeight = new QLineEdit(tmpWidget);
+    m_lePWTankHeight = new DLineEdit(tmpWidget);
     m_lePWTankHeight->setGeometry(rectTmp);
     m_lePWTankHeight->setValidator(new QRegExpValidator(double_rx,this));
     m_lePWTankHeight->hide();
@@ -152,7 +150,7 @@ void Ex_Init_Tankcfgpage::createControl()
 
     rectTmp.setX(345+90);
     rectTmp.setWidth(60);
-    m_lePWTankCap = new QLineEdit(tmpWidget);
+    m_lePWTankCap = new DLineEdit(tmpWidget);
     m_lePWTankCap->setGeometry(rectTmp);
     m_lePWTankCap->setValidator(new QIntValidator(0, 9999, this));
     m_lePWTankCap->hide();
@@ -211,7 +209,7 @@ void Ex_Init_Tankcfgpage::createControl()
 
     rectTmp.setX(250+20);
     rectTmp.setWidth(60);
-    m_leSWTankHeight = new QLineEdit(tmpWidget);
+    m_leSWTankHeight = new DLineEdit(tmpWidget);
     m_leSWTankHeight->setGeometry(rectTmp);
     m_leSWTankHeight->setValidator(new QRegExpValidator(double_rx,this));
     m_leSWTankHeight->hide();
@@ -225,7 +223,7 @@ void Ex_Init_Tankcfgpage::createControl()
 
     rectTmp.setX(345+90);
     rectTmp.setWidth(60);
-    m_leSWTankCap = new QLineEdit(tmpWidget);
+    m_leSWTankCap = new DLineEdit(tmpWidget);
     m_leSWTankCap->setGeometry(rectTmp);
     m_leSWTankCap->setValidator(new QIntValidator(0, 9999, this));
     m_leSWTankCap->hide();

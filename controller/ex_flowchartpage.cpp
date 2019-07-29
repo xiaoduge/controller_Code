@@ -1,11 +1,9 @@
 #include "ex_flowchartpage.h"
 #include <QMouseEvent>
-
-#include "titlebar.h"
 #include "mainwindow.h"
+#include "titlebar.h"
 #include "ex_flowchartwidget.h"
 #include "dtextticker.h"
-
 #include <QPainter>
 
 Ex_FlowChartPage::Ex_FlowChartPage(QObject *parent, CBaseWidget *widget, MainWindow *wndMain)

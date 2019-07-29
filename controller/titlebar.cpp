@@ -1,5 +1,5 @@
 #include "titlebar.h"
-#include <QtGui/qpainter.h>
+#include "cbitmapbutton.h"
 #include "mainwindow.h"
 
 titleBar::titleBar(QWidget *parent,int style) :

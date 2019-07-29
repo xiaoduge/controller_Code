@@ -1,17 +1,7 @@
 #ifndef EX_RFIDCFGPAGE_H
 #define EX_RFIDCFGPAGE_H
 
-
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-
-#include "basewidget.h"
 #include "subpage.h"
-
-#include "Display.h"
-#include "ctrlapplication.h"
-
 
 class MainWindow;
 class QPushButton;
@@ -52,8 +42,6 @@ private slots:
     void on_saveBtn_clicked();
 
 };
-
-extern CtrlApplication *gApp;
 
 
 #endif // EX_RFIDCFGPAGE_H

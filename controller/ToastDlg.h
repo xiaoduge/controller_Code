@@ -2,11 +2,10 @@
 #define TOASTDLG_H
 
 #include <QDialog>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QGridLayout>
-#include <QLabel>
-#include <QCheckBox>
+
+class QLabel;
+class QGridLayout;
+class QVBoxLayout;
 
 class ToastDlg : public QDialog {
     Q_OBJECT

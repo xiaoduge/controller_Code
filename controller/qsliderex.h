@@ -1,9 +1,8 @@
-﻿#ifndef QSLIDER_EX_H
+#ifndef QSLIDER_EX_H
 #define QSLIDER_EX_H
 
-#include <QWidget>
-#include <QtGui/QSlider>
-#include <QDebug>
+#include <QSlider>
+
 
 class CSliderEx : public QSlider
 {

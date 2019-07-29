@@ -15,6 +15,8 @@ class QCheckBox;
 class QRadioButton;
 class QHBoxLayout;
 class DLineEdit;
+class QSlider;
+class QButtonGroup;
 
 class Ex_ManagerSetPage : public CSubPage
 {
@@ -128,7 +130,7 @@ private:
     //Flow Rate
     QWidget *m_pFlowBackWidget;
     QLabel *m_flowLabel;
-    QLineEdit *m_flowLineEdit;
+    DLineEdit *m_flowLineEdit;
     QLabel *m_flowUnit;
     QPushButton *m_flowSaveBtn;
     int m_caliId;

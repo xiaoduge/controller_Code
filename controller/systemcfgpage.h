@@ -1,31 +1,18 @@
 #ifndef SYSTEMCFGPAGE_H
 #define SYSTEMCFGPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QLabel>
-#include <QTextEdit>
-#include <QCheckBox>
-#include <QComboBox>
-
-#include "Display.h"
-#include "ctrlapplication.h"
-#include "dlineedit.h"
-
 
 class MainWindow;
-
+class QComboBox;
+class DLineEdit;
+class QCheckBox;
+class CBitmapButton;
 
 enum SYSCFGPAGE_BTN_ENUM
 {
    SYSCFGPAGE_BTN_SAVE = 0,
-   SYSCFGPAGE_BTN_NUM,
+   SYSCFGPAGE_BTN_NUM
 };
 
 class SystemCfgPage : public CSubPage
@@ -47,7 +34,6 @@ public:
 
 
 private:
-
     void buildTitles();
     void save();
     void setBackColor();
@@ -104,7 +90,5 @@ public slots:
     void on_CmbIndexChange_pw(int index);
     void on_CmbIndexChange_sw(int index);
 };
-
-extern CtrlApplication *gApp;
 
 #endif // STERILIZEPAGE_H

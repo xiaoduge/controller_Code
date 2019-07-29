@@ -1,23 +1,14 @@
 #ifndef EX_SUPERPOWERPAGE_H
 #define EX_SUPERPOWERPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QComboBox>
-#include <QLabel>
 
-#include "Display.h"
-#include "ctrlapplication.h"
-
-
+class QComboBox;
+class QLabel;
 class MainWindow;
 class QPushButton;
 class DLineEdit;
+class CBitmapButton;
 
 class Ex_SuperPowerPage : public CSubPage
 {
@@ -36,7 +27,7 @@ public:
         SYSCFGPAGE_LB_PRODATE,
         SYSCFGPAGE_LB_INSTALLDATE,
         SYSCFGPAGE_LB_SOFTVER,
-        SYSCFGPAGE_LB_NUM,
+        SYSCFGPAGE_LB_NUM
     };
 
 public:
@@ -107,8 +98,6 @@ public slots:
     void on_btnDbDel_clicked();
     void on_btnDelCfg_clicked();
 };
-
-extern CtrlApplication *gApp;
 
 
 #endif // EX_SUPERPOWERPAGE_H

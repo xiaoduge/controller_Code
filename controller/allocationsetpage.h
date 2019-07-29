@@ -1,27 +1,12 @@
 #ifndef ALLOCATION_SET_PAGE_H
 #define ALLOCATION_SET_PAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
-#include <QTextEdit>
-#include <QListWidgetItem>
-#include <QHBoxLayout>
-#include <QPushButton>
-
-#include <QComboBox>
-#include <QCalendarWidget>
-#include "cbitmapbutton.h"
 
 class MainWindow;
-
+class QComboBox;
+class CBitmapButton;
+class DLineEdit;
 
 enum ALLOCPAGE_BTN_NAME
 {
@@ -33,7 +18,7 @@ enum ALLOCPAGE_BTN_NAME
     ALLOCPAGE_BTN_FRIDAY,
     ALLOCPAGE_BTN_SATURDAY,
     ALLOCPAGE_BTN_SAVE,
-    ALLOCPAGE_BTN_NUM,
+    ALLOCPAGE_BTN_NUM
 };
 
 
@@ -76,11 +61,11 @@ private:
     CBitmapButton *m_pBtns[ALLOCPAGE_BTN_NUM];
 
     QLabel    *m_lbNameIdlePeriod;
-    QLineEdit *m_leIdlePeriod;
+    DLineEdit *m_leIdlePeriod;
     QLabel    *m_lbNameIdlePeriodUnit;
     
     QLabel    *m_lbNameIdleCirTime;
-    QLineEdit *m_leIdleCirTime;
+    DLineEdit *m_leIdleCirTime;
     QLabel    *m_lbNameIdleCirTimeUnit;
 
     QWidget   *m_pBackWidget[6];

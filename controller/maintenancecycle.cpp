@@ -1,21 +1,13 @@
 #include "maintenancecycle.h"
-
-#include "titlebar.h"
-
 #include "mainwindow.h"
 
-#include <QPainter>
-
-#include <QScrollBar>
-
-#include <QListWidgetItem>
-
 #include "cbitmapbutton.h"
-
-#include <QRect>
-
 #include "maintenancelistwidgtitem.h"
 #include "notify.h"
+
+#include <QListWidget>
+#include <QRect>
+
 
 /*static VALIDATE_INFO_STRU vi[MTCNUM]= 
 {

@@ -1,16 +1,8 @@
 #ifndef EX_INIT_SYSCFGPAGE_H
 #define EX_INIT_SYSCFGPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-
-#include "basewidget.h"
 #include "subpage.h"
-
 #include "Display.h"
-#include "ctrlapplication.h"
-
 
 class MainWindow;
 class QPushButton;
@@ -26,7 +18,7 @@ public:
     {
         DISP_CFG_ElecLeakProtector = 0,
         DISP_CFG_TankUV,
-        DISP_CFG_NUMBER,
+        DISP_CFG_NUMBER
     };
 
 public:
@@ -67,7 +59,6 @@ public slots:
 
 };
 
-extern CtrlApplication *gApp;
 
 
 #endif // EX_INIT_SYSCFGPAGE_H

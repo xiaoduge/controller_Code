@@ -1,31 +1,16 @@
 #ifndef CONSUMABLEINSPAGE_H
 #define CONSUMABLEINSPAGE_H
 
-
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
-#include <QTextEdit>
-#include <QListWidgetItem>
-#include <QHBoxLayout>
-#include <QPushButton>
-
-#include "consumableinslistwidgtitem.h"
 #include "Display.h"
 
 #define MAX_ConsumableNum (DISP_CM_NAME_NUM  + DISP_MACHINERY_NAME_NUM)
 
 class MainWindow;
-
+class QListWidgetItem;
 class titleBar;
-
+class QListWidget;
+class CosumableInsListWidgtItem;
 
 class ConsumableInsPage : public CSubPage
 {

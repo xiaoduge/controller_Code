@@ -1,26 +1,18 @@
 #ifndef SET_DEVICE_PAGE_H
 #define SET_DEVICE_PAGE_H
 
-
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-#include <QLineEdit>
-#include <QGridLayout>
-#include <QCheckBox>
-#include <QListWidget>
-#include <QComboBox>
-
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
-#include <QTextEdit>
-#include <QHBoxLayout>
+#include <QGridLayout>
+#include <QComboBox>
+#include <QCheckBox>
+#include <QPushButton>
 #include "datatype.h"
 #include "cminterface.h"
+
+class MainWindow;
+class QHBoxLayout;
+class QListWidgetItem;
+class QListWidget;
 
 typedef enum
 {
@@ -28,7 +20,7 @@ typedef enum
     DEVICE_ITEM_ADDRESS ,
     DEVICE_ITEM_DTYPE ,
     DEVICE_ITEM_VERSION ,
-    DEVICE_ITEM_NUM ,
+    DEVICE_ITEM_NUM
 
 }DEVICE_ITEM_ENUM;
 
@@ -112,7 +104,7 @@ private:
      HANDLER_ITEM_ADDRESS ,
      HANDLER_ITEM_TYPE,
      HANDLER_ITEM_DEFAULT,
-     HANDLER_ITEM_NUM ,
+     HANDLER_ITEM_NUM
  
  }HANDLER_ITEM_ENUM;
 
@@ -242,7 +234,7 @@ private:
  {
      RFREADER_ITEM_SN = 0,
      RFREADER_ITEM_ADDRESS ,
-     RFREADER_ITEM_NUM ,
+     RFREADER_ITEM_NUM
  
  }RFREADER_ITEM_ENUM;
 
@@ -313,10 +305,6 @@ private:
      QHBoxLayout *m_pTopLayout;
      
  };
-
-
-class MainWindow;
-
 
 class SetDevicePage : public CSubPage
 {

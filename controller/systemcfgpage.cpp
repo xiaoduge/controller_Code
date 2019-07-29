@@ -1,7 +1,8 @@
 #include "systemcfgpage.h"
-#include "titlebar.h"
 #include "mainwindow.h"
 #include "ExtraDisplay.h"
+#include "dlineedit.h"
+#include "cbitmapbutton.h"
 
 #define ControlNum 6
 

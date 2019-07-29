@@ -1,8 +1,5 @@
 #include "ex_rfidcfgpage.h"
-#include "titlebar.h"
-
 #include "mainwindow.h"
-#include <QPainter>
 #include <QCheckBox>
 #include <QLabel>
 #include <QHBoxLayout>

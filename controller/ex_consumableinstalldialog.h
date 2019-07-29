@@ -5,7 +5,7 @@
 #include "ex_basewindow.h"
 
 class QComboBox;
-class QLineEdit;
+class DLineEdit;
 class QLabel;
 
 class Ex_ConsumableInstallDialog : public Ex_BaseWindow
@@ -49,9 +49,9 @@ private:
     QLabel *m_pCatLabel;
     QLabel *m_pLotLabel;
     QLabel *m_pUserLabel;
-    QLineEdit *m_pLineEditCat;
-    QLineEdit *m_pLineEditLot;
-    QLineEdit *m_pLineEditUser;
+    DLineEdit *m_pLineEditCat;
+    DLineEdit *m_pLineEditLot;
+    DLineEdit *m_pLineEditUser;
     QPushButton *m_pInstallBtn;
 
 };

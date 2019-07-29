@@ -1,14 +1,6 @@
 #include "sysmsgpage.h"
-
-#include "titlebar.h"
-
 #include "mainwindow.h"
-
-#include <QPainter>
-
-#include <QScrollBar>
-
-#include <QListWidgetItem>
+#include <QTextEdit>
 
 #define WIDGET_BACK_WIDTH  (550)
 #define WIDGET_BACK_HEIGHT (350)

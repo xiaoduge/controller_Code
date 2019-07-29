@@ -1,12 +1,10 @@
 #ifndef EX_HISTORYPAGE_H
 #define EX_HISTORYPAGE_H
 
-#include <QObject>
-#include "basewidget.h"
 #include "subpage.h"
-#include "sendtopage.h"
-#include "msgbox.h"
 
+class QCalendarWidget;
+class SendToPage;
 class MainWindow;
 class QPushButton;
 class QComboBox;

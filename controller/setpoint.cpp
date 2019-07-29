@@ -1,19 +1,12 @@
 #include "setpoint.h"
-
-#include "titlebar.h"
-
 #include "mainwindow.h"
+#include "setplistwidgtitem.h"
 
-#include <QPainter>
-
-#include <QScrollBar>
-
+#include <QListWidget>
 #include <QListWidgetItem>
 
 #include "cbitmapbutton.h"
-
 #include <QRect>
-
 #include "notify.h"
 
 

@@ -1,10 +1,8 @@
 #ifndef EX_FACTORYTESTPAGE_H
 #define EX_FACTORYTESTPAGE_H
 
-
 #include "subpage.h"
 #include "ctrlapplication.h"
-
 
 class MainWindow;
 class QPushButton;
@@ -13,6 +11,7 @@ class DLineEdit;
 class QFrame;
 class QComboBox;
 class QTextBrowser;
+class QTabWidget;
 
 class Ex_FactoryTestPage : public CSubPage
 {

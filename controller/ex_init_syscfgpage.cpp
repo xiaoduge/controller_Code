@@ -1,7 +1,5 @@
 #include "ex_init_syscfgpage.h"
-#include "titlebar.h"
 #include "mainwindow.h"
-
 #include <QMouseEvent>
 #include <QCheckBox>
 #include <QLabel>

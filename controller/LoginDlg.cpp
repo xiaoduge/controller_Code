@@ -1,26 +1,11 @@
-#include <QTextCodec>
-#include <QMessageBox>
 #include <QGridLayout>
 #include <QHBoxLayout>
-#include <QLabel>
-#include <QDebug>
-#include <QString>
-#include <QVBoxLayout>
+
 #include <QMouseEvent>
 #include <QPushButton>
-#include <QLineEdit>
-
-#include <QSqlError>
-#include <QSqlDriver>
-#include <QSqlRecord>
-#include <QSqlDatabase>
-#include <QSqlQuery>
 
 #include "LoginDlg.h"
 #include "mainwindow.h"
-#include "user.h"
-#include "MyParams.h"
-
 #include "dlineedit.h"
 
 extern QString select_sql_User;

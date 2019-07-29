@@ -1,15 +1,10 @@
 #include "parametercalibration.h"
-
-#include "titlebar.h"
-
+#include "parameterlistwidgtitem.h"
 #include "mainwindow.h"
+#include "cbitmapbutton.h"
 #include "Ex_Display_c.h"
+#include <QListWidget>
 
-#include <QPainter>
-
-#include <QScrollBar>
-
-#include <QListWidgetItem>
 
 ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
@@ -25,11 +20,12 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-    case MACHINE_PURIST:
     case MACHINE_ADAPT:
         aParameters[iIdx].type = PARAMETER_CALIBRATION_FORMAT0;
         aParameters[iIdx].id   = DISP_PC_COFF_SOURCE_WATER_CONDUCT;         
         iIdx++;
+        break;
+    default:
         break;
     }
 
@@ -43,11 +39,12 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-    case MACHINE_PURIST:
     case MACHINE_ADAPT:
         aParameters[iIdx].type  = PARAMETER_CALIBRATION_FORMAT1;
         aParameters[iIdx].id    = DISP_PC_COFF_SOURCE_WATER_TEMP;           
         iIdx++;
+        break;
+    default:
         break;
     }
 
@@ -61,10 +58,13 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
+    case MACHINE_PURIST:
     case MACHINE_ADAPT:
         aParameters[iIdx].type  = PARAMETER_CALIBRATION_FORMAT0;
         aParameters[iIdx].id    = DISP_PC_COFF_RO_WATER_CONDUCT;            
         iIdx++;
+        break;
+    default:
         break;
     }
 
@@ -78,12 +78,13 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
+    case MACHINE_PURIST:
     case MACHINE_ADAPT:
         aParameters[iIdx].type  = PARAMETER_CALIBRATION_FORMAT1;
         aParameters[iIdx].id    = DISP_PC_COFF_RO_WATER_TEMP;           
         iIdx++;
         break;
-    case MACHINE_PURIST:
+    default:
         break;
     }
 
@@ -355,18 +356,39 @@ void ParameterCalibrationPage::buildTranslation()
             /*
             RO电导率    K: 1.000  C:0.100   20μS/cm      
             */
-            m_aParameterlistItem[iLoop]->setName(tr("RO Cond."));
-            m_aParameterlistItem[iLoop]->setP1Name(tr(""));
-            m_aParameterlistItem[iLoop]->setP2Name(tr("C:"));
-            m_aParameterlistItem[iLoop]->setP3Name(tr("us/cm"));
+            switch(gGlobalParam.iMachineType)/*EDI电阻率*/
+            {
+            case MACHINE_PURIST:
+                m_aParameterlistItem[iLoop]->setName(tr("Tap Cond."));
+                m_aParameterlistItem[iLoop]->setP1Name(tr(""));  //K:
+                m_aParameterlistItem[iLoop]->setP2Name(tr("C:"));
+                m_aParameterlistItem[iLoop]->setP3Name(tr("us/cm"));
+                break;
+            default:
+                m_aParameterlistItem[iLoop]->setName(tr("RO Cond."));
+                m_aParameterlistItem[iLoop]->setP1Name(tr(""));
+                m_aParameterlistItem[iLoop]->setP2Name(tr("C:"));
+                m_aParameterlistItem[iLoop]->setP3Name(tr("us/cm"));
+                break;
+            }
             break;
         case DISP_PC_COFF_RO_WATER_TEMP:
             /*
             RO温度    K: 1.000    25.0℃
             */
-            m_aParameterlistItem[iLoop]->setName(tr("RO Temp."));
-            m_aParameterlistItem[iLoop]->setP1Name(tr(""));
-            m_aParameterlistItem[iLoop]->setP3Name(tr("celsius"));
+            switch(gGlobalParam.iMachineType)/*EDI电阻率*/
+            {
+            case MACHINE_PURIST:
+                m_aParameterlistItem[iLoop]->setName(tr("Tap Temp."));
+                m_aParameterlistItem[iLoop]->setP1Name(tr(""));
+                m_aParameterlistItem[iLoop]->setP3Name(tr("celsius"));
+                break;
+            default:
+                m_aParameterlistItem[iLoop]->setName(tr("RO Temp."));
+                m_aParameterlistItem[iLoop]->setP1Name(tr(""));
+                m_aParameterlistItem[iLoop]->setP3Name(tr("celsius"));
+                break;
+            }
             break;
         case DISP_PC_COFF_EDI_WATER_CONDUCT:
             /*

@@ -1,13 +1,7 @@
 #include "ex_init_languagepage.h"
-
-#include "titlebar.h"
 #include "mainwindow.h"
 #include <QMouseEvent>
-#include <QScrollBar>
-#include <QListWidgetItem>
-#include "cbitmapbutton.h"
 #include "ctrlapplication.h"
-#include "notify.h"
 #include <QRect>
 #include <QPushButton>
 #include <QComboBox>

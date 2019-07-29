@@ -2,15 +2,12 @@
 #define TITLE_BAR_H
 
 #include <QWidget>
-#include <QLabel>
-#include <QPushButton>
-#include "cbitmapbutton.h"
 
 enum TITLE_BAR_ID_ENUM
 {
     TITLE_BAR_ID_POWER_OFF = 0,
     TITLE_BAR_ID_BACK,
-    TITLE_BAR_ID_HOME,
+    TITLE_BAR_ID_HOME
 };
 
 class CBitmapButton;

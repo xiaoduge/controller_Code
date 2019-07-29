@@ -2,30 +2,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "notify.h"
-
-#include "LoginDlg.h"
-#include <QSettings>
-#include <QLabel>
-#include <QString>
-#include <QBrush>
-#include <QRadialGradient>
-#include <QStringListModel>
-#include <QPushButton>
-#include <QComboBox>
-#include <QLineEdit>
-
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QTime>
-#include <QSqlError>
-#include <QSqlDriver>
-#include <QSqlRecord>
-#include <QTextCodec>
-
-#include <QPainter>
-
-#include <QMouseEvent>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -42,7 +18,11 @@
 #include <termios.h>
 #include <arpa/inet.h>
 
-#include <QDebug>
+#include <QSettings>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QTime>
+#include <QMouseEvent>
 
 #include "LoginDlg.h"
 #include "rpc.h"
@@ -67,7 +47,7 @@
 #include "setdevicepage.h"
 #include "systestpage.h"
 #include "buzzer_ctl.h"
-#include "waterqualitypage.h"
+
 #include "systemmonitorpage.h"
 #include "ConsumableinsPage.h"
 #include "alarmdisplaypage.h"
@@ -198,7 +178,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190726_debug");
+QString strSoftwareVersion = QString("0.1.8.190729_debug");
 
 MainWindow *gpMainWnd;
 

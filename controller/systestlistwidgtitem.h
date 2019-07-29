@@ -2,25 +2,21 @@
 #define SYSTESTLISTWIDGTITEM_H
 
 #include <QWidget>
-
 #include <QLabel>
-#include <QRadioButton>
-#include <QButtonGroup>
 #include <QComboBox>
 #include "cbitmapbutton.h"
 
-
 #define SYSTEM_TEST_LIST_WIDGET_HEIGHT (40)
 #define SYSTEM_TEST_LIST_WIDGET_WIDTH  (760)
+
 class SysTestPage;
-class CBitmapButton;
 
 typedef enum 
 {
    SYSTEM_TEST_ITEM_TYPE_SWITCH = 0,
    SYSTEM_TEST_ITEM_TYPE_SWITCH_AND_VALUE,
    SYSTEM_TEST_ITEM_TYPE_RADIO_AND_VALUE,
-   SYSTEM_TEST_ITEM_TYPE_HO_SWITCH,
+   SYSTEM_TEST_ITEM_TYPE_HO_SWITCH
    
 }SYSTEM_TEST_ITEM_TYPE_ENUM;
 

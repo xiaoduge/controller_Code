@@ -1,6 +1,5 @@
 #include "page.h"
 #include "basewidget.h"
-
 #include "mainwindow.h"
 
 CPage::CPage(QObject *parent,CBaseWidget *widget,MainWindow  *wndMain) : QObject(parent),m_widget(widget),m_wndMain(wndMain)

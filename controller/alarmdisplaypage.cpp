@@ -1,12 +1,7 @@
 #include "alarmdisplaypage.h"
-
-#include "titlebar.h"
-
+#include "alarmdisplaylistitem.h"
 #include "mainwindow.h"
-
-#include <QPainter>
-
-#include <QScrollBar>
+#include <QListWidget>
 
 #define MAKEID(major,minor) (((major)<<16) + (minor))
 

@@ -1,9 +1,6 @@
 #include "ex_sysmsgpage.h"
 #include "ExtraDisplay.h"
-#include "titlebar.h"
 #include "mainwindow.h"
-#include <QPainter>
-#include <QScrollBar>
 #include <QListWidgetItem>
 
 

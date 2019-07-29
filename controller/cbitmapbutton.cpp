@@ -1,5 +1,5 @@
 #include "cbitmapbutton.h"
-#include <QtGui/qpainter.h>
+#include <QPainter>
 #include "ExtraDisplay.h"
 
 

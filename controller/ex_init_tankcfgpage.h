@@ -1,20 +1,11 @@
 #ifndef EX_INIT_TANKCFGPAGE_H
 #define EX_INIT_TANKCFGPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-
-#include "basewidget.h"
 #include "subpage.h"
-
-#include "Display.h"
-#include "ctrlapplication.h"
-
 
 class MainWindow;
 class QPushButton;
-class QLineEdit;
+class DLineEdit;
 class QLabel;
 class QComboBox;
 
@@ -54,16 +45,16 @@ private:
 
     QLabel    *m_lbPWTankName;
     QComboBox *m_cmbPWTankVolume;
-    QLineEdit *m_lePWTankHeight;
+    DLineEdit *m_lePWTankHeight;
     QLabel    *m_lbPWHUnit;
-    QLineEdit *m_lePWTankCap;
+    DLineEdit *m_lePWTankCap;
     QLabel    *m_lbPWCUnit;
 
     QLabel    *m_lbSWTankName;
     QComboBox *m_cmbSWTankVolume;
-    QLineEdit *m_leSWTankHeight;
+    DLineEdit *m_leSWTankHeight;
     QLabel    *m_lbSWHUnit;
-    QLineEdit *m_leSWTankCap;
+    DLineEdit *m_leSWTankCap;
     QLabel    *m_lbSWCUnit;
 
     QPushButton* m_pExNextBtn;
@@ -77,7 +68,5 @@ public slots:
     void on_ExBackBtn_clicked();
 
 };
-
-extern CtrlApplication *gApp;
 
 #endif // EX_INIT_TANKCFGPAGE_H

@@ -1,9 +1,7 @@
 #include "mainwindow.h"
 #include "systemmonitorlistwidgtitem.h"
 #include "systemmonitorpage.h"
-
-#include <QScrollBar>
-#include <QListWidgetItem>
+#include <QListWidget>
 
 SystemMonitorPage::SystemMonitorPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {

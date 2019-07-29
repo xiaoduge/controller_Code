@@ -2,7 +2,6 @@
 #define EX_PERMISSIONSETPAGE_H
 
 #include "subpage.h"
-#include "Display.h"
 
 class MainWindow;
 class QTabWidget;

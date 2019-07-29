@@ -1,10 +1,10 @@
 #include "ex_consumableinstalldialog.h"
 #include "Display.h"
 #include "mainwindow.h"
+#include "dlineedit.h"
 #include <QLabel>
 #include <QPushButton>
 #include <QComboBox>
-#include <QLineEdit>
 #include <QSqlQuery>
 #include <QSqlDatabase>
 #include <QSqlError>
@@ -34,7 +34,7 @@ void Ex_ConsumableInstallDialog::initUI()
     palette.setColor(QPalette::WindowText, Qt::white);
     m_pCatLabel->setPalette(palette);
 
-    m_pLineEditCat = new QLineEdit(this);
+    m_pLineEditCat = new DLineEdit(this);
     m_pLineEditCat->setAlignment(Qt::AlignCenter);
     m_pLineEditCat->setReadOnly(true);
 
@@ -43,7 +43,7 @@ void Ex_ConsumableInstallDialog::initUI()
     palette.setColor(QPalette::WindowText, Qt::white);
     m_pLotLabel->setPalette(palette);
 
-    m_pLineEditLot = new QLineEdit(this);
+    m_pLineEditLot = new DLineEdit(this);
     m_pLineEditLot->setAlignment(Qt::AlignCenter);
     m_pLineEditLot->setReadOnly(true);
 
@@ -52,7 +52,7 @@ void Ex_ConsumableInstallDialog::initUI()
     palette.setColor(QPalette::WindowText, Qt::white);
     m_pUserLabel->setPalette(palette);
 
-    m_pLineEditUser = new QLineEdit(this);
+    m_pLineEditUser = new DLineEdit(this);
     m_pLineEditUser->setAlignment(Qt::AlignCenter);
 
     m_pInstallBtn = new QPushButton(tr("Install"), this);

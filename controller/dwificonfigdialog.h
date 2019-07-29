@@ -3,7 +3,7 @@
 
 #include "dwificonfigwidget.h"
 
-class QLineEdit;
+class DLineEdit;
 class QLabel;
 class QPushButton;
 
@@ -28,7 +28,7 @@ private:
     QPushButton *m_pConfigBtn;
     QPushButton *m_pCancelBtn;
 
-    QLineEdit *m_pPSKLineEdit;
+    DLineEdit *m_pPSKLineEdit;
     QLabel *m_pPSKLabel;
     QLabel *m_pSSIDLabel;
 };

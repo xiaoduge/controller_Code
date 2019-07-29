@@ -1,6 +1,6 @@
 #include "dwificonfigdialog.h"
 #include "mainwindow.h"
-#include <QLineEdit>
+#include "dlineedit.h"
 #include <QLabel>
 #include <QPushButton>
 #include <QFile>
@@ -76,7 +76,7 @@ void DWifiConfigDialog::initUI()
     m_pPSKLabel = new QLabel(this);
     m_pPSKLabel->setGeometry(40, 55, 160, 25);
 
-    m_pPSKLineEdit = new QLineEdit(this);
+    m_pPSKLineEdit = new DLineEdit(this);
     m_pPSKLineEdit->setGeometry(40, 82, 220, 25);
 
     m_pConfigBtn = new QPushButton(this);

@@ -1,5 +1,4 @@
 #include "ex_init_timepage.h"
-#include "titlebar.h"
 #include "mainwindow.h"
 #include <fcntl.h>
 #include <sys/ioctl.h>
@@ -7,11 +6,13 @@
 #include <unistd.h>
 #include <time.h>
 
+#include <QCalendarWidget>
 #include <QMouseEvent>
 #include <QPixmap>
 #include <QLabel>
 #include <QPushButton>
 #include <QComboBox>
+#include "cbitmapbutton.h"
 
 Ex_Init_TimePage::Ex_Init_TimePage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {

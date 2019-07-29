@@ -10,7 +10,7 @@ enum PARAMETER_CALIBRATION_ENUM
 {
     PARAMETER_CALIBRATION_FORMAT0 = 0,
     PARAMETER_CALIBRATION_FORMAT1,
-    PARAMETER_CALIBRATION_FORMAT2,
+    PARAMETER_CALIBRATION_FORMAT2
 };
 
 #define PC_LIST_WIDGET_HEIGHT (50)
@@ -45,9 +45,7 @@ signals:
 public slots:
 
 private:
-    
     QLabel     *m_lbName;
-
     DLineEdit  *m_editP1Value;
     DLineEdit  *m_editP2Value;
     DLineEdit  *m_editP3Value;

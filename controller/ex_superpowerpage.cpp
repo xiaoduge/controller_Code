@@ -1,5 +1,5 @@
 #include "ex_superpowerpage.h"
-#include "titlebar.h"
+#include "cbitmapbutton.h"
 #include "mainwindow.h"
 #include "ExtraDisplay.h"
 #include <QMouseEvent>

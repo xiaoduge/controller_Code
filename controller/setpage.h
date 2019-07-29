@@ -1,19 +1,10 @@
 #ifndef SETPAGE_H
 #define SETPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-
-#include "basewidget.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
 #include "subpage.h"
 
-
 class MainWindow;
+class CBitmapButton;
 
 enum SET_BTN_NAME
 {
@@ -63,7 +54,6 @@ private:
 
 private:
     CPage *m_pSubPages[SET_PAGE_NUM];
-
     CBitmapButton *m_pBtns[SET_PAGE_NUM];
 
 public slots:

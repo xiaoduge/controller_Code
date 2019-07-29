@@ -1,26 +1,20 @@
 #include "ex_historypage.h"
-#include "titlebar.h"
 #include "mainwindow.h"
-#include <QPainter>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QTime>
 #include <QSqlError>
-#include <QSqlDriver>
-#include <QSqlRecord>
 #include <QSqlTableModel>
 #include <QTableView>
 #include <QHeaderView>
-#include <QLabel>
 #include <QComboBox>
 #include <QPushButton>
-#include <QTableView>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QDockWidget>
-
+#include "sendtopage.h"
 #include "ToastDlg.h"
-
+#include <QCalendarWidget>
 
 
 Ex_HistoryPage::Ex_HistoryPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)

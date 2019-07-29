@@ -1,12 +1,11 @@
 #include "setdevicepage.h"
-
-#include "titlebar.h"
 #include "mainwindow.h"
 #include "cbitmapbutton.h"
-#include <QScrollBar>
 #include <QRect>
 #include <QFile>
 #include <QFileInfo>
+#include <QListWidget>
+#include <QScrollBar>
 #include "rpc.h"
 #include "sapp.h"
 #include "Interface.h"

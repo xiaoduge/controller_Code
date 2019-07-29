@@ -1,28 +1,16 @@
 #ifndef ALARMSETPAGE_H
 #define ALARMSETPAGE_H
 
-
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
-#include <QTextEdit>
-#include <QListWidgetItem>
-#include <QHBoxLayout>
-#include <QPushButton>
-
-#include "alarmsetlistwidgtitem.h"
 #include "Display.h"
+
 
 #define ALARMSETNUM (DISP_ALARM_PART0_NUM + DISP_ALARM_PART1_NUM)
 
-class MainWindow;
+class QListWidget;
+class QListWidgetItem;
+class AlarmSetListwidgtItem;
+class CBitmapButton;
 
 class AlarmSetPage : public CSubPage
 {

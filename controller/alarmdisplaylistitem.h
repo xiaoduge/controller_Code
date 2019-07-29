@@ -1,13 +1,10 @@
 #ifndef ADCSLISTITEM_H
 #define ADCSLISTITEM_H
 
-#include <QWidget>
 #include <QLabel>
-#include <QPushButton>
-
-#include "cbitmapbutton.h"
 
 class AlarmDisplayPage;
+class QLabel;
 
 #define ADCS_LIST_WIDGET_HEIGHT (170)   //100
 #define ADCS_LIST_WIDGET_WIDTH  (350)

@@ -785,7 +785,7 @@ void Ex_WaterQualityPage::updHistoryEcoInfo()
     {
         updateValue(m_tags[UP_IN],
                     strUnitMsg[UNIT_USCM].arg(m_historyInfo[UP_IN].value1, 0, 'f', 1),
-                    strTempUnit.arg(m_historyInfo[UP_IN].value1, 0, 'f', 1));
+                    strTempUnit.arg(m_historyInfo[UP_IN].value2, 0, 'f', 1));
     }
 
 }

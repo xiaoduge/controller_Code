@@ -1,17 +1,7 @@
 #include "allocationsetpage.h"
-
-#include "titlebar.h"
-
 #include "mainwindow.h"
-
-#include <QPainter>
-
-#include <QScrollBar>
-
-#include <QListWidgetItem>
-
-#include <QPixmap>
-
+#include "dlineedit.h"
+#include "cbitmapbutton.h"
 
 
 AllocationSetPage::AllocationSetPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
@@ -209,7 +199,7 @@ void AllocationSetPage::initUi()
    m_lbNameIdlePeriod->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 150 , 20));
    m_lbNameIdlePeriod->setAlignment(Qt::AlignLeft);
    
-   m_leIdlePeriod = new QLineEdit(m_pBackWidget[iIdx]);
+   m_leIdlePeriod = new DLineEdit(m_pBackWidget[iIdx]);
    m_leIdlePeriod->setGeometry(270,ITEM_HEIGHT/2 - 15,50,30);
    m_leIdlePeriod->setValidator(new QIntValidator(0, 999, this));
 
@@ -228,7 +218,7 @@ void AllocationSetPage::initUi()
    m_lbNameIdleCirTime->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 150 , 20));
    m_lbNameIdleCirTime->setAlignment(Qt::AlignLeft);
    
-   m_leIdleCirTime = new QLineEdit(m_pBackWidget[iIdx]);
+   m_leIdleCirTime = new DLineEdit(m_pBackWidget[iIdx]);
    m_leIdleCirTime->setGeometry(270,ITEM_HEIGHT/2 - 30/2 ,50,30);
    m_leIdleCirTime->setValidator(new QIntValidator(0, 99, this));
    

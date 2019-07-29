@@ -2,10 +2,11 @@
 #define LOCKUPDLG_H
 
 #include <QDialog>
-#include <QPushButton>
-#include <QGridLayout>
-#include <QLabel>
-#include <QCheckBox>
+
+class QPushButton;
+class QGridLayout;
+class QLabel;
+class QHBoxLayout;
 
 class LockupDlg : public QDialog {
     Q_OBJECT

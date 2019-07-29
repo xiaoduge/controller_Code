@@ -36,8 +36,6 @@
 #include <QSqlRecord>
 
 #include "ctrlapplication.h"
-#include "user.h"
-#include "LoginDlg.h"
 
 #include "syszuxim.h"
 #include "syszuxpinyin.h"

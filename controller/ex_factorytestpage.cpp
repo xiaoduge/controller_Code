@@ -1,5 +1,4 @@
 #include "ex_factorytestpage.h"
-#include "titlebar.h"
 #include "mainwindow.h"
 #include "ExtraDisplay.h"
 #include "Ex_Display_c.h"
@@ -9,6 +8,7 @@
 #include <QFormLayout>
 #include <QDir>
 #include <QTextBrowser>
+#include <QTabWidget>
 #include "dlineedit.h"
 
 

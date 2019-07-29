@@ -1,25 +1,14 @@
 #ifndef NETWORKPAGE_H
 #define NETWORKPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include "mainwindow.h"
-#include <QLabel>
-#include <QTextEdit>
-#include <QHBoxLayout>
-#include <QCheckBox>
 #include "Display.h"
-
 
 class MainWindow;
 class QProcess;
 class DLineEdit;
+class QCheckBox;
+class CBitmapButton;
 
 enum NETWORKPAGE_BTN_ENUM
 {

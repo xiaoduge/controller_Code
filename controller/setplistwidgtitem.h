@@ -8,7 +8,7 @@
 enum SET_POINT_ENUM
 {
     SET_POINT_FORMAT1 = 1,
-    SET_POINT_FORMAT2,
+    SET_POINT_FORMAT2
 };
 
 #define SET_P_LIST_WIDGET_HEIGHT (80)
@@ -36,7 +36,6 @@ signals:
 public slots:
 
 private:
-
     QLabel     *m_lbName;
     QLabel     *m_lbP1Name;
     DLineEdit  *m_editP1Value;

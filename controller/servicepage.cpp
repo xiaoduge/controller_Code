@@ -22,6 +22,7 @@
 #include "ex_languagepage.h"
 #include "unitpage.h"
 #include "dpushbutton.h"
+#include "cbitmapbutton.h"
 
 #define BTNS_PER_ROW (4)
 

@@ -1,12 +1,5 @@
 #include "waterqualitypage.h"
-
-
 #include "mainwindow.h"
-
-#include <math.h>
-
-
-#include <QPainter>
 
 #define toOneDecimal(v) (((float)(int)(v*10))/10)
 #define toTwoDecimal(v) (((float)(int)(v*100))/100)

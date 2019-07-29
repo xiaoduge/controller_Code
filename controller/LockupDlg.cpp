@@ -1,25 +1,9 @@
-#include <QTextCodec>
-#include <QMessageBox>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QDebug>
-#include <QString>
-#include <QVBoxLayout>
-#include <QMouseEvent>
 #include <QPushButton>
-
-#include <QSqlError>
-#include <QSqlDriver>
-#include <QSqlRecord>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-
 #include "LockupDlg.h"
 #include "mainwindow.h"
-#include "user.h"
-#include "MyParams.h"
-
 
 LockupDlg::LockupDlg(QWidget *parent) :
     QDialog(parent)

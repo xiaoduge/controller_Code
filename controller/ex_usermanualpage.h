@@ -2,16 +2,8 @@
 #define EX_USERMANUALPAGE_H
 
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-
-#include "basewidget.h"
 #include "subpage.h"
-
 #include "Display.h"
-#include "ctrlapplication.h"
-
 
 class MainWindow;
 class QPushButton;
@@ -69,9 +61,6 @@ private slots:
 
 
 };
-
-extern CtrlApplication *gApp;
-
 
 
 #endif // EX_USERMANUALPAGE_H

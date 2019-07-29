@@ -2,11 +2,10 @@
 #define CPAGE_H
 
 #include <QObject>
-#include <QLabel>
 #include <QMessageBox>
 #include <QPainter>
 #include <QDebug>
-
+#include <QLabel>
 #include "basewidget.h"
 
 class CBaseWidget;

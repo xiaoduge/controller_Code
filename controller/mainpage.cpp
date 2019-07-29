@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "mainpage.h"
 #include "navigatorbar.h"
+#include "cbitmapbutton.h"
 #include <QMouseEvent>
 
 

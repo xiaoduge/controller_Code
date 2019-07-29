@@ -7,7 +7,6 @@ class QPushButton;
 class QLabel;
 class Ex_DSleepWidget;
 
-
 class Ex_ScreenSleepPage : public CPage
 {
     Q_OBJECT

@@ -1,19 +1,11 @@
 #ifndef SERVICEPAGE_H
 #define SERVICEPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-
-#include "basewidget.h"
 #include "page.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
 
 class MainWindow;
 class DPushButton;
+class CBitmapButton;
 
 enum SERVICE_BTN_NAME
 {  
@@ -72,14 +64,12 @@ private:
     CBitmapButton *m_pBtns[SERVICE_BTN_NUMBER];   
     titleBar      *m_pTitleBar;
     QLabel        *m_pLbPageId[3];
-
     DPushButton* m_pLogoutBtn;
     
 
 public slots:
     void on_btn_clicked(int tmp);
     void on_navi_clicked(int tmp);
-
     void on_logoutBtn_clicked();
 };
 

@@ -1,10 +1,8 @@
 #ifndef EX_USERCFGPAGE_H
 #define EX_USERCFGPAGE_H
 
-#include <QObject>
-#include "basewidget.h"
 #include "subpage.h"
-#include "ctrlapplication.h"
+
 
 class QPushButton;
 class QLabel;

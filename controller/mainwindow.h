@@ -12,12 +12,10 @@
 #include "cminterface.h"
 #include "eco_w.h"
 
-#include "cbitmapbutton.h"
-#include "basewidget.h"
 #include "ex_init_handlecfgpage.h"
 #include "ex_calcpackflow.h"
-#include <QMutex>
 
+#include <QMutex>
 #include <QThread>
 #include "DNetworkConfig.h"
 #include <QProcess>
@@ -67,8 +65,8 @@ enum GLOBAL_BMP_ENUM
     GLOBAL_BMP_BTN_GENERAL_30_INACTIVE,
     GLOBAL_BMP_CS_NORMAL,               /*indicator for consumable material state */
     GLOBAL_BMP_CS_NOTIFICATION,         /*indicator for consumable material state */
-    GLOBAL_BMP_SHOPPING_CART,         
-    GLOBAL_BMP_REMIND_ICON,         
+    GLOBAL_BMP_SHOPPING_CART,
+    GLOBAL_BMP_REMIND_ICON,
     GLOBAL_BMP_ALARM_ICON,
     GLOBAL_BMP_DEVICE_ON,
     GLOBAL_BMP_DEVICE_OFF,
@@ -105,7 +103,7 @@ enum GLOBAL_FONT
 {
     GLOBAL_FONT_12 = 0,
     GLOBAL_FONT_14 ,
-    GLOBAL_FONT_24,    
+    GLOBAL_FONT_24,
     GLOBAL_FONT_30,
     GLOBAL_FONT_40,
     GLOBAL_FONT_48,
@@ -115,7 +113,7 @@ enum GLOBAL_FONT
 
 enum SETPAGE_NAME
 {
-    SETPAGE_MAINTAIN_PERIOD = 0, 
+    SETPAGE_MAINTAIN_PERIOD = 0,
     SETPAGE_ALARM_SETTING,
     SETPAGE_SYSTEM_TEST,
     SETPAGE_SYSTEM_PARAMETER_CALIBRATE,
@@ -199,8 +197,6 @@ class MainWindow;
 class navigatorBar;
 
 class SetDevicePage;
-
-//class Ex_ScreenSleepThread;
 class Ex_CheckConsumaleInstall;
 class Ex_ConsumableInstallDialog;
 class QTcpSocket;

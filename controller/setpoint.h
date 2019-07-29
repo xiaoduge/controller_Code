@@ -1,25 +1,16 @@
 #ifndef SETPOINT_H
 #define SETPOINT_H
 
-
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QLabel>
-#include <QTextEdit>
-#include <QHBoxLayout>
 
-#include "setplistwidgtitem.h"
 
 #define SETPNUM  22
 
 class MainWindow;
-
+class QListWidget;
+class QListWidgetItem;
+class SetPlistwidgtitem;
+class CBitmapButton;
 
 class SetPoint : public CSubPage
 {
@@ -48,6 +39,7 @@ private:
     
     void save();
 
+private:
     QListWidget *listWidget;
 
     QListWidgetItem *listWidgetIem[SETPNUM];
@@ -64,7 +56,6 @@ private:
 
 
 public slots:
-    
     void on_btn_clicked(int tmp);
     void ItemClicked(QListWidgetItem * pItem);
 };

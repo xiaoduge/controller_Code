@@ -2,12 +2,12 @@
 #define LOGINDLG_H
 
 #include <QDialog>
-#include <QPushButton>
-#include <QGridLayout>
-#include <QLabel>
-#include <QCheckBox>
 
 class DLineEdit;
+class QPushButton;
+class QLabel;
+class QGridLayout;
+class QHBoxLayout;
 
 class LoginDlg : public QDialog {
     Q_OBJECT
@@ -28,12 +28,11 @@ private slots:
     void on_pushButton_Cancel();
 
 private:
-
     QPushButton *m_pBtnLogin;
     QPushButton *m_pBtnCanCel;
 
-    DLineEdit* m_pEditUserName;
-    DLineEdit* m_pEditPassWord;
+    DLineEdit *m_pEditUserName;
+    DLineEdit *m_pEditPassWord;
 
     QLabel      *m_pLUserNameL;
     QLabel      *m_pLPassWordL;
@@ -42,5 +41,6 @@ private:
 
     QGridLayout *m_pTopLayout;
     QHBoxLayout *m_pBottomLayout;
+
 };
 #endif // LOGINDLG_H

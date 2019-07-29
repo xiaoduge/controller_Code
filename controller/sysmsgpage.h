@@ -1,20 +1,11 @@
 #ifndef SYSMSGPAGE_H
 #define SYSMSGPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
-#include <QTextEdit>
+#include <QTextCharFormat>
 
 class MainWindow;
-
+class QTextEdit;
 
 
 enum SYSMS_PAGE_TE_NAME {
@@ -24,7 +15,7 @@ enum SYSMS_PAGE_TE_NAME {
      SYSMS_PAGE_TE_3,
      SYSMS_PAGE_TE_4,
      SYSMS_PAGE_TE_5,
-     SYSMS_PAGE_TE_NUM,
+     SYSMS_PAGE_TE_NUM
 };
 
 #define SYSMS_PAGE_INFO_NUM (SYSMS_PAGE_TE_NUM - 1)
@@ -53,6 +44,7 @@ private:
 
     void buildTitles();
 
+private:
     QWidget       *m_pWidget;
 
     QTextEdit     *m_pMsgTextEdit[SYSMS_PAGE_TE_NUM]; 

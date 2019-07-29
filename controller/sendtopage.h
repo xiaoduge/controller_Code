@@ -1,27 +1,11 @@
 #ifndef SENDTOPAGE_H
 #define SENDTOPAGE_H
 
-#include <QObject>
-#include <QPixmap>
-#include <QPalette>
-#include <QLabel>
-
-#include "basewidget.h"
 #include "subpage.h"
-#include "cbitmapbutton.h"
-#include <QLineEdit>
-#include <QLabel>
-#include <QTextEdit>
-#include <QListWidgetItem>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QCheckBox>
-
-#include <QComboBox>
-#include <QCalendarWidget>
-#include "cbitmapbutton.h"
 
 class MainWindow;
+class QCheckBox;
+class CBitmapButton;
 
 
 #define RECEIVER 3
@@ -29,7 +13,7 @@ class MainWindow;
 enum SENDPAGE_BTN_ENUM
 {
     SENDPAGE_BTN_CANCEL = 0,
-    SNEDPAGE_BTN_OK,
+    SNEDPAGE_BTN_OK
 };
 
 class SendToPage : public CSubPage
@@ -71,9 +55,7 @@ private:
     QWidget       *m_pSetWidget[RECEIVER];
 
 public slots:
-
     void on_checkBox_changeState(int state);
-
     void on_btn_clicked(int tmp);
 
 };

@@ -1,12 +1,9 @@
 #include "systestpage.h"
-#include "titlebar.h"
+#include "systestlistwidgtitem.h"
 #include "mainwindow.h"
 #include "Display.h"
 #include "notify.h"
-
-#include <QScrollBar>
-#include <QListWidgetItem>
-
+#include <QListWidget>
 
 SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {

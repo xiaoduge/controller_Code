@@ -1,23 +1,8 @@
-#include <QTextCodec>
-#include <QMessageBox>
-#include <QGridLayout>
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QDebug>
-#include <QString>
-#include <QVBoxLayout>
-#include <QMouseEvent>
-#include <QPushButton>
-#include <QLineEdit>
-
-#include <QSqlError>
-#include <QSqlDriver>
-#include <QSqlRecord>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-
 #include "ToastDlg.h"
-#include "mainwindow.h"
+#include <QLabel>
+#include <QTimer>
+#include <QVBoxLayout>
+
 
 ToastDlg * ToastDlg::instance = NULL;
 
