@@ -7,6 +7,16 @@
 #define toOneDecimal(v) (((float)(int)(v*10))/10)
 #define toTwoDecimal(v) (((float)(int)(v*100))/100)
 
+double toResistivity(double value)
+{
+    if(0 == value)
+    {
+        return 0;
+    }
+    double temp = 1.0 / value;
+    return temp > 18.2 ? 18.2 : temp;
+}
+
 
 Ex_WaterQualityPage::Ex_WaterQualityPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
@@ -142,9 +152,19 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
 
             if (DispGetUpQtwFlag() || DispGetUpCirFlag())
             {
-                updateValue(m_tags[UP_Resis],
-                            strWaterUnit.arg(toOneDecimal(fQ)),
-                            strTempUnit.arg(toOneDecimal(fT)));
+                if(fQ > 1)
+                {
+                    updateValue(m_tags[UP_Resis],
+                                strWaterUnit.arg(fQ, 0,' f', 1),
+                                strTempUnit.arg(fT, 0, 'f', 1));
+                }
+                else
+                {
+                    updateValue(m_tags[UP_Resis],
+                                strWaterUnit.arg(fQ, 0, 'f',3),
+                                strTempUnit.arg(fT, 0, 'f',1));
+                }
+
                 m_historyInfo[UP_Resis].value1 = info->fQuality;
                 m_historyInfo[UP_Resis].value2 = info->fTemperature;
             }
@@ -190,25 +210,27 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
                 m_historyInfo[HP_Resis].value1 = info->fQuality;
                 m_historyInfo[HP_Resis].value2 = info->fTemperature;
             }
-            else if (DispGetEdiQtwFlag() //0629
-                     &&(MACHINE_PURIST != gGlobalParam.iMachineType)
-                     &&(MACHINE_RO != gGlobalParam.iMachineType))
+            else if (DispGetEdiQtwFlag() || DispGetTankCirFlag())
             {
-                updateValue(m_tags[HP_Resis],
-                            strWaterUnit.arg(toOneDecimal(fQ)),
-                            strTempUnit.arg(toOneDecimal(fT)));
+                switch(gGlobalParam.iMachineType)
+                {
+                case MACHINE_PURIST:
+                case MACHINE_RO:
+                case MACHINE_UP:
+                case MACHINE_ADAPT:
+                    break;
+                default:
+                {
+                    updateValue(m_tags[HP_Resis],
+                                strWaterUnit.arg(toOneDecimal(fQ)),
+                                strTempUnit.arg(toOneDecimal(fT)));
 
-                m_historyInfo[HP_Resis].value1 = info->fQuality;
-                m_historyInfo[HP_Resis].value2 = info->fTemperature;
-            }
-            else if (DispGetTankCirFlag()
-                && (MACHINE_PURIST != gGlobalParam.iMachineType))
-            {
-                updateValue(m_tags[HP_Resis],
-                            strWaterUnit.arg(toOneDecimal(fQ)),
-                            strTempUnit.arg(toOneDecimal(fT)));
-                m_historyInfo[HP_Resis].value1 = info->fQuality;
-                m_historyInfo[HP_Resis].value2 = info->fTemperature;
+                    m_historyInfo[HP_Resis].value1 = info->fQuality;
+                    m_historyInfo[HP_Resis].value2 = info->fTemperature;
+                    break;
+                }
+                }
+
             }
         }
         break;
@@ -255,15 +277,25 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
             m_historyInfo[EDI_Product].value1 = info->fQuality;
             m_historyInfo[EDI_Product].value2 = info->fTemperature;
 
-            if(gGlobalParam.iMachineType == MACHINE_RO)
+            if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
             {
-                if (DispGetEdiQtwFlag() || DispGetTankCirFlag())
+                switch(gGlobalParam.iMachineType)
                 {
-                    updateValue(m_tags[HP_Resis],
+                case MACHINE_RO:
+                case MACHINE_UP:
+                {
+                    if (DispGetEdiQtwFlag() || DispGetTankCirFlag())
+                    {
+                        updateValue(m_tags[HP_Resis],
                                 strWaterUnit.arg(fQ, 0, 'f', 1),
                                 strTempUnit.arg(fT, 0, 'f', 1));
-                    m_historyInfo[HP_Resis].value1 = info->fQuality;
-                    m_historyInfo[HP_Resis].value2 = info->fTemperature;
+                        m_historyInfo[HP_Resis].value1 = info->fQuality;
+                        m_historyInfo[HP_Resis].value2 = info->fTemperature;
+                    }
+                    break;
+                }
+                default:
+                    break;
                 }
             }
         }
@@ -299,6 +331,42 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
 
                 m_historyInfo[RO_Product].value1 = info->fQuality;
                 m_historyInfo[RO_Product].value2 = info->fTemperature;
+
+                switch(gGlobalParam.iMachineType)
+                {
+                case MACHINE_RO:
+                case MACHINE_UP:
+                {
+                    if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
+                    {
+                        if (DispGetEdiQtwFlag())
+                        {
+                            updateValue(m_tags[HP_Resis],
+                                        strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
+                                        strTempUnit.arg(fT, 0, 'f', 1));
+
+                            m_historyInfo[HP_Resis].value1 = info->fQuality;
+                            m_historyInfo[HP_Resis].value2 = info->fTemperature;
+                        }
+                    }
+                    break;
+                }
+                case MACHINE_ADAPT:
+                {
+                    if (DispGetEdiQtwFlag())
+                    {
+                        updateValue(m_tags[HP_Resis],
+                                    strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
+                                    strTempUnit.arg(fT, 0, 'f', 1));
+
+                        m_historyInfo[HP_Resis].value1 = info->fQuality;
+                        m_historyInfo[HP_Resis].value2 = info->fTemperature;
+                    }
+                    break;
+                }
+                default:
+                    break;
+                }
             }
             else
             {
@@ -680,17 +748,56 @@ void Ex_WaterQualityPage::updHistoryEcoInfo()
     QString strWaterUnit = strUnitMsg[UNIT_OMG];
     QString strTempUnit = strUnitMsg[UNIT_CELSIUS];
 
+    QString strHPUnit = strUnitMsg[UNIT_OMG];
+
+
     if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
     {
         tempValue[0].value1 = m_historyInfo[EDI_Product].value1;
         tempValue[1].value1  = m_historyInfo[HP_Resis].value1;
         tempValue[2].value1  = m_historyInfo[UP_Resis].value1;
+
+        switch(gGlobalParam.iMachineType)
+        {
+        case MACHINE_RO:
+        case MACHINE_UP:
+            if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
+            {
+                strHPUnit = strUnitMsg[UNIT_USCM];
+            }
+            break;
+        case MACHINE_ADAPT:
+            strHPUnit = strUnitMsg[UNIT_USCM];
+            break;
+        default:
+            break;
+        }
     }
     else
     {
         tempValue[0].value1  = toConductivity(m_historyInfo[EDI_Product].value1);
-        tempValue[1].value1  = toConductivity(m_historyInfo[HP_Resis].value1);
         tempValue[2].value1  = toConductivity(m_historyInfo[UP_Resis].value1);
+
+        switch(gGlobalParam.iMachineType)
+        {
+        case MACHINE_RO:
+        case MACHINE_UP:
+            if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+            {
+                tempValue[1].value1  = toConductivity(m_historyInfo[HP_Resis].value1);
+            }
+            else
+            {
+                tempValue[1].value1  = m_historyInfo[HP_Resis].value1;
+            }
+            break;
+        case MACHINE_ADAPT:
+            tempValue[1].value1  = m_historyInfo[HP_Resis].value1;
+            break;
+        default:
+            tempValue[1].value1  = toConductivity(m_historyInfo[HP_Resis].value1);
+            break;
+        }
 
         for(int i = 0; i < 3; ++i)
         {
@@ -701,6 +808,7 @@ void Ex_WaterQualityPage::updHistoryEcoInfo()
         }
 
         strWaterUnit = strUnitMsg[UNIT_USCM];
+        strHPUnit = strUnitMsg[UNIT_USCM];
     }
 
 
@@ -751,13 +859,13 @@ void Ex_WaterQualityPage::updHistoryEcoInfo()
     if(tempValue[1].value1 > 1)
     {
         updateValue(m_tags[HP_Resis],
-                    strWaterUnit.arg(tempValue[1].value1, 0, 'f',1),
+                    strHPUnit.arg(tempValue[1].value1, 0, 'f',1),
                     strTempUnit.arg(tempValue[1].value2, 0, 'f',1));
     }
     else
     {
         updateValue(m_tags[HP_Resis],
-                    strWaterUnit.arg(tempValue[1].value1, 0, 'f',3),
+                    strHPUnit.arg(tempValue[1].value1, 0, 'f',3),
                     strTempUnit.arg(tempValue[1].value2, 0, 'f',1));
     }
 

@@ -22,16 +22,11 @@ class SystemCfgPage : public CSubPage
 public:
     SystemCfgPage(QObject *parent = 0,CBaseWidget *widget = 0 , MainWindow *wndMain = 0);
     
-    virtual void creatTitle();
-
-    virtual void switchLanguage();
-
-    virtual void buildTranslation();
-
-    virtual void initUi();
-
-    virtual void update();
-
+    void creatTitle();
+    void switchLanguage();
+    void buildTranslation();
+    void initUi();
+    void update();
 
 private:
     void buildTitles();
@@ -39,6 +34,10 @@ private:
     void setBackColor();
     void createControl();
     void connectData();
+
+    void setDeviceType();
+    const QString setDeviceTypeRephile();
+    const QString setDeviceTypeTypeVWR();
 
 private:
     QLabel    *m_lbPWTankName;

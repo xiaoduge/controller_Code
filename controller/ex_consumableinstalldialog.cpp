@@ -8,7 +8,6 @@
 #include <QSqlQuery>
 #include <QSqlDatabase>
 #include <QSqlError>
-#include <QDebug>
 
 Ex_ConsumableInstallDialog::Ex_ConsumableInstallDialog(int id, QWidget * parent) :
     Ex_BaseWindow(parent),
@@ -115,7 +114,6 @@ bool Ex_ConsumableInstallDialog::checkUserInfo(const QString &userName)
     while(query.next())
     {
         QString name = query.value(1).toString();
-        qDebug() << "Name: " << name;
         if((userName.compare(name, Qt::CaseInsensitive) == 0))
         {
             return true;
@@ -160,7 +158,6 @@ void Ex_ConsumableInstallDialog::updatePage()
 void Ex_ConsumableInstallDialog::on_closeBtn_clicked()
 {
     this->close();
-    qDebug() << QString("on_closeBtn_clicked() instanceID: %1").arg(m_instanceID);
 }
 
 void Ex_ConsumableInstallDialog::on_installBtn_clicked()
@@ -189,7 +186,6 @@ void Ex_ConsumableInstallDialog::on_installBtn_clicked()
 
     emit installConusumable();
     this->close();
-    qDebug() << QString("on_installBtn_clicked() instanceID: %1").arg(m_instanceID);
 }
 
 void Ex_ConsumableInstallDialog::on_comboBox_currentIndexChanged(int index)

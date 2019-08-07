@@ -8,16 +8,13 @@ class ECO_W : public QObject
 {
     Q_OBJECT
 public:
-    ECO_W(QObject *parent = 0);
+    ECO_W(QObject *parent = 0) : QObject(parent){}
+
+public:
     int iECOid;
     float iQuality;
     int   iTemp;
     QString time;
-    
-signals:
-    
-public slots:
-    
 };
 
 #endif // ECO_W_H

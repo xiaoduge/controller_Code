@@ -3,7 +3,6 @@
 #include "ExtraDisplay.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
-#include <QDebug>
 #include "dloginwarningdialog.h"
 
 Ex_UserInfo::Ex_UserInfo(QObject *parent) :
@@ -48,8 +47,6 @@ int Ex_UserInfo::checkUserInfo(const QString &userName, const QString &passWord)
     {
         QString name = query.value(1).toString();
         QString pass = query.value(2).toString();
-        qDebug() << "Name: " << name;
-        qDebug() << "Password: " << pass;
         if((userName.compare(name, Qt::CaseInsensitive) == 0) && (passWord.compare(pass, Qt::CaseInsensitive) == 0))
         {
             return 2;

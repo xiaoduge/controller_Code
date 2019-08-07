@@ -3198,7 +3198,35 @@ void work_start_qtw(void *para)
                 CcbNotState(NOT_STATE_OTHER);
 
             }            
-            
+            //2019.7.30 add
+            else
+            {
+                if (APP_DEV_HS_SUB_HYPER == pCcb->aHandler[iIndex].iDevType)
+                {
+                    iTmp = (1 << APP_EXE_I1_NO)|(1 << APP_EXE_I2_NO)|(1 << APP_EXE_I4_NO)|(1 << APP_EXE_I5_NO)|(GET_B_MASK(APP_EXE_PM1_NO));
+                    iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
+                    if (iRet )
+                    {
+                        VOS_LOG(VOS_LOG_WARNING,"CcbSetIAndBs Fail %d",iRet);
+                        /* notify ui (late implemnt) */
+                        work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);
+                        return ;
+                    }
+                }
+                else
+                {
+                    iTmp = (1 << APP_EXE_I1_NO)|(1 << APP_EXE_I2_NO)|(GET_B_MASK(APP_EXE_PM1_NO));
+                    iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
+                    if (iRet )
+                    {
+                        VOS_LOG(VOS_LOG_WARNING,"CcbSetIAndBs Fail %d",iRet);
+                        /* notify ui (late implemnt) */
+                        work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);
+                        return ;
+                    }
+                }
+            }
+
             /* produce water */
             if (APP_DEV_HS_SUB_HYPER == pCcb->aHandler[iIndex].iDevType)
             {

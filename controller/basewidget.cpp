@@ -1,6 +1,5 @@
 #include "basewidget.h"
 #include "page.h"
-#include <QDebug>
 
 
 CBaseWidget::CBaseWidget(QWidget *parent) : QWidget(parent)
@@ -13,11 +12,8 @@ bool CBaseWidget::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == this )
     {
-        //if(event->type()==QEvent::ShowToParent)
-        //if (QEvent::WindowActivate == event->type())
         if (QEvent::Show == event->type())
         {
-            qDebug()<< this << "show";
             if(this->m_pPage)
             {
                 this->m_pPage->update();
@@ -25,7 +21,6 @@ bool CBaseWidget::eventFilter(QObject *watched, QEvent *event)
         }
         else if (event->type()== QEvent::Hide)
         {
-            qDebug()<< this << "hide";
             if(this->m_pPage)
             {
                 this->m_pPage->fade();

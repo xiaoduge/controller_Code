@@ -7,14 +7,18 @@ class QLabel;
 class QGridLayout;
 class QVBoxLayout;
 
-class ToastDlg : public QDialog {
+class ToastDlg : public QDialog
+{
     Q_OBJECT
         
 private:
     ToastDlg(QWidget *parent = 0);
-    ~ToastDlg();
+    ToastDlg(const ToastDlg& obj);
+    ToastDlg& operator =(const ToastDlg& obj);
+
 public:    
     static void makeToast(QString strText);
+    ~ToastDlg();
 
 private slots:
     void on_timer_event();

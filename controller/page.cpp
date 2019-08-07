@@ -2,22 +2,19 @@
 #include "basewidget.h"
 #include "mainwindow.h"
 
-CPage::CPage(QObject *parent,CBaseWidget *widget,MainWindow  *wndMain) : QObject(parent),m_widget(widget),m_wndMain(wndMain)
+CPage::CPage(QObject *parent,CBaseWidget *widget,MainWindow  *wndMain) : QObject(parent),
+    m_widget(widget),
+    m_wndMain(wndMain),
+    m_parent(qobject_cast<CPage*>(parent)),
+    m_curTitle(0),
+    m_pLabelTitle(NULL),
+    m_lstX(0),
+    m_lstY(0),
+    m_lstFlag(0)
 {
-    m_parent = (CPage *)parent;
-    m_curTitle = 0;
-    m_pLabelTitle = NULL;
-
-    m_lstX = 0;
-    m_lstY = 0;
-    m_lstFlag = 0;    
-    
     m_widget->setPage(this);
-
     m_wndMain->addPage(this);
-
     show(false);
-
 }
 
 void CPage::creatTitle()

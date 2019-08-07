@@ -9,16 +9,14 @@ class QVBoxLayout;
 class Ex_HintDialog : public QDialog
 {
     Q_OBJECT
-public:
+private:
     explicit Ex_HintDialog(QWidget *parent = 0);
-    Ex_HintDialog(const Ex_HintDialog &obj) = delete;
-    Ex_HintDialog& operator =(const Ex_HintDialog &obj) = delete;
-    ~Ex_HintDialog();
-    
-signals:
-    
+    Ex_HintDialog(const Ex_HintDialog &obj);
+    Ex_HintDialog& operator =(const Ex_HintDialog &obj);
+
 public:
     static void getInstance(QString strText);
+    ~Ex_HintDialog();
 
 protected slots:
     void on_timer_event();

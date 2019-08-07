@@ -2,7 +2,6 @@
 #include <QTableWidget>
 #include <QHBoxLayout>
 #include <QHeaderView>
-#include <QDebug>
 #include <QLabel>
 
 DWaterQualityWidget::DWaterQualityWidget(QWidget *parent) : QWidget(parent)

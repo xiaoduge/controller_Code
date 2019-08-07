@@ -291,19 +291,45 @@ void Ex_HistoryPage::dbQueryGetWater()
     initTabelHeaderData(m_pTableModel, HISTORYPAGE_DATA_GETW);
     m_pTableView->setModel(m_pTableModel);
 
-//    m_pTableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-    m_pTableView->horizontalHeader()->setResizeMode(0, QHeaderView::Fixed);
-    m_pTableView->setColumnWidth(0, 80);
+
+    m_pTableView->horizontalHeader()->setResizeMode(0, QHeaderView::ResizeToContents);
     m_pTableView->horizontalHeader()->setResizeMode(1, QHeaderView::Fixed);
     m_pTableView->horizontalHeader()->setResizeMode(2, QHeaderView::Fixed);
-    m_pTableView->horizontalHeader()->setResizeMode(3, QHeaderView::Fixed);
-    m_pTableView->horizontalHeader()->setResizeMode(4, QHeaderView::Fixed);
+
     m_pTableView->setColumnWidth(1, 120);
     m_pTableView->setColumnWidth(2, 120);
-    m_pTableView->setColumnWidth(3, 120);
-    m_pTableView->setColumnWidth(4, 120);
-    m_pTableView->horizontalHeader()->setResizeMode(5, QHeaderView::Stretch);
 
+    m_pTableView->horizontalHeader()->setResizeMode(3, QHeaderView::Stretch);
+    m_pTableView->horizontalHeader()->setResizeMode(4, QHeaderView::Stretch);
+    m_pTableView->horizontalHeader()->setResizeMode(5, QHeaderView::Stretch);
+    m_pTableView->horizontalHeader()->setResizeMode(6, QHeaderView::ResizeToContents);
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+        m_pTableView->hideColumn(4);
+        break;
+    case MACHINE_L_Genie:
+    case MACHINE_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_UP:
+    case MACHINE_ADAPT:
+    case MACHINE_PURIST:
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
+        {
+            m_pTableView->showColumn(4);
+        }
+        else
+        {
+            m_pTableView->hideColumn(4);
+        }
+        break;
+    default:
+        break;
+    }
 }
 
 //运行信息记录

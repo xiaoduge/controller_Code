@@ -10,16 +10,14 @@ class QPushButton;
 class DLoginWarningDialog : public QDialog
 {
     Q_OBJECT
-public:
+private:
     explicit DLoginWarningDialog(QWidget *parent = 0);
-    DLoginWarningDialog(const DLoginWarningDialog &obj) = delete;
-    DLoginWarningDialog& operator =(const DLoginWarningDialog &obj) = delete;
-    ~DLoginWarningDialog();
-
-signals:
+    DLoginWarningDialog(const DLoginWarningDialog &obj);
+    DLoginWarningDialog& operator =(const DLoginWarningDialog &obj);
 
 public:
     static void getInstance(QString strText);
+     ~DLoginWarningDialog();
 
 protected slots:
     void on_closeBtn_clicked();

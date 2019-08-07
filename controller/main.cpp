@@ -1,42 +1,18 @@
-#include <QtGui/QApplication>
 #include "mainwindow.h"
-#include <QTextCodec>
 
 #include <sys/wait.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dirent.h>
 #include <libgen.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/ioctl.h>
 #include <fcntl.h>
-#include <ctype.h>
 #include <unistd.h>
-#include <sys/mman.h>
-#include <string.h>
-#include <errno.h>
-#include <sys/time.h>
-#include <signal.h>
-#include <linux/vt.h>
-#include <linux/fb.h>
-#include <linux/kd.h>
-#include <semaphore.h>
-#include <linux/fb.h>
 
+
+#include <QTextCodec>
 #include <QDebug>
-
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QTime>
-#include <QSqlError>
-#include <QSqlDriver>
-#include <QSqlRecord>
 
 #include "ctrlapplication.h"
-
 #include "syszuxim.h"
 #include "syszuxpinyin.h"
 #include "cminterface.h"
@@ -44,7 +20,6 @@
 #include "ex_eventfilter.h"
 
 CtrlApplication *gApp;
-
 
 QString gastrDbTables[DB_TBL_NUM] = 
 {
@@ -55,7 +30,6 @@ QString gastrDbTables[DB_TBL_NUM] =
     "PWater",
     "Log",
 };
-
 
 QString CREATE_TABLE_Water = "CREATE TABLE IF NOT EXISTS  Water (id INTEGER PRIMARY KEY AUTOINCREMENT,"
                                                                   "ecoid INTEGER NULL,"

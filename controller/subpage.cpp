@@ -4,7 +4,7 @@
 
 CSubPage::CSubPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CPage(parent,widget,wndMain)
 {
-    m_parent =(CPage *) parent;
+
 }
 
 void CSubPage::creatTitle()

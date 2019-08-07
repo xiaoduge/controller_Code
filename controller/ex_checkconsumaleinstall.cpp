@@ -290,13 +290,11 @@ bool Ex_CheckConsumaleInstall::comparedWithSql()
             {
                 m_operateID = 3;
                 emit consumableMsg(m_iType, m_catNo, m_lotNo);
-                qDebug() << QString("%1, consumable compared with Sql: write install date").arg(m_instanceID);
                 return true; //update
             }
             else
             {
                 m_isBusy = false;
-                qDebug() << QString("%1, consumable compared with Sql: existence").arg(m_instanceID);
                 return false; // do nothing
             }
         }
@@ -304,7 +302,6 @@ bool Ex_CheckConsumaleInstall::comparedWithSql()
         {
             m_operateID = 2;
             emit consumableMsg(m_iType, m_catNo, m_lotNo);
-            qDebug() << QString("%1, consumable compared with Sql: update").arg(m_instanceID);
             return true; //update
         }
     }
@@ -312,7 +309,6 @@ bool Ex_CheckConsumaleInstall::comparedWithSql()
     {
         m_operateID = 1;
         emit consumableMsg(m_iType, m_catNo, m_lotNo);
-        qDebug() << QString("%1, consumable compared with Sql: insert new").arg(m_instanceID);
         return true;   //insert new
     }
 

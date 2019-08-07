@@ -720,9 +720,6 @@ void ConsumableInsPage::updateRfidInfo(int iRfId)
 {
    /* search item */
    int index = m_aInsListItem[m_iCurrentItem]->getItemId();
-   int iMapIdx;
-   
-   qDebug() << "updateRfidInfo :  " << index << m_iCurrentItem <<aIds[index].iRfid; 
    
    if (aIds[index].iRfid != iRfId)
    {

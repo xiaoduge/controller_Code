@@ -1,7 +1,6 @@
 #include "ex_eventfilter.h"
 #include <QEvent>
 #include "ExtraDisplay.h"
-#include <QDebug>
 #include <QMutexLocker>
 #include "mainwindow.h"
 #include "helper.h"

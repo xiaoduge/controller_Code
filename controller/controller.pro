@@ -33,8 +33,6 @@ SOURCES += main.cpp\
     list.c \
     log.c \
     LoginDlg.cpp \
-    eco_w.cpp \
-    switchbtn.cpp \
     LockupDlg.cpp \
     syszuxim.cpp \
     syszuxpinyin.cpp \
@@ -133,7 +131,6 @@ HEADERS  += mainwindow.h \
     LoginDlg.h \
     eco_w.h \
     MyParams.h \
-    switchbtn.h \
     LockupDlg.h \
     syszuxpinyin.h \
     syszuxim.h \

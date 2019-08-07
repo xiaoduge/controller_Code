@@ -27,7 +27,6 @@ ToastDlg::ToastDlg(QWidget *parent) :
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(on_timer_event()));
-
 }
 
 ToastDlg::~ToastDlg()

@@ -3,7 +3,6 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QFile>
-#include <QDebug>
 
 DConsumableInstallWidget::DConsumableInstallWidget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f)
 {

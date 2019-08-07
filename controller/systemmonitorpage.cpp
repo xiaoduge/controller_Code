@@ -512,8 +512,6 @@ void SystemMonitorPage::updateSwitchInfo()
 
    unsigned int ulDelta = ulTempMaks ^ m_ulSwitchMask;
 
-   qDebug() << "updateSwitchInfo" << ulDelta << m_ulSwitchMask;
-
    if (ulDelta)
    {
         int iLoop;

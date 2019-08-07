@@ -30,9 +30,9 @@ class DeviceItem : public QWidget
 public:
     explicit DeviceItem(CPage *parent, const QString& text0,const QString& text1, const QString& text2)
     {
+        Q_UNUSED(parent);
         int iLoop;
 
-        (void)parent;
         m_pMainLayout   =  new QGridLayout(this);
         m_pTopLayout    =  new QHBoxLayout; //QGridLayout
         

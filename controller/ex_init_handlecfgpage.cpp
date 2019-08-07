@@ -645,7 +645,6 @@ void Ex_Init_HandleCfgpage::on_pushButton_SaveHandler()
     else
     {
         m_wndMain->prepareKeyStroke();
-        //QMessageBox::StandardButton rb = QMessageBox::question(NULL, tr("Handler"), tr("One and only one default handler shoud be configured ?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
         QMessageBox::about(NULL, tr("About"), tr("One and only one default handler per category shoud be configured !"));
     }
 
@@ -746,16 +745,10 @@ void Ex_Init_HandleCfgpage::on_pushButton_DeleteHandler()
         pItem = m_pListWgtHandler->currentItem();
         pHandler = (HandlerItem *)m_pListWgtHandler->itemWidget(pItem);
 
-        //strncpy(hdl.name,pHandler->getItemText(HANDLER_ITEM_SN).toAscii(),APP_SN_LENGTH);
+        m_pListWgtHandler->removeItemWidget(pItem);
 
-        //qDebug() << __FUNCTION__ << pHandler->getItemText(HANDLER_ITEM_SN) << hdl.name;
-
-        //m_wndMain->delHandler(hdl.name);
-       m_pListWgtHandler->removeItemWidget(pItem);
-
-       delete pItem;
-
-       delete pHandler;
+        delete pItem;
+        delete pHandler;
 
     }
     else

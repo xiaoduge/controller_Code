@@ -1,22 +1,9 @@
-#include <math.h>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "notify.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include <cmath>
 #include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/ioctl.h>
-#include <dirent.h>
-#include <libgen.h>
-#include <signal.h>
 #include <fcntl.h>
-#include <time.h>
-#include <errno.h>
-#include <sys/time.h>
-#include <termios.h>
-#include <arpa/inet.h>
 
 #include <QSettings>
 #include <QSqlDatabase>
@@ -178,7 +165,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190729_debug");
+QString strSoftwareVersion = QString("0.1.8.190807_RC");
 
 MainWindow *gpMainWnd;
 
@@ -431,7 +418,6 @@ void MainRetriveLastRunState(int iMachineType)
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
     QString strV = "/LastRunState/";
     ex_gGlobalParam.lastRunState = config->value(strV, 0).toInt();
-    qDebug() << strV << ":" << ex_gGlobalParam.lastRunState;
 
     if (config)
     {
@@ -447,7 +433,6 @@ void MainRetriveDefaultState(int iMachineType)//
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
     QString strV = "/DefaultState/";
     ex_gGlobalParam.Ex_Default = config->value(strV, 0).toInt();
-    qDebug() << strV << ":" << ex_gGlobalParam.Ex_Default;
 
     if (config)
     {
@@ -481,7 +466,7 @@ void MainRetriveProductMsg(int iMachineType) //ex_dcj
     QString strV;
 
     strV = "/ProductMsg/iCompany/";
-    ex_gGlobalParam.Ex_System_Msg.Ex_iCompany = config->value(strV, 0).toInt();
+    ex_gGlobalParam.Ex_System_Msg.Ex_iCompany = config->value(strV, 1).toInt();
 
     strV = "/ProductMsg/CatalogNo/";
     ex_gGlobalParam.Ex_System_Msg.Ex_CatalogNo = config->value(strV, "unknow").toString();
@@ -558,16 +543,13 @@ void MainRetriveExConsumableMsg(int iMachineType, DISP_CONSUME_MATERIAL_SN_STRU 
         memset(mParam.aLn[iLoop],0,sizeof(LOTNO));
         strncpy(mParam.aLn[iLoop],strUnknow.toAscii(),APP_LOT_LENGTH);
     }
-    qDebug() << "MainRetriveExConsumableMsg() running";
 
     QSqlQuery query;
     query.exec("select * from Consumable");
     while(query.next())
     {
-        qDebug() << QString("MainRetriveExConsumableMsg: %1").arg(query.value(4).toInt());
         if(query.value(4).toInt() == 0)
         {
-            qDebug() << QString("0 RetriveConsumable: %1").arg(query.value(1).toInt());
             memset(cParam.aCn[query.value(1).toInt()], 0, sizeof(CATNO));
             strncpy(cParam.aCn[query.value(1).toInt()], query.value(2).toString().toAscii(), APP_CAT_LENGTH);
             memset(cParam.aLn[query.value(1).toInt()], 0, sizeof(LOTNO));
@@ -575,7 +557,6 @@ void MainRetriveExConsumableMsg(int iMachineType, DISP_CONSUME_MATERIAL_SN_STRU 
         }
         else
         {
-            qDebug() << QString("1 RetriveConsumable: %1").arg(query.value(1).toInt());
             memset(mParam.aCn[query.value(1).toInt()], 0, sizeof(CATNO));
             strncpy(mParam.aCn[query.value(1).toInt()], query.value(2).toString().toAscii(), APP_CAT_LENGTH);
             memset(mParam.aLn[query.value(1).toInt()], 0, sizeof(LOTNO));
@@ -645,8 +626,6 @@ void MainRetriveMachineParam(int iMachineType,DISP_MACHINE_PARAM_STRU  &Param)
 
         Param.SP[iLoop] = config->value(strV,defautlValue[iLoop]).toFloat();
 
-        qDebug() << strV << ":" << Param.SP[iLoop];
-
     }
 
     if (config)
@@ -678,8 +657,6 @@ void MainRetriveTMParam(int iMachineType,DISP_TIME_PARAM_STRU  &Param)
 
         int iValue = config->value(strV,5000).toInt();
         Param.aulTime[iLoop] = iValue;
-
-        qDebug() << strV << ":" <<iValue;
     }    
     if (config)
     {
@@ -710,10 +687,8 @@ void MainRetriveAlarmSetting(int iMachineType,DISP_ALARM_SETTING_STRU  &Param)
         int iValue = config->value(strV,defautlValue[iLoop]).toInt();
         Param.aulFlag[iLoop] = iValue;
 
-        qDebug() << strV << ":" <<iValue;
     } 
 
-        
     if (config)
     {
         delete config;
@@ -742,10 +717,6 @@ void MainRetriveSubModuleSetting(int iMachineType,DISP_SUB_MODULE_SETTING_STRU  
         iValue = config->value(strV,gaMachineType[iMachineType].iDefaultModule).toInt();
 
         Param.ulFlags  = iValue;
-
-        qDebug() << strV << ":" << iValue;
-        
-
     }
 
     switch(iMachineType)
@@ -969,9 +940,6 @@ void MainRetriveFmParam(int iMachineType,DISP_FM_SETTING_STRU  &Param)
         int iValue = config->value(strV,gaMachineType[iMachineType].iDefaultFmPulse).toInt();
         
         Param.aulCfg[iLoop] = iValue;
-
-        qDebug() << strV << ":" << Param.aulCfg[iLoop];
-        
     }    
     
     if (config)
@@ -1029,9 +997,7 @@ void MainRetrivePmParam(int iMachineType,DISP_PM_SETTING_STRU  &Param)
             
             Param.afDepth[iLoop] = fValue;            
             break;
-        }
-
-        qDebug() << strV << ":" << Param.aiBuckType[iLoop]  << Param.afDepth[iLoop] << Param.afCap[iLoop];        
+        }       
         
     }    
     
@@ -1160,8 +1126,7 @@ void MainRetriveMiscParam(int iMachineType,DISP_MISC_SETTING_STRU  &Param)
 
         strV = "/MISC/LAN";
         iValue = config->value(strV,0).toInt();
-        Param.iLan = iValue;        
-        qDebug() << strV << ":" << iValue;        
+        Param.iLan = iValue;               
 
         strV = "/MISC/BRIGHTNESS";
         iValue = config->value(strV,100).toInt();
@@ -1173,28 +1138,23 @@ void MainRetriveMiscParam(int iMachineType,DISP_MISC_SETTING_STRU  &Param)
     
         strV = "/MISC/CONDUCTIVITYUNIT";
         iValue = config->value(strV,0).toInt();
-        Param.iUint4Conductivity = iValue;        
-        qDebug() << strV << ":" << iValue;        
+        Param.iUint4Conductivity = iValue;              
 
         strV = "/MISC/TEMPUNIT";
         iValue = config->value(strV,0).toInt();
-        Param.iUint4Temperature = iValue;      
-        qDebug() << strV << ":" << iValue;        
+        Param.iUint4Temperature = iValue;            
         
         strV = "/MISC/PRESSUREUNIT";
         iValue = config->value(strV,0).toInt();
-        Param.iUint4Pressure = iValue;        
-        qDebug() << strV << ":" << iValue;        
+        Param.iUint4Pressure = iValue;             
 
         strV = "/MISC/LIQUIDUNIT";
         iValue = config->value(strV,0).toInt();
-        Param.iUint4LiquidLevel = iValue;        
-        qDebug() << strV << ":" << iValue;        
+        Param.iUint4LiquidLevel = iValue;               
 
         strV = "/MISC/FLOWVELOCITYUNIT";
         iValue = config->value(strV,0).toInt();
-        Param.iUint4FlowVelocity = iValue;        
-        qDebug() << strV << ":" << iValue;        
+        Param.iUint4FlowVelocity = iValue;                
 
         strV = "/MISC/SOUNDMASK";
         iValue = config->value(strV,0).toInt();
@@ -1405,12 +1365,6 @@ void MainRetriveCMInfo(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_ROC12LIFEDAY])
     {
         Param.aulCms[DISP_ROC12LIFEDAY] = DispGetCurSecond(); // NEW uv
-    }
-
-    
-    for (iLoop = 0; iLoop < DISP_CM_NUM; iLoop++)
-    {
-         qDebug()<<"info"<<Param.aulCms[iLoop];
     }
     
     if (config)
@@ -1657,7 +1611,7 @@ void MainSaveExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int 
     query.addBindValue(iIndex);
     query.addBindValue(category);
     ret = query.exec();
-    qDebug() << QString("MainSaveExConsumableMsg consumable compared with Sql: %1").arg(ret);
+
     if(query.next())
     {
             QString lotno = query.value(0).toString();
@@ -1675,8 +1629,7 @@ void MainSaveExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int 
                 queryUpdate.addBindValue(strCurDate);
                 queryUpdate.addBindValue(iIndex);
                 queryUpdate.addBindValue(category);
-                bool ret = queryUpdate.exec();
-                qDebug() << QString("consumable update Sql: %1").arg(ret);
+                queryUpdate.exec();
             }
     }
     else
@@ -1689,8 +1642,7 @@ void MainSaveExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int 
         queryInsert.bindValue(":LotNo", ln);
         queryInsert.bindValue(":category", category);
         queryInsert.bindValue(":time", strCurDate);
-        bool ret = queryInsert.exec();
-        qDebug() << QString("consumable insert Sql: %1").arg(ret);
+        queryInsert.exec();
     }
     sync();
 }
@@ -1789,8 +1741,6 @@ void MainSaveTMParam(int iMachineType,DISP_TIME_PARAM_STRU  &Param)
             config->setValue(strV,strTmp);
         }
         
-        qDebug() << strV << ":" << Param.aulTime[iLoop];
-
     }    
     if (config)
     {
@@ -1949,8 +1899,6 @@ void MainSaveFMParam(int iMachineType,DISP_FM_SETTING_STRU  &Param)
             strTmp = QString::number(Param.aulCfg[iLoop]);
             
             config->setValue(strV,strTmp);
-
-            qDebug() << "Save FM: " << strTmp;
         }
 
     }    
@@ -7368,11 +7316,13 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                          query.bindValue(":name", "HP");
                          query.bindValue(":quantity",fQuantity);
                          query.bindValue(":quality",m_EcowCurr[num].iQuality);
+                         query.bindValue(":TOC", 0);
                          query.bindValue(":tmp",tmpI4);
                          query.bindValue(":time", strTime);
                          bDbResult = query.exec();
 
                          updQtwState(APP_DEV_HS_SUB_REGULAR,false);
+                         sync();
                      }                    
                     break;
                  case APP_DEV_HS_SUB_HYPER:
@@ -7390,6 +7340,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                          bDbResult = query.exec();
 
                          updQtwState(APP_DEV_HS_SUB_HYPER,false);
+                         sync();
                     }                    
                     break;
                  }
@@ -9031,7 +8982,7 @@ void MainWindow::updateRectAlarmState()
         DispGetOtherCurrent(APP_EXE_N1_NO, &iTmpData);
         if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N1]) > 15)
         {
-            if(iTmpData < 50)
+            if(iTmpData < 300)
             {
                 //Alaram
                 if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1 == 0)
@@ -9070,7 +9021,7 @@ void MainWindow::updateRectAlarmState()
         DispGetOtherCurrent(APP_EXE_N2_NO, &iTmpData);
         if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N2]) > 15)
         {
-            if(iTmpData < 50)
+            if(iTmpData < 300)
             {
                 //Alaram
                 if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmN2 == 0)
@@ -9107,7 +9058,7 @@ void MainWindow::updateRectAlarmState()
     //N3
     if(ex_gCcb.Ex_Rect_State.EX_N_NO[EX_RECT_N3] == 1)
     {
-        if(!gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TankUV))
+        if(!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TankUV)))
         {
             if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 == 1)
             {
@@ -9124,7 +9075,7 @@ void MainWindow::updateRectAlarmState()
         DispGetOtherCurrent(APP_EXE_N3_NO, &iTmpData);
         if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N3]) > 15)
         {
-            if(iTmpData < 50)
+            if(iTmpData < 300)
             {
                 //Alaram
                 if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmN3 == 0)
@@ -9632,8 +9583,7 @@ void MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int
                 queryUpdate.addBindValue(installDate);
                 queryUpdate.addBindValue(iIndex);
                 queryUpdate.addBindValue(category);
-                bool ret = queryUpdate.exec();
-                qDebug() << QString("consumable update Sql: %1").arg(ret);
+                queryUpdate.exec();
             }
     }
     else
@@ -9646,8 +9596,7 @@ void MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int
         queryInsert.bindValue(":LotNo", ln);
         queryInsert.bindValue(":category", category);
         queryInsert.bindValue(":time", installDate);
-        bool ret = queryInsert.exec();
-        qDebug() << QString("consumable insert Sql: %1").arg(ret);
+        queryInsert.exec();
     }
 }
 

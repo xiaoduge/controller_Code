@@ -76,7 +76,7 @@ static CONFIG_LABEL sLabels[LABEL_NUMBER] = {
     /* TANK */
     {360,115,75,35,GLOBAL_FONT_40,QColor(255,255,255),NULL,"0.0",0,0},
     {438,128,10,16,GLOBAL_FONT_14,QColor(255,255,255),NULL,"L",0,0},
-    {360,170,75,35,GLOBAL_FONT_40,QColor(255,255,255),NULL,"18.2",0,0},
+    {360,170,75,35,GLOBAL_FONT_40,QColor(255,255,255),NULL,"0",0,0},
     {380,205,60,16,GLOBAL_FONT_14,QColor(255,255,255),NULL,"O",0,0}, // omg
     {360,50,146,16,GLOBAL_FONT_14,QColor(255,255,255),NULL,0,0,TEXT_ALIGN_LEFT},
 
@@ -517,8 +517,6 @@ void MainPage::initUi()
         }
         
         m_pLbPageId[index]->show();
-
-        qDebug() << gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->width() << gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->height();
     }
 
     m_pLabels[LABEL_NAVI_UP_LOGO]->setText(m_aWaterType[gGlobalParam.iMachineType][0]) ;
@@ -1054,8 +1052,6 @@ void MainPage::on_btn_clicked(int index)
             }   
             m_wndMain->startQtw(APP_DEV_HS_SUB_HYPER,m_abQtwFlag[APP_DEV_HS_SUB_HYPER]);
         }
-        QString strCurTime2 = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-        qDebug() << QString("dcjhost UP TW btn clicked: %1").arg(strCurTime2);
     }
         break;
     case BTN_NAVI_EDI_TW:
@@ -1079,8 +1075,6 @@ void MainPage::on_btn_clicked(int index)
             }   
             m_wndMain->startQtw(APP_DEV_HS_SUB_REGULAR,m_abQtwFlag[APP_DEV_HS_SUB_REGULAR]);
         }
-        QString strCurTime1 = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-        qDebug() << QString("dcjhost EDI TW btn clicked: %1").arg(strCurTime1);
     }
         break;
     case BTN_ALARM_NOTIFY:
@@ -1714,7 +1708,6 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                 if (bVisible)
                 {
                     m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
-
                     fQ = (fQ > 200 ? 200 : fQ);
                     if(fQ > 99)
                     {
@@ -1725,9 +1718,8 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                         m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->setText(QString::number(fQ,'f',1));
                     }
                     m_pLabels[LABEL_NAVI_EDI_WQ_UNIT]->setText(tr("us"));
-
-                    m_aHistoryEco[iIndex] = *info;
                 }
+                m_aHistoryEco[iIndex] = *info;
                 break;
             }
             case MACHINE_UP:

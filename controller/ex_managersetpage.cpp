@@ -790,8 +790,6 @@ void Ex_ManagerSetPage::initTimePage()
 
     for(iLoop = 0 ; iLoop < DATE_NUM ; iLoop++)
     {
-        qDebug() << "Create_Date_Time : " << iLoop;
-
         ShowWidget[iLoop] = new QWidget(m_pageWidget[MANAGER_PAGE_TIME]);
 
         QPalette pal(ShowWidget[iLoop]->palette());
