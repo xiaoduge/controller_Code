@@ -183,6 +183,9 @@ void Ex_Init_TimePage::Create_Date_Time()
             case APP_LAN_RUS:
                 CalS->setLocale(QLocale::Russian);
                 break;
+            case APP_LAN_POR:
+                CalS->setLocale(QLocale::Portuguese);
+                break;
             default:
                 CalS->setLocale(QLocale::English);
                 break;

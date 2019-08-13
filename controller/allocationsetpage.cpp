@@ -105,7 +105,7 @@ void AllocationSetPage::initUi()
     m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
     
     m_lbNameTitle = new QLabel(m_pBackWidget[iIdx]);
-    m_lbNameTitle->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 150 , 20));
+    m_lbNameTitle->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 200 , 20));
     m_lbNameTitle->setAlignment(Qt::AlignLeft);
 
     m_pBtnEnable = new CBitmapButton(m_pBackWidget[iIdx],BITMAPBUTTON_STYLE_SWITCH,BITMAPBUTTON_PIC_STYLE_NORMAL,0);
@@ -116,20 +116,20 @@ void AllocationSetPage::initUi()
     iIdx++;
     
 
-   m_pBackWidget[iIdx] = new QWidget(m_widget);
-   m_pBackWidget[iIdx]->setAutoFillBackground(true);
-   m_pBackWidget[iIdx]->setPalette(pal);
-   m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
+    m_pBackWidget[iIdx] = new QWidget(m_widget);
+    m_pBackWidget[iIdx]->setAutoFillBackground(true);
+    m_pBackWidget[iIdx]->setPalette(pal);
+    m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
    
-   m_lbNameStartTime = new QLabel(m_pBackWidget[iIdx]);
-   m_lbNameStartTime->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 140 , 20));
-   m_lbNameStartTime->setAlignment(Qt::AlignLeft);
+    m_lbNameStartTime = new QLabel(m_pBackWidget[iIdx]);
+    m_lbNameStartTime->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 140 , 20));
+    m_lbNameStartTime->setAlignment(Qt::AlignLeft);
 
-   m_cmbStartTimeHour = new QComboBox(m_pBackWidget[iIdx]);
-   m_cmbStartTimeHour->setGeometry(270,ITEM_HEIGHT/2 - 10 - 15,50,30);
-   m_cmbStartTimeMin = new QComboBox(m_pBackWidget[iIdx]);
-   m_cmbStartTimeMin->setGeometry(325,ITEM_HEIGHT/2 - 10 - 15,50,30);
-   iIdx++;
+    m_cmbStartTimeHour = new QComboBox(m_pBackWidget[iIdx]);
+    m_cmbStartTimeHour->setGeometry(270,ITEM_HEIGHT/2 - 10 - 15,50,30);
+    m_cmbStartTimeMin = new QComboBox(m_pBackWidget[iIdx]);
+    m_cmbStartTimeMin->setGeometry(325,ITEM_HEIGHT/2 - 10 - 15,50,30);
+    iIdx++;
 
    for(iLoop = 0 ; iLoop < 24 ; iLoop++ )
    {
@@ -196,15 +196,15 @@ void AllocationSetPage::initUi()
    m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
    
    m_lbNameIdlePeriod = new QLabel(m_pBackWidget[iIdx]);
-   m_lbNameIdlePeriod->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 150 , 20));
+   m_lbNameIdlePeriod->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 200 , 20));
    m_lbNameIdlePeriod->setAlignment(Qt::AlignLeft);
    
    m_leIdlePeriod = new DLineEdit(m_pBackWidget[iIdx]);
-   m_leIdlePeriod->setGeometry(270,ITEM_HEIGHT/2 - 15,50,30);
+   m_leIdlePeriod->setGeometry(300,ITEM_HEIGHT/2 - 15,50,30);
    m_leIdlePeriod->setValidator(new QIntValidator(0, 999, this));
 
    m_lbNameIdlePeriodUnit = new QLabel(m_pBackWidget[iIdx]);
-   m_lbNameIdlePeriodUnit->setGeometry(QRect(325, ITEM_HEIGHT/2 , 40 , 20));
+   m_lbNameIdlePeriodUnit->setGeometry(QRect(355, ITEM_HEIGHT/2 , 40 , 20));
    m_lbNameIdlePeriodUnit->setAlignment(Qt::AlignLeft);
    
    iIdx++;
@@ -215,15 +215,15 @@ void AllocationSetPage::initUi()
    m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
    
    m_lbNameIdleCirTime = new QLabel(m_pBackWidget[iIdx]);
-   m_lbNameIdleCirTime->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 150 , 20));
+   m_lbNameIdleCirTime->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 200 , 20));
    m_lbNameIdleCirTime->setAlignment(Qt::AlignLeft);
    
    m_leIdleCirTime = new DLineEdit(m_pBackWidget[iIdx]);
-   m_leIdleCirTime->setGeometry(270,ITEM_HEIGHT/2 - 30/2 ,50,30);
+   m_leIdleCirTime->setGeometry(300,ITEM_HEIGHT/2 - 30/2 ,50,30);
    m_leIdleCirTime->setValidator(new QIntValidator(0, 99, this));
    
    m_lbNameIdleCirTimeUnit = new QLabel(m_pBackWidget[iIdx]);
-   m_lbNameIdleCirTimeUnit->setGeometry(QRect(325, ITEM_HEIGHT/2 , 40 , 20));
+   m_lbNameIdleCirTimeUnit->setGeometry(QRect(355, ITEM_HEIGHT/2 , 40 , 20));
    m_lbNameIdleCirTimeUnit->setAlignment(Qt::AlignLeft);
    
    iIdx++;

@@ -32,7 +32,7 @@ int DConsumableInstallWidget::id()
 void DConsumableInstallWidget::initUI()
 {
     m_pTagLabel = new QLabel;
-    m_pTagLabel->setFixedWidth(150);
+    m_pTagLabel->setFixedWidth(300);
     m_pTagLabel->setStyleSheet("font-size:20pt;color:#000000;font-family:Arial;QFont::Bold");
     m_pInsCheckBox = new QCheckBox;
     m_pInsCheckBox->setEnabled(false);
@@ -44,9 +44,9 @@ void DConsumableInstallWidget::initUI()
     m_pInsCheckBox->setStyleSheet(strQss);
 
     QHBoxLayout* hLayout = new QHBoxLayout;
-    hLayout->addSpacing(20);
+    hLayout->addSpacing(10);
     hLayout->addWidget(m_pTagLabel);
-    hLayout->addSpacing(180);
+    hLayout->addSpacing(60);
     hLayout->addWidget(m_pInsCheckBox);
     hLayout->addStretch();
 

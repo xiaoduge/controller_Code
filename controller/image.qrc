@@ -117,6 +117,7 @@
         <file alias="world.png">pics/image/world.png</file>
         <file alias="blueWorld.png">pics/image/blueWorld.png</file>
         <file alias="logout.png">pics/image/logout.png</file>
+        <file alias="rephile.png">pics/image/rephile.png</file>
     </qresource>
     <qresource prefix="/userManual">
         <file alias="G_E_1.png">pics/Manual/Genie_G_EN/G_E_1.png</file>
@@ -160,5 +161,27 @@
         <file alias="E_3_H4.png">pics/device/E_3_H4.png</file>
         <file alias="E_3_H5.png">pics/device/E_3_H5.png</file>
         <file alias="EDI.png">pics/device/EDI.png</file>
+    </qresource>
+    <qresource prefix="/ButtonIcon">
+        <file alias="alarmconfig.png">pics/buttonIcon/alarmconfig.png</file>
+        <file alias="alarmsetpoint.png">pics/buttonIcon/alarmsetpoint.png</file>
+        <file alias="calibration.png">pics/buttonIcon/calibration.png</file>
+        <file alias="cleaning.png">pics/buttonIcon/cleaning.png</file>
+        <file alias="connectingdevice.png">pics/buttonIcon/connectingdevice.png</file>
+        <file alias="connectivity.png">pics/buttonIcon/connectivity.png</file>
+        <file alias="distcontrol.png">pics/buttonIcon/distcontrol.png</file>
+        <file alias="factory.png">pics/buttonIcon/factory.png</file>
+        <file alias="factoryreset.png">pics/buttonIcon/factoryreset.png</file>
+        <file alias="functiontest.png">pics/buttonIcon/functiontest.png</file>
+        <file alias="history.png">pics/buttonIcon/history.png</file>
+        <file alias="language.png">pics/buttonIcon/language.png</file>
+        <file alias="lifetime.png">pics/buttonIcon/lifetime.png</file>
+        <file alias="permission.png">pics/buttonIcon/permission.png</file>
+        <file alias="service.png">pics/buttonIcon/service.png</file>
+        <file alias="setting.png">pics/buttonIcon/setting.png</file>
+        <file alias="super.png">pics/buttonIcon/super.png</file>
+        <file alias="systemconfig.png">pics/buttonIcon/systemconfig.png</file>
+        <file alias="units.png">pics/buttonIcon/units.png</file>
+        <file alias="userconfig.png">pics/buttonIcon/userconfig.png</file>
     </qresource>
 </RCC>

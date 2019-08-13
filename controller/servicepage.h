@@ -2,10 +2,10 @@
 #define SERVICEPAGE_H
 
 #include "page.h"
+#include "setpage.h"
 
 class MainWindow;
 class DPushButton;
-class CBitmapButton;
 
 enum SERVICE_BTN_NAME
 {  
@@ -61,14 +61,15 @@ private:
 
 private:
     CPage *m_pSubPages[SERVICE_PAGE_NUM];
-    CBitmapButton *m_pBtns[SERVICE_BTN_NUMBER];   
+    DPushButton *m_pBtns[SERVICE_BTN_NUMBER];
+
     titleBar      *m_pTitleBar;
     QLabel        *m_pLbPageId[3];
     DPushButton* m_pLogoutBtn;
     
 
 public slots:
-    void on_btn_clicked(int tmp);
+    void on_btn_clicked();
     void on_navi_clicked(int tmp);
     void on_logoutBtn_clicked();
 };

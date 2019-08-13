@@ -6,9 +6,9 @@
 #define LEFT_MARGIN       5
 #define TOP_MARGIN        5
 #define BOTTOM_MARGIN     5
-#define NAME_ITEM_WIDTH   180  //
+#define NAME_ITEM_WIDTH   220  //
 #define VALUE_ITEM_WIDTH  80
-#define ITEM_SPACE        (100)
+#define ITEM_SPACE        (40)
 
 Systestlistwidgtitem::Systestlistwidgtitem(QWidget *parent,SysTestPage *owner,int iType,int id) :
     QWidget(parent)

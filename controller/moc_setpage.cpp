@@ -30,13 +30,13 @@ static const uint qt_meta_data_SetPage[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      13,    9,    8,    8, 0x0a,
+       9,    8,    8,    8, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_SetPage[] = {
-    "SetPage\0\0tmp\0on_btn_clicked(int)\0"
+    "SetPage\0\0on_btn_clicked()\0"
 };
 
 void SetPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -45,10 +45,11 @@ void SetPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         Q_ASSERT(staticMetaObject.cast(_o));
         SetPage *_t = static_cast<SetPage *>(_o);
         switch (_id) {
-        case 0: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 0: _t->on_btn_clicked(); break;
         default: ;
         }
     }
+    Q_UNUSED(_a);
 }
 
 const QMetaObjectExtraData SetPage::staticMetaObjectExtraData = {

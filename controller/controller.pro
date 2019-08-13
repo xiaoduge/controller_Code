@@ -17,6 +17,7 @@ TRANSLATIONS += fr.ts
 TRANSLATIONS += it.ts
 TRANSLATIONS += kr.ts
 TRANSLATIONS += rus.ts
+TRANSLATIONS += por.ts
 
 TARGET = controller
 TEMPLATE = app
@@ -124,7 +125,8 @@ SOURCES += main.cpp\
     dloginwarningdialog.cpp \
     ex_initconsumableinspage.cpp \
     dconsumableinstallwidget.cpp \
-    dpushbutton.cpp
+    dpushbutton.cpp \
+    drunwarningdialog.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -222,7 +224,8 @@ HEADERS  += mainwindow.h \
     dloginwarningdialog.h \
     ex_initconsumableinspage.h \
     dconsumableinstallwidget.h \
-    dpushbutton.h
+    dpushbutton.h \
+    drunwarningdialog.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

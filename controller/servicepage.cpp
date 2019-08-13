@@ -18,15 +18,13 @@
 #include "ex_languagepage.h"
 #include "dloginwarningdialog.h"
 #include "ex_hintdialog.h"
-#include "setpage.h"
 #include "ex_languagepage.h"
 #include "unitpage.h"
 #include "dpushbutton.h"
-#include "cbitmapbutton.h"
 
 #define BTNS_PER_ROW (4)
 
-#define BTNS_H_MARGE (10)
+#define BTNS_H_MARGE (15)
 
 #define BTNS_V_MARGE (10)
 
@@ -44,18 +42,17 @@ static QString SubPageName[SERVICE_BTN_NUMBER] =
     "Service"
 };
 
-static CONFIG_BTN1 sBtns[SERVICE_BTN_NUMBER] = 
+static ButtonInfo Btninfos[SERVICE_BTN_NUMBER] =
 {
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-//    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,},
+    {QString("Select Language"), QString(":/ButtonIcon/language.png")},
+    {QString("Units"), QString(":/ButtonIcon/units.png")},
+    {QString("Setting"), QString(":/ButtonIcon/setting.png")},
+    {QString("User Config"), QString(":/ButtonIcon/userconfig.png")},
+    {QString("Permission"), QString(":/ButtonIcon/permission.png")},
+    {QString("History"), QString(":/ButtonIcon/history.png")},
+    {QString("Cleaning & Sanitization"), QString(":/ButtonIcon/cleaning.png")},
+    {QString("Dist. Control"), QString(":/ButtonIcon/distcontrol.png")},
+    {QString("Service"), QString(":/ButtonIcon/service.png")},
 };
 
 ServicePage::ServicePage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CPage(parent,widget,wndMain)
@@ -181,23 +178,21 @@ void ServicePage::buildTitles()
 
 void ServicePage::buildTranslation()
 {
-    int index;
-    m_pBtns[SERVICE_BTN_STERILIZE]->setTip(tr("Cleaning & Sanitization"));
-    m_pBtns[SERVICE_BTN_MANAGERCONFIG]->setTip(tr("Setting"));
-//    m_pBtns[SERVICE_BTN_INSTALL]->setTip(tr("Components Installation"));
-    m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->setTip(tr("Dist. Control"));
-    m_pBtns[SET_BTN_USER_CFG]->setTip(tr("User Config"));
-    m_pBtns[SET_BTN_HISTORY_RECORD]->setTip(tr("History"));
-    m_pBtns[SET_BTN_PERMISSION]->setTip(tr("Permission"));
-    m_pBtns[SET_BTN_SERVICE]->setTip(tr("Service"));
-    m_pBtns[SET_BTN_LANGUAGE]->setTip(tr("Select Language"));
-    m_pBtns[SET_BTN_UNITS]->setTip(tr("Units"));
+    m_pBtns[SERVICE_BTN_STERILIZE]->setText(tr("Cleaning & Sanitization"));
+    m_pBtns[SERVICE_BTN_MANAGERCONFIG]->setText(tr("Setting"));
+    m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->setText(tr("Dist. Control"));
+    m_pBtns[SET_BTN_USER_CFG]->setText(tr("User Config"));
+    m_pBtns[SET_BTN_HISTORY_RECORD]->setText(tr("History"));
+    m_pBtns[SET_BTN_PERMISSION]->setText(tr("Permission"));
+    m_pBtns[SET_BTN_SERVICE]->setText(tr("Service"));
+    m_pBtns[SET_BTN_LANGUAGE]->setText(tr("Select Language"));
+    m_pBtns[SET_BTN_UNITS]->setText(tr("Units"));
 
-    for (index = 0; index < SERVICE_BTN_NUMBER; index++)
+    for(int i = 0; i < SERVICE_BTN_NUMBER; ++i)
     {
-        m_pBtns[index]->setFont(m_wndMain->getFont(GLOBAL_FONT_14));
+        QFont *font = m_wndMain->getFont(GLOBAL_FONT_14);
+        m_pBtns[i]->setTextFont(*font);
     }
-
 }
 
 void ServicePage::switchLanguage()
@@ -233,60 +228,44 @@ void ServicePage::initUi()
     m_widget->setAutoFillBackground(true);
     m_widget->setPalette(pal);
 
-
     rows = (SERVICE_BTN_NUMBER + BTNS_PER_ROW - 1) / BTNS_PER_ROW;
 
     itemWidth = (width() - BTNS_H_MARGE * 2) / BTNS_PER_ROW;
 
-    yStartPos = height()/2  - 20;
+    yStartPos = height()/2  - 60;
 
     for( index = 0 ; index < SERVICE_BTN_NUMBER ; index++)
     {
         row = index / BTNS_PER_ROW;
         col = index % BTNS_PER_ROW;
-        
-        m_pBtns[index] = new CBitmapButton(m_widget,sBtns[index].enStyle,sBtns[index].enPicStyle,index);
 
-        if (*sBtns[index].pBackBitmap)
-        {
-            m_pBtns[index]->setButtonPicture(*sBtns[index].pBackBitmap);
-        }
+        m_pBtns[index] = new DPushButton(Btninfos[index].m_fileName, Btninfos[index].m_text, m_widget, index);
 
-        if (*sBtns[index].pFrontBitmap)
-        {
-            m_pBtns[index]->setPressPicture(*sBtns[index].pFrontBitmap);
-        }
+        xPos = BTNS_H_MARGE + col*itemWidth + col*BTNS_H_MARGE + 60;
 
-        xPos = BTNS_H_MARGE + col*itemWidth + col*BTNS_H_MARGE;
-        
-        yPos = yStartPos + (row - (rows/2))*105 - BTNS_V_MARGE/2;
-        
-        m_pBtns[index]->setGeometry(xPos,yPos,m_pBtns[index]->getPicWidth(),m_pBtns[index]->getPicHeight());
+        yPos = yStartPos + (row - (rows/2))*120 - BTNS_V_MARGE/2;
 
-        m_pBtns[index]->setStyleSheet("background-color:transparent");
-        connect(m_pBtns[index], SIGNAL(clicked(int)), this, SLOT(on_btn_clicked(int)));
-        m_pBtns[index]->show();
+        m_pBtns[index]->setMoveRule(DPushButton::CenterMove);
+        m_pBtns[index]->cmove(xPos, yPos);
+
+        connect(m_pBtns[index], SIGNAL(clicked()), this, SLOT(on_btn_clicked()));
     }
 
     if(MACHINE_PURIST == gGlobalParam.iMachineType)
     {
-        m_pBtns[SERVICE_BTN_STERILIZE]->enable(false);
         m_pBtns[SERVICE_BTN_STERILIZE]->hide();
-        m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->enable(false);
         m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->hide();
 
-        QPoint point = m_pBtns[SERVICE_BTN_STERILIZE]->pos();
-        m_pBtns[SET_BTN_SERVICE]->move(point);
-
+        QPoint point = m_pBtns[SERVICE_BTN_STERILIZE]->originalPos();
+        m_pBtns[SET_BTN_SERVICE]->cmove(point);
     }
 
     if(MACHINE_ADAPT == gGlobalParam.iMachineType)
     {
-        m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->enable(false);
         m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->hide();
 
-        QPoint point = m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->pos();
-        m_pBtns[SET_BTN_SERVICE]->move(point);
+        QPoint point = m_pBtns[SET_BTN_SYSTEM_ALLOCATION]->originalPos();
+        m_pBtns[SET_BTN_SERVICE]->cmove(point);
     }
 
     x = 400 - PAGEID_MARGIN/2 - PAGEID_MARGIN - gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->width()*2;
@@ -314,12 +293,15 @@ void ServicePage::initUi()
 
     QPixmap pixmap(":/pic/logout.png");
     m_pLogoutBtn = new DPushButton(pixmap, m_widget);
-    m_pLogoutBtn->move(740, 545);
+    m_pLogoutBtn->cmove(740, 545);
     connect(m_pLogoutBtn, SIGNAL(clicked()), this, SLOT(on_logoutBtn_clicked()));
 }
 
-void ServicePage::on_btn_clicked(int index)
+void ServicePage::on_btn_clicked(/* int index */)
 {
+    QObject* obj = sender();
+    DPushButton* button = qobject_cast<DPushButton*>(obj);
+    int index = button->id();
     switch(index)
     {
     case SERVICE_BTN_STERILIZE:
@@ -609,5 +591,7 @@ void ServicePage::serviceVerify(int index)
     }
 
 }
+
+
 
 

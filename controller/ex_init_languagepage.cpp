@@ -52,6 +52,7 @@ void Ex_Init_Languagepage::buildTranslation()
     m_pCbLan->setItemText(5, tr("Italian"));
     m_pCbLan->setItemText(6, tr("Korean"));
     m_pCbLan->setItemText(7, tr("Russian"));
+    m_pCbLan->setItemText(8, tr("Portugese"));
 
 //    m_pBtnSave->setText(tr("Save"));
     m_nextBtn->setText(tr("Next"));
@@ -103,7 +104,8 @@ void Ex_Init_Languagepage::initUi()
             << tr("German")
             << tr("Italian")
             << tr("Korean")
-            << tr("Russian");
+            << tr("Russian")
+            << tr("Portugese");
     m_pCbLan->addItems(strList);
     m_pCbLan->setCurrentIndex(m_iLanguage);
     m_pCbLan->setGeometry(570, 105, 160, 40);

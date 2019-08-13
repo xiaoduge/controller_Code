@@ -836,6 +836,9 @@ void Ex_ManagerSetPage::initTimePage()
             case APP_LAN_RUS:
                 CalS->setLocale(QLocale::Russian);
                 break;
+            case APP_LAN_POR:
+                CalS->setLocale(QLocale::Portuguese);
+                break;
             default:
                 CalS->setLocale(QLocale::English);
                 break;
@@ -1258,7 +1261,7 @@ void Ex_ManagerSetPage::initAdditionalSettingsPage()
 
         m_pAdditionalLb[iLoop] = new QLabel(m_pAdditionalWidget[iLoop]);
         m_pAdditionalLb[iLoop]->setPixmap(NULL);
-        m_pAdditionalLb[iLoop]->setGeometry(QRect(25, 25 , 140 , 20));
+        m_pAdditionalLb[iLoop]->setGeometry(QRect(25, 25 , 260 , 20));
         m_pAdditionalLb[iLoop]->setText("HP Recir.");
         m_pAdditionalLb[iLoop]->setStyleSheet(" font-size:18px;color:#16181e;font-family:Arial;QFont::Bold");
         m_pAdditionalLb[iLoop]->show();

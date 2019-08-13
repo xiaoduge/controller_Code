@@ -16,11 +16,11 @@
 #include "ex_userinfo.h"
 #include "ex_factorytestpage.h"
 #include "dloginwarningdialog.h"
-#include "cbitmapbutton.h"
+#include "dpushbutton.h"
 
 #define BTNS_PER_ROW (4)
 
-#define BTNS_H_MARGE (10)
+#define BTNS_H_MARGE (15)
 
 #define BTNS_V_MARGE (10)
 
@@ -38,21 +38,19 @@ static QString SubPageName[SET_BTN_NUMBER] =
     "Factory"
 };
 
-
-
-static CONFIG_BTN1 sBtns[SET_BTN_NUMBER] = 
+static ButtonInfo Btninfos[SET_BTN_NUMBER] =
 {
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
-    {-1,-1,&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_ACTIVE],&gpGlobalPixmaps[GLOBAL_BMP_BTN_GENERAL_INACTIVE],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL ,0,},
+    {QString("Consumables Life"), QString(":/ButtonIcon/lifetime.png")},
+    {QString("Alarm Config."), QString(":/ButtonIcon/alarmconfig.png")},
+    {QString("Function Test"), QString(":/ButtonIcon/functiontest.png")},
+    {QString("Calibration"), QString(":/ButtonIcon/calibration.png")},
+    {QString("Alarm Set Point"), QString(":/ButtonIcon/alarmsetpoint.png")},
+    {QString("System Config."), QString(":/ButtonIcon/systemconfig.png")},
+    {QString("Connectivity"), QString(":/ButtonIcon/connectivity.png")},
+    {QString("Connecting Device"), QString(":/ButtonIcon/connectingdevice.png")},
+    {QString("Initialize"), QString(":/ButtonIcon/factoryreset.png")},
+    {QString("Super Power"), QString(":/ButtonIcon/super.png")},
+    {QString("Factory"), QString(":/ButtonIcon/factory.png")}
 };
 
 SetPage::SetPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CSubPage(parent,widget,wndMain) //CPage(parent,widget,wndMain)
@@ -164,26 +162,25 @@ void SetPage::buildTitles()
 }
 
 void SetPage::buildTranslation()
-{
-    int index;
-    
-    m_pBtns[SET_BTN_MAINTAIN_PERIOD]->setTip(tr("Consumables Life"));
-    m_pBtns[SET_BTN_ALARM_SETTING]->setTip(tr("Alarm Config."));
-    m_pBtns[SET_BTN_SYSTEM_TEST]->setTip(tr("Function Test"));
-    m_pBtns[SET_BTN_SYSTEM_PARAMETER_CALIBRATE]->setTip(tr("Calibration"));
-    m_pBtns[SET_BTN_SYSTEM_PARAM_CONFIG]->setTip(tr("Alarm Set Point"));
-    m_pBtns[SET_BTN_SYSTEM_DEVICE_CONFIG]->setTip(tr("System Config."));
-    m_pBtns[SET_BTN_SYSTEM_NETWORK]->setTip(tr("Connectivity"));
+{ 
+    m_pBtns[SET_BTN_MAINTAIN_PERIOD]->setText(tr("Consumables Life"));
+    m_pBtns[SET_BTN_ALARM_SETTING]->setText(tr("Alarm Config."));
+    m_pBtns[SET_BTN_SYSTEM_TEST]->setText(tr("Function Test"));
+    m_pBtns[SET_BTN_SYSTEM_PARAMETER_CALIBRATE]->setText(tr("Calibration"));
+    m_pBtns[SET_BTN_SYSTEM_PARAM_CONFIG]->setText(tr("Alarm Set Point"));
+    m_pBtns[SET_BTN_SYSTEM_DEVICE_CONFIG]->setText(tr("System Config."));
+    m_pBtns[SET_BTN_SYSTEM_NETWORK]->setText(tr("Connectivity"));
 
-    m_pBtns[SET_BTN_PERIPHERAL_DEVICE_MANAGER]->setTip(tr("Connecting Device"));
-    m_pBtns[SET_BTN_INITIALIZE]->setTip(tr("Initialize"));
+    m_pBtns[SET_BTN_PERIPHERAL_DEVICE_MANAGER]->setText(tr("Connecting Device"));
+    m_pBtns[SET_BTN_INITIALIZE]->setText(tr("Initialize"));
 
-    m_pBtns[SET_BTN_SYSTEM_SUPER]->setTip(tr("Super Power"));
-    m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->setTip(tr("Factory"));
+    m_pBtns[SET_BTN_SYSTEM_SUPER]->setText(tr("Super Power"));
+    m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->setText(tr("Factory"));
 
-    for (index = 0; index < SET_BTN_NUMBER; index++)
+    for(int i = 0; i < SET_BTN_NUMBER; ++i)
     {
-        m_pBtns[index]->setFont(m_wndMain->getFont(GLOBAL_FONT_14));
+        QFont *font = m_wndMain->getFont(GLOBAL_FONT_14);
+        m_pBtns[i]->setFont(*font);
     }
 
 }
@@ -207,10 +204,6 @@ void SetPage::initUi()
     int itemWidth;
 
     int x;
-
-    //QPixmap back(":/pic/navigator_bg.png");
-
-    //QSize size(back.width(), back.height());
     
     QSize size(width(),height());
 
@@ -227,39 +220,27 @@ void SetPage::initUi()
     m_widget->setAutoFillBackground(true);
     m_widget->setPalette(pal);
 
-
     rows = (SET_BTN_NUMBER + BTNS_PER_ROW - 1) / BTNS_PER_ROW;
 
     itemWidth = (width() - BTNS_H_MARGE * 2) / BTNS_PER_ROW;
 
-    yStartPos = height()/2 ;
+    yStartPos = height()/2 - 60;
+
 
     for( index = 0 ; index < SET_BTN_NUMBER ; index++)
     {
         row = index / BTNS_PER_ROW;
         col = index % BTNS_PER_ROW;
-        
-        m_pBtns[index] = new CBitmapButton(m_widget,sBtns[index].enStyle,sBtns[index].enPicStyle,index);
 
-        if (*sBtns[index].pBackBitmap)
-        {
-            m_pBtns[index]->setButtonPicture(*sBtns[index].pBackBitmap);
-        }
+        m_pBtns[index] = new DPushButton(Btninfos[index].m_fileName, Btninfos[index].m_text, m_widget, index);
 
-        if (*sBtns[index].pFrontBitmap)
-        {
-            m_pBtns[index]->setPressPicture(*sBtns[index].pFrontBitmap);
-        }
+        xPos = BTNS_H_MARGE + col*itemWidth + col*BTNS_H_MARGE + 70;
 
-        xPos = BTNS_H_MARGE + col*itemWidth + col*BTNS_H_MARGE;
-        
-        yPos = yStartPos + (row - (rows/2))*105 - BTNS_V_MARGE/2;
-        
-        m_pBtns[index]->setGeometry(xPos,yPos,m_pBtns[index]->getPicWidth(),m_pBtns[index]->getPicHeight());
+        yPos = yStartPos + (row - (rows/2))*120 - BTNS_V_MARGE/2;
 
-        m_pBtns[index]->setStyleSheet("background-color:transparent");
-        connect(m_pBtns[index], SIGNAL(clicked(int)), this, SLOT(on_btn_clicked(int)));
-        m_pBtns[index]->show();
+        m_pBtns[index]->setMoveRule(DPushButton::CenterMove);
+        m_pBtns[index]->cmove(xPos, yPos);
+        connect(m_pBtns[index], SIGNAL(clicked()), this, SLOT(on_btn_clicked()));
     }
     /*
     if(MACHINE_PURIST == gGlobalParam.iMachineType)
@@ -274,9 +255,12 @@ void SetPage::initUi()
 
 }
 
-void SetPage::on_btn_clicked(int index)
+void SetPage::on_btn_clicked()
 {
-    printf("tmp = %d\r\n" , index);
+    QObject* obj = sender();
+    DPushButton* button = qobject_cast<DPushButton*>(obj);
+    int index = button->id();
+
     if(index == SET_BTN_INITIALIZE)
     {
         if (DISP_WORK_STATE_IDLE != DispGetWorkState())

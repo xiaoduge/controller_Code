@@ -45,6 +45,7 @@ void Ex_InitConsumableInsPage::initUi()
     m_pTitleLb->setWordWrap(true);
     m_pTitleLb->setStyleSheet("font-size:18pt; color:#FF0000; QFont::Bold");
     m_pTitleLb->setGeometry(10, 30, 780, 25);
+    m_pTitleLb->hide();
 
     for(int i = 0; i < Consumable_Type_Num; ++i)
     {

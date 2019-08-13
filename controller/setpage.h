@@ -4,7 +4,7 @@
 #include "subpage.h"
 
 class MainWindow;
-class CBitmapButton;
+class DPushButton;
 
 enum SET_BTN_NAME
 {
@@ -24,6 +24,11 @@ enum SET_BTN_NAME
 
 #define SET_PAGE_NUM SET_BTN_NUMBER
 
+struct ButtonInfo
+{
+    QString m_text;
+    QString m_fileName;
+};
 
 class SetPage : public CSubPage //CPage
 {
@@ -54,10 +59,10 @@ private:
 
 private:
     CPage *m_pSubPages[SET_PAGE_NUM];
-    CBitmapButton *m_pBtns[SET_PAGE_NUM];
+    DPushButton *m_pBtns[SET_BTN_NUMBER];
 
 public slots:
-    void on_btn_clicked(int tmp);
+    void on_btn_clicked();
 
 };
 

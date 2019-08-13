@@ -15,7 +15,7 @@
 #define BACKWIDGET_ITEM_HEIGHT  30
 
 static  QRect   sQrectAry[2] = {
-        QRect(5,  BACKWIDGET_HEIGHT/2 - BACKWIDGET_ITEM_HEIGHT/2, BACKWIDGET_ITEM_LENGTH + 50, BACKWIDGET_ITEM_HEIGHT) ,
+        QRect(5,  BACKWIDGET_HEIGHT/2 - BACKWIDGET_ITEM_HEIGHT/2, BACKWIDGET_ITEM_LENGTH + 75, BACKWIDGET_ITEM_HEIGHT) ,
         QRect(60, 2, 110 , 18) ,
     };
 
@@ -107,16 +107,16 @@ void Ex_Init_Tankcfgpage::createControl()
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
 
-    tmpWidget->setGeometry(QRect(80 , 190 , 640 ,60));
+    tmpWidget->setGeometry(QRect(50 , 190 , 640 ,60));
 
     rectTmp = sQrectAry[0];
-    rectTmp.setX(25);
+    rectTmp.setX(10);
     m_lbPWTankName = new QLabel(tmpWidget);
     m_lbPWTankName->setGeometry(rectTmp);
     m_lbPWTankName->hide();
 
-    rectTmp.setX(180);
-    rectTmp.setWidth(60+20);
+    rectTmp.setX(210);
+    rectTmp.setWidth(80);
     m_cmbPWTankVolume = new QComboBox(tmpWidget);
     m_cmbPWTankVolume->setGeometry(rectTmp);
 
@@ -134,28 +134,28 @@ void Ex_Init_Tankcfgpage::createControl()
 
     m_cmbPWTankVolume->hide();
 
-    rectTmp.setX(250+20);
+    rectTmp.setX(300);
     rectTmp.setWidth(60);
     m_lePWTankHeight = new DLineEdit(tmpWidget);
     m_lePWTankHeight->setGeometry(rectTmp);
     m_lePWTankHeight->setValidator(new QRegExpValidator(double_rx,this));
     m_lePWTankHeight->hide();
 
-    rectTmp.setX(315+20);
+    rectTmp.setX(365);
     rectTmp.setWidth(90);
     m_lbPWHUnit = new QLabel(tmpWidget);
     m_lbPWHUnit->setGeometry(rectTmp);
     m_lbPWHUnit->setText(tr("Height(M)"));
     m_lbPWHUnit->hide();
 
-    rectTmp.setX(345+90);
+    rectTmp.setX(465);
     rectTmp.setWidth(60);
     m_lePWTankCap = new DLineEdit(tmpWidget);
     m_lePWTankCap->setGeometry(rectTmp);
     m_lePWTankCap->setValidator(new QIntValidator(0, 9999, this));
     m_lePWTankCap->hide();
 
-    rectTmp.setX(410+90);
+    rectTmp.setX(530);
     rectTmp.setWidth(90);
     m_lbPWCUnit = new QLabel(tmpWidget);
     m_lbPWCUnit->setGeometry(rectTmp);
@@ -179,18 +179,18 @@ void Ex_Init_Tankcfgpage::createControl()
     /* line 2*/
     tmpWidget = new QWidget(m_widget);
 
-    tmpWidget->setGeometry(QRect(80 , 190 + 90, 640 ,60));
+    tmpWidget->setGeometry(QRect(50 , 190 + 90, 640 ,60));
 
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
 
-    rectTmp.setX(25);
+    rectTmp.setX(10);
     rectTmp.setWidth(sQrectAry[0].width());
     m_lbSWTankName = new QLabel(tmpWidget);
     m_lbSWTankName->setGeometry(rectTmp);
     m_lbSWTankName->hide();
 
-    rectTmp.setX(180);
+    rectTmp.setX(210);
     rectTmp.setWidth(60+20);
     m_cmbSWTankVolume = new QComboBox(tmpWidget);
     m_cmbSWTankVolume->setGeometry(rectTmp);
@@ -207,28 +207,28 @@ void Ex_Init_Tankcfgpage::createControl()
 
     m_cmbSWTankVolume->hide();
 
-    rectTmp.setX(250+20);
+    rectTmp.setX(300);
     rectTmp.setWidth(60);
     m_leSWTankHeight = new DLineEdit(tmpWidget);
     m_leSWTankHeight->setGeometry(rectTmp);
     m_leSWTankHeight->setValidator(new QRegExpValidator(double_rx,this));
     m_leSWTankHeight->hide();
 
-    rectTmp.setX(315+20);
+    rectTmp.setX(365);
     rectTmp.setWidth(90);
     m_lbSWHUnit = new QLabel(tmpWidget);
     m_lbSWHUnit->setGeometry(rectTmp);
     m_lbSWHUnit->setText(tr("Height(M)"));
     m_lbSWHUnit->hide();
 
-    rectTmp.setX(345+90);
+    rectTmp.setX(465);
     rectTmp.setWidth(60);
     m_leSWTankCap = new DLineEdit(tmpWidget);
     m_leSWTankCap->setGeometry(rectTmp);
     m_leSWTankCap->setValidator(new QIntValidator(0, 9999, this));
     m_leSWTankCap->hide();
 
-    rectTmp.setX(410+90);
+    rectTmp.setX(530);
     rectTmp.setWidth(90);
     m_lbSWCUnit = new QLabel(tmpWidget);
     m_lbSWCUnit->setGeometry(rectTmp);
@@ -279,7 +279,7 @@ void Ex_Init_Tankcfgpage::update()
 void Ex_Init_Tankcfgpage::createHeader()
 {
     m_pExLbTitle = new QLabel(m_widget);
-    m_pExLbTitle->setGeometry(QRect(80, 135 , 220 , 28));
+    m_pExLbTitle->setGeometry(QRect(50, 135 , 300 , 28));
     m_pExLbTitle->setStyleSheet(" font-size:24pt;color:#000000;font-family:Arial;QFont::Bold");
 
 }

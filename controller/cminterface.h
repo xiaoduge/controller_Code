@@ -234,7 +234,8 @@ typedef enum
     APP_LAN_ITA,
     APP_LAN_SKR,
     APP_LAN_RUS,
-    APP_LAN_NUM,   
+    APP_LAN_POR,
+    APP_LAN_NUM   
 }APP_LAN_TYPE_ENUM;
 
 

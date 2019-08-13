@@ -30,15 +30,15 @@ static const uint qt_meta_data_ServicePage[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      17,   13,   12,   12, 0x0a,
-      37,   13,   12,   12, 0x0a,
-      58,   12,   12,   12, 0x0a,
+      13,   12,   12,   12, 0x0a,
+      34,   30,   12,   12, 0x0a,
+      55,   12,   12,   12, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_ServicePage[] = {
-    "ServicePage\0\0tmp\0on_btn_clicked(int)\0"
+    "ServicePage\0\0on_btn_clicked()\0tmp\0"
     "on_navi_clicked(int)\0on_logoutBtn_clicked()\0"
 };
 
@@ -48,7 +48,7 @@ void ServicePage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         Q_ASSERT(staticMetaObject.cast(_o));
         ServicePage *_t = static_cast<ServicePage *>(_o);
         switch (_id) {
-        case 0: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 0: _t->on_btn_clicked(); break;
         case 1: _t->on_navi_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->on_logoutBtn_clicked(); break;
         default: ;

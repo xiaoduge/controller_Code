@@ -112,7 +112,7 @@ void NetworkPage::initUi()
 
         m_laName[iLoop]      = new QLabel(m_pBackWidget[iLoop]);
         m_laName[iLoop]->setPixmap(NULL);
-        m_laName[iLoop]->setGeometry(QRect(25, 30 , 100 , 20));
+        m_laName[iLoop]->setGeometry(QRect(25, 30 , 180 , 20));
         m_laName[iLoop]->show();
 
         m_chkSwitchs[iLoop] = new QCheckBox(m_pBackWidget[iLoop]);

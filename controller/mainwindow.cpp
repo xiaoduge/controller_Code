@@ -61,6 +61,7 @@
 #include "dwificonfigwidget.h"
 #include "ex_hintdialog.h"
 #include "ex_waterqualitypage.h"
+#include "drunwarningdialog.h"
 
 //#include "ex_screensleepthread.h"
 /***********************************************
@@ -165,7 +166,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190807_RC");
+QString strSoftwareVersion = QString("0.1.8.190813_RC");
 
 MainWindow *gpMainWnd;
 
@@ -8155,8 +8156,17 @@ void MainWindow::run(bool bRun)
             }
             return;
         }
-        
-        if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)))
+
+        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
+        {
+            DRunWarningDialog runDlg;
+            if(QDialog::Accepted != runDlg.exec())
+            {
+                pMainPage->updateRunInfo(false);
+                return;
+            }
+        }
+        else
         {
             iRet = getActiveRfidBrds();
 

@@ -8,5 +8,6 @@
         <file>it.qm</file>
         <file>kr.qm</file>
         <file>rus.qm</file>
+        <file>por.qm</file>
     </qresource>
 </RCC>

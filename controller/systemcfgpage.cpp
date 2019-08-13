@@ -314,7 +314,7 @@ void SystemCfgPage::createControl()
         yOffset += BACKWIDGET_START_HIATUS;
 
         rectTmp = sQrectAry[0];
-        rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 10);
+        rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
 
         for (iCol = 0; iCol < iCols; iCol++)
         {
@@ -324,13 +324,12 @@ void SystemCfgPage::createControl()
                 m_aChks[iRow * iCols + iCol]->setGeometry(rectTmp);
                 m_aChks[iRow * iCols + iCol]->setStyleSheet(strQss4Chk);
             
-                rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 20);
-                rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 10);
+                rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+                rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
             }
         }
         
     }
-
 
     /* line 4*/
     tmpWidget = new QWidget(m_widget);
@@ -469,13 +468,13 @@ void SystemCfgPage::createControl()
     yOffset += BACKWIDGET_START_HIATUS;
 
     rectTmp = sQrectAry[0];
-    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 20);
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
     m_lbPWTankName = new QLabel(tmpWidget);
     m_lbPWTankName->setGeometry(rectTmp);
     m_lbPWTankName->hide();
     
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
-    rectTmp.setWidth(X_ITEM_WIDTH + 30);
+    rectTmp.setWidth(X_ITEM_WIDTH + 60);
     m_cmbPWTankVolume = new QComboBox(tmpWidget);
     m_cmbPWTankVolume->setGeometry(rectTmp);
     
@@ -546,13 +545,13 @@ void SystemCfgPage::createControl()
     yOffset += BACKWIDGET_START_HIATUS;
 
     rectTmp = sQrectAry[0];
-    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 20);
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
 
     m_lbSWTankName = new QLabel(tmpWidget);
     m_lbSWTankName->setGeometry(rectTmp);
     
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
-    rectTmp.setWidth(X_ITEM_WIDTH + 30);
+    rectTmp.setWidth(X_ITEM_WIDTH + 60);
     m_cmbSWTankVolume = new QComboBox(tmpWidget);
     m_cmbSWTankVolume->setGeometry(rectTmp);
     
