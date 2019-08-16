@@ -4,9 +4,24 @@
 #include <QPushButton>
 #include <QMessageBox>
 
-DRunWarningDialog::DRunWarningDialog(QWidget *parent) : QDialog(parent)
+DRunWarningDialog::DRunWarningDialog(const QString& text, QWidget *parent) : QDialog(parent), m_text(text)
 {
     initUI();
+}
+
+void DRunWarningDialog::setButtonText(int num, const QString &text)
+{
+    switch(num)
+    {
+    case 0:
+        m_pConfirmBtn->setText(text);
+        break;
+    case 1:
+        m_pQuitBtn->setText(text);
+        break;
+    default:
+        break;
+    }
 }
 
 void DRunWarningDialog::initTitleBar()
@@ -22,8 +37,7 @@ void DRunWarningDialog::initUI()
 {
     initTitleBar();
 
-    m_pLabel = new QLabel(tr("Make sure the purification cartridge is installed in the correct position."),
-                          this);
+    m_pLabel = new QLabel(m_text, this);
     m_pLabel->setWordWrap(true);
     m_pLabel->setAlignment(Qt::AlignCenter);
     QPalette palette = m_pLabel->palette();

@@ -65,7 +65,7 @@ private:
 
     titleBar      *m_pTitleBar;
     QLabel        *m_pLbPageId[3];
-    DPushButton* m_pLogoutBtn;
+    DPushButton   *m_pLogoutBtn;
     
 
 public slots:

@@ -30,14 +30,14 @@ static const uint qt_meta_data_MenuPage[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      14,   10,    9,    9, 0x0a,
-      34,   10,    9,    9, 0x0a,
+      10,    9,    9,    9, 0x0a,
+      31,   27,    9,    9, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MenuPage[] = {
-    "MenuPage\0\0tmp\0on_btn_clicked(int)\0"
+    "MenuPage\0\0on_btn_clicked()\0tmp\0"
     "on_navi_clicked(int)\0"
 };
 
@@ -47,7 +47,7 @@ void MenuPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         Q_ASSERT(staticMetaObject.cast(_o));
         MenuPage *_t = static_cast<MenuPage *>(_o);
         switch (_id) {
-        case 0: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 0: _t->on_btn_clicked(); break;
         case 1: _t->on_navi_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }

@@ -23,7 +23,7 @@ public:
     void setPixmapScale(double i);
     void setPixmap(const QPixmap &pixmap);
     void setTextColor(const QColor &color);
-    void setTextFont(const QFont &font);
+    void setFontSize(int size);
     void setText(const QString& text);
     void setID(int id);
     void setMoveRule(MoveRule rule);

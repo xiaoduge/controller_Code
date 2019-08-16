@@ -50,11 +50,15 @@ void Ex_Init_Tankcfgpage::buildTranslation()
 {
     m_pExLbTitle->setText(tr("Tank Set"));
 
+    QFont font = m_lbPWTankName->font();
+    font.setPointSize(14);
     m_lbPWTankName->setText(tr("Pure Water Tank"));
+    m_lbPWTankName->setFont(font);
     m_cmbPWTankVolume->setItemText(5,tr("UDF"));
     m_cmbPWTankVolume->setItemText(6,tr("NO"));
 
     m_lbSWTankName->setText(tr("Feed Tank"));
+    m_lbSWTankName->setFont(font);
     m_cmbSWTankVolume->setItemText(5,tr("UDF"));
     m_cmbSWTankVolume->setItemText(6,tr("NO"));
 

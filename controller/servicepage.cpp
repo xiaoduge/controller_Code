@@ -190,8 +190,7 @@ void ServicePage::buildTranslation()
 
     for(int i = 0; i < SERVICE_BTN_NUMBER; ++i)
     {
-        QFont *font = m_wndMain->getFont(GLOBAL_FONT_14);
-        m_pBtns[i]->setTextFont(*font);
+        m_pBtns[i]->setFontSize(13);
     }
 }
 
@@ -293,11 +292,11 @@ void ServicePage::initUi()
 
     QPixmap pixmap(":/pic/logout.png");
     m_pLogoutBtn = new DPushButton(pixmap, m_widget);
-    m_pLogoutBtn->cmove(740, 545);
+    m_pLogoutBtn->cmove(745, 545);
     connect(m_pLogoutBtn, SIGNAL(clicked()), this, SLOT(on_logoutBtn_clicked()));
 }
 
-void ServicePage::on_btn_clicked(/* int index */)
+void ServicePage::on_btn_clicked()
 {
     QObject* obj = sender();
     DPushButton* button = qobject_cast<DPushButton*>(obj);
@@ -455,6 +454,7 @@ void ServicePage::userVerify(int index)
             {
             case 4:
             case 3:
+            case 31:
             case 2:
             case 1:
             {
@@ -470,6 +470,7 @@ void ServicePage::userVerify(int index)
                 break;
             }
             default:
+                show(true);
                 break;
             }
         }
@@ -504,6 +505,7 @@ void ServicePage::managerVerify(int index)
             case 4:
             case 3:
             case 2:
+            case 31:
             {
                 m_wndMain->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
                 m_pSubPages[index]->show(true);
@@ -519,6 +521,7 @@ void ServicePage::managerVerify(int index)
                 DLoginWarningDialog::getInstance(tr("Login failed!"));
                 break;
             default:
+                show(true);
                 break;
             }
         }

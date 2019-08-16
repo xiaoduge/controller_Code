@@ -166,7 +166,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190813_RC");
+QString strSoftwareVersion = QString("0.1.8.190816_RC");
 
 MainWindow *gpMainWnd;
 
@@ -8159,7 +8159,7 @@ void MainWindow::run(bool bRun)
 
         if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
         {
-            DRunWarningDialog runDlg;
+            DRunWarningDialog runDlg(tr("Confirm ALL cartridges are installed. System will START by pressing Confirm!"));
             if(QDialog::Accepted != runDlg.exec())
             {
                 pMainPage->updateRunInfo(false);
@@ -8180,22 +8180,22 @@ void MainWindow::run(bool bRun)
                 switch(-iRet)
                 {
                 case DISP_PRE_PACK:
-                    ToastDlg::makeToast(tr("No Pre-PACK detected!"));
+                    ToastDlg::makeToast(tr("PRE Pack Not Detected"));
                     return;
                 case DISP_AC_PACK:
-                    ToastDlg::makeToast(tr("No AC-PACK detected!"));
+                    ToastDlg::makeToast(tr("AC Pack Not Detected"));
                     return;
                 case DISP_P_PACK:
-                    ToastDlg::makeToast(tr("No P-PACK detected!"));
+                    ToastDlg::makeToast(tr("P Pack Not Detected"));
                     return;
                 case DISP_U_PACK:
-                    ToastDlg::makeToast(tr("No U-PACK detected!"));
+                    ToastDlg::makeToast(tr("U Pack Not Detected"));
                     return;
                 case DISP_AT_PACK:
-                    ToastDlg::makeToast(tr("No AT-PACK detected!"));
+                    ToastDlg::makeToast(tr("AT Pack Not Detected"));
                     return;
                 case DISP_H_PACK:
-                    ToastDlg::makeToast(tr("No H-PACK detected!"));
+                    ToastDlg::makeToast(tr("H Pack Not Detected"));
                     return;
                 default:
                    break;
@@ -8209,54 +8209,48 @@ void MainWindow::run(bool bRun)
 
             if (iRet <= 0)
             {
-               if (typeid(*m_pCurPage) == typeid(MainPage))
-               {
-                   pMainPage->updateRunInfo(false);
-               }
-               bool isError = false;
-               QMessageBox msgBox;
-               msgBox.setWindowTitle(tr("Warning"));
-               msgBox.setIcon(QMessageBox::Question);
-
-               switch(-iRet)
-               {
-               case (DISP_PRE_PACK | 0xFF00):
-                    msgBox.setText(tr("False Pre-PACK detected!"));
+                if (typeid(*m_pCurPage) == typeid(MainPage))
+                {
+                    pMainPage->updateRunInfo(false);
+                }
+                bool isError = false;
+                QString warningMsg;
+                switch(-iRet)
+                {
+                case (DISP_PRE_PACK | 0xFF00):
+                    warningMsg = tr("Pre Pack Error! Do you want to continue?");
                     isError = true;
                     break;
-               case (DISP_AC_PACK | 0xFF00):
-                    msgBox.setText(tr("False AC-PACK detected!"));
+                case (DISP_AC_PACK | 0xFF00):
+                    warningMsg = tr("AC Pack Error! Do you want to continue?");
                     isError = true;
                     break;
-               case (DISP_P_PACK | 0xFF00):
-                    msgBox.setText(tr("False P-PACK detected!"));
+                case (DISP_P_PACK | 0xFF00):
+                    warningMsg = tr("P Pack Error! Do you want to continue?");
                     isError = true;
                     break;
-               case (DISP_U_PACK | 0xFF00):
-                    msgBox.setText(tr("False U-PACK detected!"));
+                case (DISP_U_PACK | 0xFF00):
+                    warningMsg = tr("U Pack Error! Do you want to continue?");
                     isError = true;
                     break;
-               case (DISP_AT_PACK | 0xFF00):
-                    msgBox.setText(tr("False AT-PACK detected!"));
+                case (DISP_AT_PACK | 0xFF00):
+                    warningMsg = tr("AT Pack Error! Do you want to continue?");
                     isError = true;
                     break;
-               case (DISP_H_PACK | 0xFF00):
-                    msgBox.setText(tr("False H-PACK detected!"));
+                case (DISP_H_PACK | 0xFF00):
+                    warningMsg = tr("H Pack Error! Do you want to continue?");
                     isError = true;
                     break;
                }
 
-               if(isError)
-               {
-                    msgBox.setInformativeText(tr("Do you want to continue?"));
-                    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-                    msgBox.setDefaultButton(QMessageBox::No);
-                    int ret = msgBox.exec();
-                    if(QMessageBox::No == ret)
+                if(isError)
+                {
+                    DRunWarningDialog runDlg(warningMsg);
+                    runDlg.setButtonText(0, tr("Continue"));
+                    if(QDialog::Accepted != runDlg.exec())
                     {
                         ex_gGlobalParam.lastRunState = 0;
                         MainSaveLastRunState(gGlobalParam.iMachineType);
-
                         return;
                     }
                }

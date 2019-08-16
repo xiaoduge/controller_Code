@@ -179,10 +179,8 @@ void SetPage::buildTranslation()
 
     for(int i = 0; i < SET_BTN_NUMBER; ++i)
     {
-        QFont *font = m_wndMain->getFont(GLOBAL_FONT_14);
-        m_pBtns[i]->setFont(*font);
+        m_pBtns[i]->setFontSize(13);
     }
-
 }
 
 void SetPage::switchLanguage()

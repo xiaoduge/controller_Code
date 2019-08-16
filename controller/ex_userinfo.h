@@ -23,7 +23,7 @@ const QString userPassword[Name_Num] =
 const QString managerName[Name_Num] =
 {
     "Super",
-    "Service",
+    "Master",
     "Service",
     "Manager"
 };

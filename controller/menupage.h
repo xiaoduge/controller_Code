@@ -5,8 +5,8 @@
 
 
 class MainWindow;
-class CBitmapButton;
 class titleBar;
+class DPushButton;
 
 enum MENU_BTN_NAME
 {
@@ -41,7 +41,7 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent *);
     virtual void mouseMoveEvent(QMouseEvent *);
 
-    void goAlarm(){on_btn_clicked(MENU_BTN_SYSTEM_NOTIFICATION_ALARM);}
+    void goAlarm();
 
     CPage *getSubPage(int iIdx) {return m_pSubPages[iIdx];}
 
@@ -51,13 +51,12 @@ private:
 
 private:
     CPage         *m_pSubPages[MENU_PAGE_NUM];
-    CBitmapButton *m_pBtns[MENU_BTN_NUMBER];
+    DPushButton   *m_pBtns[MENU_BTN_NUMBER];
     titleBar      *m_pTitleBar;
     QLabel        *m_pLbPageId[3];
 
-
 public slots:
-    void on_btn_clicked(int tmp);
+    void on_btn_clicked();
     void on_navi_clicked(int tmp);
 
 };

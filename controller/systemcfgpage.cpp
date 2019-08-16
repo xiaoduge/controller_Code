@@ -130,11 +130,15 @@ void SystemCfgPage::buildTitles()
 
 void SystemCfgPage::buildTranslation()
 {
+    QFont font = m_lbPWTankName->font();
+    font.setPointSize(14);
     m_lbPWTankName->setText(tr("Pure Water Tank"));
+    m_lbPWTankName->setFont(font);
     m_cmbPWTankVolume->setItemText(5,tr("UDF"));
     m_cmbPWTankVolume->setItemText(6,tr("NO"));
     
     m_lbSWTankName->setText(tr("Feed Tank"));
+    m_lbSWTankName->setFont(font);
     m_cmbSWTankVolume->setItemText(5,tr("UDF"));
     m_cmbSWTankVolume->setItemText(6,tr("NO"));
 
@@ -351,26 +355,27 @@ void SystemCfgPage::createControl()
     yOffset += BACKWIDGET_START_HIATUS;
 
     rectTmp = sQrectAry[0];
-    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH);
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
     m_chkPWTankUV = new QCheckBox(tmpWidget);
     m_chkPWTankUV->setGeometry(rectTmp);
     m_chkPWTankUV->setStyleSheet(strQss4Chk);
     m_chkPWTankUV->hide();
 
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 10);
-    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 20);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
     m_lbPWTankUVName = new QLabel(tmpWidget);
     m_lbPWTankUVName->setGeometry(rectTmp);
+    m_lbPWTankUVName->setAlignment(Qt::AlignCenter);
     m_lbPWTankUVName->hide();
 
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 10);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
     rectTmp.setWidth(X_ITEM_WIDTH);
     m_lePWTankUVValue = new DLineEdit(tmpWidget);
     m_lePWTankUVValue->setGeometry(rectTmp);
     m_lePWTankUVValue->setValidator(new QIntValidator(0, 100, this));
     m_lePWTankUVValue->hide();
 
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 10);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
     rectTmp.setWidth(X_ITEM_WIDTH+30);
     m_lbPWTankUVUnit = new QLabel(tmpWidget);
     m_lbPWTankUVUnit->setGeometry(rectTmp);

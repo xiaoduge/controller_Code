@@ -183,5 +183,11 @@
         <file alias="systemconfig.png">pics/buttonIcon/systemconfig.png</file>
         <file alias="units.png">pics/buttonIcon/units.png</file>
         <file alias="userconfig.png">pics/buttonIcon/userconfig.png</file>
+        <file alias="about.png">pics/buttonIcon/about.png</file>
+        <file alias="consumables status.png">pics/buttonIcon/consumables status.png</file>
+        <file alias="system status.png">pics/buttonIcon/system status.png</file>
+        <file alias="user manual.png">pics/buttonIcon/user manual.png</file>
+        <file alias="Water Quality.png">pics/buttonIcon/Water Quality.png</file>
+        <file alias="alarm alert.png">pics/buttonIcon/alarm alert.png</file>
     </qresource>
 </RCC>

@@ -11,7 +11,9 @@ class DRunWarningDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit DRunWarningDialog(QWidget *parent = 0);
+    explicit DRunWarningDialog(const QString& text, QWidget *parent = 0);
+
+    void setButtonText(int num, const QString& text);
 
 private:
     void initTitleBar();
@@ -24,6 +26,7 @@ protected slots:
 private:
     Ex_DialogTitle* m_titleBar;
 
+    QString m_text;
     QLabel *m_pLabel;
     QPushButton *m_pConfirmBtn;
     QPushButton *m_pQuitBtn;

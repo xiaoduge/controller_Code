@@ -79,9 +79,9 @@ void DPushButton::setTextColor(const QColor &color)
     m_penColor = color;
 }
 
-void DPushButton::setTextFont(const QFont &font)
+void DPushButton::setFontSize(int size)
 {
-    m_font = font;
+    m_font.setPointSize(size);
 }
 
 void DPushButton::setText(const QString &text)
@@ -156,23 +156,24 @@ void DPushButton::paintEvent(QPaintEvent* e)
     int wid = fontMetrics.width(m_text);
     int h = fontMetrics.height();
 
+    int iFontHeight = m_font.pointSize() + 4;
     if(m_containText)
     {
         if(wid >= pixmap.width())
         {
             m_width = wid + 2;
-            m_height = pixmap.height() + h + 2;
+            m_height = pixmap.height() + h + iFontHeight;
         }
         else
         {
             m_width = pixmap.width() + 2;
-            m_height = pixmap.height() + h + 2;
+            m_height = pixmap.height() + h + iFontHeight;
         }
     }
     else
     {
         m_width = pixmap.width() + 2;
-        m_height = pixmap.height() + 2;
+        m_height = pixmap.height() + iFontHeight;
     }
     this->resize(m_width, m_height);
 
@@ -188,7 +189,8 @@ void DPushButton::paintEvent(QPaintEvent* e)
     painter.setPen(m_penColor);
     if(m_containText)
     {
-        painter.drawText(QRect((m_width - wid) /2, pixmap.height() + 2, wid, h), m_text);
+//        painter.drawText(QRect((m_width - wid) /2, pixmap.height() + 2, wid, h), m_text);
+        painter.drawText((m_width - wid) /2, pixmap.height() + iFontHeight, m_text);
     }
 
     if(m_isPress)
@@ -243,23 +245,24 @@ void DPushButton::initSize()
     int wid = fontMetrics.width(m_text);
     int h = fontMetrics.height();
 
+    int iFontHeight = m_font.pointSize() + 4;
     if(m_containText)
     {
         if(wid >= pixmap.width())
         {
             m_width = wid + 2;
-            m_height = pixmap.height() + h + 2;
+            m_height = pixmap.height() + h + iFontHeight;
         }
         else
         {
             m_width = pixmap.width() + 2;
-            m_height = pixmap.height() + h + 2;
+            m_height = pixmap.height() + h + iFontHeight;
         }
     }
     else
     {
         m_width = pixmap.width() + 2;
-        m_height = pixmap.height() + 2;
+        m_height = pixmap.height() + iFontHeight;
     }
     this->resize(m_width, m_height);
     m_initSize = true;

@@ -75,6 +75,10 @@ bool Ex_UserInfo::checkManagerInfo(const QString &userName)
     {
         return true;
     }
+    if(userName.compare(managerName[Super_Service_Name], Qt::CaseInsensitive) == 0)
+    {
+        return true;
+    }
     if(userName.compare(managerName[Service_Name], Qt::CaseInsensitive) == 0)
     {
         return true;
@@ -109,6 +113,10 @@ bool Ex_UserInfo::checkEngineerInfo(const QString &userName)
     {
         return true;
     }
+    if(userName.compare(managerName[Super_Service_Name], Qt::CaseInsensitive) == 0)
+    {
+        return true;
+    }
     return false;
 }
 
@@ -122,7 +130,7 @@ bool Ex_UserInfo::checkSuperService(const QString &userName, const QString& pass
     }
 
     //VWR， 超级用户
-    if((userName.compare(managerName[Service_Name], Qt::CaseInsensitive) == 0)
+    if((userName.compare(managerName[Super_Service_Name], Qt::CaseInsensitive) == 0)
         && (0 == password.compare(userPassword[Super_Service_Name])))
     {
         return true;

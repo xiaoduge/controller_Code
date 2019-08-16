@@ -103,7 +103,7 @@ void Ex_Init_TimePage::createHeads()
     lbTitPic->setPixmap(PixTit);
 
     lbTitName = new QLabel(m_widget);
-    lbTitName->setGeometry(QRect(210, 135 , 200 , 28));
+    lbTitName->setGeometry(QRect(210, 135 , 300 , 28));
     lbTitName->setStyleSheet(" font-size:24pt;color:#000000;font-family:Arial;QFont::Bold");
 }
 
@@ -148,7 +148,7 @@ void Ex_Init_TimePage::Create_Date_Time()
         ShowWidget[iLoop]->setGeometry(QRect(134 , 190 + 90 * iLoop , 530 ,60));
 
         lbName[iLoop] = new QLabel(ShowWidget[iLoop]);
-        lbName[iLoop]->setGeometry(QRect(25, 20 , 120 , 20));
+        lbName[iLoop]->setGeometry(QRect(25, 20 , 180 , 20));
         lbName[iLoop]->setAlignment(Qt::AlignLeft);
 
         m_pBtns[iLoop] = new CBitmapButton(ShowWidget[iLoop],BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,iLoop);
