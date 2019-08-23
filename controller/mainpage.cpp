@@ -869,7 +869,6 @@ void MainPage::mouseMoveEvent(QMouseEvent *e)
 
 void MainPage::mousePressEvent(QMouseEvent *e)
 {
-
     if (e->x() < 800
         && e->y() < 50)
     {

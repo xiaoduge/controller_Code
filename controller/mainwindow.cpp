@@ -166,10 +166,9 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.8.190816_RC");
+QString strSoftwareVersion = QString("0.1.9.190823_debug");
 
 MainWindow *gpMainWnd;
-
 
 QPixmap    *gpGlobalPixmaps[GLOBAL_BMP_NUM];
 
@@ -467,7 +466,7 @@ void MainRetriveProductMsg(int iMachineType) //ex_dcj
     QString strV;
 
     strV = "/ProductMsg/iCompany/";
-    ex_gGlobalParam.Ex_System_Msg.Ex_iCompany = config->value(strV, 1).toInt();
+    ex_gGlobalParam.Ex_System_Msg.Ex_iCompany = config->value(strV, 0).toInt();
 
     strV = "/ProductMsg/CatalogNo/";
     ex_gGlobalParam.Ex_System_Msg.Ex_CatalogNo = config->value(strV, "unknow").toString();
@@ -1050,29 +1049,15 @@ void MainRetriveCalibrateParam(int iMachineType)
 
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
 
-    QStringList keysList = config->allKeys();
+    QList<QVariant> defaultList;
+    defaultList << QVariant(1.0) << QVariant(1.0) << QVariant(1.0);
 
-    if(keysList.isEmpty())
+    for(int i = 0; i < DISP_PC_COFF_NUM; i++)
     {
-        for(int iLoop = 0; iLoop < DISP_PC_COFF_NUM ; iLoop++)
-        {
-            ex_global_Cali.pc[iLoop].fk = 1.0;
-            ex_global_Cali.pc[iLoop].fc = 1.0;
-        }
-
-    }
-    else
-    {
-        QList<QVariant> defaultList;
-        defaultList << QVariant(1.0) << QVariant(1.0) << QVariant(1.0);
-
-        for(int i = 0; i < keysList.size(); i++)
-        {
-            QList<QVariant> list = config->value(keysList[i], defaultList).toList();
-            int key = keysList[i].toInt();
-            ex_global_Cali.pc[key].fk = list[0].toFloat();
-            ex_global_Cali.pc[key].fc = list[1].toFloat();
-        }
+        QString strKey = QString("%1").arg(i);
+        QList<QVariant> list = config->value(strKey, defaultList).toList();
+        ex_global_Cali.pc[i].fk = list[0].toFloat();
+        ex_global_Cali.pc[i].fc = list[1].toFloat();
     }
 
     if (config)
@@ -3351,8 +3336,12 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_strConsuamble[UVTANK_CATNO] << "RAUV357A7" << "171-1270";
 
     m_strConsuamble[TANKVENTFILTER_CATNO] << "RATANKVN7" << "171-1267";
-    m_strConsuamble[FINALFILTER_CATNO] << "RAFFC7250" << "RAFFB7201"
-                                       << "171-1262" << "171-1263";
+
+    //0.2 um Final Filter   A
+    m_strConsuamble[FINALFILTER_A_CATNO] << "RAFFC7250" << "171-1262";
+
+    //Rephibio Filter   B
+    m_strConsuamble[FINALFILTER_B_CATNO]  << "RAFFB7201" << "171-1263";
 
     m_strConsuamble[UPPUMP_CATNO] << "RASP743" << "171-1280";
     m_strConsuamble[ROPACK_CATNO] << "RR70R0501" << "RR70R1001" << "RR70R1501"
@@ -4267,7 +4256,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
                 m_pExInitPages[Ex_Init_InstallConsumable], SLOT(updateConsumableInstall(int)));
         }
     }
-
 
     for(iLoop = 0; iLoop < EX_RECT_NUM; iLoop++)
     {

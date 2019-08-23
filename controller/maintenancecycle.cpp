@@ -4,7 +4,7 @@
 #include "cbitmapbutton.h"
 #include "maintenancelistwidgtitem.h"
 #include "notify.h"
-
+#include "ExtraDisplay.h"
 #include <QListWidget>
 #include <QRect>
 
@@ -577,7 +577,14 @@ void MaintenanceCyclePage::buildTranslation()
             /* 
             ÖÕ¶Ë¹ýÂËÆ÷ B   90Ìì     
             */
-            pMaintenancelistItem[iIndex]->setName(tr("Final Fliter B"));
+            if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+            {
+                pMaintenancelistItem[iIndex]->setName(tr("Final Fliter B"));
+            }
+            else
+            {
+                pMaintenancelistItem[iIndex]->setName(tr("Bio-filter"));
+            }
             pMaintenancelistItem[iIndex]->setP1Name(tr("days"));
             break;
         case DISP_T_A_FILTER:

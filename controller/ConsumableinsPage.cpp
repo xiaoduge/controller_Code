@@ -1,6 +1,7 @@
 #include "ConsumableinsPage.h"
 #include "mainwindow.h"
 #include "consumableinslistwidgtitem.h"
+#include "ExtraDisplay.h"
 #include <QListWidget>
 
 ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
@@ -536,7 +537,14 @@ void ConsumableInsPage::buildTranslation()
            /*
            ÖÕ¶Ë¹ýÂËÆ÷B      
            */
-           m_aInsListItem[iMapIdx]->setName(tr("Final Fliter B"));
+           if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+           {
+                m_aInsListItem[iMapIdx]->setName(tr("Final Fliter B"));
+           }
+           else
+           {
+               m_aInsListItem[iMapIdx]->setName(tr("Bio-filter"));
+           }
            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
            break;
        case DISP_T_A_FILTER:
@@ -792,7 +800,8 @@ void ConsumableInsPage::initTypeMap()
     m_typeMap.insert(UVTANK_CATNO, DISP_N3_UV);
     m_typeMap.insert(ROPUMP_CATNO, DISP_MACHINERY_RO_BOOSTER_PUMP);
     m_typeMap.insert(UPPUMP_CATNO, DISP_MACHINERY_CIR_PUMP);
-    m_typeMap.insert(FINALFILTER_CATNO, DISP_T_A_FILTER);
+    m_typeMap.insert(FINALFILTER_A_CATNO, DISP_T_A_FILTER);
+    m_typeMap.insert(FINALFILTER_B_CATNO, DISP_T_B_FILTER);
     m_typeMap.insert(EDI_CATNO, DISP_MACHINERY_EDI);
     m_typeMap.insert(TANKVENTFILTER_CATNO, DISP_W_FILTER);
 }

@@ -2,6 +2,7 @@
 #include "Cslistitem.h"
 #include "mainwindow.h"
 #include <QListWidget>
+#include "ExtraDisplay.h"
 
 ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain)
     : CSubPage(parent,widget,wndMain)
@@ -826,7 +827,15 @@ void ConsumableStatePage:: update()
             {
                 m_pCslistItem[iIdx]->updateState(0);
             }
-            m_pCslistItem[iIdx]->setName(tr("Final Fliter B"));
+            if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+            {
+                 m_pCslistItem[iIdx]->setName(tr("Final Fliter B"));
+            }
+            else
+            {
+                m_pCslistItem[iIdx]->setName(tr("Bio-filter"));
+            }
+
             break;  
         case DISP_T_A_FILTER:
             /* for DISP_T_A_FILTER column */

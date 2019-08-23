@@ -2,6 +2,7 @@
 #include "Display.h"
 #include "mainwindow.h"
 #include "dlineedit.h"
+#include "ExtraDisplay.h"
 #include <QLabel>
 #include <QPushButton>
 #include <QComboBox>
@@ -56,16 +57,16 @@ void Ex_ConsumableInstallDialog::initUI()
 
     m_pInstallBtn = new QPushButton(tr("Install"), this);
 
-    m_pcomboBox->setGeometry(100, 50, 180, 30);
-    m_pLineEditCat->setGeometry(100, 80, 180, 30);
-    m_pLineEditLot->setGeometry(100, 110, 180, 30);
-    m_pLineEditUser->setGeometry(100, 140, 180, 30);
+    m_pcomboBox->setGeometry(120, 50, 180, 30);
+    m_pLineEditCat->setGeometry(120, 80, 180, 30);
+    m_pLineEditLot->setGeometry(120, 110, 180, 30);
+    m_pLineEditUser->setGeometry(120, 140, 180, 30);
 
-    m_pCatLabel->setGeometry(45, 80, 50, 30);
-    m_pLotLabel->setGeometry(45, 110, 50, 30);
-    m_pUserLabel->setGeometry(45, 140, 50, 30);
+    m_pCatLabel->setGeometry(25, 80, 90, 30);
+    m_pLotLabel->setGeometry(25, 110, 90, 30);
+    m_pUserLabel->setGeometry(25, 140, 90, 30);
 
-    m_pInstallBtn->setGeometry(100, 180, 180, 30); //135, 180, 100, 30
+    m_pInstallBtn->setGeometry(120, 180, 180, 30); //135, 180, 100, 30
     m_pInstallBtn->setObjectName("loginButton");
     QString qss = QString("QPushButton#loginButton\
                          {\
@@ -127,9 +128,9 @@ void Ex_ConsumableInstallDialog::buildTranslation()
 {
     this->setTitleText(tr("Components Installation"), Qt::white, 16);
 
-    m_pCatLabel->setText(tr("CAT"));
-    m_pLotLabel->setText(tr("LOT"));
-    m_pUserLabel->setText(tr("User"));
+    m_pCatLabel->setText(tr("Cat No.:"));
+    m_pLotLabel->setText(tr("Lot No.:"));
+    m_pUserLabel->setText(tr("User Name:"));
 
     m_pInstallBtn->setText(tr("Install"));
 }
@@ -190,20 +191,7 @@ void Ex_ConsumableInstallDialog::on_installBtn_clicked()
 
 void Ex_ConsumableInstallDialog::on_comboBox_currentIndexChanged(int index)
 {
-    if((DISP_T_A_FILTER == m_iType) || (DISP_T_B_FILTER == m_iType))
-    {
-        if(0 == index)
-        {
-            m_iType = DISP_T_A_FILTER;
-            emit consumableTypeChanged(m_iType);
-        }
-        if(1 == index)
-        {
-            m_iType = DISP_T_B_FILTER;
-            emit consumableTypeChanged(m_iType);
-        }
 
-    }
 }
 
 void Ex_ConsumableInstallDialog::setConsumableName(int iType, const QString &catNo, const QString &lotNo)
@@ -261,7 +249,16 @@ void Ex_ConsumableInstallDialog::setConsumableName(int iType, const QString &cat
         break;
     case DISP_T_A_FILTER:
         m_pcomboBox->addItem(tr("Final Fliter A"));
-        m_pcomboBox->addItem(tr("Final Fliter B"));
+        break;
+    case DISP_T_B_FILTER:
+        if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+        {
+             m_pcomboBox->addItem(tr("Final Fliter B"));
+        }
+        else
+        {
+            m_pcomboBox->addItem(tr("Bio-filter"));
+        }
         break;
     case DISP_MACHINERY_EDI:
         m_pcomboBox->addItem(tr("EDI Module"));

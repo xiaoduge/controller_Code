@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QMutex>
+#include "mainwindow.h"
 
 class Ex_EventFilter : public QObject
 {
@@ -18,6 +19,9 @@ signals:
 public slots:
 
 private:
+#ifdef TOUCHTEST
+    void touchTest(QEvent *e);
+#endif
     
 };
 

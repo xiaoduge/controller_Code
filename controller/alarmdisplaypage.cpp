@@ -1,6 +1,7 @@
 #include "alarmdisplaypage.h"
 #include "alarmdisplaylistitem.h"
 #include "mainwindow.h"
+#include "ExtraDisplay.h"
 #include <QListWidget>
 
 #define MAKEID(major,minor) (((major)<<16) + (minor))
@@ -1076,7 +1077,15 @@ void AlarmDisplayPage::csUpdate()
                 m_pCslistItem[iIdx]->setLotNo(strTmp);
                 m_pCslistItem[iIdx]->updateState(1);
                 m_pCslistItem[iIdx]->setId(iIdx);
-                m_pCslistItem[iIdx]->setName(tr("Final Fliter B"));
+                if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+                {
+                     m_pCslistItem[iIdx]->setName(tr("Final Fliter B"));
+                }
+                else
+                {
+                    m_pCslistItem[iIdx]->setName(tr("Bio-filter"));
+                }
+
                 iIdx++;
             }
             break;  

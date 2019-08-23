@@ -57,7 +57,8 @@ void Ex_CheckConsumaleInstall::initRfid()
     m_iRfid[UV185_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[UVTANK_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[TANKVENTFILTER_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-    m_iRfid[FINALFILTER_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+    m_iRfid[FINALFILTER_A_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+    m_iRfid[FINALFILTER_B_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[UPPUMP_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[ROPACK_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[ROPUMP_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
@@ -168,7 +169,8 @@ void Ex_CheckConsumaleInstall::initTypeMap()
     m_typeMap.insert(UVTANK_CATNO, DISP_N3_UV);
     m_typeMap.insert(ROPUMP_CATNO, DISP_MACHINERY_RO_BOOSTER_PUMP);
     m_typeMap.insert(UPPUMP_CATNO, DISP_MACHINERY_CIR_PUMP);
-    m_typeMap.insert(FINALFILTER_CATNO, DISP_T_A_FILTER);
+    m_typeMap.insert(FINALFILTER_A_CATNO, DISP_T_A_FILTER);
+    m_typeMap.insert(FINALFILTER_B_CATNO, DISP_T_B_FILTER);
     m_typeMap.insert(EDI_CATNO, DISP_MACHINERY_EDI);
     m_typeMap.insert(TANKVENTFILTER_CATNO, DISP_W_FILTER);
 }
@@ -189,7 +191,8 @@ void Ex_CheckConsumaleInstall::initCategoryMap()
     m_categoryMap.insert(UVTANK_CATNO, 0);
     m_categoryMap.insert(ROPUMP_CATNO, 1);
     m_categoryMap.insert(UPPUMP_CATNO, 1);
-    m_categoryMap.insert(FINALFILTER_CATNO, 0);
+    m_categoryMap.insert(FINALFILTER_A_CATNO, 0);
+    m_categoryMap.insert(FINALFILTER_B_CATNO, 0);
     m_categoryMap.insert(EDI_CATNO, 1);
     m_categoryMap.insert(TANKVENTFILTER_CATNO, 0);
 }

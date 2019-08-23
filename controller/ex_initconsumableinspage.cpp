@@ -1,5 +1,6 @@
 #include "ex_initconsumableinspage.h"
 #include "mainwindow.h"
+#include "ExtraDisplay.h"
 #include <QTableWidget>
 #include <QMouseEvent>
 #include <QHeaderView>
@@ -371,7 +372,14 @@ void Ex_InitConsumableInsPage::initOtherConfig()
     case MACHINE_UP:
     case MACHINE_ADAPT:
         install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        install_info.strName = tr("Final Fliter B");
+        if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+        {
+             install_info.strName = tr("Final Fliter B");
+        }
+        else
+        {
+            install_info.strName = tr("Bio-filter");
+        }
         m_map[Type1].insert(DISP_T_B_FILTER, install_info);
         m_list[Type1].append(DISP_T_B_FILTER);
         break;
