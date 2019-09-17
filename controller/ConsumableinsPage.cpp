@@ -102,6 +102,8 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
      case MACHINE_RO:
      case MACHINE_ADAPT:
          break;
+     default:
+         break;
      }
     
      switch(gGlobalParam.iMachineType)

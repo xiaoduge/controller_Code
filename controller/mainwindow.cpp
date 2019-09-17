@@ -166,7 +166,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.9.190823_debug");
+QString strSoftwareVersion = QString("0.1.9.190916_RC");
 
 MainWindow *gpMainWnd;
 
@@ -2256,14 +2256,16 @@ void MainSaveCleanParam(int iMachineType,DISP_CLEAN_SETTING_STRU  &Param)
         {
            strTmp = QString::number(Param.aCleans[iLoop].lstTime );
            
-           config->setValue(strV + "/LASTIME",0);
+//           config->setValue(strV + "/LASTIME",0);
+           config->setValue(strV + "/LASTIME",strTmp);
         }
 
         if (Param.aCleans[iLoop].period != tmpParam.aCleans[iLoop].period)
         {
            strTmp = QString::number(Param.aCleans[iLoop].period );
            
-           config->setValue(strV + "/PERIOD",0);
+//           config->setValue(strV + "/PERIOD",0);
+           config->setValue(strV + "/PERIOD",strTmp);
         }
 
     }    
@@ -8127,6 +8129,16 @@ void MainWindow::run(bool bRun)
     
     if (bRun)
     {
+        //2019.9.16 add
+        if(pretreatmentCleaning())
+        {
+            if (typeid(*m_pCurPage) == typeid(MainPage))
+            {
+                pMainPage->updateRunInfo(false);
+            }
+            return;
+        }
+
         if (!getActiveExeBrds())
         {
             if (typeid(*m_pCurPage) == typeid(MainPage))

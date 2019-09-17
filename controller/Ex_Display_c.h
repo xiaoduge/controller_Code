@@ -86,7 +86,7 @@ extern unsigned int ex_gulSecond;
 extern unsigned short ex_isPackNew;
 
 int Ex_FactoryTest(int select);
-
+int pretreatmentCleaning(); //2019.9.16 add
 
 #ifdef __cplusplus
 }

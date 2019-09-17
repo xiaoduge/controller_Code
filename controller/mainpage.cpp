@@ -1420,6 +1420,7 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
                 m_pLabels[LABEL_NAVI_EDI_WQ_UNIT]->setText(tr("us"));
                 break;
             }
+            case MACHINE_L_UP:
             case MACHINE_UP:
             {
                 if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
@@ -1434,6 +1435,7 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
                 }
                 break;
             }
+            case MACHINE_L_RO_LOOP:
             case MACHINE_RO:
             {
                 if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
@@ -1517,6 +1519,7 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
             case MACHINE_ADAPT:
                 break;
             case MACHINE_Genie:
+            case MACHINE_L_Genie:
             {
                 if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
                 {
@@ -1544,6 +1547,7 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
                 }
                 break;
             }
+            case MACHINE_L_EDI_LOOP:
             case MACHINE_EDI:
             {
                 if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
@@ -1586,6 +1590,7 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
 
         switch(gGlobalParam.iMachineType)
         {
+        case MACHINE_L_Genie:
         case MACHINE_Genie:
         {
             if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
@@ -1602,6 +1607,7 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
             }
             break;
         }
+        case MACHINE_L_UP:
         case MACHINE_UP:
         {
             if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
@@ -1617,6 +1623,7 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
             }
             break;
         }
+        case MACHINE_L_EDI_LOOP:
         case MACHINE_EDI:
         {
             if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
@@ -1634,6 +1641,7 @@ void MainPage::updIsInfo(int iIndex,ECO_INFO_STRU *info)
             m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
             break;
         }
+        case MACHINE_L_RO_LOOP:
         case MACHINE_RO:
         {
             if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
@@ -1721,6 +1729,7 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                 m_aHistoryEco[iIndex] = *info;
                 break;
             }
+            case MACHINE_L_UP:
             case MACHINE_UP:
             {
                 if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
@@ -1740,6 +1749,7 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                 }
                 break;
             }
+            case MACHINE_L_RO_LOOP:
             case MACHINE_RO:
             {
                 if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
@@ -1825,6 +1835,7 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
 
             switch(gGlobalParam.iMachineType)
             {
+            case MACHINE_L_Genie:
             case MACHINE_Genie:
             {
                 if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
@@ -1888,6 +1899,7 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
                 }
                 break;
             }
+            case MACHINE_L_EDI_LOOP:
             case MACHINE_EDI:
             {
                 if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
@@ -1965,6 +1977,7 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
         }
         switch(gGlobalParam.iMachineType)
         {
+        case MACHINE_L_Genie:
         case MACHINE_Genie:
         {
             if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
@@ -2004,6 +2017,7 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
             }
             break;
         }
+        case MACHINE_L_UP:
         case MACHINE_UP:
         {
             if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
@@ -2067,7 +2081,7 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
             }
             break;
         }
-
+        case MACHINE_L_EDI_LOOP:
         case MACHINE_EDI:
         {
             if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
@@ -2105,6 +2119,7 @@ void MainPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd)
             m_aHistoryEco[iIndex] = *info;
             break;
         }
+        case MACHINE_L_RO_LOOP:
         case MACHINE_RO: //2018.12.12
         {
             if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))

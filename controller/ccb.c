@@ -14714,6 +14714,7 @@ void MainSecondTask4MainState()
         if (gCcb.bit1B1Check4RuningState 
             && gCcb.bit1B1UnderPressureDetected)
         {
+            //if (gulSecond - gCcb.ulB1UnderPressureTick >= 60)
             if (gulSecond - gCcb.ulB1UnderPressureTick >= DEFAULT_LPP_CHECK_NUMBER)
             {
                /* move to LPP state */
@@ -15389,6 +15390,12 @@ int Ex_FactoryTest(int select)
     }
 
     return 0;
+}
+
+//2019.9.16 add
+int  pretreatmentCleaning()
+{
+    return gCcb.ulKeyWorkStates |= (1<<APP_EXE_DIN_RF_KEY);
 }
 
 #ifdef __cplusplus

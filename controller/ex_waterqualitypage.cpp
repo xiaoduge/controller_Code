@@ -84,7 +84,9 @@ void Ex_WaterQualityPage::buildTranslation()
     strUnitMsg[UNIT_USCM] = "%1 " + tr("us/cm");
     strUnitMsg[UNIT_CELSIUS] = "%1 " + tr("Celsius");
     strUnitMsg[UNIT_F] = "%1 " + tr("Fahrenheit");
+    strUnitMsg[UNIT_L_H] = "%1 " + tr("L/h");
     strUnitMsg[UNIT_L_MIN] = "%1 " + tr("L/min");
+    strUnitMsg[UNIT_G_H] = "%1 " + tr("G/h");
     strUnitMsg[UNIT_G_MIN] = "%1 " + tr("G/min");
     strUnitMsg[UNIT_BAR] = "%1 " + tr("bar");
     strUnitMsg[UNIT_MPA] = "%1 " + tr("mpa");
@@ -932,23 +934,23 @@ void Ex_WaterQualityPage::updHistoryFlowInfo()
     {
         updateValue(m_tags[HP_Disp_Rate], strUnitMsg[UNIT_G_MIN].arg((toGallon(1))*m_historyInfo[HP_Disp_Rate].value1, 0, 'f', 1));
         updateValue(m_tags[UP_Disp_Rate], strUnitMsg[UNIT_G_MIN].arg((toGallon(1))*m_historyInfo[UP_Disp_Rate].value1, 0, 'f', 1));
-        updateValue(m_tags[RO_Feed_Rate], strUnitMsg[UNIT_G_MIN].arg((toGallon(1))*m_historyInfo[RO_Feed_Rate].value1, 0, 'f', 1));
-        updateValue(m_tags[RO_Product_Rate], strUnitMsg[UNIT_G_MIN].arg((toGallon(1))*m_historyInfo[RO_Product_Rate].value1, 0, 'f', 1));
-        updateValue(m_tags[Tap_Rate], strUnitMsg[UNIT_G_MIN].arg((toGallon(1))*m_historyInfo[Tap_Rate].value1, 0, 'f', 1));
-        updateValue(m_tags[EDI_Product_Rate], strUnitMsg[UNIT_G_MIN].arg((toGallon(1))*m_historyInfo[EDI_Product_Rate].value1, 0, 'f', 1));
-        updateValue(m_tags[EDI_Reject_Rate], strUnitMsg[UNIT_G_MIN].arg((toGallon(1))*m_historyInfo[EDI_Reject_Rate].value1, 0, 'f', 1));
-        updateValue(m_tags[RO_Reject_Rate], strUnitMsg[UNIT_G_MIN].arg((toGallon(1))*m_historyInfo[RO_Reject_Rate].value1, 0, 'f', 1));
+        updateValue(m_tags[RO_Feed_Rate], strUnitMsg[UNIT_G_H].arg((toGallon(1))*m_historyInfo[RO_Feed_Rate].value1, 0, 'f', 1));
+        updateValue(m_tags[RO_Product_Rate], strUnitMsg[UNIT_G_H].arg((toGallon(1))*m_historyInfo[RO_Product_Rate].value1, 0, 'f', 1));
+        updateValue(m_tags[Tap_Rate], strUnitMsg[UNIT_G_H].arg((toGallon(1))*m_historyInfo[Tap_Rate].value1, 0, 'f', 1));
+        updateValue(m_tags[EDI_Product_Rate], strUnitMsg[UNIT_G_H].arg((toGallon(1))*m_historyInfo[EDI_Product_Rate].value1, 0, 'f', 1));
+        updateValue(m_tags[EDI_Reject_Rate], strUnitMsg[UNIT_G_H].arg((toGallon(1))*m_historyInfo[EDI_Reject_Rate].value1, 0, 'f', 1));
+        updateValue(m_tags[RO_Reject_Rate], strUnitMsg[UNIT_G_H].arg((toGallon(1))*m_historyInfo[RO_Reject_Rate].value1, 0, 'f', 1));
     }
     else
     {
         updateValue(m_tags[HP_Disp_Rate], strUnitMsg[UNIT_L_MIN].arg(1.0 * m_historyInfo[HP_Disp_Rate].value1, 0, 'f', 1));
         updateValue(m_tags[UP_Disp_Rate], strUnitMsg[UNIT_L_MIN].arg(1.0 * m_historyInfo[UP_Disp_Rate].value1, 0, 'f', 1));
-        updateValue(m_tags[RO_Feed_Rate], strUnitMsg[UNIT_L_MIN].arg(1.0 * m_historyInfo[RO_Feed_Rate].value1, 0, 'f', 1));
-        updateValue(m_tags[RO_Product_Rate], strUnitMsg[UNIT_L_MIN].arg(1.0 * m_historyInfo[RO_Product_Rate].value1, 0, 'f', 1));
-        updateValue(m_tags[Tap_Rate], strUnitMsg[UNIT_L_MIN].arg(1.0 * m_historyInfo[Tap_Rate].value1, 0, 'f', 1));
-        updateValue(m_tags[EDI_Product_Rate], strUnitMsg[UNIT_L_MIN].arg(1.0 * m_historyInfo[EDI_Product_Rate].value1, 0, 'f', 1));
-        updateValue(m_tags[EDI_Reject_Rate], strUnitMsg[UNIT_L_MIN].arg(1.0 * m_historyInfo[EDI_Reject_Rate].value1, 0, 'f', 1));
-        updateValue(m_tags[RO_Reject_Rate], strUnitMsg[UNIT_L_MIN].arg(1.0 * m_historyInfo[RO_Reject_Rate].value1, 0, 'f', 1));
+        updateValue(m_tags[RO_Feed_Rate], strUnitMsg[UNIT_L_H].arg(1.0 * m_historyInfo[RO_Feed_Rate].value1, 0, 'f', 1));
+        updateValue(m_tags[RO_Product_Rate], strUnitMsg[UNIT_L_H].arg(1.0 * m_historyInfo[RO_Product_Rate].value1, 0, 'f', 1));
+        updateValue(m_tags[Tap_Rate], strUnitMsg[UNIT_L_H].arg(1.0 * m_historyInfo[Tap_Rate].value1, 0, 'f', 1));
+        updateValue(m_tags[EDI_Product_Rate], strUnitMsg[UNIT_L_H].arg(1.0 * m_historyInfo[EDI_Product_Rate].value1, 0, 'f', 1));
+        updateValue(m_tags[EDI_Reject_Rate], strUnitMsg[UNIT_L_H].arg(1.0 * m_historyInfo[EDI_Reject_Rate].value1, 0, 'f', 1));
+        updateValue(m_tags[RO_Reject_Rate], strUnitMsg[UNIT_L_H].arg(1.0 * m_historyInfo[RO_Reject_Rate].value1, 0, 'f', 1));
     }
 }
 
@@ -983,11 +985,13 @@ void Ex_WaterQualityPage::updFlowInfo(int iIndex,int iValue)
     m_aulFlowMeter[iIndex] = iValue;
 
     QString strFlowUnit = strUnitMsg[UNIT_L_MIN];
+    QString strFlowUnitH = strUnitMsg[UNIT_L_H];
 
     if ((FLOW_VELOCITY_UINT_GAL_PER_MIN == gGlobalParam.MiscParam.iUint4FlowVelocity))
     {
        fUnit =  toGallon(1);
        strFlowUnit = strUnitMsg[UNIT_G_MIN];
+       strFlowUnitH = strUnitMsg[UNIT_G_H];
     }
 
     switch(iIndex)
@@ -1032,27 +1036,27 @@ void Ex_WaterQualityPage::updFlowInfo(int iIndex,int iValue)
         break;
     }
     case APP_FM_FM2_NO:
-        updateValue(m_tags[RO_Feed_Rate], strFlowUnit.arg(toTwoDecimal(fUnit*(60.0*iValue)/1000)));
+        updateValue(m_tags[RO_Feed_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*iValue)/1000)));
         m_historyInfo[RO_Feed_Rate].value1 = ((60.0*iValue)/1000);
         break;
    case APP_FM_FM3_NO:
-        updateValue(m_tags[RO_Product_Rate], strFlowUnit.arg(toTwoDecimal(fUnit*(60.0*iValue)/1000)));
+        updateValue(m_tags[RO_Product_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*iValue)/1000)));
         m_historyInfo[RO_Product_Rate].value1 = ((60.0*iValue)/1000);
 
-        updateValue(m_tags[Tap_Rate], strFlowUnit.arg(toTwoDecimal(fUnit*(60.0*(m_aulFlowMeter[APP_FM_FM3_NO] + m_aulFlowMeter[APP_FM_FM4_NO]))/1000)));
+        updateValue(m_tags[Tap_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*(m_aulFlowMeter[APP_FM_FM3_NO] + m_aulFlowMeter[APP_FM_FM4_NO]))/1000)));
         m_historyInfo[Tap_Rate].value1 = ((60.0*(m_aulFlowMeter[APP_FM_FM3_NO] + m_aulFlowMeter[APP_FM_FM4_NO]))/1000);
 
-        updateValue(m_tags[EDI_Product_Rate], strFlowUnit.arg(toTwoDecimal(fUnit*(60.0*0.8*iValue)/1000)));
+        updateValue(m_tags[EDI_Product_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*0.8*iValue)/1000)));
         m_historyInfo[EDI_Product_Rate].value1 = ((60.0*0.8*iValue)/1000);
 
-        updateValue(m_tags[EDI_Reject_Rate], strFlowUnit.arg(toTwoDecimal(fUnit*(60.0*0.2*iValue)/1000)));
+        updateValue(m_tags[EDI_Reject_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*0.2*iValue)/1000)));
         m_historyInfo[EDI_Reject_Rate].value1 = ((60.0*0.2*iValue)/1000);
         break;
    case APP_FM_FM4_NO:
-        updateValue(m_tags[RO_Reject_Rate], strFlowUnit.arg(toTwoDecimal(fUnit*(60.0*iValue)/1000)));
+        updateValue(m_tags[RO_Reject_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*iValue)/1000)));
         m_historyInfo[RO_Reject_Rate].value1 = ((60.0*iValue)/1000);
 
-        updateValue(m_tags[Tap_Rate], strFlowUnit.arg(toTwoDecimal(fUnit*(60.0*(m_aulFlowMeter[APP_FM_FM3_NO] + m_aulFlowMeter[APP_FM_FM4_NO]))/1000)));
+        updateValue(m_tags[Tap_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*(m_aulFlowMeter[APP_FM_FM3_NO] + m_aulFlowMeter[APP_FM_FM4_NO]))/1000)));
         m_historyInfo[Tap_Rate].value1 = ((60.0*(m_aulFlowMeter[APP_FM_FM3_NO] + m_aulFlowMeter[APP_FM_FM4_NO]))/1000);
         break;
    }

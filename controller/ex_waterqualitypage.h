@@ -51,7 +51,9 @@ public:
         UNIT_USCM,
         UNIT_CELSIUS,//Celsius
         UNIT_F,
+        UNIT_L_H,
         UNIT_L_MIN,
+        UNIT_G_H,
         UNIT_G_MIN,
         UNIT_BAR,
         UNIT_MPA,
