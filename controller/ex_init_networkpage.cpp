@@ -3,6 +3,7 @@
 #include <QMouseEvent>
 #include <QRect>
 #include <QProcess>
+#include <QListWidget>
 #include "cbitmapbutton.h"
 #include "dlineedit.h"
 
@@ -46,12 +47,10 @@ void Ex_Init_Networkpage::buildTranslation()
     m_pExBackBtn->setText(tr("Back"));
     m_pExNextBtn->setText(tr("Next"));
 
-#ifdef D_HTTPWORK
     m_pSSIDLab->setText(tr("SSID:"));
     m_pAddSSIDBtn->setText(tr("Add"));
     m_pRefreshWifiBtn->setText(tr("Refresh"));
     m_pAddCheckBox->setText(tr("Add network"));
-#endif
 }
 
 void Ex_Init_Networkpage::switchLanguage()
@@ -149,7 +148,6 @@ void Ex_Init_Networkpage::initUi()
     m_pExBackBtn->move(200, 420);
     m_pExNextBtn->move(500, 420);
 
-#ifdef D_HTTPWORK
     m_pWifiConfigWidget = new QWidget(m_widget);
     QPalette pal(m_pWifiConfigWidget->palette());
     pal.setColor(QPalette::Background, Qt::gray);
@@ -207,9 +205,6 @@ void Ex_Init_Networkpage::initUi()
     {
         m_pWifiSSIDAddWidget->hide();
     }
-
-#endif
-
 }
 
 void Ex_Init_Networkpage::save()
@@ -270,7 +265,6 @@ void Ex_Init_Networkpage::on_checkBox_changeState(int state)
        }
     }
 
-#ifdef D_HTTPWORK
     if(Qt::Checked == m_chkSwitchs[DISPLAY_NETWORK_WIFI]->checkState())
     {
         m_pWifiConfigWidget->show();
@@ -284,7 +278,6 @@ void Ex_Init_Networkpage::on_checkBox_changeState(int state)
         m_pExBackBtn->move(200, 420);
         m_pExNextBtn->move(500, 420);
     }
-#endif
 
 }
 
@@ -320,9 +313,8 @@ void Ex_Init_Networkpage::leaveSubPage()
 
 void Ex_Init_Networkpage::update()
 {
-#ifdef D_HTTPWORK
     m_pAddCheckBox->setChecked(false);
-#endif
+
 
     if(gGlobalParam.MiscParam.iNetworkMask & 1 << DISPLAY_NETWORK_ZIGBEE)
     {
@@ -336,21 +328,20 @@ void Ex_Init_Networkpage::update()
     if(gGlobalParam.MiscParam.iNetworkMask & 1 << DISPLAY_NETWORK_WIFI)
     {
         m_chkSwitchs[DISPLAY_NETWORK_WIFI]->setChecked(true);
-#ifdef D_HTTPWORK
+
         m_pWifiConfigWidget->show();
         m_pExBackBtn->move(200, 510);
         m_pExNextBtn->move(500, 510);
-#endif
+
     }
     else
     {
         m_chkSwitchs[DISPLAY_NETWORK_WIFI]->setChecked(false);
-#ifdef D_HTTPWORK
+
         m_pWifiConfigWidget->hide();
         m_pWifiSSIDAddWidget->hide();
         m_pExBackBtn->move(200, 420);
         m_pExNextBtn->move(500, 420);
-#endif
     }
 }
 
@@ -389,7 +380,6 @@ void Ex_Init_Networkpage::mouseReleaseEvent(QMouseEvent *e)
     m_lstFlag = 0;
 }
 
-#ifdef D_HTTPWORK
 void Ex_Init_Networkpage::on_addSSIDBtn_clicked()
 {
     QString strSSID = QString("ESSID:\"%1\"").arg(m_pSSIDEdit->text());
@@ -445,7 +435,6 @@ void Ex_Init_Networkpage::on_addCheckBox_stateChanged(int state)
         m_pWifiSSIDAddWidget->hide();
     }
 }
-#endif
 
 
 

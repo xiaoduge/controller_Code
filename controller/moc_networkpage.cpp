@@ -22,7 +22,7 @@ static const uint qt_meta_data_NetworkPage[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,6 +32,11 @@ static const uint qt_meta_data_NetworkPage[] = {
  // slots: signature, parameters, type, tag, flags
       13,   12,   12,   12, 0x0a,
       39,   33,   12,   12, 0x0a,
+      68,   12,   12,   12, 0x0a,
+      92,   12,   12,   12, 0x0a,
+     120,   12,   12,   12, 0x0a,
+     145,  140,   12,   12, 0x0a,
+     193,   33,   12,   12, 0x0a,
 
        0        // eod
 };
@@ -39,6 +44,11 @@ static const uint qt_meta_data_NetworkPage[] = {
 static const char qt_meta_stringdata_NetworkPage[] = {
     "NetworkPage\0\0on_btn_clicked(int)\0state\0"
     "on_checkBox_changeState(int)\0"
+    "on_addSSIDBtn_clicked()\0"
+    "on_wifiRefreshBtn_clicked()\0"
+    "on_refreshWifiMsg()\0item\0"
+    "on_wifiListWidget_itemClicked(QListWidgetItem*)\0"
+    "on_addCheckBox_stateChanged(int)\0"
 };
 
 void NetworkPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -49,6 +59,11 @@ void NetworkPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         switch (_id) {
         case 0: _t->on_btn_clicked((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 1: _t->on_checkBox_changeState((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->on_addSSIDBtn_clicked(); break;
+        case 3: _t->on_wifiRefreshBtn_clicked(); break;
+        case 4: _t->on_refreshWifiMsg(); break;
+        case 5: _t->on_wifiListWidget_itemClicked((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 6: _t->on_addCheckBox_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -86,9 +101,9 @@ int NetworkPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 7;
     }
     return _id;
 }

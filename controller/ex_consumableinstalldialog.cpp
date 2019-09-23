@@ -266,6 +266,12 @@ void Ex_ConsumableInstallDialog::setConsumableName(int iType, const QString &cat
     case DISP_W_FILTER:
         m_pcomboBox->addItem(tr("Tank Vent Filter"));
         break;
+    case DISP_TUBE_FILTERLIFE:
+        m_pcomboBox->addItem(tr("Loop Filter"));
+        break;
+    case DISP_N4_UV:
+        m_pcomboBox->addItem(tr("Tube UV"));
+        break;
     default:
         break;
     }

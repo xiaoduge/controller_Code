@@ -3,6 +3,7 @@
 #include "cbitmapbutton.h"
 #include <QRect>
 #include <QProcess>
+#include <QListWidget>
 #include "ex_hintdialog.h"
 #include "dlineedit.h"
 
@@ -53,12 +54,10 @@ void NetworkPage::buildTranslation()
      
     m_pBtnSave->setTip(tr("Save"),QColor(228, 231, 240),BITMAPBUTTON_TIP_CENTER);
 
-#ifdef D_HTTPWORK
     m_pSSIDLab->setText(tr("SSID:"));
     m_pAddSSIDBtn->setText(tr("Add"));
     m_pRefreshWifiBtn->setText(tr("Refresh"));
     m_pAddCheckBox->setText(tr("Add network"));
-#endif
 }
 
 void NetworkPage::switchLanguage()
@@ -142,7 +141,6 @@ void NetworkPage::initUi()
     }
 
     //add for wifi config
-#ifdef D_HTTPWORK
     m_pWifiConfigWidget = new QWidget(m_widget);
     QPalette pal(m_pWifiConfigWidget->palette());
     pal.setColor(QPalette::Background, Qt::gray);
@@ -199,7 +197,6 @@ void NetworkPage::initUi()
         m_pWifiSSIDAddWidget->hide();
     }
 
-#endif
     //end
     
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,NETWORKPAGE_BTN_SAVE);
@@ -282,7 +279,6 @@ void NetworkPage::on_checkBox_changeState(int state)
        }
     }
 
-#ifdef D_HTTPWORK
     if(Qt::Checked == m_chkSwitchs[DISPLAY_NETWORK_WIFI]->checkState())
     {
         m_pWifiConfigWidget->show();
@@ -292,10 +288,8 @@ void NetworkPage::on_checkBox_changeState(int state)
         m_pWifiConfigWidget->hide();
         m_pWifiSSIDAddWidget->hide();
     }
-#endif
 }
 
-#ifdef D_HTTPWORK
 void NetworkPage::on_addSSIDBtn_clicked()
 {
     QString strSSID = QString("ESSID:\"%1\"").arg(m_pSSIDEdit->text());
@@ -351,7 +345,6 @@ void NetworkPage::on_addCheckBox_stateChanged(int state)
         m_pWifiSSIDAddWidget->hide();
     }
 }
-#endif
 
 void NetworkPage::leaveSubPage()
 {    
@@ -360,9 +353,7 @@ void NetworkPage::leaveSubPage()
 
 void NetworkPage::update()
 {
-#ifdef D_HTTPWORK
     m_pAddCheckBox->setChecked(false);
-#endif
 
     if(gGlobalParam.MiscParam.iNetworkMask & 1 << DISPLAY_NETWORK_ZIGBEE)
     {
@@ -376,17 +367,14 @@ void NetworkPage::update()
     if(gGlobalParam.MiscParam.iNetworkMask & 1 << DISPLAY_NETWORK_WIFI)
     {
         m_chkSwitchs[DISPLAY_NETWORK_WIFI]->setChecked(true);
-#ifdef D_HTTPWORK
         m_pWifiConfigWidget->show();
-#endif
+
     }
     else
     {
         m_chkSwitchs[DISPLAY_NETWORK_WIFI]->setChecked(false);
-#ifdef D_HTTPWORK
         m_pWifiConfigWidget->hide();
         m_pWifiSSIDAddWidget->hide();
-#endif
     }
 }
 

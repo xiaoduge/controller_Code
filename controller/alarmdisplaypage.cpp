@@ -293,6 +293,7 @@ void AlarmDisplayPage::buildTranslation()
             */
             m_astrPartAlarm[iIdx] = tr("Feed Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP19]) + tr("Celsius");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
          case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_RO_PRODUCT_TEMPERATURE):
               /*
               RO²úË®ÎÂ¶È>45¡æ

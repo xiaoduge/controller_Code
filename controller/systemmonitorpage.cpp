@@ -111,8 +111,6 @@ SystemMonitorPage::SystemMonitorPage(QObject *parent,CBaseWidget *widget ,MainWi
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
         aIds[iIdx].iType = SYSMONI_LIST_ITEM_DOUBLE_SWITCH_VALUE;
         aIds[iIdx].iId   = SYSTEMPAGE_ITEM_NAME_N1N2_STATE;
@@ -128,6 +126,8 @@ SystemMonitorPage::SystemMonitorPage(QObject *parent,CBaseWidget *widget ,MainWi
         aIds[iIdx].num   = 0X1;
         iIdx++;
         break;
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
     case MACHINE_EDI:
         aIds[iIdx].iType = SYSMONI_LIST_ITEM_SINGLE_SWITCH_VALUE;
         aIds[iIdx].iId   = SYSTEMPAGE_ITEM_NAME_N1N2_STATE;

@@ -15393,9 +15393,9 @@ int Ex_FactoryTest(int select)
 }
 
 //2019.9.16 add
-int  pretreatmentCleaning()
+unsigned int  pretreatmentCleaning()
 {
-    return gCcb.ulKeyWorkStates |= (1<<APP_EXE_DIN_RF_KEY);
+    return gCcb.ulKeyWorkStates;
 }
 
 #ifdef __cplusplus

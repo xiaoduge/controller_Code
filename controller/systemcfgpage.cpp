@@ -72,7 +72,7 @@ SystemCfgPage::SystemCfgPage(QObject *parent,CBaseWidget *widget ,MainWindow *wn
         iIdx++;
         break;
     }
-
+/*
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
@@ -83,7 +83,7 @@ SystemCfgPage::SystemCfgPage(QObject *parent,CBaseWidget *widget ,MainWindow *wn
         iIdx++;
         break;
     }
-
+*/
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:

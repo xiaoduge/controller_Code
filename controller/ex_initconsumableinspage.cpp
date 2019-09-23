@@ -280,16 +280,9 @@ void Ex_InitConsumableInsPage::initPackConfig()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_UP:
     case MACHINE_PURIST:
         install_info.iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
-        install_info.strName = tr("H Pack");
-        m_map[Type0].insert(DISP_H_PACK, install_info);
-        m_list[Type0].append(DISP_H_PACK);
-        break;
-    case MACHINE_L_EDI_LOOP:
-        install_info.iRfid = APP_RFID_SUB_TYPE_UPACK_HPACK;
         install_info.strName = tr("H Pack");
         m_map[Type0].insert(DISP_H_PACK, install_info);
         m_list[Type0].append(DISP_H_PACK);
@@ -304,6 +297,11 @@ void Ex_InitConsumableInsPage::initPackConfig()
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
+        install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        install_info.strName = tr("P Pack");
+        m_map[Type0].insert(DISP_P_PACK, install_info);
+        m_list[Type0].append(DISP_P_PACK);
+        break;
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -320,10 +318,6 @@ void Ex_InitConsumableInsPage::initPackConfig()
 
     switch(gGlobalParam.iMachineType)
     {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -332,6 +326,19 @@ void Ex_InitConsumableInsPage::initPackConfig()
         install_info.strName = tr("AC Pack");
         m_map[Type0].insert(DISP_AC_PACK, install_info);
         m_list[Type0].append(DISP_AC_PACK);
+        break;
+    default:
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_EDI_LOOP:
+        install_info.iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+        install_info.strName = tr("AT Pack");
+        m_map[Type0].insert(DISP_AT_PACK, install_info);
+        m_list[Type0].append(DISP_AT_PACK);
         break;
     default:
         break;
@@ -476,6 +483,66 @@ void Ex_InitConsumableInsPage::initOtherConfig()
         m_map[Type1].insert(DISP_W_FILTER, install_info);
         m_list[Type1].append(DISP_W_FILTER);
         break;
+    default:
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    {
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeUV))
+        {
+            install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            install_info.strName = tr("Tube UV");
+            m_map[Type1].insert(DISP_N4_UV, install_info);
+            m_list[Type1].append(DISP_N4_UV);
+        }
+        break;
+    }
+    default:
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    {
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTubeFilter))
+        {
+            install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            install_info.strName = tr("Loop Filter");
+            m_map[Type1].insert(DISP_TUBE_FILTER, install_info);
+            m_list[Type1].append(DISP_TUBE_FILTER);
+        }
+        break;
+    }
+    default:
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    {
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeDI))
+        {
+            install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            install_info.strName = tr("Loop DI");
+            m_map[Type1].insert(DISP_TUBE_DI, install_info);
+            m_list[Type1].append(DISP_TUBE_DI);
+        }
+        break;
+    }
     default:
         break;
     }

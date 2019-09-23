@@ -155,6 +155,8 @@ enum CONSUMABLE_CATNO
     FINALFILTER_B_CATNO,
     EDI_CATNO,
     TANKVENTFILTER_CATNO,
+    LOOPFILTER_CATNO,
+    LOOPUV_CATNO,
     CAT_NUM
 };
 
@@ -507,10 +509,11 @@ private:
 
     void saveFmData(int id,unsigned int ulValue);
 
-#ifdef D_HTTPWORK
+
     //
 public:
     void showWifiConfigDlg(const QString& name);
+#ifdef D_HTTPWORK
     void emitHttpAlarm(const QString& strAlarm);
     void checkConsumableAlarm();
 
@@ -537,7 +540,7 @@ private:
     QThread m_workerThread;
     QTimer *m_networkTimer;
 
-    DWifiConfigDialog *m_pWifiConfigDlg;
+
 
     NetworkData m_networkData;
     bool m_conAlarmMark[HTTP_NOTIFY_NUM];
@@ -548,6 +551,8 @@ private:
     int mqttNum;
     //
 #endif
+private:
+    DWifiConfigDialog *m_pWifiConfigDlg;
 
 private:
     QTimer* m_timerBuzzer;

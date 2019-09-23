@@ -4,13 +4,14 @@
 #include "subpage.h"
 #include "Display.h"
 
-
 class MainWindow;
 class QPushButton;
 class QProcess;
 class DLineEdit;
 class QCheckBox;
 class CBitmapButton;
+class QListWidget;
+class QListWidgetItem;
 
 class Ex_Init_Networkpage : public CSubPage
 {
@@ -61,7 +62,6 @@ private:
     QPushButton* m_pExNextBtn; //
     QPushButton* m_pExBackBtn; //
 
-#ifdef D_HTTPWORK
     QWidget *m_pWifiConfigWidget;
     QPushButton *m_pRefreshWifiBtn;
     QCheckBox *m_pAddCheckBox;
@@ -74,7 +74,6 @@ private:
     QWidget *m_pWifiSSIDAddWidget;
 
     QProcess *m_pProcess;
-#endif
 
 public slots:
     void on_btn_clicked(int);
@@ -83,13 +82,11 @@ public slots:
     void on_m_pExNextBtn_clicked(); //
     void on_m_pExBackBtn_clicked(); //
 
-#ifdef D_HTTPWORK
     void on_addSSIDBtn_clicked();
     void on_wifiRefreshBtn_clicked();
     void on_refreshWifiMsg();
     void on_wifiListWidget_itemClicked(QListWidgetItem *item);
     void on_addCheckBox_stateChanged(int state);
-#endif
 
 };
 

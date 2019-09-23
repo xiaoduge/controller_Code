@@ -22,6 +22,7 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
+        break;
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -83,10 +84,7 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
 
     switch(gGlobalParam.iMachineType)
     {
-    case MACHINE_L_Genie:
-        break;
     case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_UP:
     case MACHINE_PURIST:
@@ -94,6 +92,8 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         aIds[iIdx].iId   = DISP_H_PACK;
         iIdx++;
         break;
+    case MACHINE_L_Genie:
+    case MACHINE_L_EDI_LOOP:
     case MACHINE_Genie:
     case MACHINE_EDI:
     case MACHINE_RO:
@@ -143,8 +143,6 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
    {
    case MACHINE_L_Genie:
    case MACHINE_L_UP:
-   case MACHINE_L_EDI_LOOP:
-   case MACHINE_L_RO_LOOP:
    case MACHINE_Genie:
    case MACHINE_UP:
    case MACHINE_PURIST:
@@ -153,6 +151,8 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
          aIds[iIdx].iId   = DISP_N2_UV;
          iIdx++;
        break;
+   case MACHINE_L_EDI_LOOP:
+   case MACHINE_L_RO_LOOP:
    case MACHINE_EDI:
    case MACHINE_RO:
        break;
@@ -290,14 +290,26 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     {
-        if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_HaveTubeFilter)
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTubeFilter))
         {
             aIds[iIdx].iType = 0;
             aIds[iIdx].iId   = DISP_TUBE_FILTER;
             iIdx++;
         }
+        break;
+    }
+    default:
+        break;
+    }
 
-        if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_TubeDI)
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    {
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeDI))
         {
             aIds[iIdx].iType = 0;
             aIds[iIdx].iId   = DISP_TUBE_DI;
@@ -305,12 +317,7 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         }
         break;
     }
-    case MACHINE_Genie:
-    case MACHINE_ADAPT:
-    case MACHINE_RO:
-    case MACHINE_EDI:
-    case MACHINE_UP:
-    case MACHINE_PURIST:
+    default:
         break;
     }
 

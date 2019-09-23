@@ -41,17 +41,31 @@ void Ex_CheckConsumaleInstall::initRfid()
     m_iRfid[PREPACK_CATNO] = APP_RFID_SUB_TYPE_PREPACK;
     m_iRfid[ACPACK_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[TPACK_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-    m_iRfid[PPACK_CATNO] = APP_RFID_SUB_TYPE_PPACK_CLEANPACK;
     m_iRfid[ATPACK_CATNO] =  APP_RFID_SUB_TYPE_HPACK_ATPACK;
 
-    if(MACHINE_L_EDI_LOOP == gGlobalParam.iMachineType)
+    switch(gGlobalParam.iMachineType)
     {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        m_iRfid[PPACK_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        break;
+    default:
+        m_iRfid[PPACK_CATNO] = APP_RFID_SUB_TYPE_PPACK_CLEANPACK;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_EDI_LOOP:
         m_iRfid[HPACK_CATNO] = APP_RFID_SUB_TYPE_UPACK_HPACK;
-    }
-    else
-    {
+        break;
+    default:
         m_iRfid[HPACK_CATNO] = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+        break;
     }
+
     m_iRfid[UPACK_CATNO] = APP_RFID_SUB_TYPE_UPACK_HPACK;
     m_iRfid[UV254_CATNO] =  APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[UV185_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
@@ -63,6 +77,9 @@ void Ex_CheckConsumaleInstall::initRfid()
     m_iRfid[ROPACK_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[ROPUMP_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[EDI_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+
+    m_iRfid[LOOPFILTER_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+    m_iRfid[LOOPUV_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
 
 }
 
@@ -173,6 +190,9 @@ void Ex_CheckConsumaleInstall::initTypeMap()
     m_typeMap.insert(FINALFILTER_B_CATNO, DISP_T_B_FILTER);
     m_typeMap.insert(EDI_CATNO, DISP_MACHINERY_EDI);
     m_typeMap.insert(TANKVENTFILTER_CATNO, DISP_W_FILTER);
+
+    m_typeMap.insert(LOOPFILTER_CATNO, DISP_TUBE_FILTER);
+    m_typeMap.insert(LOOPUV_CATNO, DISP_N4_UV);
 }
 
 void Ex_CheckConsumaleInstall::initCategoryMap()
@@ -195,6 +215,9 @@ void Ex_CheckConsumaleInstall::initCategoryMap()
     m_categoryMap.insert(FINALFILTER_B_CATNO, 0);
     m_categoryMap.insert(EDI_CATNO, 1);
     m_categoryMap.insert(TANKVENTFILTER_CATNO, 0);
+
+    m_categoryMap.insert(LOOPFILTER_CATNO, 0);
+    m_categoryMap.insert(LOOPUV_CATNO, 0);
 }
 
 bool Ex_CheckConsumaleInstall::checkDatabaseConnect()
