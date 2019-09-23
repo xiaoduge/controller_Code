@@ -165,11 +165,13 @@ void Ex_InitConsumableInsPage::updateOtherInstall(int type)
 void Ex_InitConsumableInsPage::on_ExNextBtn_clicked()
 {
     m_wndMain->naviInitPage(Ex_Init_InstallConsumable, 0);
+    m_wndMain->prepareKeyStroke();
 }
 
 void Ex_InitConsumableInsPage::on_ExBackBtn_clicked()
 {
     m_wndMain->naviInitPage(Ex_Init_InstallConsumable, 1);
+    m_wndMain->prepareKeyStroke();
 }
 
 void Ex_InitConsumableInsPage::on_timer_event()

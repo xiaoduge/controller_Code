@@ -413,6 +413,8 @@ public:
 
     void setStartCheckConsumable(bool isStart);
 
+    void stopBuzzing();
+
 public slots:
     void retriveLastRunState();
 
@@ -508,7 +510,6 @@ private:
     void rmvRfidFromDelayList(int iRfId);
 
     void saveFmData(int id,unsigned int ulValue);
-
 
     //
 public:

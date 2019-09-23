@@ -77,8 +77,8 @@ void Ex_ManagerSetPage::buildTranslation()
 
     //Audio
     m_strSounds[0] = tr("Touch-tone");
-    m_strSounds[1] = tr("Audio Alerts");
-    m_strSounds[2] = tr("Audio Alarms");
+//    m_strSounds[1] = tr("Audio Alerts");
+    m_strSounds[1] = tr("Audio Alarms");
 
     for(iLoop = 0 ; iLoop < DISPLAY_SOUND_NUM ; iLoop++)
     {
@@ -283,6 +283,17 @@ void Ex_ManagerSetPage::update()
     m_iSleepTime = ex_gGlobalParam.Ex_Config_Param.iScreenSleepTime;
     m_comboBox->setCurrentIndex(m_iSleepTime - 1);
 
+    for(int iLoop = 0; iLoop < DISPLAY_SOUND_NUM; ++iLoop)
+    {
+        if (m_iSoundMask & (1 << iLoop))
+        {
+            m_chkSwitchs[iLoop]->setChecked(true);
+        }
+        else
+        {
+            m_chkSwitchs[iLoop]->setChecked(false);
+        }
+    }
 #if 0
     // flow
     float flowRate = ex_gGlobalParam.Ex_Config_Param.flowRate;
@@ -1018,10 +1029,10 @@ void Ex_ManagerSetPage::initAudioPage()
 
         connect(m_chkSwitchs[iLoop], SIGNAL(stateChanged(int)), this, SLOT(on_checkBox_changeState(int)));
         //2019.3.14 add
-        if(iLoop != 0)
-        {
-            m_pAudioBackWidget[iLoop]->hide();
-        }
+//        if(iLoop != 0)
+//        {
+//            m_pAudioBackWidget[iLoop]->hide();
+//        }
     }
 
     m_pAudioBtnSave = new QPushButton(m_pageWidget[MANAGER_PAGE_AUDIO]);

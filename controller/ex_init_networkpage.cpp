@@ -286,7 +286,7 @@ void Ex_Init_Networkpage::on_m_pExNextBtn_clicked()
     save(); //next clicked save
 
     m_wndMain->naviInitPage(Ex_Init_Network, 0);
-
+    m_wndMain->prepareKeyStroke();
 }
 
 void Ex_Init_Networkpage::on_m_pExBackBtn_clicked()

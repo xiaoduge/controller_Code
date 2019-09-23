@@ -4255,6 +4255,9 @@ MainWindow::MainWindow(QMainWindow *parent) :
     }
     initHttpWorker();
 #endif
+    m_pWifiConfigDlg = new DWifiConfigDialog(this);
+    m_pWifiConfigDlg->hide();
+    m_pWifiConfigDlg->move(250, 210);
 }
 
 void MainWindow::on_timerBuzzerEvent()
@@ -4276,9 +4279,8 @@ void MainWindow::setRelay(int iIdx,int iEnable)
 
         if (iRet != sizeof(aibuf))
         {
-            qDebug() << " setRelay fail:" << iRet ;     
+            qDebug() << " setRelay fail:" << iRet ;
         }
-
     }
 }
 
@@ -4325,6 +4327,11 @@ void MainWindow::stopAlarm()
     Alarm.m_bDuty   = false;
     setRelay(BUZZER_CTL_BUZZ,0);
     m_timerBuzzer->stop();
+}
+
+void MainWindow::stopBuzzing()
+{
+    setRelay(BUZZER_CTL_BUZZ,0);
 }
 
 void MainWindow::prepareKeyStroke()
@@ -5634,6 +5641,10 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
                 emitHttpAlarm(strHttpAlarm);
             }
 #endif
+            if (gGlobalParam.MiscParam.iSoundMask & (1 << DISPLAY_SOUND_ALARM_NOTIFYM))
+            {
+                setRelay(BUZZER_CTL_BUZZ, 1);
+            }
         }
     }
     else
@@ -5664,6 +5675,10 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
                 emitHttpAlarm(strHttpAlarm);
             }
 #endif
+            if (gGlobalParam.MiscParam.iSoundMask & (1 << DISPLAY_SOUND_ALARM_NOTIFYM))
+            {
+                setRelay(BUZZER_CTL_BUZZ, 0);
+            }
         }
     }    
 
@@ -5836,6 +5851,7 @@ void MainWindow::showWifiConfigDlg(const QString& name)
     m_pWifiConfigDlg->setSSIDName(name);
     m_pWifiConfigDlg->show();
 }
+
 #ifdef D_HTTPWORK
 void MainWindow::emitHttpAlarm(const QString &strAlarm)
 {
@@ -6265,10 +6281,6 @@ void MainWindow::initHttpWorker()
     m_networkTimer = new QTimer(this);
     connect(m_networkTimer, SIGNAL(timeout()), this, SLOT(on_timerNetworkEvent()),Qt::QueuedConnection);
     m_networkTimer->start(1000*10); // peroid of one second
-
-    m_pWifiConfigDlg = new DWifiConfigDialog(this);
-    m_pWifiConfigDlg->hide();
-    m_pWifiConfigDlg->move(250, 210);
 
     //test
     m_networkData.waterQuality[0].fG25x = 2000;

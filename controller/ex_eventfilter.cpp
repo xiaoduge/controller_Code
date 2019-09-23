@@ -16,6 +16,8 @@ bool Ex_EventFilter::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type() == QEvent::MouseButtonPress)
     {
+        gpMainWnd->stopBuzzing();
+
         QMutexLocker locker(&ex_gMutex);
 #ifdef TOUCHTEST
         touchTest(event); //print mouse press point

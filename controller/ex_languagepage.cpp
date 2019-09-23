@@ -110,6 +110,7 @@ void Ex_Languagepage::on_saveBtn_clicked()
         show(false);
         m_parent->show(true);
     }
+    m_wndMain->prepareKeyStroke();
 }
 
 void Ex_Languagepage::on_cbLan_currentIndexChanged(int index)
