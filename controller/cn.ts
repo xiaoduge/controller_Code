@@ -5194,7 +5194,7 @@
     <message>
         <location filename="parametercalibration.cpp" line="496"/>
         <source>RO Feed. Rate</source>
-        <translation>RO产水流速</translation>
+        <translation>RO进水流速</translation>
     </message>
     <message>
         <location filename="parametercalibration.cpp" line="512"/>

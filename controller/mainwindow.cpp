@@ -166,7 +166,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.9.190923_RC");
+QString strSoftwareVersion = QString("0.1.9.190925_RC");
 
 MainWindow *gpMainWnd;
 
@@ -2019,6 +2019,8 @@ void MainSaveCalibrateParam(int iMachineType, QMap<int, DISP_PARAM_CALI_ITEM_STR
         config->setValue(strKey, list);
     }
 
+    MainRetriveCalibrateParam(iMachineType);
+
     DISP_FM_SETTING_STRU fmParam;
 
     float default_L_Machine = 450.0;
@@ -2030,11 +2032,39 @@ void MainSaveCalibrateParam(int iMachineType, QMap<int, DISP_PARAM_CALI_ITEM_STR
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        fmParam.aulCfg[DISP_FM_FM1] = default_L_Machine / map.value(DISP_PC_COFF_S1).fk;
-        fmParam.aulCfg[DISP_FM_FM2]= default_L_Machine / map.value(DISP_PC_COFF_S1).fk;
-        fmParam.aulCfg[DISP_FM_FM3] = default_L_Machine / map.value(DISP_PC_COFF_S1).fk;
-        fmParam.aulCfg[DISP_FM_FM4] = default_L_Machine / map.value(DISP_PC_COFF_S1).fk;
+        fmParam.aulCfg[DISP_FM_FM1] = default_Machine / ex_global_Cali.pc[DISP_PC_COFF_S1].fk;
+        fmParam.aulCfg[DISP_FM_FM2]= default_L_Machine / ex_global_Cali.pc[DISP_PC_COFF_S2].fk;
+        fmParam.aulCfg[DISP_FM_FM3] = default_L_Machine / ex_global_Cali.pc[DISP_PC_COFF_S3].fk;
+        fmParam.aulCfg[DISP_FM_FM4] = default_L_Machine / ex_global_Cali.pc[DISP_PC_COFF_S4].fk;
         break;
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / ex_global_Cali.pc[DISP_PC_COFF_S1].fk;
+        break;
+    default:
+        break;
+    }
+/*
+    switch(iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    {
+        fmParam.aulCfg[DISP_FM_FM1] = default_Machine / map.value(DISP_PC_COFF_S1).fk;
+        if(!alone)
+        {
+            fmParam.aulCfg[DISP_FM_FM2]= default_L_Machine / map.value(DISP_PC_COFF_S2).fk;
+            fmParam.aulCfg[DISP_FM_FM3] = default_L_Machine / map.value(DISP_PC_COFF_S3).fk;
+            fmParam.aulCfg[DISP_FM_FM4] = default_L_Machine / map.value(DISP_PC_COFF_S4).fk;
+        }
+        break;
+    }
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -2046,6 +2076,7 @@ void MainSaveCalibrateParam(int iMachineType, QMap<int, DISP_PARAM_CALI_ITEM_STR
     default:
         break;
     }
+ */
     MainSaveFMParam(iMachineType, fmParam);
 
     if (config)
