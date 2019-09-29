@@ -4843,6 +4843,21 @@ void CanCcbPmMeasurePostProcess(int iPmId)
                         }                
                     }                
                 }  
+                //2019.9.29 add
+                if (haveB3(&gCcb)
+                   && CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) < CcbGetSp9())
+                {
+                    CanPrepare4Pm2Full();
+
+                    if (gCcb.bit1ProduceWater )
+                    {
+                       /* stop producing water */
+                       if (!SearchWork(work_stop_pw))
+                       {
+                           CcbInnerWorkStopProduceWater();
+                       }
+                    }
+                }
             }
         }
         break;
@@ -4976,6 +4991,22 @@ void CanCcbPmMeasurePostProcess(int iPmId)
                         }                
                     }                
                 }  
+                //2019.9.29 add
+                if (haveB3(&gCcb)
+                   && CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) < CcbGetSp9())
+                {
+                    CanPrepare4Pm2Full();
+
+                    if (gCcb.bit1ProduceWater )
+                    {
+                       /* stop producing water */
+                       if (!SearchWork(work_stop_pw))
+                       {
+                           CcbInnerWorkStopProduceWater();
+                       }
+                    }
+                }
+
             }
         }
         break;
@@ -14519,17 +14550,37 @@ void MainSecondTask4MainState()
                    /* check pressure */
                    if (!gCcb.bit1ProduceWater)
                    {
-                       if (CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) < CcbGetSp5())
+                       //2019.09.29 add
+                       if(haveB3(&gCcb))
                        {
-                           /* start Nomal Run */
-                           if (DISP_WORK_SUB_IDLE == gCcb.curWorkState.iSubWorkState)
+                           if ((CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) < CcbGetSp5())
+                                && (CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) > 50.0))
                            {
-                               if (!SearchWork(work_normal_run))
+                               /* start Nomal Run */
+                               if (DISP_WORK_SUB_IDLE == gCcb.curWorkState.iSubWorkState)
                                {
-                                   CcbInnerWorkRun();
+                                   if (!SearchWork(work_normal_run))
+                                   {
+                                       CcbInnerWorkRun();
+                                   }
+                               }
+                           }
+                       }//end 2019.9.29
+                       else
+                       {
+                           if (CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) < CcbGetSp5())
+                           {
+                               /* start Nomal Run */
+                               if (DISP_WORK_SUB_IDLE == gCcb.curWorkState.iSubWorkState)
+                               {
+                                   if (!SearchWork(work_normal_run))
+                                   {
+                                       CcbInnerWorkRun();
+                                   }
                                }
                            }
                        }
+
                    }
                 }
             }   
