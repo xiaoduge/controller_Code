@@ -499,6 +499,7 @@ typedef enum
     DISP_SM_HP_Water_Cir,
     DISP_SM_RFID_Authorization,
     DISP_SM_User_Authorization, //2019.1.22 add
+    DISP_SM_SUB_ACCOUNT,        //2019.10.15 add, for Sub-account
     DISP_SM_TankUV,
     DISP_SM_Pre_Filter,
     DISP_SM_HP_Electrode,
@@ -1129,6 +1130,9 @@ unsigned int CcbConvert2RectAndEdiData(unsigned int ulValue);
 unsigned int CcbConvert2GPumpData(unsigned int ulValue);
 unsigned int CcbGetRPumpVData(int iChl);
 unsigned int CcbConvert2RPumpIData(unsigned int ulValue);
+
+//for sub-account. 2019.10 15 add
+int check_Sub_Account();
 
 void DispIndicationEntry(unsigned char *pucData,int iLength);
 void DispIapIndEntry(IAP_NOTIFY_STRU *pIapNotify);

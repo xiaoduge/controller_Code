@@ -25,6 +25,8 @@
 
 //#define TOUCHTEST
 
+#define SUB_ACCOUNT  //Sub-account
+
 #define PAGEID_MARGIN (4)
 
 #define PAGE_X_DIMENSION (40)
@@ -254,6 +256,9 @@ public:
     void emitDispIndication(unsigned char *pucData,int iLength);
     void emitIapIndication(IAP_NOTIFY_STRU *pIapNotify);
 
+    //2019.10.15 add, for sub-account
+    void emitUserLogin();
+
     void setLokupState(bool state) {m_bLockupDlg = state;}
     void AfDataMsg(IAP_NOTIFY_STRU *pIapNotify);
     void zigbeeDataMsg(IAP_NOTIFY_STRU *pIapNotify);
@@ -426,6 +431,9 @@ private slots:
 
     void on_dispIndication(unsigned char *pucData,int iLength);
 
+    //2019.10.15 add, sub-account
+    int on_userLogin();
+
     void on_Stop_clicked();
 
     void on_Exit_clicked();
@@ -451,6 +459,9 @@ signals:
     void SleepPageShow(bool); //ex
     void unitsChanged();
     void updateFlowChartAlarm(const QString &msg, bool isAdd);
+
+    //2019.10.15 add, for sub-account
+    void userNeedLogin();
 
 protected:
     void mousePressEvent(QMouseEvent *e);
@@ -510,6 +521,9 @@ private:
     void rmvRfidFromDelayList(int iRfId);
 
     void saveFmData(int id,unsigned int ulValue);
+
+    //2019.10.15 add, for sub-account
+    void doSubAccountWork(double value, int iType);
 
     //
 public:

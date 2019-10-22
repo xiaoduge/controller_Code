@@ -133,6 +133,16 @@ QString insert_sql_Consumable = "insert into Consumable (id, iPackType, CatNo, L
 QString update_sql_Consumable = "update Consumable set CatNo = ?, LotNo = ?, time = ? where iPackType = ? and category = ?";
 //end
 
+//for sub-account
+QString CREATE_TABLE_SUBACCOUNT = "CREATE TABLE IF NOT EXISTS  SubAccount (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                                                          "name VARCHAR(20) NOT NULL,"
+                                                                          "quantity_UP double NULL,"
+                                                                          "quantity_HP double NULL)";
+
+QString select_sql_subAccount = "select quantity_UP, quantity_HP from SubAccount  where name = ?";
+QString insert_sql_subAccount = "INSERT INTO SubAccount (id, name, quantity_UP, quantity_HP) VALUES (:id, :name, :quantity_UP, :quantity_HP)";
+QString update_sql_subAccount = "update SubAccount set quantity_UP = ?, quantity_HP = ? where name = ?";
+
 int help_aton(const char *cp)
 {
   int           val;
@@ -425,6 +435,14 @@ int main(int argc, char *argv[])
         qDebug()<<"create Consumable table successed\r\n";
     else
         qDebug()<<"create Consumable table failed\r\n";
+
+    //2019.10.15 add
+    success = query.exec(CREATE_TABLE_SUBACCOUNT);
+    if(success)
+        qDebug()<<"create Sub-account table successed\r\n";
+    else
+        qDebug()<<"create Sub-account table failed\r\n";
+
 
     DeleteExpiredData(); //删除两年前的数据
 

@@ -38,7 +38,8 @@ int Ex_CheckConsumaleInstall::consumableType()
 
 void Ex_CheckConsumaleInstall::initRfid()
 {
-    m_iRfid[PREPACK_CATNO] = APP_RFID_SUB_TYPE_PREPACK;
+//    m_iRfid[PREPACK_CATNO] = APP_RFID_SUB_TYPE_PREPACK;
+    m_iRfid[PREPACK_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[ACPACK_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[TPACK_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[ATPACK_CATNO] =  APP_RFID_SUB_TYPE_HPACK_ATPACK;

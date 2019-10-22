@@ -231,7 +231,11 @@ void Ex_SuperPowerPage::createControl()
 
     m_pCmDbDel = new QComboBox;
     QStringList cbList;
+#ifdef SUB_ACCOUNT
+    cbList << tr("All") << tr("Alarm") << tr("GetW") << tr("PWater") << tr("Log") << tr("Consumables") << tr("Sub-account");//  << tr("Water");
+#else
     cbList << tr("All") << tr("Alarm") << tr("GetW") << tr("PWater") << tr("Log") << tr("Consumables");//  << tr("Water");
+#endif
     m_pCmDbDel->addItems(cbList);
     m_pCmDbDel->setCurrentIndex(0);
 
@@ -353,6 +357,12 @@ bool Ex_SuperPowerPage::deleteDbAll()
         return false;
     }
 
+    ret = deleteDbSubAccount();
+    if(!ret)
+    {
+        return false;
+    }
+
     return true;
 }
 
@@ -426,6 +436,19 @@ bool Ex_SuperPowerPage::deleteDbConsumables()
     if(!ret)
     {
         QMessageBox::warning(m_widget, tr("Consumable"), tr("Deleting table failed: Consumable"), QMessageBox::Ok);
+        return false;
+    }
+    return true;
+}
+
+bool Ex_SuperPowerPage::deleteDbSubAccount()
+{
+    QString strSql = "Drop Table SubAccount";
+    QSqlQuery query;
+    bool ret = query.exec(strSql);
+    if(!ret)
+    {
+        QMessageBox::warning(m_widget, tr("SubAccount"), tr("Deleting table failed: SubAccount"), QMessageBox::Ok);
         return false;
     }
     return true;
@@ -524,6 +547,9 @@ void Ex_SuperPowerPage::on_btnDbDel_clicked()
         break;
     case 5:
         deleteDbConsumables();
+        break;
+    case 6:
+        deleteDbSubAccount();
         break;
     default:
         break;

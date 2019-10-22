@@ -22,7 +22,7 @@ static const uint qt_meta_data_Ex_PermissionSetPage[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,13 +32,22 @@ static const uint qt_meta_data_Ex_PermissionSetPage[] = {
  // slots: signature, parameters, type, tag, flags
       22,   21,   21,   21, 0x09,
       47,   21,   21,   21, 0x09,
+      84,   78,   21,   21, 0x09,
+     118,   21,   21,   21, 0x09,
+     140,   21,   21,   21, 0x09,
+     167,   21,   21,   21, 0x09,
+     193,   21,   21,   21, 0x09,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_Ex_PermissionSetPage[] = {
     "Ex_PermissionSetPage\0\0on_RfidsaveBtn_clicked()\0"
-    "on_PermissionsaveBtn_clicked()\0"
+    "on_PermissionsaveBtn_clicked()\0state\0"
+    "on_chSubAccount_stateChanged(int)\0"
+    "on_QueryBtn_clicked()\0on_DisplayAllBtn_clicked()\0"
+    "on_DeleteOneBtn_clicked()\0"
+    "on_DeleteAllBtn_clicked()\0"
 };
 
 void Ex_PermissionSetPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -49,10 +58,14 @@ void Ex_PermissionSetPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
         switch (_id) {
         case 0: _t->on_RfidsaveBtn_clicked(); break;
         case 1: _t->on_PermissionsaveBtn_clicked(); break;
+        case 2: _t->on_chSubAccount_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->on_QueryBtn_clicked(); break;
+        case 4: _t->on_DisplayAllBtn_clicked(); break;
+        case 5: _t->on_DeleteOneBtn_clicked(); break;
+        case 6: _t->on_DeleteAllBtn_clicked(); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObjectExtraData Ex_PermissionSetPage::staticMetaObjectExtraData = {
@@ -87,9 +100,9 @@ int Ex_PermissionSetPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 7;
     }
     return _id;
 }

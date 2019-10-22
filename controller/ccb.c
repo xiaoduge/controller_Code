@@ -3380,6 +3380,12 @@ void work_start_qtw(void *para)
 
 DISPHANDLE CcbInnerWorkStartQtw(int iIndex)
 {
+    //2019.10.15 add
+    if(!check_Sub_Account())
+    {
+        return;
+    }
+
     WORK_ITEM_STRU *pWorkItem = CcbAllocWorkItem();
 
     if (!pWorkItem)

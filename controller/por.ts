@@ -2209,83 +2209,83 @@
         <translation>Instalar os Cartuchos</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="272"/>
+        <location filename="ex_initconsumableinspage.cpp" line="274"/>
         <source>U Pack</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="286"/>
+        <location filename="ex_initconsumableinspage.cpp" line="288"/>
         <source>H Pack</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="301"/>
-        <location filename="ex_initconsumableinspage.cpp" line="311"/>
+        <location filename="ex_initconsumableinspage.cpp" line="303"/>
+        <location filename="ex_initconsumableinspage.cpp" line="313"/>
         <source>P Pack</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="326"/>
+        <location filename="ex_initconsumableinspage.cpp" line="328"/>
         <source>AC Pack</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="339"/>
+        <location filename="ex_initconsumableinspage.cpp" line="341"/>
         <source>AT Pack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="366"/>
+        <location filename="ex_initconsumableinspage.cpp" line="368"/>
         <source>RO Membrane</source>
         <translation>Membrana de Osmose Reversa</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="384"/>
+        <location filename="ex_initconsumableinspage.cpp" line="386"/>
         <source>Final Fliter B</source>
         <translation>Filtro RephiBio</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="388"/>
+        <location filename="ex_initconsumableinspage.cpp" line="390"/>
         <source>Bio-filter</source>
         <translation type="unfinished">Filtro Bio</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="410"/>
+        <location filename="ex_initconsumableinspage.cpp" line="412"/>
         <source>Final Fliter A</source>
         <translation>Filtro Final de 0.2 µm</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="427"/>
+        <location filename="ex_initconsumableinspage.cpp" line="429"/>
         <source>254 UV Lamp</source>
         <translation>Lâmpada UV 254 nm</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="446"/>
+        <location filename="ex_initconsumableinspage.cpp" line="448"/>
         <source>185 UV Lamp</source>
         <translation>Lâmpada UV 185 nm</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="463"/>
+        <location filename="ex_initconsumableinspage.cpp" line="465"/>
         <source>Tank UV Lamp</source>
         <translation>Lâmpada UV do Reservatório </translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="482"/>
+        <location filename="ex_initconsumableinspage.cpp" line="484"/>
         <source>Tank Vent Filter</source>
         <translation>Filtro Ventilação Reserv</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="500"/>
+        <location filename="ex_initconsumableinspage.cpp" line="502"/>
         <source>Tube UV</source>
         <translation type="unfinished">Loop de Ultra Violeta</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="520"/>
+        <location filename="ex_initconsumableinspage.cpp" line="522"/>
         <source>Loop Filter</source>
         <translation type="unfinished">Filtro do Loop</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="540"/>
+        <location filename="ex_initconsumableinspage.cpp" line="542"/>
         <source>Loop DI</source>
         <translation type="unfinished">DI do Loop</translation>
     </message>
@@ -2463,37 +2463,37 @@
 <context>
     <name>Ex_Init_Networkpage</name>
     <message>
-        <location filename="ex_init_networkpage.cpp" line="29"/>
+        <location filename="ex_init_networkpage.cpp" line="30"/>
         <source>Connectivity</source>
         <translation type="unfinished">Conectividade</translation>
     </message>
     <message>
-        <location filename="ex_init_networkpage.cpp" line="37"/>
+        <location filename="ex_init_networkpage.cpp" line="38"/>
         <source>CAN</source>
         <translation type="unfinished">Com Fio</translation>
     </message>
     <message>
-        <location filename="ex_init_networkpage.cpp" line="38"/>
+        <location filename="ex_init_networkpage.cpp" line="39"/>
         <source>Zigbee</source>
         <translation>Conexão Sem Fio</translation>
     </message>
     <message>
-        <location filename="ex_init_networkpage.cpp" line="39"/>
+        <location filename="ex_init_networkpage.cpp" line="40"/>
         <source>WIFI</source>
         <translation>WI-FI</translation>
     </message>
     <message>
-        <location filename="ex_init_networkpage.cpp" line="45"/>
+        <location filename="ex_init_networkpage.cpp" line="46"/>
         <source>Save</source>
         <translation type="unfinished">Salvar</translation>
     </message>
     <message>
-        <location filename="ex_init_networkpage.cpp" line="46"/>
+        <location filename="ex_init_networkpage.cpp" line="47"/>
         <source>Back</source>
         <translation>Voltar</translation>
     </message>
     <message>
-        <location filename="ex_init_networkpage.cpp" line="47"/>
+        <location filename="ex_init_networkpage.cpp" line="48"/>
         <source>Next</source>
         <translation>Avançar</translation>
     </message>
@@ -2694,55 +2694,55 @@
     </message>
     <message>
         <location filename="ex_languagepage.cpp" line="51"/>
-        <location filename="ex_languagepage.cpp" line="132"/>
+        <location filename="ex_languagepage.cpp" line="133"/>
         <source>English</source>
         <translation>English</translation>
     </message>
     <message>
         <location filename="ex_languagepage.cpp" line="52"/>
-        <location filename="ex_languagepage.cpp" line="133"/>
+        <location filename="ex_languagepage.cpp" line="134"/>
         <source>Chinese</source>
         <translation>中文</translation>
     </message>
     <message>
         <location filename="ex_languagepage.cpp" line="53"/>
-        <location filename="ex_languagepage.cpp" line="134"/>
+        <location filename="ex_languagepage.cpp" line="135"/>
         <source>Spanish</source>
         <translation>Español</translation>
     </message>
     <message>
         <location filename="ex_languagepage.cpp" line="54"/>
-        <location filename="ex_languagepage.cpp" line="135"/>
+        <location filename="ex_languagepage.cpp" line="136"/>
         <source>French</source>
         <translation>Français</translation>
     </message>
     <message>
         <location filename="ex_languagepage.cpp" line="55"/>
-        <location filename="ex_languagepage.cpp" line="136"/>
+        <location filename="ex_languagepage.cpp" line="137"/>
         <source>German</source>
         <translation>Deutsch</translation>
     </message>
     <message>
         <location filename="ex_languagepage.cpp" line="56"/>
-        <location filename="ex_languagepage.cpp" line="137"/>
+        <location filename="ex_languagepage.cpp" line="138"/>
         <source>Italian</source>
         <translation>Italiano</translation>
     </message>
     <message>
         <location filename="ex_languagepage.cpp" line="57"/>
-        <location filename="ex_languagepage.cpp" line="138"/>
+        <location filename="ex_languagepage.cpp" line="139"/>
         <source>Korean</source>
         <translation>한국어</translation>
     </message>
     <message>
         <location filename="ex_languagepage.cpp" line="58"/>
-        <location filename="ex_languagepage.cpp" line="139"/>
+        <location filename="ex_languagepage.cpp" line="140"/>
         <source>Russian</source>
         <translation>русский</translation>
     </message>
     <message>
         <location filename="ex_languagepage.cpp" line="59"/>
-        <location filename="ex_languagepage.cpp" line="140"/>
+        <location filename="ex_languagepage.cpp" line="141"/>
         <source>Portugese</source>
         <translation>Português</translation>
     </message>
@@ -2761,31 +2761,31 @@
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="46"/>
-        <location filename="ex_managersetpage.cpp" line="886"/>
+        <location filename="ex_managersetpage.cpp" line="897"/>
         <source>Time &amp; Date</source>
         <translation>Data e Horário</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="47"/>
-        <location filename="ex_managersetpage.cpp" line="924"/>
+        <location filename="ex_managersetpage.cpp" line="935"/>
         <source>Calibration</source>
         <translation>Calibração</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="48"/>
-        <location filename="ex_managersetpage.cpp" line="1032"/>
+        <location filename="ex_managersetpage.cpp" line="1043"/>
         <source>Audio</source>
         <translation>Som</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="49"/>
-        <location filename="ex_managersetpage.cpp" line="1232"/>
+        <location filename="ex_managersetpage.cpp" line="1243"/>
         <source>LCD</source>
         <translation></translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="50"/>
-        <location filename="ex_managersetpage.cpp" line="1297"/>
+        <location filename="ex_managersetpage.cpp" line="1308"/>
         <source>Additional Settings</source>
         <translation>Configurações Adicionais</translation>
     </message>
@@ -2835,11 +2835,6 @@
         <translation>Som do toque</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="80"/>
-        <source>Audio Alerts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="ex_managersetpage.cpp" line="81"/>
         <source>Audio Alarms</source>
         <translation type="unfinished"></translation>
@@ -2866,49 +2861,49 @@
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="116"/>
-        <location filename="ex_managersetpage.cpp" line="942"/>
+        <location filename="ex_managersetpage.cpp" line="953"/>
         <source>English</source>
         <translation type="unfinished">English</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="117"/>
-        <location filename="ex_managersetpage.cpp" line="943"/>
+        <location filename="ex_managersetpage.cpp" line="954"/>
         <source>Chinese</source>
         <translation type="unfinished">中文</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="118"/>
-        <location filename="ex_managersetpage.cpp" line="944"/>
+        <location filename="ex_managersetpage.cpp" line="955"/>
         <source>Spanish</source>
         <translation type="unfinished">Español</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="119"/>
-        <location filename="ex_managersetpage.cpp" line="945"/>
+        <location filename="ex_managersetpage.cpp" line="956"/>
         <source>French</source>
         <translation type="unfinished">Français</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="120"/>
-        <location filename="ex_managersetpage.cpp" line="946"/>
+        <location filename="ex_managersetpage.cpp" line="957"/>
         <source>German</source>
         <translation type="unfinished">Deutsch</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="121"/>
-        <location filename="ex_managersetpage.cpp" line="947"/>
+        <location filename="ex_managersetpage.cpp" line="958"/>
         <source>Italian</source>
         <translation type="unfinished">Italiano</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="122"/>
-        <location filename="ex_managersetpage.cpp" line="948"/>
+        <location filename="ex_managersetpage.cpp" line="959"/>
         <source>Korean</source>
         <translation type="unfinished">한국어</translation>
     </message>
     <message>
         <location filename="ex_managersetpage.cpp" line="123"/>
-        <location filename="ex_managersetpage.cpp" line="949"/>
+        <location filename="ex_managersetpage.cpp" line="960"/>
         <source>Russian</source>
         <translation type="unfinished">русский</translation>
     </message>
@@ -2993,21 +2988,21 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="503"/>
-        <location filename="ex_managersetpage.cpp" line="577"/>
-        <location filename="ex_managersetpage.cpp" line="607"/>
-        <location filename="ex_managersetpage.cpp" line="650"/>
-        <location filename="ex_managersetpage.cpp" line="717"/>
+        <location filename="ex_managersetpage.cpp" line="514"/>
+        <location filename="ex_managersetpage.cpp" line="588"/>
+        <location filename="ex_managersetpage.cpp" line="618"/>
+        <location filename="ex_managersetpage.cpp" line="661"/>
+        <location filename="ex_managersetpage.cpp" line="728"/>
         <source>Successfully saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="960"/>
+        <location filename="ex_managersetpage.cpp" line="971"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="1140"/>
+        <location filename="ex_managersetpage.cpp" line="1151"/>
         <source>Units</source>
         <translation type="unfinished">Unidades de Medida</translation>
     </message>
@@ -3015,45 +3010,79 @@
 <context>
     <name>Ex_PermissionSetPage</name>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="27"/>
+        <location filename="ex_permissionsetpage.cpp" line="30"/>
         <source>Permission</source>
         <translation type="unfinished">Níveis de Permissão</translation>
     </message>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="34"/>
         <location filename="ex_permissionsetpage.cpp" line="37"/>
-        <location filename="ex_permissionsetpage.cpp" line="189"/>
+        <location filename="ex_permissionsetpage.cpp" line="48"/>
+        <location filename="ex_permissionsetpage.cpp" line="253"/>
         <source>RFID Config</source>
         <translation>Configuração RFID</translation>
     </message>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="35"/>
-        <location filename="ex_permissionsetpage.cpp" line="41"/>
-        <location filename="ex_permissionsetpage.cpp" line="224"/>
+        <location filename="ex_permissionsetpage.cpp" line="38"/>
+        <location filename="ex_permissionsetpage.cpp" line="52"/>
+        <location filename="ex_permissionsetpage.cpp" line="288"/>
+        <location filename="ex_permissionsetpage.cpp" line="341"/>
         <source>Verification</source>
         <translation>Verificação</translation>
     </message>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="38"/>
+        <location filename="ex_permissionsetpage.cpp" line="41"/>
+        <location filename="ex_permissionsetpage.cpp" line="42"/>
+        <source>Sub-Account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_permissionsetpage.cpp" line="43"/>
+        <location filename="ex_permissionsetpage.cpp" line="363"/>
+        <source>Name</source>
+        <translation type="unfinished">Nome</translation>
+    </message>
+    <message>
+        <location filename="ex_permissionsetpage.cpp" line="44"/>
+        <source>Query</source>
+        <translation type="unfinished">Consulta</translation>
+    </message>
+    <message>
+        <location filename="ex_permissionsetpage.cpp" line="45"/>
+        <source>Display All</source>
+        <translation type="unfinished">Mostrar Todos</translation>
+    </message>
+    <message>
+        <location filename="ex_permissionsetpage.cpp" line="49"/>
         <source>Disable RFID</source>
         <translation>Desligar alarme RFID.</translation>
     </message>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="39"/>
-        <location filename="ex_permissionsetpage.cpp" line="43"/>
+        <location filename="ex_permissionsetpage.cpp" line="50"/>
+        <location filename="ex_permissionsetpage.cpp" line="54"/>
         <source>Save</source>
         <translation>Salvar</translation>
     </message>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="42"/>
+        <location filename="ex_permissionsetpage.cpp" line="53"/>
         <source>Users is free of verification.</source>
         <translation>Desconectar</translation>
     </message>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="134"/>
-        <location filename="ex_permissionsetpage.cpp" line="154"/>
+        <location filename="ex_permissionsetpage.cpp" line="160"/>
+        <location filename="ex_permissionsetpage.cpp" line="180"/>
+        <location filename="ex_permissionsetpage.cpp" line="200"/>
         <source>Successfully saved</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_permissionsetpage.cpp" line="362"/>
+        <source>ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ex_permissionsetpage.cpp" line="364"/>
+        <source>Quantity</source>
+        <translation type="unfinished">Quantidade</translation>
     </message>
 </context>
 <context>
@@ -4080,124 +4109,129 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8128"/>
+        <location filename="mainwindow.cpp" line="8256"/>
         <source>Confirm ALL cartridges are installed. System will START by pressing Confirm!</source>
         <translation>Confirme se TODOS os cartuchos estão instalados. O sistema iniciará pressionando Confirmar!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8149"/>
+        <location filename="mainwindow.cpp" line="8277"/>
         <source>PRE Pack Not Detected</source>
         <oldsource>No Pre-PACK detected!</oldsource>
         <translation type="unfinished">Cartucho Pre Pack não detectado</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8152"/>
+        <location filename="mainwindow.cpp" line="8280"/>
         <source>AC Pack Not Detected</source>
         <oldsource>No AC-PACK detected!</oldsource>
         <translation type="unfinished">Cartucho AC Pack não detectado</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8155"/>
+        <location filename="mainwindow.cpp" line="8283"/>
         <source>P Pack Not Detected</source>
         <oldsource>No P-PACK detected!</oldsource>
         <translation type="unfinished">Cartucho P Pack não detectado</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8158"/>
+        <location filename="mainwindow.cpp" line="8286"/>
         <source>U Pack Not Detected</source>
         <oldsource>No U-PACK detected!</oldsource>
         <translation type="unfinished">Cartucho U Pack não detectado</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8161"/>
+        <location filename="mainwindow.cpp" line="8289"/>
         <source>AT Pack Not Detected</source>
         <oldsource>No AT-PACK detected!</oldsource>
         <translation type="unfinished">Cartucho AT Pack não detectado</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8164"/>
+        <location filename="mainwindow.cpp" line="8292"/>
         <source>H Pack Not Detected</source>
         <oldsource>No H-PACK detected!</oldsource>
         <translation type="unfinished">Cartucho H Pack não detectado</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8187"/>
+        <location filename="mainwindow.cpp" line="8315"/>
         <source>Pre Pack Error! Do you want to continue?</source>
         <translation>Pre-Pack Erro! Você quer continuar?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8191"/>
+        <location filename="mainwindow.cpp" line="8319"/>
         <source>AC Pack Error! Do you want to continue?</source>
         <translation>AC-Pack Erro! Você quer continuar?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8195"/>
+        <location filename="mainwindow.cpp" line="8323"/>
         <source>P Pack Error! Do you want to continue?</source>
         <translation>P-Pack Erro! Você quer continuar?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8199"/>
+        <location filename="mainwindow.cpp" line="8327"/>
         <source>U Pack Error! Do you want to continue?</source>
         <translation>U-Pack Erro! Você quer continuar?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8203"/>
+        <location filename="mainwindow.cpp" line="8331"/>
         <source>AT Pack Error! Do you want to continue?</source>
         <translation>AT-Pack Erro! Você quer continuar?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8207"/>
+        <location filename="mainwindow.cpp" line="8335"/>
         <source>H Pack Error! Do you want to continue?</source>
         <translation>H-Pack Erro! Você quer continuar?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9590"/>
-        <location filename="mainwindow.cpp" line="9596"/>
+        <location filename="mainwindow.cpp" line="8541"/>
+        <source>Login failed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="9761"/>
+        <location filename="mainwindow.cpp" line="9767"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8215"/>
+        <location filename="mainwindow.cpp" line="8343"/>
         <source>Continue</source>
         <translation>Continuar</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8690"/>
+        <location filename="mainwindow.cpp" line="8846"/>
         <source>Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8691"/>
+        <location filename="mainwindow.cpp" line="8847"/>
         <source>Alarm</source>
         <translation type="unfinished">Alarmes</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8692"/>
+        <location filename="mainwindow.cpp" line="8848"/>
         <source>User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8693"/>
+        <location filename="mainwindow.cpp" line="8849"/>
         <source>GetW</source>
         <translation type="unfinished">Dispensar</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8694"/>
+        <location filename="mainwindow.cpp" line="8850"/>
         <source>PWater</source>
         <translation type="unfinished">Informação do Produto</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8695"/>
+        <location filename="mainwindow.cpp" line="8851"/>
         <source>Log</source>
         <translation type="unfinished">Histórico de Entradas</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9590"/>
+        <location filename="mainwindow.cpp" line="9761"/>
         <source>write install date error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9596"/>
+        <location filename="mainwindow.cpp" line="9767"/>
         <source>write vol data error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4400,27 +4434,27 @@
 <context>
     <name>NetworkPage</name>
     <message>
-        <location filename="networkpage.cpp" line="36"/>
+        <location filename="networkpage.cpp" line="37"/>
         <source>Connectivity</source>
         <translation type="unfinished">Conectividade</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="45"/>
+        <location filename="networkpage.cpp" line="46"/>
         <source>CAN</source>
         <translation type="unfinished">Com Fio</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="46"/>
+        <location filename="networkpage.cpp" line="47"/>
         <source>Zigbee</source>
         <translation>Conexão Sem Fio</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="47"/>
+        <location filename="networkpage.cpp" line="48"/>
         <source>WIFI</source>
         <translation>WI-FI</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="54"/>
+        <location filename="networkpage.cpp" line="55"/>
         <source>Save</source>
         <translation>Salvar</translation>
     </message>

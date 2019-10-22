@@ -62,6 +62,9 @@
 #include "ex_hintdialog.h"
 #include "ex_waterqualitypage.h"
 #include "drunwarningdialog.h"
+#include "ex_userinfo.h"
+#include "dloginwarningdialog.h"
+#include "printer.h"
 
 //#include "ex_screensleepthread.h"
 /***********************************************
@@ -166,7 +169,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.9.190929_RC");
+QString strSoftwareVersion = QString("0.1.9.191017_RC");
 
 MainWindow *gpMainWnd;
 
@@ -358,6 +361,11 @@ extern QString INSERT_sql_Rfid ;
 extern QString select_sql_Consumable;
 extern QString insert_sql_Consumable;
 extern QString update_sql_Consumable;
+
+//for sub-account
+extern QString select_sql_subAccount;
+extern QString insert_sql_subAccount;
+extern QString update_sql_subAccount;
 
 char *State_info[] =
 {
@@ -3413,6 +3421,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_strConsuamble[LOOPFILTER_CATNO] << "RAFF12201" << "RAFF22201";
     m_strConsuamble[LOOPUV_CATNO] << "RAUV620A1" << "RAUV834A1";
 
+    m_strConsuamble[PREPACK_CATNO] << "LAB02CP71" << "LAB02CP74";
+
     gCMUsage.ulUsageState = 0;
 
     memset(m_iAlarmRcdMask ,0,sizeof(m_iAlarmRcdMask));
@@ -3935,6 +3945,9 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     connect(this, SIGNAL(autoLogin()),
      this, SLOT(on_AutoLogin()),Qt::QueuedConnection);
+
+    connect(this, SIGNAL(userNeedLogin()),
+            this, SLOT(on_userLogin()));
 
     m_timerBuzzer = new QTimer(this);
     connect(m_timerBuzzer, SIGNAL(timeout()), this, SLOT(on_timerBuzzerEvent()),Qt::QueuedConnection);
@@ -5877,6 +5890,63 @@ void MainWindow::saveFmData(int id,unsigned int ulValue)
     m_ulFlowRptTick[id] = m_periodEvents;
 }
 
+void MainWindow::doSubAccountWork(double value, int iType)
+{
+    QSqlQuery query;
+    bool ret;
+
+    query.prepare(select_sql_subAccount);
+    query.addBindValue(m_userInfo.m_strUserName);
+    ret = query.exec();
+
+    if(query.next())
+    {
+        double upValue = query.value(0).toDouble();
+        double hpValue = query.value(1).toDouble();
+
+        switch(iType)
+        {
+        //UP
+        case APP_DEV_HS_SUB_HYPER:
+            upValue += value;
+            break;
+        //HP
+        case APP_DEV_HS_SUB_REGULAR:
+            hpValue += value;
+            break;
+        default:
+            return;
+        }
+        QSqlQuery updateSqlQuery;
+        updateSqlQuery.prepare(update_sql_subAccount);
+        updateSqlQuery.addBindValue(upValue);
+        updateSqlQuery.addBindValue(hpValue);
+        updateSqlQuery.addBindValue(m_userInfo.m_strUserName);
+        updateSqlQuery.exec();
+    }
+    else
+    {
+        QSqlQuery insertSqlQuery;
+        insertSqlQuery.prepare(insert_sql_subAccount);
+        insertSqlQuery.bindValue(":name", m_userInfo.m_strUserName);
+        switch(iType)
+        {
+        case APP_DEV_HS_SUB_HYPER: //UP
+            insertSqlQuery.bindValue(":quantity_UP", value);
+            insertSqlQuery.bindValue(":quantity_HP", 0.0);
+            break;
+        case APP_DEV_HS_SUB_REGULAR: //HP
+            insertSqlQuery.bindValue(":quantity_UP", 0.0);
+            insertSqlQuery.bindValue(":quantity_HP", value);
+            break;
+        default:
+            return;
+        }
+
+        insertSqlQuery.exec();
+    }
+}
+
 void MainWindow::showWifiConfigDlg(const QString& name)
 {
     m_pWifiConfigDlg->setSSIDName(name);
@@ -7304,7 +7374,12 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                          query.bindValue(":tmp",tmpI4);
                          query.bindValue(":time", strTime);
                          bDbResult = query.exec();
-
+#ifdef SUB_ACCOUNT
+                         if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_SUB_ACCOUNT))
+                         {
+                             doSubAccountWork(fQuantity, APP_DEV_HS_SUB_REGULAR);
+                         }
+#endif
                          updQtwState(APP_DEV_HS_SUB_REGULAR,false);
                          sync();
                      }                    
@@ -7322,7 +7397,12 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                          query.bindValue(":tmp"     ,tmpI5);
                          query.bindValue(":time"    ,strTime);
                          bDbResult = query.exec();
-
+#ifdef SUB_ACCOUNT
+                         if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_SUB_ACCOUNT))
+                         {
+                             doSubAccountWork(fQuantity, APP_DEV_HS_SUB_HYPER);
+                         }
+#endif
                          updQtwState(APP_DEV_HS_SUB_HYPER,false);
                          sync();
                     }                    
@@ -8029,6 +8109,29 @@ void DispIndicationEntry(unsigned char *pucData,int iLength)
    }
 }
 
+int check_Sub_Account()
+{
+#ifdef SUB_ACCOUNT
+    if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_SUB_ACCOUNT)))
+    {
+        return 1;
+    }
+
+    if(user_LoginState.loginState())
+    {
+        return 1;
+    }
+    if (gpMainWnd)
+    {
+        gpMainWnd->emitUserLogin();
+    }
+    return 0;
+#else
+    return 1;
+#endif
+
+}
+
 void DispGetHandlerConfig(int addr)
 {
    if (gpMainWnd)
@@ -8045,6 +8148,11 @@ void DispGetHandlerConfig(int addr)
 void MainWindow::emitIapIndication(IAP_NOTIFY_STRU *pIapNotify)
 {
     emit iapIndication(pIapNotify);
+}
+
+void MainWindow::emitUserLogin()
+{
+    emit userNeedLogin();
 }
 
 void DispIapIndEntry(IAP_NOTIFY_STRU *pIapNotify)
@@ -8143,6 +8251,39 @@ void MainWindow::run(bool bRun)
     int iRet;
     
     MainPage *pMainPage = (MainPage *)m_pSubPages[PAGE_MAIN];
+#if 0
+    // for test
+    {
+        QString strMachineType = "Genie G 5";
+        QString strSN = "S9PA000000";
+        QString strMfd = "Rephile Bioscience,LTD.";
+        QString strTime = "15:42:56";
+        QString strDate = "2012/7/19";
+        float res = 18.2;
+        float temp = 25.7;
+        int   toc  = 90;
+        float vol  = 100.1;
+        QString type = "UP";
+        QString user = "ADMIN";
+
+        QString info = "EXCH P PACK";
+
+        printerDispenseWater(strMachineType,strSN,strMfd,strTime,strDate,res,temp,toc,vol,type,user);
+
+        printerFillingTank(strMachineType,strSN,strMfd,strTime,strDate,res,temp,90,1000,1000,100);
+
+        printerAlert(false,strMachineType,strSN,strMfd,strTime,strDate,info);
+
+        info = "LOW PRESURE";
+
+        printerAlarm(false,strMachineType,strSN,strMfd,strTime,strDate,info);
+
+        info = "INSTALLATION P PACK S/N:S8PA000000";
+
+        printerService(strMachineType,strSN,strMfd,strTime,strDate,info);
+
+    }
+#endif
     
     if (bRun)
     {
@@ -8440,6 +8581,39 @@ void MainWindow::saveLoginfo(const QString& strUserName, const QString& strPassw
 const DUserInfo MainWindow::getLoginfo()
 {
     return m_userInfo;
+}
+
+int MainWindow::on_userLogin()
+{
+    LoginDlg dlg;
+    dlg.exec();
+    if(0 == dlg.m_iLogInResult)
+    {
+        Ex_UserInfo userInfo;
+        int ret = userInfo.checkUserInfo(dlg.m_strUserName, dlg.m_strPassword);
+        switch(ret)
+        {
+        case 4:
+        case 3:
+        case 31:
+        case 2:
+        case 1:
+            this->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
+            user_LoginState.setLoginState(true);
+            if (NULL != m_pSubPages[PAGE_MAIN])
+            {
+                MainPage *page = (MainPage *)m_pSubPages[PAGE_MAIN];
+                page->showLogoutBtn(true);
+            }
+            return 1;
+        case 0:
+            DLoginWarningDialog::getInstance(tr("Login failed!"));
+            return 0;
+        default:
+            return 0;
+        }
+    }
+    return 0;
 }
 
 void MainWindow::MainWriteLoginOperationInfo2Db(int iActId)
@@ -9249,11 +9423,34 @@ void MainWindow::checkConsumableInstall(int iRfId)
 
 void MainWindow::checkUserLoginStatus()
 {
+    QMutexLocker locker(&ex_gMutex);
+#ifdef SUB_ACCOUNT
+    if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_SUB_ACCOUNT))
+    {
+        if(!(DispGetUpQtwFlag() || DispGetEdiQtwFlag()))
+        {
+            g_AutoLogoutTimer++;
+        }
+    }
+    else
+    {
+        g_AutoLogoutTimer++;
+    }
+#else
     g_AutoLogoutTimer++;
+#endif
 
     if(user_LoginState.loginState())
     {
         user_LoginState.checkAutoLogout();
+    }
+    else
+    {
+        if (NULL != m_pSubPages[PAGE_MAIN])
+        {
+            MainPage *page = (MainPage *)m_pSubPages[PAGE_MAIN];
+            page->showLogoutBtn(false);
+        }
     }
 }
 
@@ -9332,7 +9529,8 @@ void MainWindow::updateCMInfoWithRFID(int operate)
     if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter)) //DISP_SM_PreFilterColumn
     {
         packType = DISP_PRE_PACK;
-        iRfId = APP_RFID_SUB_TYPE_PREPACK;
+//        iRfId = APP_RFID_SUB_TYPE_PREPACK;
+        iRfId = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         if(0 == operate)
         {
             readCMInfoFromRFID(iRfId, packType);
@@ -9661,6 +9859,313 @@ const QString &MainWindow::consumableInitDate() const
 {
     return m_consuambleInitDate;
 }
+
+
+// for printer
+int printerDispenseWater(QString &strMachineType, QString &strSN,QString &strMfd, QString& strTime,QString &strDate,float res,float temp,int toc,float vol,QString& type,QString &user)
+{
+   char buffer[1500];
+
+   char *pCont = buffer;
+
+   int iRet;
+   int iIdx = 0;
+
+   iRet = sprintf(pCont,"%s\n","ESC \"@\"");
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"%s\n","ESC \"3\" 18");
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"%s\n","ESC \"a\" 1");
+   pCont += iRet;
+   iIdx  += iRet;
+
+
+   // Genie G 5   S/N:S9PA000000   Rephile Bioscience,LTD.
+   iRet = sprintf(pCont,"\"%s S/N:%s %s\" LF\n",strMachineType.toLatin1().data(),strSN.toLatin1().data(),strMfd.toLatin1().data());
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"%s \n","ESC \"d\" 3");
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"%s \n","ESC \"a\" 0");
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"%s LF LF\n","\"DISPENSE WATER\"");
+   pCont += iRet;
+   iIdx  += iRet;
+
+   /* TIME	RES	TEMP	TOC	VOL	TYP	USER */
+   iRet = sprintf(pCont,"\"%10s %4s %4s %3s %6s %4s %6s\" LF\n","   TIME   "," RES","TEMP","TOC","  VOL ","TYPE"," USER ");
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"\"%10s %4.1f %4.1f %3d %5.1f %4s %6s\" LF LF\n",strTime.toLatin1().data(),res,temp,toc,vol,type.toLatin1().data(),user.toLatin1().data());
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"%s\n","FS \"&\"");
+   pCont += iRet;
+   iIdx  += iRet;
+
+
+   iRet = sprintf(pCont,"\"%10s %6s %2s %3s %6s\" LF LF\n",strDate.toLatin1().data(),"\x4d\xa6\xb8\x2e\x43\x4d","\xa1\xe6","ppb","L");
+   pCont += iRet;
+   iIdx  += iRet;
+
+
+   iRet = sprintf(pCont,"%s\n","GS \"V\" 66 0");
+   pCont += iRet;
+   iIdx  += iRet;
+
+   pCont[0] = 0;
+
+   iIdx++;
+
+   CPrinter::getInstance()->snd2Printer(buffer,iIdx);
+
+   qDebug() << buffer << endl;
+
+}
+
+int printerFillingTank(QString &strMachineType, QString &strSN,QString &strMfd, QString& strTime,QString &strDate,float prod,float temp,int rej,int feed,int perm,int dur)
+{
+   char buffer[1500];
+
+   char *pCont = buffer;
+
+   int iRet;
+   int iIdx = 0;
+
+   iRet = sprintf(pCont,"%s\n","ESC \"@\"");
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"%s\n","ESC \"3\" 18");
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"%s\n","ESC \"a\" 1");
+   pCont += iRet;
+   iIdx  += iRet;
+
+
+   // Genie G 5   S/N:S9PA000000   Rephile Bioscience,LTD.
+   iRet = sprintf(pCont,"\"%s S/N:%s %s\" LF\n",strMachineType.toLatin1().data(),strSN.toLatin1().data(),strMfd.toLatin1().data());
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"%s \n","ESC \"d\" 3");
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"%s \n","ESC \"a\" 0");
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"%s LF LF\n","\"FILLING TANK\"");
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"\"%10s %4s %4s %3s %4s %4s %4s\" LF\n","   TIME   ","PROD","TEMP","REJ","FEED","PERM","DURA");
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"\"%10s %4.1f %4.1f %3d %4d %4d %4d\" LF LF\n",strTime.toLatin1().data(),prod,temp,rej,feed,perm,dur);
+   pCont += iRet;
+   iIdx  += iRet;
+
+   iRet = sprintf(pCont,"%s\n","FS \"&\"");
+   pCont += iRet;
+   iIdx  += iRet;
+
+
+   iRet = sprintf(pCont,"\"%10s %6s %2s %3s %6s %6s %3s\" LF LF\n",strDate.toLatin1().data(),"\x4d\xa6\xb8\x2e\x43\x4d","\xa1\xe6","%","\xA6\xCC\x53\x2F\x63\x6D","\xA6\xCC\x53\x2F\x63\x6D","min");
+   pCont += iRet;
+   iIdx  += iRet;
+
+
+   iRet = sprintf(pCont,"%s\n","GS \"V\" 66 0");
+   pCont += iRet;
+   iIdx  += iRet;
+
+   pCont[0] = 0;
+
+   iIdx++;
+
+   CPrinter::getInstance()->snd2Printer(buffer,iIdx);
+
+   qDebug() << buffer << endl;
+
+}
+
+
+int printerAlert(bool bAlarm,QString &strMachineType, QString &strSN,QString &strMfd, QString& strTime,QString &strDate,QString& strInfo)
+{
+    char buffer[1500];
+
+    char *pCont = buffer;
+
+    int iRet;
+    int iIdx = 0;
+
+    iRet = sprintf(pCont,"%s\n","ESC \"@\"");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"%s\n","ESC \"3\" 18");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"%s\n","ESC \"a\" 1");
+    pCont += iRet;
+    iIdx  += iRet;
+
+
+    // Genie G 5   S/N:S9PA000000   Rephile Bioscience,LTD.
+    iRet = sprintf(pCont,"\"%s S/N:%s %s\" LF\n",strMachineType.toLatin1().data(),strSN.toLatin1().data(),strMfd.toLatin1().data());
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"%s \n","ESC \"d\" 3");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"%s \n","ESC \"a\" 0");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"\"%s %s %s %s \"LF LF\n",bAlarm ? "ALERT:" : "ALERT LIFTED:",strTime.toLatin1().data(),strDate.toLatin1().data(),strInfo.toLatin1().data());
+    pCont += iRet;
+    iIdx  += iRet;
+
+
+    iRet = sprintf(pCont,"%s\n","GS \"V\" 66 0");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    pCont[0] = 0;
+
+    iIdx++;
+
+    CPrinter::getInstance()->snd2Printer(buffer,iIdx);
+
+    qDebug() << buffer << endl;
+
+}
+
+int printerAlarm(bool bAlarm ,QString &strMachineType, QString &strSN,QString &strMfd, QString& strTime,QString &strDate,QString& strInfo)
+{
+    char buffer[1500];
+
+    char *pCont = buffer;
+
+    int iRet;
+    int iIdx = 0;
+
+    iRet = sprintf(pCont,"%s\n","ESC \"@\"");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"%s\n","ESC \"3\" 18");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"%s\n","ESC \"a\" 1");
+    pCont += iRet;
+    iIdx  += iRet;
+
+
+    // Genie G 5   S/N:S9PA000000   Rephile Bioscience,LTD.
+    iRet = sprintf(pCont,"\"%s S/N:%s %s\" LF\n",strMachineType.toLatin1().data(),strSN.toLatin1().data(),strMfd.toLatin1().data());
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"%s \n","ESC \"d\" 3");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"%s \n","ESC \"a\" 0");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"\"%s %s %s %s \"LF LF\n",bAlarm ? "ALARM:" : "ALARM LIFTED:",strTime.toLatin1().data(),strDate.toLatin1().data(),strInfo.toLatin1().data());
+    pCont += iRet;
+    iIdx  += iRet;
+
+
+    iRet = sprintf(pCont,"%s\n","GS \"V\" 66 0");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    pCont[0] = 0;
+
+    iIdx++;
+
+    CPrinter::getInstance()->snd2Printer(buffer,iIdx);
+
+    qDebug() << buffer << endl;
+}
+
+int printerService(QString &strMachineType, QString &strSN,QString &strMfd, QString& strTime,QString &strDate,QString &strInfo)
+{
+    char buffer[1500];
+
+    char *pCont = buffer;
+
+    int iRet;
+    int iIdx = 0;
+
+    iRet = sprintf(pCont,"%s\n","ESC \"@\"");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"%s\n","ESC \"3\" 18");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"%s\n","ESC \"a\" 1");
+    pCont += iRet;
+    iIdx  += iRet;
+
+
+    // Genie G 5   S/N:S9PA000000   Rephile Bioscience,LTD.
+    iRet = sprintf(pCont,"\"%s S/N:%s %s\" LF\n",strMachineType.toLatin1().data(),strSN.toLatin1().data(),strMfd.toLatin1().data());
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"%s \n","ESC \"d\" 3");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"%s \n","ESC \"a\" 0");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    iRet = sprintf(pCont,"\"%s %s %s %s \"LF LF\n","SERVICE:",strTime.toLatin1().data(),strDate.toLatin1().data(),strInfo.toLatin1().data());
+    pCont += iRet;
+    iIdx  += iRet;
+
+
+    iRet = sprintf(pCont,"%s\n","GS \"V\" 66 0");
+    pCont += iRet;
+    iIdx  += iRet;
+
+    pCont[0] = 0;
+
+    iIdx++;
+
+    CPrinter::getInstance()->snd2Printer(buffer,iIdx);
+
+    qDebug() << buffer << endl;
+}
+
 
 
 

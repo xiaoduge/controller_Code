@@ -45,6 +45,7 @@
 
 #define ZBITF_MAIN_MTN_MSG                  (USER_MESSAGE_EVENT+34)
 
+#define MAIN_PRINTER_MSG                    (USER_MESSAGE_EVENT+35)
 
 #define TCP_CLIENT_SEND_DATA				(USER_MESSAGE_EVENT + 0x100)
 

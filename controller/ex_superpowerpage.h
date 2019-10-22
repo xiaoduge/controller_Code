@@ -60,6 +60,7 @@ private:
     bool deleteDbPWater();
     bool deleteDbLog();
     bool deleteDbConsumables();
+    bool deleteDbSubAccount();
 
     bool deleteInfoConfig();
     bool deleteConfig();

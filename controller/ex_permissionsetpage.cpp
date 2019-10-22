@@ -5,7 +5,11 @@
 
 #include <QFile>
 #include <QRadioButton>
-
+#include <QTableView>
+#include <QSqlTableModel>
+#include <QSqlQuery>
+#include <QHeaderView>
+#include "dlineedit.h"
 
 Ex_PermissionSetPage::Ex_PermissionSetPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
@@ -33,6 +37,16 @@ void Ex_PermissionSetPage::buildTranslation()
 {
     m_tabWidget->setTabText(0, tr("RFID Config"));
     m_tabWidget->setTabText(1, tr("Verification"));
+
+#ifdef SUB_ACCOUNT
+    m_tabWidget->setTabText(2, tr("Sub-Account"));
+    m_chSubAccount->setText(tr("Sub-Account"));
+    m_pNameLB->setText(tr("Name"));
+    m_pQueryBtn->setText(tr("Query"));
+    m_pDisplayAllBtn->setText(tr("Display All"));
+    m_pDeleteOneBtn->setText(tr("Reset"));
+    m_pDeleteAllBtn->setText(tr("Reset All"));
+#endif
 
     m_pRfidTitle->setText(tr("RFID Config"));
     m_chRfid->setText(tr("Disable RFID"));
@@ -76,6 +90,10 @@ void Ex_PermissionSetPage::initUi()
     //add page
     initRFIDConfigPage();
     initInstallPermissionPage();
+
+#ifdef SUB_ACCOUNT
+    initSubAccountPage();
+#endif
     //end
 
     mainLayout->addWidget(m_tabWidget, 0, 0);
@@ -111,6 +129,17 @@ void Ex_PermissionSetPage::update()
     {
         m_chPermission->setChecked(false);
     }
+#ifdef SUB_ACCOUNT
+    //2019.10.15 add, for sub-account
+    if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_SUB_ACCOUNT))
+    {
+        m_chSubAccount->setChecked(true);
+    }
+    else
+    {
+        m_chSubAccount->setChecked(false);
+    }
+#endif
 }
 
 void Ex_PermissionSetPage::on_RfidsaveBtn_clicked()
@@ -152,6 +181,45 @@ void Ex_PermissionSetPage::on_PermissionsaveBtn_clicked()
     m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_INSTALL_PERMISSION);
     m_wndMain->prepareKeyStroke();
     Ex_HintDialog::getInstance(tr("Successfully saved"));
+}
+
+void Ex_PermissionSetPage::on_chSubAccount_stateChanged(int state)
+{
+    DISP_MISC_SETTING_STRU  miscParam = gGlobalParam.MiscParam;
+    if ((Qt::Checked == state))
+    {
+        miscParam.ulMisFlags |= 1 << DISP_SM_SUB_ACCOUNT;
+    }
+    else
+    {
+        miscParam.ulMisFlags &= ~(1 << DISP_SM_SUB_ACCOUNT);
+    }
+
+    MainSaveMiscParam(gGlobalParam.iMachineType,miscParam);
+    MainUpdateGlobalParam();
+
+    m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_INSTALL_PERMISSION);
+    m_wndMain->prepareKeyStroke();
+//    Ex_HintDialog::getInstance(tr("Successfully saved"));
+}
+
+void Ex_PermissionSetPage::on_QueryBtn_clicked()
+{
+    QString strName = m_pNameLineEdit->text();
+    m_pTableModel->setFilter(QString("name='%1'").arg(strName));
+    m_pTableModel->select();
+    initTabelHeaderData();// ex
+    m_pTableView->hideColumn(0);
+    m_wndMain->prepareKeyStroke();
+}
+
+void Ex_PermissionSetPage::on_DisplayAllBtn_clicked()
+{
+    m_pTableModel->setTable("SubAccount");
+    m_pTableModel->select();
+    initTabelHeaderData();// ex
+    m_pTableView->hideColumn(0);
+    m_wndMain->prepareKeyStroke();
 }
 
 void Ex_PermissionSetPage::initRFIDConfigPage()
@@ -222,6 +290,117 @@ void Ex_PermissionSetPage::initInstallPermissionPage()
 
     QIcon icon1(":/pic/unselected.png");
     m_tabWidget->addTab(m_pageWidget[PAGE_PERMISSION], icon1, tr("Verification"));
+}
+
+void Ex_PermissionSetPage::initSubAccountPage()
+{
+    m_pageWidget[PAGE_SUBACCOUNT] = new QWidget;
+
+    QString strQss4Chk = m_wndMain->getQss4Chk();
+
+    m_chSubAccount = new QCheckBox;
+    m_chSubAccount->setStyleSheet(strQss4Chk);
+
+    m_pTableView = new QTableView;
+    m_pTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    m_pNameLB = new QLabel;
+    m_pNameLineEdit = new DLineEdit;
+    m_pQueryBtn = new QPushButton;
+    m_pDisplayAllBtn = new QPushButton;
+    m_pDeleteOneBtn = new QPushButton;
+    m_pDeleteAllBtn = new QPushButton;
+
+    QHBoxLayout* h0Layout = new QHBoxLayout;
+    QHBoxLayout* h1Layout = new QHBoxLayout;
+    QHBoxLayout* h2Layout = new QHBoxLayout;
+    QHBoxLayout* h3Layout = new QHBoxLayout;
+
+    h0Layout->setAlignment(Qt::AlignLeft);
+    h0Layout->addWidget(m_chSubAccount);
+
+    h1Layout->addWidget(m_pTableView);
+
+    m_pNameLineEdit->setMaximumWidth(250);
+    m_pNameLineEdit->setMinimumWidth(200);
+    m_pQueryBtn->setMinimumWidth(150);
+    m_pDisplayAllBtn->setMinimumWidth(150);
+    h2Layout->addWidget(m_pNameLB);
+    h2Layout->addWidget(m_pNameLineEdit);
+    h2Layout->addStretch(1);
+    h2Layout->addWidget(m_pQueryBtn);
+    h2Layout->addWidget(m_pDisplayAllBtn);
+
+    h3Layout->setAlignment(Qt::AlignRight);
+    m_pDeleteOneBtn->setMinimumWidth(150);
+    m_pDeleteAllBtn->setMinimumWidth(150);
+    h3Layout->addWidget(m_pDeleteOneBtn);
+    h3Layout->addWidget(m_pDeleteAllBtn);
+
+    QVBoxLayout* vLayout = new QVBoxLayout;
+
+    vLayout->addLayout(h0Layout);
+    vLayout->addLayout(h1Layout);
+    vLayout->addLayout(h2Layout);
+    vLayout->addLayout(h3Layout);
+
+    m_pageWidget[PAGE_SUBACCOUNT]->setLayout(vLayout);
+
+    connect(m_chSubAccount, SIGNAL(stateChanged(int)),
+            this, SLOT(on_chSubAccount_stateChanged(int)));
+    connect(m_pQueryBtn, SIGNAL(clicked()), this, SLOT(on_QueryBtn_clicked()));
+    connect(m_pDisplayAllBtn, SIGNAL(clicked()), this, SLOT(on_DisplayAllBtn_clicked()));
+
+    connect(m_pDeleteOneBtn, SIGNAL(clicked()), this, SLOT(on_DeleteOneBtn_clicked()));
+    connect(m_pDeleteAllBtn, SIGNAL(clicked()), this, SLOT(on_DeleteAllBtn_clicked()));
+
+    QIcon icon1(":/pic/unselected.png");
+    m_tabWidget->addTab(m_pageWidget[PAGE_SUBACCOUNT], icon1, tr("Verification"));
+
+    initDBTabelModel();
+}
+
+void Ex_PermissionSetPage::initDBTabelModel()
+{
+    m_pTableModel = new QSqlTableModel(m_widget);
+    m_pTableModel->setTable("SubAccount");
+    m_pTableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    m_pTableModel->select();
+    initTabelHeaderData();// ex
+    m_pTableView->setModel(m_pTableModel);
+
+    m_pTableView->verticalHeader()->setDefaultSectionSize(50);
+    m_pTableView->verticalHeader()->setMinimumSectionSize(50);
+    m_pTableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+
+    m_pTableView->hideColumn(0);
+}
+
+void Ex_PermissionSetPage::initTabelHeaderData()
+{
+    m_pTableModel->setHeaderData(0, Qt::Horizontal, tr("ID"));
+    m_pTableModel->setHeaderData(1, Qt::Horizontal, tr("Name"));
+    m_pTableModel->setHeaderData(2, Qt::Horizontal, tr("UP Quantity"));
+    m_pTableModel->setHeaderData(3, Qt::Horizontal, tr("HP Quantity"));
+}
+
+void Ex_PermissionSetPage::on_DeleteOneBtn_clicked()
+{
+    QString strName = m_pNameLineEdit->text();
+    QString strSql = QString("delete from SubAccount where name='%1'").arg(strName);
+    QSqlQuery query;
+    query.exec(strSql);
+
+    m_wndMain->prepareKeyStroke();
+}
+
+void Ex_PermissionSetPage::on_DeleteAllBtn_clicked()
+{
+    QString strSql = QString("delete from SubAccount");
+    QSqlQuery query;
+    query.exec(strSql);
+
+    m_wndMain->prepareKeyStroke();
 }
 
 

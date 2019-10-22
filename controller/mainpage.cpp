@@ -2,8 +2,10 @@
 #include "mainpage.h"
 #include "navigatorbar.h"
 #include "cbitmapbutton.h"
+#include "ExtraDisplay.h"
 #include <QMouseEvent>
-
+#include "dpushbutton.h"
+#include "ex_hintdialog.h"
 
 #define SINGLE_MACHINE_PANEL_XOFF (408)
 #define SINGLE_MACHINE_PANEL_YOFF (-162)
@@ -617,6 +619,11 @@ void MainPage::initUi()
     }
     connect(m_pNaviBar, SIGNAL(clicked(int)), this, SLOT(on_navi_clicked(int)));
 
+    QPixmap pixmap(":/pic/logout.png");
+    m_pLogoutBtn = new DPushButton(pixmap, m_widget);
+    m_pLogoutBtn->cmove(760, 545);
+    connect(m_pLogoutBtn, SIGNAL(clicked()), this, SLOT(on_logoutBtn_clicked()));
+    m_pLogoutBtn->hide();
 }
 
 void MainPage::creatTitle()
@@ -651,8 +658,30 @@ void MainPage::update()
    default:
        break;
    }
+#ifdef SUB_ACCOUNT
+   if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_SUB_ACCOUNT))
+   {
+       if(user_LoginState.loginState())
+       {
+           m_pLogoutBtn->show();
+       }
+       else
+       {
+           m_pLogoutBtn->hide();
+       }
+   }
 
+   else
+   {
+       m_pLogoutBtn->hide();
+   }
 
+#else
+   {
+       m_pLogoutBtn->hide();
+   }
+
+#endif
    //end
 }
 
@@ -801,6 +830,25 @@ void MainPage::updRealTimeQtwVolume(unsigned int uIValue)
             m_pLabels[m_aiLblMap[LABEL_NAVI_EDIWQUANTITY_VALUE]]->hide();
             m_pLabels[m_aiLblMap[LABEL_NAVI_EDIWQUANTITY_UNIT]]->hide();
         }
+    }
+}
+
+void MainPage::showLogoutBtn(bool bShow)
+{
+    if(bShow)
+    {
+        if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_SUB_ACCOUNT))
+        {
+            m_pLogoutBtn->show();
+        }
+        else
+        {
+            m_pLogoutBtn->hide();
+        }
+    }
+    else
+    {
+         m_pLogoutBtn->hide();
     }
 }
 
@@ -1153,6 +1201,16 @@ void MainPage::on_timerEvent()
         updQtwInfo(APP_DEV_HS_SUB_REGULAR,m_wndMain->getWaterQuantity(APP_DEV_HS_SUB_REGULAR));
         break;
     }
+}
+
+void MainPage::on_logoutBtn_clicked()
+{
+    if(user_LoginState.loginState())
+    {
+        user_LoginState.setLoginState(false);
+        m_pLogoutBtn->hide();
+    }
+    Ex_HintDialog::getInstance(tr("Signed out"));
 }
 
 void MainPage::on_btn_clicking(int index)

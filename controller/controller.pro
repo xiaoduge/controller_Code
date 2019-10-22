@@ -26,7 +26,8 @@ DEFINES += CONFIG_CTRL_IFACE
 
 DEFINES += CONFIG_CTRL_IFACE_UNIX
 
-INCLUDEPATH	+= . .. ../../../../../../860210000/linux/am3358/wpa/wpa_supplicant-0.7.3/src/utils
+#INCLUDEPATH	+= . .. ../../../../../../860210000/linux/am3358/wpa/wpa_supplicant-0.7.3/src/utils
+INCLUDEPATH	+= . .. ./ecspos ../../../../../../860210000/linux/am3358/wpa/wpa_supplicant-0.7.3/src/utils
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -126,7 +127,8 @@ SOURCES += main.cpp\
     ex_initconsumableinspage.cpp \
     dconsumableinstallwidget.cpp \
     dpushbutton.cpp \
-    drunwarningdialog.cpp
+    drunwarningdialog.cpp \
+    printer.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -225,7 +227,9 @@ HEADERS  += mainwindow.h \
     ex_initconsumableinspage.h \
     dconsumableinstallwidget.h \
     dpushbutton.h \
-    drunwarningdialog.h
+    drunwarningdialog.h \
+    escpos/init_parser.h \
+    printer.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \
@@ -251,10 +255,22 @@ OTHER_FILES += \
     Table.qss \
     combox.qss
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/release/ -lcommon
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/debug/ -lcommon
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/release/ -lcommon
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/debug/ -lcommon
+#else:symbian: LIBS += -lcommon
+#else:unix: LIBS += -L$$PWD  -lcommon
+#INCLUDEPATH += $$PWD/
+#DEPENDPATH += $$PWD/
+
+#win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/release/common.lib
+#else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/debug/common.lib
+#else:unix:!symbian: PRE_TARGETDEPS += $$PWD/libcommon.a
+
+##
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/release/ -lcommon -lescpos
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/debug/ -lcommon -lescpos
 else:symbian: LIBS += -lcommon
-else:unix: LIBS += -L$$PWD  -lcommon
+else:unix: LIBS += -L$$PWD  -lcommon -lescpos
 INCLUDEPATH += $$PWD/
 DEPENDPATH += $$PWD/
 

@@ -9,43 +9,6 @@ extern "C"
 {
 #endif
 
-typedef struct msgbuf
-{
-    long int   mtype;
-    long int   msgLen;
-    char*      mtext;
-}Msgbuf;
-
-typedef struct msgItem {
-    list_t list;
-    Msgbuf msgInfo;
-}MsgItem;
-
-typedef struct MsgQueue
-{
-    list_t            list;
-    int               used;
-    int               msgId;
-    sp_sem_t          items;
-    sp_sem_t           slots;
-    
-    sp_thread_mutex_t queue_mutex;
-    
-    list_t             Msghead;
-
-    int                MsgNum;
-    
-}MsgQueue;
-
-typedef struct 
-{
-    list_t            busy;
-    list_t            free;
-    sp_thread_mutex_t Mutex;
-}MsgMan;
-
-
-
 typedef struct
 {
     unsigned  int   sender;
@@ -60,9 +23,6 @@ typedef  struct
     char         data[1]; 
 }SAT_MSG_STRU;
 
-#define MAX_OS_MSG_SIZE   (8300)
-#define MAX_MSG_QUEUE_SIZE 5  
-#define MAX_QUEUE_LENGTH 8192
 
 void init_msgQueue();
 

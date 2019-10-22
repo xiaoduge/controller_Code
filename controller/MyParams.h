@@ -118,6 +118,15 @@ void MainRetrivePmParam(int iMachineType,DISP_PM_SETTING_STRU  &Param);
 void MainRetriveCalParam(int iMachineType,DISP_CAL_SETTING_STRU  &Param);
 void MainSaveCalParam(int iMachineType,DISP_CAL_SETTING_STRU  &Param);
 void MainSaveCleanParam(int iMachineType,DISP_CLEAN_SETTING_STRU  &Param);
+
+
+// for printer
+int printerDispenseWater(QString &strMachineType, QString &strSN,QString &strMfd, QString& strTime,QString &strDate,float res,float temp,int toc,float vol,QString& type,QString &user);
+int printerFillingTank(QString &strMachineType, QString &strSN,QString &strMfd, QString& strTime,QString &strDate,float prod,float temp,int rej,int feed,int perm,int dur);
+int printerAlert(bool bAlert,QString &strMachineType, QString &strSN,QString &strMfd, QString& strTime,QString &strDate,QString& strInfo);
+int printerAlarm(bool bAlarm,QString &strMachineType, QString &strSN,QString &strMfd, QString& strTime,QString &strDate,QString& strInfo);
+int printerService(QString &strMachineType, QString &strSN,QString &strMfd, QString& strTime,QString &strDate,QString &strInfo);
+
 #ifdef __cplusplus
 }
 #endif

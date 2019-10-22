@@ -8,6 +8,7 @@
 class MainWindow;
 class navigatorBar;
 class CBitmapButton;
+class DPushButton;
 
 enum BTN_NAME
 {
@@ -131,6 +132,8 @@ public:
 
     void  updRealTimeQtwVolume(unsigned int uIValue);
 
+    void  showLogoutBtn(bool bShow);
+
 private:
     void buildTitles();
 
@@ -182,12 +185,15 @@ private:
 
     int           m_abDecFlag[APP_DEV_HS_SUB_NUM];
 
+    DPushButton   *m_pLogoutBtn;
+
 public slots:
     void on_btn_clicked(int tmp);
     void on_navi_clicked(int tmp);
     void on_btn_clicking(int index);
     void on_timerEvent();
 
+    void on_logoutBtn_clicked();
 };
 
 #endif // RUNPAGE_H
