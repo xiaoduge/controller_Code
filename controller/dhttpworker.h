@@ -8,6 +8,7 @@
 #include "DNetworkConfig.h"
 
 class DNetworkAccessManager;
+class DXmlGenerator;
 
 class DHttpWorker : public QObject
 {
@@ -23,43 +24,30 @@ signals:
     void feedback(const QByteArray&);
 
 public slots:
-    void on_updateRunMsgList(const QString&, int index);
-    void on_updateAlarmList(const QString&);
-    void on_updateHeartList(const NetworkData&);
+    void on_updateAlarmList(const DNetworkAlaramInfo &alarmInfo);
+    void on_updateHeartList(const DNetworkData&);
 
-    void on_heartHttpPost();
+    void on_heartHttpPost(const QByteArray& xmlByte);
     void on_alarmHttpPost();
-    void on_runMsgHttpPost();
 
     void on_initHttp();
 
 private slots:
     void onHeartReplyFinished();
     void onAlarmReplyFinished();
-    void onRunMsgReplyFinished();
-
-private:
-    void updateOperatingData(const QString&, int index);
-    void initJsonFormat();
 
 
 private:
+    DXmlGenerator *m_xmlGenerator;
     DNetworkAccessManager *m_networkAccessManager;
     QNetworkReply *m_pHeartNetworkReply;
     QNetworkReply *m_pAlarmNetworkReply;
 
-    QString m_heartJson;
-
-    QStringList strAlarmList;
-    QStringList strAlarmTempList;
-
-    QStringList strOperatingList; //Operating parameters
-    QString strOperatingData[NETWORK_DATA_NUM]; //Operating parameters
-    QString strHeartMsg;
+    QList<DNetworkAlaramInfo> m_alarmList;
+    QList<DNetworkAlaramInfo> m_alarmTempList;
 
     bool m_idleHeart;
     bool m_idleAlarm;
-    bool m_idleRunMsg;
 
     QMutex m_mutex;
 

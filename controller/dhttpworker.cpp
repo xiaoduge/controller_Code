@@ -1,5 +1,6 @@
 #include "dhttpworker.h"
 #include "dnetworkaccessmanager.h"
+#include "dxmlgenerator.h"
 #include "ExtraDisplay.h"
 #include <QMutexLocker>
 #include <QFile>
@@ -7,87 +8,67 @@
 #include <QTimer>
 #include <QTimerEvent>
 
-DHttpWorker::DHttpWorker(QObject *parent) : QObject(parent)
+DHttpWorker::DHttpWorker(QObject *parent) : QObject(parent),
+                                            m_networkAccessManager(0),
+                                            m_xmlGenerator(0)
 {
     m_idleHeart = true;
     m_idleAlarm = true;
-    m_idleRunMsg = true;
-
-    for(int i = 0; i < NETWORK_DATA_NUM; i++)
-    {
-        strOperatingData[i].clear();
-    }
-    initJsonFormat();
 }
 
 DHttpWorker::~DHttpWorker()
 {
-    m_networkAccessManager->deleteLater();
+    if(m_networkAccessManager) m_networkAccessManager->deleteLater();
+
+    if(m_xmlGenerator) m_xmlGenerator->deleteLater();
 }
 
 void DHttpWorker::timerEvent(QTimerEvent *event)
 {
     if(event->timerId() == m_timerID)
     {
-        if(!strAlarmList.empty())
+        if(!m_alarmList.empty())
         {
             on_alarmHttpPost();
         }
     }
 }
 
-void DHttpWorker::on_updateRunMsgList(const QString &msg, int index)
+void DHttpWorker::on_updateAlarmList(const DNetworkAlaramInfo &alarmInfo)
 {
     QMutexLocker locker(&m_mutex);
-    updateOperatingData(msg, index);
-    on_runMsgHttpPost();
+    m_alarmList.append(alarmInfo);
+    m_alarmTempList = m_alarmList; //backup
 }
 
-void DHttpWorker::on_updateAlarmList(const QString &data)
+void DHttpWorker::on_updateHeartList(const DNetworkData &data)
 {
     QMutexLocker locker(&m_mutex);
-    strAlarmList.append(data);
-    strAlarmTempList = strAlarmList; //backup
+    QByteArray xmlArray = m_xmlGenerator->generator(data);
+
+    xmlArray.replace("\"", "\'");
+
+    on_heartHttpPost(xmlArray);
 }
 
-void DHttpWorker::on_updateHeartList(const NetworkData &data)
-{
-    QMutexLocker locker(&m_mutex);
-    strHeartMsg = m_heartJson.arg(data.waterQuality[0].fG25x)
-                             .arg(data.waterQuality[0].tx)
-                             .arg(data.waterQuality[1].fG25x)
-                             .arg(data.waterQuality[1].tx)
-                             .arg(data.waterQuality[2].fG25x)
-                             .arg(data.waterQuality[2].tx)
-                             .arg(data.waterQuality[3].fG25x)
-                             .arg(data.waterQuality[3].tx)
-                             .arg(data.waterQuality[4].fG25x)
-                             .arg(data.waterQuality[4].tx)
-                             .arg(data.fResidue)
-                             .arg(data.fToc)
-                             .arg(data.runStatus);
-    on_heartHttpPost();
-}
-
-void DHttpWorker::on_heartHttpPost()
+void DHttpWorker::on_heartHttpPost(const QByteArray& xmlByte)
 {
     if(!m_idleHeart)
     {
         return;
     }
-    QString strSerial = QString("\"serial\":{\"serialNo\":\"%1\"},").arg(ex_gGlobalParam.Ex_System_Msg.Ex_SerialNo);;
 
-    QString strContent  = QString("{");
-    strContent += strSerial;
-    strContent += strHeartMsg;
-    strContent += QString("}");
-
-//    qDebug() << strContent;
+    QString strContent = QString("{\"data\" : \"%1\"} ").arg(QString(xmlByte));
 
     QByteArray msgArray = strContent.toLatin1();
+//    qDebug() << msgArray;
+
+    msgArray.replace("\n", "");
+
+    qDebug() << msgArray;
 
     QNetworkRequest request;
-    request.setUrl(QUrl("https://s.yzzhushu.com/api/client"));  //https
+    request.setUrl(QUrl("http://106.14.204.27:8080/app/rest/v2/services/rephile_HeartDataService/uploadHeartData"));  //https
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     m_pHeartNetworkReply = m_networkAccessManager->post(request, msgArray); //msgArray
@@ -101,52 +82,34 @@ void DHttpWorker::on_alarmHttpPost()
     {
             return;
     }
+    QByteArray xmlArray = m_xmlGenerator->generator(m_alarmList);
 
-    QString strSerial = QString("\"serial\":{\"serialNo\":\"%1\"},").arg(ex_gGlobalParam.Ex_System_Msg.Ex_SerialNo);;
-
-    QString strContent  = QString("{");
-    strContent += strSerial;
-
-    if(!strAlarmList.isEmpty())
-    {
-        strContent += QString("\"alarm\":[");
-        for(int i = 0; i < strAlarmList.size(); i++)
-        {
-                strContent += strAlarmList.at(i);
-                if(i < (strAlarmList.size() - 1))
-                {
-                    strContent += QString(",");
-                }
-        }
-        strContent += QString("]");
-        strAlarmList.clear();
-    }
-
-
-    strContent += QString("}");
-
-//    qDebug() << strContent;
+    xmlArray.replace("\"", "\'");
+    QString strContent = QString("{\"data\" : \"%1\"} ").arg(QString(xmlArray));
 
     QByteArray msgArray = strContent.toLatin1();
+//    qDebug() << msgArray;
+
+    msgArray.replace("\n", "");
+
+    qDebug() << msgArray;
 
     QNetworkRequest request;
-    request.setUrl(QUrl("https://s.yzzhushu.com/api/client"));  //https
+    request.setUrl(QUrl("http://106.14.204.27:8080/app/rest/v2/services/rephile_AlarmDataService/uploadAlarmData"));  //https
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     m_pAlarmNetworkReply = m_networkAccessManager->post(request, msgArray); //msgArray
     m_idleAlarm = false;
     connect(m_pAlarmNetworkReply, SIGNAL(finished()), this, SLOT(onAlarmReplyFinished()));
-}
 
-void DHttpWorker::on_runMsgHttpPost()
-{
-    //
+    m_alarmList.clear();
 }
 
 void DHttpWorker::on_initHttp()
 {
-     m_networkAccessManager = new DNetworkAccessManager;
-     m_timerID = this->startTimer(2000);
+    m_xmlGenerator = new DXmlGenerator;
+    m_networkAccessManager = new DNetworkAccessManager;
+    m_timerID = this->startTimer(2000);
 }
 
 void DHttpWorker::onHeartReplyFinished()
@@ -159,6 +122,7 @@ void DHttpWorker::onHeartReplyFinished()
     else
     {
         QString strError = QString("Heart NetworkReply Error:%1").arg(m_pHeartNetworkReply->error());
+        qDebug() << "HeartData Error: " << strError;
         QByteArray array = strError.toLatin1();
         emit feedback(array);
     }
@@ -176,41 +140,13 @@ void DHttpWorker::onAlarmReplyFinished()
     else
     {
         QString strError = QString("Alarm NetworkReply Error:%1").arg(m_pAlarmNetworkReply->error());
+        qDebug() << "AlarmData Error: " << strError;
         QByteArray array = strError.toLatin1();
         emit feedback(array);
-        strAlarmList.append(strAlarmTempList);
+        m_alarmList.append(m_alarmTempList);
     }
     m_pAlarmNetworkReply->deleteLater();
     m_idleAlarm = true;
-}
-
-void DHttpWorker::onRunMsgReplyFinished()
-{
-}
-
-void DHttpWorker::updateOperatingData(const QString & msg, int index)
-{
-    if(index < NETWORK_DATA_NUM)
-    {
-        strOperatingData[index] = msg;
-
-        strOperatingList.clear();
-        for(int i = 0; i < NETWORK_DATA_NUM; i++)
-        {
-            if(!strOperatingData[i].isEmpty())
-            {
-                strOperatingList.append(strOperatingData[i]);
-            }
-        }
-    }
-}
-
-void DHttpWorker::initJsonFormat()
-{
-    QFile jsonFile(":/json/heartJson.json");
-    jsonFile.open(QFile::ReadOnly);
-    m_heartJson = QLatin1String(jsonFile.readAll());
-    jsonFile.close();
 }
 
 

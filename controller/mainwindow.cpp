@@ -169,7 +169,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.9.191017_RC");
+QString strSoftwareVersion = QString("0.1.9.191023_debug");
 
 MainWindow *gpMainWnd;
 
@@ -4505,12 +4505,20 @@ void MainWindow::updEcoInfo(int index)
     }
 
 #ifdef D_HTTPWORK
-    m_networkData.waterQuality[index].fG25x = m_EcoInfo[index].fQuality;
-    m_networkData.waterQuality[index].tx = m_EcoInfo[index].fTemperature;
+    // Use DNetworkData
+    m_uploadNetData.m_waterQuality[index].fG25x = m_EcoInfo[index].fQuality;
+    m_uploadNetData.m_waterQuality[index].tx = m_EcoInfo[index].fTemperature;
+    if(DispGetInitRunFlag() && index == APP_EXE_I1_NO)
+    {
+        m_uploadNetData.m_tapWaterInfo.fG25x = m_EcoInfo[index].fQuality;
+        m_uploadNetData.m_tapWaterInfo.tx = m_EcoInfo[index].fTemperature;
+    }
+
     if(index == APP_EXE_I2_NO)
     {
-         DispGetREJ(&m_networkData.fResidue);
+        DispGetREJ(&m_uploadNetData.m_otherInfo.fRej);
     }
+
 #endif
 }
 
@@ -4525,6 +4533,10 @@ void MainWindow::updTank()
         Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
         page->updTank(level, liter);
     }
+#endif
+#ifdef D_HTTPWORK
+    m_uploadNetData.m_tankInfo[0].iPercent = level;
+    m_uploadNetData.m_tankInfo[0].fVolume = liter;
 #endif
     if (NULL != m_pSubPages[PAGE_MAIN])
     {
@@ -4574,6 +4586,11 @@ void MainWindow::updSourceTank()
     /* calc */
     float liter = (m_fPressure[APP_EXE_PM3_NO]/100)*gGlobalParam.PmParam.afCap[APP_EXE_PM3_NO];
     int   level = (int)((liter*100) / gGlobalParam.PmParam.afCap[APP_EXE_PM3_NO]);
+
+#ifdef D_HTTPWORK
+    m_uploadNetData.m_tankInfo[1].iPercent = level;
+    m_uploadNetData.m_tankInfo[1].fVolume = liter;
+#endif
 
     if (NULL != m_pSubPages[PAGE_SERVICE])
     {
@@ -4639,6 +4656,9 @@ void MainWindow::updPressure(int iIdx)
             Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
             page->updPressure(iIdx, m_fPressure[iIdx]);
         }
+#endif
+#ifdef D_HTTPWORK
+        m_uploadNetData.m_otherInfo.fROPressure = m_fPressure[iIdx];
 #endif
         break;
      }
@@ -4715,6 +4735,22 @@ void MainWindow::updFlowInfo(int iIdx)
             }
         }
 
+    }
+#endif
+
+#ifdef D_HTTPWORK
+    {
+        //for network data
+        int iTmDelta = m_periodEvents - m_iLstFlowMeterTick[iIdx];
+        int iFmDelta;
+
+        if ((iTmDelta >= (FM_CALC_PERIOD/PERIOD_EVENT_LENGTH))
+            && (m_ulLstFlowMeter[iIdx] != 0))
+        {
+            iFmDelta = m_ulFlowMeter[iIdx] - m_ulLstFlowMeter[iIdx];
+
+            this->updateNetworkFlowRate(iIdx, (iFmDelta * TOMLPERMIN / iTmDelta));
+        }
     }
 #endif
     if ( (0 == m_ulLstFlowMeter[iIdx]) 
@@ -5679,10 +5715,8 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
             if((gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
                 && ex_gGlobalParam.Ex_Default)
             {
-                QString strHttpAlarm = QString("{\"type\":0,\"code\":%1,\"status\":1,\"time\":\"%2\"}")
-                                            .arg((iAlarmPart * DISP_ALARM_PART0_NUM) + iAlarmId)
-                                            .arg(strdataTime);
-                emitHttpAlarm(strHttpAlarm);
+                DNetworkAlaramInfo alarmInfo = {0, iAlarmPart * DISP_ALARM_PART0_NUM + iAlarmId, 1, QDateTime::currentDateTime()};
+                emitHttpAlarm(alarmInfo);
             }
 #endif
             if (gGlobalParam.MiscParam.iSoundMask & (1 << DISPLAY_SOUND_ALARM_NOTIFYM))
@@ -5713,10 +5747,8 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
             if((gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
                 && ex_gGlobalParam.Ex_Default)
             {
-                QString strHttpAlarm = QString("{\"type\":0,\"code\":%1,\"status\":0,\"time\":\"%2\"}")
-                                            .arg((iAlarmPart * DISP_ALARM_PART0_NUM) + iAlarmId)
-                                            .arg(strdataTime);
-                emitHttpAlarm(strHttpAlarm);
+                DNetworkAlaramInfo alarmInfo = {0, iAlarmPart * DISP_ALARM_PART0_NUM + iAlarmId, 0, QDateTime::currentDateTime()};
+                emitHttpAlarm(alarmInfo);
             }
 #endif
             if (gGlobalParam.MiscParam.iSoundMask & (1 << DISPLAY_SOUND_ALARM_NOTIFYM))
@@ -5954,23 +5986,22 @@ void MainWindow::showWifiConfigDlg(const QString& name)
 }
 
 #ifdef D_HTTPWORK
-void MainWindow::emitHttpAlarm(const QString &strAlarm)
+void MainWindow::emitHttpAlarm(const DNetworkAlaramInfo &alarmInfo)
 {
-    emit sendHttpAlarm(strAlarm);
+    emit sendHttpAlarm(alarmInfo);
 }
 
 void MainWindow::checkConsumableAlarm()
 {
-    QString strCurTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-    QString strJson = QString("{\"type\":1,\"code\":%1,\"status\":%2,\"time\":\"%3\"}");
+    QDateTime curTime = QDateTime::currentDateTime();
 
     if (gCMUsage.ulUsageState & (1 << DISP_PRE_PACKLIFEDAY)
         || gCMUsage.ulUsageState & (1 << DISP_PRE_PACKLIFEL))
     {
         if(!m_conAlarmMark[DISP_PRE_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_PRE_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_PRE_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_PRE_NOTIFY] = true;
         }
     }
@@ -5978,8 +6009,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_PRE_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_PRE_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_PRE_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_PRE_NOTIFY] = false;
         }
     }
@@ -5989,8 +6020,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_AC_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_AC_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_AC_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_AC_NOTIFY] = true;
         }
     }
@@ -5998,8 +6029,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_AC_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_AC_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_AC_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_AC_NOTIFY] = false;
         }
     }
@@ -6009,8 +6040,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_T_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_T_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_T_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_T_NOTIFY] = true;
         }
     }
@@ -6018,8 +6049,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_T_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_T_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_T_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_T_NOTIFY] = false;
         }
     }
@@ -6030,8 +6061,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_P_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_P_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_P_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_P_NOTIFY] = true;
         }
     }
@@ -6039,8 +6070,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_P_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_P_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_P_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_P_NOTIFY] = false;
         }
     }
@@ -6050,8 +6081,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_U_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_U_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_U_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_U_NOTIFY] = true;
         }
     }
@@ -6059,8 +6090,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_U_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_U_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_U_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_U_NOTIFY] = false;
         }
     }
@@ -6070,8 +6101,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_AT_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_AT_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_AT_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_AT_NOTIFY] = true;
         }
     }
@@ -6079,8 +6110,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_AT_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_AT_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_AT_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_AT_NOTIFY] = false;
         }
     }
@@ -6090,8 +6121,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_H_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_H_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_H_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_H_NOTIFY] = true;
         }
     }
@@ -6099,8 +6130,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_H_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_H_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_H_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_H_NOTIFY] = false;
         }
     }
@@ -6110,8 +6141,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_N1_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_N1_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_N1_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_N1_NOTIFY] = true;
         }
     }
@@ -6119,8 +6150,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_N1_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_N1_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_N1_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_N1_NOTIFY] = false;
         }
     }
@@ -6130,8 +6161,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_N2_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_N2_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_N2_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_N2_NOTIFY] = true;
         }
     }
@@ -6139,8 +6170,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_N2_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_N2_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_N2_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_N2_NOTIFY] = false;
         }
     }
@@ -6150,8 +6181,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_N3_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_N3_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_N3_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_N3_NOTIFY] = true;
         }
     }
@@ -6159,8 +6190,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_N3_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_N3_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_N3_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_N3_NOTIFY] = false;
         }
     }
@@ -6170,8 +6201,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_N4_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_N4_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_N4_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_N4_NOTIFY] = true;
         }
     }
@@ -6179,8 +6210,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_N4_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_N4_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_N4_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_N4_NOTIFY] = false;
         }
     }
@@ -6190,8 +6221,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_N5_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_N5_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_N5_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_N5_NOTIFY] = true;
         }
     }
@@ -6199,8 +6230,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_N5_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_N5_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_N5_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_N5_NOTIFY] = false;
         }
     }
@@ -6212,8 +6243,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_W_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_W_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_W_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_W_NOTIFY] = true;
         }
     }
@@ -6221,8 +6252,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_W_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_W_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_W_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_W_NOTIFY] = false;
         }
     }
@@ -6232,8 +6263,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_T_B_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_T_B_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1,DISP_T_B_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_T_B_NOTIFY] = true;
         }
     }
@@ -6241,8 +6272,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_T_B_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_T_B_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1,DISP_T_B_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_T_B_NOTIFY] = false;
         }
     }
@@ -6253,8 +6284,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_T_A_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_T_A_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1,DISP_T_A_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_T_A_NOTIFY] = true;
         }
     }
@@ -6262,8 +6293,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_T_A_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_T_A_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1,DISP_T_A_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_T_A_NOTIFY] = false;
         }
     }
@@ -6273,8 +6304,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_TUBE_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_TUBE_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_TUBE_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_TUBE_NOTIFY] = true;
         }
     }
@@ -6282,8 +6313,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_TUBE_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_TUBE_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_TUBE_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_TUBE_NOTIFY] = false;
         }
     }
@@ -6294,8 +6325,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_TUBE_DI_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_TUBE_DI_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_TUBE_DI_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_TUBE_DI_NOTIFY] = true;
         }
     }
@@ -6303,8 +6334,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_TUBE_DI_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_TUBE_DI_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_TUBE_DI_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_TUBE_DI_NOTIFY] = false;
         }
     }
@@ -6314,8 +6345,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(!m_conAlarmMark[DISP_ROC12_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_ROC12_NOTIFY).arg(1).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_ROC12_NOTIFY, 1, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_ROC12_NOTIFY] = true;
         }
     }
@@ -6323,8 +6354,8 @@ void MainWindow::checkConsumableAlarm()
     {
         if(m_conAlarmMark[DISP_ROC12_NOTIFY])
         {
-            QString strAlarm = strJson.arg(DISP_ROC12_NOTIFY).arg(0).arg(strCurTime);
-            emitHttpAlarm(strAlarm);
+            DNetworkAlaramInfo alarmInfo = {1, DISP_ROC12_NOTIFY, 0, curTime};
+            emitHttpAlarm(alarmInfo);
             m_conAlarmMark[DISP_ROC12_NOTIFY] = false;
         }
     }
@@ -6332,9 +6363,10 @@ void MainWindow::checkConsumableAlarm()
 
 void MainWindow::on_timerNetworkEvent()
 {
-    QString strCurTime = QTime::currentTime().toString("hh:mm:ss:zzz");
-    QString msg = QString("Genie client Message: hello Mqtt %1").arg(strCurTime);
-    publishMqttMessage(msg.toUtf8());
+    //mqtt test
+//    QString strCurTime = QTime::currentTime().toString("hh:mm:ss:zzz");
+//    QString msg = QString("Genie client Message: hello Mqtt %1").arg(strCurTime);
+//    publishMqttMessage(msg.toUtf8());
 
     if(ex_gGlobalParam.Ex_Default == 0)
     {
@@ -6343,8 +6375,7 @@ void MainWindow::on_timerNetworkEvent()
     if(gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
     {
         //test
-        emit sendHttpHeartData(m_networkData);
-        emit httpHeartPost();
+        emit sendHttpHeartData(m_uploadNetData);
     }
 }
 
@@ -6362,6 +6393,61 @@ bool MainWindow::isDirExist(const QString &fullPath)
     }
 }
 
+void MainWindow::updateNetworkFlowRate(int iIndex, int iValue)
+{
+    switch(iIndex)
+    {
+    case APP_FM_FM1_NO:
+    {
+        if (DispGetUpQtwFlag()
+            || DispGetUpCirFlag())
+        {
+            if (0 != m_uploadNetData.m_flowRateInfo.value[HPDispRate])
+            {
+                m_uploadNetData.m_flowRateInfo.value[HPDispRate] = 0;
+            }
+            m_uploadNetData.m_flowRateInfo.value[UPDispRate] = ((iValue*1.0)/1000);
+        }
+        else if(DispGetEdiQtwFlag() || DispGetTankCirFlag()) //0629
+        {
+            if (0 != m_uploadNetData.m_flowRateInfo.value[UPDispRate])
+            {
+                m_uploadNetData.m_flowRateInfo.value[UPDispRate] = 0;
+            }
+
+            m_uploadNetData.m_flowRateInfo.value[HPDispRate] = ((iValue*1.0)/1000);
+        }
+        else
+        {
+            if (0 != m_uploadNetData.m_flowRateInfo.value[HPDispRate])
+            {
+                m_uploadNetData.m_flowRateInfo.value[HPDispRate] = 0;
+            }
+            if (0 != m_uploadNetData.m_flowRateInfo.value[UPDispRate])
+            {
+                m_uploadNetData.m_flowRateInfo.value[UPDispRate] = 0;
+            }
+        }
+        break;
+    }
+    case APP_FM_FM2_NO:
+        m_uploadNetData.m_flowRateInfo.value[ROFeedRate] = ((60.0*iValue)/1000);
+        break;
+   case APP_FM_FM3_NO:
+        m_uploadNetData.m_flowRateInfo.value[ROProductRate] = ((60.0*iValue)/1000);
+        m_uploadNetData.m_flowRateInfo.value[TapRate] = m_uploadNetData.m_flowRateInfo.value[ROProductRate] + m_uploadNetData.m_flowRateInfo.value[RORejectRate];
+        m_uploadNetData.m_flowRateInfo.value[EDIProductRate] = ((60.0*0.8*iValue)/1000);
+        m_uploadNetData.m_flowRateInfo.value[EDIRejectRate] = ((60.0*0.2*iValue)/1000);
+        break;
+   case APP_FM_FM4_NO:
+        m_uploadNetData.m_flowRateInfo.value[RORejectRate] = ((60.0*iValue)/1000);
+        m_uploadNetData.m_flowRateInfo.value[TapRate] = m_uploadNetData.m_flowRateInfo.value[ROProductRate] + m_uploadNetData.m_flowRateInfo.value[RORejectRate];
+        break;
+    default:
+        break;
+   }
+}
+
 void MainWindow::initHttpWorker()
 {
     DHttpWorker *worker = new DHttpWorker;
@@ -6370,41 +6456,19 @@ void MainWindow::initHttpWorker()
     connect(&m_workerThread, SIGNAL(finished()), worker, SLOT(deleteLater()));
     connect(&m_workerThread, SIGNAL(started()), worker, SLOT(on_initHttp()));
 
-    connect(this, SIGNAL(sendHttpRunMsg(const QString&, int)), worker, SLOT(on_updateRunMsgList(const QString&, int)));
-    connect(this, SIGNAL(sendHttpAlarm(const QString&)), worker, SLOT(on_updateAlarmList(const QString&)));
-    connect(this, SIGNAL(sendHttpHeartData(const NetworkData&)), worker, SLOT(on_updateHeartList(const NetworkData&)));
+    connect(this, SIGNAL(sendHttpAlarm(const DNetworkAlaramInfo&)), worker, SLOT(on_updateAlarmList(const DNetworkAlaramInfo&)));
+    connect(this, SIGNAL(sendHttpHeartData(const DNetworkData&)), worker, SLOT(on_updateHeartList(const DNetworkData&)));
 
-    connect(this, SIGNAL(httpHeartPost()), worker, SLOT(on_heartHttpPost()));
     connect(worker, SIGNAL(feedback(const QByteArray&)), this, SLOT(on_updateText(const QByteArray&)));
 
     m_workerThread.start();
 
     m_networkTimer = new QTimer(this);
     connect(m_networkTimer, SIGNAL(timeout()), this, SLOT(on_timerNetworkEvent()),Qt::QueuedConnection);
-    m_networkTimer->start(1000*10); // peroid of one second
+    m_networkTimer->start(1000*60*10); // peroid of one second
 
-    //test
-    m_networkData.waterQuality[0].fG25x = 2000;
-    m_networkData.waterQuality[0].tx = 25.0;
-
-    m_networkData.waterQuality[1].fG25x = 50;
-    m_networkData.waterQuality[1].tx = 25.1;
-
-    m_networkData.waterQuality[2].fG25x = 16.0;
-    m_networkData.waterQuality[2].tx = 25.2;
-
-    m_networkData.waterQuality[3].fG25x = 18.0;
-    m_networkData.waterQuality[3].tx = 25.3;
-
-    m_networkData.waterQuality[4].fG25x = 18.2;
-    m_networkData.waterQuality[4].tx = 25.4;
-
-    m_networkData.fResidue = 98;
-    m_networkData.fToc = 3;
-
-    m_networkData.runStatus = 0;
-
-    initMqtt();
+    //start mqtt work
+//    initMqtt();
 }
 
 void MainWindow::initMqtt()
@@ -7045,6 +7109,9 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 Ex_WaterQualityPage *subpage = (Ex_WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
                 subpage->updSwPressure(m_fPressure[APP_EXE_PM1_NO]);
             }
+#ifdef D_HTTPWORK
+            m_uploadNetData.m_otherInfo.fFeedPressure = m_fPressure[APP_EXE_PM1_NO];
+#endif
             
         }
         break;
@@ -7519,9 +7586,6 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 {
                     qDebug("on_dispIndication:DISP_NOT_STATE DISP_NOT_STATE NOT_STATE_INIT \r\n");
 
-#ifdef D_HTTPWORK
-                    m_networkData.runStatus = 0;
-#endif
                     //2019.6.3
                     ex_gGlobalParam.lastRunState = 0;
                     MainSaveLastRunState(gGlobalParam.iMachineType);
@@ -7537,9 +7601,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             case NOT_STATE_RUN:
                 {
                     qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_RUN \r\n");
-#ifdef D_HTTPWORK
-                    m_networkData.runStatus = 1;
-#endif
+
                     //2019.6.3
                     ex_gGlobalParam.lastRunState = 1;
                     MainSaveLastRunState(gGlobalParam.iMachineType);
@@ -7920,7 +7982,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             m_curToc = (int)(fToc + 0.5);
 
 #ifdef D_HTTPWORK
-            m_networkData.fToc = fToc;
+            m_uploadNetData.m_otherInfo.fToc = fToc;
 #endif
 
             //2018.11.13

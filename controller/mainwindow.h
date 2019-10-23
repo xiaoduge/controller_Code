@@ -21,7 +21,7 @@
 #include <QProcess>
 
 //#define FLOWCHART
-//#define D_HTTPWORK
+#define D_HTTPWORK
 
 //#define TOUCHTEST
 
@@ -529,20 +529,19 @@ private:
 public:
     void showWifiConfigDlg(const QString& name);
 #ifdef D_HTTPWORK
-    void emitHttpAlarm(const QString& strAlarm);
+    void emitHttpAlarm(const DNetworkAlaramInfo &alarmInfo);
     void checkConsumableAlarm();
 
 signals:
-    void sendHttpRunMsg(const QString&, int index);
-    void sendHttpHeartData(const NetworkData& networkData);
-    void sendHttpAlarm(const QString&);
-    void httpHeartPost();
+    void sendHttpHeartData(const DNetworkData& networkData);
+    void sendHttpAlarm(const DNetworkAlaramInfo&);
 
 private:
     void initHttpWorker();
     void initMqtt();
     void publishMqttMessage(const QByteArray& msg);
     bool isDirExist(const QString& fullPath);
+    void updateNetworkFlowRate(int iIndex, int iValue);
 
 private slots:
     void on_updateText(const QByteArray&);
@@ -555,9 +554,7 @@ private:
     QThread m_workerThread;
     QTimer *m_networkTimer;
 
-
-
-    NetworkData m_networkData;
+    DNetworkData m_uploadNetData;
     bool m_conAlarmMark[HTTP_NOTIFY_NUM];
 
     QFileSystemWatcher *m_pFileWatcher;

@@ -9,6 +9,8 @@ QT       += sql
 
 QT       += network
 
+QT       += xml
+
 TRANSLATIONS = cn.ts
 TRANSLATIONS += de.ts
 TRANSLATIONS += en.ts
@@ -128,7 +130,8 @@ SOURCES += main.cpp\
     dconsumableinstallwidget.cpp \
     dpushbutton.cpp \
     drunwarningdialog.cpp \
-    printer.cpp
+    printer.cpp \
+    dxmlgenerator.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -229,7 +232,8 @@ HEADERS  += mainwindow.h \
     dpushbutton.h \
     drunwarningdialog.h \
     escpos/init_parser.h \
-    printer.h
+    printer.h \
+    dxmlgenerator.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

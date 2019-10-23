@@ -348,8 +348,11 @@ int main(int argc, char *argv[])
     Ex_EventFilter eventF;
     a.installEventFilter(&eventF);
     //Register a custom type
-    qRegisterMetaType<NetworkData>("NetworkData");
-    qRegisterMetaType<NetworkData>("NetworkData&");
+    qRegisterMetaType<DNetworkData>("DNetworkData");
+    qRegisterMetaType<DNetworkData>("DNetworkData&");
+
+    qRegisterMetaType<DNetworkData>("DNetworkAlaramInfo");
+    qRegisterMetaType<DNetworkData>("DNetworkAlaramInfo&");
     //end
 
     chdir(dirname(argv[0]));

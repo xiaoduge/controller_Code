@@ -2,57 +2,102 @@
 #define DNETWORKCONFIG_H
 
 #include <QMetaType>
+#include <QDateTime>
+#include "datatype.h"
+#include "cminterface.h"
 
-typedef struct
+enum XmlGeneratorCode
 {
-    float fG25x;
-    float tx;
-}WQualityMsg;
-
-typedef struct
-{
-    int flowValue[4];
-}FlowRateMsg;
-
-typedef struct
-{
-//    int sourceTank;
-    int pureTank;
-    float workPressure;
-}PressureMsg;
-
-
-struct NetworkData
-{
-    WQualityMsg waterQuality[5];
-    float fResidue;
-    float fToc;
-    int runStatus;
+    XmlHeartData = 0,
+    XmlAlarmData,
+    XmlActiveData,
+    XmlGeneratorCode_Num
 };
 
-Q_DECLARE_METATYPE(NetworkData)
-
-enum Network_Operating_Data
+enum FlowRateCate
 {
-    I1_DATA = 0,
-    I2_DATA,
-    I3_DATA,
-    I4_DATA,
-    I5_DATA,
-
-    S1_DATA,
-    S2_DATA,
-    S3_DATA,
-    S4_DATA,
-
-    SOURCE_TANK_DATA,
-    PURE_TANK_DATA,
-    WORK_PRESSURE_DATA,
-
-    NETWORK_DATA_NUM
-
+    ROProductRate = 0,
+    RORejectRate,
+    ROFeedRate,
+    TapRate,
+    EDIProductRate,
+    EDIRejectRate,
+    HPDispRate,
+    UPDispRate,
+    FlowRateNum
 };
 
+struct DNetworkData
+{
+    struct WaterQuality
+    {
+        float fG25x;
+        float tx;
+    }m_waterQuality[APP_EXE_ECO_NUM];
+
+    WaterQuality m_tapWaterInfo;
+
+    struct FlowRateInfo
+    {
+        float value[FlowRateNum];
+    }m_flowRateInfo;
+
+    struct TankInfo
+    {
+        int iPercent;
+        float fVolume;
+    }m_tankInfo[2];
+
+    struct OtherInfo
+    {
+        float fToc;
+        float fRej;
+        float fFeedPressure;
+        float fROPressure;
+    }m_otherInfo;
+
+    explicit DNetworkData()
+    {
+        clear();
+    }
+
+    void clear()
+    {
+        for(int i = 0; i < APP_EXE_ECO_NUM; ++i)
+        {
+            m_waterQuality[i].fG25x = 0;
+            m_waterQuality[i].tx = 0;
+        }
+        m_tapWaterInfo.fG25x = 0;
+        m_tapWaterInfo.tx = 0;
+
+        for(int i = 0; i < FlowRateNum; ++i)
+        {
+            m_flowRateInfo.value[i] = 0;
+        }
+
+        for(int i = 0; i < 2; ++i)
+        {
+            m_tankInfo[i].iPercent = 0;
+            m_tankInfo[i].fVolume = 0;
+        }
+        m_otherInfo.fFeedPressure = 0;
+        m_otherInfo.fRej = 0;
+        m_otherInfo.fROPressure = 0;
+        m_otherInfo.fToc = 0;
+    }
+};
+
+struct DNetworkAlaramInfo
+{
+    uint m_alarmType;
+    uint m_alarmContent;
+    uint m_alarmStatus;
+    QDateTime m_triggerTime;
+};
+
+Q_DECLARE_METATYPE(DNetworkData)
+Q_DECLARE_METATYPE(DNetworkAlaramInfo)
 
 enum Consumables_Notify  //NOTIFY
 {
