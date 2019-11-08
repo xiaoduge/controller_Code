@@ -117,6 +117,7 @@ void DHttpWorker::onHeartReplyFinished()
     if(m_pHeartNetworkReply->error() == QNetworkReply::NoError)
     {
         QByteArray array = m_pHeartNetworkReply->readAll();
+        qDebug() << "heartData Feed back: " << array;
         emit feedback(array);
     }
     else
@@ -135,6 +136,7 @@ void DHttpWorker::onAlarmReplyFinished()
     if(m_pAlarmNetworkReply->error() == QNetworkReply::NoError)
     {
         QByteArray array = m_pAlarmNetworkReply->readAll();
+        qDebug() << "AlarmInfo Feed back: " << array;
         emit feedback(array);
     }
     else

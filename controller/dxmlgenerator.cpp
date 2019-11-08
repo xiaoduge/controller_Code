@@ -4,29 +4,24 @@
 #include <QStringList>
 #include <QDebug>
 
-inline const QByteArray fCharStr(float value)
+inline const QString toString1(float value)
 {
-    QString str = QString::number(value, 'f', 1);
-    return str.toLatin1();
+    return QString::number(value, 'f', 1);
 }
 
-inline const QByteArray charStr3(float value)
+inline const QString toString3(float value)
 {
-    QString str = QString::number(value, 'f', 3);
-    return str.toLatin1();
+    return QString::number(value, 'f', 3);
 }
 
-inline const QByteArray iCharStr(int value)
+inline const QString toString(int value)
 {
-    QString str = QString::number(value);
-    return str.toLatin1();
+    return QString::number(value);
 }
 
-inline const QByteArray charStr(unsigned int value)
+inline const QString toString(uint value)
 {
-    QString str = QString::number(value);
-    return str.toLatin1();
-
+    return QString::number(value);
 }
 
 DXmlGenerator::DXmlGenerator(QObject *parent) :
@@ -261,19 +256,31 @@ void DXmlGenerator::getTankInfo(int index, int &v, float &h)
     }
 }
 
-void DXmlGenerator::appendElement(QList<QStringList> &elementlist, int count, ...)
+void DXmlGenerator::appendElement(QList<QStringList> &elementlist, const QString &s1, const QString &s2)
 {
-    va_list ap;
-    va_start(ap, count);
     QStringList strList;
+    strList << s1 << s2;
+    elementlist << strList;
+}
 
-    for(int i = 0; i < count; ++i)
-    {
-        char* str = va_arg(ap, char*);
-        strList << str;
-    }
-    va_end(ap);
+void DXmlGenerator::appendElement(QList<QStringList> &elementlist, const QString &s1, const QString &s2, const QString &s3)
+{
+    QStringList strList;
+    strList << s1 << s2 << s3;
+    elementlist << strList;
+}
 
+void DXmlGenerator::appendElement(QList<QStringList> &elementlist, const QString &s1, const QString &s2, const QString &s3, const QString &s4)
+{
+    QStringList strList;
+    strList << s1 << s2 << s3 << s4;
+    elementlist << strList;
+}
+
+void DXmlGenerator::appendElement(QList<QStringList> &elementlist, const QString &s1, const QString &s2, const QString &s3, const QString &s4, const QString &s5, const QString &s6)
+{
+    QStringList strList;
+    strList << s1 << s2 << s3 << s4 << s5 << s6;
     elementlist << strList;
 }
 
@@ -470,19 +477,19 @@ void DXmlGenerator::createHeartDataList(QList<QStringList> &elementsList, const 
     case MACHINE_EDI:
     case MACHINE_RO:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 3, "TapCond", "0", fCharStr(data.m_tapWaterInfo.fG25x).data());
-        appendElement(elementsList, 3, "TapTemp", "2", fCharStr(data.m_tapWaterInfo.tx).data());
-        appendElement(elementsList, 3, "ROFeedCond", "0", fCharStr(data.m_waterQuality[APP_EXE_I1_NO].fG25x).data());
-        appendElement(elementsList, 3, "ROFeedTemp", "2", fCharStr(data.m_waterQuality[APP_EXE_I1_NO].tx).data());
-        appendElement(elementsList, 3, "ROProductCond", "0", fCharStr(data.m_waterQuality[APP_EXE_I2_NO].fG25x).data());
-        appendElement(elementsList, 3, "ROProductTemp", "2", fCharStr(data.m_waterQuality[APP_EXE_I2_NO].tx).data());
-        appendElement(elementsList, 3, "RORejectionRate", "7", fCharStr(data.m_otherInfo.fRej).data());
-        appendElement(elementsList, 3, "ROFeedPressure", "4", fCharStr(data.m_otherInfo.fFeedPressure).data());
-        appendElement(elementsList, 3, "ROPressure", "4", fCharStr(data.m_otherInfo.fROPressure).data());
+        appendElement(elementsList, "TapCond", "0", toString1(data.m_tapWaterInfo.fG25x));
+        appendElement(elementsList, "TapTemp", "2", toString1(data.m_tapWaterInfo.tx));
+        appendElement(elementsList, "ROFeedCond", "0", toString1(data.m_waterQuality[APP_EXE_I1_NO].fG25x));
+        appendElement(elementsList, "ROFeedTemp", "2", toString1(data.m_waterQuality[APP_EXE_I1_NO].tx));
+        appendElement(elementsList, "ROProductCond", "0", toString1(data.m_waterQuality[APP_EXE_I2_NO].fG25x));
+        appendElement(elementsList, "ROProductTemp", "2", toString1(data.m_waterQuality[APP_EXE_I2_NO].tx));
+        appendElement(elementsList, "RORejectionRate", "7", toString1(data.m_otherInfo.fRej));
+        appendElement(elementsList, "ROFeedPressure", "4", toString1(data.m_otherInfo.fFeedPressure));
+        appendElement(elementsList, "ROPressure", "4", toString1(data.m_otherInfo.fROPressure));
         break;
     case MACHINE_PURIST:
-        appendElement(elementsList, 3, "UPIN", "0", fCharStr(data.m_waterQuality[APP_EXE_I2_NO].fG25x).data()); //new
-        appendElement(elementsList, 3, "UPIN", "2", fCharStr(data.m_waterQuality[APP_EXE_I2_NO].tx).data());
+        appendElement(elementsList, "UPIN", "0", toString1(data.m_waterQuality[APP_EXE_I2_NO].fG25x)); //new
+        appendElement(elementsList, "UPIN", "2", toString1(data.m_waterQuality[APP_EXE_I2_NO].tx));
         break;
     default:
         break;
@@ -494,10 +501,10 @@ void DXmlGenerator::createHeartDataList(QList<QStringList> &elementsList, const 
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, 3, "ROProductRate", "5", fCharStr(data.m_flowRateInfo.value[ROProductRate]).data());
-        appendElement(elementsList, 3, "RORejectRate", "5", fCharStr(data.m_flowRateInfo.value[RORejectRate]).data());
-        appendElement(elementsList, 3, "ROFeedRate", "5", fCharStr(data.m_flowRateInfo.value[ROFeedRate]).data());
-        appendElement(elementsList, 3, "TapRate", "5", fCharStr(data.m_flowRateInfo.value[TapRate]).data());
+        appendElement(elementsList, "ROProductRate", "5", toString1(data.m_flowRateInfo.value[ROProductRate]));
+        appendElement(elementsList, "RORejectRate", "5", toString1(data.m_flowRateInfo.value[RORejectRate]));
+        appendElement(elementsList, "ROFeedRate", "5", toString1(data.m_flowRateInfo.value[ROFeedRate]));
+        appendElement(elementsList, "TapRate", "5", toString1(data.m_flowRateInfo.value[TapRate]));
         break;
 
     default:
@@ -510,8 +517,8 @@ void DXmlGenerator::createHeartDataList(QList<QStringList> &elementsList, const 
     case MACHINE_L_EDI_LOOP:
     case MACHINE_Genie:
     case MACHINE_EDI:
-        appendElement(elementsList, 3, "EDIProductResis", "1", fCharStr(data.m_waterQuality[APP_EXE_I3_NO].fG25x).data());
-        appendElement(elementsList, 3, "EDIProductTemp", "2", fCharStr(data.m_waterQuality[APP_EXE_I3_NO].tx).data());
+        appendElement(elementsList, "EDIProductResis", "1", toString1(data.m_waterQuality[APP_EXE_I3_NO].fG25x));
+        appendElement(elementsList, "EDIProductTemp", "2", toString1(data.m_waterQuality[APP_EXE_I3_NO].tx));
         break;
     default:
         break;
@@ -521,8 +528,8 @@ void DXmlGenerator::createHeartDataList(QList<QStringList> &elementsList, const 
     {
     case MACHINE_L_Genie:
     case MACHINE_L_EDI_LOOP:
-        appendElement(elementsList, 3, "EDIProductRate", "5", fCharStr(data.m_flowRateInfo.value[EDIProductRate]).data());
-        appendElement(elementsList, 3, "EDIRejectRate", "5", fCharStr(data.m_flowRateInfo.value[EDIRejectRate]).data());
+        appendElement(elementsList,  "EDIProductRate", "5", toString1(data.m_flowRateInfo.value[EDIProductRate]));
+        appendElement(elementsList,  "EDIRejectRate", "5", toString1(data.m_flowRateInfo.value[EDIRejectRate]));
         break;
     default:
         break;
@@ -532,23 +539,23 @@ void DXmlGenerator::createHeartDataList(QList<QStringList> &elementsList, const 
     {
     case MACHINE_L_Genie:
     case MACHINE_Genie:
-        appendElement(elementsList, 3, "HPResis", "1", fCharStr(data.m_waterQuality[APP_EXE_I4_NO].fG25x).data());
-        appendElement(elementsList, 3, "HPTemp", "2", fCharStr(data.m_waterQuality[APP_EXE_I4_NO].tx).data());
-        appendElement(elementsList, 3, "HPDispRate", "5", fCharStr(data.m_flowRateInfo.value[HPDispRate]).data());
+        appendElement(elementsList, "HPResis", "1", toString1(data.m_waterQuality[APP_EXE_I4_NO].fG25x));
+        appendElement(elementsList, "HPTemp", "2", toString1(data.m_waterQuality[APP_EXE_I4_NO].tx));
+        appendElement(elementsList, "HPDispRate", "5", toString1(data.m_flowRateInfo.value[HPDispRate]));
         break;
     case MACHINE_L_EDI_LOOP:
     case MACHINE_EDI:
         if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
         {
-            appendElement(elementsList, 3, "HPResis", "1", fCharStr(data.m_waterQuality[APP_EXE_I4_NO].fG25x).data());
-            appendElement(elementsList, 3, "HPTemp", "2", fCharStr(data.m_waterQuality[APP_EXE_I4_NO].tx).data());
+            appendElement(elementsList, "HPResis", "1", toString1(data.m_waterQuality[APP_EXE_I4_NO].fG25x));
+            appendElement(elementsList, "HPTemp", "2", toString1(data.m_waterQuality[APP_EXE_I4_NO].tx));
         }
         else
         {
-            appendElement(elementsList, 3, "HPResis", "1", fCharStr(data.m_waterQuality[APP_EXE_I3_NO].fG25x).data());
-            appendElement(elementsList, 3, "HPTemp", "2", fCharStr(data.m_waterQuality[APP_EXE_I3_NO].tx).data());
+            appendElement(elementsList, "HPResis", "1", toString1(data.m_waterQuality[APP_EXE_I3_NO].fG25x));
+            appendElement(elementsList, "HPTemp", "2", toString1(data.m_waterQuality[APP_EXE_I3_NO].tx));
         }
-        appendElement(elementsList, 3, "HPDispRate", "5", fCharStr(data.m_flowRateInfo.value[HPDispRate]).data());
+        appendElement(elementsList, "HPDispRate", "5", toString1(data.m_flowRateInfo.value[HPDispRate]));
         break;
 
     case MACHINE_L_UP:
@@ -557,20 +564,20 @@ void DXmlGenerator::createHeartDataList(QList<QStringList> &elementsList, const 
     case MACHINE_RO:
         if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
         {
-            appendElement(elementsList, 3, "HPResis", "1", fCharStr(data.m_waterQuality[APP_EXE_I3_NO].fG25x).data());
-            appendElement(elementsList, 3, "HPTemp", "2", fCharStr(data.m_waterQuality[APP_EXE_I3_NO].tx).data());
+            appendElement(elementsList, "HPResis", "1", toString1(data.m_waterQuality[APP_EXE_I3_NO].fG25x));
+            appendElement(elementsList, "HPTemp", "2", toString1(data.m_waterQuality[APP_EXE_I3_NO].tx));
         }
         else
         {
-            appendElement(elementsList, 3, "HPResis", "1", fCharStr(data.m_waterQuality[APP_EXE_I2_NO].fG25x).data());
-            appendElement(elementsList, 3, "HPTemp", "2", fCharStr(data.m_waterQuality[APP_EXE_I2_NO].tx).data());
+            appendElement(elementsList, "HPResis", "1", toString1(data.m_waterQuality[APP_EXE_I2_NO].fG25x));
+            appendElement(elementsList, "HPTemp", "2", toString1(data.m_waterQuality[APP_EXE_I2_NO].tx));
         }
-        appendElement(elementsList, 3, "HPDispRate", "5", fCharStr(data.m_flowRateInfo.value[HPDispRate]).data());
+        appendElement(elementsList, "HPDispRate", "5", toString1(data.m_flowRateInfo.value[HPDispRate]));
         break;
     case MACHINE_ADAPT:
-        appendElement(elementsList, 3, "HPResis", "1", fCharStr(data.m_waterQuality[APP_EXE_I2_NO].fG25x).data());
-        appendElement(elementsList, 3, "HPTemp", "2", fCharStr(data.m_waterQuality[APP_EXE_I2_NO].tx).data());
-        appendElement(elementsList, 3, "HPDispRate", "5", fCharStr(data.m_flowRateInfo.value[HPDispRate]).data());
+        appendElement(elementsList, "HPResis", "1", toString1(data.m_waterQuality[APP_EXE_I2_NO].fG25x));
+        appendElement(elementsList, "HPTemp", "2", toString1(data.m_waterQuality[APP_EXE_I2_NO].tx));
+        appendElement(elementsList, "HPDispRate", "5", toString1(data.m_flowRateInfo.value[HPDispRate]));
         break;
     default:
         break;
@@ -584,12 +591,12 @@ void DXmlGenerator::createHeartDataList(QList<QStringList> &elementsList, const 
     case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 3, "UPResis", "1", fCharStr(data.m_waterQuality[APP_EXE_I5_NO].fG25x).data());
-        appendElement(elementsList, 3, "UPTemp", "2", fCharStr(data.m_waterQuality[APP_EXE_I5_NO].tx).data());
-        appendElement(elementsList, 3, "UPDispRate", "5", fCharStr(data.m_flowRateInfo.value[UPDispRate]).data());
+        appendElement(elementsList, "UPResis", "1", toString1(data.m_waterQuality[APP_EXE_I5_NO].fG25x));
+        appendElement(elementsList, "UPTemp", "2", toString1(data.m_waterQuality[APP_EXE_I5_NO].tx));
+        appendElement(elementsList, "UPDispRate", "5", toString1(data.m_flowRateInfo.value[UPDispRate]));
         if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
-            appendElement(elementsList, 3, "TOC", "3", charStr((uint)data.m_otherInfo.fToc).data());
+            appendElement(elementsList, "TOC", "3", toString((uint)data.m_otherInfo.fToc));
         }
         break;
     default:
@@ -604,8 +611,8 @@ void DXmlGenerator::createHeartDataList(QList<QStringList> &elementsList, const 
     case MACHINE_L_RO_LOOP:
         if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB3))
         {
-            appendElement(elementsList, 3, "SourceTankPercent", "7", iCharStr(data.m_tankInfo[1].iPercent).data());
-            appendElement(elementsList, 3, "SourceTankVolume", "8", fCharStr(data.m_tankInfo[1].fVolume).data());
+            appendElement(elementsList, "SourceTankPercent", "7", toString(data.m_tankInfo[1].iPercent));
+            appendElement(elementsList, "SourceTankVolume", "8", toString1(data.m_tankInfo[1].fVolume));
         }
         break;
     default:
@@ -623,8 +630,8 @@ void DXmlGenerator::createHeartDataList(QList<QStringList> &elementsList, const 
     case MACHINE_EDI:
     case MACHINE_RO:
     case MACHINE_PURIST:
-        appendElement(elementsList, 3, "PureTankPercent", "7", iCharStr(data.m_tankInfo[0].iPercent).data());
-        appendElement(elementsList, 3, "PureTankVolume", "8", fCharStr(data.m_tankInfo[0].fVolume).data());
+        appendElement(elementsList, "PureTankPercent", "7", toString(data.m_tankInfo[0].iPercent));
+        appendElement(elementsList, "PureTankVolume", "8", toString1(data.m_tankInfo[0].fVolume));
         break;
     default:
         break;
@@ -635,8 +642,8 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
 {
     if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
     {
-        appendElement(elementsList, 4, "PrePack", charStr(gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEDAY]).data(),
-                                                  charStr(gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEL]).data(), "L");
+        appendElement(elementsList, "PrePack", toString(gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEDAY]),
+                                               toString(gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEL]), "L");
     }
 
     switch(gGlobalParam.iMachineType)
@@ -650,9 +657,8 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-        appendElement(elementsList, 4, "ACPack", charStr(gGlobalParam.CMParam.aulCms[DISP_AC_PACKLIFEDAY]).data(),
-                                                 charStr(gGlobalParam.CMParam.aulCms[DISP_AC_PACKLIFEL]).data(),
-                                                 "L");
+        appendElement(elementsList, "ACPack", toString(gGlobalParam.CMParam.aulCms[DISP_AC_PACKLIFEDAY]),
+                                              toString(gGlobalParam.CMParam.aulCms[DISP_AC_PACKLIFEL]), "L");
         break;
     default:
         break;
@@ -660,7 +666,7 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
 
     if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
     {
-        appendElement(elementsList, 2, "TPack", charStr(gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEDAY]).data());
+        appendElement(elementsList, "TPack", toString(gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEDAY]));
     }
 
     switch(gGlobalParam.iMachineType)
@@ -674,8 +680,8 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_EDI:
     case MACHINE_RO:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 4, "PPack", charStr(gGlobalParam.CMParam.aulCms[DISP_P_PACKLIFEDAY]).data(),
-                                                charStr(gGlobalParam.CMParam.aulCms[DISP_P_PACKLIFEL]).data(), "L");
+        appendElement(elementsList, "PPack", toString(gGlobalParam.CMParam.aulCms[DISP_P_PACKLIFEDAY]),
+                                             toString(gGlobalParam.CMParam.aulCms[DISP_P_PACKLIFEL]), "L");
         break;
     default:
         break;
@@ -689,8 +695,8 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 4, "UPack", charStr(gGlobalParam.CMParam.aulCms[DISP_U_PACKLIFEDAY]).data(),
-                                                charStr(gGlobalParam.CMParam.aulCms[DISP_U_PACKLIFEL]).data(), "L");
+        appendElement(elementsList, "UPack", toString(gGlobalParam.CMParam.aulCms[DISP_U_PACKLIFEDAY]),
+                                             toString(gGlobalParam.CMParam.aulCms[DISP_U_PACKLIFEL]), "L");
         break;
     default:
         break;
@@ -700,8 +706,8 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     {
     case MACHINE_L_Genie:
     case MACHINE_L_EDI_LOOP:
-        appendElement(elementsList, 4, "ATPack", charStr(gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEDAY]).data(),
-                                                 charStr(gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEL]).data(), "L");
+        appendElement(elementsList, "ATPack", toString(gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEDAY]),
+                                              toString(gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEL]), "L");
         break;
     default:
         break;
@@ -712,8 +718,8 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_UP:
     case MACHINE_PURIST:
-        appendElement(elementsList, 4, "HPack", charStr(gGlobalParam.CMParam.aulCms[DISP_H_PACKLIFEDAY]).data(),
-                                                charStr(gGlobalParam.CMParam.aulCms[DISP_H_PACKLIFEL]).data(), "L");
+        appendElement(elementsList, "HPack", toString(gGlobalParam.CMParam.aulCms[DISP_H_PACKLIFEDAY]),
+                                             toString(gGlobalParam.CMParam.aulCms[DISP_H_PACKLIFEL]), "L");
         break;
     default:
         break;
@@ -727,8 +733,8 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_EDI:
-        appendElement(elementsList, 4, "UV254", charStr(gGlobalParam.CMParam.aulCms[DISP_N1_UVLIFEDAY]).data(),
-                                                charStr(gGlobalParam.CMParam.aulCms[DISP_N1_UVLIFEHOUR]).data(), "h");
+        appendElement(elementsList, "UV254", toString(gGlobalParam.CMParam.aulCms[DISP_N1_UVLIFEDAY]),
+                                             toString(gGlobalParam.CMParam.aulCms[DISP_N1_UVLIFEHOUR]), "h");
         break;
     default:
         break;
@@ -742,8 +748,8 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 4, "UV185", charStr(gGlobalParam.CMParam.aulCms[DISP_N2_UVLIFEDAY]).data(),
-                                                charStr(gGlobalParam.CMParam.aulCms[DISP_N2_UVLIFEHOUR]).data(), "h");
+        appendElement(elementsList, "UV185", toString(gGlobalParam.CMParam.aulCms[DISP_N2_UVLIFEDAY]),
+                                             toString(gGlobalParam.CMParam.aulCms[DISP_N2_UVLIFEHOUR]), "h");
          break;
     default:
         break;
@@ -759,8 +765,8 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-        appendElement(elementsList, 4, "TankUV", charStr(gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEDAY]).data(),
-                                                 charStr(gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEHOUR]).data(), "h");
+        appendElement(elementsList, "TankUV", toString(gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEDAY]),
+                                              toString(gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEHOUR]), "h");
         break;
     default:
         break;
@@ -772,9 +778,8 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, 4, "LoopUV", charStr(gGlobalParam.CMParam.aulCms[DISP_N4_UVLIFEDAY]).data(),
-                                                 charStr(gGlobalParam.CMParam.aulCms[DISP_N4_UVLIFEHOUR]).data(),
-                                                 "h");
+        appendElement(elementsList, "LoopUV", toString(gGlobalParam.CMParam.aulCms[DISP_N4_UVLIFEDAY]),
+                                              toString(gGlobalParam.CMParam.aulCms[DISP_N4_UVLIFEHOUR]), "h");
         break;
     default:
         break;
@@ -790,7 +795,7 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-        appendElement(elementsList, 2, "TankVentFilter", charStr(gGlobalParam.CMParam.aulCms[DISP_W_FILTERLIFE]).data());
+        appendElement(elementsList, "TankVentFilter", toString(gGlobalParam.CMParam.aulCms[DISP_W_FILTERLIFE]));
         break;
     default:
         break;
@@ -803,7 +808,7 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 2, "RephibioFilter", charStr(gGlobalParam.CMParam.aulCms[DISP_T_B_FILTERLIFE]).data());
+        appendElement(elementsList, "RephibioFilter", toString(gGlobalParam.CMParam.aulCms[DISP_T_B_FILTERLIFE]));
         break;
     default:
         break;
@@ -821,7 +826,7 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_RO:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 2, "umFinalFilter", charStr(gGlobalParam.CMParam.aulCms[DISP_T_A_FILTERLIFE]).data());
+        appendElement(elementsList, "umFinalFilter", toString(gGlobalParam.CMParam.aulCms[DISP_T_A_FILTERLIFE]));
         break;
     default:
         break;
@@ -833,7 +838,7 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, 2, "LoopFilter", charStr(gGlobalParam.CMParam.aulCms[DISP_TUBE_FILTERLIFE]).data());
+        appendElement(elementsList, "LoopFilter", toString(gGlobalParam.CMParam.aulCms[DISP_TUBE_FILTERLIFE]));
         break;
     default:
         break;
@@ -845,7 +850,7 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, 2, "LoopDI", charStr(gGlobalParam.CMParam.aulCms[DISP_TUBE_DI_LIFE]).data());
+        appendElement(elementsList, "LoopDI", toString(gGlobalParam.CMParam.aulCms[DISP_TUBE_DI_LIFE]));
         break;
     default:
         break;
@@ -862,7 +867,7 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_EDI:
     case MACHINE_RO:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 2, "ROClCleaning", charStr(gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY]).data());
+        appendElement(elementsList, "ROClCleaning", toString(gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY]));
         break;
     default:
         break;
@@ -883,8 +888,8 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_EDI:
     case MACHINE_RO:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 2, "ROFeedConductivity", charStr3(ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk).data());
-        appendElement(elementsList, 2, "ROFeedTempertature", charStr3(ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk).data());
+        appendElement(elementsList, "ROFeedConductivity", toString3(ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk));
+        appendElement(elementsList, "ROFeedTempertature", toString3(ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk));
         break;
     default:
         break;
@@ -902,8 +907,8 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_RO:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 2, "ROConductivity", charStr3(ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk).data());
-        appendElement(elementsList, 2, "ROTempertature", charStr3(ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk).data());
+        appendElement(elementsList, "ROConductivity", toString3(ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk));
+        appendElement(elementsList, "ROTempertature", toString3(ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk));
         break;
     default:
         break;
@@ -915,8 +920,8 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_L_EDI_LOOP:
     case MACHINE_Genie:
     case MACHINE_EDI:
-        appendElement(elementsList, 2, "EDIResistivity", charStr3(ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk).data());
-        appendElement(elementsList, 2, "EDITempertature", charStr3(ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk).data());
+        appendElement(elementsList, "EDIResistivity", toString3(ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk));
+        appendElement(elementsList, "EDITempertature", toString3(ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk));
         break;
     case MACHINE_L_UP:
     case MACHINE_L_RO_LOOP:
@@ -924,8 +929,8 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_UP:
         if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
         {
-            appendElement(elementsList, 2, "EDIResistivity", charStr3(ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk).data());
-            appendElement(elementsList, 2, "EDITempertature", charStr3(ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk).data());
+            appendElement(elementsList, "EDIResistivity", toString3(ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk));
+            appendElement(elementsList, "EDITempertature", toString3(ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk));
         }
         break;
     default:
@@ -940,8 +945,8 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 2, "UPResistivity", charStr3(ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk).data());
-        appendElement(elementsList, 2, "UPTempertature", charStr3(ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_TEMP].fk).data());
+        appendElement(elementsList, "UPResistivity", toString3(ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk));
+        appendElement(elementsList, "UPTempertature", toString3(ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_TEMP].fk));
         break;
     default:
         break;
@@ -955,8 +960,8 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 2, "HPResistivity", charStr3(ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk).data());
-        appendElement(elementsList, 2, "HPTempertature", charStr3(ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk).data());
+        appendElement(elementsList, "HPResistivity", toString3(ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk));
+        appendElement(elementsList, "HPTempertature", toString3(ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk));
         break;
     default:
         break;
@@ -974,7 +979,7 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_RO:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 2, "FlowMeter", charStr3(ex_global_Cali.pc[DISP_PC_COFF_S1].fk).data());
+        appendElement(elementsList, "FlowMeter", toString3(ex_global_Cali.pc[DISP_PC_COFF_S1].fk));
         break;
     default:
         break;
@@ -986,7 +991,7 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, 2, "ROFeedRate", charStr3(ex_global_Cali.pc[DISP_PC_COFF_S2].fk).data());
+        appendElement(elementsList, "ROFeedRate", toString3(ex_global_Cali.pc[DISP_PC_COFF_S2].fk));
         break;
     default:
         break;
@@ -998,7 +1003,7 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, 2, "ROProductRate", charStr3(ex_global_Cali.pc[DISP_PC_COFF_S3].fk).data());
+        appendElement(elementsList, "ROProductRate", toString3(ex_global_Cali.pc[DISP_PC_COFF_S3].fk));
         break;
     default:
         break;
@@ -1010,7 +1015,7 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, 2, "RORejectRate", charStr3(ex_global_Cali.pc[DISP_PC_COFF_S4].fk).data());
+        appendElement(elementsList, "RORejectRate", toString3(ex_global_Cali.pc[DISP_PC_COFF_S4].fk));
         break;
     default:
         break;
@@ -1027,7 +1032,7 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_EDI:
     case MACHINE_RO:
     case MACHINE_PURIST:
-        appendElement(elementsList, 2, "PureTankLevel", charStr3(ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk).data());
+        appendElement(elementsList, "PureTankLevel", toString3(ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk));
         break;
     default:
         break;
@@ -1039,7 +1044,7 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, 2, "FeedTankLevel", charStr3(ex_global_Cali.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk).data());
+        appendElement(elementsList, "FeedTankLevel", toString3(ex_global_Cali.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk));
         break;
     default:
         break;
@@ -1057,7 +1062,7 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_RO:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 2, "ROPressure", charStr3(ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk).data());
+        appendElement(elementsList, "ROPressure", toString3(ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk));
         break;
     default:
         break;
@@ -1077,8 +1082,8 @@ void DXmlGenerator::createAlarmPointList(QList<QStringList> &elementsList)
     case MACHINE_EDI:
     case MACHINE_RO:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 4, "FeedWaterPressure",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP1]).data(), "4");
+        appendElement(elementsList, "FeedWaterPressure",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP1]), "4");
         break;
     default:
         break;
@@ -1095,8 +1100,8 @@ void DXmlGenerator::createAlarmPointList(QList<QStringList> &elementsList)
     case MACHINE_EDI:
     case MACHINE_RO:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 4, "ROPressure",
-                      "Max", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP33]).data(), "4");
+        appendElement(elementsList, "ROPressure",
+                      "Max", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP33]), "4");
         break;
     default:
         break;
@@ -1113,11 +1118,11 @@ void DXmlGenerator::createAlarmPointList(QList<QStringList> &elementsList)
     case MACHINE_EDI:
     case MACHINE_RO:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 4, "TapFeedConductivity",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP13]).data(), "0");
-        appendElement(elementsList, 6, "TapFeedTemperature",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP19]).data(),
-                      "Max", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP18]).data(), "2");
+        appendElement(elementsList, "TapFeedConductivity",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP13]), "0");
+        appendElement(elementsList, "TapFeedTemperature",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP19]),
+                      "Max", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP18]), "2");
         break;
     default:
         break;
@@ -1135,13 +1140,13 @@ void DXmlGenerator::createAlarmPointList(QList<QStringList> &elementsList)
     case MACHINE_RO:
     case MACHINE_ADAPT:
     case MACHINE_PURIST:
-        appendElement(elementsList, 4, "ROConductivity",
-                      "Max", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP3]).data(), "0");
-        appendElement(elementsList, 6, "ROTemperature",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP21]).data(),
-                      "Max", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP20]).data(), "2");
-        appendElement(elementsList, 4, "RORejectionRate",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP2]).data(), "7");
+        appendElement(elementsList, "ROConductivity",
+                      "Max", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP3]), "0");
+        appendElement(elementsList, "ROTemperature",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP21]),
+                      "Max", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP20]), "2");
+        appendElement(elementsList, "RORejectionRate",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP2]), "7");
         break;
     default:
         break;
@@ -1153,11 +1158,11 @@ void DXmlGenerator::createAlarmPointList(QList<QStringList> &elementsList)
     case MACHINE_L_EDI_LOOP:
     case MACHINE_Genie:
     case MACHINE_EDI:
-        appendElement(elementsList, 4, "EDIResistivity",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP4]).data(), "1");
-        appendElement(elementsList, 6, "EDITemperature",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP23]).data(),
-                      "Max", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP22]).data(), "2");
+        appendElement(elementsList, "EDIResistivity",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP4]), "1");
+        appendElement(elementsList, "EDITemperature",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP23]),
+                      "Max", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP22]), "2");
         break;
     default:
         break;
@@ -1171,11 +1176,11 @@ void DXmlGenerator::createAlarmPointList(QList<QStringList> &elementsList)
     case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, 4, "UPResistivity",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP7]).data(), "1");
-        appendElement(elementsList, 6, "UPTemperature",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP25]).data(),
-                      "Max", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP24]).data(), "2");
+        appendElement(elementsList, "UPResistivity",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP7]), "1");
+        appendElement(elementsList, "UPTemperature",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP25]),
+                      "Max", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP24]), "2");
         break;
     default:
         break;
@@ -1187,79 +1192,10 @@ void DXmlGenerator::createAlarmPointList(QList<QStringList> &elementsList)
     case MACHINE_ADAPT:
         break;
     default:
-        appendElement(elementsList, 4, "HPResistivity",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP32]).data(), "1");
-        appendElement(elementsList, 4, "RecirWaterResistivity",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP31]).data(), "1");
-        break;
-    }
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-        appendElement(elementsList, 6, "TankResistivity",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP10]).data(),
-                      "Max", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP12]).data(), "1");
-        break;
-    default:
-        break;
-    }
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        appendElement(elementsList, 6, "TOCTemperature",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP29]).data(),
-                      "Max", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP28]).data(), "2");
-        break;
-    default:
-        break;
-    }
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        appendElement(elementsList, 4, "TOCFeedResistivity",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP30]).data(), "2");
-        break;
-    default:
-        break;
-    }
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, 4, "LoopResistivity",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP17]).data(), "1");
-        appendElement(elementsList, 6, "LoopTemperature",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP27]).data(),
-                      "Max", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP26]).data(), "2");
-        break;
-    default:
+        appendElement(elementsList, "HPResistivity",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP32]), "1");
+        appendElement(elementsList, "RecirWaterResistivity",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP31]), "1");
         break;
     }
 
@@ -1273,10 +1209,27 @@ void DXmlGenerator::createAlarmPointList(QList<QStringList> &elementsList)
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
+        appendElement(elementsList, "TankResistivity",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP10]),
+                      "Max", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP12]), "1");
+        break;
+    default:
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
     case MACHINE_PURIST:
-        appendElement(elementsList, 6, "PureTankLevel",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP6]).data(),
-                      "Max", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP5]).data(), "7");
+    case MACHINE_ADAPT:
+        appendElement(elementsList, "TOCTemperature",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP29]),
+                      "Max", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP28]), "2");
         break;
     default:
         break;
@@ -1288,9 +1241,12 @@ void DXmlGenerator::createAlarmPointList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, 6, "FeedTankLevel",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP9]).data(),
-                      "Max", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP8]).data(), "7");
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        appendElement(elementsList, "TOCFeedResistivity",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP30]), "2");
         break;
     default:
         break;
@@ -1302,9 +1258,11 @@ void DXmlGenerator::createAlarmPointList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, 6, "ROProductRate",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP15]).data(),
-                      "Max", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP14]).data(), "5");
+        appendElement(elementsList, "LoopResistivity",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP17]), "1");
+        appendElement(elementsList, "LoopTemperature",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP27]),
+                      "Max", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP26]), "2");
         break;
     default:
         break;
@@ -1316,8 +1274,55 @@ void DXmlGenerator::createAlarmPointList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, 4, "RORejectRate",
-                      "Min", fCharStr(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP16]).data(), "5");
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_PURIST:
+        appendElement(elementsList, "PureTankLevel",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP6]),
+                      "Max", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP5]), "7");
+        break;
+    default:
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        appendElement(elementsList, "FeedTankLevel",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP9]),
+                      "Max", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP8]), "7");
+        break;
+    default:
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        appendElement(elementsList, "ROProductRate",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP15]),
+                      "Max", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP14]), "5");
+        break;
+    default:
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        appendElement(elementsList, "RORejectRate",
+                      "Min", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP16]), "5");
         break;
     default:
         break;

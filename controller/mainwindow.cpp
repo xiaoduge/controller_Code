@@ -169,7 +169,7 @@ Version: 0.1.2.181119.release
 181119  :  Date version number
 release :  version phase
 */
-QString strSoftwareVersion = QString("0.1.9.191023_debug");
+QString strSoftwareVersion = QString("0.1.9.191024_debug");
 
 MainWindow *gpMainWnd;
 
@@ -6465,7 +6465,7 @@ void MainWindow::initHttpWorker()
 
     m_networkTimer = new QTimer(this);
     connect(m_networkTimer, SIGNAL(timeout()), this, SLOT(on_timerNetworkEvent()),Qt::QueuedConnection);
-    m_networkTimer->start(1000*60*10); // peroid of one second
+    m_networkTimer->start(1000*60*10); //
 
     //start mqtt work
 //    initMqtt();

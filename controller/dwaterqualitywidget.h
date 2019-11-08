@@ -23,12 +23,12 @@ public:
         m_type = iType;
     }
 
-    const QString tag()
+    const QString tag() const
     {
         return m_tag;
     }
 
-    const int type()
+    int type() const
     {
         return m_type;
     }
