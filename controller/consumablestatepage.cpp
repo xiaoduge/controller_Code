@@ -128,9 +128,9 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_EDI:
-          aIds[iIdx].iType = 0;
-          aIds[iIdx].iId   = DISP_N1_UV;
-          iIdx++;
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_N1_UV;
+        iIdx++;
         break;
     case MACHINE_UP:
     case MACHINE_PURIST:
@@ -139,24 +139,24 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         break;
     }
    
-   switch(gGlobalParam.iMachineType)
-   {
-   case MACHINE_L_Genie:
-   case MACHINE_L_UP:
-   case MACHINE_Genie:
-   case MACHINE_UP:
-   case MACHINE_PURIST:
-   case MACHINE_ADAPT:
-         aIds[iIdx].iType = 0;
-         aIds[iIdx].iId   = DISP_N2_UV;
-         iIdx++;
-       break;
-   case MACHINE_L_EDI_LOOP:
-   case MACHINE_L_RO_LOOP:
-   case MACHINE_EDI:
-   case MACHINE_RO:
-       break;
-   }
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_N2_UV;
+        iIdx++;
+        break;
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+        break;
+    }
 
     switch(gGlobalParam.iMachineType)
     {
@@ -168,9 +168,9 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-          aIds[iIdx].iType = 0;
-          aIds[iIdx].iId   = DISP_N3_UV;
-          iIdx++;
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_N3_UV;
+        iIdx++;
         break;
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
@@ -237,9 +237,9 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-          aIds[iIdx].iType = 0;
-          aIds[iIdx].iId   = DISP_W_FILTER;
-          iIdx++;
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_W_FILTER;
+        iIdx++;
         break;
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
@@ -253,9 +253,9 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_ADAPT:
-          aIds[iIdx].iType = 0;
-          aIds[iIdx].iId   = DISP_T_B_FILTER;
-          iIdx++;
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_T_B_FILTER;
+        iIdx++;
         break;
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
@@ -277,9 +277,9 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_RO:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-          aIds[iIdx].iType = 0;
-          aIds[iIdx].iId   = DISP_T_A_FILTER;
-          iIdx++;
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_T_A_FILTER;
+        iIdx++;
         break;
     }
     //0628
@@ -410,7 +410,6 @@ void ConsumableStatePage:: update()
             strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_PRE_PACK];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
 
-            
             if (gCMUsage.ulUsageState & (1 << DISP_PRE_PACKLIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_PRE_PACKLIFEL))
             {
@@ -444,7 +443,6 @@ void ConsumableStatePage:: update()
             strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_AC_PACK];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
 
-
             if (gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEDAY)
                 || gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEL))
             {
@@ -459,13 +457,6 @@ void ConsumableStatePage:: update()
             break;
         case DISP_T_PACK:
             /* T-Pack */
-
-            /*
-            tmp = gCMUsage.info.aulCms[DISP_T_PACKLIFEL] ;
-            strTmp = astrNames[0] + "  " + QString::number(tmp) + "L";
-            m_pCslistItem[iIdx]->setValue(strTmp);
-            */
-
             strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY]);
             m_pCslistItem[iIdx]->setInstDate(strTmp);
 
@@ -480,7 +471,6 @@ void ConsumableStatePage:: update()
             strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_T_PACK];
             m_pCslistItem[iIdx]->setLotNo(strTmp);
 
-
             if (gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEDAY)
                 || gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEL))
             {
@@ -493,7 +483,6 @@ void ConsumableStatePage:: update()
             m_pCslistItem[iIdx]->setName(tr("T Pack"));
             break;
         case DISP_P_PACK:
-        
             /* for DISP_P_PACK column */
             tmp = gCMUsage.info.aulCms[DISP_P_PACKLIFEL] ;
             strTmp = astrNames[0] + "  " + QString::number(tmp) + "L";
@@ -525,7 +514,6 @@ void ConsumableStatePage:: update()
             m_pCslistItem[iIdx]->setName(tr("P PACK "));
             break; 
         case DISP_U_PACK:
-            
             /* for DISP_U_PACK column */
             tmp = gCMUsage.info.aulCms[DISP_U_PACKLIFEL] ;
             strTmp = astrNames[0] + "  " + QString::number(tmp) + "L";
@@ -557,7 +545,6 @@ void ConsumableStatePage:: update()
             m_pCslistItem[iIdx]->setName(tr("U PACK "));
             break;     
         case DISP_AT_PACK:
-            
             /* for DISP_AT_PACK column */
             tmp = gCMUsage.info.aulCms[DISP_AT_PACKLIFEL] ;
             strTmp = astrNames[0] + "  " + QString::number(tmp) + "L";
@@ -589,7 +576,6 @@ void ConsumableStatePage:: update()
             m_pCslistItem[iIdx]->setName(tr("AT PACK "));
             break;  
         case DISP_H_PACK:
-            
             /* for DISP_AT_PACK column */
             tmp = gCMUsage.info.aulCms[DISP_H_PACKLIFEL] ;
             strTmp = astrNames[0] + "  " + QString::number(tmp) + "L";
@@ -621,7 +607,6 @@ void ConsumableStatePage:: update()
             m_pCslistItem[iIdx]->setName(tr("H PACK "));
             break;              
         case DISP_N1_UV:
-            
             /* for DISP_N1_UV column */
             tmp = gCMUsage.info.aulCms[DISP_N1_UVLIFEHOUR] ;
             strTmp = astrNames[1] + "  " + QString::number(tmp) + "H";
@@ -653,7 +638,6 @@ void ConsumableStatePage:: update()
             m_pCslistItem[iIdx]->setName(tr("254 UV"));
             break;  
         case DISP_N2_UV:
-            
             /* for DISP_N2_UV column */
             tmp = gCMUsage.info.aulCms[DISP_N2_UVLIFEHOUR] ;
             strTmp = astrNames[1] + "  " + QString::number(tmp) + "H";
@@ -685,7 +669,6 @@ void ConsumableStatePage:: update()
             m_pCslistItem[iIdx]->setName(tr("185 UV"));
             break;  
         case DISP_N3_UV:
-            
             /* for DISP_N3_UV column */
             tmp = gCMUsage.info.aulCms[DISP_N3_UVLIFEHOUR] ;
             strTmp = astrNames[1] + "  " + QString::number(tmp) + "H";
@@ -717,7 +700,6 @@ void ConsumableStatePage:: update()
             m_pCslistItem[iIdx]->setName(tr("TANK UV"));
             break;  
         case DISP_N4_UV:
-            
             /* for DISP_N4_UV column */
             tmp = gCMUsage.info.aulCms[DISP_N4_UVLIFEHOUR] ;
             strTmp = astrNames[1] + "  " + QString::number(tmp) + "H";
@@ -749,7 +731,6 @@ void ConsumableStatePage:: update()
             m_pCslistItem[iIdx]->setName(tr("TUBE UV"));
             break;  
         case DISP_N5_UV:
-            
             /* for DISP_N5_UV column */
             tmp = gCMUsage.info.aulCms[DISP_N5_UVLIFEHOUR] ;
             strTmp = astrNames[1] + "  " + QString::number(tmp) + "H";
@@ -781,7 +762,6 @@ void ConsumableStatePage:: update()
             m_pCslistItem[iIdx]->setName(tr("TOC UV"));
             break;              
         case DISP_W_FILTER:
-            
             /* for DISP_W_FILTER column */
             strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_W_FILTERLIFE]);
             m_pCslistItem[iIdx]->setInstDate(strTmp);
@@ -808,7 +788,6 @@ void ConsumableStatePage:: update()
             }
             m_pCslistItem[iIdx]->setName(tr("Tank Vent Filter"));
             break;  
-            
         case DISP_T_B_FILTER:
             /* for DISP_T_B_FILTER column */
             strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_T_B_FILTERLIFE]);
@@ -842,7 +821,6 @@ void ConsumableStatePage:: update()
             {
                 m_pCslistItem[iIdx]->setName(tr("Bio-filter"));
             }
-
             break;  
         case DISP_T_A_FILTER:
             /* for DISP_T_A_FILTER column */
@@ -871,7 +849,6 @@ void ConsumableStatePage:: update()
             }
             m_pCslistItem[iIdx]->setName(tr("Final Fliter A"));
             break;  
-            
         case DISP_TUBE_FILTER:
             /* for DISP_T_A_FILTER column */
             strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_TUBE_FILTERLIFE]);
@@ -899,7 +876,6 @@ void ConsumableStatePage:: update()
             }
             m_pCslistItem[iIdx]->setName(tr("Loop Filter"));
             break;  
-            
         case DISP_TUBE_DI:
             /* for DISP_TUBE_DI column */
             strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_TUBE_DI_LIFE]);
@@ -929,8 +905,8 @@ void ConsumableStatePage:: update()
             break;  
         }
     }
-
 }
+
 void ConsumableStatePage::switchLanguage()
 {
     buildTranslation();

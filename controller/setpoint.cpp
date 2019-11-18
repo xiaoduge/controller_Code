@@ -315,7 +315,7 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
 
 #if 0
     //MACHINE_PARAM_SP12 ???
-    switch(gGlobalParam.iMachineType)/*´¿Ë®È¡Ë®*/
+    switch(gGlobalParam.iMachineType)/*çº¯æ°´å–æ°´*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -397,19 +397,19 @@ void SetPoint::buildTranslation()
         switch(aIds[iLoop].iParamId[0])
         {
         case MACHINE_PARAM_SP1:
-            /* ×ÔÀ´Ë®Ñ¹Á¦ÏÂÏÞ1.0bar */
+            /* è‡ªæ¥æ°´åŽ‹åŠ›ä¸‹é™1.0bar */
             pSetPlistItem[iLoop]->setName(tr("Tap Pressure"));
             pSetPlistItem[iLoop]->setP1Name(tr("Lower Limit"));
             pSetPlistItem[iLoop]->setP1Unit(tr("bar"));
             break;
         case MACHINE_PARAM_SP2:
-            /* RO½ØÁôÂÊ ÏÂÏÞ92.0% */
+            /* ROæˆªç•™çŽ‡ ä¸‹é™92.0% */
             pSetPlistItem[iLoop]->setName(tr("RO Rejection"));
             pSetPlistItem[iLoop]->setP1Name(tr("Lower Limit"));
             pSetPlistItem[iLoop]->setP1Unit(tr("%"));
             break;
         case MACHINE_PARAM_SP3:
-            /* RO²úË®  ÉÏÏÞ50.0¦ÌS/cm */
+            /* ROäº§æ°´  ä¸Šé™50.0Î¼S/cm */
             if (MACHINE_PURIST == gGlobalParam.iMachineType)
             {
                 pSetPlistItem[iLoop]->setName(tr("UP Feed Cond."));
@@ -422,14 +422,14 @@ void SetPoint::buildTranslation()
             pSetPlistItem[iLoop]->setP1Unit(tr("us/cm"));
             break;
         case MACHINE_PARAM_SP4:
-            /* EDI²úË® ÏÂÏÞ1.0M¦¸.cm */
+            /* EDIäº§æ°´ ä¸‹é™1.0MÎ©.cm */
             pSetPlistItem[iLoop]->setName(tr("EDI Resis."));
             pSetPlistItem[iLoop]->setP1Name(tr("Lower Limit"));
             pSetPlistItem[iLoop]->setP1Unit(tr("omg"));
             break;
         case MACHINE_PARAM_SP5:
         case MACHINE_PARAM_SP6:
-            /* ´¿Ë®ÏäÒºÎ»     Ë®Ïä¿Õ10%  »Ö¸´×¢Ë® 80% */
+            /* çº¯æ°´ç®±æ¶²ä½     æ°´ç®±ç©º10%  æ¢å¤æ³¨æ°´ 80% */
             pSetPlistItem[iLoop]->setName(tr("Pure Tank Level"));
             pSetPlistItem[iLoop]->setP1Name(tr("Empty"));
             pSetPlistItem[iLoop]->setP2Name(tr("Refill"));
@@ -437,7 +437,7 @@ void SetPoint::buildTranslation()
             pSetPlistItem[iLoop]->setP2Unit(tr("%"));
             break;
         case MACHINE_PARAM_SP7:
-            /* UPÈ¡Ë®ÏÂÏÞ16.0M¦¸.cm */
+            /* UPå–æ°´ä¸‹é™16.0MÎ©.cm */
              switch(gGlobalParam.iMachineType)
              {
              case MACHINE_L_Genie:
@@ -454,7 +454,7 @@ void SetPoint::buildTranslation()
             break;
         case MACHINE_PARAM_SP8:
         case MACHINE_PARAM_SP9:
-            /* Ô´Ë®ÏäÒºÎ»     Ë®Ïä¿Õ 10%  »Ö¸´×¢Ë® 80% */
+            /* æºæ°´ç®±æ¶²ä½     æ°´ç®±ç©º 10%  æ¢å¤æ³¨æ°´ 80% */
             pSetPlistItem[iLoop]->setName(tr("Feed Tank Level"));
             pSetPlistItem[iLoop]->setP1Name(tr("Empty"));
             pSetPlistItem[iLoop]->setP2Name(tr("Refill"));
@@ -463,7 +463,7 @@ void SetPoint::buildTranslation()
             break;
         case MACHINE_PARAM_SP10:
         case MACHINE_PARAM_SP11:
-            /* Ë®ÏäË®ÖÊ  ÉÏÏÞ15.0M¦¸.cmÏÂÏÞ 1.0M¦¸.cm */
+            /* æ°´ç®±æ°´è´¨  ä¸Šé™15.0MÎ©.cmä¸‹é™ 1.0MÎ©.cm */
             pSetPlistItem[iLoop]->setName(tr("Tank Resis."));
             pSetPlistItem[iLoop]->setP2Name(tr("Max."));
             pSetPlistItem[iLoop]->setP1Name(tr("Min."));
@@ -471,20 +471,20 @@ void SetPoint::buildTranslation()
             pSetPlistItem[iLoop]->setP2Unit(tr("omg"));
             break;
         case MACHINE_PARAM_SP12:
-            /* ´¿Ë®È¡Ë®  ÏÂÏÞ1.0M¦¸.cm */
+            /* çº¯æ°´å–æ°´  ä¸‹é™1.0MÎ©.cm */
             pSetPlistItem[iLoop]->setName(tr("HP Resis."));
             pSetPlistItem[iLoop]->setP1Name(tr("Lower Limit"));
             pSetPlistItem[iLoop]->setP1Unit(tr("omg"));
             break;
         case MACHINE_PARAM_SP13:
-            /* ×ÔÀ´Ë®µçµ¼ÂÊ ÉÏÏÞ20000¦ÌS/cm */
+            /* è‡ªæ¥æ°´ç”µå¯¼çŽ‡ ä¸Šé™20000Î¼S/cm */
             pSetPlistItem[iLoop]->setName(tr("Tap Cond."));
             pSetPlistItem[iLoop]->setP1Name(tr("Upper Limit"));
             pSetPlistItem[iLoop]->setP1Unit(tr("us/cm"));
             break;
         case MACHINE_PARAM_SP14:
         case MACHINE_PARAM_SP15:
-            /* RO²úË®Á÷ËÙ ÉÏÏÞ100.0L/minÏÂÏÞ20.0L/min */
+            /* ROäº§æ°´æµé€Ÿ ä¸Šé™100.0L/minä¸‹é™20.0L/min */
             pSetPlistItem[iLoop]->setName(tr("RO Product Rate"));
             pSetPlistItem[iLoop]->setP2Name(tr("Max."));
             pSetPlistItem[iLoop]->setP1Name(tr("Min."));
@@ -492,13 +492,13 @@ void SetPoint::buildTranslation()
             pSetPlistItem[iLoop]->setP2Unit(tr("L/h"));
             break;
         case MACHINE_PARAM_SP16:
-            /*     ROÆúË®Á÷ËÙ ÏÂÏÞ20.0L/min    */
+            /*     ROå¼ƒæ°´æµé€Ÿ ä¸‹é™20.0L/min    */
             pSetPlistItem[iLoop]->setName(tr("RO Reject Rate"));
             pSetPlistItem[iLoop]->setP1Name(tr("Lower Limit"));
             pSetPlistItem[iLoop]->setP1Unit(tr("L/h"));
             break;
         case MACHINE_PARAM_SP17:
-            /*     ¹ÜÂ·Ë®ÖÊ   ÏÂÏÞ 1M¦¸.cm    */
+            /*     ç®¡è·¯æ°´è´¨   ä¸‹é™ 1MÎ©.cm    */
             pSetPlistItem[iLoop]->setName(tr("Loop Resis."));
             pSetPlistItem[iLoop]->setP1Name(tr("Lower Limit"));
             pSetPlistItem[iLoop]->setP1Unit(tr("omg"));
@@ -506,7 +506,7 @@ void SetPoint::buildTranslation()
         case MACHINE_PARAM_SP18:
         case MACHINE_PARAM_SP19:
             /*     
-            ½øË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            è¿›æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             pSetPlistItem[iLoop]->setName(tr("Tap Temp."));
             pSetPlistItem[iLoop]->setP2Name(tr("Max."));
@@ -517,7 +517,7 @@ void SetPoint::buildTranslation()
         case MACHINE_PARAM_SP20:
         case MACHINE_PARAM_SP21:
             /*     
-            RO²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            ROäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             if (MACHINE_PURIST == gGlobalParam.iMachineType)
             {
@@ -535,7 +535,7 @@ void SetPoint::buildTranslation()
         case MACHINE_PARAM_SP22:
         case MACHINE_PARAM_SP23:
             /*     
-            EDI²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            EDIäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             pSetPlistItem[iLoop]->setName(tr("EDI Temp."));
             pSetPlistItem[iLoop]->setP2Name(tr("Max."));
@@ -546,7 +546,7 @@ void SetPoint::buildTranslation()
         case MACHINE_PARAM_SP24:
         case MACHINE_PARAM_SP25:
             /*     
-            UP²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            UPäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             switch(gGlobalParam.iMachineType)
              {
@@ -573,7 +573,7 @@ void SetPoint::buildTranslation()
         case MACHINE_PARAM_SP26:
         case MACHINE_PARAM_SP27:
             /*     
-            ¹ÜÂ·ÎÂ¶È ÉÏÏÞ45¡æ  ÏÂÏÞ5¡æ
+            ç®¡è·¯æ¸©åº¦ ä¸Šé™45â„ƒ  ä¸‹é™5â„ƒ
             */
             pSetPlistItem[iLoop]->setName(tr("Loop Temp."));
             pSetPlistItem[iLoop]->setP2Name(tr("Max."));
@@ -584,7 +584,7 @@ void SetPoint::buildTranslation()
         case MACHINE_PARAM_SP28:
         case MACHINE_PARAM_SP29:
             /*     
-            TOC´«¸ÐÆ÷ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            TOCä¼ æ„Ÿå™¨æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             pSetPlistItem[iLoop]->setName(tr("TOC Temp."));
             pSetPlistItem[iLoop]->setP2Name(tr("Max."));
@@ -594,7 +594,7 @@ void SetPoint::buildTranslation()
             break;
         case MACHINE_PARAM_SP30:
             /*     
-            TOC½øË®Ë®ÖÊÏÂÏÞ15.0M¦¸.cm
+            TOCè¿›æ°´æ°´è´¨ä¸‹é™15.0MÎ©.cm
             */
             pSetPlistItem[iLoop]->setName(tr("TOC Feed Resis."));
             pSetPlistItem[iLoop]->setP1Name(tr("Lower Limit"));            
@@ -602,7 +602,7 @@ void SetPoint::buildTranslation()
             break;
         case MACHINE_PARAM_SP31:
             /*     
-            Ñ­»·Ë®ÖÊÏÂÏÞ ? M¦¸.cm
+            å¾ªçŽ¯æ°´è´¨ä¸‹é™ ? MÎ©.cm
             */
             pSetPlistItem[iLoop]->setName(tr("Cir Water Quality"));
             pSetPlistItem[iLoop]->setP1Name(tr("Lower threshold"));            
@@ -610,7 +610,7 @@ void SetPoint::buildTranslation()
             break;
         case MACHINE_PARAM_SP32:
             /*     
-            HP²úË®Ë®ÖÊÏÂÏÞ ? M¦¸.cm
+            HPäº§æ°´æ°´è´¨ä¸‹é™ ? MÎ©.cm
             */
             pSetPlistItem[iLoop]->setName(tr("HP Produce Water Quality"));
             pSetPlistItem[iLoop]->setP1Name(tr("Lower threshold"));            
@@ -740,41 +740,41 @@ void SetPoint::save()
         switch(aIds[iLoop].iParamId[0])
         {
         case MACHINE_PARAM_SP1:
-            /* ×ÔÀ´Ë®Ñ¹Á¦ÏÂÏÞ1.0bar */
+            /* è‡ªæ¥æ°´åŽ‹åŠ›ä¸‹é™1.0bar */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP1] = fTemp;
             break;
         case MACHINE_PARAM_SP2:
-            /* RO½ØÁôÂÊ ÏÂÏÞ92.0% */
+            /* ROæˆªç•™çŽ‡ ä¸‹é™92.0% */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP2] = fTemp;
             break;
         case MACHINE_PARAM_SP3:
-            /* RO²úË®  ÉÏÏÞ50.0¦ÌS/cm */
+            /* ROäº§æ°´  ä¸Šé™50.0Î¼S/cm */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP3] = fTemp;
             break;
         case MACHINE_PARAM_SP4:
-            /* EDI²úË® ÏÂÏÞ1.0M¦¸.cm */
+            /* EDIäº§æ°´ ä¸‹é™1.0MÎ©.cm */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP4] = fTemp;
             break;
         case MACHINE_PARAM_SP6:
         case MACHINE_PARAM_SP5:
-            /* ´¿Ë®ÏäÒºÎ»     Ë®Ïä¿Õ10%  »Ö¸´×¢Ë® 80% */
+            /* çº¯æ°´ç®±æ¶²ä½     æ°´ç®±ç©º10%  æ¢å¤æ³¨æ°´ 80% */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP6] = fTemp;
             fTemp = pSetPlistItem[iLoop]->getP2().toFloat();
             MMParam.SP[MACHINE_PARAM_SP5] = fTemp;
             break;
         case MACHINE_PARAM_SP7:
-            /* UPÈ¡Ë®ÏÂÏÞ16.0M¦¸.cm */
+            /* UPå–æ°´ä¸‹é™16.0MÎ©.cm */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP7] = fTemp;
             break;
         case MACHINE_PARAM_SP8:
         case MACHINE_PARAM_SP9:
-            /* Ô´Ë®ÏäÒºÎ»     Ë®Ïä¿Õ 10%  »Ö¸´×¢Ë® 80% */
+            /* æºæ°´ç®±æ¶²ä½     æ°´ç®±ç©º 10%  æ¢å¤æ³¨æ°´ 80% */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP9] = fTemp;
             fTemp = pSetPlistItem[iLoop]->getP2().toFloat();
@@ -782,44 +782,44 @@ void SetPoint::save()
             break;
         case MACHINE_PARAM_SP10:
         case MACHINE_PARAM_SP11:
-            /* Ë®ÏäË®ÖÊ  ÉÏÏÞ15.0M¦¸.cmÏÂÏÞ 1.0M¦¸.cm */
+            /* æ°´ç®±æ°´è´¨  ä¸Šé™15.0MÎ©.cmä¸‹é™ 1.0MÎ©.cm */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP10] = fTemp;
             fTemp = pSetPlistItem[iLoop]->getP2().toFloat();
             MMParam.SP[MACHINE_PARAM_SP11] = fTemp;
             break;
         case MACHINE_PARAM_SP12:
-            /* ´¿Ë®È¡Ë®  ÏÂÏÞ1.0M¦¸.cm */
+            /* çº¯æ°´å–æ°´  ä¸‹é™1.0MÎ©.cm */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP12] = fTemp;
             break;
         case MACHINE_PARAM_SP13:
-            /* ×ÔÀ´Ë®µçµ¼ÂÊ ÉÏÏÞ20000¦ÌS/cm */
+            /* è‡ªæ¥æ°´ç”µå¯¼çŽ‡ ä¸Šé™20000Î¼S/cm */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP13] = fTemp;
             break;
         case MACHINE_PARAM_SP14:
         case MACHINE_PARAM_SP15:
-            /* RO²úË®Á÷ËÙ ÉÏÏÞ100.0L/minÏÂÏÞ20.0L/min */
+            /* ROäº§æ°´æµé€Ÿ ä¸Šé™100.0L/minä¸‹é™20.0L/min */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP15] = fTemp;
             fTemp = pSetPlistItem[iLoop]->getP2().toFloat();
             MMParam.SP[MACHINE_PARAM_SP14] = fTemp;
             break;
         case MACHINE_PARAM_SP16:
-            /*     ROÆúË®Á÷ËÙ ÏÂÏÞ20.0L/min    */
+            /*     ROå¼ƒæ°´æµé€Ÿ ä¸‹é™20.0L/min    */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP16] = fTemp;
             break;
         case MACHINE_PARAM_SP17:
-            /*     ¹ÜÂ·Ë®ÖÊ   ÏÂÏÞ 1M¦¸.cm    */
+            /*     ç®¡è·¯æ°´è´¨   ä¸‹é™ 1MÎ©.cm    */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP17] = fTemp;
             break;
         case MACHINE_PARAM_SP18:
         case MACHINE_PARAM_SP19:
             /*     
-            ½øË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            è¿›æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP19] = fTemp;
@@ -829,7 +829,7 @@ void SetPoint::save()
         case MACHINE_PARAM_SP20:
         case MACHINE_PARAM_SP21:
             /*     
-            RO²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            ROäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP21] = fTemp;
@@ -839,7 +839,7 @@ void SetPoint::save()
         case MACHINE_PARAM_SP22:
         case MACHINE_PARAM_SP23:
             /*     
-            EDI²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            EDIäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP23] = fTemp;
@@ -849,7 +849,7 @@ void SetPoint::save()
         case MACHINE_PARAM_SP24:
         case MACHINE_PARAM_SP25:
             /*     
-            UP²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            UPäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP25] = fTemp;
@@ -859,7 +859,7 @@ void SetPoint::save()
         case MACHINE_PARAM_SP26:
         case MACHINE_PARAM_SP27:
             /*     
-            ¹ÜÂ·ÎÂ¶È ÉÏÏÞ45¡æ  ÏÂÏÞ5¡æ
+            ç®¡è·¯æ¸©åº¦ ä¸Šé™45â„ƒ  ä¸‹é™5â„ƒ
             */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP27] = fTemp;
@@ -869,7 +869,7 @@ void SetPoint::save()
         case MACHINE_PARAM_SP28:
         case MACHINE_PARAM_SP29:
             /*     
-            TOC´«¸ÐÆ÷ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            TOCä¼ æ„Ÿå™¨æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP29] = fTemp;
@@ -878,27 +878,27 @@ void SetPoint::save()
             break;
         case MACHINE_PARAM_SP30:
             /*     
-            TOC½øË®Ë®ÖÊÏÂÏÞ15.0M¦¸.cm
+            TOCè¿›æ°´æ°´è´¨ä¸‹é™15.0MÎ©.cm
             */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP30] = fTemp;
             break;
         case MACHINE_PARAM_SP31:
             /*     
-            Ñ­»·Ë®ÖÊÏÂÏÞ ? M¦¸.cm
+            å¾ªçŽ¯æ°´è´¨ä¸‹é™ ? MÎ©.cm
             */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP31] = fTemp;
             break;
         case MACHINE_PARAM_SP32:
             /*     
-            HP²úË®Ë®ÖÊÏÂÏÞ ? M¦¸.cm
+            HPäº§æ°´æ°´è´¨ä¸‹é™ ? MÎ©.cm
             */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP32] = fTemp;
             break;
         case MACHINE_PARAM_SP33:
-            /* ×ÔÀ´Ë®Ñ¹Á¦ÏÂÏÞ1.0bar */
+            /* è‡ªæ¥æ°´åŽ‹åŠ›ä¸‹é™1.0bar */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP33] = fTemp;
             break;
@@ -943,72 +943,72 @@ void SetPoint::update()
         switch(aIds[iLoop].iParamId[0])
         {
         case MACHINE_PARAM_SP1:
-            /* ×ÔÀ´Ë®Ñ¹Á¦ÏÂÏÞ1.0bar */
+            /* è‡ªæ¥æ°´åŽ‹åŠ›ä¸‹é™1.0bar */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP1],'f',1));
             
             break;
         case MACHINE_PARAM_SP2:
-            /* RO½ØÁôÂÊ ÏÂÏÞ92.0% */
+            /* ROæˆªç•™çŽ‡ ä¸‹é™92.0% */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP2],'f',1));
             break;
         case MACHINE_PARAM_SP3:
-            /* RO²úË®  ÉÏÏÞ50.0¦ÌS/cm */
+            /* ROäº§æ°´  ä¸Šé™50.0Î¼S/cm */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP3],'f',1));
             break;
         case MACHINE_PARAM_SP4:
-            /* EDI²úË® ÏÂÏÞ1.0M¦¸.cm */
+            /* EDIäº§æ°´ ä¸‹é™1.0MÎ©.cm */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP4],'f',1));
             break;
         case MACHINE_PARAM_SP5:
         case MACHINE_PARAM_SP6:
-            /* ´¿Ë®ÏäÒºÎ»     Ë®Ïä¿Õ10%  »Ö¸´×¢Ë® 80% */
+            /* çº¯æ°´ç®±æ¶²ä½     æ°´ç®±ç©º10%  æ¢å¤æ³¨æ°´ 80% */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP6],'f',1));
             pSetPlistItem[iLoop]->setP2(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP5],'f',1));
             break;
         case MACHINE_PARAM_SP7:
-            /* UPÈ¡Ë®ÏÂÏÞ16.0M¦¸.cm */
+            /* UPå–æ°´ä¸‹é™16.0MÎ©.cm */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP7],'f',1));
             break;
         case MACHINE_PARAM_SP8:
         case MACHINE_PARAM_SP9:
-            /* Ô´Ë®ÏäÒºÎ»     Ë®Ïä¿Õ 10%  »Ö¸´×¢Ë® 80% */
+            /* æºæ°´ç®±æ¶²ä½     æ°´ç®±ç©º 10%  æ¢å¤æ³¨æ°´ 80% */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP9],'f',1));
             pSetPlistItem[iLoop]->setP2(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP8],'f',1));
             break;
         case MACHINE_PARAM_SP10:
         case MACHINE_PARAM_SP11:
-            /* Ë®ÏäË®ÖÊ  ÉÏÏÞ15.0M¦¸.cmÏÂÏÞ 1.0M¦¸.cm */
+            /* æ°´ç®±æ°´è´¨  ä¸Šé™15.0MÎ©.cmä¸‹é™ 1.0MÎ©.cm */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP10],'f',1));
             pSetPlistItem[iLoop]->setP2(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP11],'f',1));
             break;
         case MACHINE_PARAM_SP12:
-            /* ´¿Ë®È¡Ë®  ÏÂÏÞ1.0M¦¸.cm */
+            /* çº¯æ°´å–æ°´  ä¸‹é™1.0MÎ©.cm */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP12],'f',1));
             break;
         case MACHINE_PARAM_SP13:
-            /* ×ÔÀ´Ë®µçµ¼ÂÊ ÉÏÏÞ20000¦ÌS/cm */
+            /* è‡ªæ¥æ°´ç”µå¯¼çŽ‡ ä¸Šé™20000Î¼S/cm */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP13],'f',1));
             break;
         case MACHINE_PARAM_SP14:
         case MACHINE_PARAM_SP15:
-            /* RO²úË®Á÷ËÙ ÉÏÏÞ100.0L/minÏÂÏÞ20.0L/min */
+            /* ROäº§æ°´æµé€Ÿ ä¸Šé™100.0L/minä¸‹é™20.0L/min */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP15],'f',1));
             pSetPlistItem[iLoop]->setP2(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP14],'f',1));
             
             break;
         case MACHINE_PARAM_SP16:
-            /*     ROÆúË®Á÷ËÙ ÏÂÏÞ20.0L/min    */
+            /*     ROå¼ƒæ°´æµé€Ÿ ä¸‹é™20.0L/min    */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP16],'f',1));
             
             break;
         case MACHINE_PARAM_SP17:
-            /*     ¹ÜÂ·Ë®ÖÊ   ÏÂÏÞ 1M¦¸.cm    */
+            /*     ç®¡è·¯æ°´è´¨   ä¸‹é™ 1MÎ©.cm    */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP17],'f',1));
             break;
         case MACHINE_PARAM_SP18:
         case MACHINE_PARAM_SP19:
             /*     
-            ½øË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            è¿›æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP19],'f',1));
             pSetPlistItem[iLoop]->setP2(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP18],'f',1));
@@ -1016,7 +1016,7 @@ void SetPoint::update()
         case MACHINE_PARAM_SP20:
         case MACHINE_PARAM_SP21:
             /*     
-            RO²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            ROäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP21],'f',1));
             pSetPlistItem[iLoop]->setP2(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP20],'f',1));
@@ -1024,7 +1024,7 @@ void SetPoint::update()
         case MACHINE_PARAM_SP22:
         case MACHINE_PARAM_SP23:
             /*     
-            EDI²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            EDIäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP23],'f',1));
             pSetPlistItem[iLoop]->setP2(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP22],'f',1));
@@ -1032,7 +1032,7 @@ void SetPoint::update()
         case MACHINE_PARAM_SP24:
         case MACHINE_PARAM_SP25:
             /*     
-            UP²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            UPäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP25],'f',1));
             pSetPlistItem[iLoop]->setP2(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP24],'f',1));
@@ -1040,7 +1040,7 @@ void SetPoint::update()
         case MACHINE_PARAM_SP26:
         case MACHINE_PARAM_SP27:
             /*     
-            ¹ÜÂ·ÎÂ¶È ÉÏÏÞ45¡æ  ÏÂÏÞ5¡æ
+            ç®¡è·¯æ¸©åº¦ ä¸Šé™45â„ƒ  ä¸‹é™5â„ƒ
             */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP27],'f',1));
             pSetPlistItem[iLoop]->setP2(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP26],'f',1));
@@ -1048,31 +1048,31 @@ void SetPoint::update()
         case MACHINE_PARAM_SP28:
         case MACHINE_PARAM_SP29:
             /*     
-            TOC´«¸ÐÆ÷ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ
+            TOCä¼ æ„Ÿå™¨æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ
             */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP29],'f',1));
             pSetPlistItem[iLoop]->setP2(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP28],'f',1));
             break;
         case MACHINE_PARAM_SP30:
             /*     
-            TOC½øË®Ë®ÖÊÏÂÏÞ15.0M¦¸.cm
+            TOCè¿›æ°´æ°´è´¨ä¸‹é™15.0MÎ©.cm
             */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP30],'f',1));
             break;
         case MACHINE_PARAM_SP31:
             /*     
-            Ñ­»·Ë®ÖÊÏÂÏÞ ? M¦¸.cm
+            å¾ªçŽ¯æ°´è´¨ä¸‹é™ ? MÎ©.cm
             */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP31],'f',1));
             break;
         case MACHINE_PARAM_SP32:
             /*     
-            HP²úË®Ë®ÖÊÏÂÏÞ ? M¦¸.cm
+            HPäº§æ°´æ°´è´¨ä¸‹é™ ? MÎ©.cm
             */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP32],'f',1));
             break;
         case MACHINE_PARAM_SP33:
-            /* ×ÔÀ´Ë®Ñ¹Á¦ÏÂÏÞ1.0bar */
+            /* è‡ªæ¥æ°´åŽ‹åŠ›ä¸‹é™1.0bar */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP33],'f',1));
 
             break;

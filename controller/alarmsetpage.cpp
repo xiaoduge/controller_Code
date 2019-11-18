@@ -71,93 +71,51 @@ void AlarmSetPage::buildTranslation()
     int iIdx = 0;
 
     /* refer : QString gastrAlarmName */
-
     m_pBtnSave->setTip(tr("save"));
 
     for (iIdx = 0; iIdx < m_iRealNum; iIdx++)
     {
         switch(aIds[iIdx].iId)
         {
-        
         /* Part One */
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP):
-            /*
-            检查254UV
-            */
             m_plistItem[iIdx]->setName(tr("Check 254 UV"));
             break;
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP):
-            /*
-            检查185UV
-            */
             m_plistItem[iIdx]->setName(tr("Check 185 UV"));
             break;
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP):
-            /*
-            检查水箱UV
-            */
             m_plistItem[iIdx]->setName(tr("Check Tank UV"));
             break;
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TUBEUV_OOP):
-            /*
-            检查管路UV
-            */
             m_plistItem[iIdx]->setName(tr("Check Loop UV"));
             break;
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP):
-            /*
-            PRE-Pack脱落
-            */
             m_plistItem[iIdx]->setName(tr("PRE Pack Not Detected"));
             break;
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP):
-            /*
-            AC-Pack脱落
-            */
             m_plistItem[iIdx]->setName(tr("AC Pack Not Detected"));
             break;
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP):
-            /*
-            P-Pack脱落
-            */
             m_plistItem[iIdx]->setName(tr("P Pack Not Detected"));
             break;
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ATPACK_OOP):
-            /*
-            AT-Pack脱落
-            */
             m_plistItem[iIdx]->setName(tr("AT Pack Not Detected"));
             break;
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_HPACK_OOP):
-            /*
-            H-Pack脱落
-            */
             m_plistItem[iIdx]->setName(tr("H Pack Not Detected"));
             break;
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP):
-            /*
-            U-Pack脱落
-            */
             m_plistItem[iIdx]->setName(tr("U Pack Not Detected"));
             break;
             /* Part Two */
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE):
-            /*
-            自来水压力低
-            */
             m_plistItem[iIdx]->setName(tr("Low Tap Pressure"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_SOURCE_WATER_CONDUCTIVITY):
-            /*
-            自来水电导率>设定值
-            */
             m_plistItem[iIdx]->setName(tr("High Tap Conductivity"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_RO_PRODUCT_CONDUCTIVITY):
-            /*
-            RO产水>设定值
-            */
-            
             if (MACHINE_PURIST == gGlobalParam.iMachineType)
             {
                 m_plistItem[iIdx]->setName(tr("High UP Feed Cond."));
@@ -169,109 +127,61 @@ void AlarmSetPage::buildTranslation()
             }
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_RESIDUE_RATIO):
-            
-            /*
-            RO截留率<设定值
-            */
             m_plistItem[iIdx]->setName(tr("Low RO Rejection")); //ex
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE):
-            /*
-            EDI产水<设定值
-            */
-            //Low EDI Resistivity
             m_plistItem[iIdx]->setName(tr("Low EDI Resistivity"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE):
-            /*
-            UP取水<设定值
-            */
             m_plistItem[iIdx]->setName(tr("Low UP Resistivity"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TUBE_RESISTENCE):
-            /*
-            管路水质<设定值
-            */
             m_plistItem[iIdx]->setName(tr("Low Loop Resistivity"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PWTANKE_WATER_LEVEL):
-            /*
-            纯水箱液位<设定值
-            */
             m_plistItem[iIdx]->setName(tr("Low Pure Tank Level"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SWTANKE_WATER_LEVEL):
-            /*
-            源水箱液位<设定值 
-            */
             m_plistItem[iIdx]->setName(tr("Low Feed Tank Level"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_PRODUCT_FLOWING_VELOCITY):
-            /*
-            RO产水流速<设定值
-            */
             m_plistItem[iIdx]->setName(tr("Low RO Product Rate"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_WASTE_FLOWING_VELOCITY):
-            /*
-            RO弃水流速<设定值
-            */
             m_plistItem[iIdx]->setName(tr("Low RO Reject Rate"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY):
-             /*
-             循环水质<设定值 
-             */
              m_plistItem[iIdx]->setName(tr("Low Recir. Resis."));
              break;
          case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY):
-             /*
-             HP产水<设定值 
-             */
              m_plistItem[iIdx]->setName(tr("Low HP Prouduce Cond."));
              break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PWTANK_RESISTENCE):
-            /*
-            水箱水质 <设定值
-            */
             m_plistItem[iIdx]->setName(tr("Low Pure Tank Water Resis."));
             break;
             /*
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE):
-            //纯水取水<设定值
+            //麓驴脣庐脠隆脣庐<脡猫露篓脰碌
             m_plistItem[iIdx]->setName(tr("Low Feed Product Resis."));
             break;
             */
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE):
-            /*
-            进水温度>45℃
-            */
             m_plistItem[iIdx]->setName(tr("High RO Feed Temp."));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_TEMPERATURE):
-           /*
-           进水温度<5℃
-           */
-           m_plistItem[iIdx]->setName(tr("Low RO Feed Temp."));
+            m_plistItem[iIdx]->setName(tr("Low RO Feed Temp."));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_RO_PRODUCT_TEMPERATURE):
-             /*
-             RO产水温度>45℃
-             */
-             
-             if (MACHINE_PURIST == gGlobalParam.iMachineType)
-             {
-                  m_plistItem[iIdx]->setName(tr("High UP Feed Temp."));
-             }
-             else
-             {
-                 m_plistItem[iIdx]->setName(tr("High RO Temperature"));
-             }
+            if (MACHINE_PURIST == gGlobalParam.iMachineType)
+            {
+                m_plistItem[iIdx]->setName(tr("High UP Feed Temp."));
+            }
+            else
+            {
+                m_plistItem[iIdx]->setName(tr("High RO Temperature"));
+            }
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_PRODUCT_TEMPERATURE):
-            /*
-            RO产水温度<5℃
-            */
             if (MACHINE_PURIST == gGlobalParam.iMachineType)
             {
                 m_plistItem[iIdx]->setName(tr("Low UP Feed Temp."));
@@ -282,74 +192,39 @@ void AlarmSetPage::buildTranslation()
             }
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_EDI_PRODUCT_TEMPERATURE):
-            /*
-            EDI产水温度>45℃
-            */
             m_plistItem[iIdx]->setName(tr("High EDI Temperature"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_TEMPERATURE):
-            /*
-            EDI产水温度<5℃
-            */
             m_plistItem[iIdx]->setName(tr("Low EDI Temperature"));
-            
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE):
-            /*
-            UP产水温度>45℃
-            */
             m_plistItem[iIdx]->setName(tr("High UP Temperature"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE):
-            /*
-            UP产水温度<5℃
-            */
             m_plistItem[iIdx]->setName(tr("Low UP Temperature"));
-            
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_TUBE_TEMPERATURE):
-            /*
-            管路温度>45℃
-            */
             m_plistItem[iIdx]->setName(tr("High Loop Temperature"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TUBE_TEMPERATURE):
-            /*
-            管路温度<5℃
-            */
             m_plistItem[iIdx]->setName(tr("Low Loop Temperature"));
-            
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE):
-            /*
-            TOC温度>45℃
-            */
             m_plistItem[iIdx]->setName(tr("High TOC Temperature"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE):
-            /*
-            TOC温度<5℃
-            */
             m_plistItem[iIdx]->setName(tr("Low TOC Temperature"));
-            
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE):            
-            /*
-            TOC进水水质<15MΩ。cm
-            */
             m_plistItem[iIdx]->setName(tr("High TOC Feed Conductivity"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW):
-            /*
-            Leak or Tank Overflow
-            */
             m_plistItem[iIdx]->setName(tr("Leak or Tank Overflow"));
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE):
-            /*
-            Work pressure max
-            */
             m_plistItem[iIdx]->setName(tr("High Work Pressure"));
+            break;
+        default:
             break;
         }
     }
@@ -402,7 +277,6 @@ void AlarmSetPage::createList()
                  );
     
     connect(m_plistWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(ItemClicked(QListWidgetItem*)));
-
 }
 
 void AlarmSetPage::setBackColor()
@@ -423,11 +297,8 @@ void AlarmSetPage::setBackColor()
     m_widget->setPalette(pal);
 }
 
-
-
 void AlarmSetPage::initUi()
 {
-
     setBackColor();
 
     createList();
@@ -511,11 +382,9 @@ void AlarmSetPage::save()
     {
         switch(aIds[iIdx].iId)
         {
-        
         /* Part One */
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP):
             /* for part1 */
-            
             if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
             {
                 Param.aulFlag[DISP_ALARM_PART0] |= (1<<DISP_ALARM_PART0_254UV_OOP);
@@ -708,31 +577,25 @@ void AlarmSetPage::save()
             }
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY):
-             /*
-             循环水质<设定值 
-             */
-             if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
-             {
-                 Param.aulFlag[DISP_ALARM_PART1] |= (1<<DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY);
-             }
-             else
-             {
-                 Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY);
-             }
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY):
-             /*
-             HP产水<设定值 
-             */
-             if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
-             {
-                 Param.aulFlag[DISP_ALARM_PART1] |= (1<<DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY);
-             }
-             else
-             {
-                 Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY);
-             }
-             break;
+            if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
+            {
+                Param.aulFlag[DISP_ALARM_PART1] |= (1<<DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY);
+            }
+            else
+            {
+                Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY);
+            }
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY):
+            if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
+            {
+                Param.aulFlag[DISP_ALARM_PART1] |= (1<<DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY);
+            }
+            else
+            {
+                Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY);
+            }
+            break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_PRODUCT_FLOWING_VELOCITY):
             if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
             {
@@ -836,7 +699,7 @@ void AlarmSetPage::save()
             }
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE):
-             if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
+            if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
             {
                 Param.aulFlag[DISP_ALARM_PART1] |= (1<<DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE);
             }
@@ -926,7 +789,6 @@ void AlarmSetPage::save()
             }
             iIdx++;
             break;
-
         }
     }    
 
@@ -943,15 +805,15 @@ void AlarmSetPage::save()
 
 void AlarmSetPage::update()
 {
-   int iIdx = 0;
-   
-   DISP_ALARM_SETTING_STRU *pParam = &gGlobalParam.AlarmSettting;
+    int iIdx = 0;
+    
+    DISP_ALARM_SETTING_STRU *pParam = &gGlobalParam.AlarmSettting;
 
-   for (iIdx = 0; iIdx < m_iRealNum; iIdx++)
-   {
+    for (iIdx = 0; iIdx < m_iRealNum; iIdx++)
+    {
        /* for part1 */
-       switch(aIds[iIdx].iId)
-       { 
+        switch(aIds[iIdx].iId)
+        { 
         /* Part One */
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP): 
             if (pParam->aulFlag[DISP_ALARM_PART0] & (1<<DISP_ALARM_PART0_254UV_OOP))
@@ -1126,31 +988,25 @@ void AlarmSetPage::update()
             }
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY):
-             /*
-             循环水质<设定值 
-             */
-             if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY))
-             {
-                 m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
-             }
-             else
-             {
-                 m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
-             }
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY):
-             /*
-             HP产水<设定值 
-             */
-             if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY))
-             {
-                 m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
-             }
-             else
-             {
-                 m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
-             }
-             break;
+            if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY))
+            {
+                m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
+            }
+            else
+            {
+                m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
+            }
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY):
+            if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY))
+            {
+                m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
+            }
+            else
+            {
+                m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
+            }
+            break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PWTANKE_WATER_LEVEL):
             if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_LOWER_PWTANKE_WATER_LEVEL))
             {
@@ -1343,27 +1199,26 @@ void AlarmSetPage::update()
                 m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
             }
             break;
-
-       case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW):
-           if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW))
-           {
-               m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
-           }
-           else
-           {
-               m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
-           }
-           break;
-       case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE):
-           if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_HIGH_WORK_PRESSURE))
-           {
-               m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
-           }
-           else
-           {
-               m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
-           }
-           break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW):
+            if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW))
+            {
+                m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
+            }
+            else
+            {
+                m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
+            }
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE):
+            if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_HIGH_WORK_PRESSURE))
+            {
+                m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
+            }
+            else
+            {
+                m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
+            }
+            break;
         }
-   }      
+    }      
 }

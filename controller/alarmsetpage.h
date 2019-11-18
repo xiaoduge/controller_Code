@@ -4,7 +4,6 @@
 #include "subpage.h"
 #include "Display.h"
 
-
 #define ALARMSETNUM (DISP_ALARM_PART0_NUM + DISP_ALARM_PART1_NUM)
 
 class QListWidget;
@@ -52,7 +51,6 @@ private:
     int                    m_iRealNum;
 
 public slots:
-
     void ItemClicked(QListWidgetItem * item);
     void on_btn_clicked(int);
 };

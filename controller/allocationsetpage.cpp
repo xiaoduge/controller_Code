@@ -3,7 +3,6 @@
 #include "dlineedit.h"
 #include "cbitmapbutton.h"
 
-
 AllocationSetPage::AllocationSetPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
     creatTitle();
@@ -11,7 +10,6 @@ AllocationSetPage::AllocationSetPage(QObject *parent,CBaseWidget *widget ,MainWi
     initUi();
 
     buildTranslation();
-
 }
 
 void AllocationSetPage::creatTitle()
@@ -131,102 +129,102 @@ void AllocationSetPage::initUi()
     m_cmbStartTimeMin->setGeometry(325,ITEM_HEIGHT/2 - 10 - 15,50,30);
     iIdx++;
 
-   for(iLoop = 0 ; iLoop < 24 ; iLoop++ )
-   {
-       m_cmbStartTimeHour->addItem(QString::number(iLoop,10));
-   }
+    for(iLoop = 0 ; iLoop < 24 ; iLoop++ )
+    {
+        m_cmbStartTimeHour->addItem(QString::number(iLoop,10));
+    }
    
    
-   for(iLoop = 0 ; iLoop < 60 ; iLoop++ )
-   {
-       m_cmbStartTimeMin->addItem(QString::number(iLoop,10));
-   }
+    for(iLoop = 0 ; iLoop < 60 ; iLoop++ )
+    {
+        m_cmbStartTimeMin->addItem(QString::number(iLoop,10));
+    }
    
-   m_pBackWidget[iIdx] = new QWidget(m_widget);
-   m_pBackWidget[iIdx]->setAutoFillBackground(true);
-   m_pBackWidget[iIdx]->setPalette(pal);
-   m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
+    m_pBackWidget[iIdx] = new QWidget(m_widget);
+    m_pBackWidget[iIdx]->setAutoFillBackground(true);
+    m_pBackWidget[iIdx]->setPalette(pal);
+    m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
    
-   m_lbNameEndTime = new QLabel(m_pBackWidget[iIdx]);
-   m_lbNameEndTime->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 140 , 20));
-   m_lbNameEndTime->setAlignment(Qt::AlignLeft);
+    m_lbNameEndTime = new QLabel(m_pBackWidget[iIdx]);
+    m_lbNameEndTime->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 140 , 20));
+    m_lbNameEndTime->setAlignment(Qt::AlignLeft);
+    
+    m_cmbEndTimeHour = new QComboBox(m_pBackWidget[iIdx]);
+    m_cmbEndTimeHour->setGeometry(270,ITEM_HEIGHT/2 - 10 - 15,50,30);
+    m_cmbEndTimeMin = new QComboBox(m_pBackWidget[iIdx]);
+    m_cmbEndTimeMin->setGeometry(325,ITEM_HEIGHT/2 - 10 - 15,50,30);
+    iIdx++;
+    for(iLoop = 0 ; iLoop < 24 ; iLoop++ )
+    {
+        m_cmbEndTimeHour->addItem(QString::number(iLoop,10));
+    }
    
-   m_cmbEndTimeHour = new QComboBox(m_pBackWidget[iIdx]);
-   m_cmbEndTimeHour->setGeometry(270,ITEM_HEIGHT/2 - 10 - 15,50,30);
-   m_cmbEndTimeMin = new QComboBox(m_pBackWidget[iIdx]);
-   m_cmbEndTimeMin->setGeometry(325,ITEM_HEIGHT/2 - 10 - 15,50,30);
-   iIdx++;
-   for(iLoop = 0 ; iLoop < 24 ; iLoop++ )
-   {
-       m_cmbEndTimeHour->addItem(QString::number(iLoop,10));
-   }
    
-   
-   for(iLoop = 0 ; iLoop < 60 ; iLoop++ )
-   {
-       m_cmbEndTimeMin->addItem(QString::number(iLoop,10));
-   }
+    for(iLoop = 0 ; iLoop < 60 ; iLoop++ )
+    {
+        m_cmbEndTimeMin->addItem(QString::number(iLoop,10));
+    }
 
-   m_pBackWidget[iIdx] = new QWidget(m_widget);
-   m_pBackWidget[iIdx]->setAutoFillBackground(true);
-   m_pBackWidget[iIdx]->setPalette(pal);
-   m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
+    m_pBackWidget[iIdx] = new QWidget(m_widget);
+    m_pBackWidget[iIdx]->setAutoFillBackground(true);
+    m_pBackWidget[iIdx]->setPalette(pal);
+    m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
    
-   m_lbNameWeekday = new QLabel(m_pBackWidget[iIdx]);
-   m_lbNameWeekday->adjustSize();
-   m_lbNameWeekday->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 110 , 20*2));
-   m_lbNameWeekday->setWordWrap(true); //
-   m_lbNameWeekday->setAlignment(Qt::AlignHCenter);
+    m_lbNameWeekday = new QLabel(m_pBackWidget[iIdx]);
+    m_lbNameWeekday->adjustSize();
+    m_lbNameWeekday->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 110 , 20*2));
+    m_lbNameWeekday->setWordWrap(true); //
+    m_lbNameWeekday->setAlignment(Qt::AlignHCenter);
 //   m_lbNameWeekday->setAlignment(Qt::AlignLeft);
 
-   for (iLoop = 0; iLoop < 7; iLoop++)
-   {
-       m_pBtns[iLoop] = new CBitmapButton(m_pBackWidget[iIdx],BITMAPBUTTON_STYLE_SWITCH,0,0);
-       m_pBtns[iLoop]->setGeometry(130 + iLoop*70 ,ITEM_HEIGHT/2 - 15 ,60,30);
-       m_pBtns[iLoop]->setStyleSheet("background-color:transparent");
-       m_pBtns[iLoop]->setColor(Qt::black,BITMAPBUTTON_STATE_UNSEL);
-       m_pBtns[iLoop]->setColor(Qt::red,BITMAPBUTTON_STATE_SEL);
-   
-   }
-   iIdx++;   
+    for (iLoop = 0; iLoop < 7; iLoop++)
+    {
+        m_pBtns[iLoop] = new CBitmapButton(m_pBackWidget[iIdx],BITMAPBUTTON_STYLE_SWITCH,0,0);
+        m_pBtns[iLoop]->setGeometry(130 + iLoop*70 ,ITEM_HEIGHT/2 - 15 ,60,30);
+        m_pBtns[iLoop]->setStyleSheet("background-color:transparent");
+        m_pBtns[iLoop]->setColor(Qt::black,BITMAPBUTTON_STATE_UNSEL);
+        m_pBtns[iLoop]->setColor(Qt::red,BITMAPBUTTON_STATE_SEL);
+    
+    }
+    iIdx++;   
 
-   m_pBackWidget[iIdx] = new QWidget(m_widget);
-   m_pBackWidget[iIdx]->setAutoFillBackground(true);
-   m_pBackWidget[iIdx]->setPalette(pal);
-   m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
+    m_pBackWidget[iIdx] = new QWidget(m_widget);
+    m_pBackWidget[iIdx]->setAutoFillBackground(true);
+    m_pBackWidget[iIdx]->setPalette(pal);
+    m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
    
-   m_lbNameIdlePeriod = new QLabel(m_pBackWidget[iIdx]);
-   m_lbNameIdlePeriod->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 200 , 20));
-   m_lbNameIdlePeriod->setAlignment(Qt::AlignLeft);
-   
-   m_leIdlePeriod = new DLineEdit(m_pBackWidget[iIdx]);
-   m_leIdlePeriod->setGeometry(300,ITEM_HEIGHT/2 - 15,50,30);
-   m_leIdlePeriod->setValidator(new QIntValidator(0, 999, this));
+    m_lbNameIdlePeriod = new QLabel(m_pBackWidget[iIdx]);
+    m_lbNameIdlePeriod->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 200 , 20));
+    m_lbNameIdlePeriod->setAlignment(Qt::AlignLeft);
 
-   m_lbNameIdlePeriodUnit = new QLabel(m_pBackWidget[iIdx]);
-   m_lbNameIdlePeriodUnit->setGeometry(QRect(355, ITEM_HEIGHT/2 , 40 , 20));
-   m_lbNameIdlePeriodUnit->setAlignment(Qt::AlignLeft);
-   
-   iIdx++;
-   
-   m_pBackWidget[iIdx] = new QWidget(m_widget);
-   m_pBackWidget[iIdx]->setAutoFillBackground(true);
-   m_pBackWidget[iIdx]->setPalette(pal);
-   m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
-   
-   m_lbNameIdleCirTime = new QLabel(m_pBackWidget[iIdx]);
-   m_lbNameIdleCirTime->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 200 , 20));
-   m_lbNameIdleCirTime->setAlignment(Qt::AlignLeft);
-   
-   m_leIdleCirTime = new DLineEdit(m_pBackWidget[iIdx]);
-   m_leIdleCirTime->setGeometry(300,ITEM_HEIGHT/2 - 30/2 ,50,30);
-   m_leIdleCirTime->setValidator(new QIntValidator(0, 99, this));
-   
-   m_lbNameIdleCirTimeUnit = new QLabel(m_pBackWidget[iIdx]);
-   m_lbNameIdleCirTimeUnit->setGeometry(QRect(355, ITEM_HEIGHT/2 , 40 , 20));
-   m_lbNameIdleCirTimeUnit->setAlignment(Qt::AlignLeft);
-   
-   iIdx++;
+    m_leIdlePeriod = new DLineEdit(m_pBackWidget[iIdx]);
+    m_leIdlePeriod->setGeometry(300,ITEM_HEIGHT/2 - 15,50,30);
+    m_leIdlePeriod->setValidator(new QIntValidator(0, 999, this));
+
+    m_lbNameIdlePeriodUnit = new QLabel(m_pBackWidget[iIdx]);
+    m_lbNameIdlePeriodUnit->setGeometry(QRect(355, ITEM_HEIGHT/2 , 40 , 20));
+    m_lbNameIdlePeriodUnit->setAlignment(Qt::AlignLeft);
+
+    iIdx++;
+
+    m_pBackWidget[iIdx] = new QWidget(m_widget);
+    m_pBackWidget[iIdx]->setAutoFillBackground(true);
+    m_pBackWidget[iIdx]->setPalette(pal);
+    m_pBackWidget[iIdx]->setGeometry(QRect(100 , 70 + 70 * iIdx , ITEM_WIDTH ,ITEM_HEIGHT));
+
+    m_lbNameIdleCirTime = new QLabel(m_pBackWidget[iIdx]);
+    m_lbNameIdleCirTime->setGeometry(QRect(10, ITEM_HEIGHT/2 - 10 , 200 , 20));
+    m_lbNameIdleCirTime->setAlignment(Qt::AlignLeft);
+
+    m_leIdleCirTime = new DLineEdit(m_pBackWidget[iIdx]);
+    m_leIdleCirTime->setGeometry(300,ITEM_HEIGHT/2 - 30/2 ,50,30);
+    m_leIdleCirTime->setValidator(new QIntValidator(0, 99, this));
+
+    m_lbNameIdleCirTimeUnit = new QLabel(m_pBackWidget[iIdx]);
+    m_lbNameIdleCirTimeUnit->setGeometry(QRect(355, ITEM_HEIGHT/2 , 40 , 20));
+    m_lbNameIdleCirTimeUnit->setAlignment(Qt::AlignLeft);
+
+    iIdx++;
 
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,ALLOCPAGE_BTN_SAVE);
     
@@ -323,7 +321,6 @@ void AllocationSetPage::save()
         {
             iMask |= 1 << iLoop;
         }
-        
     }
 
     iTubeCirCycle    = m_leIdlePeriod->text().toInt();
@@ -339,26 +336,24 @@ void AllocationSetPage::save()
         || aiTubeCirTimeInfo[1] != gGlobalParam.MiscParam.aiTubeCirTimeInfo[1]
         )
     {
-       DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;  
-   
-       MiscParam.ulAllocMask      = iMask;
-       MiscParam.iTubeCirCycle    = iTubeCirCycle;
-       MiscParam.iTubeCirDuration = iTubeCirDuration;
-       MiscParam.aiTubeCirTimeInfo[0] = aiTubeCirTimeInfo[0];
-       MiscParam.aiTubeCirTimeInfo[1] = aiTubeCirTimeInfo[1];
+        DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;  
 
-       MainSaveMiscParam(gGlobalParam.iMachineType,MiscParam);
+        MiscParam.ulAllocMask      = iMask;
+        MiscParam.iTubeCirCycle    = iTubeCirCycle;
+        MiscParam.iTubeCirDuration = iTubeCirDuration;
+        MiscParam.aiTubeCirTimeInfo[0] = aiTubeCirTimeInfo[0];
+        MiscParam.aiTubeCirTimeInfo[1] = aiTubeCirTimeInfo[1];
 
-       MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
+        MainSaveMiscParam(gGlobalParam.iMachineType,MiscParam);
 
-       m_wndMain->updateTubeCirCfg();
-       
-       m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_ALLOCATION);
-       
+        MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
+
+        m_wndMain->updateTubeCirCfg();
+
+        m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_ALLOCATION);
     }
     show(false);
     m_parent->show(true);
-
 }
 
 void AllocationSetPage::on_btn_clicked(int index)

@@ -1,7 +1,6 @@
 #include "basewidget.h"
 #include "page.h"
 
-
 CBaseWidget::CBaseWidget(QWidget *parent) : QWidget(parent)
 {
     this->installEventFilter(this);
@@ -25,7 +24,6 @@ bool CBaseWidget::eventFilter(QObject *watched, QEvent *event)
             {
                 this->m_pPage->fade();
             }
-
         }
     }
     return QWidget::eventFilter(watched,event); ;

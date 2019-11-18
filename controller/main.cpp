@@ -145,39 +145,51 @@ QString update_sql_subAccount = "update SubAccount set quantity_UP = ?, quantity
 
 int help_aton(const char *cp)
 {
-  int           val;
-  unsigned char base;
-            char c;
+    int           val;
+    unsigned char base;
+    char c;
 
-  c = *cp;
+    c = *cp;
   /*
    * Collect number up to ``.''.
    * Values are specified as for C:
    * 0x=hex, 0=octal, 1-9=decimal.
    */
-  if (!isdigit(c))
-    return (0);
-  val = 0;
-  base = 10;
-  if (c == '0') {
-    c = *++cp;
-    if (c == 'x' || c == 'X') {
-      base = 16;
-      c = *++cp;
-    } else
-      base = 8;
-  }
-  for (;;) {
-    if (isdigit(c)) {
-      val = (val * base) + (int)(c - '0');
-      c = *++cp;
-    } else if (base == 16 && isxdigit(c)) {
-      val = (val << 4) | (int)(c + 10 - (islower(c) ? 'a' : 'A'));
-      c = *++cp;
-    } else
-      break;
-  }
-  return val;
+    if (!isdigit(c))
+        return (0);
+    val = 0;
+    base = 10;
+    if (c == '0') 
+    {
+        c = *++cp;
+        if (c == 'x' || c == 'X') 
+        {
+            base = 16;
+            c = *++cp;
+        } 
+        else
+        {
+            base = 8;
+        }
+    }
+    for (;;) 
+    {
+        if (isdigit(c)) 
+        {
+            val = (val * base) + (int)(c - '0');
+            c = *++cp;
+        } 
+        else if (base == 16 && isxdigit(c)) 
+        {
+            val = (val << 4) | (int)(c + 10 - (islower(c) ? 'a' : 'A'));
+            c = *++cp;
+        } 
+        else
+        {
+            break;
+        }
+    }
+    return val;
 }
 
 
@@ -323,8 +335,7 @@ void DeleteExpiredData()
 
     for(iLoop = 0; iLoop < 4; iLoop++)
     {
-        QString strQuery = QString("Delete from %1 where time < '%2'")
-                .arg(tableName.at(iLoop)).arg(strLine);
+        QString strQuery = QString("Delete from %1 where time < '%2'").arg(tableName.at(iLoop)).arg(strLine);
         bool ret = query.exec(strQuery);
         if(ret)
             qDebug() << QString("Delete from %1 where time < '%2' : success").arg(tableName.at(iLoop)).arg(strLine);

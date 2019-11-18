@@ -63,8 +63,6 @@ unsigned char gaucIapBuffer[1024];
 
 #define MAKE_RECT_MASK(mask) (mask <<(APP_EXE_ECO_NUM + APP_EXE_PRESSURE_METER))
 
-
-
 #define is_B3_FULL(ulValue) ((ulValue / gCcb.PMParam.afDepth[DISP_PM_PM3] * 100) >= B3_FULL)
 
 //#define is_B2_FULL(ulValue) ((ulValue / gCcb.PMParam.afDepth[DISP_PM_PM2] * 100) >= B2_FULL)
@@ -83,7 +81,6 @@ unsigned char gaucIapBuffer[1024];
 int Check_TOC_Alarm = 0;
 int AlarmHighWorkPress = 0;
 const float cor_H_PurtTank = 0.08;
-int isAdaptPreAlarm = 0;
 int isAdaptQtwFlush = 0;
 
 //end
@@ -258,7 +255,6 @@ void CcbDefaultModbusCallBack(int code,void *param)
     }
 }
 
-
 int DispGetUpCirFlag(void)
 {
     if (DISP_WORK_STATE_RUN == gCcb.curWorkState.iMainWorkState4Pw
@@ -268,7 +264,6 @@ int DispGetUpCirFlag(void)
     }
 
     return 0;
-
 }
 
 int DispGetTankCirFlag(void)
@@ -288,7 +283,7 @@ int DispGetTocCirFlag(void)
     if (DISP_WORK_STATE_RUN == gCcb.curWorkState.iMainWorkState4Pw
         && DISP_WORK_SUB_RUN_CIR == gCcb.curWorkState.iSubWorkState4Pw)
     {
-       return gCcb.bit1TocOngoing;
+        return gCcb.bit1TocOngoing;
     }
 
     return 0;
@@ -303,7 +298,7 @@ int DispGetUpQtwFlag(void)
         if (gCcb.aHandler[iLoop].bit1Qtw 
             && APP_DEV_HS_SUB_HYPER == gCcb.aHandler[iLoop].iDevType) 
         {
-             return 1;
+            return 1;
         }
     }
 
@@ -319,7 +314,7 @@ int DispGetEdiQtwFlag(void)
         if (gCcb.aHandler[iLoop].bit1Qtw 
             && APP_DEV_HS_SUB_REGULAR == gCcb.aHandler[iLoop].iDevType) 
         {
-             return 1;
+            return 1;
         }
     }
 
@@ -2938,7 +2933,7 @@ void work_start_qtw(void *para)
             CanCcbTransState(DISP_WORK_STATE_RUN,DISP_WORK_SUB_RUN_INIT);//2019.3.29 add
 
             /* 2018/01/05 add extra 10 seconds for flush according to ZHANG Chunhe */
-            if ((gulSecond - pCcb->ulAdapterAgingCount > 60) || isAdaptPreAlarm)
+            if ((gulSecond - pCcb->ulAdapterAgingCount > 60))
             {
                 gCcb.aHandler[iIndex].bit1PendingQtw = 1;
                 
@@ -3041,8 +3036,10 @@ void work_start_qtw(void *para)
         
                     VOS_LOG(VOS_LOG_WARNING," DISP_WORK_STATE_LPP %d",iRet);  
                 
-                    CanCcbTransState(DISP_WORK_STATE_LPP,DISP_WORK_SUB_IDLE);        
-                    
+                    CanCcbTransState(DISP_WORK_STATE_LPP,DISP_WORK_SUB_IDLE);
+                            
+                    gCcb.aHandler[iIndex].bit1PendingQtw = 0;
+
                     return;
                 }
         
@@ -4850,19 +4847,21 @@ void CanCcbPmMeasurePostProcess(int iPmId)
                     }                
                 }  
                 //2019.9.29 add
-                if (haveB3(&gCcb)
-                   && CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) < CcbGetSp9())
+                if (haveB3(&gCcb))
                 {
-                    CanPrepare4Pm2Full();
-
-                    if (gCcb.bit1ProduceWater )
+                    float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
+                    if(fValue < CcbGetSp9())
                     {
-                       /* stop producing water */
-                       if (!SearchWork(work_stop_pw))
-                       {
-                           CcbInnerWorkStopProduceWater();
-                       }
+                        if (gCcb.bit1ProduceWater)
+                        {
+                            /* stop producing water */
+                            if (!SearchWork(work_stop_pw))
+                            {
+                                CcbInnerWorkStopProduceWater();
+                            }
+                        }
                     }
+
                 }
             }
         }
@@ -4903,7 +4902,6 @@ void CanCcbPmMeasurePostProcess(int iPmId)
                             if (fValue >= fThd)
                             {
                                 gCcb.bit1B1UnderPressureDetected = 0;
-                                isAdaptPreAlarm = 0;
                             }
                             else
                             {
@@ -4998,18 +4996,19 @@ void CanCcbPmMeasurePostProcess(int iPmId)
                     }                
                 }  
                 //2019.9.29 add
-                if (haveB3(&gCcb)
-                   && CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) < CcbGetSp9())
+                if (haveB3(&gCcb))
                 {
-                    CanPrepare4Pm2Full();
-
-                    if (gCcb.bit1ProduceWater )
+                    float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
+                    if(fValue < CcbGetSp9())
                     {
-                       /* stop producing water */
-                       if (!SearchWork(work_stop_pw))
-                       {
-                           CcbInnerWorkStopProduceWater();
-                       }
+                        if (gCcb.bit1ProduceWater)
+                        {
+                            /* stop producing water */
+                            if (!SearchWork(work_stop_pw))
+                            {
+                                CcbInnerWorkStopProduceWater();
+                            }
+                        }
                     }
                 }
 
@@ -10570,7 +10569,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 return ;
             }
             
-            for (iLoop = 0; iLoop < 10; iLoop++) //延时测进水压�?
+            for (iLoop = 0; iLoop < 10; iLoop++) //延时测进水压?
             {
                 /* get B1 reports from exe */
                 iRet = CcbGetPmValue(pWorkItem->id,APP_EXE_PM1_NO,1);
@@ -13078,7 +13077,7 @@ void work_start_lpp(void *para)
 
     if(MACHINE_ADAPT == gCcb.ulMachineType)
     {
-        isAdaptPreAlarm = 1;
+        gCcb.ulAdapterAgingCount = 0XFFFFFF00;
     }
 
 }
@@ -14459,6 +14458,8 @@ void CcbAddFmReportWork(WORK_SETUP_REPORT_STRU *pRpt )
 
 void MainSecondTask4MainState()
 {
+    int iLoop;
+
     printf("check Ro Alarm: 00\r\n");
     switch(gCcb.curWorkState.iMainWorkState)
     {
@@ -14554,39 +14555,38 @@ void MainSecondTask4MainState()
                 /* check SP5 */
                 {
                    /* check pressure */
-                   if (!gCcb.bit1ProduceWater)
-                   {
+                    if (!gCcb.bit1ProduceWater)
+                    {
                        //2019.09.29 add
-                       if(haveB3(&gCcb))
-                       {
-                           if ((CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) < CcbGetSp5())
-                                && (CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) > 50.0))
-                           {
-                               /* start Nomal Run */
-                               if (DISP_WORK_SUB_IDLE == gCcb.curWorkState.iSubWorkState)
-                               {
-                                   if (!SearchWork(work_normal_run))
-                                   {
-                                       CcbInnerWorkRun();
-                                   }
-                               }
-                           }
-                       }//end 2019.9.29
-                       else
-                       {
-                           if (CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) < CcbGetSp5())
-                           {
-                               /* start Nomal Run */
-                               if (DISP_WORK_SUB_IDLE == gCcb.curWorkState.iSubWorkState)
-                               {
-                                   if (!SearchWork(work_normal_run))
-                                   {
-                                       CcbInnerWorkRun();
-                                   }
-                               }
-                           }
-                       }
-
+                        if(haveB3(&gCcb))
+                        {
+                            if ((CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) < CcbGetSp5())
+                                 && (CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) > 50.0))
+                            {
+                                /* start Nomal Run */
+                                if (DISP_WORK_SUB_IDLE == gCcb.curWorkState.iSubWorkState)
+                                {
+                                    if (!SearchWork(work_normal_run))
+                                    {
+                                        CcbInnerWorkRun();
+                                    }
+                                }
+                            }
+                        }//end 2019.9.29
+                        else
+                        {
+                            if (CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) < CcbGetSp5())
+                            {
+                                /* start Nomal Run */
+                                if (DISP_WORK_SUB_IDLE == gCcb.curWorkState.iSubWorkState)
+                                {
+                                    if (!SearchWork(work_normal_run))
+                                    {
+                                        CcbInnerWorkRun();
+                                    }
+                                }
+                            }
+                        }
                    }
                 }
             }   
@@ -14606,156 +14606,6 @@ void MainSecondTask4MainState()
             break;
         }
 
-#if 0
-        if (gCcb.bit1AlarmRej || gCcb.bit1AlarmRoPw)
-        {
-            unsigned int ulMask =  (1 << APP_EXE_I1_NO) | (1 << APP_EXE_I2_NO);
-            
-            if (ulMask != CcbGetIObjState(ulMask))
-            {
-               /* Active Report Flag */
-               WORK_SETUP_REPORT_STRU Rpt;
-               Rpt.ulMask  = ulMask;
-               Rpt.ulValue = ulMask;
-               
-               CcbAddExeReportWork(&Rpt);
-               
-            }
-            else
-            {
-                //int   iRet;
-                {
-                    float fRej;
-
-                    fRej = CcbCalcREJ();
-           
-                    if (fRej >= CcbGetSp2())
-                    {
-                        /* alarem */
-                        gCcb.ulRejCheckCount++;
-
-                        if (gCcb.ulRejCheckCount >= DEFAULT_REJ_CHECK_NUMBER)
-                        {
-                            gCcb.bit1AlarmRej = FALSE;
-        
-                            /* Notify */
-                            if ((gCcb.ulFiredAlarmFlags  & ALARM_REJ))
-                            {
-                                gCcb.ulFiredAlarmFlags &= ~ALARM_REJ;
-                                
-                                CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_RESIDUE_RATIO,FALSE);
-                            
-                            }
-                        }
-                    }
-                    else
-                    {
-                        gCcb.ulRejCheckCount = 0;
-                    }
-                    
-                } 
-
-                if (gCcb.bit1AlarmRoPw)
-                {
-                    if (gCcb.ExeBrd.aEcoObjs[APP_EXE_I2_NO].Value.eV.fWaterQ < CcbGetSp3())
-                    {
-                        /* alarem */
-                        gCcb.bit1AlarmRoPw = FALSE;
-                    
-                        /* Notify */
-                        if ((gCcb.ulFiredAlarmFlags  & ALARM_ROPW))
-                        {
-                            gCcb.ulFiredAlarmFlags &= ~ALARM_ROPW;
-                            
-                            CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_RO_PRODUCT_CONDUCTIVITY,FALSE);
-                        
-                        }
-                    }
-                }
-                
-            }
-
-            if (gCcb.bit1AlarmRej)
-            {
-                if (!(gCcb.ulFiredAlarmFlags  & ALARM_REJ))
-                {
-                    /* fire alarm */
-                    if (gulSecond - gCcb.ulAlarmRejTick >= 5) //60*5
-                    {
-                        gCcb.ulFiredAlarmFlags |= ALARM_REJ;
-        
-                        CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_RESIDUE_RATIO, TRUE);
-                    }
-                }
-            }
-
-            if (gCcb.bit1AlarmRoPw)
-            {
-                if (!(gCcb.ulFiredAlarmFlags  & ALARM_ROPW))
-                {
-                    /* fire alarm */
-                    if (gulSecond - gCcb.ulAlarmRoPwTick >= 5)
-                    {
-                        gCcb.ulFiredAlarmFlags |= ALARM_ROPW;
-        
-                        CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_RO_PRODUCT_CONDUCTIVITY,TRUE);
-                    }
-                }
-            }           
-            
-        }
-
-        if (gCcb.bit1AlarmEDI)
-        {
-            unsigned int ulMask =  (1 << APP_EXE_I3_NO);
-            
-            if (ulMask != CcbGetIObjState(ulMask))
-            {
-               /* Active Report Flag */
-               WORK_SETUP_REPORT_STRU Rpt;
-               Rpt.ulMask  = ulMask;
-               Rpt.ulValue = ulMask;
-               
-               CcbAddExeReportWork(&Rpt);
-               
-            }
-            else
-            {
-                if ((gCcb.ExeBrd.aEcoObjs[APP_EXE_I3_NO].Value.eV.fWaterQ >= CcbGetSp4()))
-                {
-                    /*alarem */
-                    gCcb.bit1AlarmEDI   = FALSE;
-
-                    /* Notify Alarm */
-                    if ((gCcb.ulFiredAlarmFlags  & ALARM_EDI))
-                    {
-                        /* fire alarm */
-                        gCcb.ulFiredAlarmFlags &= ~ALARM_EDI;
-
-                        CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE,FALSE);                            
-                    }
-                    
-                }
- 
-            }
-
-            if (gCcb.bit1AlarmEDI)
-            {
-                if ((gulSecond - gCcb.ulAlarmEDITick) >= gCcb.TMParam.aulTime[TIME_PARAM_NormRunT3]/1000)
-                {
-                    if (!(gCcb.ulFiredAlarmFlags  & ALARM_EDI))
-                    {
-                        /* fire alarm */
-                        gCcb.ulFiredAlarmFlags |= ALARM_EDI;
-
-                        CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE,TRUE);                            
-                    }
-                
-                }
-            }
-        }  
-   #endif
-
         /*Check B3 */
         if (!CcbGetPmObjState(1 << APP_EXE_PM3_NO)
             && haveB3(&gCcb))
@@ -14774,28 +14624,51 @@ void MainSecondTask4MainState()
             //if (gulSecond - gCcb.ulB1UnderPressureTick >= 60)
             if (gulSecond - gCcb.ulB1UnderPressureTick >= DEFAULT_LPP_CHECK_NUMBER)
             {
-               /* move to LPP state */
-               if (!SearchWork(work_start_lpp))
-               {
-                   CcbInnerWorkLpp();
-               }   
+                //2019.11.08 add for adpet, 
+                //TOTEST
+                if(MACHINE_ADAPT == gCcb.ulMachineType)
+                {
+                    for(iLoop = 0; iLoop < MAX_HANDLER_NUM; iLoop++)
+                    {
+                        if (gCcb.aHandler[iLoop].bit1Qtw)
+                        {
+                            CcbInnerWorkStopQtw(iLoop);
+                        }
+                        if (gCcb.aHandler[iLoop].bit1PendingQtw)
+                        {
+                            DISPHANDLE hdl ;
+                            hdl = SearchWork(work_start_qtw);
+                            if (hdl)
+                            {
+                                CcbCancelWork(hdl);
+                            }
+                            gCcb.aHandler[iLoop].bit1PendingQtw = 0;
+                        }
+                    }
+                } 
+
+                /* move to LPP state */
+                if (!SearchWork(work_start_lpp))
+                {
+                    CcbInnerWorkLpp();
+                }   
 
                /* Cancel Running task */
                {
-                   DISPHANDLE hdl ;
-                   hdl = SearchWork(work_init_run);
+                    DISPHANDLE hdl ;        
+                    hdl = SearchWork(work_init_run);
 
-                   if (hdl)
-                   {
-                       CcbCancelWork(hdl);
-                   }
+                    if (hdl)
+                    {
+                        CcbCancelWork(hdl);
+                    }
 
-                   hdl = SearchWork(work_normal_run);
+                    hdl = SearchWork(work_normal_run);
 
-                   if (hdl)
-                   {
-                       CcbCancelWork(hdl);
-                   }                   
+                    if (hdl)
+                    {
+                        CcbCancelWork(hdl);
+                    }                   
                }
             }
         }

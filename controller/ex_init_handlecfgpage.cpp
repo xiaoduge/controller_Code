@@ -63,7 +63,6 @@ void Ex_Init_HandleCfgpage::buildTranslation()
     m_pBtnSaveHandler->setText(tr("Save"));
 
     m_pTblWidget->setTabText(0,tr("Dispenser"));
-
 }
 
 void Ex_Init_HandleCfgpage::switchLanguage()
@@ -102,7 +101,6 @@ void Ex_Init_HandleCfgpage::finishSave()
 
 void Ex_Init_HandleCfgpage::on_CmbIndexChange_trx_type(int index)
 {
-
     int iIdx = m_pcombTrxType->currentIndex();
 
     if (APP_TRX_ZIGBEE == iIdx
@@ -169,7 +167,6 @@ void Ex_Init_HandleCfgpage::initUi()
     m_plbHandlerDef = new QLabel;
     m_plbHandlerType = new QLabel;
     m_plbHandlerOper = new QLabel;
-
 
     m_pcombTrxType     = new QComboBox;
 
@@ -254,53 +251,53 @@ void Ex_Init_HandleCfgpage::on_pushButton_QueryHandler()
     switch (m_pcombTrxType->currentIndex())
     {
     case APP_TRX_CAN:
-        {
-            IAP_CAN_CMD_STRU *pCmd = (IAP_CAN_CMD_STRU *)buf;
+    {
+        IAP_CAN_CMD_STRU *pCmd = (IAP_CAN_CMD_STRU *)buf;
 
-            APP_PACKET_HO_STRU *pHo = (APP_PACKET_HO_STRU *)pCmd->data;
-
-
-            pCmd->iCanChl     = 0;
-            pCmd->ucCmd       = SAPP_CMD_DATA;
-            pCmd->iPayLoadLen = APP_POROTOL_PACKET_HO_COMMON_LENGTH;
-            pCmd->ulCanId     = APP_PROTOL_CANID_BROADCAST;
-
-            pHo->hdr.ucLen     = 1;
-            pHo->hdr.ucTransId = 0XF0;
-            pHo->hdr.ucDevType = APP_DEV_TYPE_MAIN_CTRL;
-            pHo->hdr.ucMsgType = APP_PACKET_HAND_OPERATION;
-
-            pHo->ucOpsType     = APP_PACKET_HO_ADR_QRY;
-
-            DispAfEntry(pCmd);
+        APP_PACKET_HO_STRU *pHo = (APP_PACKET_HO_STRU *)pCmd->data;
 
 
-        }
+        pCmd->iCanChl     = 0;
+        pCmd->ucCmd       = SAPP_CMD_DATA;
+        pCmd->iPayLoadLen = APP_POROTOL_PACKET_HO_COMMON_LENGTH;
+        pCmd->ulCanId     = APP_PROTOL_CANID_BROADCAST;
+
+        pHo->hdr.ucLen     = 1;
+        pHo->hdr.ucTransId = 0XF0;
+        pHo->hdr.ucDevType = APP_DEV_TYPE_MAIN_CTRL;
+        pHo->hdr.ucMsgType = APP_PACKET_HAND_OPERATION;
+
+        pHo->ucOpsType     = APP_PACKET_HO_ADR_QRY;
+
+        DispAfEntry(pCmd);
+
         break;
+    }
     case APP_TRX_ZIGBEE:
-        {
+    {
 
-            IAP_ZB_CMD_STRU *pCmd = (IAP_ZB_CMD_STRU *)buf;
+        IAP_ZB_CMD_STRU *pCmd = (IAP_ZB_CMD_STRU *)buf;
 
-            APP_PACKET_HO_STRU *pHo = (APP_PACKET_HO_STRU *)pCmd->data;
+        APP_PACKET_HO_STRU *pHo = (APP_PACKET_HO_STRU *)pCmd->data;
 
-            pCmd->addr.addrMode = AddrBroadcast;
-            pCmd->addr.addr.shortAddr = 0XFFFF;
+        pCmd->addr.addrMode = AddrBroadcast;
+        pCmd->addr.addr.shortAddr = 0XFFFF;
 
-            pCmd->iPayLoadLen = APP_PROTOL_HEADER_LEN;
+        pCmd->iPayLoadLen = APP_PROTOL_HEADER_LEN;
 
-            pHo->hdr.ucLen     = 1;
-            pHo->hdr.ucTransId = 0XF0;
-            pHo->hdr.ucDevType = APP_DEV_TYPE_MAIN_CTRL;
-            pHo->hdr.ucMsgType = APP_PACKET_HAND_OPERATION;
+        pHo->hdr.ucLen     = 1;
+        pHo->hdr.ucTransId = 0XF0;
+        pHo->hdr.ucDevType = APP_DEV_TYPE_MAIN_CTRL;
+        pHo->hdr.ucMsgType = APP_PACKET_HAND_OPERATION;
 
-            pHo->ucOpsType     = APP_PACKET_HO_ADR_QRY;
+        pHo->ucOpsType     = APP_PACKET_HO_ADR_QRY;
 
-            pCmd->iPayLoadLen += pHo->hdr.ucLen;
+        pCmd->iPayLoadLen += pHo->hdr.ucLen;
 
-            DispZigbeeEntry(pCmd);
-        }
+        DispZigbeeEntry(pCmd);
+
         break;
+    }
 
     }
     m_wndMain->prepareKeyStroke();
@@ -404,74 +401,74 @@ void Ex_Init_HandleCfgpage::on_pushButton_CfgHandler()
                 switch (m_pcombTrxType->currentIndex())
                 {
                 case APP_TRX_CAN:
-                    {
-                        IAP_CAN_CMD_STRU *pCmd = (IAP_CAN_CMD_STRU *)buf;
+                {
+                    IAP_CAN_CMD_STRU *pCmd = (IAP_CAN_CMD_STRU *)buf;
 
-                        APP_PACKET_HO_STRU *pHo = (APP_PACKET_HO_STRU *)pCmd->data;
+                    APP_PACKET_HO_STRU *pHo = (APP_PACKET_HO_STRU *)pCmd->data;
 
-                        pHandler = (HandlerItem *)m_pListWgtHandler->itemWidget(pItem);
+                    pHandler = (HandlerItem *)m_pListWgtHandler->itemWidget(pItem);
 
-                        QString strSn = pHandler->getItemText(HANDLER_ITEM_SN);
+                    QString strSn = pHandler->getItemText(HANDLER_ITEM_SN);
 
 
-                        pCmd->iCanChl     = 0;
-                        pCmd->ucCmd       = SAPP_CMD_DATA;
-                        pCmd->iPayLoadLen = APP_PROTOL_HEADER_LEN;
-                        pCmd->ulCanId     = APP_PROTOL_CANID_BROADCAST;
+                    pCmd->iCanChl     = 0;
+                    pCmd->ucCmd       = SAPP_CMD_DATA;
+                    pCmd->iPayLoadLen = APP_PROTOL_HEADER_LEN;
+                    pCmd->ulCanId     = APP_PROTOL_CANID_BROADCAST;
 
-                        pHo->hdr.ucLen     = APP_SN_LENGTH + 2 + 1;
-                        pHo->hdr.ucTransId = 0XF0;
-                        pHo->hdr.ucDevType = APP_DEV_TYPE_MAIN_CTRL;
-                        pHo->hdr.ucMsgType = APP_PACKET_HAND_OPERATION;
+                    pHo->hdr.ucLen     = APP_SN_LENGTH + 2 + 1;
+                    pHo->hdr.ucTransId = 0XF0;
+                    pHo->hdr.ucDevType = APP_DEV_TYPE_MAIN_CTRL;
+                    pHo->hdr.ucMsgType = APP_PACKET_HAND_OPERATION;
 
-                        pHo->ucOpsType     = APP_PACKET_HO_ADR_SET;
+                    pHo->ucOpsType     = APP_PACKET_HO_ADR_SET;
 
-                        QByteArray bytes = strSn.toAscii();
+                    QByteArray bytes = strSn.toAscii();
 
-                        memcpy(&pHo->aucData[0],bytes.data(),bytes.size());
+                    memcpy(&pHo->aucData[0],bytes.data(),bytes.size());
 
-                        pHo->aucData[APP_SN_LENGTH + 0] = ((iLoop + APP_HAND_SET_BEGIN_ADDRESS) >> 8) & 0XFF;
-                        pHo->aucData[APP_SN_LENGTH + 1] = ((iLoop + APP_HAND_SET_BEGIN_ADDRESS) >> 0) & 0XFF;
+                    pHo->aucData[APP_SN_LENGTH + 0] = ((iLoop + APP_HAND_SET_BEGIN_ADDRESS) >> 8) & 0XFF;
+                    pHo->aucData[APP_SN_LENGTH + 1] = ((iLoop + APP_HAND_SET_BEGIN_ADDRESS) >> 0) & 0XFF;
 
-                        pCmd->iPayLoadLen += pHo->hdr.ucLen;
+                    pCmd->iPayLoadLen += pHo->hdr.ucLen;
 
-                        DispAfEntry(pCmd);
-                    }
+                    DispAfEntry(pCmd);
+                }
                     break;
                 case APP_TRX_ZIGBEE:
-                    {
+                {
 
-                        IAP_ZB_CMD_STRU *pCmd = (IAP_ZB_CMD_STRU *)buf;
+                    IAP_ZB_CMD_STRU *pCmd = (IAP_ZB_CMD_STRU *)buf;
 
-                        APP_PACKET_HO_STRU *pHo = (APP_PACKET_HO_STRU *)pCmd->data;
+                    APP_PACKET_HO_STRU *pHo = (APP_PACKET_HO_STRU *)pCmd->data;
 
-                        pHandler = (HandlerItem *)m_pListWgtHandler->itemWidget(pItem);
+                    pHandler = (HandlerItem *)m_pListWgtHandler->itemWidget(pItem);
 
-                        QString strSn = pHandler->getItemText(HANDLER_ITEM_SN);
+                    QString strSn = pHandler->getItemText(HANDLER_ITEM_SN);
 
-                        pCmd->addr.addrMode = AddrBroadcast;
-                        pCmd->addr.addr.shortAddr = 0XFFFF;
+                    pCmd->addr.addrMode = AddrBroadcast;
+                    pCmd->addr.addr.shortAddr = 0XFFFF;
 
-                        pCmd->iPayLoadLen = APP_PROTOL_HEADER_LEN;
+                    pCmd->iPayLoadLen = APP_PROTOL_HEADER_LEN;
 
-                        pHo->hdr.ucLen     = APP_SN_LENGTH + 2 + 1;
-                        pHo->hdr.ucTransId = 0XF0;
-                        pHo->hdr.ucDevType = APP_DEV_TYPE_MAIN_CTRL;
-                        pHo->hdr.ucMsgType = APP_PACKET_HAND_OPERATION;
+                    pHo->hdr.ucLen     = APP_SN_LENGTH + 2 + 1;
+                    pHo->hdr.ucTransId = 0XF0;
+                    pHo->hdr.ucDevType = APP_DEV_TYPE_MAIN_CTRL;
+                    pHo->hdr.ucMsgType = APP_PACKET_HAND_OPERATION;
 
-                        pHo->ucOpsType     = APP_PACKET_HO_ADR_SET;
+                    pHo->ucOpsType     = APP_PACKET_HO_ADR_SET;
 
-                        QByteArray bytes = strSn.toAscii();
+                    QByteArray bytes = strSn.toAscii();
 
-                        memcpy(&pHo->aucData[0],bytes.data(),bytes.size());
+                    memcpy(&pHo->aucData[0],bytes.data(),bytes.size());
 
-                        pHo->aucData[APP_SN_LENGTH + 0] = ((iLoop + APP_HAND_SET_BEGIN_ADDRESS) >> 8) & 0XFF;
-                        pHo->aucData[APP_SN_LENGTH + 1] = ((iLoop + APP_HAND_SET_BEGIN_ADDRESS) >> 0) & 0XFF;
+                    pHo->aucData[APP_SN_LENGTH + 0] = ((iLoop + APP_HAND_SET_BEGIN_ADDRESS) >> 8) & 0XFF;
+                    pHo->aucData[APP_SN_LENGTH + 1] = ((iLoop + APP_HAND_SET_BEGIN_ADDRESS) >> 0) & 0XFF;
 
-                        pCmd->iPayLoadLen += pHo->hdr.ucLen;
+                    pCmd->iPayLoadLen += pHo->hdr.ucLen;
 
-                        DispZigbeeEntry(pCmd);
-                    }
+                    DispZigbeeEntry(pCmd);
+                }
                     break;
 
                 }
@@ -493,51 +490,49 @@ void Ex_Init_HandleCfgpage::on_pushButton_ResetHandler()
     switch (m_pcombTrxType->currentIndex())
     {
     case APP_TRX_CAN:
-        {
-            IAP_CAN_CMD_STRU *pCmd = (IAP_CAN_CMD_STRU *)buf;
+    {
+        IAP_CAN_CMD_STRU *pCmd = (IAP_CAN_CMD_STRU *)buf;
 
-            APP_PACKET_HO_STRU *pHo = (APP_PACKET_HO_STRU *)pCmd->data;
+        APP_PACKET_HO_STRU *pHo = (APP_PACKET_HO_STRU *)pCmd->data;
 
-            pCmd->iCanChl     = 0;
-            pCmd->ucCmd       = SAPP_CMD_DATA;
-            pCmd->ulCanId     = APP_PROTOL_CANID_BROADCAST;
-            pCmd->iPayLoadLen = APP_POROTOL_PACKET_HO_COMMON_LENGTH;
+        pCmd->iCanChl     = 0;
+        pCmd->ucCmd       = SAPP_CMD_DATA;
+        pCmd->ulCanId     = APP_PROTOL_CANID_BROADCAST;
+        pCmd->iPayLoadLen = APP_POROTOL_PACKET_HO_COMMON_LENGTH;
 
-            pHo->hdr.ucLen     = 1;
-            pHo->hdr.ucTransId = 0XF0;
-            pHo->hdr.ucDevType = APP_DEV_TYPE_MAIN_CTRL;
-            pHo->hdr.ucMsgType = APP_PACKET_HAND_OPERATION;
+        pHo->hdr.ucLen     = 1;
+        pHo->hdr.ucTransId = 0XF0;
+        pHo->hdr.ucDevType = APP_DEV_TYPE_MAIN_CTRL;
+        pHo->hdr.ucMsgType = APP_PACKET_HAND_OPERATION;
 
-            pHo->ucOpsType     = APP_PACKET_HO_ADR_RST;
+        pHo->ucOpsType     = APP_PACKET_HO_ADR_RST;
 
-            DispAfEntry(pCmd);
+        DispAfEntry(pCmd);
 
-        }
+    }
         break;
     case APP_TRX_ZIGBEE:
-        {
+    {
+        IAP_ZB_CMD_STRU *pCmd = (IAP_ZB_CMD_STRU *)buf;
 
-            IAP_ZB_CMD_STRU *pCmd = (IAP_ZB_CMD_STRU *)buf;
+        APP_PACKET_HO_STRU *pHo = (APP_PACKET_HO_STRU *)pCmd->data;
 
-            APP_PACKET_HO_STRU *pHo = (APP_PACKET_HO_STRU *)pCmd->data;
+        pCmd->addr.addrMode = AddrBroadcast;
+        pCmd->addr.addr.shortAddr = 0XFFFF;
 
+        pCmd->iPayLoadLen = APP_PROTOL_HEADER_LEN;
 
-            pCmd->addr.addrMode = AddrBroadcast;
-            pCmd->addr.addr.shortAddr = 0XFFFF;
+        pHo->hdr.ucLen     = 1;
+        pHo->hdr.ucTransId = 0XF0;
+        pHo->hdr.ucDevType = APP_DEV_TYPE_MAIN_CTRL;
+        pHo->hdr.ucMsgType = APP_PACKET_HAND_OPERATION;
 
-            pCmd->iPayLoadLen = APP_PROTOL_HEADER_LEN;
+        pHo->ucOpsType     = APP_PACKET_HO_ADR_RST;
 
-            pHo->hdr.ucLen     = 1;
-            pHo->hdr.ucTransId = 0XF0;
-            pHo->hdr.ucDevType = APP_DEV_TYPE_MAIN_CTRL;
-            pHo->hdr.ucMsgType = APP_PACKET_HAND_OPERATION;
+        pCmd->iPayLoadLen += pHo->hdr.ucLen;
 
-            pHo->ucOpsType     = APP_PACKET_HO_ADR_RST;
-
-            pCmd->iPayLoadLen += pHo->hdr.ucLen;
-
-            DispZigbeeEntry(pCmd);
-        }
+        DispZigbeeEntry(pCmd);
+    }
         break;
 
     }
@@ -633,7 +628,6 @@ void Ex_Init_HandleCfgpage::on_pushButton_SaveHandler()
 
 
             strncpy(hdl[idx].name,pHandler->getItemText(HANDLER_ITEM_SN).toAscii(),APP_SN_LENGTH);
-
 
             qDebug() << __FUNCTION__ << pHandler->getItemText(HANDLER_ITEM_SN) << hdl[idx].name << hdl[idx].address << hdl[idx].type << hdl[idx].def;
         }
@@ -798,7 +792,6 @@ void Ex_Init_HandleCfgpage::addHandler(int iType,const QString& text0,const QStr
     QColor colors[] = {QColor(119,136,153),QColor(240,248,255)};
 
     qDebug() << text0 << text1;
-
 
     if (!item)
     {

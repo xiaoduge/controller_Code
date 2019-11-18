@@ -110,7 +110,6 @@ void DLoginWarningDialog::mousePressEvent(QMouseEvent *event)
 void DLoginWarningDialog::mouseMoveEvent(QMouseEvent *event)
 {
     QPoint point = event->globalPos() - m_offsetPoint;
-
     this->move(point);
 }
 

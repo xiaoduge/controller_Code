@@ -2,7 +2,6 @@
 #include <QPainter>
 #include "ExtraDisplay.h"
 
-
 CBitmapButton::CBitmapButton(QWidget *parent,int style,int bgStyle,int id) :
     QWidget(parent)
 {
@@ -218,13 +217,9 @@ void CBitmapButton::paintEvent(QPaintEvent *e)
                     QFontMetrics fm = painter.fontMetrics();
                     rectText.setY(rectText.bottom() - (fm.ascent()+fm.descent()) - rect().height() / 5);
                     painter.drawText(rectText,Qt::AlignCenter,strDst);
-//                    QTextOption option(Qt::AlignHCenter | Qt::AlignVCenter);
-//                    option.setWrapMode(QTextOption::WordWrap);
-//                    painter.drawText(rect(), strDst, option);
                 }
                 break;
            default:
-//                painter.drawText(rectText,Qt::AlignCenter,strDst);
                 QTextOption option(Qt::AlignHCenter | Qt::AlignVCenter);
                 option.setWrapMode(QTextOption::WordWrap);
                 painter.drawText(rect(), strDst, option);
@@ -319,7 +314,7 @@ void CBitmapButton::toggleState()
 
 void CBitmapButton::enable(bool bEnable)
 {
-   this->bEnable = bEnable;
+    this->bEnable = bEnable;
 }
 
 void CBitmapButton::setText(QString str,int state)

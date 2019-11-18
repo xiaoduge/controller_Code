@@ -196,74 +196,74 @@ typedef struct
 }DISP_OBJ_STRU;
 
 /* default setting for MM parameters */
-#define MM_DEFALUT_SP1 0.5//          0~1.6Mpa    B1½øË®Ñ¹Á¦ÏÂÏÞ
-#define MM_DEFALUT_SP2 92//          RO½ØÁôÂÊÏÂÏÞ,Í¨¹ý¼ÆËã¹«Ê½rejection=(I1b-I2)/I1b*100%
-#define MM_DEFALUT_SP3 50//          0~100?s/cm  RO²úË®µçµ¼ÂÊÏÂÏÞ£¨I2²âµÃ£©
-#define MM_DEFALUT_SP4 1.0//          0~18.2M .cm EDI²úË®µç×èÂÊÏÂÏÞ£¨I3²âµÃ£©
-#define MM_DEFALUT_SP5 80 //          0~2.0m  Éè±¸»Ö¸´²úË®ÒºÎ»£¨B2£©
-#define MM_DEFALUT_SP6 10 //          0~2.0m  Ë®ÏäµÍÒºÎ»±¨¾¯Ïß£¨B2£©
-#define MM_DEFALUT_SP7 16//          0~18.2M .cm UP²úË®µç×èÂÊÏÂÏÞ£¨I5£©
-#define MM_DEFALUT_SP8 80//          0~2.0m  Ô´Ë®Ïä²¹Ë®ÒºÎ»£¨B3£©
-#define MM_DEFALUT_SP9 10//          0~2.0m  Ô­Ë®ÏäµÍÎ»ÏµÍ³±£»¤Éè¶¨µã£¨B3£©
-#define MM_DEFALUT_SP10 1.0//        0~18.2M .cm Ë®ÏäË®Ë®ÖÊÏÂÏÞ£¨I4£©
-#define MM_DEFALUT_SP11 2.0//        0~18.2M .cm Ë®ÏäË®Ë®ÖÊÉÏÏÞ£¨I4£©
-#define MM_DEFALUT_SP12 1.0//        0~18.2M .cm ´¿Ë®È¡Ë®Ë®ÖÊÏÂÏÞ£¨I4£©
-#define MM_DEFALUT_SP13 2000//        0~2000?s/cm ×ÔÀ´Ë®µçµ¼ÂÊÉÏÏÞ£¨I1a£©
-#define MM_DEFALUT_SP14 100//        RO²úË®Á÷ËÙ ÉÏÏÞ100.0L/min     
-#define MM_DEFALUT_SP15 20//        RO²úË®Á÷ËÙ ÏÂÏÞ20.0L/min   
-#define MM_DEFALUT_SP16 20//        ROÆúË®Á÷ËÙ ÏÂÏÞ20.0L/min     
-#define MM_DEFALUT_SP17 1//        ¹ÜÂ·Ë®ÖÊ   ÏÂÏÞ 1M¦¸.cm     
-#define MM_DEFALUT_SP18 45//        ½øË®ÎÂ¶È ÉÏÏÞ45¡æ      
-#define MM_DEFALUT_SP19 5//        ½øË®ÎÂ¶È ÏÂÏÞ5¡æ     
-#define MM_DEFALUT_SP20 45//        RO²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ    
+#define MM_DEFALUT_SP1 0.5//          0~1.6Mpa    B1è¿›æ°´åŽ‹åŠ›ä¸‹é™
+#define MM_DEFALUT_SP2 92//          ROæˆªç•™çŽ‡ä¸‹é™,é€šè¿‡è®¡ç®—å…¬å¼rejection=(I1b-I2)/I1b*100%
+#define MM_DEFALUT_SP3 50//          0~100?s/cm  ROäº§æ°´ç”µå¯¼çŽ‡ä¸‹é™ï¼ˆI2æµ‹å¾—ï¼‰
+#define MM_DEFALUT_SP4 1.0//          0~18.2M .cm EDIäº§æ°´ç”µé˜»çŽ‡ä¸‹é™ï¼ˆI3æµ‹å¾—ï¼‰
+#define MM_DEFALUT_SP5 80 //          0~2.0m  è®¾å¤‡æ¢å¤äº§æ°´æ¶²ä½ï¼ˆB2ï¼‰
+#define MM_DEFALUT_SP6 10 //          0~2.0m  æ°´ç®±ä½Žæ¶²ä½æŠ¥è­¦çº¿ï¼ˆB2ï¼‰
+#define MM_DEFALUT_SP7 16//          0~18.2M .cm UPäº§æ°´ç”µé˜»çŽ‡ä¸‹é™ï¼ˆI5ï¼‰
+#define MM_DEFALUT_SP8 80//          0~2.0m  æºæ°´ç®±è¡¥æ°´æ¶²ä½ï¼ˆB3ï¼‰
+#define MM_DEFALUT_SP9 10//          0~2.0m  åŽŸæ°´ç®±ä½Žä½ç³»ç»Ÿä¿æŠ¤è®¾å®šç‚¹ï¼ˆB3ï¼‰
+#define MM_DEFALUT_SP10 1.0//        0~18.2M .cm æ°´ç®±æ°´æ°´è´¨ä¸‹é™ï¼ˆI4ï¼‰
+#define MM_DEFALUT_SP11 2.0//        0~18.2M .cm æ°´ç®±æ°´æ°´è´¨ä¸Šé™ï¼ˆI4ï¼‰
+#define MM_DEFALUT_SP12 1.0//        0~18.2M .cm çº¯æ°´å–æ°´æ°´è´¨ä¸‹é™ï¼ˆI4ï¼‰
+#define MM_DEFALUT_SP13 2000//        0~2000?s/cm è‡ªæ¥æ°´ç”µå¯¼çŽ‡ä¸Šé™ï¼ˆI1aï¼‰
+#define MM_DEFALUT_SP14 100//        ROäº§æ°´æµé€Ÿ ä¸Šé™100.0L/min     
+#define MM_DEFALUT_SP15 20//        ROäº§æ°´æµé€Ÿ ä¸‹é™20.0L/min   
+#define MM_DEFALUT_SP16 20//        ROå¼ƒæ°´æµé€Ÿ ä¸‹é™20.0L/min     
+#define MM_DEFALUT_SP17 1//        ç®¡è·¯æ°´è´¨   ä¸‹é™ 1MÎ©.cm     
+#define MM_DEFALUT_SP18 45//        è¿›æ°´æ¸©åº¦ ä¸Šé™45â„ƒ      
+#define MM_DEFALUT_SP19 5//        è¿›æ°´æ¸©åº¦ ä¸‹é™5â„ƒ     
+#define MM_DEFALUT_SP20 45//        ROäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ    
 #define MM_DEFALUT_SP21 5//           
-#define MM_DEFALUT_SP22 45//        EDI²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ   
+#define MM_DEFALUT_SP22 45//        EDIäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ   
 #define MM_DEFALUT_SP23 5//           
-#define MM_DEFALUT_SP24 45//        UP²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ   
+#define MM_DEFALUT_SP24 45//        UPäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ   
 #define MM_DEFALUT_SP25 5//           
-#define MM_DEFALUT_SP26 45//        UP²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ   
+#define MM_DEFALUT_SP26 45//        UPäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ   
 #define MM_DEFALUT_SP27 5//           
-#define MM_DEFALUT_SP28 45//        TOC´«¸ÐÆ÷ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ  
+#define MM_DEFALUT_SP28 45//        TOCä¼ æ„Ÿå™¨æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ  
 #define MM_DEFALUT_SP29 5//           
-#define MM_DEFALUT_SP30 15.0//        TOC½øË®Ë®ÖÊÏÂÏÞ15.0M¦¸.cm   
-#define MM_DEFALUT_SP31 1.0//        HPÑ­»·(Ë®ÏäÑ­»·)Ë®ÖÊÏÂÏÞ15.0M¦¸.cm   
-#define MM_DEFALUT_SP32 0.0//        HP²úË®Ë®ÖÊÏÂÏÞ15.0M¦¸.cm   
+#define MM_DEFALUT_SP30 15.0//        TOCè¿›æ°´æ°´è´¨ä¸‹é™15.0MÎ©.cm   
+#define MM_DEFALUT_SP31 1.0//        HPå¾ªçŽ¯(æ°´ç®±å¾ªçŽ¯)æ°´è´¨ä¸‹é™15.0MÎ©.cm   
+#define MM_DEFALUT_SP32 0.0//        HPäº§æ°´æ°´è´¨ä¸‹é™15.0MÎ©.cm   
 #define MM_DEFALUT_SP33 12.0//       bar 
 
 typedef enum
 {
-    MACHINE_PARAM_SP1 = 0,//    0~1.6Mpa    B1½øË®Ñ¹Á¦ÏÂÏÞ
-    MACHINE_PARAM_SP2,//          RO½ØÁôÂÊÏÂÏÞ,Í¨¹ý¼ÆËã¹«Ê½rejection=(I1b-I2)/I1b*100%
-    MACHINE_PARAM_SP3,//          0~100?s/cm  RO²úË®µçµ¼ÂÊÉÏÏÞ£¨I2²âµÃ£©
-    MACHINE_PARAM_SP4,//          0~18.2M .cm EDI²úË®µç×èÂÊÏÂÏÞ£¨I3²âµÃ£©
-    MACHINE_PARAM_SP5,//          0~2.0m  Éè±¸»Ö¸´²úË®ÒºÎ»£¨B2£©
-    MACHINE_PARAM_SP6,//          0~2.0m  Ë®ÏäµÍÒºÎ»±¨¾¯Ïß£¨B2£©
-    MACHINE_PARAM_SP7,//          0~18.2M .cm UP²úË®µç×èÂÊÏÂÏÞ£¨I5£©
-    MACHINE_PARAM_SP8,//          0~2.0m  Ô´Ë®Ïä²¹Ë®ÒºÎ»£¨B3£©
-    MACHINE_PARAM_SP9,//          0~2.0m  Ô­Ë®ÏäµÍÎ»ÏµÍ³±£»¤Éè¶¨µã£¨B3£©
-    MACHINE_PARAM_SP10,//        0~18.2M .cm Ë®ÏäË®Ë®ÖÊÏÂÏÞ£¨I4£©
-    MACHINE_PARAM_SP11,//        0~18.2M .cm Ë®ÏäË®Ë®ÖÊÉÏÏÞ£¨I4£©
-    MACHINE_PARAM_SP12,//        0~18.2M .cm ´¿Ë®È¡Ë®Ë®ÖÊÏÂÏÞ£¨I4£©
-    MACHINE_PARAM_SP13,//        0~2000?s/cm ×ÔÀ´Ë®µçµ¼ÂÊÉÏÏÞ£¨I1a£©
-    MACHINE_PARAM_SP14,//        RO²úË®Á÷ËÙ ÉÏÏÞ100.0L/min     
-    MACHINE_PARAM_SP15,//        RO²úË®Á÷ËÙ ÏÂÏÞ20.0L/min   
-    MACHINE_PARAM_SP16,//        ROÆúË®Á÷ËÙ ÏÂÏÞ20.0L/min     
-    MACHINE_PARAM_SP17,//        ¹ÜÂ·Ë®ÖÊ   ÏÂÏÞ 1M¦¸.cm     
-    MACHINE_PARAM_SP18,//        ½øË®ÎÂ¶È ÉÏÏÞ45¡æ      
-    MACHINE_PARAM_SP19,//        ½øË®ÎÂ¶È ÏÂÏÞ5¡æ     
-    MACHINE_PARAM_SP20,//        RO²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ    
+    MACHINE_PARAM_SP1 = 0,//    0~1.6Mpa    B1è¿›æ°´åŽ‹åŠ›ä¸‹é™
+    MACHINE_PARAM_SP2,//          ROæˆªç•™çŽ‡ä¸‹é™,é€šè¿‡è®¡ç®—å…¬å¼rejection=(I1b-I2)/I1b*100%
+    MACHINE_PARAM_SP3,//          0~100?s/cm  ROäº§æ°´ç”µå¯¼çŽ‡ä¸Šé™ï¼ˆI2æµ‹å¾—ï¼‰
+    MACHINE_PARAM_SP4,//          0~18.2M .cm EDIäº§æ°´ç”µé˜»çŽ‡ä¸‹é™ï¼ˆI3æµ‹å¾—ï¼‰
+    MACHINE_PARAM_SP5,//          0~2.0m  è®¾å¤‡æ¢å¤äº§æ°´æ¶²ä½ï¼ˆB2ï¼‰
+    MACHINE_PARAM_SP6,//          0~2.0m  æ°´ç®±ä½Žæ¶²ä½æŠ¥è­¦çº¿ï¼ˆB2ï¼‰
+    MACHINE_PARAM_SP7,//          0~18.2M .cm UPäº§æ°´ç”µé˜»çŽ‡ä¸‹é™ï¼ˆI5ï¼‰
+    MACHINE_PARAM_SP8,//          0~2.0m  æºæ°´ç®±è¡¥æ°´æ¶²ä½ï¼ˆB3ï¼‰
+    MACHINE_PARAM_SP9,//          0~2.0m  åŽŸæ°´ç®±ä½Žä½ç³»ç»Ÿä¿æŠ¤è®¾å®šç‚¹ï¼ˆB3ï¼‰
+    MACHINE_PARAM_SP10,//        0~18.2M .cm æ°´ç®±æ°´æ°´è´¨ä¸‹é™ï¼ˆI4ï¼‰
+    MACHINE_PARAM_SP11,//        0~18.2M .cm æ°´ç®±æ°´æ°´è´¨ä¸Šé™ï¼ˆI4ï¼‰
+    MACHINE_PARAM_SP12,//        0~18.2M .cm çº¯æ°´å–æ°´æ°´è´¨ä¸‹é™ï¼ˆI4ï¼‰
+    MACHINE_PARAM_SP13,//        0~2000?s/cm è‡ªæ¥æ°´ç”µå¯¼çŽ‡ä¸Šé™ï¼ˆI1aï¼‰
+    MACHINE_PARAM_SP14,//        ROäº§æ°´æµé€Ÿ ä¸Šé™100.0L/min     
+    MACHINE_PARAM_SP15,//        ROäº§æ°´æµé€Ÿ ä¸‹é™20.0L/min   
+    MACHINE_PARAM_SP16,//        ROå¼ƒæ°´æµé€Ÿ ä¸‹é™20.0L/min     
+    MACHINE_PARAM_SP17,//        ç®¡è·¯æ°´è´¨   ä¸‹é™ 1MÎ©.cm     
+    MACHINE_PARAM_SP18,//        è¿›æ°´æ¸©åº¦ ä¸Šé™45â„ƒ      
+    MACHINE_PARAM_SP19,//        è¿›æ°´æ¸©åº¦ ä¸‹é™5â„ƒ     
+    MACHINE_PARAM_SP20,//        ROäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ    
     MACHINE_PARAM_SP21,//           
-    MACHINE_PARAM_SP22,//        EDI²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ   
+    MACHINE_PARAM_SP22,//        EDIäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ   
     MACHINE_PARAM_SP23,//           
-    MACHINE_PARAM_SP24,//        UP²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ   
+    MACHINE_PARAM_SP24,//        UPäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ   
     MACHINE_PARAM_SP25,//           
-    MACHINE_PARAM_SP26,//        TUBE²úË®ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ   
+    MACHINE_PARAM_SP26,//        TUBEäº§æ°´æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ   
     MACHINE_PARAM_SP27,//           
-    MACHINE_PARAM_SP28,//        TOC´«¸ÐÆ÷ÎÂ¶È ÉÏÏÞ45¡æ ÏÂÏÞ5¡æ  
+    MACHINE_PARAM_SP28,//        TOCä¼ æ„Ÿå™¨æ¸©åº¦ ä¸Šé™45â„ƒ ä¸‹é™5â„ƒ  
     MACHINE_PARAM_SP29,//           
-    MACHINE_PARAM_SP30,//        TOC½øË®Ë®ÖÊÏÂÏÞ15.0M¦¸.cm   
-    MACHINE_PARAM_SP31,//        Ë®ÏäÑ­»·Ë®ÖÊÏÂÏÞ   
-    MACHINE_PARAM_SP32,//        HP ²úË®Ë®ÖÊÏÂÏÞ
+    MACHINE_PARAM_SP30,//        TOCè¿›æ°´æ°´è´¨ä¸‹é™15.0MÎ©.cm   
+    MACHINE_PARAM_SP31,//        æ°´ç®±å¾ªçŽ¯æ°´è´¨ä¸‹é™   
+    MACHINE_PARAM_SP32,//        HP äº§æ°´æ°´è´¨ä¸‹é™
     MACHINE_PARAM_SP33,//        Working pressure limit
     MACHINE_PARAM_SP_NUM,
 
@@ -286,7 +286,7 @@ typedef enum
     TIME_PARAM_PhWashT4,
     TIME_PARAM_PhWashT5,
     
-    TIME_PARAM_InitRunT1, //  ÏµÍ³³åÏ´Ê±¼ä 
+    TIME_PARAM_InitRunT1, //  ç³»ç»Ÿå†²æ´—æ—¶é—´ 
     
     TIME_PARAM_NormRunT1,
     TIME_PARAM_NormRunT2,
@@ -294,8 +294,8 @@ typedef enum
     TIME_PARAM_NormRunT4,
     TIME_PARAM_NormRunT5,
     
-    TIME_PARAM_N3Period,   // Ë®Ïä×ÏÍâÕÕÉäÖÜÆÚ
-    TIME_PARAM_N3Duration, // Ë®Ïä×ÏÍâÕÕÉäÊ±¼ä 
+    TIME_PARAM_N3Period,   // æ°´ç®±ç´«å¤–ç…§å°„å‘¨æœŸ
+    TIME_PARAM_N3Duration, // æ°´ç®±ç´«å¤–ç…§å°„æ—¶é—´ 
     
     TIME_PARAM_TOCT1,
     TIME_PARAM_TOCT2,
@@ -659,36 +659,36 @@ typedef struct
 
 typedef enum
 {
-    DISP_PRE_PACKLIFEDAY = 0,   //´¿»¯Öù:  0~999 DAYS    0~9999L 
-    DISP_PRE_PACKLIFEL,     //´¿»¯Öù:   0~9999L
+    DISP_PRE_PACKLIFEDAY = 0,   //çº¯åŒ–æŸ±:  0~999 DAYS    0~9999L 
+    DISP_PRE_PACKLIFEL,     //çº¯åŒ–æŸ±:   0~9999L
     DISP_AC_PACKLIFEDAY,   //AC PACK:  0~999 DAYS    0~9999L 
     DISP_AC_PACKLIFEL,     //AC PACK:   0~9999L
     DISP_T_PACKLIFEDAY,     //T PACK: 2018.10.12 ADD
     DISP_T_PACKLIFEL,       //T PACK: 2018.10.12 ADD
-    DISP_P_PACKLIFEDAY ,    //´¿»¯Öù:  0~999 DAYS    0~9999L 
-    DISP_P_PACKLIFEL ,      //´¿»¯Öù:   0~9999L 
-    DISP_U_PACKLIFEDAY ,    //´¿»¯Öù:  0~999 DAYS    0~9999L 
-    DISP_U_PACKLIFEL,       //´¿»¯Öù:   0~9999L
-    DISP_H_PACKLIFEDAY ,    //´¿»¯Öù:  0~999 DAYS    0~9999L 
-    DISP_H_PACKLIFEL,       //´¿»¯Öù:   0~9999L
-    DISP_AT_PACKLIFEDAY ,   //´¿»¯Öù:  0~999 DAYS    0~9999L 
-    DISP_AT_PACKLIFEL,      //´¿»¯Öù:   0~9999L
-    DISP_N1_UVLIFEDAY ,     //  254UV  720Ìì     8000Ð¡Ê± 
+    DISP_P_PACKLIFEDAY ,    //çº¯åŒ–æŸ±:  0~999 DAYS    0~9999L 
+    DISP_P_PACKLIFEL ,      //çº¯åŒ–æŸ±:   0~9999L 
+    DISP_U_PACKLIFEDAY ,    //çº¯åŒ–æŸ±:  0~999 DAYS    0~9999L 
+    DISP_U_PACKLIFEL,       //çº¯åŒ–æŸ±:   0~9999L
+    DISP_H_PACKLIFEDAY ,    //çº¯åŒ–æŸ±:  0~999 DAYS    0~9999L 
+    DISP_H_PACKLIFEL,       //çº¯åŒ–æŸ±:   0~9999L
+    DISP_AT_PACKLIFEDAY ,   //çº¯åŒ–æŸ±:  0~999 DAYS    0~9999L 
+    DISP_AT_PACKLIFEL,      //çº¯åŒ–æŸ±:   0~9999L
+    DISP_N1_UVLIFEDAY ,     //  254UV  720å¤©     8000å°æ—¶ 
     DISP_N1_UVLIFEHOUR,     // 
-    DISP_N2_UVLIFEDAY,      // 185UV    720Ìì     8000Ð¡Ê± 
+    DISP_N2_UVLIFEDAY,      // 185UV    720å¤©     8000å°æ—¶ 
     DISP_N2_UVLIFEHOUR,     // 
-    DISP_N3_UVLIFEDAY,      // Ë®ÏäUV    720Ìì     8000Ð¡Ê± 
+    DISP_N3_UVLIFEDAY,      // æ°´ç®±UV    720å¤©     8000å°æ—¶ 
     DISP_N3_UVLIFEHOUR,     // 
-    DISP_N4_UVLIFEDAY,      //  ¹ÜÂ·UV    720Ìì     8000Ð¡Ê± 
+    DISP_N4_UVLIFEDAY,      //  ç®¡è·¯UV    720å¤©     8000å°æ—¶ 
     DISP_N4_UVLIFEHOUR,     // 
-    DISP_N5_UVLIFEDAY,      //  TOC UV    720Ìì     8000Ð¡Ê± 
+    DISP_N5_UVLIFEDAY,      //  TOC UV    720å¤©     8000å°æ—¶ 
     DISP_N5_UVLIFEHOUR,     // 
-    DISP_W_FILTERLIFE,      //Ë®Ïä¿ÕÆø¹ýÂËÆ÷ÊÙÃü :0~999DAYS
-    DISP_T_B_FILTERLIFE,    //ÖÕ¶Ë¹ýÂËÆ÷ÊÙÃü :0~999DAYS
-    DISP_T_A_FILTERLIFE,    //ÖÕ¶Ë¹ýÂËÆ÷ÊÙÃü :0~999DAYS
-    DISP_TUBE_FILTERLIFE,   //    ¹ÜÂ·¹ýÂËÆ÷    180Ìì     
-    DISP_TUBE_DI_LIFE,      //     ¹ÜÂ·DI    180Ìì     
-    DISP_ROC12LIFEDAY,      //RO Cl2ÇåÏ´ :0~999DAYS
+    DISP_W_FILTERLIFE,      //æ°´ç®±ç©ºæ°”è¿‡æ»¤å™¨å¯¿å‘½ :0~999DAYS
+    DISP_T_B_FILTERLIFE,    //ç»ˆç«¯è¿‡æ»¤å™¨å¯¿å‘½ :0~999DAYS
+    DISP_T_A_FILTERLIFE,    //ç»ˆç«¯è¿‡æ»¤å™¨å¯¿å‘½ :0~999DAYS
+    DISP_TUBE_FILTERLIFE,   //    ç®¡è·¯è¿‡æ»¤å™¨    180å¤©     
+    DISP_TUBE_DI_LIFE,      //     ç®¡è·¯DI    180å¤©     
+    DISP_ROC12LIFEDAY,      //RO Cl2æ¸…æ´— :0~999DAYS
     DISP_CM_NUM,
 }DISP_CM_ENUM;
 

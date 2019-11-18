@@ -197,29 +197,29 @@ void Ex_Init_Syscfgpage::connectData()
 
 void Ex_Init_Syscfgpage::save()
 {
-   DISP_SUB_MODULE_SETTING_STRU  smParam = gGlobalParam.SubModSetting;
+    DISP_SUB_MODULE_SETTING_STRU  smParam = gGlobalParam.SubModSetting;
 
-   if ((Qt::Checked == m_chCfg[DISP_CFG_ElecLeakProtector]->checkState()))
-   {
-       smParam.ulFlags |= 1 << DISP_SM_ElecLeakProtector;
-   }
-   else
-   {
-       smParam.ulFlags &= ~(1 << DISP_SM_ElecLeakProtector);
-   }
+    if ((Qt::Checked == m_chCfg[DISP_CFG_ElecLeakProtector]->checkState()))
+    {
+        smParam.ulFlags |= 1 << DISP_SM_ElecLeakProtector;
+    }
+    else
+    {
+        smParam.ulFlags &= ~(1 << DISP_SM_ElecLeakProtector);
+    }
 
-   if ((Qt::Checked == m_chCfg[DISP_CFG_TankUV]->checkState()))
-   {
-       smParam.ulFlags |= 1 << DISP_SM_TankUV;
-   }
-   else
-   {
-       smParam.ulFlags &= ~(1 << DISP_SM_TankUV);
-   }
+    if ((Qt::Checked == m_chCfg[DISP_CFG_TankUV]->checkState()))
+    {
+        smParam.ulFlags |= 1 << DISP_SM_TankUV;
+    }
+    else
+    {
+        smParam.ulFlags &= ~(1 << DISP_SM_TankUV);
+    }
 
-   MainSaveSubModuleSetting(gGlobalParam.iMachineType,smParam);
+    MainSaveSubModuleSetting(gGlobalParam.iMachineType,smParam);
 
-   MainUpdateGlobalParam();
+    MainUpdateGlobalParam();
 
 }
 

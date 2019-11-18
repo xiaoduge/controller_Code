@@ -14,7 +14,6 @@ Ex_Init_Networkpage::Ex_Init_Networkpage(QObject *parent,CBaseWidget *widget ,Ma
     initUi();
     buildTranslation();
     this->hideTitleBar();
-
 }
 
 void Ex_Init_Networkpage::creatTitle()
@@ -29,7 +28,6 @@ void Ex_Init_Networkpage::buildTitles()
     QStringList stringList;
     stringList << tr("Connectivity");
     setTitles(stringList);
-
 }
 
 void Ex_Init_Networkpage::buildTranslation()
@@ -211,13 +209,13 @@ void Ex_Init_Networkpage::save()
 {
     if (m_iNetworkMask != gGlobalParam.MiscParam.iNetworkMask)
     {
-       DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;
+        DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;
 
-       MiscParam.iNetworkMask = m_iNetworkMask;
+        MiscParam.iNetworkMask = m_iNetworkMask;
 
-       MainSaveMiscParam(gGlobalParam.iMachineType,MiscParam);
+        MainSaveMiscParam(gGlobalParam.iMachineType,MiscParam);
 
-       MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
+        MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
 
     }
 
@@ -225,17 +223,16 @@ void Ex_Init_Networkpage::save()
 
 void Ex_Init_Networkpage::on_btn_clicked(int index)
 {
+    switch(index)
+    {
+    case NETWORKPAGE_BTN_SAVE:
+        save();
+        break;
+    default:
+        break;
+    }
 
-   switch(index)
-   {
-   case NETWORKPAGE_BTN_SAVE:
-       save();
-       break;
-   default:
-       break;
-   }
-
-   m_wndMain->prepareKeyStroke();
+    m_wndMain->prepareKeyStroke();
 }
 
 void Ex_Init_Networkpage::on_checkBox_changeState(int state)
@@ -252,17 +249,16 @@ void Ex_Init_Networkpage::on_checkBox_changeState(int state)
 
     //int tmp = (Qt::Checked == pChkBox->checkState()) ? 1 : 0;
 
-
     for(iLoop = 0 ; iLoop < DISPLAY_NETWORK_NUM ; iLoop++)
     {
-       if ((Qt::Checked == m_chkSwitchs[iLoop]->checkState()))
-       {
-           m_iNetworkMask |= 1 << iLoop;
-       }
-       else
-       {
-           m_iNetworkMask &= ~(1 << iLoop);
-       }
+        if ((Qt::Checked == m_chkSwitchs[iLoop]->checkState()))
+        {
+            m_iNetworkMask |= 1 << iLoop;
+        }
+        else
+        {
+            m_iNetworkMask &= ~(1 << iLoop);
+        }
     }
 
     if(Qt::Checked == m_chkSwitchs[DISPLAY_NETWORK_WIFI]->checkState())
@@ -299,14 +295,13 @@ void Ex_Init_Networkpage::leaveSubPage()
 {
     if (m_iNetworkMask != gGlobalParam.MiscParam.iNetworkMask)
     {
-       DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;
+        DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;
 
-       MiscParam.iNetworkMask = m_iNetworkMask;
+        MiscParam.iNetworkMask = m_iNetworkMask;
 
-       MainSaveMiscParam(gGlobalParam.iMachineType,MiscParam);
+        MainSaveMiscParam(gGlobalParam.iMachineType,MiscParam);
 
-       MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
-
+        MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
     }
     CSubPage::leaveSubPage();
 }
@@ -314,7 +309,6 @@ void Ex_Init_Networkpage::leaveSubPage()
 void Ex_Init_Networkpage::update()
 {
     m_pAddCheckBox->setChecked(false);
-
 
     if(gGlobalParam.MiscParam.iNetworkMask & 1 << DISPLAY_NETWORK_ZIGBEE)
     {

@@ -60,7 +60,5 @@ CosumableInsListWidgtItem::CosumableInsListWidgtItem(QWidget *parent,ConsumableI
     m_btnInstall->show();
     
     connect(m_btnInstall, SIGNAL(clicked(int)), m_owner, SLOT(on_btn_clicked(int)));
-    
-    
 }
 

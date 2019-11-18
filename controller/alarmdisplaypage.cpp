@@ -8,10 +8,10 @@
 
 AlarmDisplayPage::AlarmDisplayPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
-     int iCsIdx = 0;
-     int iAsIds = 0;
-     int iLoop;
-     int iMask;
+    int iCsIdx = 0;
+    int iAsIds = 0;
+    int iLoop;
+    int iMask;
 
     iMask = m_wndMain->getMachineNotifyMask(gGlobalParam.iMachineType,0);
     
@@ -23,7 +23,7 @@ AlarmDisplayPage::AlarmDisplayPage(QObject *parent,CBaseWidget *widget ,MainWind
        }
     }
 
-     m_aiRealNum[ALARM_TYPE_CS] = iCsIdx;
+    m_aiRealNum[ALARM_TYPE_CS] = iCsIdx;
 
     iMask = m_wndMain->getMachineAlarmMask(gGlobalParam.iMachineType,DISP_ALARM_PART0);
     
@@ -75,334 +75,332 @@ void AlarmDisplayPage::buildTitles()
 
 void AlarmDisplayPage::buildTranslation()
 {
-     int iIdx = 0;
+    int iIdx = 0;
 
-     m_lbNotName->setText(tr("Alerts"));
-     m_lbAlarmName->setText(tr("Alarms"));
+    m_lbNotName->setText(tr("Alerts"));
+    m_lbAlarmName->setText(tr("Alarms"));
 
+
+    for (iIdx = 0; iIdx < DISP_ALARM_TOTAL_NUM; iIdx++)
+    {
+        aAsIndex[DISP_ALARM_PART0][iIdx] = 0XFF;
+        aAsIndex[DISP_ALARM_PART1][iIdx] = 0XFF;
+    }
      
-     for (iIdx = 0; iIdx < DISP_ALARM_TOTAL_NUM; iIdx++)
-     {
-         aAsIndex[DISP_ALARM_PART0][iIdx] = 0XFF;
-         aAsIndex[DISP_ALARM_PART1][iIdx] = 0XFF;
-     }
-     
-     for (iIdx = 0; iIdx < m_aiRealNum[ALARM_TYPE_AS]; iIdx++)
-     {
-         switch(aAsIds[iIdx].iId)
-         {
-             /* Part One */
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP):
-             /*
-             ¼ì²é254UV
-             */
-             m_astrPartAlarm[iIdx] = tr("Check 254 UV");
+    for (iIdx = 0; iIdx < m_aiRealNum[ALARM_TYPE_AS]; iIdx++)
+    {
+        switch(aAsIds[iIdx].iId)
+        {
+         /* Part One */
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP):
+            /*
+            æ£€æŸ¥254UV
+            */
+            m_astrPartAlarm[iIdx] = tr("Check 254 UV");
 
-             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP):
-             /*
-             ¼ì²é185UV
-             */
-             m_astrPartAlarm[iIdx] = tr("Check 185 UV");
-             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP):
-             /*
-             ¼ì²éË®ÏäUV
-             */
-             m_astrPartAlarm[iIdx] = tr("Check Tank UV");
-             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TUBEUV_OOP):
-             /*
-             ¼ì²é¹ÜÂ·UV
-             */
-             m_astrPartAlarm[iIdx] = tr("Check TUBE UV");
-             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP):
-             /*
-             PRE-PackÍÑÂä
-             */
-             m_astrPartAlarm[iIdx] = tr("PRE Pack Not Detected");
-             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx;
-             break;
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP):
-             /*
-             AC-PackÍÑÂä
-             */
-             m_astrPartAlarm[iIdx] = tr("AC Pack Not Detected");
-             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx;
-             break;
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP):
-             /*
-             P-PackÍÑÂä
-             */
-             m_astrPartAlarm[iIdx] = tr("P Pack Not Detected");
-             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ATPACK_OOP):
-             /*
-             AT-PackÍÑÂä
-             */
-             m_astrPartAlarm[iIdx] = tr("AT Pack Not Detected");
-             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_HPACK_OOP):
-             /*
-             H-PackÍÑÂä
-             */
-             m_astrPartAlarm[iIdx] = tr("H Pack Not Detected");
-             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP):
-             /*
-             U-PackÍÑÂä
-             */
-             m_astrPartAlarm[iIdx] = tr("U Pack Not Detected");
-             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
-             break;
+            aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP):
+            /*
+            æ£€æŸ¥185UV
+            */
+            m_astrPartAlarm[iIdx] = tr("Check 185 UV");
+            aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP):
+            /*
+            æ£€æŸ¥æ°´ç®±U
+            */
+            m_astrPartAlarm[iIdx] = tr("Check Tank UV");
+            aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TUBEUV_OOP):
+            /*
+            æ£€æŸ¥ç®¡è·¯UV
+            */
+            m_astrPartAlarm[iIdx] = tr("Check TUBE UV");
+            aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP):
+            /*
+            PRE-Packè„±è½
+            */
+            m_astrPartAlarm[iIdx] = tr("PRE Pack Not Detected");
+            aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx;
+            break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP):
+            /*
+            AC-Packè„±è½
+            */
+            m_astrPartAlarm[iIdx] = tr("AC Pack Not Detected");
+            aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx;
+            break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP):
+            /*
+            P-Packè„±è½
+            */
+            m_astrPartAlarm[iIdx] = tr("P Pack Not Detected");
+            aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ATPACK_OOP):
+            /*
+            AT-Packè„±è½
+            */
+            m_astrPartAlarm[iIdx] = tr("AT Pack Not Detected");
+            aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_HPACK_OOP):
+            /*
+            H-Packè„±è½
+            */
+            m_astrPartAlarm[iIdx] = tr("H Pack Not Detected");
+            aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP):
+            /*
+            U-Packè„±è½
+            */
+            m_astrPartAlarm[iIdx] = tr("U Pack Not Detected");
+            aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
+            break;
 
              /* Part Two */
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE):
-             /*
-             ×ÔÀ´Ë®Ñ¹Á¦µÍ
-             */
-             m_astrPartAlarm[iIdx] = tr("Lower Tap Pres.");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_SOURCE_WATER_CONDUCTIVITY):
-             /*
-             ×ÔÀ´Ë®µçµ¼ÂÊ>Éè¶¨Öµ
-             */
-             m_astrPartAlarm[iIdx] = tr("Tap Cond. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP13]) + tr("us/cm");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_RO_PRODUCT_CONDUCTIVITY):
-             /*
-             RO²úË®>Éè¶¨Öµ
-             */
-                 
-             if (MACHINE_PURIST == gGlobalParam.iMachineType)
-             {
-                 m_astrPartAlarm[iIdx] = tr("UP Feed Cond. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP3]) + tr("us/cm");
-             }
-             else
-             {
-                 m_astrPartAlarm[iIdx] = tr("RO Product Cond. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP3]) + tr("us/cm");
-             }
-                 
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_RESIDUE_RATIO):
-             
-             /*
-             RO½ØÁôÂÊ<Éè¶¨Öµ
-             */
-             m_astrPartAlarm[iIdx] = tr("RO Rejection < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP2]) + tr("%");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE):
-             /*
-             EDI²úË®<Éè¶¨Öµ
-             */
-             m_astrPartAlarm[iIdx] = tr("EDI Product Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP4]) + tr("omg");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE):
-             /*
-             UPÈ¡Ë®<Éè¶¨Öµ
-             */
-             m_astrPartAlarm[iIdx] = tr("UP Product Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP7]) + tr("omg");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TUBE_RESISTENCE):
-             /*
-             ¹ÜÂ·Ë®ÖÊ<Éè¶¨Öµ
-             */
-             m_astrPartAlarm[iIdx] = tr("Loop Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP17]) + tr("omg");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PWTANKE_WATER_LEVEL):
-             /*
-             ´¿Ë®ÏäÒºÎ»<Éè¶¨Öµ
-             */
-             m_astrPartAlarm[iIdx] = tr("Pure Tank Level < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP6]) + tr("%");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SWTANKE_WATER_LEVEL):
-             /*
-             Ô´Ë®ÏäÒºÎ»<Éè¶¨Öµ 
-             */
-             m_astrPartAlarm[iIdx] = tr("Feed Tank Level < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP9]) + tr("%");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_PRODUCT_FLOWING_VELOCITY):
-             /*
-             RO²úË®Á÷ËÙ<Éè¶¨Öµ
-             */
-             m_astrPartAlarm[iIdx] = tr("RO Prod. Rate < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP15]) + tr("L/h");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_WASTE_FLOWING_VELOCITY):
-             /*
-             ROÆúË®Á÷ËÙ<Éè¶¨Öµ
-             */
-             m_astrPartAlarm[iIdx] = tr("RO Rej. Rate < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP16]) + tr("L/h");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PWTANK_RESISTENCE):
-             /*
-             Ë®ÏäË®ÖÊ <Éè¶¨Öµ
-             */
-             m_astrPartAlarm[iIdx] = tr("Tank Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP11]) + tr("omg");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-             /*
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE):
-             //´¿Ë®È¡Ë®<Éè¶¨Öµ
-             m_astrPartAlarm[iIdx] = tr("Feed Product Resis.") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP12]) + tr("omg");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-             */
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY):
-             /*
-             Ñ­»·Ë®ÖÊ<Éè¶¨Öµ 
-             */
-             m_astrPartAlarm[iIdx] = tr("Recir. Cond. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP31]) + tr("omg");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY):
-             /*
-             HP²úË®<Éè¶¨Öµ 
-             */
-             m_astrPartAlarm[iIdx] = tr("HP Product Cond. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP32]) + tr("omg");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE):
-             /*
-             ½øË®ÎÂ¶È>45¡æ
-             */
-             m_astrPartAlarm[iIdx] = tr("Feed Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP18]) + tr("Celsius");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_TEMPERATURE):
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE):
             /*
-            ½øË®ÎÂ¶È<5¡æ
+            è‡ªæ¥æ°´åŽ‹åŠ›ä½Ž
+            */
+            m_astrPartAlarm[iIdx] = tr("Lower Tap Pres.");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_SOURCE_WATER_CONDUCTIVITY):
+            /*
+            è‡ªæ¥æ°´ç”µå¯¼çŽ‡>è®¾å®šå€¼
+            */
+            m_astrPartAlarm[iIdx] = tr("Tap Cond. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP13]) + tr("us/cm");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_RO_PRODUCT_CONDUCTIVITY):
+            /*
+            ROäº§æ°´>è®¾å®šå€¼
+            */
+            if (MACHINE_PURIST == gGlobalParam.iMachineType)
+            {
+                m_astrPartAlarm[iIdx] = tr("UP Feed Cond. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP3]) + tr("us/cm");
+            }
+            else
+            {
+                m_astrPartAlarm[iIdx] = tr("RO Product Cond. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP3]) + tr("us/cm");
+            }
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_RESIDUE_RATIO):
+            /*
+            ROæˆªç•™çŽ‡<è®¾å®šå€¼
+            */
+            m_astrPartAlarm[iIdx] = tr("RO Rejection < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP2]) + tr("%");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE):
+            /*
+            EDIäº§æ°´<è®¾å®šå€¼
+            */
+            m_astrPartAlarm[iIdx] = tr("EDI Product Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP4]) + tr("omg");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE):
+            /*
+            UPå–æ°´<è®¾å®šå€¼
+            */
+            m_astrPartAlarm[iIdx] = tr("UP Product Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP7]) + tr("omg");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TUBE_RESISTENCE):
+            /*
+            ç®¡è·¯æ°´è´¨<è®¾å®šå€¼
+            */
+            m_astrPartAlarm[iIdx] = tr("Loop Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP17]) + tr("omg");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PWTANKE_WATER_LEVEL):
+            /*
+            çº¯æ°´ç®±æ¶²ä½<è®¾å®šå€¼
+            */
+            m_astrPartAlarm[iIdx] = tr("Pure Tank Level < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP6]) + tr("%");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SWTANKE_WATER_LEVEL):
+            /*
+            æºæ°´ç®±æ¶²ä½<è®¾å®šå€¼ 
+            */
+            m_astrPartAlarm[iIdx] = tr("Feed Tank Level < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP9]) + tr("%");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_PRODUCT_FLOWING_VELOCITY):
+            /*
+            ROäº§æ°´æµé€Ÿ<è®¾å®šå€¼
+            */
+            m_astrPartAlarm[iIdx] = tr("RO Prod. Rate < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP15]) + tr("L/h");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_WASTE_FLOWING_VELOCITY):
+            /*
+            ROå¼ƒæ°´æµé€Ÿ<è®¾å®šå€¼
+            */
+            m_astrPartAlarm[iIdx] = tr("RO Rej. Rate < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP16]) + tr("L/h");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PWTANK_RESISTENCE):
+            /*
+            æ°´ç®±æ°´è´¨ <è®¾å®šå€¼
+            */
+            m_astrPartAlarm[iIdx] = tr("Tank Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP11]) + tr("omg");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+             /*
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE):
+            //çº¯æ°´å–æ°´<è®¾å®šå€¼
+            m_astrPartAlarm[iIdx] = tr("Feed Product Resis.") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP12]) + tr("omg");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY):
+            /*
+            å¾ªçŽ¯æ°´è´¨<è®¾å®šå€¼ 
+            */
+            m_astrPartAlarm[iIdx] = tr("Recir. Cond. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP31]) + tr("omg");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY):
+            /*
+            HPäº§æ°´<è®¾å®šå€¼ 
+            */
+            m_astrPartAlarm[iIdx] = tr("HP Product Cond. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP32]) + tr("omg");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE):
+            /*
+            è¿›æ°´æ¸©åº¦>45â„ƒ
+            */
+            m_astrPartAlarm[iIdx] = tr("Feed Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP18]) + tr("Celsius");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_TEMPERATURE):
+            /*
+            è¿›æ°´æ¸©åº¦<5â„ƒ
             */
             m_astrPartAlarm[iIdx] = tr("Feed Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP19]) + tr("Celsius");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_RO_PRODUCT_TEMPERATURE):
-              /*
-              RO²úË®ÎÂ¶È>45¡æ
-              */
-              if (MACHINE_PURIST == gGlobalParam.iMachineType)
-              {
-                  m_astrPartAlarm[iIdx] = tr("UP Feed Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP20]) + tr("Celsius");
-              }
-              else
-              {
-                  m_astrPartAlarm[iIdx] = tr("RO Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP20]) + tr("Celsius");
-              }
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_RO_PRODUCT_TEMPERATURE):
+            /*
+            ROäº§æ°´æ¸©åº¦>45â„ƒ
+            */
+            if (MACHINE_PURIST == gGlobalParam.iMachineType)
+            {
+                m_astrPartAlarm[iIdx] = tr("UP Feed Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP20]) + tr("Celsius");
+            }
+            else
+            {
+                m_astrPartAlarm[iIdx] = tr("RO Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP20]) + tr("Celsius");
+            }
               
-              aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_PRODUCT_TEMPERATURE):
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_PRODUCT_TEMPERATURE):
              /*
-             RO²úË®ÎÂ¶È<5¡æ
+             ROäº§æ°´æ¸©åº¦<5â„ƒ
              */
-             if (MACHINE_PURIST == gGlobalParam.iMachineType)
-             {
-                 m_astrPartAlarm[iIdx] = tr("UP Feed Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP21]) + tr("Celsius");
-             }
-             else
-             {
-                 m_astrPartAlarm[iIdx] = tr("RO Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP21]) + tr("Celsius");
-             }
-             
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_EDI_PRODUCT_TEMPERATURE):
-             /*
-             EDI²úË®ÎÂ¶È>45¡æ
-             */
-             m_astrPartAlarm[iIdx] = tr("EDI Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP22]) + tr("Celsius");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_TEMPERATURE):
-             /*
-             EDI²úË®ÎÂ¶È<5¡æ
-             */
-             m_astrPartAlarm[iIdx] = tr("EDI Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP23]) + tr("Celsius");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE):
-             /*
-             UP²úË®ÎÂ¶È>45¡æ
-             */
-             m_astrPartAlarm[iIdx] = tr("UP Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP24]) + tr("Celsius");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE):
-             /*
-             UP²úË®ÎÂ¶È<5¡æ
-             */
-             m_astrPartAlarm[iIdx] = tr("UP Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP25]) + tr("Celsius");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_TUBE_TEMPERATURE):
-             /*
-             ¹ÜÂ·ÎÂ¶È>45¡æ
-             */
-             m_astrPartAlarm[iIdx] = tr("Loop Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP26]) + tr("Celsius");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TUBE_TEMPERATURE):
-             /*
-             ¹ÜÂ·ÎÂ¶È<5¡æ
-             */
-             m_astrPartAlarm[iIdx] = tr("Loop Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP27]) + tr("Celsius");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE):
-             /*
-             TOCÎÂ¶È>45¡æ
-             */
-             m_astrPartAlarm[iIdx] = tr("TOC Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP28]) + tr("Celsius");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE):
-             /*
-             TOCÎÂ¶È<5¡æ
-             */
-             m_astrPartAlarm[iIdx] = tr("TOC Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP29]) + tr("Celsius");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE):            
-             /*
-             TOC½øË®Ë®ÖÊ<15M¦¸¡£cm
-             */
-             m_astrPartAlarm[iIdx] = tr("TOC Feed Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP30]) + tr("omg");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW): //LEAK
-             /*
-             Leak or Tank Overflow
-             */
-             m_astrPartAlarm[iIdx] = tr("Leak or Tank Overflow");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx;
-             break;
-         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE):
-             /*
-             work pressure
-             */
-             m_astrPartAlarm[iIdx] = tr("High Work Pressure");
-             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx;
-             break;
-         }
-      }
+            if (MACHINE_PURIST == gGlobalParam.iMachineType)
+            {
+                m_astrPartAlarm[iIdx] = tr("UP Feed Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP21]) + tr("Celsius");
+            }
+            else
+            {
+                m_astrPartAlarm[iIdx] = tr("RO Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP21]) + tr("Celsius");
+            }
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_EDI_PRODUCT_TEMPERATURE):
+            /*
+            EDIäº§æ°´æ¸©åº¦>45â„ƒ
+            */
+            m_astrPartAlarm[iIdx] = tr("EDI Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP22]) + tr("Celsius");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_TEMPERATURE):
+            /*
+            EDIäº§æ°´æ¸©åº¦<5â„ƒ
+            */
+            m_astrPartAlarm[iIdx] = tr("EDI Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP23]) + tr("Celsius");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE):
+            /*
+            UPäº§æ°´æ¸©åº¦>45â„ƒ
+            */
+            m_astrPartAlarm[iIdx] = tr("UP Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP24]) + tr("Celsius");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE):
+            /*
+            UPäº§æ°´æ¸©åº¦<5â„ƒ
+            */
+            m_astrPartAlarm[iIdx] = tr("UP Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP25]) + tr("Celsius");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_TUBE_TEMPERATURE):
+            /*
+            ç®¡è·¯æ¸©åº¦>45â„ƒ
+            */
+            m_astrPartAlarm[iIdx] = tr("Loop Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP26]) + tr("Celsius");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TUBE_TEMPERATURE):
+            /*
+            ç®¡è·¯æ¸©åº¦<5â„ƒ
+            */
+            m_astrPartAlarm[iIdx] = tr("Loop Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP27]) + tr("Celsius");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE):
+            /*
+            TOCæ¸©åº¦>45â„ƒ
+            */
+            m_astrPartAlarm[iIdx] = tr("TOC Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP28]) + tr("Celsius");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE):
+            /*
+            TOCæ¸©åº¦<5â„ƒ
+            */
+            m_astrPartAlarm[iIdx] = tr("TOC Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP29]) + tr("Celsius");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE):            
+            /*
+            TOCè¿›æ°´æ°´è´¨<15MÎ©ã€‚cm
+            */
+            m_astrPartAlarm[iIdx] = tr("TOC Feed Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP30]) + tr("omg");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW): //LEAK
+            /*
+            Leak or Tank Overflow
+            */
+            m_astrPartAlarm[iIdx] = tr("Leak or Tank Overflow");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx;
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE):
+            /*
+            work pressure
+            */
+            m_astrPartAlarm[iIdx] = tr("High Work Pressure");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx;
+            break;
+        default:
+            break;
+        }
+    }
 }
 
 static QString decodeTime(unsigned int ulTime)
@@ -419,7 +417,6 @@ static QString decodeTime(unsigned int ulTime)
 static QString decodeDays(unsigned int ulDay)
 {
     QString strTime;
-
     strTime.sprintf("%d",ulDay);
 
     return strTime;
@@ -430,7 +427,6 @@ void AlarmDisplayPage:: update()
 {
     csUpdate();
     asUpdate();
-
 }
 
 void AlarmDisplayPage::switchLanguage()
@@ -446,56 +442,56 @@ void AlarmDisplayPage::createList()
 {
     int index;
 
-     QColor colors[] = {QColor(200,200,188),QColor(228, 231, 240)};
-    
-     m_listWidget[0] = new QListWidget(m_widget);
-     m_listWidget[1] = new QListWidget(m_widget);
+    QColor colors[] = {QColor(200,200,188),QColor(228, 231, 240)};
 
-     m_lbNotName = new QLabel(m_widget);
-     m_lbNotName->setGeometry(QRect(10 , 55 , 380 , 45));
-     m_lbNotName->setAlignment(Qt::AlignCenter);
+    m_listWidget[0] = new QListWidget(m_widget);
+    m_listWidget[1] = new QListWidget(m_widget);
 
-     m_listWidget[0]->setStyleSheet("background-color:transparent");
-     m_listWidget[0]->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-     m_listWidget[0]->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-     m_listWidget[0]->setFrameShape(QListWidget::NoFrame);
-     m_listWidget[0]->setGeometry(QRect(10,100 ,375,490));
+    m_lbNotName = new QLabel(m_widget);
+    m_lbNotName->setGeometry(QRect(10 , 55 , 380 , 45));
+    m_lbNotName->setAlignment(Qt::AlignCenter);
 
-     m_lbAlarmName = new QLabel(m_widget);
-     m_lbAlarmName->setGeometry(QRect(410 , 55 , 380 , 45));
-     m_lbAlarmName->setAlignment(Qt::AlignCenter);
+    m_listWidget[0]->setStyleSheet("background-color:transparent");
+    m_listWidget[0]->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    m_listWidget[0]->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_listWidget[0]->setFrameShape(QListWidget::NoFrame);
+    m_listWidget[0]->setGeometry(QRect(10,100 ,375,490));
+
+    m_lbAlarmName = new QLabel(m_widget);
+    m_lbAlarmName->setGeometry(QRect(410 , 55 , 380 , 45));
+    m_lbAlarmName->setAlignment(Qt::AlignCenter);
+
+    m_listWidget[1]->setStyleSheet("background-color:transparent");
+    m_listWidget[1]->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    m_listWidget[1]->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_listWidget[1]->setFrameShape(QListWidget::NoFrame);
+    m_listWidget[1]->setGeometry(QRect(410,100 ,380,490));
+
+    for(index = 0 ; index < m_aiRealNum[ALARM_TYPE_CS] ; index++ )
+    {
+        m_pCslistWidgetItem[index] = new QListWidgetItem;
+        m_pCslistWidgetItem[index]->setSizeHint(QSize(390 , ADCS_LIST_WIDGET_HEIGHT));
+
+        m_pCslistItem[index] = new AdcsListItem(0 ,this);
+
+        m_pCslistWidgetItem[index]->setBackground(colors[index % 2]);
+
+        m_listWidget[0]->insertItem(index,m_pCslistWidgetItem[index]);
+        m_listWidget[0]->setItemWidget(m_pCslistWidgetItem[index] , m_pCslistItem[index]);
+    }
      
-     m_listWidget[1]->setStyleSheet("background-color:transparent");
-     m_listWidget[1]->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-     m_listWidget[1]->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-     m_listWidget[1]->setFrameShape(QListWidget::NoFrame);
-     m_listWidget[1]->setGeometry(QRect(410,100 ,380,490));
+    for(index = 0 ; index < m_aiRealNum[ALARM_TYPE_AS] ; index++ )
+    {
+        m_pAslistWidgetIem[index] = new QListWidgetItem;
+        m_pAslistWidgetIem[index]->setSizeHint(QSize(390 , ADAS_LIST_WIDGET_HEIGHT));
 
-     for(index = 0 ; index < m_aiRealNum[ALARM_TYPE_CS] ; index++ )
-     {
-         m_pCslistWidgetItem[index] = new QListWidgetItem;
-         m_pCslistWidgetItem[index]->setSizeHint(QSize(390 , ADCS_LIST_WIDGET_HEIGHT));
+        m_pAslistItem[index] = new AdasListItem(0 ,this);
 
-         m_pCslistItem[index] = new AdcsListItem(0 ,this);
+        m_pAslistWidgetIem[index]->setBackground(colors[index % 2]);
 
-         m_pCslistWidgetItem[index]->setBackground(colors[index % 2]);
-
-         m_listWidget[0]->insertItem(index,m_pCslistWidgetItem[index]);
-         m_listWidget[0]->setItemWidget(m_pCslistWidgetItem[index] , m_pCslistItem[index]);
-     }
-     
-     for(index = 0 ; index < m_aiRealNum[ALARM_TYPE_AS] ; index++ )
-     {
-         m_pAslistWidgetIem[index] = new QListWidgetItem;
-         m_pAslistWidgetIem[index]->setSizeHint(QSize(390 , ADAS_LIST_WIDGET_HEIGHT));
-
-         m_pAslistItem[index] = new AdasListItem(0 ,this);
-
-         m_pAslistWidgetIem[index]->setBackground(colors[index % 2]);
-
-         m_listWidget[1]->insertItem(index,m_pAslistWidgetIem[index]);
-         m_listWidget[1]->setItemWidget(m_pAslistWidgetIem[index] , m_pAslistItem[index]);
-     }
+        m_listWidget[1]->insertItem(index,m_pAslistWidgetIem[index]);
+        m_listWidget[1]->setItemWidget(m_pAslistWidgetIem[index] , m_pAslistItem[index]);
+    }
      
 }
 
@@ -506,7 +502,8 @@ void AlarmDisplayPage::csUpdate()
     int     iLoop;
     QString strTmp;
 
-    QString astrNames[] = {
+    QString astrNames[] = 
+    {
         tr(" "),
         tr(" "),
     };
@@ -535,19 +532,13 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
 
-                /*
-                tmp = gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEDAY] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY])/ DISP_DAYININSECOND;
-                   */
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY])/DISP_DAYININSECOND) -
                       gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEDAY];
-
 
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setName(tr("Prefilter"));
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
@@ -617,11 +608,6 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
 
-                /*
-                tmp = gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEDAY] -
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY])/ DISP_DAYININSECOND;
-                    */
-
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY])/ DISP_DAYININSECOND) -
                         gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEDAY];
 
@@ -629,7 +615,6 @@ void AlarmDisplayPage::csUpdate()
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setName(tr("T Pack"));
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
@@ -645,7 +630,6 @@ void AlarmDisplayPage::csUpdate()
                 iIdx++;
             }
             break;
-
         case DISP_P_PACK:
             if (gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEL))
@@ -661,10 +645,7 @@ void AlarmDisplayPage::csUpdate()
                 
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
-                /*
-                tmp = gGlobalParam.CMParam.aulCms[DISP_P_PACKLIFEDAY] - 
-                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY])/ DISP_DAYININSECOND;
-                    */
+
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY])/ DISP_DAYININSECOND) -
                         gGlobalParam.CMParam.aulCms[DISP_P_PACKLIFEDAY];
 
@@ -672,7 +653,6 @@ void AlarmDisplayPage::csUpdate()
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
                 
@@ -704,16 +684,12 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-//                tmp = gGlobalParam.CMParam.aulCms[DISP_U_PACKLIFEDAY] -
-//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY])/ DISP_DAYININSECOND;
-
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY])/ DISP_DAYININSECOND) -
                         gGlobalParam.CMParam.aulCms[DISP_U_PACKLIFEDAY];
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
                 
@@ -726,7 +702,6 @@ void AlarmDisplayPage::csUpdate()
                 m_pCslistItem[iIdx]->setId(iIdx);
                 m_pCslistItem[iIdx]->setName(tr("U PACK"));
                 iIdx++;
-
             }
             break;     
         case DISP_AT_PACK:
@@ -745,8 +720,6 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_AT_PACKLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-//                tmp = gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEDAY] -
-//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_AT_PACKLIFEDAY])/ DISP_DAYININSECOND;
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_AT_PACKLIFEDAY])/ DISP_DAYININSECOND) -
                         gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEDAY];
 
@@ -754,7 +727,6 @@ void AlarmDisplayPage::csUpdate()
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
                 
@@ -767,7 +739,6 @@ void AlarmDisplayPage::csUpdate()
                 m_pCslistItem[iIdx]->setId(iIdx);
                 m_pCslistItem[iIdx]->setName(tr("AT PACK"));
                 iIdx++;
-                    
             }
             break;  
         case DISP_H_PACK:
@@ -786,9 +757,6 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-//                tmp = gGlobalParam.CMParam.aulCms[DISP_H_PACKLIFEDAY] -
-//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY])/ DISP_DAYININSECOND;
-
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY])/ DISP_DAYININSECOND) -
                         gGlobalParam.CMParam.aulCms[DISP_H_PACKLIFEDAY];
 
@@ -796,7 +764,6 @@ void AlarmDisplayPage::csUpdate()
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
                 
@@ -810,7 +777,6 @@ void AlarmDisplayPage::csUpdate()
                 m_pCslistItem[iIdx]->setId(iIdx);
                 m_pCslistItem[iIdx]->setName(tr("U PACK"));
                 iIdx++;
-
             }
             break;              
         case DISP_N1_UV:
@@ -829,8 +795,6 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_N1_UVLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-//                tmp = gGlobalParam.CMParam.aulCms[DISP_N1_UVLIFEDAY] -
-//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N1_UVLIFEDAY])/ DISP_DAYININSECOND;
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N1_UVLIFEDAY])/ DISP_DAYININSECOND) -
                         gGlobalParam.CMParam.aulCms[DISP_N1_UVLIFEDAY];
 
@@ -838,7 +802,6 @@ void AlarmDisplayPage::csUpdate()
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
@@ -852,7 +815,6 @@ void AlarmDisplayPage::csUpdate()
                 m_pCslistItem[iIdx]->setId(iIdx);
                 m_pCslistItem[iIdx]->setName(tr("254 UV"));
                 iIdx++;
-
             }
             break;  
         case DISP_N2_UV:
@@ -871,8 +833,6 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_N2_UVLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-//                tmp = gGlobalParam.CMParam.aulCms[DISP_N2_UVLIFEDAY] -
-//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N2_UVLIFEDAY])/ DISP_DAYININSECOND;
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N2_UVLIFEDAY])/ DISP_DAYININSECOND) -
                         gGlobalParam.CMParam.aulCms[DISP_N2_UVLIFEDAY];
 
@@ -880,7 +840,6 @@ void AlarmDisplayPage::csUpdate()
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
                 
@@ -913,15 +872,12 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_N3_UVLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-//                tmp = gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEDAY] -
-//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N3_UVLIFEDAY])/ DISP_DAYININSECOND;
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N3_UVLIFEDAY])/ DISP_DAYININSECOND) -
                         gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEDAY];
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
@@ -953,15 +909,12 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_N4_UVLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-//                tmp = gGlobalParam.CMParam.aulCms[DISP_N4_UVLIFEDAY] -
-//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N4_UVLIFEDAY])/ DISP_DAYININSECOND;
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_N4_UVLIFEDAY])/ DISP_DAYININSECOND) -
                         gGlobalParam.CMParam.aulCms[DISP_N4_UVLIFEDAY];
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
@@ -975,7 +928,6 @@ void AlarmDisplayPage::csUpdate()
                 m_pCslistItem[iIdx]->setId(iIdx);
                 m_pCslistItem[iIdx]->setName(tr("TUBE UV"));
                 iIdx++;
-
             }
             break;  
         case DISP_N5_UV:
@@ -1023,16 +975,12 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_W_FILTERLIFE]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-//                tmp = gGlobalParam.CMParam.aulCms[DISP_W_FILTERLIFE] -
-//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_W_FILTERLIFE])/ DISP_DAYININSECOND;
-
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_W_FILTERLIFE])/ DISP_DAYININSECOND) -
                         gGlobalParam.CMParam.aulCms[DISP_W_FILTERLIFE];
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
@@ -1057,16 +1005,12 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_T_B_FILTERLIFE]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-//                tmp = gGlobalParam.CMParam.aulCms[DISP_T_B_FILTERLIFE] -
-//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_B_FILTERLIFE])/ DISP_DAYININSECOND;
-
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_B_FILTERLIFE])/ DISP_DAYININSECOND) -
                         gGlobalParam.CMParam.aulCms[DISP_T_B_FILTERLIFE];
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
@@ -1098,15 +1042,12 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_T_A_FILTERLIFE]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-//                tmp = gGlobalParam.CMParam.aulCms[DISP_T_A_FILTERLIFE] -
-//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_A_FILTER])/ DISP_DAYININSECOND;
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_T_A_FILTERLIFE])/ DISP_DAYININSECOND) -
                         gGlobalParam.CMParam.aulCms[DISP_T_A_FILTERLIFE];
                 if(tmp < 0)
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
@@ -1133,9 +1074,6 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_TUBE_FILTERLIFE]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-//                tmp = gGlobalParam.CMParam.aulCms[DISP_TUBE_FILTERLIFE] -
-//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_TUBE_FILTERLIFE])/ DISP_DAYININSECOND;
-
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_TUBE_FILTERLIFE])/ DISP_DAYININSECOND) -
                         gGlobalParam.CMParam.aulCms[DISP_TUBE_FILTERLIFE];
 
@@ -1143,7 +1081,6 @@ void AlarmDisplayPage::csUpdate()
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
@@ -1160,7 +1097,6 @@ void AlarmDisplayPage::csUpdate()
 
             }
             break;  
-            
         case DISP_TUBE_DI:
             if (gCMUsage.ulUsageState & (1 << DISP_TUBE_DI_LIFE) 
                 || gCMUsage.ulUsageState & (1 << DISP_TUBE_DI_LIFE))
@@ -1170,9 +1106,6 @@ void AlarmDisplayPage::csUpdate()
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_TUBE_DI_LIFE]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 
-//                tmp = gGlobalParam.CMParam.aulCms[DISP_TUBE_DI_LIFE] -
-//                    (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_TUBE_DI_LIFE])/ DISP_DAYININSECOND;
-
                 tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_TUBE_DI_LIFE])/ DISP_DAYININSECOND) -
                         gGlobalParam.CMParam.aulCms[DISP_TUBE_DI_LIFE];
 
@@ -1180,7 +1113,6 @@ void AlarmDisplayPage::csUpdate()
                 {
                     tmp = 0;
                 }
-//                strTmp = tr("Replace in ") + decodeDays(tmp) + tr(" ") + tr("days");
                 strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
                 m_pCslistItem[iIdx]->setChangeDate(strTmp);
 
@@ -1234,61 +1166,59 @@ void AlarmDisplayPage::csUpdate()
 
 }
 
-
 void AlarmDisplayPage::asUpdate()
 {
-     int iLoop = 0;
-     int iIdx  = 0;
+    int iLoop = 0;
+    int iIdx  = 0;
     
-     for (iLoop = 0; iLoop < m_aiRealNum[ALARM_TYPE_AS]; iLoop++)
-     {
-         switch(aAsIds[iLoop].iId)
-         {
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP):
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP):
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP):
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TUBEUV_OOP):
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP):
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP):
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP):
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ATPACK_OOP):
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_HPACK_OOP):
-         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP):
-             if (m_wndMain->getAlarmInfo(DISP_ALARM_PART0,aAsIds[iLoop].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)))
-             {
-                 if (0XFF != aAsIndex[DISP_ALARM_PART0][aAsIds[iLoop].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)])
-                 {
-                     m_pAslistItem[iIdx]->setName(m_astrPartAlarm[aAsIndex[DISP_ALARM_PART0][aAsIds[iLoop].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)]]);
-                     m_pAslistItem[iIdx]->setId(aAsIds[iLoop].iId);
-                     iIdx++;
-                 }
-             }
+    for (iLoop = 0; iLoop < m_aiRealNum[ALARM_TYPE_AS]; iLoop++)
+    {
+        switch(aAsIds[iLoop].iId)
+        {
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP):
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP):
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP):
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TUBEUV_OOP):
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP):
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP):
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP):
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ATPACK_OOP):
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_HPACK_OOP):
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP):
+            if (m_wndMain->getAlarmInfo(DISP_ALARM_PART0,aAsIds[iLoop].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)))
+            {
+                if (0XFF != aAsIndex[DISP_ALARM_PART0][aAsIds[iLoop].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)])
+                {
+                    m_pAslistItem[iIdx]->setName(m_astrPartAlarm[aAsIndex[DISP_ALARM_PART0][aAsIds[iLoop].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)]]);
+                    m_pAslistItem[iIdx]->setId(aAsIds[iLoop].iId);
+                    iIdx++;
+                }
+            }
             break;
          default:
-             if (m_wndMain->getAlarmInfo(DISP_ALARM_PART1,aAsIds[iLoop].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)))
-             {
-                 if (0XFF != aAsIndex[DISP_ALARM_PART1][aAsIds[iLoop].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)])
-                 {
-                     m_pAslistItem[iIdx]->setName(m_astrPartAlarm[aAsIndex[DISP_ALARM_PART1][aAsIds[iLoop].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)]]);
-                     m_pAslistItem[iIdx]->setId(aAsIds[iLoop].iId);
-                     iIdx++;
-                 }
-             }
-             break;
+            if (m_wndMain->getAlarmInfo(DISP_ALARM_PART1,aAsIds[iLoop].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)))
+            {
+                if (0XFF != aAsIndex[DISP_ALARM_PART1][aAsIds[iLoop].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)])
+                {
+                    m_pAslistItem[iIdx]->setName(m_astrPartAlarm[aAsIndex[DISP_ALARM_PART1][aAsIds[iLoop].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)]]);
+                    m_pAslistItem[iIdx]->setId(aAsIds[iLoop].iId);
+                    iIdx++;
+                }
+            }
+            break;
          }
 
-     }
+    }
      
-     for (iLoop = 0; iLoop < iIdx; iLoop++)
-     {
-         m_listWidget[1]->setItemHidden(m_pAslistWidgetIem[iLoop],false);
-     }
+    for (iLoop = 0; iLoop < iIdx; iLoop++)
+    {
+        m_listWidget[1]->setItemHidden(m_pAslistWidgetIem[iLoop],false);
+    }
      
-     for (iLoop = iIdx; iLoop < m_aiRealNum[ALARM_TYPE_AS]; iLoop++)
-     {
-         m_listWidget[1]->setItemHidden(m_pAslistWidgetIem[iLoop],true);
-     }
-
+    for (iLoop = iIdx; iLoop < m_aiRealNum[ALARM_TYPE_AS]; iLoop++)
+    {
+        m_listWidget[1]->setItemHidden(m_pAslistWidgetIem[iLoop],true);
+    }
 }
 
 void AlarmDisplayPage::setBackColor()
@@ -1312,7 +1242,6 @@ void AlarmDisplayPage::setBackColor()
 void AlarmDisplayPage::initUi()
 {
     setBackColor();
-
     createList();
 }
 

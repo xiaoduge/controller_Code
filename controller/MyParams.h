@@ -5,8 +5,8 @@
 #include <QMap>
 
 #ifdef __cplusplus
- extern "C"
- {
+extern "C"
+{
 #endif
 
 #define GLOBAL_CFG_INI           "global.ini"
@@ -36,18 +36,18 @@ typedef enum
 
 typedef enum
 {
-   ROP = 0,
-   PHP ,
-   DelP ,
-   AddUserP
+    ROP = 0,
+    PHP ,
+    DelP ,
+    AddUserP
 }NOT_USER_PER_ENUM;
 
 #define AdminP (1 << ROP | 1 << PHP | 1 << DelP | 1 << AddUserP)
 
 typedef enum
 {
-   MACHINE_FUNCTION_UP  = 0x1,
-   MACHINE_FUNCTION_EDI = 0x2
+    MACHINE_FUNCTION_UP  = 0x1,
+    MACHINE_FUNCTION_EDI = 0x2
 }MACHINE_FUNCTION_ENUM;
 
 #define MACHINE_FUNCTION_ALL (MACHINE_FUNCTION_UP|MACHINE_FUNCTION_EDI)
@@ -57,9 +57,9 @@ typedef struct
     char *strName;
     int iType;
     int iFunctions;
-	int iDefaultModule;
+    int iDefaultModule;
     int iDefaultFmPulse;
-    int aParamId[LESUM];
+    // int aParamId[LESUM];
 }MACHINE_TYPE_STRU;
 
 extern MACHINE_TYPE_STRU gaMachineType[MACHINE_NUM];

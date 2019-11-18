@@ -5,7 +5,6 @@
 #include <QFontDatabase>
 #include <QDebug>
 
-
 CtrlApplication::CtrlApplication( int argc, char **argv ):
     QApplication( argc, argv )
 {
@@ -13,16 +12,13 @@ CtrlApplication::CtrlApplication( int argc, char **argv ):
     m_pMainWnd    = NULL;
     m_bFontLoaded = false;
     m_iFontNum    = 0;
-
     /* variable init */
     MainRetriveGlobalParam();
-
 }
 
 
 bool CtrlApplication::qwsEventFilter(QWSEvent *event)
 {
-
     if (QWSEvent::Mouse  == event->type
         || QWSEvent::Key == event->type)
     {

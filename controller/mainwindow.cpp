@@ -67,45 +67,46 @@
 #include "printer.h"
 
 //#include "ex_screensleepthread.h"
+//
 /***********************************************
 B3: source water tank
 B2: pure water tank
 B1: tube water pressure
 
-ROˮ:  I2
-ROˮ I1
-EDIˮI3
-TOC缫/ˮˮ(ˮѭ)I4 
-UPˮ I5
+RO产水:  I2
+RO进水： I1
+EDI产水：I3
+TOC电极/水箱水检测(水箱循环)：I4 
+UP产水： I5
 
-S4: ROˮ
-S3: ROˮ/EDIˮ
-S2RO ˮ
-S1ˮU pack
+S4: RO废水
+S3: RO产水/EDI进水
+S2：RO 进水
+S1：超纯水，U pack
 
 
 
-·DI: 
-·UV:
+管路DI: 
+管路UV:
 
-ע⣺E1C1ͬʱرʱE1C1ʱ5s
+注意：E1和C1同时关闭时，E1比C1延时5s
 
-C4ѭ (·UV)
+C4：外置循环泵 (管路UV)
 
-ROˮ : S3 
-ROˮ : S4 
-ROˮ : S2 
-ˮ S3+S4
-EDIˮ: S3*0.8
-EDIˮ: S3*0.2
+RO产水流速 : S3 读数
+RO弃水流速 : S4 读数
+RO进水流速 : S2 读数
+自来水流速 ：S3+S4
+EDI产水流速: S3*0.8
+EDI弃水流速: S3*0.2
 
-ͳ:
+统计量:
 
-Ԥ: S3+S4
+预处理柱: S3+S4
 
 P-PACK = S3+S4
 
-U-PACK = UPˮ(S1)
+U-PACK = UP的水量(S1)
 
 AT-PACK= S3
 
@@ -114,62 +115,64 @@ H-PACK=  S1
 ************************************************/
 
 /************************************************
-E1  ROˮŷ    
-E2  ROˮŷ    
-E3  ROϸŷŷ  
-E4  ˮˮŷ  
-E5  UPѭŷ    
-E6  HPѭŷ    
-E7/E8   ˮŷ(UP/HPã  
-E9  TOCϴŷ   
-E10 ԭˮŷ  
+E1  RO进水电磁阀    
+E2  RO弃水电磁阀    
+E3  RO不合格排放阀  
+E4  纯水进水电磁阀  
+E5  UP循环电磁阀    
+E6  HP循环电磁阀    
+E7/E8   产水电磁阀(UP/HP根据配置）  
+E9  TOC冲洗电磁阀   
+E10 原水电磁阀  
         
-C1  ROѹ    
-C2  UPѭ    
-C3  ԭˮѹ  
-C4  ·ѭ  
+C1  RO增压泵    
+C2  UP循环泵    
+C3  原水增压泵  
+C4  管路循环泵  
         
-B1  ѹ  
-B2  ˮҺλ    
-B3  ԭˮҺλ    
+B1  压力传感器  
+B2  纯水箱液位传感器    
+B3  原水箱液位传感器    
         
-K1/K2   ˮأUP/HPãҪ㴥ͳֻģʽ 
-K3  Ԥϴź  
-K4  ˮź/©ˮź 
-K5  ˮѹź  
+K1/K2   产水开关（UP/HP根据配置）（需要点触和长按两只模式） 
+K3  预处理反洗信号  
+K4  纯水箱溢流信号/漏水信号 
+K5  进水压力低信号  
         
-N1  254nm 
-N2  185nm 
-N3  ˮ  
-N4  ·  
+N1  254nm紫外灯 
+N2  185nm紫外灯 
+N3  水箱消毒紫外灯  
+N4  管路紫外灯  
         
-T   EDIģ 
+T   EDI模块 
         
-S1  ˮˮ    
-S2  ROˮ  
-S3  ROˮ  
-S4  ROˮ  
+S1  纯水进水流速    
+S2  RO进水流速  
+S3  RO产水流速  
+S4  RO弃水流速  
         
-I1  ROˮ絼    
-I2  ROˮ絼    
-I3  EDIˮ   
-I4  ѭˮ    
-I5  UPˮ    
+I1  RO进水电导率    
+I2  RO产水电导率    
+I3  EDI产水电阻率   
+I4  循环水电阻率    
+I5  UP产水电阻率    
 
 
 *************************************************/
 
 #define BUZZER_FILE       "/dev/buzzer_ctl"
 
-/*
-Version: 0.1.2.181119.release
-0       :  Major version number
-1       :  Minor version number
-2       :  Revision number
-181119  :  Date version number
-release :  version phase
-*/
-QString strSoftwareVersion = QString("0.1.9.191024_debug");
+/****************************************************************************
+**
+** @Version:   0.1.2.181119.release
+** @0          Major version number
+** @1          Minor version number
+** @2          Revision number
+** @181119     Date version number
+** @release    version phase
+**
+****************************************************************************/
+QString strSoftwareVersion = QString("0.1.9.191118_RC");
 
 MainWindow *gpMainWnd;
 
@@ -232,7 +235,7 @@ QMutex ex_gMutex;
 DISP_CM_USAGE_STRU     gCMUsage ;
 
 //#define PCBTEST
-
+#if 0
 MACHINE_TYPE_STRU gaMachineType[MACHINE_NUM] =
 {
 #ifdef PCBTEST
@@ -249,6 +252,21 @@ MACHINE_TYPE_STRU gaMachineType[MACHINE_NUM] =
     {MACH_NAME_RO,       MACHINE_MODEL_DESK,MACHINE_FUNCTION_EDI,DEFAULT_MODULES_RO      ,7055 ,{1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1, 1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1},},
     {MACH_NAME_PURIST,   MACHINE_MODEL_DESK,MACHINE_FUNCTION_UP ,DEFAULT_MODULES_PURIST  ,7055,{1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1, 1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1},},
     {MACH_NAME_Adapt,    MACHINE_MODEL_DESK,MACHINE_FUNCTION_ALL,DEFAULT_MODULES_ADAPT   ,7055 ,{1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1, 1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1},},
+};
+#endif
+
+MACHINE_TYPE_STRU gaMachineType[MACHINE_NUM] =
+{
+    {MACH_NAME_LGenie,   MACHINE_MODEL_MID ,MACHINE_FUNCTION_ALL,DEFAULT_MODULES_L_Genie ,450},
+    {MACH_NAME_LUP,      MACHINE_MODEL_MID ,MACHINE_FUNCTION_ALL,DEFAULT_MODULES_L_UP    ,450},
+    {MACH_NAME_LEDI_LOOP,MACHINE_MODEL_MID ,MACHINE_FUNCTION_EDI,DEFAULT_MODULES_EDI_LOOP,450},
+    {MACH_NAME_LRO_LOOP, MACHINE_MODEL_MID ,MACHINE_FUNCTION_EDI,DEFAULT_MODULES_RO_LOOP ,450},
+    {MACH_NAME_Genie,    MACHINE_MODEL_DESK,MACHINE_FUNCTION_ALL,DEFAULT_MODULES_Genie   ,7055},
+    {MACH_NAME_UP,       MACHINE_MODEL_DESK,MACHINE_FUNCTION_ALL,DEFAULT_MODULES_UP      ,7055},
+    {MACH_NAME_EDI,      MACHINE_MODEL_DESK,MACHINE_FUNCTION_EDI,DEFAULT_MODULES_EDI     ,7055},
+    {MACH_NAME_RO,       MACHINE_MODEL_DESK,MACHINE_FUNCTION_EDI,DEFAULT_MODULES_RO      ,7055},
+    {MACH_NAME_PURIST,   MACHINE_MODEL_DESK,MACHINE_FUNCTION_UP ,DEFAULT_MODULES_PURIST  ,7055},
+    {MACH_NAME_Adapt,    MACHINE_MODEL_DESK,MACHINE_FUNCTION_ALL,DEFAULT_MODULES_ADAPT   ,7055}
 };
 
 QString gastrTmCfgName[] = 
@@ -3337,7 +3355,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     MainRetriveExConsumableMsg(gGlobalParam.iMachineType,gGlobalParam.cmSn,gGlobalParam.macSn);
 
-    //ui->setupUi(this);
     gpMainWnd = this;
 
     {
@@ -3436,7 +3453,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
     iFirst = 1;
     m_bLockupDlg = false;
 
-    
     m_iExeActiveMask = 0;
     m_iFmActiveMask  = 0;
     m_eWorkMode      = APP_WORK_MODE_NORMAL; /* refer APP_WORK_MODE_NUM */
@@ -3462,7 +3478,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     for (iLoop = 0; iLoop < APP_EXE_INPUT_REG_PUMP_NUM; iLoop++)
     {
-//        m_aiRPumpVoltageLevel[iLoop] = 0; //ex_dcj
         m_aiRPumpVoltageLevel[iLoop] = PUMP_SPEED_10;
     }
     
@@ -3479,20 +3494,11 @@ MainWindow::MainWindow(QMainWindow *parent) :
         m_ulFlowRptTick[iLoop]     = 0;
     }
 
-    m_EcoInfo[APP_EXE_I1_NO].fQuality    = 0;
-    m_EcoInfo[APP_EXE_I1_NO].fTemperature = 0;
-
-    m_EcoInfo[APP_EXE_I2_NO].fQuality    = 0;
-    m_EcoInfo[APP_EXE_I2_NO].fTemperature = 0;
-
-    m_EcoInfo[APP_EXE_I3_NO].fQuality    = 0;
-    m_EcoInfo[APP_EXE_I3_NO].fTemperature = 0;
-
-    m_EcoInfo[APP_EXE_I4_NO].fQuality    = 0;
-    m_EcoInfo[APP_EXE_I4_NO].fTemperature = 0;
-
-    m_EcoInfo[APP_EXE_I5_NO].fQuality    = 0;
-    m_EcoInfo[APP_EXE_I5_NO].fTemperature = 0;
+    for(iLoop = APP_EXE_I1_NO; iLoop < APP_EXE_ECO_NUM; ++iLoop)
+    {
+        m_EcoInfo[iLoop].fQuality    = 0;
+        m_EcoInfo[iLoop].fTemperature = 0;
+    }
 
     m_curToc = 0;
 
@@ -3519,7 +3525,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
         switch(iLoop)
         {
         case MACHINE_L_Genie:
-
             /*alarm masks */
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_HPACK_OOP)

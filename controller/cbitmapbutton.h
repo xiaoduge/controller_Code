@@ -73,15 +73,18 @@ public:
     void setColor(QColor color,int state = BITMAPBUTTON_STATE_UNSEL);
     void setId(int id) {iBtnId = id;}
     QString& getTip() {return strTip;}
+
 signals:
     void clicked();
     void clicked(int);
     void clicking(int);
+
 public slots:
 
 protected:
     void mousePressEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
+    
 protected:
     virtual void paintEvent(QPaintEvent *pe);
 

@@ -123,87 +123,105 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
     switch(iIndex)
     {
     case APP_EXE_I5_NO:
+    {
+        float fQ ;
+        float fT;
+
+        if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
         {
-            float fQ ;
-            float fT;
-
-            if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
+            fQ = info->fQuality;
+        }
+        else
+        {
+            fQ = toConductivity(info->fQuality);
+            strWaterUnit = strUnitMsg[UNIT_USCM];
+            if(fQ < 0.055)
             {
-                fQ = info->fQuality;
-            }
-            else
-            {
-                fQ = toConductivity(info->fQuality);
-                strWaterUnit = strUnitMsg[UNIT_USCM];
-                if(fQ < 0.055)
-                {
-                    fQ = 0.055;
-                }
-            }
-
-
-            if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
-            {
-                fT = info->fTemperature;
-            }
-            else
-            {
-                fT = toFahrenheit(info->fTemperature);
-                strTempUnit = strUnitMsg[UNIT_F];
-            }
-
-            if (DispGetUpQtwFlag() || DispGetUpCirFlag())
-            {
-                if(fQ > 1)
-                {
-                    updateValue(m_tags[UP_Resis],
-                                strWaterUnit.arg(fQ, 0,' f', 1),
-                                strTempUnit.arg(fT, 0, 'f', 1));
-                }
-                else
-                {
-                    updateValue(m_tags[UP_Resis],
-                                strWaterUnit.arg(fQ, 0, 'f',3),
-                                strTempUnit.arg(fT, 0, 'f',1));
-                }
-
-                m_historyInfo[UP_Resis].value1 = info->fQuality;
-                m_historyInfo[UP_Resis].value2 = info->fTemperature;
+                fQ = 0.055;
             }
         }
+
+
+        if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
+        {
+            fT = info->fTemperature;
+        }
+        else
+        {
+            fT = toFahrenheit(info->fTemperature);
+            strTempUnit = strUnitMsg[UNIT_F];
+        }
+
+        if (DispGetUpQtwFlag() || DispGetUpCirFlag())
+        {
+            if(fQ > 1)
+            {
+                updateValue(m_tags[UP_Resis],
+                            strWaterUnit.arg(fQ, 0,' f', 1),
+                            strTempUnit.arg(fT, 0, 'f', 1));
+            }
+            else
+            {
+                updateValue(m_tags[UP_Resis],
+                            strWaterUnit.arg(fQ, 0, 'f',3),
+                            strTempUnit.arg(fT, 0, 'f',1));
+            }
+
+            m_historyInfo[UP_Resis].value1 = info->fQuality;
+            m_historyInfo[UP_Resis].value2 = info->fTemperature;
+        }
+    }
         break;
     case APP_EXE_I4_NO:
+    {
+        float fQ ;
+        float fT;
+        if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
         {
-            float fQ ;
-            float fT;
-            if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
+            fQ = info->fQuality;
+        }
+        else
+        {
+            fQ = toConductivity(info->fQuality);
+            strWaterUnit = strUnitMsg[UNIT_USCM];
+            if(fQ < 0.055)
             {
-                fQ = info->fQuality;
+                fQ = 0.055;
             }
-            else
-            {
-                fQ = toConductivity(info->fQuality);
-                strWaterUnit = strUnitMsg[UNIT_USCM];
-                if(fQ < 0.055)
-                {
-                    fQ = 0.055;
-                }
-            }
+        }
 
-            if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
-            {
-                fT = info->fTemperature;
-            }
-            else
-            {
-                fT = toFahrenheit(info->fTemperature);
-                strTempUnit = strUnitMsg[UNIT_F];
-            }
+        if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
+        {
+            fT = info->fTemperature;
+        }
+        else
+        {
+            fT = toFahrenheit(info->fTemperature);
+            strTempUnit = strUnitMsg[UNIT_F];
+        }
 
-            if (DispGetTubeCirFlag())
+        if (DispGetTubeCirFlag())
+        {
+        }
+        else if (DispGetTocCirFlag())
+        {
+            updateValue(m_tags[HP_Resis],
+                        strWaterUnit.arg(toOneDecimal(fQ)),
+                        strTempUnit.arg(toOneDecimal(fT)));
+
+            m_historyInfo[HP_Resis].value1 = info->fQuality;
+            m_historyInfo[HP_Resis].value2 = info->fTemperature;
+        }
+        else if (DispGetEdiQtwFlag() || DispGetTankCirFlag())
+        {
+            switch(gGlobalParam.iMachineType)
             {
-            }
-            else if (DispGetTocCirFlag())
+            case MACHINE_PURIST:
+            case MACHINE_RO:
+            case MACHINE_UP:
+            case MACHINE_ADAPT:
+                break;
+            default:
             {
                 updateValue(m_tags[HP_Resis],
                             strWaterUnit.arg(toOneDecimal(fQ)),
@@ -211,149 +229,117 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
 
                 m_historyInfo[HP_Resis].value1 = info->fQuality;
                 m_historyInfo[HP_Resis].value2 = info->fTemperature;
+                break;
             }
-            else if (DispGetEdiQtwFlag() || DispGetTankCirFlag())
-            {
-                switch(gGlobalParam.iMachineType)
-                {
-                case MACHINE_PURIST:
-                case MACHINE_RO:
-                case MACHINE_UP:
-                case MACHINE_ADAPT:
-                    break;
-                default:
-                {
-                    updateValue(m_tags[HP_Resis],
-                                strWaterUnit.arg(toOneDecimal(fQ)),
-                                strTempUnit.arg(toOneDecimal(fT)));
-
-                    m_historyInfo[HP_Resis].value1 = info->fQuality;
-                    m_historyInfo[HP_Resis].value2 = info->fTemperature;
-                    break;
-                }
-                }
-
             }
+
         }
+    }
         break;
     case APP_EXE_I3_NO:
+    {
+        float fQ ;
+        float fT;
+        if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
         {
-            float fQ ;
-            float fT;
-            if (CONDUCTIVITY_UINT_OMG == gGlobalParam.MiscParam.iUint4Conductivity)
+            fQ = info->fQuality;
+        }
+        else
+        {
+            fQ = toConductivity(info->fQuality);
+            strWaterUnit = strUnitMsg[UNIT_USCM];
+            if(fQ < 0.055)
             {
-                fQ = info->fQuality;
-            }
-            else
-            {
-                fQ = toConductivity(info->fQuality);
-                strWaterUnit = strUnitMsg[UNIT_USCM];
-                if(fQ < 0.055)
-                {
-                    fQ = 0.055;
-                }
-            }
-
-            if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
-            {
-                fT = info->fTemperature;
-            }
-            else
-            {
-                fT = toFahrenheit(info->fTemperature);
-                strTempUnit = strUnitMsg[UNIT_F];
-            }
-
-            if(fQ > 16)
-            {
-                updateValue(m_tags[EDI_Product],
-                            strWaterUnit.arg(">16"),
-                            strTempUnit.arg(fT, 0, 'f', 1));
-            }
-            else
-            {
-                updateValue(m_tags[EDI_Product],
-                            strWaterUnit.arg(fQ, 0, 'f', 1),
-                            strTempUnit.arg(fT, 0, 'f', 1));
-            }
-            m_historyInfo[EDI_Product].value1 = info->fQuality;
-            m_historyInfo[EDI_Product].value2 = info->fTemperature;
-
-            if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
-            {
-                switch(gGlobalParam.iMachineType)
-                {
-                case MACHINE_RO:
-                case MACHINE_UP:
-                {
-                    if (DispGetEdiQtwFlag() || DispGetTankCirFlag())
-                    {
-                        updateValue(m_tags[HP_Resis],
-                                strWaterUnit.arg(fQ, 0, 'f', 1),
-                                strTempUnit.arg(fT, 0, 'f', 1));
-                        m_historyInfo[HP_Resis].value1 = info->fQuality;
-                        m_historyInfo[HP_Resis].value2 = info->fTemperature;
-                    }
-                    break;
-                }
-                default:
-                    break;
-                }
+                fQ = 0.055;
             }
         }
+
+        if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
+        {
+            fT = info->fTemperature;
+        }
+        else
+        {
+            fT = toFahrenheit(info->fTemperature);
+            strTempUnit = strUnitMsg[UNIT_F];
+        }
+
+        if(fQ > 16)
+        {
+            updateValue(m_tags[EDI_Product],
+                        strWaterUnit.arg(">16"),
+                        strTempUnit.arg(fT, 0, 'f', 1));
+        }
+        else
+        {
+            updateValue(m_tags[EDI_Product],
+                        strWaterUnit.arg(fQ, 0, 'f', 1),
+                        strTempUnit.arg(fT, 0, 'f', 1));
+        }
+        m_historyInfo[EDI_Product].value1 = info->fQuality;
+        m_historyInfo[EDI_Product].value2 = info->fTemperature;
+
+        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+        {
+            switch(gGlobalParam.iMachineType)
+            {
+            case MACHINE_RO:
+            case MACHINE_UP:
+            {
+                if (DispGetEdiQtwFlag() || DispGetTankCirFlag())
+                {
+                    updateValue(m_tags[HP_Resis],
+                            strWaterUnit.arg(fQ, 0, 'f', 1),
+                            strTempUnit.arg(fT, 0, 'f', 1));
+                    m_historyInfo[HP_Resis].value1 = info->fQuality;
+                    m_historyInfo[HP_Resis].value2 = info->fTemperature;
+                }
+                break;
+            }
+            default:
+                break;
+            }
+        }
+    }
         break;
     case APP_EXE_I2_NO: // RO Out
+    {
+        float fResidue;
+        float fT;
+
+        if (DispGetREJ(&fResidue)
+            && (MACHINE_PURIST != gGlobalParam.iMachineType))
         {
-            float fResidue;
-            float fT;
+            updateValue(m_tags[RO_Rejection],
+                        strUnitMsg[UNIT_PERCENTAGE].arg(fResidue, 0, 'f', 0));
+            m_historyInfo[RO_Rejection].value1 = fResidue;
+        }
 
-            if (DispGetREJ(&fResidue)
-                && (MACHINE_PURIST != gGlobalParam.iMachineType))
+        if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
+        {
+            fT = info->fTemperature;
+        }
+        else
+        {
+            fT = toFahrenheit(info->fTemperature);
+            strTempUnit = strUnitMsg[UNIT_F];
+        }
+
+        if(MACHINE_PURIST != gGlobalParam.iMachineType)
+        {
+            updateValue(m_tags[RO_Product],
+                        strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
+                        strTempUnit.arg(fT, 0, 'f', 1));
+
+            m_historyInfo[RO_Product].value1 = info->fQuality;
+            m_historyInfo[RO_Product].value2 = info->fTemperature;
+
+            switch(gGlobalParam.iMachineType)
             {
-                updateValue(m_tags[RO_Rejection],
-                            strUnitMsg[UNIT_PERCENTAGE].arg(fResidue, 0, 'f', 0));
-                m_historyInfo[RO_Rejection].value1 = fResidue;
-            }
-
-            if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
+            case MACHINE_RO:
+            case MACHINE_UP:
             {
-                fT = info->fTemperature;
-            }
-            else
-            {
-                fT = toFahrenheit(info->fTemperature);
-                strTempUnit = strUnitMsg[UNIT_F];
-            }
-
-            if(MACHINE_PURIST != gGlobalParam.iMachineType)
-            {
-                updateValue(m_tags[RO_Product],
-                            strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
-                            strTempUnit.arg(fT, 0, 'f', 1));
-
-                m_historyInfo[RO_Product].value1 = info->fQuality;
-                m_historyInfo[RO_Product].value2 = info->fTemperature;
-
-                switch(gGlobalParam.iMachineType)
-                {
-                case MACHINE_RO:
-                case MACHINE_UP:
-                {
-                    if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
-                    {
-                        if (DispGetEdiQtwFlag())
-                        {
-                            updateValue(m_tags[HP_Resis],
-                                        strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
-                                        strTempUnit.arg(fT, 0, 'f', 1));
-
-                            m_historyInfo[HP_Resis].value1 = info->fQuality;
-                            m_historyInfo[HP_Resis].value2 = info->fTemperature;
-                        }
-                    }
-                    break;
-                }
-                case MACHINE_ADAPT:
+                if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
                 {
                     if (DispGetEdiQtwFlag())
                     {
@@ -364,63 +350,75 @@ void Ex_WaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
                         m_historyInfo[HP_Resis].value1 = info->fQuality;
                         m_historyInfo[HP_Resis].value2 = info->fTemperature;
                     }
-                    break;
                 }
-                default:
-                    break;
-                }
+                break;
             }
-            else
+            case MACHINE_ADAPT:
             {
-                updateValue(m_tags[UP_IN],
-                            strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
-                            strTempUnit.arg(fT, 0, 'f', 1));
+                if (DispGetEdiQtwFlag())
+                {
+                    updateValue(m_tags[HP_Resis],
+                                strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
+                                strTempUnit.arg(fT, 0, 'f', 1));
 
-                m_historyInfo[UP_IN].value1 = info->fQuality;
-                m_historyInfo[UP_IN].value2 = info->fTemperature;
+                    m_historyInfo[HP_Resis].value1 = info->fQuality;
+                    m_historyInfo[HP_Resis].value2 = info->fTemperature;
+                }
+                break;
+            }
+            default:
+                break;
             }
         }
+        else
+        {
+            updateValue(m_tags[UP_IN],
+                        strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
+                        strTempUnit.arg(fT, 0, 'f', 1));
+
+            m_historyInfo[UP_IN].value1 = info->fQuality;
+            m_historyInfo[UP_IN].value2 = info->fTemperature;
+        }
+    }
         break;
     case APP_EXE_I1_NO: // RO In
+    {
+        float fT;
+
+        if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
         {
-            float fT;
-
-            if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
-            {
-                fT = info->fTemperature;
-            }
-            else
-            {
-                fT = toFahrenheit(info->fTemperature);
-                strTempUnit = strUnitMsg[UNIT_F];
-            }
-
-            if (DispGetInitRunFlag())
-            {
-                updateValue(m_tags[Tap_Cond],
-                            strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
-                            strTempUnit.arg(fT, 0, 'f', 1));
-
-                m_historyInfo[Tap_Cond].value1 = info->fQuality;
-                m_historyInfo[Tap_Cond].value2 = info->fTemperature;
-            }
-            else
-            {
-                updateValue(m_tags[RO_Feed_Cond],
-                            strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
-                            strTempUnit.arg(fT, 0, 'f', 1));
-
-                m_historyInfo[RO_Feed_Cond].value1 = info->fQuality;
-                m_historyInfo[RO_Feed_Cond].value2 = info->fTemperature;
-
-                updateValue(m_tags[Tap_Cond],
-                            strUnitMsg[UNIT_USCM].arg(m_historyInfo[Tap_Cond].value1, 0, 'f', 1),
-                            strTempUnit.arg(fT, 0, 'f', 1));
-                m_historyInfo[Tap_Cond].value2 = info->fTemperature;
-            }
-
-
+            fT = info->fTemperature;
         }
+        else
+        {
+            fT = toFahrenheit(info->fTemperature);
+            strTempUnit = strUnitMsg[UNIT_F];
+        }
+
+        if (DispGetInitRunFlag())
+        {
+            updateValue(m_tags[Tap_Cond],
+                        strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
+                        strTempUnit.arg(fT, 0, 'f', 1));
+
+            m_historyInfo[Tap_Cond].value1 = info->fQuality;
+            m_historyInfo[Tap_Cond].value2 = info->fTemperature;
+        }
+        else
+        {
+            updateValue(m_tags[RO_Feed_Cond],
+                        strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),
+                        strTempUnit.arg(fT, 0, 'f', 1));
+
+            m_historyInfo[RO_Feed_Cond].value1 = info->fQuality;
+            m_historyInfo[RO_Feed_Cond].value2 = info->fTemperature;
+
+            updateValue(m_tags[Tap_Cond],
+                        strUnitMsg[UNIT_USCM].arg(m_historyInfo[Tap_Cond].value1, 0, 'f', 1),
+                        strTempUnit.arg(fT, 0, 'f', 1));
+            m_historyInfo[Tap_Cond].value2 = info->fTemperature;
+        }
+    }
         break;
     }
 }
@@ -1039,7 +1037,7 @@ void Ex_WaterQualityPage::updFlowInfo(int iIndex,int iValue)
         updateValue(m_tags[RO_Feed_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*iValue)/1000)));
         m_historyInfo[RO_Feed_Rate].value1 = ((60.0*iValue)/1000);
         break;
-   case APP_FM_FM3_NO:
+    case APP_FM_FM3_NO:
         updateValue(m_tags[RO_Product_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*iValue)/1000)));
         m_historyInfo[RO_Product_Rate].value1 = ((60.0*iValue)/1000);
 
@@ -1052,7 +1050,7 @@ void Ex_WaterQualityPage::updFlowInfo(int iIndex,int iValue)
         updateValue(m_tags[EDI_Reject_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*0.2*iValue)/1000)));
         m_historyInfo[EDI_Reject_Rate].value1 = ((60.0*0.2*iValue)/1000);
         break;
-   case APP_FM_FM4_NO:
+     case APP_FM_FM4_NO:
         updateValue(m_tags[RO_Reject_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*iValue)/1000)));
         m_historyInfo[RO_Reject_Rate].value1 = ((60.0*iValue)/1000);
 

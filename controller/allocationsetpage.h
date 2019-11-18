@@ -73,10 +73,7 @@ private:
     CBitmapButton     *m_pBtnSave;   
 
 public slots:
-
     void on_btn_clicked(int);
-
-
 };
 
 #endif // TIMEPAGE_H

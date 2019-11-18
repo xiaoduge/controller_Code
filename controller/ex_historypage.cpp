@@ -16,14 +16,11 @@
 #include "ToastDlg.h"
 #include <QCalendarWidget>
 
-
 Ex_HistoryPage::Ex_HistoryPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
-
     creatTitle();
     initUi();
     buildTranslation();
-
 }
 
 void Ex_HistoryPage::creatTitle()

@@ -32,8 +32,8 @@ extern "C"
 #define CAN_RCV_BUFFER_NUM (6)
 
 
-typedef struct  {
-
+typedef struct  
+{
 	unsigned short		usLen;     // total CAN network layer message usLen
 	unsigned short		usDataLen; // how many data left to  be received
 
@@ -52,8 +52,8 @@ typedef struct  {
     
 }CAN_Rcv_buff;
 
-typedef struct  {
-
+typedef struct  
+{
 	unsigned short		usLen;     // total CAN network layer message usLen
 	unsigned short		usDataLen; // how many data left to have been sended 
 
@@ -193,17 +193,17 @@ static int CanSocketInit(int iChl)
 	// set filter for your application
 	if (0)
 	{
-          struct can_filter rfilter[2];
+        struct can_filter rfilter[2];
 
-	      // for standard
-          rfilter[0].can_id   = 0x123;
-          rfilter[0].can_mask = CAN_SFF_MASK;
+        // for standard
+        rfilter[0].can_id   = 0x123;
+        rfilter[0].can_mask = CAN_SFF_MASK;
 
-		  // for extend
-          rfilter[1].can_id   = 0x10000000;
-          rfilter[1].can_mask = CAN_EFF_MASK ;
-      
-          setsockopt(socked, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));		
+        // for extend
+        rfilter[1].can_id   = 0x10000000;
+        rfilter[1].can_mask = CAN_EFF_MASK ;
+
+        setsockopt(socked, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));		
 	}
 #if 0
     {
@@ -218,7 +218,6 @@ static int CanSocketInit(int iChl)
     gCanItf[iChl].socket = socked;
 
     return 0;
-
 }
 
 static int can_send(int socket, struct can_frame *pframe)
@@ -256,7 +255,8 @@ static void CanSndMsg(CAN_ITF_STRU *pItf,SAT_MSG_HEAD *pMsg)
 
     // printf("CAN Send : %d \r\n",SndBuf.usDataLen);
 
-    do {
+    do 
+    {
         if (SndBuf.usDataLen >= 8)
         {
             MsgLen = 8;
@@ -292,10 +292,9 @@ static void CanSndMsg(CAN_ITF_STRU *pItf,SAT_MSG_HEAD *pMsg)
             break;
         }
 
-    }
-    while(SndBuf.usDataLen > 0);
+    }while(SndBuf.usDataLen > 0);
+
 	msleep(25);
-	
 }
 
 
@@ -306,7 +305,6 @@ static void CanItfSecondTask()
     CanBufCheck();
 
     //printf("CanItfSecondTask \r\n");
-    
 }
 
 static void CanItfTimerMsg(SAT_MSG_HEAD *pMsg)
@@ -410,58 +408,52 @@ void CanItfMsgProc(void *para,SAT_MSG_HEAD *pMsg)
  //      c->h 
 static int CanItfFrameCheck(int iIdx)
 {
-  unsigned char ch;
-  unsigned char rpcSte = rpcSteSOF;
-  unsigned char sbFcs=0, sbIdx=0,sbLen=0;
+    unsigned char ch;
+    unsigned char rpcSte = rpcSteSOF;
+    unsigned char sbFcs=0, sbIdx=0,sbLen=0;
 
-  int len = CanRcvBuff[iIdx].usDataLen;
-  unsigned char *data = CanRcvBuff[iIdx].aucbuf;
+    int len = CanRcvBuff[iIdx].usDataLen;
+    unsigned char *data = CanRcvBuff[iIdx].aucbuf;
 
-  while (len--)
-  {
-    ch = *data++;
-    switch (rpcSte)
+    while (len--)
     {
-    case rpcSteSOF:
-      if (RPC_UART_SOF == ch)
-      {
-        rpcSte = rpcSteLen;
-      }
-      break;
-
-    case rpcSteLen:
-      {
-        rpcSte = rpcSteData;
-        sbFcs = sbIdx = 0;
-        sbLen = ch + 3;  // Combine the parsing of Len, Cmd0 & Cmd1 with the data.
-        // no break;
-      }
-
-    case rpcSteData:
-      sbFcs ^= ch;
-
-      if (++sbIdx == sbLen)
-      {
-        rpcSte = rpcSteFcs;
-      }
-      break;
-
-    case rpcSteFcs:
-      rpcSte = rpcSteSOF;
-
-      if (sbFcs == ch) 
-      {
-         // process
-         return TRUE;
-      }
-      break;
-
-    default:
-     break;
+        ch = *data++;
+        switch (rpcSte)
+        {
+        case rpcSteSOF:
+            if (RPC_UART_SOF == ch)
+            {
+              rpcSte = rpcSteLen;
+            }
+            break;
+        case rpcSteLen:
+        {
+            rpcSte = rpcSteData;
+            sbFcs = sbIdx = 0;
+            sbLen = ch + 3;  // Combine the parsing of Len, Cmd0 & Cmd1 with the data.
+            // no break;
+        }
+        case rpcSteData:
+            sbFcs ^= ch;
+            if (++sbIdx == sbLen)
+            {
+                rpcSte = rpcSteFcs;
+            }
+            break;
+        case rpcSteFcs:
+            rpcSte = rpcSteSOF;
+            if (sbFcs == ch) 
+            {
+                // process
+                return TRUE;
+            }
+            break;
+        default:
+            break;
+        }
     }
-  }
 
-  return FALSE;
+    return FALSE;
 }
 
 static void CanRcvFrame(int iChl,unsigned char ucRcvBufIndex)
@@ -501,9 +493,6 @@ static void CanRcvFrame(int iChl,unsigned char ucRcvBufIndex)
     {
     }
 }
-
-
-
 
 static void CanItfRcvData(int iChl,struct can_frame *frame)
 {
@@ -570,16 +559,14 @@ static void CanItfRcvData(int iChl,struct can_frame *frame)
         
     }
     
-    
     if (CanRcvBuff[iIndex].usDataLen == CanRcvBuff[iIndex].usLen
      && 0 != CanRcvBuff[iIndex].usLen)
     {
-       // a frame is received
+        // a frame is received
+        CanRcvFrame(iChl,iIndex);
     
-       CanRcvFrame(iChl,iIndex);
-    
-       // clear rcv buffer
-       CanInitBuf(iIndex);
+        // clear rcv buffer
+        CanInitBuf(iIndex);
     }
 
 }
@@ -601,9 +588,8 @@ static void CanItfRcvProc(void *lparam)
     
     // msg("I Start Can Receiver");
 
-
-     for(;;)
-     {
+    for(;;)
+    {
         int iLoop;
         socketMax = 0;
         timeout.tv_sec = 1;  
@@ -624,17 +610,16 @@ static void CanItfRcvProc(void *lparam)
         ret = select(socketMax + 1, &rdset, NULL, NULL, &timeout);     
         if (ret > 0)
         {
-        
-           for (iLoop = 0; iLoop < CANITF_MAX_CAN_NUM; iLoop++)
-           {
-               if (FD_ISSET(pCanItf[iLoop].socket, &rdset))   
-               {
-                   ret = read(pCanItf[iLoop].socket, &frame, sizeof(struct can_frame));
-                   if (ret > 0 )CanItfRcvData(iLoop,&frame);
-               }
-           }
+            for (iLoop = 0; iLoop < CANITF_MAX_CAN_NUM; iLoop++)
+            {
+                if (FD_ISSET(pCanItf[iLoop].socket, &rdset))   
+                {
+                    ret = read(pCanItf[iLoop].socket, &frame, sizeof(struct can_frame));
+                    if (ret > 0 )CanItfRcvData(iLoop,&frame);
+                }
+            }
         }
-     }
+    }
 
 }
 

@@ -44,7 +44,6 @@ private:
     ConsumableStatePage *m_pOwner;
     int  m_id;
     
-
 };
 
 #endif // CSLISTITEM_H

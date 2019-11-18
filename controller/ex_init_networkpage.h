@@ -19,8 +19,8 @@ class Ex_Init_Networkpage : public CSubPage
 public:
     enum NETWORKPAGE_BTN_ENUM
     {
-       NETWORKPAGE_BTN_SAVE = 0,
-       NETWORKPAGE_BTN_NUM
+        NETWORKPAGE_BTN_SAVE = 0,
+        NETWORKPAGE_BTN_NUM
     };
 
 public:

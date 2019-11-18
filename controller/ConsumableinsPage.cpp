@@ -74,75 +74,75 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
         break;
      }
     
-     switch(gGlobalParam.iMachineType)
-     {
-     case MACHINE_L_Genie:
-     case MACHINE_L_EDI_LOOP:
-         aIds[iIdx].iType = 0;
-         aIds[iIdx].iId   = DISP_AT_PACK;
-         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
-         iIdx++;
-         break;
-     }
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_EDI_LOOP:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_AT_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+        iIdx++;
+        break;
+    }
     
-     switch(gGlobalParam.iMachineType)
-     {
-     case MACHINE_L_UP:  
-     case MACHINE_UP:
-     case MACHINE_PURIST:
-         aIds[iIdx].iType = 0;
-         aIds[iIdx].iId   = DISP_H_PACK;
-         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
-         iIdx++;
-         break;
-     case MACHINE_L_Genie:
-     case MACHINE_L_EDI_LOOP:
-     case MACHINE_L_RO_LOOP:
-     case MACHINE_Genie:
-     case MACHINE_EDI:
-     case MACHINE_RO:
-     case MACHINE_ADAPT:
-         break;
-     default:
-         break;
-     }
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_UP:  
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_H_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+        iIdx++;
+        break;
+    case MACHINE_L_Genie:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        break;
+    default:
+        break;
+    }
     
-     switch(gGlobalParam.iMachineType)
-     {
-     case MACHINE_L_Genie:
-     case MACHINE_L_UP:
-     case MACHINE_Genie:
-     case MACHINE_UP:
-     case MACHINE_PURIST:
-     case MACHINE_ADAPT:
-         aIds[iIdx].iType = 0;
-         aIds[iIdx].iId   = DISP_U_PACK;
-         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_UPACK_HPACK;
-         iIdx++;
-         break;
-     default:
-         break;
-     }
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_U_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_UPACK_HPACK;
+        iIdx++;
+        break;
+    default:
+        break;
+    }
     
-     switch(gGlobalParam.iMachineType)
-     {
-     case MACHINE_L_Genie:
-     case MACHINE_L_UP:
-     case MACHINE_L_EDI_LOOP:
-     case MACHINE_L_RO_LOOP:
-     case MACHINE_Genie:
-     case MACHINE_EDI:
-         aIds[iIdx].iType = 0;
-         aIds[iIdx].iId   = DISP_N1_UV; //254
-         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-         iIdx++;
-         break;
-     case MACHINE_RO:
-     case MACHINE_UP:
-         break;
-     default:
-         break;
-     }
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_N1_UV; //254
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    case MACHINE_RO:
+    case MACHINE_UP:
+        break;
+    default:
+        break;
+    }
     
     switch(gGlobalParam.iMachineType)
     {
@@ -164,116 +164,116 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
         break;
     }
     
-     switch(gGlobalParam.iMachineType)
-     {
-     case MACHINE_L_Genie:
-     case MACHINE_L_UP:
-     case MACHINE_L_EDI_LOOP:
-     case MACHINE_L_RO_LOOP:
-     case MACHINE_Genie:
-     case MACHINE_UP:
-     case MACHINE_EDI:
-     case MACHINE_RO:
-         aIds[iIdx].iType = 0;
-         aIds[iIdx].iId   = DISP_N3_UV;
-         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-         iIdx++;
-         break;
-     }
-     //0628
-     switch(gGlobalParam.iMachineType)
-     {
-     case MACHINE_L_Genie:
-     case MACHINE_L_UP:
-     case MACHINE_L_EDI_LOOP:
-     case MACHINE_L_RO_LOOP:
-     {
-         if (gGlobalParam.SubModSetting.ulFlags & (1 <<DISP_SM_TubeUV))
-         {
-             aIds[iIdx].iType = 0;
-             aIds[iIdx].iId   = DISP_N4_UV;
-             aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-             iIdx++;
-         }
-         break;
-     }
-     case MACHINE_Genie:
-     case MACHINE_RO:
-     case MACHINE_EDI:
-     case MACHINE_PURIST:
-     case MACHINE_UP:
-         break;
-     }
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_N3_UV;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+    //0628
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    {
+        if (gGlobalParam.SubModSetting.ulFlags & (1 <<DISP_SM_TubeUV))
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_N4_UV;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            iIdx++;
+        }
+        break;
+    }
+    case MACHINE_Genie:
+    case MACHINE_RO:
+    case MACHINE_EDI:
+    case MACHINE_PURIST:
+    case MACHINE_UP:
+        break;
+    }
 
 /*2018/05/21 TOC UV*/
 #if 0
-     switch(gGlobalParam.iMachineType) /*TOC UV E9*/
-     {
-     case MACHINE_L_Genie:
-     case MACHINE_L_UP:
-     case MACHINE_Genie:
-         {
-             if (gGlobalParam.SubModSetting.ulFlags &(1 << DISP_SM_HaveTOC))
-            {
-                 aIds[iIdx].iType = 0;
-                 aIds[iIdx].iId   = DISP_N5_UV;
-                 aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-                 iIdx++;
-            }
-         }
-         break;
-     }
+    switch(gGlobalParam.iMachineType) /*TOC UV E9*/
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_Genie:
+        {
+            if (gGlobalParam.SubModSetting.ulFlags &(1 << DISP_SM_HaveTOC))
+           {
+                aIds[iIdx].iType = 0;
+                aIds[iIdx].iId   = DISP_N5_UV;
+                aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+                iIdx++;
+           }
+        }
+        break;
+    }
 #endif
      
-     switch(gGlobalParam.iMachineType)
-     {
-     case MACHINE_L_Genie:
-     case MACHINE_L_UP:
-     case MACHINE_L_EDI_LOOP:
-     case MACHINE_L_RO_LOOP:
-     case MACHINE_Genie:
-     case MACHINE_UP:
-     case MACHINE_EDI:
-     case MACHINE_RO:
-         aIds[iIdx].iType = 0;
-         aIds[iIdx].iId   = DISP_W_FILTER;
-         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-         iIdx++;
-         break;
-     }
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_W_FILTER;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
     
-     switch(gGlobalParam.iMachineType)
-     {
-     case MACHINE_L_Genie:
-     case MACHINE_L_UP:
-     case MACHINE_Genie:
-     case MACHINE_UP:
-     case MACHINE_ADAPT:
-         aIds[iIdx].iType = 0;
-         aIds[iIdx].iId   = DISP_T_B_FILTER;
-         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-         iIdx++;
-         break;
-     }
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_T_B_FILTER;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
     
-     switch(gGlobalParam.iMachineType)
-     {
-     case MACHINE_L_Genie:
-     case MACHINE_L_UP:
-     case MACHINE_L_EDI_LOOP:
-     case MACHINE_L_RO_LOOP:
-     case MACHINE_Genie:
-     case MACHINE_UP:
-     case MACHINE_EDI:
-     case MACHINE_RO:
-     case MACHINE_PURIST:
-     case MACHINE_ADAPT:
-         aIds[iIdx].iType = 0;
-         aIds[iIdx].iId   = DISP_T_A_FILTER;
-         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-         iIdx++;
-         break;
-     }
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_T_A_FILTER;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
      //0628
     switch(gGlobalParam.iMachineType)
     {
@@ -352,54 +352,54 @@ ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWi
         break;
     }
 
-     switch(gGlobalParam.iMachineType)
-     {
-     case MACHINE_L_Genie:
-     case MACHINE_L_UP:
-     case MACHINE_L_EDI_LOOP:
-     case MACHINE_L_RO_LOOP:
-     case MACHINE_Genie:
-     case MACHINE_UP:
-     case MACHINE_EDI:
-     case MACHINE_RO:
-     case MACHINE_ADAPT:
-         aIds[iIdx].iType = 1; //0
-         aIds[iIdx].iId   = DISP_MACHINERY_RO_MEMBRANE;
-         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-         iIdx++;
-         break;
-     }
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_RO_MEMBRANE;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
 
-     switch(gGlobalParam.iMachineType)
-     {
-     case MACHINE_L_Genie:
-     case MACHINE_L_UP:
-     case MACHINE_L_EDI_LOOP:
-     case MACHINE_L_RO_LOOP:
-     case MACHINE_Genie:
-     case MACHINE_UP:
-     case MACHINE_EDI:
-     case MACHINE_RO:
-     case MACHINE_ADAPT:
-         aIds[iIdx].iType = 1; //0
-         aIds[iIdx].iId   = DISP_MACHINERY_RO_BOOSTER_PUMP;
-         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-         iIdx++;
-         break;
-     }
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_RO_BOOSTER_PUMP;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
 
-     switch(gGlobalParam.iMachineType)
-     {
-     case MACHINE_L_Genie:
-     case MACHINE_L_EDI_LOOP:
-     case MACHINE_Genie:
-     case MACHINE_EDI:
-         aIds[iIdx].iType = 1; //0
-         aIds[iIdx].iId   = DISP_MACHINERY_EDI;
-         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-         iIdx++;
-         break;
-     }     
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_EDI;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }     
      
     m_iRealItemNum = iIdx;
 
@@ -440,202 +440,195 @@ void ConsumableInsPage::buildTranslation()
 
     for (iIdx = 0; iIdx < m_iRealItemNum; iIdx++)
     {
-       iEscape = 0;
-       switch(aIds[iIdx].iId)
-       {
-       case DISP_PRE_PACK:
+        iEscape = 0;
+        switch(aIds[iIdx].iId)
+        {
+        case DISP_PRE_PACK:
             /*
             预处理柱     
             */
             m_aInsListItem[iMapIdx]->setName(tr("Prefilter"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
-       case DISP_AC_PACK:
+        case DISP_AC_PACK:
             /*
             AC PACK
             */
             m_aInsListItem[iMapIdx]->setName(tr("AC Pack"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
-       case DISP_T_PACK:
+        case DISP_T_PACK:
             /*
             T Pack
             */
             m_aInsListItem[iMapIdx]->setName(tr("T Pack"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
-       case DISP_P_PACK:
-           /*
-           P-Pack  
-           */
-           m_aInsListItem[iMapIdx]->setName(tr("P Pack"));
-           m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-           break;
-       case DISP_U_PACK:
-           /*
-           U-Pack  
-           */
-           m_aInsListItem[iMapIdx]->setName(tr("U Pack"));
-           m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-           break;
-       case DISP_AT_PACK:
-           /*
-           AT-Pack  
-           */
-           m_aInsListItem[iMapIdx]->setName(tr("AT Pack"));
-           m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-           break;
-       case DISP_H_PACK:
-           /*
-           H-Pack  
-           */
-           m_aInsListItem[iMapIdx]->setName(tr("H Pack"));
-           m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-           break;
-       case DISP_N1_UV:
-           /*
-           254UV 
-           */
-           m_aInsListItem[iMapIdx]->setName(tr("254 UV Lamp"));
-           m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-           break;
-       case DISP_N2_UV:
-           /*
-           185UV       
-           */
-           m_aInsListItem[iMapIdx]->setName(tr("185 UV Lamp"));
-           m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-           break;
-       case DISP_N3_UV:
-           /*
-           水箱UV       
-           */
-           m_aInsListItem[iMapIdx]->setName(tr("Tank UV Lamp"));
-           m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-           break;
-       case DISP_N4_UV:
-           /*
-           管路UV       
-           */
-           m_aInsListItem[iMapIdx]->setName(tr("TUBE UV"));
-           m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-           break;
-       case DISP_N5_UV:
-           /*
-           TOC UV       
-           */
-           m_aInsListItem[iMapIdx]->setName(tr("TOC UV"));
-           m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-           break;
-       case DISP_W_FILTER:
-           /*
-           空气过滤器       
-           */
-           if ((gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2)))
-           {
-               m_aInsListItem[iMapIdx]->setName(tr("Tank Vent Filter"));
-               m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-           }
-           else
-           {
-               iEscape = 1;
-           }
-           break;
-       case DISP_T_B_FILTER:
-           /*
-           终端过滤器B      
-           */
-           if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
-           {
-                m_aInsListItem[iMapIdx]->setName(tr("Final Fliter B"));
-           }
-           else
-           {
-               m_aInsListItem[iMapIdx]->setName(tr("Bio-filter"));
-           }
-           m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-           break;
-       case DISP_T_A_FILTER:
-           /*
-           终端过滤器A      
-           */
-           m_aInsListItem[iMapIdx]->setName(tr("Final Fliter A"));
-           m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-           break;
-       case DISP_TUBE_FILTER:
-           /*
-           管路过滤器       
-           */
-           m_aInsListItem[iMapIdx]->setName(tr("Loop Filter"));
-           m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-           break;
-       case DISP_TUBE_DI:
-           /*
-           管路DI     
-           */
-           m_aInsListItem[iMapIdx]->setName(tr("Loop DI"));
-           m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-           break;
-       case DISP_MACHINERY_SOURCE_BOOSTER_PUMP:
-
-          /*
-          原水增压泵
-          */
-          m_aInsListItem[iMapIdx]->setName(tr("Feed Pump"));
-          m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-          break;
-          
-      case DISP_MACHINERY_TUBE_CIR_PUMP:
-          /*
-          管路循环泵       
-          */
-          m_aInsListItem[iMapIdx]->setName(tr("Dist. Pump"));
-          m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-          break;
-
-      case DISP_MACHINERY_CIR_PUMP:
-          
-          /*
-          循环泵       
-          */
-          m_aInsListItem[iMapIdx]->setName(tr("Recir. Pump"));
-          m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-          break;
-          
-      case DISP_MACHINERY_RO_MEMBRANE:
-          /*
-          RO膜
-          */
-          m_aInsListItem[iMapIdx]->setName(tr("RO Membrane"));
-          m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-          break;
-          
-      case DISP_MACHINERY_RO_BOOSTER_PUMP:
-          /*
-          RO增压泵
-          安装
-          */
-          m_aInsListItem[iMapIdx]->setName(tr("RO Pump"));
-          m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-          break;
-          
-      case DISP_MACHINERY_EDI:
-          /*
-          EDI
-          */
-          m_aInsListItem[iMapIdx]->setName(tr("EDI Module"));
-          m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
-          break;           
-       }
-       if (iEscape)
-       {
-          continue;
-       }
-       m_aInsListItem[iMapIdx]->setItemId(iIdx);
-       m_aInsListItem[iMapIdx]->setBtnId(iMapIdx);
-       m_aInsListItem[iMapIdx]->setCatName(tr("CAT"));
-       m_aInsListItem[iMapIdx]->setLotName(tr("LOT"));
-       iMapIdx++;
+        case DISP_P_PACK:
+            /*
+            P-Pack  
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("P Pack"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_U_PACK:
+             /*
+             U-Pack  
+             */
+            m_aInsListItem[iMapIdx]->setName(tr("U Pack"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_AT_PACK:
+            /*
+            AT-Pack  
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("AT Pack"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_H_PACK:
+            /*
+            H-Pack  
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("H Pack"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_N1_UV:
+            /*
+            254UV 
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("254 UV Lamp"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_N2_UV:
+            /*
+            185UV       
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("185 UV Lamp"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_N3_UV:
+            /*
+            水箱UV       
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("Tank UV Lamp"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_N4_UV:
+            /*
+            管路UV       
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("TUBE UV"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_N5_UV:
+            /*
+            TOC UV       
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("TOC UV"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_W_FILTER:
+            /*
+            空气过滤器       
+            */
+            if ((gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2)))
+            {
+                m_aInsListItem[iMapIdx]->setName(tr("Tank Vent Filter"));
+                m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            }
+            else
+            {
+                iEscape = 1;
+            }
+            break;
+        case DISP_T_B_FILTER:
+            /*
+            终端过滤器B      
+            */
+            if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+            {
+                 m_aInsListItem[iMapIdx]->setName(tr("Final Fliter B"));
+            }
+            else
+            {
+                m_aInsListItem[iMapIdx]->setName(tr("Bio-filter"));
+            }
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_T_A_FILTER:
+            /*
+            终端过滤器A      
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("Final Fliter A"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_TUBE_FILTER:
+            /*
+            管路过滤器       
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("Loop Filter"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_TUBE_DI:
+            /*
+            管路DI     
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("Loop DI"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_MACHINERY_SOURCE_BOOSTER_PUMP:
+            /*
+            原水增压泵
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("Feed Pump"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_MACHINERY_TUBE_CIR_PUMP:
+            /*
+            管路循环泵       
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("Dist. Pump"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_MACHINERY_CIR_PUMP:
+            /*
+            循环泵       
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("Recir. Pump"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_MACHINERY_RO_MEMBRANE:
+            /*
+            RO膜
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("RO Membrane"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_MACHINERY_RO_BOOSTER_PUMP:
+            /*
+            RO增压泵
+            安装
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("RO Pump"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
+        case DISP_MACHINERY_EDI:
+            /*
+            EDI
+            */
+            m_aInsListItem[iMapIdx]->setName(tr("EDI Module"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;           
+        }
+        if (iEscape)
+        {
+            continue;
+        }
+        m_aInsListItem[iMapIdx]->setItemId(iIdx);
+        m_aInsListItem[iMapIdx]->setBtnId(iMapIdx);
+        m_aInsListItem[iMapIdx]->setCatName(tr("CAT"));
+        m_aInsListItem[iMapIdx]->setLotName(tr("LOT"));
+        iMapIdx++;
     }
 
     for (iIdx = 0; iIdx < iMapIdx; iIdx++)
@@ -721,9 +714,9 @@ void ConsumableInsPage::initUi()
 
 void ConsumableInsPage::update()
 {
-   m_wndMain->setWorkMode(APP_WORK_MODE_INSTALL);
+    m_wndMain->setWorkMode(APP_WORK_MODE_INSTALL);
    
-   buildTranslation();
+    buildTranslation();
    
 }
 
@@ -735,47 +728,47 @@ void ConsumableInsPage::fade()
 void ConsumableInsPage::updateRfidInfo(int iRfId)
 {
    /* search item */
-   int index = m_aInsListItem[m_iCurrentItem]->getItemId();
+    int index = m_aInsListItem[m_iCurrentItem]->getItemId();
    
-   if (aIds[index].iRfid != iRfId)
-   {
-      return ;
-   }
+    if (aIds[index].iRfid != iRfId)
+    {
+         return ;
+    }
 
-   if (index < m_iViewItemNum)
-   {
-      int                 iRet;
+    if (index < m_iViewItemNum)
+    {
+        int                 iRet;
 
-      CATNO cn;
-      LOTNO ln;
-      
-      memset(cn,0,sizeof(CATNO));
-      memset(ln,0,sizeof(LOTNO));
+        CATNO cn;
+        LOTNO ln;
 
-      if (m_wndMain->getRfidState(iRfId))
-      {
-          m_wndMain->getRfidCatNo(iRfId,cn);
-          m_wndMain->getRfidLotNo(iRfId,ln);
-      }
-      else
-      {
+        memset(cn,0,sizeof(CATNO));
+        memset(ln,0,sizeof(LOTNO));
+
+        if (m_wndMain->getRfidState(iRfId))
+        {
+            m_wndMain->getRfidCatNo(iRfId,cn);
+            m_wndMain->getRfidLotNo(iRfId,ln);
+        }
+        else
+        {
          // if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)))
-          {
-              iRet = m_wndMain->readRfid(iRfId);
+            {
+                iRet = m_wndMain->readRfid(iRfId);
           
-              if (iRet)
-              {
-                  return;
-              }
-          }
+                if (iRet)
+                {
+                    return;
+                }
+            }
           
-          m_wndMain->getRfidCatNo(iRfId,cn);
-          m_wndMain->getRfidLotNo(iRfId,ln);
-      }
+            m_wndMain->getRfidCatNo(iRfId,cn);
+            m_wndMain->getRfidLotNo(iRfId,ln);
+        }
 
-      m_aInsListItem[m_iCurrentItem]->setP1(cn);
-      m_aInsListItem[m_iCurrentItem]->setP2(ln);
-  }       
+        m_aInsListItem[m_iCurrentItem]->setP1(cn);
+        m_aInsListItem[m_iCurrentItem]->setP2(ln);
+    }       
 }
 
 
@@ -784,7 +777,6 @@ void ConsumableInsPage::ItemClicked(QListWidgetItem * item)
     QListWidget *pTmpListWidget = (QListWidget *)this->sender();
     
     m_iCurrentItem = pTmpListWidget->row(item);
-
 }
 
 void ConsumableInsPage::toCurrentItem(int index)
@@ -816,79 +808,79 @@ void ConsumableInsPage::initTypeMap()
 
 void ConsumableInsPage::on_btn_clicked(int index)
 {  
-   int iOffset = 0;
-   int iLen;
+    int iOffset = 0;
+    int iLen;
 
-   QDate installDate = QDate::currentDate();
+    QDate installDate = QDate::currentDate();
    
    /* check SN number */
-   if (index < m_iViewItemNum)
-   {
-       CATNO cn;
-       LOTNO ln;
-       QString strCn = m_aInsListItem[index]->getP1();
-       QString strLn = m_aInsListItem[index]->getP2();
+    if (index < m_iViewItemNum)
+    {
+        CATNO cn;
+        LOTNO ln;
+        QString strCn = m_aInsListItem[index]->getP1();
+        QString strLn = m_aInsListItem[index]->getP2();
 
-       int iMapIdx = m_aInsListItem[index]->getItemId();
+        int iMapIdx = m_aInsListItem[index]->getItemId();
 
-       memset(cn,0,sizeof(CATNO));
-       memset(ln,0,sizeof(LOTNO));
+        memset(cn,0,sizeof(CATNO));
+        memset(ln,0,sizeof(LOTNO));
 
-       toCurrentItem(index);
+        toCurrentItem(index);
 
-       if (strCn.isEmpty()
-           || strLn.isEmpty())
-       {
+        if (strCn.isEmpty()
+            || strLn.isEmpty())
+        {
           /* try to read info by RFID */
           
-          if ( aIds[iMapIdx].iRfid < APP_RF_READER_MAX_NUMBER)
-          {
-              int  iRet;
+            if ( aIds[iMapIdx].iRfid < APP_RF_READER_MAX_NUMBER)
+            {
+                int  iRet;
 
-              if (m_wndMain->getRfidState(aIds[iMapIdx].iRfid))
-              {
-                  m_wndMain->getRfidCatNo(aIds[iMapIdx].iRfid,cn);
-                  m_wndMain->getRfidLotNo(aIds[iMapIdx].iRfid,ln);
-                  m_wndMain->getRfidInstallDate(aIds[iMapIdx].iRfid, &installDate);
-              }
-              else
-              {
+                if (m_wndMain->getRfidState(aIds[iMapIdx].iRfid))
+                {
+                    m_wndMain->getRfidCatNo(aIds[iMapIdx].iRfid,cn);
+                    m_wndMain->getRfidLotNo(aIds[iMapIdx].iRfid,ln);
+                    m_wndMain->getRfidInstallDate(aIds[iMapIdx].iRfid, &installDate);
+                }
+                else
+                {
               
                  // if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)))
-                  {
-                      iRet = m_wndMain->readRfid(aIds[iMapIdx].iRfid);
+                    {
+                        iRet = m_wndMain->readRfid(aIds[iMapIdx].iRfid);
     
-                      if (iRet)
-                      {
-                          QMessageBox::about(NULL, tr("Alarm"), "<font color='red'>"+tr("Failed to read RFID,please make sure the part is installed correctly.")+"</font>");
-                          return;
-                      }
-                  }
-                  
-                  m_wndMain->getRfidCatNo(aIds[iMapIdx].iRfid,cn);
-                  m_wndMain->getRfidLotNo(aIds[iMapIdx].iRfid,ln);
-                  m_wndMain->getRfidInstallDate(aIds[iMapIdx].iRfid, &installDate);
-              }
+                        if (iRet)
+                        {
+                            QMessageBox::about(NULL, tr("Alarm"), "<font color='red'>"+tr("Failed to read RFID,please make sure the part is installed correctly.")+"</font>");
+                            return;
+                        }
+                    }
+                    
+                    m_wndMain->getRfidCatNo(aIds[iMapIdx].iRfid,cn);
+                    m_wndMain->getRfidLotNo(aIds[iMapIdx].iRfid,ln);
+                    m_wndMain->getRfidInstallDate(aIds[iMapIdx].iRfid, &installDate);
+                }
 
-              m_aInsListItem[index]->setP1(cn);
-              m_aInsListItem[index]->setP2(ln);
-          }
-          else
-          {
-              QMessageBox::about(NULL, tr("About"), tr("Please Input Serial Number !"));
-              return;
-          }
-       }
+                m_aInsListItem[index]->setP1(cn);
+                m_aInsListItem[index]->setP2(ln);
+            }
+            else
+            {
+                QMessageBox::about(NULL, tr("About"), tr("Please Input Serial Number !"));
+                return;
+            }
+        }
        
-       strCn = m_aInsListItem[index]->getP1();
-       strLn = m_aInsListItem[index]->getP2();
+        strCn = m_aInsListItem[index]->getP1();
+        strLn = m_aInsListItem[index]->getP2();
 
-       if (strCn.isEmpty()
-           || strLn.isEmpty())
-       {
-           QMessageBox::about(NULL, tr("About"), tr("Please Input Serial Number !"));
-           return;
-       }
+        if (strCn.isEmpty()
+            || strLn.isEmpty())
+        {
+            QMessageBox::about(NULL, tr("About"), tr("Please Input Serial Number !"));
+            return;
+        }
         switch(aIds[iMapIdx].iType)
         {
         case 0:
@@ -923,49 +915,38 @@ void ConsumableInsPage::on_btn_clicked(int index)
             break;
         case 1:
         {
-             int macIdx = aIds[iMapIdx].iId - DISP_MACHINERY_SOURCE_BOOSTER_PUMP;
+            int macIdx = aIds[iMapIdx].iId - DISP_MACHINERY_SOURCE_BOOSTER_PUMP;
 
-             int value = m_typeMap.key(aIds[iMapIdx].iId);
-             bool verify = MainWindow::consumableCatNo(static_cast<CONSUMABLE_CATNO>(value)).contains(strCn);
-             if(!verify)
-             {
-                 QMessageBox::warning(NULL,
-                                      tr("Warning"),
-                                      tr("The type of consumable is wrong, failed installation!"),
-                                      QMessageBox::Ok
-                                      );
-                 return;
-             }
-             if (0 == strcmp(strCn.toAscii(),gGlobalParam.macSn.aCn[macIdx])
-                || 0 == strcmp(strLn.toAscii(),gGlobalParam.macSn.aLn[macIdx]))
-             {
-                return ;
-             }
+            int value = m_typeMap.key(aIds[iMapIdx].iId);
+            bool verify = MainWindow::consumableCatNo(static_cast<CONSUMABLE_CATNO>(value)).contains(strCn);
+            if(!verify)
+            {
+                QMessageBox::warning(NULL,
+                                     tr("Warning"),
+                                     tr("The type of consumable is wrong, failed installation!"),
+                                     QMessageBox::Ok
+                                     );
+                return;
+            }
+            if (0 == strcmp(strCn.toAscii(),gGlobalParam.macSn.aCn[macIdx])
+               || 0 == strcmp(strLn.toAscii(),gGlobalParam.macSn.aLn[macIdx]))
+            {
+               return ;
+            }
              
              /* install */
-             strncpy(cn,strCn.toAscii(),APP_CAT_LENGTH);
-             strncpy(ln,strLn.toAscii(),APP_LOT_LENGTH);
+            strncpy(cn,strCn.toAscii(),APP_CAT_LENGTH);
+            strncpy(ln,strLn.toAscii(),APP_LOT_LENGTH);
              
-             //MainSaveMacSnItem(gGlobalParam.iMachineType,cn,ln,macIdx);
-            // if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
-            // {
-            //    MainSaveExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1);
-            // }
-            // else
-             {
-                m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1, installDate, aIds[iMapIdx].iRfid);
-             }
-
-//             strncpy(gGlobalParam.cmSn.aCn[macIdx],cn,APP_CAT_LENGTH);
-//             strncpy(gGlobalParam.cmSn.aLn[macIdx],ln,APP_LOT_LENGTH);
+            m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1, installDate, aIds[iMapIdx].iRfid);
 
              /* reset state info */
-             m_wndMain->MainWriteMacInstallInfo2Db(macIdx,0,cn,ln);
-         }        
-         break;       
-       }
+            m_wndMain->MainWriteMacInstallInfo2Db(macIdx,0,cn,ln);
+        }        
+            break;       
+        }
     }
    
-   m_wndMain->prepareKeyStroke();
+    m_wndMain->prepareKeyStroke();
 }
 

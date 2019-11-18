@@ -6,11 +6,8 @@
 #include <QPushButton>
 #include <QComboBox>
 
-
-
 Ex_Init_Languagepage::Ex_Init_Languagepage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
-
     m_iLanguage = gGlobalParam.MiscParam.iLan;
 
     creatTitle();
@@ -119,7 +116,6 @@ void Ex_Init_Languagepage::initUi()
     m_nextBtn = new QPushButton(m_widget);
     m_nextBtn->setGeometry(570, 180, 160, 40);
     connect(m_nextBtn, SIGNAL(clicked()), this, SLOT(on_nextBtn_clicked()));
-
 }
 
 void Ex_Init_Languagepage::on_nextBtn_clicked()
@@ -127,24 +123,23 @@ void Ex_Init_Languagepage::on_nextBtn_clicked()
     on_saveBtn_clicked(); //next clicked save
     m_wndMain->naviInitPage(Ex_Init_Lan, 0);
     m_wndMain->prepareKeyStroke();
-
 }
 
 void Ex_Init_Languagepage::leaveSubPage()
 {
     if (m_iLanguage != gGlobalParam.MiscParam.iLan)
     {
-       DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;
+        DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;
 
-       MiscParam.iLan = m_iLanguage;
+        MiscParam.iLan = m_iLanguage;
 
-       MainSaveMiscParam(gGlobalParam.iMachineType,MiscParam);
+        MainSaveMiscParam(gGlobalParam.iMachineType,MiscParam);
 
-       MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
+        MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
 
-       gApp->installTranslators(m_iLanguage);
+        gApp->installTranslators(m_iLanguage);
 
-       m_wndMain->switchLanguage();
+        m_wndMain->switchLanguage();
     }
 
     CSubPage::leaveSubPage();
@@ -188,7 +183,7 @@ void Ex_Init_Languagepage::mouseReleaseEvent(QMouseEvent *e)
 void Ex_Init_Languagepage::on_saveBtn_clicked()
 {
     if (m_iLanguage != gGlobalParam.MiscParam.iLan)
-     {
+    {
         DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;
 
         MiscParam.iLan = m_iLanguage;
@@ -200,7 +195,6 @@ void Ex_Init_Languagepage::on_saveBtn_clicked()
         gApp->installTranslators(m_iLanguage);
 
         m_wndMain->switchLanguage();
-
     }
 }
 
