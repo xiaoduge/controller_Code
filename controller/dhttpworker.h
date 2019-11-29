@@ -26,28 +26,34 @@ signals:
 public slots:
     void on_updateAlarmList(const DNetworkAlaramInfo &alarmInfo);
     void on_updateHeartList(const DNetworkData&);
+    void on_updateDispenseList(const DDispenseData&);
 
     void on_heartHttpPost(const QByteArray& xmlByte);
     void on_alarmHttpPost();
+    void on_dispenseHttpPost(const QByteArray& xmlByte);
 
     void on_initHttp();
 
 private slots:
     void onHeartReplyFinished();
     void onAlarmReplyFinished();
+	void onDispenseReplyFinished();
 
 
 private:
-    DXmlGenerator *m_xmlGenerator;
     DNetworkAccessManager *m_networkAccessManager;
+    DXmlGenerator *m_xmlGenerator;
+
     QNetworkReply *m_pHeartNetworkReply;
     QNetworkReply *m_pAlarmNetworkReply;
+    QNetworkReply *m_pDispenseNetworkReply;
 
     QList<DNetworkAlaramInfo> m_alarmList;
     QList<DNetworkAlaramInfo> m_alarmTempList;
 
     bool m_idleHeart;
     bool m_idleAlarm;
+    bool m_idleDispense;
 
     QMutex m_mutex;
 

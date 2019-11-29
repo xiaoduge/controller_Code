@@ -96,8 +96,36 @@ struct DNetworkAlaramInfo
     QDateTime m_triggerTime;
 };
 
+struct DDispenseData
+{
+    explicit DDispenseData(){}
+    explicit DDispenseData(const QString &type, float vol, float quality,
+                           float tmp, int toc, const QString &time)
+                          :m_strType(type), m_fVolume(vol), m_fQuality(quality),
+                           m_fTmp(tmp), m_iToc(toc), m_strTime(time){}
+
+    void setData(const QString &type, float vol, float quality,
+                 float tmp, int toc, const QString &time)
+    {
+        m_strType    = type;
+        m_fVolume    = vol;
+        m_fQuality   = quality;
+        m_fTmp       = tmp;
+        m_iToc       = toc;
+        m_strTime = time;
+    }
+
+    QString m_strType;
+    float   m_fVolume;
+    float   m_fQuality;
+    float   m_fTmp;
+    int     m_iToc;
+    QString m_strTime;
+};
+
 Q_DECLARE_METATYPE(DNetworkData)
 Q_DECLARE_METATYPE(DNetworkAlaramInfo)
+Q_DECLARE_METATYPE(DDispenseData)
 
 enum Consumables_Notify  //NOTIFY
 {

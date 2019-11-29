@@ -25,7 +25,7 @@
 
 //#define TOUCHTEST
 
-#define SUB_ACCOUNT  //Sub-account
+//#define SUB_ACCOUNT  //Sub-account
 
 #define PAGEID_MARGIN (4)
 
@@ -533,8 +533,9 @@ public:
     void checkConsumableAlarm();
 
 signals:
-    void sendHttpHeartData(const DNetworkData& networkData);
+    void sendHttpHeartData(const DNetworkData&);
     void sendHttpAlarm(const DNetworkAlaramInfo&);
+	void sendDispenseData(const DDispenseData&);
 
 private:
     void initHttpWorker();
@@ -826,9 +827,6 @@ private:
 
 
 private:
-    //ex  screenSleep
-//    Ex_ScreenSleepThread* m_screenSleepThread;
-
     Ex_CheckConsumaleInstall* m_checkConsumaleInstall[APP_RFID_SUB_TYPE_NUM];
     Ex_ConsumableInstallDialog* m_consumaleInstallDialog[APP_RFID_SUB_TYPE_NUM];
     bool m_startCheckConsumable;

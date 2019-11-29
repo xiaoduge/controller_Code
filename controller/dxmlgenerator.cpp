@@ -30,6 +30,11 @@ DXmlGenerator::DXmlGenerator(QObject *parent) :
     initMachineInfo();
 }
 
+/**
+ * 将心跳数据打包成XML格式
+ * @param  data [心跳数据]
+ * @return      [XML格式的心跳数据]
+ */
 const QByteArray DXmlGenerator::generator(const DNetworkData& data)
 {
     QByteArray xmlArray;
@@ -50,6 +55,11 @@ const QByteArray DXmlGenerator::generator(const DNetworkData& data)
     return xmlArray;
 }
 
+/**
+ * 将报警信息打包成XML格式
+ * @param  data [报警信息列表]
+ * @return      [XML格式的报警信息]
+ */
 const QByteArray DXmlGenerator::generator(QList<DNetworkAlaramInfo> &data)
 {
     QByteArray xmlArray;
@@ -63,6 +73,31 @@ const QByteArray DXmlGenerator::generator(QList<DNetworkAlaramInfo> &data)
     xmlWriter.writeAttribute("MachineType", m_machineInfo);
 
     createAlarmAndConfig(xmlWriter, data);
+
+    xmlWriter.writeEndElement();
+    xmlWriter.writeEndDocument();
+
+    return xmlArray;
+}
+
+/**
+ * 将取水信息打包成XML格式
+ * @param  data [取水数据]
+ * @return      [XML格式的取水数据]
+ */
+const QByteArray DXmlGenerator::generator(const DDispenseData &data)
+{
+    QByteArray xmlArray;
+    QXmlStreamWriter xmlWriter(&xmlArray);
+
+    xmlWriter.setAutoFormatting(true);
+    xmlWriter.writeStartDocument();
+    xmlWriter.writeStartElement("UploadData");
+
+    xmlWriter.writeAttribute("Serial", ex_gGlobalParam.Ex_System_Msg.Ex_SerialNo);
+    xmlWriter.writeAttribute("MachineType", m_machineInfo);
+
+    createDispenseData(xmlWriter, data);
 
     xmlWriter.writeEndElement();
     xmlWriter.writeEndDocument();
@@ -114,6 +149,20 @@ void DXmlGenerator::createAlarm(QXmlStreamWriter &xmlWriter, QList<DNetworkAlara
         xmlWriter.writeTextElement("AlarmStatus", QString::number(alarmInfo.m_alarmStatus));
         xmlWriter.writeEndElement();
     }
+}
+
+void DXmlGenerator::createDispenseData(QXmlStreamWriter &xmlWriter, const DDispenseData &data)
+{
+    xmlWriter.writeStartElement("DispenseData");
+    xmlWriter.writeAttribute("Time", data.m_strTime);
+
+    QList<QStringList> elementsList;
+
+    createDispenseDataList(elementsList, data);
+
+    writeDispenseElements(xmlWriter, elementsList);
+
+    xmlWriter.writeEndElement();
 }
 
 void DXmlGenerator::createActiveUpload(QXmlStreamWriter &xmlWriter)
@@ -414,6 +463,45 @@ void DXmlGenerator::writeAlarmPointElements(QXmlStreamWriter &xmlWriter, const Q
             xmlWriter.writeCharacters(maxValue);
             xmlWriter.writeEndElement();
 
+            xmlWriter.writeEndElement();
+            break;
+        }
+        default:
+            break;
+        }
+    }
+}
+
+void DXmlGenerator::writeDispenseElements(QXmlStreamWriter &xmlWriter, const QList<QStringList> &elementlist)
+{
+    QList<QStringList>::const_iterator iter = elementlist.begin();
+    for(;iter != elementlist.end(); ++iter)
+    {
+        QStringList strList = *iter;
+        int listSize = strList.size();
+
+        switch (listSize)
+        {
+        case 2:
+        {
+            QString elementName = strList[0];
+            QString elementValue = strList[1];
+
+            xmlWriter.writeStartElement(elementName);
+            xmlWriter.writeCharacters(elementValue);
+            xmlWriter.writeEndElement();
+            break;
+        }
+        case 3:
+        {
+            QString elementName = strList[0];
+            QString attriValue = strList[1];
+            QString elementValue = strList[2];
+
+            xmlWriter.writeStartElement(elementName);
+
+            xmlWriter.writeAttribute("unit", attriValue);
+            xmlWriter.writeCharacters(elementValue);
             xmlWriter.writeEndElement();
             break;
         }
@@ -1328,5 +1416,14 @@ void DXmlGenerator::createAlarmPointList(QList<QStringList> &elementsList)
         break;
     }
 
+}
+
+void DXmlGenerator::createDispenseDataList(QList<QStringList> &elementsList, const DDispenseData &data)
+{
+    appendElement(elementsList, "DispenseType", data.m_strType);
+    appendElement(elementsList, "Quality", "1", toString1(data.m_fQuality));
+    appendElement(elementsList, "Temperature", toString1(data.m_fTmp));
+    appendElement(elementsList, "Volume", toString3(data.m_fVolume));
+    appendElement(elementsList, "TOC", toString(data.m_iToc));
 }
 

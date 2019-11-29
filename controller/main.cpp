@@ -362,8 +362,11 @@ int main(int argc, char *argv[])
     qRegisterMetaType<DNetworkData>("DNetworkData");
     qRegisterMetaType<DNetworkData>("DNetworkData&");
 
-    qRegisterMetaType<DNetworkData>("DNetworkAlaramInfo");
-    qRegisterMetaType<DNetworkData>("DNetworkAlaramInfo&");
+    qRegisterMetaType<DNetworkAlaramInfo>("DNetworkAlaramInfo");
+    qRegisterMetaType<DNetworkAlaramInfo>("DNetworkAlaramInfo&");
+
+	qRegisterMetaType<DDispenseData>("DDispenseData");
+    qRegisterMetaType<DDispenseData>("DDispenseData&");
     //end
 
     chdir(dirname(argv[0]));

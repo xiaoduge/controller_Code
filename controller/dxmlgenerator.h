@@ -12,13 +12,15 @@ class DXmlGenerator : public QObject
 public:
     explicit DXmlGenerator(QObject *parent = 0);
 
-    const QByteArray generator(const DNetworkData& data);
-    const QByteArray generator(QList<DNetworkAlaramInfo>& data);
+    const QByteArray generator(const DNetworkData &data);
+    const QByteArray generator(QList<DNetworkAlaramInfo> &data);
+    const QByteArray generator(const DDispenseData &data);
 
-private:
+private:   
     void createHeartData(QXmlStreamWriter &xmlWriter, const DNetworkData& data);
     void createAlarmAndConfig(QXmlStreamWriter &xmlWriter, QList<DNetworkAlaramInfo>& data);
-    void createAlarm(QXmlStreamWriter &xmlWriter, QList<DNetworkAlaramInfo>& data);
+    void createAlarm(QXmlStreamWriter &xmlWriter, QList<DNetworkAlaramInfo> &data);
+    void createDispenseData(QXmlStreamWriter &xmlWriter, const DDispenseData &data);
 
     void createActiveUpload(QXmlStreamWriter &xmlWriter);
     void createLifetime(QXmlStreamWriter &xmlWriter);
@@ -36,13 +38,15 @@ private:
     void writeLifeTimeElements(QXmlStreamWriter &xmlWriter, const QList<QStringList> &elementlist);
     void writeCalibrationElements(QXmlStreamWriter &xmlWriter, const QList<QStringList> &elementlist);
     void writeAlarmPointElements(QXmlStreamWriter &xmlWriter, const QList<QStringList> &elementlist);
-    
+    void writeDispenseElements(QXmlStreamWriter &xmlWriter, const QList<QStringList> &elementlist);
+
     void initMachineInfo();
 
     void createHeartDataList(QList<QStringList> &elementsList, const DNetworkData& data);
     void createLifeTimeList(QList<QStringList> &elementsList);
     void createCalibrationList(QList<QStringList> &elementsList);
     void createAlarmPointList(QList<QStringList> &elementsList);
+    void createDispenseDataList(QList<QStringList> &elementsList, const DDispenseData& data);
 
 private:
     QString m_machineInfo;

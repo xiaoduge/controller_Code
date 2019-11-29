@@ -10,6 +10,15 @@
 class Ex_CheckConsumaleInstall : public QObject
 {
     Q_OBJECT
+    enum InstallAction
+    {
+        InvalidAction = 0,             //0 : do nothing
+        InsertAction,            //1 : insert new
+        UpdateAction,            //2 : update     
+        WriteInstallDataAction,  //3 : only write install date to RFID
+        ActionNum
+    };
+
 public:
     explicit Ex_CheckConsumaleInstall(int id, QObject *parent = 0);
     ~Ex_CheckConsumaleInstall();
@@ -59,7 +68,7 @@ private:
     QDate m_installDate;
     int m_volUsed;
     bool m_isRfidType;
-    int m_operateID;
+    InstallAction m_operateID;
     bool m_isBusy;
     QMap<short int, short int> m_typeMap;
     QMap<short int, short int> m_categoryMap;

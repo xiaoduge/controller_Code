@@ -66,7 +66,7 @@ enum IAP_PROC
 {
    IAP_PROC_DOWNLOAD,
    IAP_PROC_FORCEBOOT,
-   IAP_PROC_BUTT,
+   IAP_PROC_BUTT
 };
 
 enum IAP_STATE
@@ -75,7 +75,7 @@ enum IAP_STATE
    IAP_STATE_HS,
    IAP_STATE_FS,
    IAP_STATE_DATA,
-   IAP_STATE_BUTT,
+   IAP_STATE_BUTT
 };
 
 typedef struct

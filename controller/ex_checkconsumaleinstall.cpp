@@ -315,7 +315,7 @@ bool Ex_CheckConsumaleInstall::comparedWithSql()
         {
             if(newPack())
             {
-                m_operateID = 3;
+                m_operateID = WriteInstallDataAction;
                 emit consumableMsg(m_iType, m_catNo, m_lotNo);
                 return true; //update
             }
@@ -327,14 +327,14 @@ bool Ex_CheckConsumaleInstall::comparedWithSql()
         }
         else
         {
-            m_operateID = 2;
+            m_operateID = UpdateAction;
             emit consumableMsg(m_iType, m_catNo, m_lotNo);
             return true; //update
         }
     }
     else
     {
-        m_operateID = 1;
+        m_operateID = InsertAction;
         emit consumableMsg(m_iType, m_catNo, m_lotNo);
         return true;   //insert new
     }
@@ -418,7 +418,7 @@ void Ex_CheckConsumaleInstall::updateConsumaleMsg()
 
     switch(m_operateID)
     {
-    case 1:
+    case InsertAction:
     {
         insertSql();
         if(newPack())
@@ -429,7 +429,7 @@ void Ex_CheckConsumaleInstall::updateConsumaleMsg()
         MainResetCmInfo(m_iType);
         break;
     }
-    case 2:
+    case UpdateAction:
     {
         updateSql();
         if(newPack())
@@ -440,7 +440,7 @@ void Ex_CheckConsumaleInstall::updateConsumaleMsg()
         MainResetCmInfo(m_iType);
         break;
     }
-    case 3:
+    case WriteInstallDataAction:
     {
         writeInstallDate();
         clearVolofUse();
