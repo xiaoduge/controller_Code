@@ -1,7 +1,7 @@
 #include "ConsumableinsPage.h"
 #include "mainwindow.h"
 #include "consumableinslistwidgtitem.h"
-#include "ExtraDisplay.h"
+#include "exconfig.h"
 #include <QListWidget>
 
 ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
@@ -445,7 +445,7 @@ void ConsumableInsPage::buildTranslation()
         {
         case DISP_PRE_PACK:
             /*
-            预处理柱     
+            预     
             */
             m_aInsListItem[iMapIdx]->setName(tr("Prefilter"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
@@ -508,14 +508,14 @@ void ConsumableInsPage::buildTranslation()
             break;
         case DISP_N3_UV:
             /*
-            水箱UV       
+            水UV       
             */
             m_aInsListItem[iMapIdx]->setName(tr("Tank UV Lamp"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
         case DISP_N4_UV:
             /*
-            管路UV       
+            路UV       
             */
             m_aInsListItem[iMapIdx]->setName(tr("TUBE UV"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
@@ -529,7 +529,7 @@ void ConsumableInsPage::buildTranslation()
             break;
         case DISP_W_FILTER:
             /*
-            空气过滤器       
+                   
             */
             if ((gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2)))
             {
@@ -543,9 +543,9 @@ void ConsumableInsPage::buildTranslation()
             break;
         case DISP_T_B_FILTER:
             /*
-            终端过滤器B      
+            斩斯B      
             */
-            if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+            if(0 == gAdditionalCfgParam.productInfo.iCompany)
             {
                  m_aInsListItem[iMapIdx]->setName(tr("Final Fliter B"));
             }
@@ -557,42 +557,42 @@ void ConsumableInsPage::buildTranslation()
             break;
         case DISP_T_A_FILTER:
             /*
-            终端过滤器A      
+            斩斯A      
             */
             m_aInsListItem[iMapIdx]->setName(tr("Final Fliter A"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
         case DISP_TUBE_FILTER:
             /*
-            管路过滤器       
+            路       
             */
             m_aInsListItem[iMapIdx]->setName(tr("Loop Filter"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
         case DISP_TUBE_DI:
             /*
-            管路DI     
+            路DI     
             */
             m_aInsListItem[iMapIdx]->setName(tr("Loop DI"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
         case DISP_MACHINERY_SOURCE_BOOSTER_PUMP:
             /*
-            原水增压泵
+            原水压
             */
             m_aInsListItem[iMapIdx]->setName(tr("Feed Pump"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
         case DISP_MACHINERY_TUBE_CIR_PUMP:
             /*
-            管路循环泵       
+            路循       
             */
             m_aInsListItem[iMapIdx]->setName(tr("Dist. Pump"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
         case DISP_MACHINERY_CIR_PUMP:
             /*
-            循环泵       
+            循       
             */
             m_aInsListItem[iMapIdx]->setName(tr("Recir. Pump"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
@@ -606,8 +606,8 @@ void ConsumableInsPage::buildTranslation()
             break;
         case DISP_MACHINERY_RO_BOOSTER_PUMP:
             /*
-            RO增压泵
-            安装
+            RO压
+            装
             */
             m_aInsListItem[iMapIdx]->setName(tr("RO Pump"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));

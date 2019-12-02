@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "Display.h"
 #include "notify.h"
+#include "exconfig.h"
 #include <QListWidget>
 
 SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
@@ -16,7 +17,7 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
 
     iIdx = 0;
 
-    switch(gGlobalParam.iMachineType)/*½øË®·§ON/OFF*/
+    switch(gGlobalParam.iMachineType)/*è¿›æ°´é˜€ON/OFF*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -33,7 +34,7 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     }
 
-    switch(gGlobalParam.iMachineType)/*RO³åÏ´·§ON/OFF*/
+    switch(gGlobalParam.iMachineType)/*ROå†²æ´—é˜€ON/OFF*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -50,7 +51,7 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     }
 
-    switch(gGlobalParam.iMachineType)/*RO²úË®·§ON/OFF*/
+    switch(gGlobalParam.iMachineType)/*ROäº§æ°´é˜€ON/OFF*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -67,11 +68,18 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     }
 
-    switch(gGlobalParam.iMachineType)/*´¿Ë®½øË®µç´Å·§ON/OFF*/
+    switch(gGlobalParam.iMachineType)/*çº¯æ°´è¿›æ°´ç”µç£é˜€ON/OFF*/
     {
+    case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        {
+            aSwitchs[iIdx].type = SYSTEM_TEST_ITEM_TYPE_SWITCH;
+            aSwitchs[iIdx].id   = APP_EXE_E4_NO;            
+            iIdx++;
+        }
+        break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
@@ -84,7 +92,7 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     }
 
-    switch(gGlobalParam.iMachineType)/*UPÑ­»·µç´Å·§ON/OFF*/
+    switch(gGlobalParam.iMachineType)/*UPå¾ªçŽ¯ç”µç£é˜€ON/OFF*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -98,11 +106,18 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     }    
 
-    switch(gGlobalParam.iMachineType)/*HPÑ­»·µç´Å·§ ON/OFF*/
+    switch(gGlobalParam.iMachineType)/*HPå¾ªçŽ¯ç”µç£é˜€ ON/OFF*/
     {
+    case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        {
+            aSwitchs[iIdx].type = SYSTEM_TEST_ITEM_TYPE_SWITCH;
+            aSwitchs[iIdx].id   = APP_EXE_E6_NO;            
+            iIdx++;
+        }
+        break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
@@ -114,11 +129,18 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*TOCÑ­»··§ON/OFF*/
+    switch(gGlobalParam.iMachineType)/*TOCå¾ªçŽ¯é˜€ON/OFF*/
     {
+    case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        {
+            aSwitchs[iIdx].type = SYSTEM_TEST_ITEM_TYPE_SWITCH;
+            aSwitchs[iIdx].id   = APP_EXE_E9_NO;            
+            iIdx++;
+        }
+        break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
@@ -130,7 +152,7 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*Ô­Ë®·§ON/OFF*/
+    switch(gGlobalParam.iMachineType)/*åŽŸæ°´é˜€ON/OFF*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -174,7 +196,7 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
     }
 #endif
 
-    switch(gGlobalParam.iMachineType)/*C3Ô­Ë®ÔöÑ¹±Ã*/
+    switch(gGlobalParam.iMachineType)/*C3åŽŸæ°´å¢žåŽ‹æ³µ*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -192,7 +214,7 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*C4¹ÜÂ·Ñ­»·±Ã ¹ÜÂ·UV*/
+    switch(gGlobalParam.iMachineType)/*C4ç®¡è·¯å¾ªçŽ¯æ³µ ç®¡è·¯UV*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -208,7 +230,7 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*254UV   ON/OFF   µçÁ÷£º000*/
+    switch(gGlobalParam.iMachineType)/*254UV   ON/OFF   ç”µæµï¼š000*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -224,7 +246,7 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         iIdx++;
         break;
     } 
-    switch(gGlobalParam.iMachineType)/*185UV   ON/OFF   µçÁ÷£º000*/
+    switch(gGlobalParam.iMachineType)/*185UV   ON/OFF   ç”µæµï¼š000*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -244,7 +266,7 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*Ë®ÏäUV  ON/OFF   µçÁ÷£º000*/
+    switch(gGlobalParam.iMachineType)/*æ°´ç®±UV  ON/OFF   ç”µæµï¼š000*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -264,7 +286,7 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*EDI µçÔ´  ON/OFF   µçÁ÷£º000*/
+    switch(gGlobalParam.iMachineType)/*EDI ç”µæº  ON/OFF   ç”µæµï¼š000*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_EDI_LOOP:
@@ -277,11 +299,11 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*RO±Ã OFF/µÍ/ÖÐ/¸ß µçÑ¹£º000µçÁ÷£º000*/
+    switch(gGlobalParam.iMachineType)/*ROæ³µ OFF/ä½Ž/ä¸­/é«˜ ç”µåŽ‹ï¼š000ç”µæµï¼š000*/
     {
+    case MACHINE_L_EDI_LOOP:
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
@@ -295,11 +317,11 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*UP/HP±Ã OFF/µÍ/ÖÐ/¸ß µçÑ¹£º000µçÁ÷£º000*/
+    switch(gGlobalParam.iMachineType)/*UP/HPæ³µ OFF/ä½Ž/ä¸­/é«˜ ç”µåŽ‹ï¼š000ç”µæµï¼š000*/
     {
+    case MACHINE_L_EDI_LOOP:
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
@@ -362,25 +384,25 @@ void SysTestPage::buildTranslation()
         {
         case APP_EXE_E1_NO:
             /*
-            E1  RO½øË®µç´Å·§     ON/OFF
+            E1  ROè¿›æ°´ç”µç£é˜€     ON/OFF
             */
             m_pSysTestlistItem[iLoop]->setName(tr("RO Inlet Valve"));
             break;
         case APP_EXE_E2_NO:
             /*
-            RO³åÏ´·§  ON/OFF
+            ROå†²æ´—é˜€  ON/OFF
             */
             m_pSysTestlistItem[iLoop]->setName(tr("RO Reject Valve"));
             break;
         case APP_EXE_E3_NO:
             /*
-            RO²úË®·§  ON/OFF
+            ROäº§æ°´é˜€  ON/OFF
             */
             m_pSysTestlistItem[iLoop]->setName(tr("RO Drain Valve"));
             break;
         case APP_EXE_E4_NO:
             /*
-            ´¿Ë®½øË®µç´Å·§ON/OFF
+            çº¯æ°´è¿›æ°´ç”µç£é˜€ON/OFF
             */
             switch(gGlobalParam.iMachineType)
              {
@@ -402,32 +424,32 @@ void SysTestPage::buildTranslation()
             break;
         case APP_EXE_E5_NO:
             /*
-            UPÑ­»·µç´Å·§ON/OFF
+            UPå¾ªçŽ¯ç”µç£é˜€ON/OFF
             */
             m_pSysTestlistItem[iLoop]->setName(tr("UP Recirculation Valve"));
             break;
         case APP_EXE_E6_NO:
             /*
-            HPÑ­»·µç´Å·§ ON/OFF
+            HPå¾ªçŽ¯ç”µç£é˜€ ON/OFF
             */
             m_pSysTestlistItem[iLoop]->setName(tr("HP Recirculation Valve"));
             break;
         case APP_EXE_E9_NO:
             /*
-            TOCÑ­»··§ON/OFF
+            TOCå¾ªçŽ¯é˜€ON/OFF
             */
             m_pSysTestlistItem[iLoop]->setName(tr("TOC Flush Valve"));
             
             break;
         case APP_EXE_E10_NO:
             /*
-            Ô­Ë®·§ ON/OFF
+            åŽŸæ°´é˜€ ON/OFF
             */
             m_pSysTestlistItem[iLoop]->setName(tr("Feed Water Valve"));
             break;
         case APP_EXE_C3_NO:
             /*
-            C3  Ô­Ë®ÔöÑ¹±Ã  
+            C3  åŽŸæ°´å¢žåŽ‹æ³µ  
             */
             m_pSysTestlistItem[iLoop]->setName(tr("Feed Pump"));
             m_pSysTestlistItem[iLoop]->setP1Name(tr("Current"));
@@ -435,35 +457,35 @@ void SysTestPage::buildTranslation()
             break;
         case APP_EXE_C4_NO:
             /*
-            C4  ¹ÜÂ·Ñ­»·±Ã  
+            C4  ç®¡è·¯å¾ªçŽ¯æ³µ  
             */
             m_pSysTestlistItem[iLoop]->setName(tr("Dist. Pump"));
             m_pSysTestlistItem[iLoop]->setP1Name(tr("Current"));
             break;             
         case APP_EXE_N1_NO:
             /*
-            254UV   ON/OFF   µçÁ÷£º000
+            254UV   ON/OFF   ç”µæµï¼š000
             */
             m_pSysTestlistItem[iLoop]->setName(tr("254 UV Lamp"));
             m_pSysTestlistItem[iLoop]->setP1Name(tr("Current"));
             break;
         case APP_EXE_N2_NO:
             /*
-            185UV   ON/OFF   µçÁ÷£º000
+            185UV   ON/OFF   ç”µæµï¼š000
             */
             m_pSysTestlistItem[iLoop]->setName(tr("185 UV Lamp"));
             m_pSysTestlistItem[iLoop]->setP1Name(tr("Current"));
             break;
         case APP_EXE_N3_NO:
             /*
-            Ë®ÏäUV  ON/OFF   µçÁ÷£º000
+            æ°´ç®±UV  ON/OFF   ç”µæµï¼š000
             */
             m_pSysTestlistItem[iLoop]->setName(tr("Tank UV Lamp"));
             m_pSysTestlistItem[iLoop]->setP1Name(tr("Current"));
             break;
         case APP_EXE_T1_NO:
             /*
-            EDI µçÔ´   ON/OFF   µçÁ÷£º000
+            EDI ç”µæº   ON/OFF   ç”µæµï¼š000
             */
             m_pSysTestlistItem[iLoop]->setName(tr("EDI Power"));
             m_pSysTestlistItem[iLoop]->setP1Name(tr("Current"));
@@ -471,7 +493,7 @@ void SysTestPage::buildTranslation()
            
         case APP_EXE_C1_NO:
             /*
-            RO±Ã     OFF/µÍ/ÖÐ/¸ß         µçÑ¹£º000µçÁ÷£º000          
+            ROæ³µ     OFF/ä½Ž/ä¸­/é«˜         ç”µåŽ‹ï¼š000ç”µæµï¼š000          
             */
             m_pSysTestlistItem[iLoop]->setName(tr("RO Pump"));
             m_pSysTestlistItem[iLoop]->setP1Name(tr("Current"));
@@ -481,7 +503,7 @@ void SysTestPage::buildTranslation()
             break;
         case APP_EXE_C2_NO:
             /*
-            UP±Ã      OFF/µÍ/ÖÐ/¸ß        µçÑ¹£º000µçÁ÷£º000                    
+            UPæ³µ      OFF/ä½Ž/ä¸­/é«˜        ç”µåŽ‹ï¼š000ç”µæµï¼š000                    
             */
             switch(gGlobalParam.iMachineType)
              {
@@ -516,37 +538,37 @@ void SysTestPage::buildTranslation()
 #if 0
 
     /*
-    UP²úË®·§ON/OFF
+    UPäº§æ°´é˜€ON/OFF
     */
     m_pSysTestlistItem[4]->setName(tr("UP Out Valve"));
     
     /*
-    Ô­Ë®±Ã  ON/OFF
+    åŽŸæ°´æ³µ  ON/OFF
     */
     m_pSysTestlistItem[5]->setName(tr("Source Pump"));
     
     
     /*
-    TOCÑ­»··§ON/OFF
+    TOCå¾ªçŽ¯é˜€ON/OFF
     */
     m_pSysTestlistItem[7]->setName(tr("TOC Cir Valve"));
     
     /*
-    HP²úË®·§ON/OFF
+    HPäº§æ°´é˜€ON/OFF
     */
     m_pSysTestlistItem[9]->setName(tr("HP Out Valve"));
 
     /*
-    ·ÖÅä±Ã  ON/OFF
+    åˆ†é…æ³µ  ON/OFF
     */
     m_pSysTestlistItem[11]->setName(tr("Allocated Pump"));
 
     /*
-    ¹ÜÂ·UV   ON/OFF
+    ç®¡è·¯UV   ON/OFF
     */
     m_pSysTestlistItem[12]->setName(tr("Tube UV Light"));
 
-    /* Vo=0.792*£¨1+41.2K/Rwb ,Rwb=0~10k */
+    /* Vo=0.792*ï¼ˆ1+41.2K/Rwb ,Rwb=0~10k */
 #endif
 
 }

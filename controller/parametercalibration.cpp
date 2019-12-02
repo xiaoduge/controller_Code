@@ -2,7 +2,8 @@
 #include "parameterlistwidgtitem.h"
 #include "mainwindow.h"
 #include "cbitmapbutton.h"
-#include "Ex_Display_c.h"
+#include "exdisplay.h"
+#include "exconfig.h"
 #include <QListWidget>
 
 
@@ -10,7 +11,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
 {
     int iIdx = 0;
 
-    switch(gGlobalParam.iMachineType)/*½øË®µçµ¼ÂÊ*/
+    switch(gGlobalParam.iMachineType)/*è¿›æ°´ç”µå¯¼çŽ‡*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -29,7 +30,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
         break;
     }
 
-    switch(gGlobalParam.iMachineType)/*½øË®ÎÂ¶È*/
+    switch(gGlobalParam.iMachineType)/*è¿›æ°´æ¸©åº¦*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -48,7 +49,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
         break;
     }
 
-    switch(gGlobalParam.iMachineType)/*ROµçµ¼ÂÊ*/
+    switch(gGlobalParam.iMachineType)/*ROç”µå¯¼çŽ‡*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -68,7 +69,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
         break;
     }
 
-    switch(gGlobalParam.iMachineType)/*ROÎÂ¶È*/
+    switch(gGlobalParam.iMachineType)/*ROæ¸©åº¦*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -88,7 +89,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
         break;
     }
 
-    switch(gGlobalParam.iMachineType)/*EDIµç×èÂÊ*/
+    switch(gGlobalParam.iMachineType)/*EDIç”µé˜»çŽ‡*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_EDI_LOOP:
@@ -111,7 +112,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
         break;
     }    
 
-    switch(gGlobalParam.iMachineType)/*EDIÎÂ¶È*/
+    switch(gGlobalParam.iMachineType)/*EDIæ¸©åº¦*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_EDI_LOOP:
@@ -134,7 +135,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*UPµç×èÂÊ*/
+    switch(gGlobalParam.iMachineType)/*UPç”µé˜»çŽ‡*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -150,7 +151,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*UPÎÂ¶È*/
+    switch(gGlobalParam.iMachineType)/*UPæ¸©åº¦*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -166,7 +167,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*TOCµç¼«*/
+    switch(gGlobalParam.iMachineType)/*TOCç”µæž*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -180,7 +181,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*TOCÎÂ¶È*/
+    switch(gGlobalParam.iMachineType)/*TOCæ¸©åº¦*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -196,9 +197,16 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
 
     switch(gGlobalParam.iMachineType)/*S1*/
     {
+    case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        {
+            aParameters[iIdx].type  = PARAMETER_CALIBRATION_FORMAT2;
+            aParameters[iIdx].id    = DISP_PC_COFF_S1;          
+            iIdx++;
+        }
+        break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
@@ -248,7 +256,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*´¿Ë®ÒºÎ»½ÃÕý*/
+    switch(gGlobalParam.iMachineType)/*çº¯æ°´æ¶²ä½çŸ«æ­£*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -265,7 +273,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
         break;
     } 
 
-    switch(gGlobalParam.iMachineType)/*Ô­Ë®ÒºÎ»½ÃÕý*/
+    switch(gGlobalParam.iMachineType)/*åŽŸæ°´æ¶²ä½çŸ«æ­£*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -277,7 +285,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
         break;
     }
 
-    switch(gGlobalParam.iMachineType)/*ÏµÍ³Ñ¹Á¦½ÃÕý*/
+    switch(gGlobalParam.iMachineType)/*ç³»ç»ŸåŽ‹åŠ›çŸ«æ­£*/
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -337,7 +345,7 @@ void ParameterCalibrationPage::buildTranslation()
         {
         case DISP_PC_COFF_SOURCE_WATER_CONDUCT:
             /*
-            ½øË®µçµ¼ÂÊ     K: 1.000  C:1.000   500¦ÌS/cm  
+            è¿›æ°´ç”µå¯¼çŽ‡     K: 1.000  C:1.000   500Î¼S/cm  
             */
             m_aParameterlistItem[iLoop]->setName(tr("Tap Cond."));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));  //K:
@@ -346,7 +354,7 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_SOURCE_WATER_TEMP:
             /*
-            ½øË®ÎÂ¶È    K:1.000    25.0¡æ
+            è¿›æ°´æ¸©åº¦    K:1.000    25.0â„ƒ
             */
             m_aParameterlistItem[iLoop]->setName(tr("Tap Temp."));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
@@ -354,9 +362,9 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_RO_WATER_CONDUCT:
             /*
-            ROµçµ¼ÂÊ    K: 1.000  C:0.100   20¦ÌS/cm      
+            ROç”µå¯¼çŽ‡    K: 1.000  C:0.100   20Î¼S/cm      
             */
-            switch(gGlobalParam.iMachineType)/*EDIµç×èÂÊ*/
+            switch(gGlobalParam.iMachineType)/*EDIç”µé˜»çŽ‡*/
             {
             case MACHINE_PURIST:
                 m_aParameterlistItem[iLoop]->setName(tr("Tap Cond."));
@@ -374,9 +382,9 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_RO_WATER_TEMP:
             /*
-            ROÎÂ¶È    K: 1.000    25.0¡æ
+            ROæ¸©åº¦    K: 1.000    25.0â„ƒ
             */
-            switch(gGlobalParam.iMachineType)/*EDIµç×èÂÊ*/
+            switch(gGlobalParam.iMachineType)/*EDIç”µé˜»çŽ‡*/
             {
             case MACHINE_PURIST:
                 m_aParameterlistItem[iLoop]->setName(tr("Tap Temp."));
@@ -392,9 +400,9 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_EDI_WATER_CONDUCT:
             /*
-            EDIµç×èÂÊ    K:1.000 C:0.01   15.0M¦¸.cm
+            EDIç”µé˜»çŽ‡    K:1.000 C:0.01   15.0MÎ©.cm
             */
-            switch(gGlobalParam.iMachineType)/*EDIµç×èÂÊ*/
+            switch(gGlobalParam.iMachineType)/*EDIç”µé˜»çŽ‡*/
             {
             case MACHINE_RO:
             case MACHINE_UP:
@@ -413,9 +421,9 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_EDI_WATER_TEMP:
             /*
-            EDIÎÂ¶È     K:1.000     25.0¡æ
+            EDIæ¸©åº¦     K:1.000     25.0â„ƒ
             */
-            switch(gGlobalParam.iMachineType)/*EDIµç×èÂÊ*/
+            switch(gGlobalParam.iMachineType)/*EDIç”µé˜»çŽ‡*/
             {
             case MACHINE_RO:
             case MACHINE_UP:
@@ -431,7 +439,7 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_UP_WATER_CONDUCT:
             /*
-            UPµç×èÂÊ    K:1.000 C:0.01   18.2M¦¸.cm
+            UPç”µé˜»çŽ‡    K:1.000 C:0.01   18.2MÎ©.cm
             */
             m_aParameterlistItem[iLoop]->setName(tr("UP Conduct"));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
@@ -440,7 +448,7 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_UP_WATER_TEMP:
             /*
-            UPÎÂ¶È    K: 1.000    25.0¡æ
+            UPæ¸©åº¦    K: 1.000    25.0â„ƒ
             */
             m_aParameterlistItem[iLoop]->setName(tr("UP Temp"));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
@@ -448,9 +456,9 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_TOC_WATER_CONDUCT:
             /*
-            TOCµç¼«    K:1.000 C:0.01   5ppb
+            TOCç”µæž    K:1.000 C:0.01   5ppb
             */
-            switch(gGlobalParam.iMachineType)/*EDIµç×èÂÊ*/
+            switch(gGlobalParam.iMachineType)/*EDIç”µé˜»çŽ‡*/
             {
             case MACHINE_UP:
                 m_aParameterlistItem[iLoop]->setName(tr("UP TOC Conduct"));
@@ -466,9 +474,9 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_TOC_WATER_TEMP:
             /*
-            TOCÎÂ¶È    K: 1.000    25.0¡æ
+            TOCæ¸©åº¦    K: 1.000    25.0â„ƒ
             */
-            switch(gGlobalParam.iMachineType)/*EDIµç×èÂÊ*/
+            switch(gGlobalParam.iMachineType)/*EDIç”µé˜»çŽ‡*/
             {
             case MACHINE_UP:
                 m_aParameterlistItem[iLoop]->setName(tr("UP TOC Temp"));
@@ -483,7 +491,7 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_S1:
             /*
-            È¡Ë®Á÷Á¿¼ÆS1  1.000 1.8L/min
+            å–æ°´æµé‡è®¡S1  1.000 1.8L/min
             */
             m_aParameterlistItem[iLoop]->setName(tr("Disp. Rate"));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
@@ -491,7 +499,7 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_S2:
             /*
-            RO½øË®Á÷Á¿¼ÆS2   1.000 30.0l/min
+            ROè¿›æ°´æµé‡è®¡S2   1.000 30.0l/min
             */
             m_aParameterlistItem[iLoop]->setName(tr("RO Feed. Rate"));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
@@ -499,7 +507,7 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_S3:
             /*
-            RO²úË®Á÷Á¿¼ÆS3   1.000 20.0l/min
+            ROäº§æ°´æµé‡è®¡S3   1.000 20.0l/min
             */
             m_aParameterlistItem[iLoop]->setName(tr("RO Prod. Rate"));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
@@ -507,7 +515,7 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_S4:
             /*
-            RO·ÏË®Á÷Á¿¼ÆS4   1.000 10.0l/min
+            ROåºŸæ°´æµé‡è®¡S4   1.000 10.0l/min
             */
             m_aParameterlistItem[iLoop]->setName(tr("RO Drain Rate"));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
@@ -515,7 +523,7 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_PW_TANK_LEVEL:
             /*
-            ´¿Ë®ÒºÎ»Ð£Õý    1.000  0.80m 
+            çº¯æ°´æ¶²ä½æ ¡æ­£    1.000  0.80m 
             */
             m_aParameterlistItem[iLoop]->setName(tr("Pure Tank Level"));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
@@ -523,7 +531,7 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_SW_TANK_LEVEL:
             /*
-            Ô­Ë®ÒºÎ»Ð£Õý      1.000  0.80m 
+            åŽŸæ°´æ¶²ä½æ ¡æ­£      1.000  0.80m 
             */
             m_aParameterlistItem[iLoop]->setName(tr("Feed Tank Level"));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
@@ -531,7 +539,7 @@ void ParameterCalibrationPage::buildTranslation()
             break;
         case DISP_PC_COFF_SYS_PRESSURE:
             /*
-            ÏµÍ³Ñ¹Á¦Ð£Õý       1.000  4.0bar
+            ç³»ç»ŸåŽ‹åŠ›æ ¡æ­£       1.000  4.0bar
             */
             m_aParameterlistItem[iLoop]->setName(tr("Pres. Sensor"));
             m_aParameterlistItem[iLoop]->setP1Name(tr(""));
@@ -631,13 +639,13 @@ void ParameterCalibrationPage::update()
     {
         if(gGlobalParam.Caliparam.pc[iIdx].fk > 100)
         {
-            m_aParameterlistItem[iIdx]->setP1(QString::number(ex_global_Cali.pc[aParameters[iIdx].id].fk));
+            m_aParameterlistItem[iIdx]->setP1(QString::number(gCaliParam.pc[aParameters[iIdx].id].fk));
         }
         else
         {
-            m_aParameterlistItem[iIdx]->setP1(QString::number(ex_global_Cali.pc[aParameters[iIdx].id].fk,'f',3));
+            m_aParameterlistItem[iIdx]->setP1(QString::number(gCaliParam.pc[aParameters[iIdx].id].fk,'f',3));
         }
-        m_aParameterlistItem[iIdx]->setP2(QString::number(ex_global_Cali.pc[aParameters[iIdx].id].fc));
+        m_aParameterlistItem[iIdx]->setP2(QString::number(gCaliParam.pc[aParameters[iIdx].id].fc));
     }
 }
 

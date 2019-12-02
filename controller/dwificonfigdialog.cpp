@@ -4,7 +4,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QFile>
-#include "ex_hintdialog.h"
+#include "dhintdialog.h"
 #include <QDebug>
 #include<unistd.h>
 
@@ -57,7 +57,7 @@ void DWifiConfigDialog::on_configBtn_clicked()
     m_pPSKLineEdit->clear();
     close();
     sync();
-    Ex_HintDialog::getInstance(tr("Successfully"));
+    DHintDialog::getInstance(tr("Successfully"));
 }
 
 void DWifiConfigDialog::on_cancelBtn_clicked()

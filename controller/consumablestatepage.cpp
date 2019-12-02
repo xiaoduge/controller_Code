@@ -2,7 +2,7 @@
 #include "Cslistitem.h"
 #include "mainwindow.h"
 #include <QListWidget>
-#include "ExtraDisplay.h"
+#include "exconfig.h"
 
 ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain)
     : CSubPage(parent,widget,wndMain)
@@ -46,9 +46,16 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
 
     switch(gGlobalParam.iMachineType)
     {
+    case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_P_PACK;
+            iIdx++;
+        }
+        break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
@@ -66,10 +73,17 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
-    case MACHINE_L_EDI_LOOP:
         aIds[iIdx].iType = 0;
         aIds[iIdx].iId   = DISP_AT_PACK;
         iIdx++;
+        break;
+    case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_AT_PACK;
+            iIdx++;
+        }
         break;
     case MACHINE_L_UP:
     case MACHINE_L_RO_LOOP:
@@ -267,9 +281,16 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
 
     switch(gGlobalParam.iMachineType)
     {
+    case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_T_A_FILTER;
+            iIdx++;
+        }
+        break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
@@ -813,7 +834,7 @@ void ConsumableStatePage:: update()
             {
                 m_pCslistItem[iIdx]->updateState(0);
             }
-            if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+            if(0 == gAdditionalCfgParam.productInfo.iCompany)
             {
                  m_pCslistItem[iIdx]->setName(tr("Final Fliter B"));
             }

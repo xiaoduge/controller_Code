@@ -2,6 +2,7 @@
 #include "cbitmapbutton.h"
 #include "mainwindow.h"
 #include "ToastDlg.h"
+#include "exconfig.h"
 
 #define ControlNum 6
 
@@ -10,25 +11,15 @@
 #define BACKWIDGET_HEIGHT       120   //80
 #define BACKWIDGET_WIDTH        700
 
-/*
-QRect   QrectAry[ControlNum] = {
-        QRect(0,  10,  41 , 37) ,
-        QRect(50, 20, 120 , 18) ,
-        QRect(190, 20, 340 , 15) ,
-        QRect(50, 50, 250 , 15) , //QRect(60, 50, 190 , 15) ,
-        QRect(300, 50, 260 , 15) ,  //325->300
-        QRect(600, 22, 150 , 15) ,
-    };
-*/
-
-QRect   QrectAry[ControlNum] = {
-        QRect(0,  10,  41 , 37) ,
-        QRect(50, 20, 130 , 18) ,
-        QRect(190, 20, 340 , 15) ,
-        QRect(50, 60, 280 , 15) , //QRect(60, 50, 190 , 15) ,
-        QRect(50, 85, 280 , 15) ,  //325->300
-        QRect(600, 22, 150 , 15) ,
-    };
+QRect   QrectAry[ControlNum] = 
+{
+    QRect(0,  10,  41 , 37) ,
+    QRect(50, 20, 130 , 18) ,
+    QRect(190, 20, 340 , 15) ,
+    QRect(50, 60, 280 , 15) , //QRect(60, 50, 190 , 15) ,
+    QRect(50, 85, 280 , 15) ,  //325->300
+    QRect(600, 22, 150 , 15) 
+};
 
 
 static CONFIG_BTN cleanBtn[1] =
@@ -280,16 +271,30 @@ void SterilizePage::on_btn_clicked(int index)
             DISPHANDLE hdl = DISP_INVALID_HANDLE;
             if (BITMAPBUTTON_STATE_SEL == state)
             {
-                QMessageBox::StandardButton rb = QMessageBox::question(NULL, tr("Clean"), tr("Please Insert Detergent Casette!"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No); 
-                if(rb != QMessageBox::Yes) 
-                { 
-                    m_aSterilize[index].btnClean->setState(BITMAPBUTTON_STATE_UNSEL);
-                    return ;
+                switch(gGlobalParam.iMachineType)
+                {
+                case MACHINE_L_EDI_LOOP:
+                    if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+                    {
+                        QMessageBox::StandardButton rb = QMessageBox::question(NULL, tr("Clean"), tr("Please Insert Detergent Casette!"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No); 
+                        if(rb != QMessageBox::Yes) 
+                        { 
+                            m_aSterilize[index].btnClean->setState(BITMAPBUTTON_STATE_UNSEL);
+                            return ;
+                        }
+                    }
+                    break;
+                default:
+                    QMessageBox::StandardButton rb = QMessageBox::question(NULL, tr("Clean"), tr("Please Insert Detergent Casette!"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No); 
+                    if(rb != QMessageBox::Yes) 
+                    { 
+                        m_aSterilize[index].btnClean->setState(BITMAPBUTTON_STATE_UNSEL);
+                        return ;
+                    }
+                    break;
                 }
-
     
                 /* check clean package */
-    
                 if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)))
                 {
                     int iRet = m_wndMain->getActiveRfidBrds4Cleaning();

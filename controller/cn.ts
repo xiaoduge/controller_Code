@@ -1688,7 +1688,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_CheckConsumaleInstall</name>
+    <name>DCheckConsumaleInstall</name>
     <message>
         <location filename="ex_checkconsumaleinstall.cpp" line="156"/>
         <location filename="ex_checkconsumaleinstall.cpp" line="167"/>
@@ -1707,7 +1707,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_ConsumableInstallDialog</name>
+    <name>DConsumableInstallDialog</name>
     <message>
         <location filename="ex_consumableinstalldialog.cpp" line="19"/>
         <location filename="ex_consumableinstalldialog.cpp" line="129"/>
@@ -1863,7 +1863,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_FactoryTestPage</name>
+    <name>DFactoryTestPage</name>
     <message>
         <location filename="ex_factorytestpage.cpp" line="35"/>
         <source>Factory Test</source>
@@ -2081,7 +2081,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_FlowChartPage</name>
+    <name>DFlowChartPage</name>
     <message>
         <location filename="ex_flowchartpage.cpp" line="27"/>
         <source>Flow Chart</source>
@@ -2153,7 +2153,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_FlowChartWidget</name>
+    <name>DFlowChartWidget</name>
     <message>
         <location filename="ex_flowchartwidget.cpp" line="2213"/>
         <source>omg</source>
@@ -2199,15 +2199,15 @@
     </message>
 </context>
 <context>
-    <name>Ex_HintDialog</name>
+    <name>DHintDialog</name>
     <message>
         <location filename="ex_hintdialog.cpp" line="42"/>
-        <source>~Ex_HintDialog()</source>
+        <source>~DHintDialog()</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>Ex_HistoryPage</name>
+    <name>DHistoryPage</name>
     <message>
         <location filename="ex_historypage.cpp" line="39"/>
         <source>History</source>
@@ -2397,7 +2397,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_InitConsumableInsPage</name>
+    <name>DInitConsumableInsPage</name>
     <message>
         <location filename="ex_initconsumableinspage.cpp" line="28"/>
         <source>Next</source>
@@ -2537,7 +2537,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_Init_HandleCfgpage</name>
+    <name>DInitHandleCfgpage</name>
     <message>
         <location filename="ex_init_handlecfgpage.cpp" line="42"/>
         <source>Connecting Device</source>
@@ -2660,7 +2660,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_Init_Languagepage</name>
+    <name>DInitLanguagepage</name>
     <message>
         <location filename="ex_init_languagepage.cpp" line="39"/>
         <source>Language</source>
@@ -2739,7 +2739,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_Init_Networkpage</name>
+    <name>DInitNetworkpage</name>
     <message>
         <location filename="ex_init_networkpage.cpp" line="30"/>
         <source>Connectivity</source>
@@ -2797,7 +2797,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_Init_Syscfgpage</name>
+    <name>DInitSyscfgpage</name>
     <message>
         <location filename="ex_init_syscfgpage.cpp" line="30"/>
         <source>System Config</source>
@@ -2835,7 +2835,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_Init_Tankcfgpage</name>
+    <name>DInitTankcfgpage</name>
     <message>
         <location filename="ex_init_tankcfgpage.cpp" line="43"/>
         <source>System Config</source>
@@ -2930,7 +2930,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_Init_TimePage</name>
+    <name>DInitTimePage</name>
     <message>
         <location filename="ex_init_timepage.cpp" line="41"/>
         <location filename="ex_init_timepage.cpp" line="59"/>
@@ -2969,7 +2969,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_Languagepage</name>
+    <name>DLanguagepage</name>
     <message>
         <location filename="ex_languagepage.cpp" line="43"/>
         <source>Language</source>
@@ -3036,7 +3036,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_ManagerSetPage</name>
+    <name>DManagerSetPage</name>
     <message>
         <location filename="ex_managersetpage.cpp" line="36"/>
         <source>Manager Config</source>
@@ -3297,7 +3297,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_PermissionSetPage</name>
+    <name>DPermissionSetPage</name>
     <message>
         <location filename="ex_permissionsetpage.cpp" line="30"/>
         <source>Permission</source>
@@ -3380,7 +3380,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_RFIDCfgPage</name>
+    <name>DRFIDCfgPage</name>
     <message>
         <location filename="ex_rfidcfgpage.cpp" line="28"/>
         <location filename="ex_rfidcfgpage.cpp" line="36"/>
@@ -3399,7 +3399,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_ScreenSleepPage</name>
+    <name>DScreenSleepPage</name>
     <message>
         <source>Genie G</source>
         <translation type="obsolete">Genie G</translation>
@@ -3461,7 +3461,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_SuperPowerPage</name>
+    <name>DSuperPowerPage</name>
     <message>
         <location filename="ex_superpowerpage.cpp" line="46"/>
         <source>Super Power</source>
@@ -3700,7 +3700,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_SysMsgPage</name>
+    <name>DSysMsgPage</name>
     <message>
         <location filename="ex_sysmsgpage.cpp" line="30"/>
         <source>Information</source>
@@ -3799,7 +3799,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_UserCfgPage</name>
+    <name>DUserCfgPage</name>
     <message>
         <location filename="ex_usercfgpage.cpp" line="38"/>
         <location filename="ex_usercfgpage.cpp" line="53"/>
@@ -3875,7 +3875,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_UserManualPage</name>
+    <name>DUserManualPage</name>
     <message>
         <location filename="ex_usermanualpage.cpp" line="30"/>
         <source>User Manual</source>
@@ -3883,7 +3883,7 @@
     </message>
 </context>
 <context>
-    <name>Ex_WaterQualityPage</name>
+    <name>DWaterQualityPage</name>
     <message>
         <location filename="ex_waterqualitypage.cpp" line="53"/>
         <source>Water Quality</source>

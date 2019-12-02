@@ -6,10 +6,10 @@
 #include "consumablestatepage.h"
 #include "systemmonitorpage.h"
 #include "alarmdisplaypage.h"
-#include "ex_sysmsgpage.h"
-#include "ex_usermanualpage.h"
-#include "ex_waterqualitypage.h"
-#include "ExtraDisplay.h"
+#include "dsysmsgpage.h"
+#include "dusermanualpage.h"
+#include "dwaterqualitypage.h"
+#include "exconfig.h"
 #include "dpushbutton.h"
 #include "setpage.h"
 
@@ -146,7 +146,7 @@ void MenuPage::Create_subPage()
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
             //m_pSubPages[index] = new WaterQualityPage(this , tmpWidget , m_wndMain);
-            m_pSubPages[index] = new Ex_WaterQualityPage(this , tmpWidget , m_wndMain);
+            m_pSubPages[index] = new DWaterQualityPage(this , tmpWidget , m_wndMain);
             break;
         case MENU_BTN_CONSUMPATION_MATERAIL_SATUS:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
@@ -172,14 +172,14 @@ void MenuPage::Create_subPage()
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
 //            m_pSubPages[index] = new SysMsgPage(this , tmpWidget , m_wndMain);
-            m_pSubPages[index] = new Ex_SysMsgPage(this , tmpWidget , m_wndMain);
+            m_pSubPages[index] = new DSysMsgPage(this , tmpWidget , m_wndMain);
             break;
 
         case MENU_BTN_USER_MANU:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new Ex_UserManualPage(this , tmpWidget , m_wndMain);
+            m_pSubPages[index] = new DUserManualPage(this , tmpWidget , m_wndMain);
             break;
         }
     }
@@ -230,7 +230,7 @@ void MenuPage::on_btn_clicked()
     DPushButton* button = qobject_cast<DPushButton*>(obj);
     int index = button->id();
 
-    if(0 != ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+    if(0 != gAdditionalCfgParam.productInfo.iCompany)
     {
         if(MENU_BTN_USER_MANU == index)
         {

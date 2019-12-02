@@ -84,54 +84,54 @@ SOURCES += main.cpp\
     zb.c \
     SerialItf4zb.c \
     helper.c \
-    ex_loginstate.cpp \
-    ex_init_languagepage.cpp \
-    ex_superpowerpage.cpp \
-    ex_init_networkpage.cpp \
-    ex_init_handlecfgpage.cpp \
-    ex_sysmsgpage.cpp \
-    ex_init_timepage.cpp \
-    ex_init_tankcfgpage.cpp \
-    ex_usercfgpage.cpp \
-    ex_comboboxdelegate.cpp \
     ccb.c \
-    ex_userinfo.cpp \
-    ex_init_syscfgpage.cpp \
-    ex_flowchartpage.cpp \
-    ex_historypage.cpp \
-    ex_rfidcfgpage.cpp \
-    ex_screensleepthread.cpp \
-    ex_eventfilter.cpp \
-    ex_screensleeppage.cpp \
-    ex_dsleepwidget.cpp \
-    ex_factorytestpage.cpp \
-    ex_calcpackflow.cpp \
-    ex_languagepage.cpp \
-    ex_usermanualpage.cpp \
-    ex_managersetpage.cpp \
-    ex_checkconsumaleinstall.cpp \
-    ex_consumableinstalldialog.cpp \
-    ex_permissionsetpage.cpp \
-    ex_hintdialog.cpp \
-    ex_basewindow.cpp \
-    ex_dialogtitle.cpp \
-    ex_flowchartwidget.cpp \
     dtextticker.cpp \
     dnetworkaccessmanager.cpp \
     dhttpworker.cpp \
     dwificonfigwidget.cpp \
     dwificonfigdialog.cpp \
-    ex_waterqualitypage.cpp \
     dwaterqualitywidget.cpp \
     dlineedit.cpp \
     dsqltablemodelforuser.cpp \
     dloginwarningdialog.cpp \
-    ex_initconsumableinspage.cpp \
     dconsumableinstallwidget.cpp \
     dpushbutton.cpp \
     drunwarningdialog.cpp \
     printer.cpp \
-    dxmlgenerator.cpp
+    dxmlgenerator.cpp \
+    dinithandlecfgpage.cpp \
+    dmanagersetpage.cpp \
+    dbasewindow.cpp \
+    dcalcpackflow.cpp \
+    dcheckconsumaleinstall.cpp \
+    dcomboboxdelegate.cpp \
+    dconsumableinstalldialog.cpp \
+    ddialogtitle.cpp \
+    dsleepwidget.cpp \
+    deventfilter.cpp \
+    dfactorytestpage.cpp \
+    dflowchartpage.cpp \
+    dflowchartwidget.cpp \
+    dhintdialog.cpp \
+    dhistorypage.cpp \
+    dinitlanguagepage.cpp \
+    dinitnetworkpage.cpp \
+    dinitsyscfgpage.cpp \
+    dinittankcfgpage.cpp \
+    dinittimepage.cpp \
+    dinitconsumableinspage.cpp \
+    dlanguagepage.cpp \
+    dwaterqualitypage.cpp \
+    dusermanualpage.cpp \
+    dloginstate.cpp \
+    dpermissionsetpage.cpp \
+    drfidcfgpage.cpp \
+    dscreensleeppage.cpp \
+    dscreensleepthread.cpp \
+    dsuperpowerpage.cpp \
+    dsysmsgpage.cpp \
+    dusercfgpage.cpp \
+    duserinfochecker.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -183,57 +183,57 @@ HEADERS  += mainwindow.h \
     systemmonitorpage.h \
     systemmonitorlistwidgtitem.h \
     ToastDlg.h \
-    ExtraDisplay.h \
-    ex_loginstate.h \
-    ex_init_languagepage.h \
-    ex_superpowerpage.h \
-    ex_init_networkpage.h \
-    ex_init_handlecfgpage.h \
-    ex_sysmsgpage.h \
-    ex_init_timepage.h \
-    ex_init_tankcfgpage.h \
-    ex_usercfgpage.h \
-    ex_comboboxdelegate.h \
-    Ex_Display_c.h \
-    ex_userinfo.h \
-    ex_init_syscfgpage.h \
-    ex_flowchartpage.h \
-    ex_historypage.h \
-    ex_rfidcfgpage.h \
-    ex_screensleepthread.h \
-    ex_eventfilter.h \
-    ex_screensleeppage.h \
-    ex_dsleepwidget.h \
-    ex_factorytestpage.h \
-    ex_calcpackflow.h \
-    ex_languagepage.h \
-    ex_usermanualpage.h \
-    ex_managersetpage.h \
-    ex_checkconsumaleinstall.h \
-    ex_consumableinstalldialog.h \
-    ex_permissionsetpage.h \
-    ex_hintdialog.h \
-    ex_basewindow.h \
-    ex_dialogtitle.h \
-    ex_flowchartwidget.h \
     dtextticker.h \
     DNetworkConfig.h \
     dnetworkaccessmanager.h \
     dhttpworker.h \
     dwificonfigwidget.h \
     dwificonfigdialog.h \
-    ex_waterqualitypage.h \
     dwaterqualitywidget.h \
     dlineedit.h \
     dsqltablemodelforuser.h \
     dloginwarningdialog.h \
-    ex_initconsumableinspage.h \
     dconsumableinstallwidget.h \
     dpushbutton.h \
     drunwarningdialog.h \
     escpos/init_parser.h \
     printer.h \
-    dxmlgenerator.h
+    dxmlgenerator.h \
+    exdisplay.h \
+    exconfig.h \
+    dinithandlecfgpage.h \
+    dmanagersetpage.h \
+    dbasewindow.h \
+    dcalcpackflow.h \
+    dcheckconsumaleinstall.h \
+    dcomboboxdelegate.h \
+    dconsumableinstalldialog.h \
+    ddialogtitle.h \
+    dsleepwidget.h \
+    deventfilter.h \
+    dfactorytestpage.h \
+    dflowchartpage.h \
+    dflowchartwidget.h \
+    dhintdialog.h \
+    dhistorypage.h \
+    dinitlanguagepage.h \
+    dinitnetworkpage.h \
+    dinitsyscfgpage.h \
+    dinittankcfgpage.h \
+    dinittimepage.h \
+    dinitconsumableinspage.h \
+    dlanguagepage.h \
+    dloginstate.h \
+    dpermissionsetpage.h \
+    drfidcfgpage.h \
+    dscreensleeppage.h \
+    dscreensleepthread.h \
+    dsuperpowerpage.h \
+    dsysmsgpage.h \
+    dusercfgpage.h \
+    dusermanualpage.h \
+    dwaterqualitypage.h \
+    duserinfochecker.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

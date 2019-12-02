@@ -1,7 +1,7 @@
 #include "dhttpworker.h"
 #include "dnetworkaccessmanager.h"
 #include "dxmlgenerator.h"
-#include "ExtraDisplay.h"
+#include "exconfig.h"
 #include <QMutexLocker>
 #include <QFile>
 #include <QDebug>

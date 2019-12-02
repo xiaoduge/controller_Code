@@ -2,10 +2,10 @@
 #include "mainpage.h"
 #include "navigatorbar.h"
 #include "cbitmapbutton.h"
-#include "ExtraDisplay.h"
+#include "exconfig.h"
 #include <QMouseEvent>
 #include "dpushbutton.h"
-#include "ex_hintdialog.h"
+#include "dhintdialog.h"
 
 #define SINGLE_MACHINE_PANEL_XOFF (408)
 #define SINGLE_MACHINE_PANEL_YOFF (-162)
@@ -670,7 +670,7 @@ void MainPage::update()
 #ifdef SUB_ACCOUNT
    if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_SUB_ACCOUNT))
    {
-       if(user_LoginState.loginState())
+       if(gUserLoginState.loginState())
        {
            m_pLogoutBtn->show();
        }
@@ -1214,12 +1214,12 @@ void MainPage::on_timerEvent()
 
 void MainPage::on_logoutBtn_clicked()
 {
-    if(user_LoginState.loginState())
+    if(gUserLoginState.loginState())
     {
-        user_LoginState.setLoginState(false);
+        gUserLoginState.setLoginState(false);
         m_pLogoutBtn->hide();
     }
-    Ex_HintDialog::getInstance(tr("Signed out"));
+    DHintDialog::getInstance(tr("Signed out"));
 }
 
 void MainPage::on_btn_clicking(int index)

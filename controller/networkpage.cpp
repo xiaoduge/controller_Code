@@ -4,7 +4,7 @@
 #include <QRect>
 #include <QProcess>
 #include <QListWidget>
-#include "ex_hintdialog.h"
+#include "dhintdialog.h"
 #include "dlineedit.h"
 
 

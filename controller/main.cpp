@@ -17,7 +17,7 @@
 #include "syszuxpinyin.h"
 #include "cminterface.h"
 
-#include "ex_eventfilter.h"
+#include "deventfilter.h"
 
 CtrlApplication *gApp;
 
@@ -356,7 +356,7 @@ int main(int argc, char *argv[])
     gApp = &a;
 
     //ex
-    Ex_EventFilter eventF;
+    DEventFilter eventF;
     a.installEventFilter(&eventF);
     //Register a custom type
     qRegisterMetaType<DNetworkData>("DNetworkData");

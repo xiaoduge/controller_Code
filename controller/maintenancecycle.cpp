@@ -4,29 +4,9 @@
 #include "cbitmapbutton.h"
 #include "maintenancelistwidgtitem.h"
 #include "notify.h"
-#include "ExtraDisplay.h"
+#include "exconfig.h"
 #include <QListWidget>
 #include <QRect>
-
-
-/*static VALIDATE_INFO_STRU vi[MTCNUM]= 
-{
-    {0,90, 0,10000},
-    {0,360,0,30000},
-    {0,360,0,6000},
-    {0,360,0,6000},
-    {0,720,0,8000},
-    {0,720,0,8000},
-    {0,720,0,8000},
-    {0,720,0,8000},
-    {0,720,0,8000},
-    {0,360,0,0},
-    {0,90,0,0},
-    {0,180,0,0},
-    {0,180,0,0},
-    {0,180,0,0},
-    {0,30,0,0},
-};*/
 
 MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
@@ -83,9 +63,20 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     
     switch(gGlobalParam.iMachineType)
     {
+    case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        {
+            aIds[iIdx].iDspType = 2;
+            aIds[iIdx].iId      = DISP_P_PACK;
+            aIds[iIdx].vi.v1Min = 0;
+            aIds[iIdx].vi.v1Max = 99999;
+            aIds[iIdx].vi.v2Min = 0;
+            aIds[iIdx].vi.v2Max = 99999;
+            iIdx++;
+        }
+        break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
@@ -129,8 +120,19 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
 
     switch(gGlobalParam.iMachineType)
     {
-    case MACHINE_L_Genie:
     case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        {
+            aIds[iIdx].iDspType = 2;
+            aIds[iIdx].iId      = DISP_AT_PACK;
+            aIds[iIdx].vi.v1Min = 0;
+            aIds[iIdx].vi.v1Max = 99999;
+            aIds[iIdx].vi.v2Min = 0;
+            aIds[iIdx].vi.v2Max = 99999;
+            iIdx++;
+        }
+        break;
+    case MACHINE_L_Genie:   
         aIds[iIdx].iDspType = 2;
         aIds[iIdx].iId      = DISP_AT_PACK;
         aIds[iIdx].vi.v1Min = 0;
@@ -343,9 +345,20 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
 
     switch(gGlobalParam.iMachineType)
     {
+    case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        {
+            aIds[iIdx].iDspType = 1;
+            aIds[iIdx].iId      = DISP_T_A_FILTER;
+            aIds[iIdx].vi.v1Min = 0;
+            aIds[iIdx].vi.v1Max = 99999;
+            aIds[iIdx].vi.v2Min = 0;
+            aIds[iIdx].vi.v2Max = 0;
+            iIdx++;
+        }
+        break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
@@ -471,7 +484,7 @@ void MaintenanceCyclePage::buildTranslation()
         {
         case DISP_PRE_PACK:
             /* 
-            预处理柱  90天   10000升 
+            预  90   10000 
             */
             pMaintenancelistItem[iIndex]->setName(tr("Prefilter"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
@@ -495,7 +508,7 @@ void MaintenanceCyclePage::buildTranslation()
             break;
         case DISP_P_PACK:
             /* 
-            P-PACK     360天     30000升 
+            P-PACK     360     30000 
             */
             pMaintenancelistItem[iIndex]->setName(tr("P PACK"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
@@ -503,7 +516,7 @@ void MaintenanceCyclePage::buildTranslation()
             break;
         case DISP_U_PACK:
             /* 
-            U-PACK     360天     6000升 
+            U-PACK     360     6000 
             */
             pMaintenancelistItem[iIndex]->setName(tr("U PACK"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
@@ -511,7 +524,7 @@ void MaintenanceCyclePage::buildTranslation()
             break;
         case DISP_AT_PACK:
             /* 
-            AT-PACK     360天     6000升 
+            AT-PACK     360     6000 
             */
             pMaintenancelistItem[iIndex]->setName(tr("AT PACK"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
@@ -519,7 +532,7 @@ void MaintenanceCyclePage::buildTranslation()
             break;
         case DISP_H_PACK:
             /* 
-            H-PACK     360天     6000升 
+            H-PACK     360     6000 
             */
             pMaintenancelistItem[iIndex]->setName(tr("H PACK"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
@@ -527,7 +540,7 @@ void MaintenanceCyclePage::buildTranslation()
             break;
         case DISP_N1_UV:
             /* 
-            254UV    720天     8000小时 
+            254UV    720     8000小时 
             */
             pMaintenancelistItem[iIndex]->setName(tr("254 UV"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
@@ -535,7 +548,7 @@ void MaintenanceCyclePage::buildTranslation()
             break;
         case DISP_N2_UV:
             /* 
-            185UV    720天     8000小时 
+            185UV    720     8000小时 
             */
             pMaintenancelistItem[iIndex]->setName(tr("185 UV"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
@@ -543,7 +556,7 @@ void MaintenanceCyclePage::buildTranslation()
             break;
         case DISP_N3_UV:
             /* 
-            水箱UV    720天     8000小时 
+            水UV    720     8000小时 
             */
             pMaintenancelistItem[iIndex]->setName(tr("Tank UV"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
@@ -551,7 +564,7 @@ void MaintenanceCyclePage::buildTranslation()
             break;
         case DISP_N4_UV:
             /* 
-            管路UV    720天     8000小时 
+            路UV    720     8000小时 
             */
             pMaintenancelistItem[iIndex]->setName(tr("Tube UV"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
@@ -559,7 +572,7 @@ void MaintenanceCyclePage::buildTranslation()
             break;
         case DISP_N5_UV:
             /* 
-            TOC UV    720天     8000小时 
+            TOC UV    720     8000小时 
             */
             pMaintenancelistItem[iIndex]->setName(tr("TOC UV"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
@@ -567,16 +580,16 @@ void MaintenanceCyclePage::buildTranslation()
             break;
         case DISP_W_FILTER:
             /* 
-            水箱空气过滤器   360天     
+            水   360     
             */
             pMaintenancelistItem[iIndex]->setName(tr("Tank Vent Filter"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("days"));
             break;
         case DISP_T_B_FILTER:
             /* 
-            终端过滤器 B   90天     
+            斩斯 B   90     
             */
-            if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+            if(0 == gAdditionalCfgParam.productInfo.iCompany)
             {
                 pMaintenancelistItem[iIndex]->setName(tr("Final Fliter B"));
             }
@@ -588,28 +601,28 @@ void MaintenanceCyclePage::buildTranslation()
             break;
         case DISP_T_A_FILTER:
             /* 
-            终端过滤器A    180天     
+            斩斯A    180     
             */
             pMaintenancelistItem[iIndex]->setName(tr("Final Fliter A"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("days"));
             break;
         case DISP_TUBE_FILTER:
             /* 
-            管路过滤器    180天     
+            路    180     
             */
             pMaintenancelistItem[iIndex]->setName(tr("Loop Filter"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("days"));
             break;
         case DISP_TUBE_DI:
             /* 
-            管路DI    180天     
+            路DI    180     
             */
             pMaintenancelistItem[iIndex]->setName(tr("Loop DI"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("days"));
             break;
         case DISP_ROC12:
             /* 
-            RO氯清洗    30天     
+            RO洗    30     
             */
             pMaintenancelistItem[iIndex]->setName(tr("RO Chlorine Cleaning"));
             pMaintenancelistItem[iIndex]->setP1Name(tr("days"));
@@ -728,7 +741,7 @@ void MaintenanceCyclePage:: update()
         {
         case DISP_PRE_PACK:
             /* 
-            预处理柱  90天   10000升 
+            预  90   10000 
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEDAY]));
             pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEL]));
@@ -749,42 +762,42 @@ void MaintenanceCyclePage:: update()
             break;
         case DISP_P_PACK:
             /* 
-            P-PACK     360天     30000升 
+            P-PACK     360     30000 
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_P_PACKLIFEDAY]));
             pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_P_PACKLIFEL]));
             break;
         case DISP_U_PACK:
             /* 
-            U-PACK     360天     6000升 
+            U-PACK     360     6000 
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_U_PACKLIFEDAY]));
             pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_U_PACKLIFEL]));
             break;
         case DISP_AT_PACK:
             /* 
-            AT-PACK     360天     6000升 
+            AT-PACK     360     6000 
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEDAY]));
             pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEL]));
             break;
         case DISP_H_PACK:
             /* 
-            H-PACK     360天     6000升 
+            H-PACK     360     6000 
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_H_PACKLIFEDAY]));
             pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_H_PACKLIFEL]));
             break;
         case DISP_N1_UV:
             /* 
-            254UV    720天     8000小时 
+            254UV    720     8000小时 
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_N1_UVLIFEDAY]));
             pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_N1_UVLIFEHOUR]));
             break;
         case DISP_N2_UV:
             /* 
-            185UV    720天     8000小时 
+            185UV    720     8000小时 
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_N2_UVLIFEDAY]));
             pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_N2_UVLIFEHOUR]));
@@ -792,7 +805,7 @@ void MaintenanceCyclePage:: update()
             break;
         case DISP_N3_UV:
             /* 
-            水箱UV    720天     8000小时 
+            水UV    720     8000小时 
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEDAY]));
             pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEHOUR]));
@@ -800,7 +813,7 @@ void MaintenanceCyclePage:: update()
             break;
         case DISP_N4_UV:
             /* 
-            管路UV    720天     8000小时 
+            路UV    720     8000小时 
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_N4_UVLIFEDAY]));
             pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_N4_UVLIFEHOUR]));
@@ -808,7 +821,7 @@ void MaintenanceCyclePage:: update()
             break;
         case DISP_N5_UV:
             /* 
-            TOC UV    720天     8000小时 
+            TOC UV    720     8000小时 
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_N5_UVLIFEDAY]));
             pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_N5_UVLIFEHOUR]));
@@ -816,41 +829,41 @@ void MaintenanceCyclePage:: update()
             break;
         case DISP_W_FILTER:
             /* 
-            水箱空气过滤器   360天     
+            水   360     
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_W_FILTERLIFE]));
 
             break;
         case DISP_T_B_FILTER:
             /* 
-            终端过滤器 B   90天     
+            斩斯 B   90     
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_T_B_FILTERLIFE]));
 
             break;
         case DISP_T_A_FILTER:
             /* 
-            终端过滤器A    180天     
+            斩斯A    180     
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_T_A_FILTERLIFE]));
 
             break;
         case DISP_TUBE_FILTER:
             /* 
-            管路过滤器    180天     
+            路    180     
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_TUBE_FILTERLIFE]));
 
             break;
         case DISP_TUBE_DI:
             /* 
-            管路DI    180天     
+            路DI    180     
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_TUBE_DI_LIFE]));
             break;
         case DISP_ROC12:
             /* 
-            RO氯清洗    30天     
+            RO洗    30     
             */
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY]));
             break;
@@ -878,7 +891,7 @@ void MaintenanceCyclePage::save()
         {
         case DISP_PRE_PACK:
             /* 
-            预处理柱  90天   10000升 
+            预  90   10000 
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_PRE_PACKLIFEDAY] = iTemp;
@@ -905,7 +918,7 @@ void MaintenanceCyclePage::save()
             break;
         case DISP_P_PACK:
             /* 
-            P-PACK     360天     30000升 
+            P-PACK     360     30000 
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_P_PACKLIFEDAY] = iTemp;
@@ -914,7 +927,7 @@ void MaintenanceCyclePage::save()
             break;
         case DISP_U_PACK:
             /* 
-            U-PACK     360天     6000升 
+            U-PACK     360     6000 
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_U_PACKLIFEDAY] = iTemp;
@@ -923,7 +936,7 @@ void MaintenanceCyclePage::save()
             break;
         case DISP_AT_PACK:
             /* 
-            AT-PACK     360天     6000升 
+            AT-PACK     360     6000 
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_AT_PACKLIFEDAY] = iTemp;
@@ -932,7 +945,7 @@ void MaintenanceCyclePage::save()
             break;
         case DISP_H_PACK:
             /* 
-            H-PACK     360天     6000升 
+            H-PACK     360     6000 
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_H_PACKLIFEDAY] = iTemp;
@@ -941,7 +954,7 @@ void MaintenanceCyclePage::save()
             break;
         case DISP_N1_UV:
             /* 
-            254UV    720天     8000小时 
+            254UV    720     8000小时 
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_N1_UVLIFEDAY] = iTemp;
@@ -950,7 +963,7 @@ void MaintenanceCyclePage::save()
             break;
         case DISP_N2_UV:
             /* 
-            185V    720天     8000小时 
+            185V    720     8000小时 
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_N2_UVLIFEDAY] = iTemp;
@@ -959,7 +972,7 @@ void MaintenanceCyclePage::save()
             break;
         case DISP_N3_UV:
             /* 
-            水箱UV    720天     8000小时 
+            水UV    720     8000小时 
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_N3_UVLIFEDAY] = iTemp;
@@ -968,7 +981,7 @@ void MaintenanceCyclePage::save()
             break;
         case DISP_N4_UV:
             /* 
-            管路UV    720天     8000小时 
+            路UV    720     8000小时 
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_N4_UVLIFEDAY] = iTemp;
@@ -977,7 +990,7 @@ void MaintenanceCyclePage::save()
             break;
         case DISP_N5_UV:
             /* 
-            TOC UV    720天     8000小时 
+            TOC UV    720     8000小时 
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_N5_UVLIFEDAY] = iTemp;
@@ -986,21 +999,21 @@ void MaintenanceCyclePage::save()
             break;
         case DISP_W_FILTER:
             /* 
-            水箱空气过滤器   360天     
+            水   360     
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_W_FILTERLIFE] = iTemp;
             break;
         case DISP_T_B_FILTER:
             /* 
-            终端过滤器 B   90天     
+            斩斯 B   90     
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_T_B_FILTERLIFE] = iTemp;
             break;
         case DISP_T_A_FILTER:
             /* 
-            终端过滤器A    180天     
+            斩斯A    180     
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_T_A_FILTERLIFE] = iTemp;
@@ -1008,7 +1021,7 @@ void MaintenanceCyclePage::save()
             break;
         case DISP_TUBE_FILTER:
             /* 
-            管路过滤器    180天     
+            路    180     
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_TUBE_FILTERLIFE] = iTemp;
@@ -1016,14 +1029,14 @@ void MaintenanceCyclePage::save()
             break;
         case DISP_TUBE_DI:
             /* 
-            管路DI    180天     
+            路DI    180     
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_TUBE_DI_LIFE] = iTemp;
             break;
         case DISP_ROC12:
             /* 
-            RO氯清洗    30天     
+            RO洗    30     
             */
             iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
             CMParam.aulCms[DISP_ROC12LIFEDAY] = iTemp;

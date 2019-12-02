@@ -1,5 +1,5 @@
 #include "dxmlgenerator.h"
-#include "ExtraDisplay.h"
+#include "exconfig.h"
 #include <QDateTime>
 #include <QStringList>
 #include <QDebug>
@@ -44,7 +44,7 @@ const QByteArray DXmlGenerator::generator(const DNetworkData& data)
     xmlWriter.writeStartDocument();
     xmlWriter.writeStartElement("UploadData");
 
-    xmlWriter.writeAttribute("Serial", ex_gGlobalParam.Ex_System_Msg.Ex_SerialNo);
+    xmlWriter.writeAttribute("Serial", gAdditionalCfgParam.productInfo.strSerialNo);
     xmlWriter.writeAttribute("MachineType", m_machineInfo);
 
     createHeartData(xmlWriter, data);
@@ -69,7 +69,7 @@ const QByteArray DXmlGenerator::generator(QList<DNetworkAlaramInfo> &data)
     xmlWriter.writeStartDocument();
     xmlWriter.writeStartElement("UploadData");
 
-    xmlWriter.writeAttribute("Serial", ex_gGlobalParam.Ex_System_Msg.Ex_SerialNo);
+    xmlWriter.writeAttribute("Serial", gAdditionalCfgParam.productInfo.strSerialNo);
     xmlWriter.writeAttribute("MachineType", m_machineInfo);
 
     createAlarmAndConfig(xmlWriter, data);
@@ -94,7 +94,7 @@ const QByteArray DXmlGenerator::generator(const DDispenseData &data)
     xmlWriter.writeStartDocument();
     xmlWriter.writeStartElement("UploadData");
 
-    xmlWriter.writeAttribute("Serial", ex_gGlobalParam.Ex_System_Msg.Ex_SerialNo);
+    xmlWriter.writeAttribute("Serial", gAdditionalCfgParam.productInfo.strSerialNo);
     xmlWriter.writeAttribute("MachineType", m_machineInfo);
 
     createDispenseData(xmlWriter, data);
@@ -513,7 +513,7 @@ void DXmlGenerator::writeDispenseElements(QXmlStreamWriter &xmlWriter, const QLi
 
 void DXmlGenerator::initMachineInfo()
 {
-    unsigned int machineFlow = ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow;
+    unsigned int machineFlow = gAdditionalCfgParam.machineInfo.iMachineFlow;
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
@@ -976,8 +976,8 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_EDI:
     case MACHINE_RO:
     case MACHINE_ADAPT:
-        appendElement(elementsList, "ROFeedConductivity", toString3(ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk));
-        appendElement(elementsList, "ROFeedTempertature", toString3(ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk));
+        appendElement(elementsList, "ROFeedConductivity", toString3(gCaliParam.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk));
+        appendElement(elementsList, "ROFeedTempertature", toString3(gCaliParam.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk));
         break;
     default:
         break;
@@ -995,8 +995,8 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_RO:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, "ROConductivity", toString3(ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk));
-        appendElement(elementsList, "ROTempertature", toString3(ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk));
+        appendElement(elementsList, "ROConductivity", toString3(gCaliParam.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk));
+        appendElement(elementsList, "ROTempertature", toString3(gCaliParam.pc[DISP_PC_COFF_RO_WATER_TEMP].fk));
         break;
     default:
         break;
@@ -1008,8 +1008,8 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_L_EDI_LOOP:
     case MACHINE_Genie:
     case MACHINE_EDI:
-        appendElement(elementsList, "EDIResistivity", toString3(ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk));
-        appendElement(elementsList, "EDITempertature", toString3(ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk));
+        appendElement(elementsList, "EDIResistivity", toString3(gCaliParam.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk));
+        appendElement(elementsList, "EDITempertature", toString3(gCaliParam.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk));
         break;
     case MACHINE_L_UP:
     case MACHINE_L_RO_LOOP:
@@ -1017,8 +1017,8 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_UP:
         if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
         {
-            appendElement(elementsList, "EDIResistivity", toString3(ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk));
-            appendElement(elementsList, "EDITempertature", toString3(ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk));
+            appendElement(elementsList, "EDIResistivity", toString3(gCaliParam.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk));
+            appendElement(elementsList, "EDITempertature", toString3(gCaliParam.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk));
         }
         break;
     default:
@@ -1033,8 +1033,8 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, "UPResistivity", toString3(ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk));
-        appendElement(elementsList, "UPTempertature", toString3(ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_TEMP].fk));
+        appendElement(elementsList, "UPResistivity", toString3(gCaliParam.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk));
+        appendElement(elementsList, "UPTempertature", toString3(gCaliParam.pc[DISP_PC_COFF_UP_WATER_TEMP].fk));
         break;
     default:
         break;
@@ -1048,8 +1048,8 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, "HPResistivity", toString3(ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk));
-        appendElement(elementsList, "HPTempertature", toString3(ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk));
+        appendElement(elementsList, "HPResistivity", toString3(gCaliParam.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk));
+        appendElement(elementsList, "HPTempertature", toString3(gCaliParam.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk));
         break;
     default:
         break;
@@ -1067,7 +1067,7 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_RO:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, "FlowMeter", toString3(ex_global_Cali.pc[DISP_PC_COFF_S1].fk));
+        appendElement(elementsList, "FlowMeter", toString3(gCaliParam.pc[DISP_PC_COFF_S1].fk));
         break;
     default:
         break;
@@ -1079,7 +1079,7 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, "ROFeedRate", toString3(ex_global_Cali.pc[DISP_PC_COFF_S2].fk));
+        appendElement(elementsList, "ROFeedRate", toString3(gCaliParam.pc[DISP_PC_COFF_S2].fk));
         break;
     default:
         break;
@@ -1091,7 +1091,7 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, "ROProductRate", toString3(ex_global_Cali.pc[DISP_PC_COFF_S3].fk));
+        appendElement(elementsList, "ROProductRate", toString3(gCaliParam.pc[DISP_PC_COFF_S3].fk));
         break;
     default:
         break;
@@ -1103,7 +1103,7 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, "RORejectRate", toString3(ex_global_Cali.pc[DISP_PC_COFF_S4].fk));
+        appendElement(elementsList, "RORejectRate", toString3(gCaliParam.pc[DISP_PC_COFF_S4].fk));
         break;
     default:
         break;
@@ -1120,7 +1120,7 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_EDI:
     case MACHINE_RO:
     case MACHINE_PURIST:
-        appendElement(elementsList, "PureTankLevel", toString3(ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk));
+        appendElement(elementsList, "PureTankLevel", toString3(gCaliParam.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk));
         break;
     default:
         break;
@@ -1132,7 +1132,7 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        appendElement(elementsList, "FeedTankLevel", toString3(ex_global_Cali.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk));
+        appendElement(elementsList, "FeedTankLevel", toString3(gCaliParam.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk));
         break;
     default:
         break;
@@ -1150,7 +1150,7 @@ void DXmlGenerator::createCalibrationList(QList<QStringList> &elementsList)
     case MACHINE_RO:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        appendElement(elementsList, "ROPressure", toString3(ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk));
+        appendElement(elementsList, "ROPressure", toString3(gCaliParam.pc[DISP_PC_COFF_SYS_PRESSURE].fk));
         break;
     default:
         break;

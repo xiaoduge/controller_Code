@@ -1,6 +1,6 @@
 #include "cbitmapbutton.h"
 #include <QPainter>
-#include "ExtraDisplay.h"
+#include "exconfig.h"
 
 CBitmapButton::CBitmapButton(QWidget *parent,int style,int bgStyle,int id) :
     QWidget(parent)
@@ -26,7 +26,7 @@ void CBitmapButton::setIcon(QPixmap *pic)
 
 void CBitmapButton::mousePressEvent(QMouseEvent *e)
 {
-    if(g_isScreenSleep) return;
+    if(gScreenSleeping) return;
     if (!bEnable) return ;
 
     switch(btnStyle)
@@ -57,7 +57,7 @@ void CBitmapButton::mousePressEvent(QMouseEvent *e)
 */
 void CBitmapButton::mouseReleaseEvent(QMouseEvent *e)
 {
-    if(g_isScreenSleep) return;
+    if(gScreenSleeping) return;
     if (!bEnable) return ;
 
     switch(btnStyle)

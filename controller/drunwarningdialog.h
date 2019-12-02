@@ -5,7 +5,7 @@
 
 class QLabel;
 class QPushButton;
-class Ex_DialogTitle;
+class DDialogTitle;
 
 class DRunWarningDialog : public QDialog
 {
@@ -24,7 +24,7 @@ protected slots:
     void on_quitBtn_clicked();
 
 private:
-    Ex_DialogTitle* m_titleBar;
+    DDialogTitle* m_titleBar;
 
     QString m_text;
     QLabel *m_pLabel;

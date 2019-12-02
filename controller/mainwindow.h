@@ -12,8 +12,8 @@
 #include "cminterface.h"
 #include "eco_w.h"
 
-#include "ex_init_handlecfgpage.h"
-#include "ex_calcpackflow.h"
+#include "dinithandlecfgpage.h"
+#include "dcalcpackflow.h"
 
 #include <QMutex>
 #include <QThread>
@@ -204,8 +204,8 @@ class MainWindow;
 class navigatorBar;
 
 class SetDevicePage;
-class Ex_CheckConsumaleInstall;
-class Ex_ConsumableInstallDialog;
+class DCheckConsumaleInstall;
+class DConsumableInstallDialog;
 class QTcpSocket;
 class QNetworkReply;
 class DNetworkAccessManager;
@@ -313,7 +313,7 @@ public:
     DISPHANDLE startClean(int iType,bool bStart);
     
     SetDevicePage *getDeviceDlg();
-    Ex_Init_HandleCfgpage *getExInitPage(); //ex-dcj
+    DInitHandleCfgpage *getExInitPage(); //ex-dcj
 
     QString& getQss4Chk() {return m_strQss4Chk;}
 
@@ -827,8 +827,8 @@ private:
 
 
 private:
-    Ex_CheckConsumaleInstall* m_checkConsumaleInstall[APP_RFID_SUB_TYPE_NUM];
-    Ex_ConsumableInstallDialog* m_consumaleInstallDialog[APP_RFID_SUB_TYPE_NUM];
+    DCheckConsumaleInstall* m_checkConsumaleInstall[APP_RFID_SUB_TYPE_NUM];
+    DConsumableInstallDialog* m_consumaleInstallDialog[APP_RFID_SUB_TYPE_NUM];
     bool m_startCheckConsumable;
     //end
 
@@ -836,7 +836,7 @@ private:
     int m_productMachineFlow;
 
     int m_runningFlushTime;
-//    Ex_CalcPackFlow m_calcPFlow;
+//    DCalcPackFlow m_calcPFlow;
 
 private:
     void initScreenSleep();

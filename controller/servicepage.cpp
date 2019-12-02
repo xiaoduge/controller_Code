@@ -6,19 +6,19 @@
 #include "SterilizePage.h"
 #include "ConsumableinsPage.h"
 #include "allocationsetpage.h"
-#include "ex_usercfgpage.h"
-#include "ex_historypage.h"
+#include "dusercfgpage.h"
+#include "dhistorypage.h"
 #include "LoginDlg.h"
-#include "ex_userinfo.h"
-#include "ExtraDisplay.h"
-#include "ex_rfidcfgpage.h"
-#include "ex_managersetpage.h"
-#include "ex_permissionsetpage.h"
+#include "duserinfochecker.h"
+#include "exconfig.h"
+#include "drfidcfgpage.h"
+#include "dmanagersetpage.h"
+#include "dpermissionsetpage.h"
 
-#include "ex_languagepage.h"
+#include "dlanguagepage.h"
 #include "dloginwarningdialog.h"
-#include "ex_hintdialog.h"
-#include "ex_languagepage.h"
+#include "dhintdialog.h"
+#include "dlanguagepage.h"
 #include "unitpage.h"
 #include "dpushbutton.h"
 
@@ -96,7 +96,7 @@ void ServicePage::Create_subPage()
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[SERVICE_BTN_MANAGERCONFIG] = new Ex_ManagerSetPage(this , tmpWidget , m_wndMain);
+            m_pSubPages[SERVICE_BTN_MANAGERCONFIG] = new DManagerSetPage(this , tmpWidget , m_wndMain);
             break;
 #if 0
         case SERVICE_BTN_INSTALL:
@@ -116,25 +116,25 @@ void ServicePage::Create_subPage()
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new Ex_UserCfgPage(this , tmpWidget , m_wndMain);
+            m_pSubPages[index] = new DUserCfgPage(this , tmpWidget , m_wndMain);
             break;
         case SET_BTN_HISTORY_RECORD:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new Ex_HistoryPage(this , tmpWidget , m_wndMain);
+            m_pSubPages[index] = new DHistoryPage(this , tmpWidget , m_wndMain);
             break;
         case SET_BTN_PERMISSION:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new Ex_PermissionSetPage(this , tmpWidget , m_wndMain);
+            m_pSubPages[index] = new DPermissionSetPage(this , tmpWidget , m_wndMain);
             break;
         case SET_BTN_LANGUAGE:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new Ex_Languagepage(this , tmpWidget , m_wndMain);
+            m_pSubPages[index] = new DLanguagepage(this , tmpWidget , m_wndMain);
             break;
         case SET_BTN_UNITS:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
@@ -156,7 +156,7 @@ void ServicePage::Create_subPage()
 
 void ServicePage::update()
 {
-    if(user_LoginState.loginState())
+    if(gUserLoginState.loginState())
     {
         m_pLogoutBtn->show();
     }
@@ -415,12 +415,12 @@ void ServicePage::on_navi_clicked(int index)
 
 void ServicePage::on_logoutBtn_clicked()
 {
-    if(user_LoginState.loginState())
+    if(gUserLoginState.loginState())
     {
-        user_LoginState.setLoginState(false);
+        gUserLoginState.setLoginState(false);
         m_pLogoutBtn->hide();
     }
-    Ex_HintDialog::getInstance(tr("Signed out"));
+    DHintDialog::getInstance(tr("Signed out"));
 }
 
 void ServicePage::notVerify(int index)
@@ -437,7 +437,7 @@ void ServicePage::userVerify(int index)
         return;
     }
 
-    if(user_LoginState.loginState())
+    if(gUserLoginState.loginState())
     {
         m_pSubPages[index]->show(true);
     }
@@ -448,7 +448,7 @@ void ServicePage::userVerify(int index)
         dlg.exec();
         if(0 == dlg.m_iLogInResult)
         {
-            Ex_UserInfo userInfo;
+            DUserInfoChecker userInfo;
             int ret = userInfo.checkUserInfo(dlg.m_strUserName, dlg.m_strPassword);
             switch(ret)
             {
@@ -460,7 +460,7 @@ void ServicePage::userVerify(int index)
             {
                 m_wndMain->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
                 m_pSubPages[index]->show(true);
-                user_LoginState.setLoginState(true);
+                gUserLoginState.setLoginState(true);
                 break;
             }
             case 0:
@@ -484,11 +484,11 @@ void ServicePage::userVerify(int index)
 
 void ServicePage::managerVerify(int index)
 {
-    Ex_UserInfo userInfo;
+    DUserInfoChecker userInfo;
     DUserInfo userlog = m_wndMain->getLoginfo();
     bool isManager = userInfo.checkManagerInfo(userlog.m_strUserName);
 
-    if(user_LoginState.loginState() && isManager)
+    if(gUserLoginState.loginState() && isManager)
     {
         m_pSubPages[index]->show(true);
     }
@@ -509,7 +509,7 @@ void ServicePage::managerVerify(int index)
             {
                 m_wndMain->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
                 m_pSubPages[index]->show(true);
-                user_LoginState.setLoginState(true);
+                gUserLoginState.setLoginState(true);
                 break;
             }
             case 1:
@@ -535,11 +535,11 @@ void ServicePage::managerVerify(int index)
 
 void ServicePage::serviceVerify(int index)
 {
-    Ex_UserInfo userInfo;
+    DUserInfoChecker userInfo;
     DUserInfo userlog = m_wndMain->getLoginfo();
     bool isEngineer = userInfo.checkEngineerInfo(userlog.m_strUserName);
 
-    if(user_LoginState.loginState() && isEngineer )
+    if(gUserLoginState.loginState() && isEngineer )
     {
         m_pSubPages[index]->show(true);
     }
@@ -549,7 +549,7 @@ void ServicePage::serviceVerify(int index)
         dlg.exec() ;
         if(0 == dlg.m_iLogInResult)
         {
-            Ex_UserInfo userInfo;
+            DUserInfoChecker userInfo;
             int ret = userInfo.checkUserInfo(dlg.m_strUserName, dlg.m_strPassword);
             SetPage* setpage = qobject_cast<SetPage*>(m_pSubPages[index]);
             setpage->setSuperPage(false);
@@ -561,7 +561,7 @@ void ServicePage::serviceVerify(int index)
             {
                 m_wndMain->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
                 m_pSubPages[index]->show(true);
-                user_LoginState.setLoginState(true);
+                gUserLoginState.setLoginState(true);
                 if(3 != ret)
                 {
                     SetPage* setpage = qobject_cast<SetPage*>(m_pSubPages[index]);

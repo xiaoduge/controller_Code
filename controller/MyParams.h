@@ -67,7 +67,7 @@ extern MACHINE_TYPE_STRU gaMachineType[MACHINE_NUM];
 //ex_dcj
 void MainRetriveLastRunState(int iMachineType);
 void MainRetriveDefaultState(int iMachineType);
-void MainRetriveExMachineMsg(int iMachineType);
+void MainRetriveMachineInfo(int iMachineType);
 void MainRetriveProductMsg(int iMachineType);
 void MainRetriveInstallMsg(int iMachineType);
 void MainRetriveExConfigParam(int iMachineType);

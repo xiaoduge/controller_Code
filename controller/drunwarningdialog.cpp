@@ -1,5 +1,5 @@
 #include "drunwarningdialog.h"
-#include "ex_dialogtitle.h"
+#include "ddialogtitle.h"
 #include <QLabel>
 #include <QPushButton>
 #include <QMessageBox>
@@ -28,7 +28,7 @@ void DRunWarningDialog::initTitleBar()
 {
     this->setFixedSize(360, 222);
     this->setWindowFlags(Qt::FramelessWindowHint);
-    m_titleBar = new Ex_DialogTitle(this);
+    m_titleBar = new DDialogTitle(this);
     m_titleBar->move(0, 0);
     m_titleBar->setTitleContent(tr("Warning"), Qt::white, 16);
 }

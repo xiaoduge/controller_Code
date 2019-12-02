@@ -41,32 +41,31 @@
 #include "cminterface.h"
 #include "ToastDlg.h"
 
-#include "ExtraDisplay.h" //dcj_ex
-#include "ex_loginstate.h"
-#include "ex_init_languagepage.h"
-#include "ex_init_networkpage.h"
-#include "ex_initconsumableinspage.h"
-#include "ex_init_handlecfgpage.h"
-#include "ex_init_timepage.h"
-#include "ex_init_tankcfgpage.h"
-#include "ex_init_syscfgpage.h"
-#include "ex_screensleeppage.h"
-#include "ex_factorytestpage.h"
-#include "ex_checkconsumaleinstall.h"
-#include "ex_consumableinstalldialog.h"
-#include "ex_flowchartpage.h"
+#include "exconfig.h" //dcj_ex
+#include "dloginstate.h"
+#include "dinitlanguagepage.h"
+#include "dinitnetworkpage.h"
+#include "dinitconsumableinspage.h"
+#include "dinittimepage.h"
+#include "dinittankcfgpage.h"
+#include "dinitsyscfgpage.h"
+#include "dscreensleeppage.h"
+#include "dfactorytestpage.h"
+#include "dcheckconsumaleinstall.h"
+#include "dconsumableinstalldialog.h"
+#include "dflowchartpage.h"
 #include "DNetworkConfig.h"
 #include "dhttpworker.h"
 #include "dwificonfigdialog.h"
 #include "dwificonfigwidget.h"
-#include "ex_hintdialog.h"
-#include "ex_waterqualitypage.h"
+#include "dhintdialog.h"
+#include "dwaterqualitypage.h"
 #include "drunwarningdialog.h"
-#include "ex_userinfo.h"
+#include "duserinfochecker.h"
 #include "dloginwarningdialog.h"
 #include "printer.h"
 
-//#include "ex_screensleepthread.h"
+//#include "dscreensleepthread.h"
 //
 /***********************************************
 B3: source water tank
@@ -217,16 +216,16 @@ QString gGlobalPixelmapName[GLOBAL_BMP_NUM] =
 
 DISP_GLOBAL_PARAM_STRU gGlobalParam;
 
-Ex_DISP_PARAM_CALI_STRU ex_global_Cali; //dcj_ex;
+Ex_DISP_PARAM_CALI_STRU gCaliParam; //dcj_ex;
 
-Ex_LoginState user_LoginState; //ex
+DLoginState gUserLoginState; //ex
 
-Ex_DISP_GLOBAL_PARAM_STRU ex_gGlobalParam; //dcj_ex;
+AdditionalGlobalCfg gAdditionalCfgParam; //dcj_ex;
 EX_CCB  ex_gCcb; //dcj_ex
 
-unsigned int g_screenSleep;
-bool g_isScreenSleep;
-unsigned int g_AutoLogoutTimer;
+unsigned int gScreenSleepTimer;
+bool gScreenSleeping;
+unsigned int gAutoLogoutTimer;
 
 unsigned int ex_gulSecond = 0;
 unsigned short ex_isPackNew;
@@ -420,7 +419,7 @@ void MainRetriveLastRunState(int iMachineType)
     strCfgName += ".ini";
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
     QString strV = "/LastRunState/";
-    ex_gGlobalParam.lastRunState = config->value(strV, 0).toInt();
+    gAdditionalCfgParam.lastRunState = config->value(strV, 0).toInt();
 
     if (config)
     {
@@ -435,7 +434,7 @@ void MainRetriveDefaultState(int iMachineType)//
     strCfgName += ".ini";
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
     QString strV = "/DefaultState/";
-    ex_gGlobalParam.Ex_Default = config->value(strV, 0).toInt();
+    gAdditionalCfgParam.initMachine = config->value(strV, 0).toInt();
 
     if (config)
     {
@@ -444,7 +443,7 @@ void MainRetriveDefaultState(int iMachineType)//
     }
 }
 
-void MainRetriveExMachineMsg(int iMachineType) //ex_dcj
+void MainRetriveMachineInfo(int iMachineType) //ex_dcj
 {
     QString strCfgName = gaMachineType[iMachineType].strName;
     strCfgName += ".ini";
@@ -452,7 +451,7 @@ void MainRetriveExMachineMsg(int iMachineType) //ex_dcj
     QString strV;
 
     strV = "/ExMachineMsg/MachineFlow/";
-    ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow = config->value(strV, 5).toInt();
+    gAdditionalCfgParam.machineInfo.iMachineFlow = config->value(strV, 5).toInt();
 
     if (config)
     {
@@ -469,20 +468,19 @@ void MainRetriveProductMsg(int iMachineType) //ex_dcj
     QString strV;
 
     strV = "/ProductMsg/iCompany/";
-    ex_gGlobalParam.Ex_System_Msg.Ex_iCompany = config->value(strV, 0).toInt();
+    gAdditionalCfgParam.productInfo.iCompany = config->value(strV, 0).toInt();
 
     strV = "/ProductMsg/CatalogNo/";
-    ex_gGlobalParam.Ex_System_Msg.Ex_CatalogNo = config->value(strV, "unknow").toString();
+    gAdditionalCfgParam.productInfo.strCatalogNo = config->value(strV, "unknow").toString();
 
     strV = "/ProductMsg/SerialNo/";
-    ex_gGlobalParam.Ex_System_Msg.Ex_SerialNo = config->value(strV, "unknow").toString();
+    gAdditionalCfgParam.productInfo.strSerialNo = config->value(strV, "unknow").toString();
 
     strV = "/ProductMsg/ProductionDate/";
-    ex_gGlobalParam.Ex_System_Msg.Ex_ProDate = config->value(strV, "unknow").toString();
+    gAdditionalCfgParam.productInfo.strProductDate = config->value(strV, "unknow").toString();
 
     strV = "/ProductMsg/SoftwareVersion/";
-    ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer = strSoftwareVersion;
-
+    gAdditionalCfgParam.productInfo.strVersion = strSoftwareVersion;
 
     if (config)
     {
@@ -498,7 +496,7 @@ void MainRetriveInstallMsg(int iMachineType) //ex_dcj
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
 
     QString strV = "/InstallMsg/InstallDate/";
-    ex_gGlobalParam.Ex_System_Msg.Ex_InsDate = config->value(strV, "unknow").toString();
+    gAdditionalCfgParam.productInfo.strInstallDate = config->value(strV, "unknow").toString();
 
     if (config)
     {
@@ -515,10 +513,7 @@ void MainRetriveExConfigParam(int iMachineType)
 
     QString strV;
     strV = "/ExConfigParam/ScreenSleepTime";
-    ex_gGlobalParam.Ex_Config_Param.iScreenSleepTime = config->value(strV, 10).toInt();
-
-    strV = "/ExConfigParam/DispenseFlowRate";
-    ex_gGlobalParam.Ex_Config_Param.flowRate = config->value(strV, 2.0).toFloat();
+    gAdditionalCfgParam.additionalParam.iScreenSleepTime = config->value(strV, 10).toInt();
 
     if (config)
     {
@@ -1054,8 +1049,8 @@ void MainRetriveCalibrateParam(int iMachineType)
     {
         QString strKey = QString("%1").arg(i);
         QList<QVariant> list = config->value(strKey, defaultList).toList();
-        ex_global_Cali.pc[i].fk = list[0].toFloat();
-        ex_global_Cali.pc[i].fc = list[1].toFloat();
+        gCaliParam.pc[i].fk = list[0].toFloat();
+        gCaliParam.pc[i].fc = list[1].toFloat();
     }
 
     if (config)
@@ -1473,7 +1468,7 @@ void MainSaveLastRunState(int iMachineType)
 
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
     QString strV = "/LastRunState/";
-    QString strTmp = QString::number(ex_gGlobalParam.lastRunState);
+    QString strTmp = QString::number(gAdditionalCfgParam.lastRunState);
     config->setValue(strV, strTmp);
 
     if (config)
@@ -1491,7 +1486,7 @@ void MainSaveDefaultState(int iMachineType) //ex_dcj
 
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
     QString strV = "/DefaultState/";
-    QString strTmp = QString::number(ex_gGlobalParam.Ex_Default);
+    QString strTmp = QString::number(gAdditionalCfgParam.initMachine);
     config->setValue(strV, strTmp);
 
     if (config)
@@ -1512,7 +1507,7 @@ void MainSaveExMachineMsg(int iMachineType)
     QString strV;
 
     strV = "/ExMachineMsg/MachineFlow/";
-    config->setValue(strV, ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow);
+    config->setValue(strV, gAdditionalCfgParam.machineInfo.iMachineFlow);
 
     if (config)
     {
@@ -1531,19 +1526,19 @@ void MainSaveProductMsg(int iMachineType) //ex_dcj
     QString strV;
 
     strV = "/ProductMsg/iCompany/";
-    config->setValue(strV, ex_gGlobalParam.Ex_System_Msg.Ex_iCompany);
+    config->setValue(strV, gAdditionalCfgParam.productInfo.iCompany);
 
     strV = "/ProductMsg/CatalogNo/";
-    config->setValue(strV, ex_gGlobalParam.Ex_System_Msg.Ex_CatalogNo);
+    config->setValue(strV, gAdditionalCfgParam.productInfo.strCatalogNo);
 
     strV = "/ProductMsg/SerialNo/";
-    config->setValue(strV, ex_gGlobalParam.Ex_System_Msg.Ex_SerialNo);
+    config->setValue(strV, gAdditionalCfgParam.productInfo.strSerialNo);
 
     strV = "/ProductMsg/ProductionDate/";
-    config->setValue(strV, ex_gGlobalParam.Ex_System_Msg.Ex_ProDate);
+    config->setValue(strV, gAdditionalCfgParam.productInfo.strProductDate);
 
     strV = "/ProductMsg/SoftwareVersion/";
-    config->setValue(strV, ex_gGlobalParam.Ex_System_Msg.Ex_SofeVer);
+    config->setValue(strV, gAdditionalCfgParam.productInfo.strVersion);
 
     if (config)
     {
@@ -1561,7 +1556,7 @@ void MainSaveInstallMsg(int iMachineType) //ex_dcj
     QString strV;
 
     strV = "/InstallMsg/InstallDate/";
-    config->setValue(strV, ex_gGlobalParam.Ex_System_Msg.Ex_InsDate);
+    config->setValue(strV, gAdditionalCfgParam.productInfo.strInstallDate);
 
     if (config)
     {
@@ -1579,10 +1574,7 @@ void MainSaveExConfigParam(int iMachineType)
 
     QString strV;
     strV = "/ExConfigParam/ScreenSleepTime";
-    config->setValue(strV, ex_gGlobalParam.Ex_Config_Param.iScreenSleepTime);
-
-    strV = "/ExConfigParam/DispenseFlowRate";
-    config->setValue(strV, ex_gGlobalParam.Ex_Config_Param.flowRate);
+    config->setValue(strV, gAdditionalCfgParam.additionalParam.iScreenSleepTime);
 
     if (config)
     {
@@ -2010,9 +2002,10 @@ void MainSaveCalibrateParam(int iMachineType, QMap<int, DISP_PARAM_CALI_ITEM_STR
     MainRetriveCalibrateParam(iMachineType);
 
     DISP_FM_SETTING_STRU fmParam;
-
-    float default_L_Machine = 450.0;
-    float default_Machine = 7055.0;
+	
+	float quarterInchFM = 7055;  // 1/4流量计
+    float halfInchFM = 450.0;    // 1/2流量计
+	float oneInchFm = 120.0;     // 1寸流量计
 
     switch(iMachineType)
     {
@@ -2020,10 +2013,31 @@ void MainSaveCalibrateParam(int iMachineType, QMap<int, DISP_PARAM_CALI_ITEM_STR
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        fmParam.aulCfg[DISP_FM_FM1] = default_Machine / ex_global_Cali.pc[DISP_PC_COFF_S1].fk;
-        fmParam.aulCfg[DISP_FM_FM2]= default_L_Machine / ex_global_Cali.pc[DISP_PC_COFF_S2].fk;
-        fmParam.aulCfg[DISP_FM_FM3] = default_L_Machine / ex_global_Cali.pc[DISP_PC_COFF_S3].fk;
-        fmParam.aulCfg[DISP_FM_FM4] = default_L_Machine / ex_global_Cali.pc[DISP_PC_COFF_S4].fk;
+        switch(gAdditionalCfgParam.machineInfo.iMachineFlow)
+        {
+        case MachineFlow_125:
+        case MachineFlow_150:
+        case MachineFlow_250:
+        case MachineFlow_300:
+            fmParam.aulCfg[DISP_FM_FM1] = quarterInchFM / gCaliParam.pc[DISP_PC_COFF_S1].fk;
+            fmParam.aulCfg[DISP_FM_FM2]= halfInchFM / gCaliParam.pc[DISP_PC_COFF_S2].fk;
+            fmParam.aulCfg[DISP_FM_FM3] = halfInchFM / gCaliParam.pc[DISP_PC_COFF_S3].fk;
+            fmParam.aulCfg[DISP_FM_FM4] = halfInchFM / gCaliParam.pc[DISP_PC_COFF_S4].fk;
+            break;
+        case MachineFlow_500:
+        case MachineFlow_600:
+            fmParam.aulCfg[DISP_FM_FM1] = halfInchFM / gCaliParam.pc[DISP_PC_COFF_S1].fk;
+            fmParam.aulCfg[DISP_FM_FM2]= oneInchFm / gCaliParam.pc[DISP_PC_COFF_S2].fk;
+            fmParam.aulCfg[DISP_FM_FM3] = halfInchFM / gCaliParam.pc[DISP_PC_COFF_S3].fk;
+            fmParam.aulCfg[DISP_FM_FM4] = oneInchFm / gCaliParam.pc[DISP_PC_COFF_S4].fk;
+            break;
+        default:
+            fmParam.aulCfg[DISP_FM_FM1] = quarterInchFM / gCaliParam.pc[DISP_PC_COFF_S1].fk;
+            fmParam.aulCfg[DISP_FM_FM2]= halfInchFM / gCaliParam.pc[DISP_PC_COFF_S2].fk;
+            fmParam.aulCfg[DISP_FM_FM3] = quarterInchFM / gCaliParam.pc[DISP_PC_COFF_S3].fk;
+            fmParam.aulCfg[DISP_FM_FM4] = halfInchFM / gCaliParam.pc[DISP_PC_COFF_S4].fk;
+            break;
+        }
         break;
     case MACHINE_Genie:
     case MACHINE_UP:
@@ -2031,7 +2045,7 @@ void MainSaveCalibrateParam(int iMachineType, QMap<int, DISP_PARAM_CALI_ITEM_STR
     case MACHINE_RO:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        fmParam.aulCfg[DISP_FM_FM1]  = default_Machine / ex_global_Cali.pc[DISP_PC_COFF_S1].fk;
+        fmParam.aulCfg[DISP_FM_FM1]  = quarterInchFM / gCaliParam.pc[DISP_PC_COFF_S1].fk;
         break;
     default:
         break;
@@ -2463,12 +2477,12 @@ void MainRetriveGlobalParam(void)
 
     MainRetriveMachineType(gGlobalParam.iMachineType);
 
-    MainRetriveLastRunState(gGlobalParam.iMachineType); //20190521
-    MainRetriveDefaultState(gGlobalParam.iMachineType); //ex_dcj
-    MainRetriveExMachineMsg(gGlobalParam.iMachineType);
-    MainRetriveProductMsg(gGlobalParam.iMachineType); //ex_dcj
-    MainRetriveInstallMsg(gGlobalParam.iMachineType); //ex_dcj
-    MainRetriveExConfigParam(gGlobalParam.iMachineType);//ex_dcj
+    MainRetriveLastRunState(gGlobalParam.iMachineType);
+    MainRetriveDefaultState(gGlobalParam.iMachineType);
+    MainRetriveMachineInfo(gGlobalParam.iMachineType);
+    MainRetriveProductMsg(gGlobalParam.iMachineType);
+    MainRetriveInstallMsg(gGlobalParam.iMachineType);
+    MainRetriveExConfigParam(gGlobalParam.iMachineType);
 
     MainRetriveMachineParam(gGlobalParam.iMachineType,gGlobalParam.MMParam);
 #ifdef USER_TIMER_CONFIG    
@@ -2851,7 +2865,7 @@ void CheckConsumptiveMaterialState(void)
     }
 #ifdef D_HTTPWORK
     if((gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
-        && ex_gGlobalParam.Ex_Default)
+        && gAdditionalCfgParam.initMachine)
     {
         gpMainWnd->checkConsumableAlarm();
     }
@@ -3212,7 +3226,7 @@ void MainWindow::initUI()
     m_pFonts[GLOBAL_FONT_48] = new QFont("" , 48 ,  QFont::Bold);
     m_pFonts[GLOBAL_FONT_60] = new QFont("" , 60 ,  QFont::Bold);
     //ex_dcj
-    if(ex_gGlobalParam.Ex_Default == 0)
+    if(gAdditionalCfgParam.initMachine == 0)
     {
         for(int i = 0; i < Ex_Init_Num; i++)
         {
@@ -3221,13 +3235,13 @@ void MainWindow::initUI()
             m_pExInitWidgets[i]->hide();
             m_pExInitWidgets[i]->setGeometry(0, 0, 800, 600);
         }
-        m_pExInitPages[Ex_Init_Lan] = new Ex_Init_Languagepage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Lan] , this);
-        m_pExInitPages[Ex_Init_Time] = new Ex_Init_TimePage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Time] , this);
-        m_pExInitPages[Ex_Init_Tankcfg] = new Ex_Init_Tankcfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Tankcfg] , this);
-        m_pExInitPages[Ex_Init_Syscfg] = new Ex_Init_Syscfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Syscfg] , this);
-        m_pExInitPages[Ex_Init_Network] = new Ex_Init_Networkpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Network] , this);
-        m_pExInitPages[Ex_Init_InstallConsumable] = new Ex_InitConsumableInsPage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_InstallConsumable] , this);
-        m_pExInitPages[Ex_Init_Handlercfg] = new Ex_Init_HandleCfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Handlercfg] , this);
+        m_pExInitPages[Ex_Init_Lan] = new DInitLanguagepage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Lan] , this);
+        m_pExInitPages[Ex_Init_Time] = new DInitTimePage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Time] , this);
+        m_pExInitPages[Ex_Init_Tankcfg] = new DInitTankcfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Tankcfg] , this);
+        m_pExInitPages[Ex_Init_Syscfg] = new DInitSyscfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Syscfg] , this);
+        m_pExInitPages[Ex_Init_Network] = new DInitNetworkpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Network] , this);
+        m_pExInitPages[Ex_Init_InstallConsumable] = new DInitConsumableInsPage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_InstallConsumable] , this);
+        m_pExInitPages[Ex_Init_Handlercfg] = new DInitHandleCfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Handlercfg] , this);
         m_curExInitPage = m_pExInitPages[Ex_Init_Lan];
     }
     //ScreenPage
@@ -3236,7 +3250,7 @@ void MainWindow::initUI()
     m_pScreenSleepWidget->hide();
     m_pScreenSleepWidget->setGeometry(0, 0, 800, 600);
 
-    m_pScreenSleepPage = new Ex_ScreenSleepPage(0, m_pScreenSleepWidget, this);
+    m_pScreenSleepPage = new DScreenSleepPage(0, m_pScreenSleepWidget, this);
     connect(m_pScreenSleepPage, SIGNAL(pageHide()), this, SLOT(on_Ex_ScreenPageHide()));
     connect(this, SIGNAL(SleepPageShow(bool)), m_pScreenSleepPage, SLOT(on_SleepPageShow(bool)));
     m_pPreviousPage = NULL;
@@ -3250,7 +3264,7 @@ void MainWindow::initUI()
         m_pSubWidget[index]->setGeometry(0,0,800,600);
     }
 #ifdef FLOWCHART
-    m_pSubPages[PAGE_FLOWCHART]    = new Ex_FlowChartPage(0,(CBaseWidget *)m_pSubWidget[PAGE_FLOWCHART] , this);
+    m_pSubPages[PAGE_FLOWCHART]    = new DFlowChartPage(0,(CBaseWidget *)m_pSubWidget[PAGE_FLOWCHART] , this);
     connect(this, SIGNAL(unitsChanged()), m_pSubPages[PAGE_FLOWCHART], SLOT(updateUnits()));
     connect(this, SIGNAL(updateFlowChartAlarm(const QString&,bool)),
             m_pSubPages[PAGE_FLOWCHART], SLOT(on_updateAlarmMsg(const QString&, bool)));
@@ -3471,19 +3485,44 @@ MainWindow::MainWindow(QMainWindow *parent) :
             break;
         case MACHINE_L_EDI_LOOP:
             /*alarm masks */
-            m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
-            m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_UPACK_OOP)
-                                                          |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
-                                                          |(1 << DISP_ALARM_PART0_PREPACK_OOP)
-                                                          |(1 << DISP_ALARM_PART0_185UV_OOP)));
+            if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+            {
+                m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
+                m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_UPACK_OOP)
+                                                              |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
+                                                              |(1 << DISP_ALARM_PART0_PREPACK_OOP)
+                                                              |(1 << DISP_ALARM_PART0_185UV_OOP)));
 
-            m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
-            m_aMas[iLoop].aulMask[DISP_ALARM_PART1] &= ( ~((1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE)
-                                                           |(1 << DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE)
-                                                           |(1 << DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE)
-                                                           |(1 << DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE)
-                                                           |(1 << DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE)
-                                                           |(1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE)));
+                m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
+                m_aMas[iLoop].aulMask[DISP_ALARM_PART1] &= ( ~((1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE)
+                                                               |(1 << DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE)
+                                                               |(1 << DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE)
+                                                               |(1 << DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE)
+                                                               |(1 << DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE)
+                                                               |(1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE)));
+            }
+            else
+            {
+                m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
+                m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= (~((1 << DISP_ALARM_PART0_UPACK_OOP)
+                                                              |(1 << DISP_ALARM_PART0_254UV_OOP)
+                                                              |(1 << DISP_ALARM_PART0_ACPACK_OOP)   
+                                                              |(1 << DISP_ALARM_PART0_PPACK_OOP)
+                                                              |(1 << DISP_ALARM_PART0_ATPACK_OOP)
+                                                              |(1 << DISP_ALARM_PART0_HPACK_OOP)
+                                                              |(1 << DISP_ALARM_PART0_TUBEUV_OOP)
+                                                              |(1 << DISP_ALARM_PART0_PREPACK_OOP)
+                                                              |(1 << DISP_ALARM_PART0_185UV_OOP)));
+
+                m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
+                m_aMas[iLoop].aulMask[DISP_ALARM_PART1] &= ( ~((1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE)
+                                                               |(1 << DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE)
+                                                               |(1 << DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE)
+                                                               |(1 << DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE)
+                                                               |(1 << DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE)
+                                                               |(1 << DISP_ALARM_PART1_LOWER_PWTANKE_WATER_LEVEL)
+                                                               |(1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE)));
+            }
             break;
         case MACHINE_L_RO_LOOP:
             /*alarm masks */
@@ -3496,14 +3535,14 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1] &= (~((1 << DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE)
-                                                         |(1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE)
-                                                         |(1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_HIGHER_EDI_PRODUCT_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE)
-                                                         |(1 << DISP_ALARM_PART1_LOWER_EDI_PRODUCT_TEMPERATURE)));
+                                                          |(1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE)
+                                                          |(1 << DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE)
+                                                          |(1 << DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE)
+                                                          |(1 << DISP_ALARM_PART1_HIGHER_EDI_PRODUCT_TEMPERATURE)
+                                                          |(1 << DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE)
+                                                          |(1 << DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE)
+                                                          |(1 << DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE)
+                                                          |(1 << DISP_ALARM_PART1_LOWER_EDI_PRODUCT_TEMPERATURE)));
             
             break;
         case MACHINE_Genie:
@@ -4060,8 +4099,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
     //ex
     for(iLoop = 0; iLoop < APP_RFID_SUB_TYPE_NUM; iLoop++)
     {
-        m_checkConsumaleInstall[iLoop] = new Ex_CheckConsumaleInstall(iLoop, this);
-        m_consumaleInstallDialog[iLoop] = new Ex_ConsumableInstallDialog(iLoop, this);
+        m_checkConsumaleInstall[iLoop] = new DCheckConsumaleInstall(iLoop, this);
+        m_consumaleInstallDialog[iLoop] = new DConsumableInstallDialog(iLoop, this);
         m_consumaleInstallDialog[iLoop]->hide();
         m_consumaleInstallDialog[iLoop]->setGeometry(200, 175, 350, 250);
 
@@ -4077,7 +4116,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
         connect(m_consumaleInstallDialog[iLoop], SIGNAL(consumableTypeChanged(int)),
                 m_checkConsumaleInstall[iLoop], SLOT(updateConsumableType(int)));
 
-        if(0 == ex_gGlobalParam.Ex_Default)
+        if(0 == gAdditionalCfgParam.initMachine)
         {
             connect(m_checkConsumaleInstall[iLoop], SIGNAL(consumableInstallFinished(int)),
                 m_pExInitPages[Ex_Init_InstallConsumable], SLOT(updateConsumableInstall(int)));
@@ -4101,7 +4140,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     CcbInit();
 
-    if(ex_gGlobalParam.Ex_Default == 0)
+    if(gAdditionalCfgParam.initMachine == 0)
     {
         setStartCheckConsumable(false);
         m_pExInitPages[Ex_Init_Lan]->show(true);    
@@ -4110,7 +4149,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
     {
         setStartCheckConsumable(true);
 
-        if(0 == ex_gGlobalParam.Ex_System_Msg.Ex_iCompany)
+        if(0 == gAdditionalCfgParam.productInfo.iCompany)
         {
             Splash();
         }
@@ -4296,7 +4335,7 @@ void MainWindow::mainDisplay()
 
     m_pSubPages[PAGE_MAIN]->show(true);
 
-    if(ex_gGlobalParam.Ex_Default)
+    if(gAdditionalCfgParam.initMachine)
     {
         QTimer::singleShot(1000, this, SLOT(retriveLastRunState()));
     }
@@ -4313,7 +4352,7 @@ void MainWindow::updEcoInfo(int index)
 #ifdef FLOWCHART
     if (NULL != m_pSubPages[PAGE_FLOWCHART])
     {
-        Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
+        DFlowChartPage *page = (DFlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
         page->updEcoInfo(index, &m_EcoInfo[index]);
     }
 #endif
@@ -4322,7 +4361,7 @@ void MainWindow::updEcoInfo(int index)
         MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
 
 //        WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
-        Ex_WaterQualityPage *subpage = (Ex_WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+        DWaterQualityPage *subpage = (DWaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
         subpage->updEcoInfo(index,&m_EcoInfo[index]);
     }
 
@@ -4360,7 +4399,7 @@ void MainWindow::updTank()
 #ifdef FLOWCHART
     if (NULL != m_pSubPages[PAGE_FLOWCHART])
     {
-        Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
+        DFlowChartPage *page = (DFlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
         page->updTank(level, liter);
     }
 #endif
@@ -4379,7 +4418,7 @@ void MainWindow::updTank()
         MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
 
       //  WaterQualityPage *subpage =(WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
-         Ex_WaterQualityPage *subpage =(Ex_WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+         DWaterQualityPage *subpage =(DWaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
         subpage->updTank(level,liter);
     }   
     //ex
@@ -4398,7 +4437,7 @@ void MainWindow::updTank()
 
         SetPage* subpage = (SetPage*)page->getSubPage(SET_BTN_SERVICE);
 
-        Ex_FactoryTestPage *subSubpage = (Ex_FactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+        DFactoryTestPage *subSubpage = (DFactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
 
         subSubpage->updTank(level,liter);
     }
@@ -4428,7 +4467,7 @@ void MainWindow::updSourceTank()
 
         SetPage* subpage = (SetPage*)page->getSubPage(SET_BTN_SERVICE);
 
-        Ex_FactoryTestPage *subSubpage = (Ex_FactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+        DFactoryTestPage *subSubpage = (DFactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
 
         subSubpage->updSourceTank(level,liter);
     }
@@ -4436,7 +4475,7 @@ void MainWindow::updSourceTank()
     if (NULL != m_pSubPages[PAGE_MENU])
     {
         MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
-        Ex_WaterQualityPage *subpage = (Ex_WaterQualityPage*)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+        DWaterQualityPage *subpage = (DWaterQualityPage*)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
 
         subpage->updSourceTank(level,liter);
     }
@@ -4465,7 +4504,7 @@ void MainWindow::updPressure(int iIdx)
             MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
         
            // WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
-            Ex_WaterQualityPage *subpage = (Ex_WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+            DWaterQualityPage *subpage = (DWaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
             subpage->updPressure(iIdx, m_fPressure[iIdx]);
 
         }
@@ -4476,14 +4515,14 @@ void MainWindow::updPressure(int iIdx)
 
             SetPage* subpage = (SetPage*)page->getSubPage(SET_BTN_SERVICE);
 
-            Ex_FactoryTestPage *subSubpage = (Ex_FactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+            DFactoryTestPage *subSubpage = (DFactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
 
             subSubpage->updatePressure(iIdx, m_fPressure[iIdx]);
         }
 #ifdef FLOWCHART
         if (NULL != m_pSubPages[PAGE_FLOWCHART])
         {
-            Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
+            DFlowChartPage *page = (DFlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
             page->updPressure(iIdx, m_fPressure[iIdx]);
         }
 #endif
@@ -4510,7 +4549,7 @@ void MainWindow::updFlowInfo(int iIdx)
         MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
     
        // WaterQualityPage *subpage =(WaterQualityPage *) page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
-        Ex_WaterQualityPage *subpage =(Ex_WaterQualityPage *) page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+        DWaterQualityPage *subpage =(DWaterQualityPage *) page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
     
         {
             int iTmDelta = m_periodEvents - m_iLstFlowMeterTick[iIdx];
@@ -4533,7 +4572,7 @@ void MainWindow::updFlowInfo(int iIdx)
 
         SetPage* subpage = (SetPage*)page->getSubPage(SET_BTN_SERVICE);
 
-        Ex_FactoryTestPage *subSubpage = (Ex_FactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+        DFactoryTestPage *subSubpage = (DFactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
 
         {
             int iTmDelta = m_periodEvents - m_iLstFlowMeterTick[iIdx];
@@ -4551,7 +4590,7 @@ void MainWindow::updFlowInfo(int iIdx)
 #ifdef FLOWCHART
     if (NULL != m_pSubPages[PAGE_FLOWCHART])
     {
-        Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
+        DFlowChartPage *page = (DFlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
         {
             int iTmDelta = m_periodEvents - m_iLstFlowMeterTick[iIdx];
             int iFmDelta;
@@ -5104,9 +5143,9 @@ void MainWindow::on_timerSecondEvent()
 void MainWindow::on_timerScreenSleepEvent()
 {
     QMutexLocker locker(&ex_gMutex);
-    g_screenSleep++;
+    gScreenSleepTimer++;
 
-    if(g_screenSleep == ex_gGlobalParam.Ex_Config_Param.iScreenSleepTime * 6)
+    if(gScreenSleepTimer == gAdditionalCfgParam.additionalParam.iScreenSleepTime * 6)
     {
         on_ScreenSleep(true);
     }
@@ -5147,9 +5186,9 @@ void MainWindow::AfDataMsg(IAP_NOTIFY_STRU *pIapNotify)
             case APP_PACKET_HO_ADR_SET:
                 {
                     /*
-                    if (ex_gGlobalParam.Ex_Default == 0)
+                    if (gAdditionalCfgParam.initMachine == 0)
                     {
-                        Ex_Init_HandleCfgpage* ex_Page = getExInitPage();
+                        DInitHandleCfgpage* ex_Page = getExInitPage();
                         if(ex_Page) ex_Page->cfgHandlerRsp();
                     }
                     else
@@ -5178,9 +5217,9 @@ void MainWindow::AfDataMsg(IAP_NOTIFY_STRU *pIapNotify)
                     QString strAddress = QString::number(iAddress);
                     offset += 2;
 
-                    if (ex_gGlobalParam.Ex_Default == 0)
+                    if (gAdditionalCfgParam.initMachine == 0)
                     {
-                        Ex_Init_HandleCfgpage* ex_Page = getExInitPage();
+                        DInitHandleCfgpage* ex_Page = getExInitPage();
                         if(ex_Page)
                             ex_Page->addHandler(1,strSn,strAddress);
                     }
@@ -5254,9 +5293,9 @@ void MainWindow::zigbeeDataMsg(IAP_NOTIFY_STRU *pIapNotify)
             case APP_PACKET_HO_ADR_SET:
                 {
                     /*
-                    if (ex_gGlobalParam.Ex_Default == 0)
+                    if (gAdditionalCfgParam.initMachine == 0)
                     {
-                        Ex_Init_HandleCfgpage* ex_Page = getExInitPage();
+                        DInitHandleCfgpage* ex_Page = getExInitPage();
                         if(ex_Page) ex_Page->cfgHandlerRsp();
                     }
                     else
@@ -5286,9 +5325,9 @@ void MainWindow::zigbeeDataMsg(IAP_NOTIFY_STRU *pIapNotify)
                     QString strAddress = QString::number(iAddress);
                     offset += 2;
 
-                    if (ex_gGlobalParam.Ex_Default == 0)
+                    if (gAdditionalCfgParam.initMachine == 0)
                     {
-                        Ex_Init_HandleCfgpage* ex_Page = getExInitPage();
+                        DInitHandleCfgpage* ex_Page = getExInitPage();
                         if(ex_Page)
                             ex_Page->addHandler(1,strSn,strAddress);
                     }
@@ -5540,7 +5579,7 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
 
 #ifdef D_HTTPWORK
             if((gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
-                && ex_gGlobalParam.Ex_Default)
+                && gAdditionalCfgParam.initMachine)
             {
                 DNetworkAlaramInfo alarmInfo = {0, iAlarmPart * DISP_ALARM_PART0_NUM + iAlarmId, 1, QDateTime::currentDateTime()};
                 emitHttpAlarm(alarmInfo);
@@ -5572,7 +5611,7 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
 
 #ifdef D_HTTPWORK
             if((gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
-                && ex_gGlobalParam.Ex_Default)
+                && gAdditionalCfgParam.initMachine)
             {
                 DNetworkAlaramInfo alarmInfo = {0, iAlarmPart * DISP_ALARM_PART0_NUM + iAlarmId, 0, QDateTime::currentDateTime()};
                 emitHttpAlarm(alarmInfo);
@@ -6196,7 +6235,7 @@ void MainWindow::on_timerNetworkEvent()
 //    QString msg = QString("Genie client Message: hello Mqtt %1").arg(strCurTime);
 //    publishMqttMessage(msg.toUtf8());
 	
-    if(ex_gGlobalParam.Ex_Default == 0)
+    if(gAdditionalCfgParam.initMachine == 0)
     {
         return;
     }
@@ -6397,7 +6436,7 @@ void MainWindow::on_updateText(const QByteArray& array)
 
         SetPage* subpage = (SetPage*)page->getSubPage(SET_BTN_SERVICE);
 
-        Ex_FactoryTestPage *subSubpage = (Ex_FactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
+        DFactoryTestPage *subSubpage = (DFactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
 
         if(subSubpage->isVisible())
         {
@@ -6475,10 +6514,10 @@ int MainWindow::idForHPGetWHistory()
 
 void MainWindow::on_ScreenSleep(bool sleep)
 {
-    if(sleep && (g_screenSleep != 0) && (!g_isScreenSleep) && gGlobalParam.MiscParam.iEnerySave)
+    if(sleep && (gScreenSleepTimer != 0) && (!gScreenSleeping) && gGlobalParam.MiscParam.iEnerySave)
     {
 
-        g_isScreenSleep = true;
+        gScreenSleeping = true;
 //        int value = 10;
 //        Write_sys_int(PWMLCD_FILE, value);
 
@@ -6938,7 +6977,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
             
                // WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
-                Ex_WaterQualityPage *subpage = (Ex_WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+                DWaterQualityPage *subpage = (DWaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
                 subpage->updSwPressure(m_fPressure[APP_EXE_PM1_NO]);
             }
 #ifdef D_HTTPWORK
@@ -7011,9 +7050,9 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                         page->updateRectInfo(pItem->ucId);
                     }
 #ifdef FLOWCHART
-                    else if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
+                    else if (typeid(*m_pCurPage) == typeid(DFlowChartPage))
                     {
-                        Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
+                        DFlowChartPage *page = (DFlowChartPage *)m_pCurPage;
                         page->updateRectInfo(pItem->ucId);
                     }
 #endif
@@ -7047,9 +7086,9 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                         page->updateGpumpInfo(pItem->ucId);
                     }
 #ifdef FLOWCHART
-                    else if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
+                    else if (typeid(*m_pCurPage) == typeid(DFlowChartPage))
                     {
-                        Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
+                        DFlowChartPage *page = (DFlowChartPage *)m_pCurPage;
                         page->updateGpumpInfo(pItem->ucId);
                     }
 #endif
@@ -7085,9 +7124,9 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                          page->updateRpumpInfo(pItem->ucId);
                      }  
 #ifdef FLOWCHART
-                     else if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
+                     else if (typeid(*m_pCurPage) == typeid(DFlowChartPage))
                      {
-                         Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
+                         DFlowChartPage *page = (DFlowChartPage *)m_pCurPage;
 
                          page->updateRpumpInfo(pItem->ucId);
                      }
@@ -7124,9 +7163,9 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                          page->updateEdiInfo(pItem->ucId);
                      }  
 #ifdef FLOWCHART
-                     else if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
+                     else if (typeid(*m_pCurPage) == typeid(DFlowChartPage))
                      {
-                         Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
+                         DFlowChartPage *page = (DFlowChartPage *)m_pCurPage;
                          page->updateEdiInfo(pItem->ucId);
                      }
 #endif
@@ -7412,9 +7451,9 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 page->updateWorkState();
             }
 #ifdef FLOWCHART
-            if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
+            if (typeid(*m_pCurPage) == typeid(DFlowChartPage))
             {
-                Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
+                DFlowChartPage *page = (DFlowChartPage *)m_pCurPage;
                 page->updateWorkState();
             }
 #endif
@@ -7436,7 +7475,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     qDebug("on_dispIndication:DISP_NOT_STATE DISP_NOT_STATE NOT_STATE_INIT \r\n");
 
                     //2019.6.3
-                    ex_gGlobalParam.lastRunState = 0;
+                    gAdditionalCfgParam.lastRunState = 0;
                     MainSaveLastRunState(gGlobalParam.iMachineType);
 
 
@@ -7452,7 +7491,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_RUN \r\n");
 
                     //2019.6.3
-                    ex_gGlobalParam.lastRunState = 1;
+                    gAdditionalCfgParam.lastRunState = 1;
                     MainSaveLastRunState(gGlobalParam.iMachineType);
 
                     if (NULL != m_pSubPages[PAGE_MAIN])
@@ -7491,9 +7530,9 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 page->updateWorkState();
             }
 #ifdef FLOWCHART
-            if (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage))
+            if (typeid(*m_pCurPage) == typeid(DFlowChartPage))
             {
-                Ex_FlowChartPage *page = (Ex_FlowChartPage*)m_pCurPage;
+                DFlowChartPage *page = (DFlowChartPage*)m_pCurPage;
                 page->updateWorkState();
             }
 #endif
@@ -7768,9 +7807,9 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 page->updateSwitchInfo();
             }
 #ifdef FLOWCHART
-            if (!m_bSplash && (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage)))
+            if (!m_bSplash && (typeid(*m_pCurPage) == typeid(DFlowChartPage)))
             {
-                Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
+                DFlowChartPage *page = (DFlowChartPage *)m_pCurPage;
                 page->updateSwitchInfo();
             }
 #endif
@@ -7790,9 +7829,9 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 page->updateRpumpInfo(pItem->ucId);
             }
 #ifdef FLOWCHART
-            if (!m_bSplash && (typeid(*m_pCurPage) == typeid(Ex_FlowChartPage)))
+            if (!m_bSplash && (typeid(*m_pCurPage) == typeid(DFlowChartPage)))
             {
-                Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pCurPage;
+                DFlowChartPage *page = (DFlowChartPage *)m_pCurPage;
 
                 NOT_RPUMP_STATE_ITEM_STRU *pItem = (NOT_RPUMP_STATE_ITEM_STRU *)pNotify->aucData;
 
@@ -7840,14 +7879,14 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
 
                 //WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
-                Ex_WaterQualityPage *subpage = (Ex_WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+                DWaterQualityPage *subpage = (DWaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
                 subpage->updTOC(fToc);
             }
             //end
 #ifdef FLOWCHART
             if (NULL != m_pSubPages[PAGE_FLOWCHART])
             {
-                Ex_FlowChartPage *page = (Ex_FlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
+                DFlowChartPage *page = (DFlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
                 page->updTOC(fToc);
             }
 #endif
@@ -7865,9 +7904,9 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     SetDevicePage *page = getDeviceDlg();
                     if (page) page->zigbeeUpdResult(pItem->iResult,pItem->iPercent);
 
-                    if (typeid(*m_pCurPage) == typeid(Ex_FactoryTestPage))
+                    if (typeid(*m_pCurPage) == typeid(DFactoryTestPage))
                     {
-                        Ex_FactoryTestPage *page = qobject_cast<Ex_FactoryTestPage*>(m_pCurPage);
+                        DFactoryTestPage *page = qobject_cast<DFactoryTestPage*>(m_pCurPage);
                         page->zigbeeUpdResult(pItem->iResult,pItem->iPercent);
                     }
                         
@@ -8028,7 +8067,7 @@ int check_Sub_Account()
         return 1;
     }
 
-    if(user_LoginState.loginState())
+    if(gUserLoginState.loginState())
     {
         return 1;
     }
@@ -8127,11 +8166,11 @@ SetDevicePage *MainWindow::getDeviceDlg()
 
 }
 
-Ex_Init_HandleCfgpage *MainWindow::getExInitPage()
+DInitHandleCfgpage *MainWindow::getExInitPage()
 {
-    if (typeid(*m_curExInitPage) == typeid(Ex_Init_HandleCfgpage))
+    if (typeid(*m_curExInitPage) == typeid(DInitHandleCfgpage))
     {
-        Ex_Init_HandleCfgpage *page = (Ex_Init_HandleCfgpage *)m_curExInitPage;
+        DInitHandleCfgpage *page = (DInitHandleCfgpage *)m_curExInitPage;
         return page;
     }
 
@@ -8318,7 +8357,7 @@ void MainWindow::run(bool bRun)
                     runDlg.setButtonText(0, tr("Continue"));
                     if(QDialog::Accepted != runDlg.exec())
                     {
-                        ex_gGlobalParam.lastRunState = 0;
+                        gAdditionalCfgParam.lastRunState = 0;
                         MainSaveLastRunState(gGlobalParam.iMachineType);
                         return;
                     }
@@ -8331,7 +8370,7 @@ void MainWindow::run(bool bRun)
         {
             DispCmdEntry(DISP_CMD_RUN,NULL,0);
 
-            ex_gGlobalParam.lastRunState = 1;
+            gAdditionalCfgParam.lastRunState = 1;
             MainSaveLastRunState(gGlobalParam.iMachineType);
 
             return;
@@ -8350,7 +8389,7 @@ void MainWindow::run(bool bRun)
     {
         DispCmdEntry(DISP_CMD_HALT,NULL,0);
 
-        ex_gGlobalParam.lastRunState = 0;
+        gAdditionalCfgParam.lastRunState = 0;
         MainSaveLastRunState(gGlobalParam.iMachineType);
     
         return ;
@@ -8500,7 +8539,7 @@ int MainWindow::on_userLogin()
     dlg.exec();
     if(0 == dlg.m_iLogInResult)
     {
-        Ex_UserInfo userInfo;
+        DUserInfoChecker userInfo;
         int ret = userInfo.checkUserInfo(dlg.m_strUserName, dlg.m_strPassword);
         switch(ret)
         {
@@ -8510,7 +8549,7 @@ int MainWindow::on_userLogin()
         case 2:
         case 1:
             this->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
-            user_LoginState.setLoginState(true);
+            gUserLoginState.setLoginState(true);
             if (NULL != m_pSubPages[PAGE_MAIN])
             {
                 MainPage *page = (MainPage *)m_pSubPages[PAGE_MAIN];
@@ -8824,7 +8863,7 @@ void MainWindow::buildTranslation()
 
 void MainWindow::on_Ex_ScreenPageHide()
 {
-    if(typeid(*m_pCurPage) == typeid(Ex_ScreenSleepPage))
+    if(typeid(*m_pCurPage) == typeid(DScreenSleepPage))
     {
         m_pCurPage->show(false);
         emit SleepPageShow(false);
@@ -9210,7 +9249,7 @@ void MainWindow::updateRectAlarmState()
 void MainWindow::initMachineFlow()
 {
     int rate = 0;
-    unsigned int machineFlow = ex_gGlobalParam.Ex_Machine_Msg.iMachineFlow;
+    unsigned int machineFlow = gAdditionalCfgParam.machineInfo.iMachineFlow;
 
     rate = 120;
     m_flushMachineFlow = ((rate * 1000.0)/3600.0) + 0.5;
@@ -9329,20 +9368,20 @@ void MainWindow::checkUserLoginStatus()
     {
         if(!(DispGetUpQtwFlag() || DispGetEdiQtwFlag()))
         {
-            g_AutoLogoutTimer++;
+            gAutoLogoutTimer++;
         }
     }
     else
     {
-        g_AutoLogoutTimer++;
+        gAutoLogoutTimer++;
     }
 #else
-    g_AutoLogoutTimer++;
+    gAutoLogoutTimer++;
 #endif
 
-    if(user_LoginState.loginState())
+    if(gUserLoginState.loginState())
     {
-        user_LoginState.checkAutoLogout();
+        gUserLoginState.checkAutoLogout();
     }
     else
     {
@@ -9416,7 +9455,7 @@ void MainWindow::setStartCheckConsumable(bool isStart)
 
 void MainWindow::retriveLastRunState()
 {
-    if(ex_gGlobalParam.lastRunState)
+    if(gAdditionalCfgParam.lastRunState)
     {
         this->run(true);
     }

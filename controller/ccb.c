@@ -24,7 +24,7 @@
 
 #include "notify.h"
 #include "zb.h"
-#include "Ex_Display_c.h" //ex
+#include "exdisplay.h"
 
 
 #ifdef __cplusplus
@@ -539,7 +539,7 @@ void CanCcbSaveQtw2(int iTrxIndex, int iDevId,int iVolume)
     gCcb.aHandler[iIndex].iCanIdx = 0;
     if(INVALID_FM_VALUE != iVolume)
     {
-        gCcb.QtwMeas.ulTotalFm        = iVolume - ex_global_Cali.pc[DISP_PC_COFF_S1].fc;
+        gCcb.QtwMeas.ulTotalFm        = iVolume - gCaliParam.pc[DISP_PC_COFF_S1].fc;
     }
     else
     {
@@ -825,7 +825,7 @@ float CcbConvert2Pm3SP(unsigned int ulValue)
 
     //ex_dcj
     float tmp = (fValue / gCcb.PMParam.afDepth[DISP_PM_PM3]) * 100 ;
-    tmp *= ex_global_Cali.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk;
+    tmp *= gCaliParam.pc[DISP_PC_COFF_SW_TANK_LEVEL].fk;
     return tmp;
    // return (fValue / gCcb.PMParam.afDepth[DISP_PM_PM3]) * 100 ;  /* convert to 0~100 percent */
 }
@@ -872,7 +872,7 @@ float CcbConvert2Pm2SP(unsigned int ulValue)
     }
 
     float tmp = (correction_fValue / (gCcb.PMParam.afDepth[DISP_PM_PM2] - correction)) * 100 ;
-    tmp *= ex_global_Cali.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk;
+    tmp *= gCaliParam.pc[DISP_PC_COFF_PW_TANK_LEVEL].fk;
     return tmp;
 }
 
@@ -881,7 +881,6 @@ float CcbConvert2Pm1Data(unsigned int ulValue)
 {
     float fValue = (ulValue * 3300);
 
-
     fValue /= (4096*125);
 
     if (fValue <= 4) fValue = 4;
@@ -889,16 +888,19 @@ float CcbConvert2Pm1Data(unsigned int ulValue)
     fValue = (fValue - 4) / 16; 
     //ex_dcj
     fValue *= B1_PRESSURE;
-    fValue *= ex_global_Cali.pc[DISP_PC_COFF_SYS_PRESSURE].fk;
+    fValue *= gCaliParam.pc[DISP_PC_COFF_SYS_PRESSURE].fk;
     return fValue;
     
     //return fValue * B1_PRESSURE;
 }
 
-
+/**
+ * 计算过水量
+ * @param  ulValue [脉冲数]
+ * @return         [过水量，单位ml]
+ */
 unsigned int CcbConvert2Fm1Data(unsigned int ulValue)
 {
-
     /* x pulse per litre */
     if (!gCcb.FMParam.aulCfg[0])
     {
@@ -906,17 +908,12 @@ unsigned int CcbConvert2Fm1Data(unsigned int ulValue)
     
         return 0;
     }
-    //ex_dcj
-    unsigned int tmp = (ulValue * 1000)/ gCcb.FMParam.aulCfg[0];
-   // tmp *= ex_global_Cali.pc[DISP_PC_COFF_S1].fk;
+    unsigned int tmp = (ulValue * 1000)/ gCcb.FMParam.aulCfg[0]; //ml
     return tmp;
-
-    //return (ulValue * 1000)/ gCcb.FMParam.aulCfg[0]; // ->ml
 }
 
 unsigned int CcbConvert2Fm2Data(unsigned int ulValue)
 {
-
     /* x pulse per litre */
     if (!gCcb.FMParam.aulCfg[1])
     {
@@ -924,47 +921,34 @@ unsigned int CcbConvert2Fm2Data(unsigned int ulValue)
     
         return 0;
     }
-    //ex_dcj
     unsigned int tmp = (ulValue * 1000)/ gCcb.FMParam.aulCfg[1];
-    //tmp *= ex_global_Cali.pc[DISP_PC_COFF_S2].fk;
     return tmp;
-    
-  //  return (ulValue * 1000)/ gCcb.FMParam.aulCfg[1] ; // ->ml
 }
 
 unsigned int CcbConvert2Fm3Data(unsigned int ulValue)
 {
-    
-    /* 450 pulse per litre */
+    /* x pulse per litre */
     if (!gCcb.FMParam.aulCfg[2])
     {
         VOS_LOG(VOS_LOG_WARNING,"gCcb.FMParam.aulCfg[2] = 0");    
     
         return 0;
     }
-    //ex_dcj
     unsigned int tmp = (ulValue * 1000)/ gCcb.FMParam.aulCfg[2];
-    //tmp *= ex_global_Cali.pc[DISP_PC_COFF_S3].fk;
     return tmp;
-
-    //return (ulValue * 1000)/ gCcb.FMParam.aulCfg[2] ; // ->ml
 }
 
 unsigned int CcbConvert2Fm4Data(unsigned int ulValue)
 {   
-    /* 450 pulse per litre */
+    /* x pulse per litre */
     if (!gCcb.FMParam.aulCfg[3])
     {
         VOS_LOG(VOS_LOG_WARNING,"gCcb.FMParam.aulCfg[3] = 0");    
     
         return 0;
     }
-    //ex_dcj
     unsigned int tmp = (ulValue * 1000)/ gCcb.FMParam.aulCfg[3];
-    //tmp *= ex_global_Cali.pc[DISP_PC_COFF_S4].fk;
     return tmp;
-
-  //  return (ulValue * 1000)/ gCcb.FMParam.aulCfg[3] ; // ->ml
 }
 
 unsigned int CcbConvert2RectAndEdiData(unsigned int ulValue)
@@ -6939,33 +6923,33 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
                     switch(pEco->ucId)
                     {
                     case 0:
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= ex_global_Cali.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk;
+                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk;
+                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk;
                         break;
                     case 1:
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= ex_global_Cali.pc[DISP_PC_COFF_RO_WATER_TEMP].fk;
+                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk;
+                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_RO_WATER_TEMP].fk;
                         break;
                     case 2:
                     {
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= ex_global_Cali.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk;
+                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk;
+                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk;
                         if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ > 16)
                             gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = 16;
                         break;
                     }
                     case 3:
                     {
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= ex_global_Cali.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk;
+                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk;
+                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk;
                         if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ > 18.2)
                             gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = 18.2;
                         break;
                     }
                     case 4:
                     {
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= ex_global_Cali.pc[DISP_PC_COFF_UP_WATER_TEMP].fk;
+                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk;
+                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_UP_WATER_TEMP].fk;
                         if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ > 18.2)
                             gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = 18.2;
                         break;
@@ -8593,7 +8577,7 @@ void CanCcbSaveQtwMsg(int iTrxIndex, void *pMsg)
             gCcb.aHandler[iIndex].iCanIdx = pCanItfMsg->iCanChl;
             if(INVALID_FM_VALUE != pQtwReq->ulVolumn)
             {
-                gCcb.QtwMeas.ulTotalFm        = pQtwReq->ulVolumn - ex_global_Cali.pc[DISP_PC_COFF_S1].fc;
+                gCcb.QtwMeas.ulTotalFm        = pQtwReq->ulVolumn - gCaliParam.pc[DISP_PC_COFF_S1].fc;
             }
             else
             {
@@ -8622,7 +8606,7 @@ void CanCcbSaveQtwMsg(int iTrxIndex, void *pMsg)
 
             if(INVALID_FM_VALUE != pQtwReq->ulVolumn)
             {
-                gCcb.QtwMeas.ulTotalFm        = pQtwReq->ulVolumn - ex_global_Cali.pc[DISP_PC_COFF_S1].fc;
+                gCcb.QtwMeas.ulTotalFm        = pQtwReq->ulVolumn - gCaliParam.pc[DISP_PC_COFF_S1].fc;
             }
             else
             {

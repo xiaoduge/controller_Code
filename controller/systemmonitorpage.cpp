@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "systemmonitorlistwidgtitem.h"
 #include "systemmonitorpage.h"
+#include "exconfig.h"
 #include <QListWidget>
 
 SystemMonitorPage::SystemMonitorPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
@@ -44,6 +45,22 @@ SystemMonitorPage::SystemMonitorPage(QObject *parent,CBaseWidget *widget ,MainWi
         aIds[iIdx].num   = 0X0;
         iIdx++;
         break;
+    case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        {
+            aIds[iIdx].iType = SYSMONI_LIST_ITEM_DOUBLE_SWITCH;
+            aIds[iIdx].iId   = SYSTEMPAGE_ITEM_NAME_E3E4_STATE;
+            aIds[iIdx].num   = 0XFF;
+            iIdx++;
+        }
+        else
+        {
+            aIds[iIdx].iType = SYSMONI_LIST_ITEM_SINGLE_SWITCH;
+            aIds[iIdx].iId   = SYSTEMPAGE_ITEM_NAME_E3E4_STATE;
+            aIds[iIdx].num   = 0X0;
+            iIdx++;
+        }
+        break;
     default:
         aIds[iIdx].iType = SYSMONI_LIST_ITEM_DOUBLE_SWITCH;
         aIds[iIdx].iId   = SYSTEMPAGE_ITEM_NAME_E3E4_STATE;
@@ -65,6 +82,14 @@ SystemMonitorPage::SystemMonitorPage(QObject *parent,CBaseWidget *widget ,MainWi
         iIdx++;
         break;
     case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        {
+            aIds[iIdx].iType = SYSMONI_LIST_ITEM_SINGLE_SWITCH;
+            aIds[iIdx].iId   = SYSTEMPAGE_ITEM_NAME_E5E6_STATE;
+            aIds[iIdx].num   = 0X1;
+            iIdx++;
+        }
+        break;
     case MACHINE_L_RO_LOOP:
     case MACHINE_EDI:
     case MACHINE_RO:

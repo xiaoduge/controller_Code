@@ -10,11 +10,11 @@
 
 #include "alarmsetpage.h"
 #include "LoginDlg.h"
-#include "ExtraDisplay.h"
-#include "ex_superpowerpage.h"
-#include "ex_usercfgpage.h"
-#include "ex_userinfo.h"
-#include "ex_factorytestpage.h"
+#include "exconfig.h"
+#include "dsuperpowerpage.h"
+#include "dusercfgpage.h"
+#include "duserinfochecker.h"
+#include "dfactorytestpage.h"
 #include "dloginwarningdialog.h"
 #include "dpushbutton.h"
 
@@ -135,13 +135,13 @@ void SetPage::createSubPage()
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new Ex_SuperPowerPage(this, tmpWidget, m_wndMain);
+            m_pSubPages[index] = new DSuperPowerPage(this, tmpWidget, m_wndMain);
             break;
         case SET_BTN_SYSTEM_FACTORYTEST:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new Ex_FactoryTestPage(this, tmpWidget, m_wndMain);
+            m_pSubPages[index] = new DFactoryTestPage(this, tmpWidget, m_wndMain);
             break;
         }
     }
@@ -267,10 +267,10 @@ void SetPage::on_btn_clicked()
             return;
         }
 
-        Ex_UserInfo userInfo;
+        DUserInfoChecker userInfo;
         DUserInfo userlog = m_wndMain->getLoginfo();
         bool iEngineer = userInfo.checkEngineerInfo(userlog.m_strUserName);
-        if(!user_LoginState.loginState() || (!iEngineer))
+        if(!gUserLoginState.loginState() || (!iEngineer))
         {
             m_pBtns[SET_BTN_SYSTEM_SUPER]->hide(); //
             m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
@@ -278,7 +278,7 @@ void SetPage::on_btn_clicked()
             dlg.exec() ;
             if(0 == dlg.m_iLogInResult)
             {
-                Ex_UserInfo userInfo;
+                DUserInfoChecker userInfo;
                 int ret = userInfo.checkUserInfo(dlg.m_strUserName, dlg.m_strPassword);
 
                 switch(ret)
@@ -288,7 +288,7 @@ void SetPage::on_btn_clicked()
                 case 4:
                 {
                     m_wndMain->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
-                    user_LoginState.setLoginState(true);
+                    gUserLoginState.setLoginState(true);
                     if(3 != ret)
                     {
                         m_pBtns[SET_BTN_SYSTEM_SUPER]->show(); //
@@ -332,10 +332,10 @@ void SetPage::on_btn_clicked()
         case SET_BTN_SYSTEM_SUPER: //
         case SET_BTN_SYSTEM_FACTORYTEST:
         {
-            Ex_UserInfo userInfo;
+            DUserInfoChecker userInfo;
             DUserInfo userlog = m_wndMain->getLoginfo();
             bool iEngineer = userInfo.checkEngineerInfo(userlog.m_strUserName);
-            if(!user_LoginState.loginState() || (!iEngineer))
+            if(!gUserLoginState.loginState() || (!iEngineer))
             {
                 m_pBtns[SET_BTN_SYSTEM_SUPER]->hide(); //
                 m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
@@ -343,7 +343,7 @@ void SetPage::on_btn_clicked()
                 dlg.exec() ;
                 if(0 == dlg.m_iLogInResult)
                 {
-                    Ex_UserInfo userInfo;
+                    DUserInfoChecker userInfo;
                     int ret = userInfo.checkUserInfo(dlg.m_strUserName, dlg.m_strPassword);
 
                     switch(ret)
@@ -354,7 +354,7 @@ void SetPage::on_btn_clicked()
                     {
                         m_wndMain->saveLoginfo(dlg.m_strUserName, dlg.m_strPassword);
                         m_pSubPages[index]->show(true);
-                        user_LoginState.setLoginState(true);
+                        gUserLoginState.setLoginState(true);
                         if(3 != ret)
                         {
                             m_pBtns[SET_BTN_SYSTEM_SUPER]->show(); //
@@ -409,7 +409,7 @@ void SetPage::toInitializePage()
     {
         return;
     }
-    ex_gGlobalParam.Ex_Default = 0;
+    gAdditionalCfgParam.initMachine = 0;
     MainSaveDefaultState(gGlobalParam.iMachineType);
     m_wndMain->restart();
 }

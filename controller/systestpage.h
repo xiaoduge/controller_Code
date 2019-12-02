@@ -28,7 +28,7 @@ public:
 
     virtual void initUi();
 
-            void  updateInfo(int major,int minor,float fValue);  
+	void  updateInfo(int major,int minor,float fValue);  
 
     virtual void update();
 
