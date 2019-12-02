@@ -2705,7 +2705,8 @@ void work_stop_fill_water(void *para)
     {
         VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);    
     }
-
+    //2019.12.2 修改，停止取水时不需要关闭原水箱检测
+#if 0
     iTmp  = (GET_B_MASK(APP_EXE_PM3_NO));
     iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,0);
     if (iRet )
@@ -2713,7 +2714,7 @@ void work_stop_fill_water(void *para)
         VOS_LOG(VOS_LOG_WARNING,"CcbUpdateIAndBs Fail %d",iRet);    
         /* notify ui (late implemnt) */
     }     
-
+#endif
     gCcb.bit1FillingTank = FALSE;
     gCcb.bit1NeedFillTank = FALSE;
 
@@ -14729,6 +14730,16 @@ void MainSecondTask4MainState()
         }
     }
     /* 2018/01/11 end */
+
+	//2019.12.2 增加原水箱压力检测检查
+    if (!CcbGetPmObjState((1 << APP_EXE_PM3_NO)))
+    {
+        WORK_SETUP_REPORT_STRU Rpt;
+        Rpt.ulMask  = MAKE_B_MASK((1 << APP_EXE_PM3_NO));
+        Rpt.ulValue = MAKE_B_MASK((1 << APP_EXE_PM3_NO));
+        
+        CcbAddExeReportWork(&Rpt);
+    }
 
     /* independent work to fill tank */
     if (gCcb.bit1FillingTank)
