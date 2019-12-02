@@ -53,12 +53,12 @@ static CONFIG_BTN sBtns[BTN_NUMBER] =
 static CONFIG_LABEL sLabels[LABEL_NUMBER] = {
     /* UP */
     {77,106,146,50,GLOBAL_FONT_48,QColor(255,255,255),NULL,"0.0",0,0},
-    {233,140,50,20,GLOBAL_FONT_14,QColor(255,255,255),NULL,"O",0,0},//M¦¸.cm
+    {233,140,50,20,GLOBAL_FONT_14,QColor(255,255,255),NULL,"O",0,0},//Mæ¬¡.cm
     {100,190,40,15,GLOBAL_FONT_14,QColor(255,255,255),NULL,"TOC",0,0},
     {145,177,90,30,GLOBAL_FONT_30,QColor(255,255,255),NULL," ",0,0}, //3, 2018.11.23
     {240,190,30,15,GLOBAL_FONT_14,QColor(255,255,255),NULL,"ppb",0,0},
     {130,230,70,30,GLOBAL_FONT_30,QColor(255,255,255),NULL,"0.0",0,0},
-    {205,240,15,20,GLOBAL_FONT_14,QColor(255,255,255),NULL,"C",0,0}, // ¡æ
+    {205,240,15,20,GLOBAL_FONT_14,QColor(255,255,255),NULL,"C",0,0}, // âŠ¥
     {40,275,46,30,GLOBAL_FONT_30,QColor(255,255,255),":/pics/image/indicator.png","UP",0,0},
    // {97,88,146,16,GLOBAL_FONT_14,QColor(255,255,255),NULL,0,0,TEXT_ALIGN_LEFT},
     {97,80,146,24,GLOBAL_FONT_14,QColor(255,255,255),NULL,0,0,TEXT_ALIGN_LEFT},
@@ -190,12 +190,21 @@ MainPage::MainPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CP
     iValue = m_wndMain->getRPumpValue(1);
     DrawSpeed(1, iValue);
     //end
+
+    m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->hide();
+    m_pLabels[LABEL_NAVI_EDI_WQ_UNIT]->hide();
+    m_pLabels[LABEL_NAVI_EDI_LOOP_LBL]->hide();
+    m_pLabels[LABEL_NAVI_EDI_LOOP_VALUE]->hide();
+    m_pLabels[LABEL_NAVI_EDI_LOOP_UNIT]->hide();
+    m_pLabels[LABEL_NAVI_EDI_TEMP_VALUE]->hide();
+    m_pLabels[LABEL_NAVI_EDI_TEMP_UNIT]->hide();
+    m_pLabels[LABEL_NAVI_EDI_LOGO]->hide();
+    m_pLabels[LABEL_NAVI_EDI_STATE]->hide();
 }
 
 void MainPage::initUi()
 {
     int index;
-    int iLoop;
 
     int x;
     

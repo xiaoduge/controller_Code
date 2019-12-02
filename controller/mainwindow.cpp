@@ -172,7 +172,7 @@ I5  UP产水电阻率
 ** @release    version phase
 **
 ****************************************************************************/
-QString strSoftwareVersion = QString("0.1.9.191122_RC");
+QString strSoftwareVersion = QString("0.1.9.191129_RC");
 
 MainWindow *gpMainWnd;
 
@@ -9400,7 +9400,12 @@ void MainWindow::restart()
     QStringList  list;
     list<<"-qws";
 
+    //gApp->quit(); 
+    //gApp->closeAllWindows();
+    
     QProcess::startDetached(gApp->applicationFilePath(),list);
+
+    *((int *)(0)) = 0;
 
 }
 
