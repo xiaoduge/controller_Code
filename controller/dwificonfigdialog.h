@@ -1,3 +1,12 @@
+/****************************************************************************
+**
+** @Author    dcj
+** @DateTime  2019-12-3
+** @version   v0.0.1
+** @brief     Interface for WIFI Configuration
+**
+****************************************************************************/
+
 #ifndef DWIFICONFIGDIALOG_H
 #define DWIFICONFIGDIALOG_H
 

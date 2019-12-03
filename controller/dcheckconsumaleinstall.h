@@ -1,3 +1,14 @@
+/****************************************************************************
+**
+** @Author    dcj
+** @DateTime  2019-12-3
+** @version   v0.0.1
+** @brief     Interface for check consumables in real time
+**
+** 提供耗材实时检查，检测到新耗材时提醒安装耗材
+**
+****************************************************************************/
+
 #ifndef DCHECKCONSUMALEINSTALL_H
 #define DCHECKCONSUMALEINSTALL_H
 
@@ -12,7 +23,7 @@ class DCheckConsumaleInstall : public QObject
     Q_OBJECT
     enum InstallAction
     {
-        InvalidAction = 0,             //0 : do nothing
+        InvalidAction = 0,       //0 : do nothing
         InsertAction,            //1 : insert new
         UpdateAction,            //2 : update     
         WriteInstallDataAction,  //3 : only write install date to RFID

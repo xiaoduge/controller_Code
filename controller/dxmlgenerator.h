@@ -1,3 +1,13 @@
+/****************************************************************************
+**
+** @Author    dcj
+** @DateTime  2019-12-3
+** @version   v0.0.1
+** @brief     Interface for xml bytearray generator
+**
+** 用于将特定格式数据打包成XML QByteArray
+****************************************************************************/
+
 #ifndef DXMLGENERATOR_H
 #define DXMLGENERATOR_H
 

@@ -1,3 +1,13 @@
+/****************************************************************************
+**
+** @Author    dcj
+** @DateTime  2019-12-3
+** @version   v0.0.1
+** @brief     Interface for eventfilter
+**
+** 时间过滤器，当前主要用于过滤QEvent::MouseButtonPress事件，以计算无操作时间
+****************************************************************************/
+
 #ifndef DEVENTFILTER_H
 #define DEVENTFILTER_H
 

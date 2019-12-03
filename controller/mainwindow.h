@@ -857,6 +857,8 @@ void Write_sys_int(char *sysfilename,int value);
 extern QMutex ex_gMutex;
 
 #define PWMLCD_FILE       "/sys/class/backlight/pwm-backlight/brightness"
+
+// 系统WIFI配置文件
 #define WIFICONFIG_FILE   "/etc/wpa_supplicant.conf"
 
 #endif // MAINWINDOW_H

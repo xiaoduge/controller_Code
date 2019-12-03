@@ -1,3 +1,13 @@
+/****************************************************************************
+**
+** @Author    dcj
+** @DateTime  2019-12-03
+** @version   v0.0.1
+** @brief     Provide some additional configuration information
+**
+** 当前文件中的定义、声明只能用于纯C++中
+****************************************************************************/
+
 #ifndef EXCONFIG_H
 #define EXCONFIG_H
 #include "dloginstate.h"
@@ -22,6 +32,14 @@ enum MachineFlow
     MachineFlow_600 = 600
 };
 
+/**
+ * @ iCompany       : rephile:0; VWR:0
+ * @ strCatalogNo   : 设备货号   
+ * @ strSerialNo    : 设备序列号
+ * @ strProductDate : 设备生产日期   
+ * @ strInstallDate : 设备安装日期    
+ * @ strVersion     : 程序版本号  
+ */
 struct ProductInfo
 {
     int iCompany;
@@ -32,16 +50,30 @@ struct ProductInfo
     QString strVersion;
 };
 
+/**
+ * @ iScreenSleepTime : 设置的时间内无操作设备屏保
+ */
 struct AdditionalCfgParam
 {
     int   iScreenSleepTime;
 };
 
+/**
+ * @ iMachineFlow : 设备的额定制水量
+ */
 struct MachineInfo
 {
     unsigned int iMachineFlow; //机型流量
 };
 
+
+/**
+ * @ initMachine     :  0:开机后设备进入初始化配置界面; 1:开机后设备进入主运行界面
+ * @ productInfo     :  产品信息
+ * @ additionalParam :  额外补充的一些配置信息
+ * @ machineInfo     :  设备参数
+ * @ lastRunState    :  设备上次运行状态(运行/待机)
+ */
 struct AdditionalGlobalCfg
 {
     int initMachine;

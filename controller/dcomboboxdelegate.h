@@ -1,3 +1,14 @@
+/****************************************************************************
+**
+** @Author    dcj
+** @DateTime  2019-12-3
+** @version   v0.0.1
+** @brief     Item delegate for user configuration view
+**
+** 用户配置界面用户等级列代理，完成<int, string>间的映射
+**
+****************************************************************************/
+
 #ifndef DCOMBOBOXDELEGATE_H
 #define DCOMBOBOXDELEGATE_H
 

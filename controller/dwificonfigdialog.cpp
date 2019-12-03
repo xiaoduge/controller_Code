@@ -6,7 +6,7 @@
 #include <QFile>
 #include "dhintdialog.h"
 #include <QDebug>
-#include<unistd.h>
+#include <unistd.h>
 
 DWifiConfigDialog::DWifiConfigDialog(QWidget *parent) : DWifiConfigWidget(parent)
 {
